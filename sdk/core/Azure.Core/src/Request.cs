@@ -14,12 +14,6 @@ namespace Azure.Core.Http
 
         public virtual RequestMethod Method { get; set; }
 
-        public virtual void SetRequestLine(RequestMethod method, Uri uri)
-        {
-            Method = method;
-            UriBuilder.Uri = uri;
-        }
-
         public virtual HttpPipelineRequestContent? Content { get; set; }
 
         protected internal abstract void AddHeader(string name, string value);

@@ -29,7 +29,7 @@ namespace Azure.Storage.Queues.Models
         /// </param>
         static partial void CustomizeFromXml(XElement root, StorageError error)
         {
-            foreach (var element in root.Elements())
+            foreach (XElement element in root.Elements())
             {
                 switch (element.Name.LocalName)
                 {
@@ -53,6 +53,6 @@ namespace Azure.Storage.Queues.Models
         /// A <see cref="StorageRequestFailedException"/>.
         /// </returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Message, null, this.Code, this.AdditionalInformation);
+            => new StorageRequestFailedException(response, Message, null, Code, AdditionalInformation);
     }
 }

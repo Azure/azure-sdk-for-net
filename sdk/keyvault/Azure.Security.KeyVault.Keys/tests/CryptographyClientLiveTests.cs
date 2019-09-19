@@ -1,12 +1,14 @@
-﻿using Azure.Core.Testing;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -24,16 +26,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             // in record mode we reset the challenge cache before each test so that the challenge call
             // is always made.  This allows tests to be replayed independently and in any order
-            if (this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                this.Client = this.GetClient();
+                Client = GetClient();
 
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
         }
 
         [Test]
-        public async Task EncryptDecryptRoundTrip([Values]EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
@@ -60,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapUnwrapRoundTrip([Values]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
@@ -87,11 +89,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignVerifyDataRoundTrip([Values]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
-            var cryptoClient = GetCryptoClient(key.Id);
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
 
             var data = new byte[32];
             Recording.Random.NextBytes(data);
@@ -130,11 +132,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignVerifyDataStreamRoundTrip([Values]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
-            var cryptoClient = GetCryptoClient(key.Id);
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
 
             var data = new byte[8000];
             Recording.Random.NextBytes(data);
@@ -197,7 +199,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            switch (algorithm)
+            switch (algorithm.ToString())
             {
                 case KeyWrapAlgorithm.RSA15:
                 case KeyWrapAlgorithm.RSAOAEP:

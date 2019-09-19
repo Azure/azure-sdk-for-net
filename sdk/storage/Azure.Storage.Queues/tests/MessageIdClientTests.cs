@@ -23,12 +23,12 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
-                var enqueuedMessage = (await queue.EnqueueMessageAsync(String.Empty)).Value;
+                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(string.Empty)).Value;
 
                 // Act
-                var result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+                Response result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId);
@@ -39,11 +39,11 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync_Error()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    queue.DeleteMessageAsync(this.GetNewMessageId(), this.GetNewString()),
+                    queue.DeleteMessageAsync(GetNewMessageId(), GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
             }
         }
@@ -52,12 +52,12 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync_DeletePeek()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
-                var enqueuedMessage = (await queue.EnqueueMessageAsync(String.Empty)).Value;
-                
+                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(string.Empty)).Value;
+
                 // Act
-                var result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+                Response result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
                 // Assert
                 await queue.PeekMessagesAsync();
@@ -69,15 +69,15 @@ namespace Azure.Storage.Queues.Test
         public async Task UpdateAsync_Update()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
-                var enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
 
                 // Act
-                var result = await queue.UpdateMessageAsync(
+                Response<Models.UpdatedMessage> result = await queue.UpdateMessageAsync(
                     message1,
                     enqueuedMessage.MessageId,
                     enqueuedMessage.PopReceipt,
@@ -92,15 +92,15 @@ namespace Azure.Storage.Queues.Test
         public async Task UpdateAsync_Min()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
-                var enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
 
                 // Act
-                var result = await queue.UpdateMessageAsync(
+                Response<Models.UpdatedMessage> result = await queue.UpdateMessageAsync(
                     message1,
                     enqueuedMessage.MessageId,
                     enqueuedMessage.PopReceipt);
@@ -113,15 +113,15 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task UpdateAsync_UpdateDequeuedMessage()
         {
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
                 await queue.EnqueueMessageAsync(message0);
-                var message = (await queue.DequeueMessagesAsync(1)).Value.First();
+                Models.DequeuedMessage message = (await queue.DequeueMessagesAsync(1)).Value.First();
 
-                var update = await queue.UpdateMessageAsync(
+                Response<Models.UpdatedMessage> update = await queue.UpdateMessageAsync(
                     message1,
                     message.MessageId,
                     message.PopReceipt);
@@ -129,7 +129,7 @@ namespace Azure.Storage.Queues.Test
                 Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
                 Assert.AreNotEqual(update.Value.TimeNextVisible, message.TimeNextVisible);
 
-                var newMessage = message.Update(update);
+                Models.DequeuedMessage newMessage = message.Update(update);
                 Assert.AreEqual(message.MessageId, newMessage.MessageId);
                 Assert.AreEqual(message.MessageText, newMessage.MessageText);
                 Assert.AreEqual(message.InsertionTime, newMessage.InsertionTime);
@@ -146,19 +146,19 @@ namespace Azure.Storage.Queues.Test
         public async Task UpdateAsync_UpdatePeek()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
-                var enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
 
                 // Act
                 await queue.UpdateMessageAsync(message1, enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
                 // Assert
-                var peekedMessages = await queue.PeekMessagesAsync(1);
-                var peekedMessage = peekedMessages.Value.First();
+                Response<System.Collections.Generic.IEnumerable<Models.PeekedMessage>> peekedMessages = await queue.PeekMessagesAsync(1);
+                Models.PeekedMessage peekedMessage = peekedMessages.Value.First();
 
                 Assert.AreEqual(1, peekedMessages.Value.Count());
                 Assert.AreEqual(message1, peekedMessage.MessageText);
@@ -169,11 +169,11 @@ namespace Azure.Storage.Queues.Test
         public async Task UpdateAsync_Error()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    queue.UpdateMessageAsync(String.Empty, this.GetNewMessageId(), this.GetNewString()),
+                    queue.UpdateMessageAsync(string.Empty, GetNewMessageId(), GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
 
             }

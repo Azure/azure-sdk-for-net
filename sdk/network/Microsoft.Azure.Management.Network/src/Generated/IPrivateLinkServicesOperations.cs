@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> DeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string serviceName, string peConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Checks the subscription is visible to private link service
+        /// Checks whether the subscription is visible to private link service.
         /// </summary>
         /// <param name='location'>
         /// The location of the domain name.
@@ -229,7 +229,8 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityWithHttpMessagesAsync(string location, CheckPrivateLinkServiceVisibilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Checks the subscription is visible to private link service
+        /// Checks whether the subscription is visible to private link service
+        /// in the specified resource group.
         /// </summary>
         /// <param name='location'>
         /// The location of the domain name.

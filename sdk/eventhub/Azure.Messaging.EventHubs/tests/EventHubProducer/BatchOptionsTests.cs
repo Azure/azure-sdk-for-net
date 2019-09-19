@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions
             {
                 PartitionKey = "some_partition_123",
-                MaximumizeInBytes = (Int32.MaxValue + 122L)
+                MaximumizeInBytes = (int.MaxValue + 122L)
             };
 
-            var clone = options.Clone();
+            BatchOptions clone = options.Clone();
             Assert.That(clone, Is.TypeOf<BatchOptions>(), "The clone should be a BatchOptions instance.");
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
             Assert.That(clone, Is.Not.SameAs(options), "The clone should not the same reference as the options.");
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void MaximumBatchSizeInBytesDoesNotLimitMaximum()
         {
             var options = new BatchOptions();
-            Assert.That(() => options.MaximumizeInBytes = Int32.MaxValue, Throws.Nothing);
+            Assert.That(() => options.MaximumizeInBytes = int.MaxValue, Throws.Nothing);
         }
 
         /// <summary>

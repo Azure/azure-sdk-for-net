@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Core.Tests
 {
@@ -37,20 +38,25 @@ namespace Azure.Core.Tests
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";
                 var exceptionSuffix = ".Exception";
+
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
+                    PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Links");
+                    var links = propertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
+
                     var scope = new ProducedDiagnosticScope()
                     {
                         Name = name,
-                        Activity = Activity.Current
+                        Activity = Activity.Current,
+                        Links = links.Select(a => a.ParentId).ToList()
                     };
                     Scopes.Add(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
-                    foreach (var producedDiagnosticScope in Scopes)
+                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
                         if (producedDiagnosticScope.Name == name)
                         {
@@ -63,7 +69,7 @@ namespace Azure.Core.Tests
                 else if (value.Key.EndsWith(exceptionSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
-                    foreach (var producedDiagnosticScope in Scopes)
+                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
                         if (producedDiagnosticScope.IsCompleted)
                         {
@@ -105,7 +111,7 @@ namespace Azure.Core.Tests
                 subscription.Dispose();
             }
 
-            foreach (var producedDiagnosticScope in Scopes)
+            foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
                 if (!producedDiagnosticScope.IsCompleted)
                 {
@@ -118,11 +124,11 @@ namespace Azure.Core.Tests
         {
             lock (Scopes)
             {
-                foreach (var producedDiagnosticScope in Scopes)
+                foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                 {
                     if (producedDiagnosticScope.Name == name)
                     {
-                        foreach (var expectedAttribute in expectedAttributes)
+                        foreach (KeyValuePair<string, string> expectedAttribute in expectedAttributes)
                         {
                             if (!producedDiagnosticScope.Activity.Tags.Contains(expectedAttribute))
                             {
@@ -139,7 +145,7 @@ namespace Azure.Core.Tests
 
         public ProducedDiagnosticScope AssertScope(string name, params KeyValuePair<string, string>[] expectedAttributes)
         {
-            var scope = AssertScopeStarted(name, expectedAttributes);
+            ProducedDiagnosticScope scope = AssertScopeStarted(name, expectedAttributes);
             if (!scope.IsCompleted)
             {
                 throw new InvalidOperationException($"'{name}' is not completed");
@@ -150,7 +156,7 @@ namespace Azure.Core.Tests
 
         public ProducedDiagnosticScope AssertScopeException(string name, Action<Exception> action = null)
         {
-            var scope = AssertScopeStarted(name);
+            ProducedDiagnosticScope scope = AssertScopeStarted(name);
 
             if (scope.Exception == null)
             {
@@ -168,6 +174,7 @@ namespace Azure.Core.Tests
             public Activity Activity { get; set; }
             public bool IsCompleted { get; set; }
             public Exception Exception { get; set; }
+            public List<string> Links { get; set; } = new List<string>();
         }
     }
 

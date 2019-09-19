@@ -24,9 +24,7 @@ namespace Azure.Security.KeyVault.Secrets
         public Secret(string name, string value)
             : base(name)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
-
-            Value = value;
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

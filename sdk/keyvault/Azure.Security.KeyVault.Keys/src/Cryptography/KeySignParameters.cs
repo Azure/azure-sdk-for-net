@@ -8,8 +8,8 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeySignParameters : IJsonSerializable
     {
-        private static readonly JsonEncodedText AlgorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
-        private static readonly JsonEncodedText DigestPropertyNameBytes = JsonEncodedText.Encode("value");
+        private static readonly JsonEncodedText s_algorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
+        private static readonly JsonEncodedText s_digestPropertyNameBytes = JsonEncodedText.Encode("value");
 
         public string Algorithm { get; set; }
 
@@ -19,11 +19,11 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (Algorithm != null)
             {
-                json.WriteString(AlgorithmPropertyNameBytes, Algorithm);
+                json.WriteString(s_algorithmPropertyNameBytes, Algorithm);
             }
             if (Digest != null)
             {
-                json.WriteString(DigestPropertyNameBytes, Base64Url.Encode(Digest));
+                json.WriteString(s_digestPropertyNameBytes, Base64Url.Encode(Digest));
             }
         }
     }

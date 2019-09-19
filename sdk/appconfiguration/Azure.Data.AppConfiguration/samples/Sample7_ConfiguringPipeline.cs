@@ -13,16 +13,18 @@ namespace Azure.Data.AppConfiguration.Samples
     [LiveOnly]
     public partial class ConfigurationSamples
     {
-        private HttpClient s_client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         [Test]
         public void ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = new ConfigurationClientOptions();
+            var options = new ConfigurationClientOptions
+            {
 
-            // specify custon HttpClient
-            options.Transport = new HttpClientTransport(s_client);
+                // specify custon HttpClient
+                Transport = new HttpClientTransport(_client)
+            };
 
             // remove logging policy
             options.Diagnostics.IsLoggingEnabled = false;
@@ -33,10 +35,10 @@ namespace Azure.Data.AppConfiguration.Samples
             options.Retry.Delay = TimeSpan.FromSeconds(1);
 
             // add a policy (custom behavior) that executes once per client call
-            options.AddPolicy(HttpPipelinePosition.PerCall, new AddHeaderPolicy());
+            options.AddPolicy(new AddHeaderPolicy(), HttpPipelinePosition.PerCall);
 
             // add a policy that executes once per retry
-            options.AddPolicy(HttpPipelinePosition.PerRetry, new CustomLogPolicy());
+            options.AddPolicy(new CustomLogPolicy(), HttpPipelinePosition.PerRetry);
 
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
             // pass the policy options to the client

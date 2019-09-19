@@ -26,7 +26,7 @@ namespace Azure
         /// class for mocking.
         /// </summary>
         protected AsyncCollection() =>
-            this.CancellationToken = CancellationToken.None;
+            CancellationToken = CancellationToken.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncCollection{T}"/>
@@ -37,7 +37,7 @@ namespace Azure
         /// enumerating asynchronously.
         /// </param>
         protected AsyncCollection(CancellationToken cancellationToken) =>
-            this.CancellationToken = cancellationToken;
+            CancellationToken = cancellationToken;
 
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time.  This may

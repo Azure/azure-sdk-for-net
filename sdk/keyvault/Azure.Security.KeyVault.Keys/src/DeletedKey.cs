@@ -32,11 +32,11 @@ namespace Azure.Security.KeyVault.Keys
         internal DeletedKey(string name) : base(name) { }
 
         private const string RecoveryIdPropertyName = "recoveryId";
-        private static readonly JsonEncodedText RecoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
+        private static readonly JsonEncodedText s_recoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
         private const string DeletedDatePropertyName = "deletedDate";
-        private static readonly JsonEncodedText DeletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
+        private static readonly JsonEncodedText s_deletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private static readonly JsonEncodedText ScheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
+        private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
@@ -44,17 +44,17 @@ namespace Azure.Security.KeyVault.Keys
 
             if (RecoveryId != null)
             {
-                json.WriteString(RecoveryIdPropertyNameBytes, RecoveryId);
+                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId);
             }
 
             if (DeletedDate.HasValue)
             {
-                json.WriteNumber(DeletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_deletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
             }
 
             if (ScheduledPurgeDate.HasValue)
             {
-                json.WriteNumber(ScheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_scheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
             }
         }
 

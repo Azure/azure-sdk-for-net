@@ -24,87 +24,87 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Validator for the UseDevelopmentStorage setting. Must be "true".
         /// </summary>
-        private static readonly AccountSetting UseDevelopmentStorageSetting = Setting(Constants.ConnectionStrings.UseDevelopmentSetting, "true");
+        private static readonly AccountSetting s_useDevelopmentStorageSetting = Setting(Constants.ConnectionStrings.UseDevelopmentSetting, "true");
 
         /// <summary>
         /// Validator for the DevelopmentStorageProxyUri setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting DevelopmentStorageProxyUriSetting = Setting(Constants.ConnectionStrings.DevelopmentProxyUriSetting, IsValidUri);
+        private static readonly AccountSetting s_developmentStorageProxyUriSetting = Setting(Constants.ConnectionStrings.DevelopmentProxyUriSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the DefaultEndpointsProtocol setting. Must be either "http" or "https".
         /// </summary>
-        private static readonly AccountSetting DefaultEndpointsProtocolSetting = Setting(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, "http", "https");
+        private static readonly AccountSetting s_defaultEndpointsProtocolSetting = Setting(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, "http", "https");
 
         /// <summary>
         /// Validator for the AccountName setting. No restrictions.
         /// </summary>
-        private static readonly AccountSetting AccountNameSetting = Setting(Constants.ConnectionStrings.AccountNameSetting);
+        private static readonly AccountSetting s_accountNameSetting = Setting(Constants.ConnectionStrings.AccountNameSetting);
 
         /// <summary>
         /// Validator for the AccountKey setting. No restrictions.
         /// </summary>
-        private static readonly AccountSetting AccountKeyNameSetting = Setting(Constants.ConnectionStrings.AccountKeyNameSetting);
+        private static readonly AccountSetting s_accountKeyNameSetting = Setting(Constants.ConnectionStrings.AccountKeyNameSetting);
 
         /// <summary>
         /// Validator for the AccountKey setting. Must be a valid base64 string.
         /// </summary>
-        private static readonly AccountSetting AccountKeySetting = Setting(Constants.ConnectionStrings.AccountKeySetting, IsValidBase64String);
+        private static readonly AccountSetting s_accountKeySetting = Setting(Constants.ConnectionStrings.AccountKeySetting, IsValidBase64String);
 
         /// <summary>
         /// Validator for the BlobEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting BlobEndpointSetting = Setting(Constants.ConnectionStrings.BlobEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_blobEndpointSetting = Setting(Constants.ConnectionStrings.BlobEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the QueueEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting QueueEndpointSetting = Setting(Constants.ConnectionStrings.QueueEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_queueEndpointSetting = Setting(Constants.ConnectionStrings.QueueEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the TableEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting TableEndpointSetting = Setting(Constants.ConnectionStrings.TableEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_tableEndpointSetting = Setting(Constants.ConnectionStrings.TableEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the FileEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting FileEndpointSetting = Setting(Constants.ConnectionStrings.FileEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_fileEndpointSetting = Setting(Constants.ConnectionStrings.FileEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the BlobSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting BlobSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.BlobSecondaryEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_blobSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.BlobSecondaryEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the QueueSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting QueueSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.QueueSecondaryEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_queueSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.QueueSecondaryEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the TableSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting TableSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.TableSecondaryEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_tableSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.TableSecondaryEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the FileSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting FileSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.FileSecondaryEndpointSetting, IsValidUri);
+        private static readonly AccountSetting s_fileSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.FileSecondaryEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the EndpointSuffix setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting EndpointSuffixSetting = Setting(Constants.ConnectionStrings.EndpointSuffixSetting, IsValidDomain);
+        private static readonly AccountSetting s_endpointSuffixSetting = Setting(Constants.ConnectionStrings.EndpointSuffixSetting, IsValidDomain);
 
         /// <summary>
         /// Validator for the SharedAccessSignature setting. No restrictions.
         /// </summary>
-        private static readonly AccountSetting SharedAccessSignatureSetting = Setting(Constants.ConnectionStrings.SharedAccessSignatureSetting);
+        private static readonly AccountSetting s_sharedAccessSignatureSetting = Setting(Constants.ConnectionStrings.SharedAccessSignatureSetting);
 
         /// <summary>
         /// Singleton instance for the development storage account.
         /// </summary>
-        private static StorageConnectionString devStoreAccount;
+        private static StorageConnectionString s_devStoreAccount;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
@@ -131,12 +131,12 @@ namespace Azure.Storage.Common
         /// <param name="fileStorageUri">A <see cref="System.Uri"/> specifying the File service endpoint or endpoints.</param>
         public StorageConnectionString(object storageCredentials, (Uri, Uri) blobStorageUri, (Uri, Uri) queueStorageUri, (Uri, Uri) tableStorageUri, (Uri, Uri) fileStorageUri)
         {
-            this.Credentials = storageCredentials;
-            this.BlobStorageUri = blobStorageUri;
-            this.QueueStorageUri = queueStorageUri;
-            this.TableStorageUri = tableStorageUri;
-            this.FileStorageUri = fileStorageUri;
-            this.DefaultEndpoints = false;
+            Credentials = storageCredentials;
+            BlobStorageUri = blobStorageUri;
+            QueueStorageUri = queueStorageUri;
+            TableStorageUri = tableStorageUri;
+            FileStorageUri = fileStorageUri;
+            DefaultEndpoints = false;
         }
 
         /// <summary>
@@ -175,20 +175,20 @@ namespace Azure.Storage.Common
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
         public StorageConnectionString(object storageCredentials, string accountName, string endpointSuffix, bool useHttps)
         {
-            if (storageCredentials == default)
+            if (storageCredentials == null)
             {
                 throw Errors.ArgumentNull(nameof(storageCredentials));
             }
 
-            if (storageCredentials is StorageSharedKeyCredential sharedKeyCredentials && !String.IsNullOrEmpty(sharedKeyCredentials.AccountName))
+            if (storageCredentials is StorageSharedKeyCredential sharedKeyCredentials && !string.IsNullOrEmpty(sharedKeyCredentials.AccountName))
             {
-                if (String.IsNullOrEmpty(accountName))
+                if (string.IsNullOrEmpty(accountName))
                 {
                     accountName = sharedKeyCredentials.AccountName;
                 }
                 else
                 {
-                    if (String.Compare(sharedKeyCredentials.AccountName, accountName, System.StringComparison.Ordinal) != 0)
+                    if (string.Compare(sharedKeyCredentials.AccountName, accountName, System.StringComparison.Ordinal) != 0)
                     {
                         throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
                     }
@@ -201,13 +201,13 @@ namespace Azure.Storage.Common
             }
 
             var protocol = useHttps ? "https" : "http";
-            this.BlobStorageUri = ConstructBlobEndpoint(protocol, accountName, endpointSuffix);
-            this.QueueStorageUri = ConstructQueueEndpoint(protocol, accountName, endpointSuffix);
-            this.TableStorageUri = ConstructTableEndpoint(protocol, accountName, endpointSuffix);
-            this.FileStorageUri = ConstructFileEndpoint(protocol, accountName, endpointSuffix);
-            this.Credentials = storageCredentials;
-            this.EndpointSuffix = endpointSuffix;
-            this.DefaultEndpoints = true;
+            BlobStorageUri = ConstructBlobEndpoint(protocol, accountName, endpointSuffix);
+            QueueStorageUri = ConstructQueueEndpoint(protocol, accountName, endpointSuffix);
+            TableStorageUri = ConstructTableEndpoint(protocol, accountName, endpointSuffix);
+            FileStorageUri = ConstructFileEndpoint(protocol, accountName, endpointSuffix);
+            Credentials = storageCredentials;
+            EndpointSuffix = endpointSuffix;
+            DefaultEndpoints = true;
         }
 
         /// <summary>
@@ -218,12 +218,12 @@ namespace Azure.Storage.Common
         {
             get
             {
-                if (devStoreAccount == null)
+                if (s_devStoreAccount == null)
                 {
-                    devStoreAccount = GetDevelopmentStorageAccount(null);
+                    s_devStoreAccount = GetDevelopmentStorageAccount(null);
                 }
 
-                return devStoreAccount;
+                return s_devStoreAccount;
             }
         }
 
@@ -251,25 +251,25 @@ namespace Azure.Storage.Common
         /// Gets the primary endpoint for the Blob service, as configured for the storage account.
         /// </summary>
         /// <value>A <see cref="System.Uri"/> containing the primary Blob service endpoint.</value>
-        public Uri BlobEndpoint => this.BlobStorageUri.PrimaryUri;
+        public Uri BlobEndpoint => BlobStorageUri.PrimaryUri;
 
         /// <summary>
         /// Gets the primary endpoint for the Queue service, as configured for the storage account.
         /// </summary>
         /// <value>A <see cref="System.Uri"/> containing the primary Queue service endpoint.</value>
-        public Uri QueueEndpoint => this.QueueStorageUri.PrimaryUri;
+        public Uri QueueEndpoint => QueueStorageUri.PrimaryUri;
 
         /// <summary>
         /// Gets the primary endpoint for the Table service, as configured for the storage account.
         /// </summary>
         /// <value>A <see cref="System.Uri"/> containing the primary Table service endpoint.</value>
-        public Uri TableEndpoint => this.TableStorageUri.PrimaryUri;
+        public Uri TableEndpoint => TableStorageUri.PrimaryUri;
 
         /// <summary>
         /// Gets the primary endpoint for the File service, as configured for the storage account.
         /// </summary>
         /// <value>A <see cref="System.Uri"/> containing the primary File service endpoint.</value>
-        public Uri FileEndpoint => this.FileStorageUri.PrimaryUri;
+        public Uri FileEndpoint => FileStorageUri.PrimaryUri;
 
         /// <summary>
         /// Gets the endpoints for the Blob service at the primary and secondary location, as configured for the storage account.
@@ -304,7 +304,7 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Private record of the account name for use in ToString(bool).
         /// </summary>
-        private string accountName;
+        private string _accountName;
 
         /// <summary>
         /// Parses a connection string and returns a <see cref="StorageConnectionString"/> created
@@ -318,12 +318,12 @@ namespace Azure.Storage.Common
         public static StorageConnectionString Parse(string connectionString)
         {
 
-            if (String.IsNullOrEmpty(connectionString))
+            if (string.IsNullOrEmpty(connectionString))
             {
                 throw Errors.ArgumentNull(nameof(connectionString));
             }
 
-            if (ParseImpl(connectionString, out var ret, err => { throw Errors.InvalidFormat(err); }))
+            if (ParseImpl(connectionString, out StorageConnectionString ret, err => { throw Errors.InvalidFormat(err); }))
             {
                 return ret;
             }
@@ -340,7 +340,7 @@ namespace Azure.Storage.Common
         /// <returns><b>true</b> if the connection string was successfully parsed; otherwise, <b>false</b>.</returns>
         public static bool TryParse(string connectionString, out StorageConnectionString account)
         {
-            if (String.IsNullOrEmpty(connectionString))
+            if (string.IsNullOrEmpty(connectionString))
             {
                 account = null;
                 return false;
@@ -382,7 +382,7 @@ namespace Azure.Storage.Common
         /// Returns a connection string for this storage account, without sensitive data.
         /// </summary>
         /// <returns>A connection string.</returns>
-        public override string ToString() => this.ToString(false);
+        public override string ToString() => ToString(false);
 
         /// <summary>
         /// Returns a connection string for the storage account, optionally with sensitive data.
@@ -391,80 +391,80 @@ namespace Azure.Storage.Common
         /// <returns>A connection string.</returns>
         public string ToString(bool exportSecrets)
         {
-            if (this.Settings == null)
+            if (Settings == null)
             {
-                this.Settings = new Dictionary<string, string>();
+                Settings = new Dictionary<string, string>();
 
-                if (this.DefaultEndpoints)
+                if (DefaultEndpoints)
                 {
-                    this.Settings.Add(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, this.BlobEndpoint.Scheme);
+                    Settings.Add(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, BlobEndpoint.Scheme);
 
-                    if (this.EndpointSuffix != null)
+                    if (EndpointSuffix != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.EndpointSuffixSetting, this.EndpointSuffix);
+                        Settings.Add(Constants.ConnectionStrings.EndpointSuffixSetting, EndpointSuffix);
                     }
                 }
                 else
                 {
-                    if (this.BlobEndpoint != null)
+                    if (BlobEndpoint != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.BlobEndpointSetting, this.BlobEndpoint.ToString());
+                        Settings.Add(Constants.ConnectionStrings.BlobEndpointSetting, BlobEndpoint.ToString());
                     }
 
-                    if (this.QueueEndpoint != null)
+                    if (QueueEndpoint != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.QueueEndpointSetting, this.QueueEndpoint.ToString());
+                        Settings.Add(Constants.ConnectionStrings.QueueEndpointSetting, QueueEndpoint.ToString());
                     }
 
-                    if (this.TableEndpoint != null)
+                    if (TableEndpoint != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.TableEndpointSetting, this.TableEndpoint.ToString());
+                        Settings.Add(Constants.ConnectionStrings.TableEndpointSetting, TableEndpoint.ToString());
                     }
 
-                    if (this.FileEndpoint != null)
+                    if (FileEndpoint != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.FileEndpointSetting, this.FileEndpoint.ToString());
+                        Settings.Add(Constants.ConnectionStrings.FileEndpointSetting, FileEndpoint.ToString());
                     }
 
-                    if (this.BlobStorageUri.SecondaryUri != null)
+                    if (BlobStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
-                            this.BlobStorageUri.SecondaryUri.ToString());
+                        Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
+                            BlobStorageUri.SecondaryUri.ToString());
                     }
 
-                    if (this.QueueStorageUri.SecondaryUri != null)
+                    if (QueueStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
-                            this.QueueStorageUri.SecondaryUri.ToString());
+                        Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
+                            QueueStorageUri.SecondaryUri.ToString());
                     }
 
-                    if (this.TableStorageUri.SecondaryUri != null)
+                    if (TableStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
-                            this.TableStorageUri.SecondaryUri.ToString());
+                        Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
+                            TableStorageUri.SecondaryUri.ToString());
                     }
 
-                    if (this.FileStorageUri.SecondaryUri != null)
+                    if (FileStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting,
-                            this.FileStorageUri.SecondaryUri.ToString());
+                        Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting,
+                            FileStorageUri.SecondaryUri.ToString());
                     }
                 }
             }
 
-            var listOfSettings = this.Settings.Select(pair => String.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, pair.Value)).ToList();
+            var listOfSettings = Settings.Select(pair => string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, pair.Value)).ToList();
 
-            if (this.Credentials != null && !this.IsDevStoreAccount)
+            if (Credentials != null && !IsDevStoreAccount)
             {
-                listOfSettings.Add(StorageCredentialsExtensions.ToString(this.Credentials, exportSecrets));
+                listOfSettings.Add(StorageCredentialsExtensions.ToString(Credentials, exportSecrets));
             }
 
-            if (!String.IsNullOrWhiteSpace(this.accountName) && (this.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? String.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
+            if (!string.IsNullOrWhiteSpace(_accountName) && (Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
             {
-                listOfSettings.Add(String.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, this.accountName));
+                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, _accountName));
             }
 
-            return String.Join(";", listOfSettings);
+            return string.Join(";", listOfSettings);
         }
 
         /// <summary>
@@ -474,31 +474,31 @@ namespace Azure.Storage.Common
         /// <returns>The new <see cref="StorageConnectionString"/>.</returns>
         private static StorageConnectionString GetDevelopmentStorageAccount(Uri proxyUri)
         {
-            var builder = proxyUri != null ?
+            UriBuilder builder = proxyUri != null ?
                 new UriBuilder(proxyUri.Scheme, proxyUri.Host) :
                 new UriBuilder("http", "127.0.0.1");
 
             builder.Path = Constants.ConnectionStrings.DevStoreAccountName;
 
             builder.Port = Constants.ConnectionStrings.BlobEndpointPortNumber;
-            var blobEndpoint = builder.Uri;
+            Uri blobEndpoint = builder.Uri;
 
             builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
-            var queueEndpoint = builder.Uri;
+            Uri queueEndpoint = builder.Uri;
 
             builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
-            var tableEndpoint = builder.Uri;
+            Uri tableEndpoint = builder.Uri;
 
             builder.Path = Constants.ConnectionStrings.DevStoreAccountName + Constants.ConnectionStrings.SecondaryLocationAccountSuffix;
 
             builder.Port = Constants.ConnectionStrings.BlobEndpointPortNumber;
-            var blobSecondaryEndpoint = builder.Uri;
+            Uri blobSecondaryEndpoint = builder.Uri;
 
             builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
-            var queueSecondaryEndpoint = builder.Uri;
+            Uri queueSecondaryEndpoint = builder.Uri;
 
             builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
-            var tableSecondaryEndpoint = builder.Uri;
+            Uri tableSecondaryEndpoint = builder.Uri;
 
             var credentials = new StorageSharedKeyCredential(Constants.ConnectionStrings.DevStoreAccountName, Constants.ConnectionStrings.DevStoreAccountKey);
 #pragma warning disable IDE0017 // Simplify object initialization
@@ -533,7 +533,7 @@ namespace Azure.Storage.Common
         /// <returns>If true, the parse was successful. Otherwise, false.</returns>
         internal static bool ParseImpl(string connectionString, out StorageConnectionString accountInformation, Action<string> error)
         {
-            var settings = ParseStringIntoSettings(connectionString, error);
+            IDictionary<string, string> settings = ParseStringIntoSettings(connectionString, error);
 
             // malformed settings string
 
@@ -557,8 +557,8 @@ namespace Azure.Storage.Common
 
             if (MatchesSpecification(
                 settings,
-                AllRequired(UseDevelopmentStorageSetting),
-                Optional(DevelopmentStorageProxyUriSetting)))
+                AllRequired(s_useDevelopmentStorageSetting),
+                Optional(s_developmentStorageProxyUriSetting)))
             {
 
                 accountInformation =
@@ -566,51 +566,51 @@ namespace Azure.Storage.Common
                     ? GetDevelopmentStorageAccount(new Uri(proxyUri))
                     : DevelopmentStorageAccount;
 
-                accountInformation.Settings = ValidCredentials(settings);
+                accountInformation.Settings = s_validCredentials(settings);
 
                 return true;
             }
 
             // non-devstore case
 
-            var endpointsOptional =
+            ConnectionStringFilter endpointsOptional =
                 Optional(
-                    BlobEndpointSetting, BlobSecondaryEndpointSetting,
-                    QueueEndpointSetting, QueueSecondaryEndpointSetting,
-                    TableEndpointSetting, TableSecondaryEndpointSetting,
-                    FileEndpointSetting, FileSecondaryEndpointSetting
+                    s_blobEndpointSetting, s_blobSecondaryEndpointSetting,
+                    s_queueEndpointSetting, s_queueSecondaryEndpointSetting,
+                    s_tableEndpointSetting, s_tableSecondaryEndpointSetting,
+                    s_fileEndpointSetting, s_fileSecondaryEndpointSetting
                     );
 
-            var primaryEndpointRequired =
+            ConnectionStringFilter primaryEndpointRequired =
                 AtLeastOne(
-                    BlobEndpointSetting,
-                    QueueEndpointSetting,
-                    TableEndpointSetting,
-                    FileEndpointSetting
+                    s_blobEndpointSetting,
+                    s_queueEndpointSetting,
+                    s_tableEndpointSetting,
+                    s_fileEndpointSetting
                     );
 
-            var secondaryEndpointsOptional =
+            ConnectionStringFilter secondaryEndpointsOptional =
                 Optional(
-                    BlobSecondaryEndpointSetting,
-                    QueueSecondaryEndpointSetting,
-                    TableSecondaryEndpointSetting,
-                    FileSecondaryEndpointSetting
+                    s_blobSecondaryEndpointSetting,
+                    s_queueSecondaryEndpointSetting,
+                    s_tableSecondaryEndpointSetting,
+                    s_fileSecondaryEndpointSetting
                     );
 
-            var automaticEndpointsMatchSpec =
+            ConnectionStringFilter automaticEndpointsMatchSpec =
                 MatchesExactly(MatchesAll(
                     MatchesOne(
-                        MatchesAll(AllRequired(AccountKeySetting), Optional(AccountKeyNameSetting)), // Key + Name, Endpoints optional
-                        AllRequired(SharedAccessSignatureSetting) // SAS + Name, Endpoints optional
+                        MatchesAll(AllRequired(s_accountKeySetting), Optional(s_accountKeyNameSetting)), // Key + Name, Endpoints optional
+                        AllRequired(s_sharedAccessSignatureSetting) // SAS + Name, Endpoints optional
                     ),
-                    AllRequired(AccountNameSetting), // Name required to automatically create URIs
+                    AllRequired(s_accountNameSetting), // Name required to automatically create URIs
                     endpointsOptional,
-                    Optional(DefaultEndpointsProtocolSetting, EndpointSuffixSetting)
+                    Optional(s_defaultEndpointsProtocolSetting, s_endpointSuffixSetting)
                     ));
 
-            var explicitEndpointsMatchSpec =
+            ConnectionStringFilter explicitEndpointsMatchSpec =
                 MatchesExactly(MatchesAll( // Any Credentials, Endpoints must be explicitly declared
-                    ValidCredentials,
+                    s_validCredentials,
                     primaryEndpointRequired,
                     secondaryEndpointsOptional
                     ));
@@ -636,14 +636,14 @@ namespace Azure.Storage.Common
 
                 // if secondary is specified, primary must also be specified
 
-                bool isValidEndpointPair(string primary, string secondary) =>
-                        !String.IsNullOrWhiteSpace(primary)
-                        || /* primary is null, and... */ String.IsNullOrWhiteSpace(secondary);
+                static bool s_isValidEndpointPair(string primary, string secondary) =>
+                        !string.IsNullOrWhiteSpace(primary)
+                        || /* primary is null, and... */ string.IsNullOrWhiteSpace(secondary);
 
                 (Uri, Uri) createStorageUri(string primary, string secondary, Func<IDictionary<string, string>, (Uri, Uri)> factory) =>
-                        !String.IsNullOrWhiteSpace(secondary) && !String.IsNullOrWhiteSpace(primary)
+                        !string.IsNullOrWhiteSpace(secondary) && !string.IsNullOrWhiteSpace(primary)
                             ? (new Uri(primary), new Uri(secondary))
-                        : !String.IsNullOrWhiteSpace(primary)
+                        : !string.IsNullOrWhiteSpace(primary)
                             ? (new Uri(primary), default)
                         : matchesAutomaticEndpointsSpec && factory != null
                             ? factory(settings)
@@ -651,10 +651,10 @@ namespace Azure.Storage.Common
                         ;
 
                 if (
-                    isValidEndpointPair(blobEndpoint, blobSecondaryEndpoint)
-                    && isValidEndpointPair(queueEndpoint, queueSecondaryEndpoint)
-                    && isValidEndpointPair(tableEndpoint, tableSecondaryEndpoint)
-                    && isValidEndpointPair(fileEndpoint, fileSecondaryEndpoint)
+                    s_isValidEndpointPair(blobEndpoint, blobSecondaryEndpoint)
+                    && s_isValidEndpointPair(queueEndpoint, queueSecondaryEndpoint)
+                    && s_isValidEndpointPair(tableEndpoint, tableSecondaryEndpoint)
+                    && s_isValidEndpointPair(fileEndpoint, fileSecondaryEndpoint)
                     )
                 {
                     accountInformation =
@@ -668,10 +668,10 @@ namespace Azure.Storage.Common
                         {
                             DefaultEndpoints = blobEndpoint == null && queueEndpoint == null && tableEndpoint == null && fileEndpoint == null,
                             EndpointSuffix = settingOrDefault(Constants.ConnectionStrings.EndpointSuffixSetting),
-                            Settings = ValidCredentials(settings)
+                            Settings = s_validCredentials(settings)
                         };
 
-                    accountInformation.accountName = settingOrDefault(Constants.ConnectionStrings.AccountNameSetting);
+                    accountInformation._accountName = settingOrDefault(Constants.ConnectionStrings.AccountNameSetting);
 
                     return true;
                 }
@@ -708,7 +708,7 @@ namespace Azure.Storage.Common
 
                 if (settings.ContainsKey(splittedNameValue[0]))
                 {
-                    error(String.Format(CultureInfo.InvariantCulture, "Duplicate setting '{0}' found.", splittedNameValue[0]));
+                    error(string.Format(CultureInfo.InvariantCulture, "Duplicate setting '{0}' found.", splittedNameValue[0]));
                     return null;
                 }
 
@@ -781,7 +781,7 @@ namespace Azure.Storage.Common
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
 
-                foreach (var requirement in requiredSettings)
+                foreach (AccountSetting requirement in requiredSettings)
                 {
                     if (result.TryGetValue(requirement.Key, out var value) && requirement.Value(value))
                     {
@@ -806,7 +806,7 @@ namespace Azure.Storage.Common
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
 
-                foreach (var requirement in optionalSettings)
+                foreach (AccountSetting requirement in optionalSettings)
                 {
                     if (result.TryGetValue(requirement.Key, out var value) && requirement.Value(value))
                     {
@@ -829,7 +829,7 @@ namespace Azure.Storage.Common
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
                 var foundOne = false;
 
-                foreach (var requirement in atLeastOneSettings)
+                foreach (AccountSetting requirement in atLeastOneSettings)
                 {
                     if (result.TryGetValue(requirement.Key, out var value) && requirement.Value(value))
                     {
@@ -853,7 +853,7 @@ namespace Azure.Storage.Common
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
                 var foundOne = false;
 
-                foreach (var requirement in atLeastOneSettings)
+                foreach (AccountSetting requirement in atLeastOneSettings)
                 {
                     if (result.TryGetValue(requirement.Key, out var value) && requirement.Value(value))
                     {
@@ -874,7 +874,7 @@ namespace Azure.Storage.Common
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
 
-                foreach (var filter in filters)
+                foreach (ConnectionStringFilter filter in filters)
                 {
                     if (result == null)
                     {
@@ -895,7 +895,7 @@ namespace Azure.Storage.Common
         private static ConnectionStringFilter MatchesOne(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
-                var results =
+                IDictionary<string, string>[] results =
                     filters
                     .Select(filter => filter(new Dictionary<string, string>(settings)))
                     .Where(result => result != null)
@@ -913,7 +913,7 @@ namespace Azure.Storage.Common
         private static ConnectionStringFilter MatchesExactly(ConnectionStringFilter filter) =>
             (settings) =>
             {
-                var results = filter(settings);
+                IDictionary<string, string> results = filter(settings);
 
                 return results == null || results.Any() ? null : results;
             };
@@ -922,11 +922,11 @@ namespace Azure.Storage.Common
         /// Settings filter that ensures that a valid combination of credentials is present.
         /// </summary>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static readonly ConnectionStringFilter ValidCredentials =
+        private static readonly ConnectionStringFilter s_validCredentials =
             MatchesOne(
-                MatchesAll(AllRequired(AccountNameSetting, AccountKeySetting), Optional(AccountKeyNameSetting), None(SharedAccessSignatureSetting)),    // AccountAndKey
-                MatchesAll(AllRequired(SharedAccessSignatureSetting), Optional(AccountNameSetting), None(AccountKeySetting, AccountKeyNameSetting)),    // SharedAccessSignature (AccountName optional)
-                None(AccountNameSetting, AccountKeySetting, AccountKeyNameSetting, SharedAccessSignatureSetting)                                        // Anonymous
+                MatchesAll(AllRequired(s_accountNameSetting, s_accountKeySetting), Optional(s_accountKeyNameSetting), None(s_sharedAccessSignatureSetting)),    // AccountAndKey
+                MatchesAll(AllRequired(s_sharedAccessSignatureSetting), Optional(s_accountNameSetting), None(s_accountKeySetting, s_accountKeyNameSetting)),    // SharedAccessSignature (AccountName optional)
+                None(s_accountNameSetting, s_accountKeySetting, s_accountKeyNameSetting, s_sharedAccessSignatureSetting)                                        // Anonymous
             );
 
         /// <summary>
@@ -943,9 +943,9 @@ namespace Azure.Storage.Common
             IDictionary<string, string> settings,
             params ConnectionStringFilter[] constraints)
         {
-            foreach (var constraint in constraints)
+            foreach (ConnectionStringFilter constraint in constraints)
             {
-                var remainingSettings = constraint(settings);
+                IDictionary<string, string> remainingSettings = constraint(settings);
 
                 if (remainingSettings == null)
                 {
@@ -1002,22 +1002,22 @@ namespace Azure.Storage.Common
         /// <returns>The default blob endpoint.</returns>
         private static (Uri, Uri) ConstructBlobEndpoint(string scheme, string accountName, string endpointSuffix)
         {
-            if (String.IsNullOrEmpty(scheme))
+            if (string.IsNullOrEmpty(scheme))
             {
                 throw Errors.ArgumentNull(nameof(scheme));
             }
 
-            if (String.IsNullOrEmpty(accountName))
+            if (string.IsNullOrEmpty(accountName))
             {
                 throw Errors.ArgumentNull(nameof(accountName));
             }
 
-            if (String.IsNullOrEmpty(endpointSuffix))
+            if (string.IsNullOrEmpty(endpointSuffix))
             {
                 endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
-            var primaryUri = String.Format(
+            var primaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}.{2}.{3}/",
                 scheme,
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Common
                 Constants.ConnectionStrings.DefaultBlobHostnamePrefix,
                 endpointSuffix);
 
-            var secondaryUri = String.Format(
+            var secondaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}{2}.{3}.{4}",
                 scheme,
@@ -1056,22 +1056,22 @@ namespace Azure.Storage.Common
         /// <returns>The default file endpoint.</returns>
         private static (Uri, Uri) ConstructFileEndpoint(string scheme, string accountName, string endpointSuffix)
         {
-            if (String.IsNullOrEmpty(scheme))
+            if (string.IsNullOrEmpty(scheme))
             {
                 throw Errors.ArgumentNull(nameof(scheme));
             }
 
-            if (String.IsNullOrEmpty(accountName))
+            if (string.IsNullOrEmpty(accountName))
             {
                 throw Errors.ArgumentNull(nameof(accountName));
             }
 
-            if (String.IsNullOrEmpty(endpointSuffix))
+            if (string.IsNullOrEmpty(endpointSuffix))
             {
                 endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
-            var primaryUri = String.Format(
+            var primaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}.{2}.{3}/",
                 scheme,
@@ -1079,7 +1079,7 @@ namespace Azure.Storage.Common
                 Constants.ConnectionStrings.DefaultFileHostnamePrefix,
                 endpointSuffix);
 
-            var secondaryUri = String.Format(
+            var secondaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}{2}.{3}.{4}",
                 scheme,
@@ -1110,22 +1110,22 @@ namespace Azure.Storage.Common
         /// <returns>The default queue endpoint.</returns>
         private static (Uri, Uri) ConstructQueueEndpoint(string scheme, string accountName, string endpointSuffix)
         {
-            if (String.IsNullOrEmpty(scheme))
+            if (string.IsNullOrEmpty(scheme))
             {
                 throw Errors.ArgumentNull(nameof(scheme));
             }
 
-            if (String.IsNullOrEmpty(accountName))
+            if (string.IsNullOrEmpty(accountName))
             {
                 throw Errors.ArgumentNull(nameof(accountName));
             }
 
-            if (String.IsNullOrEmpty(endpointSuffix))
+            if (string.IsNullOrEmpty(endpointSuffix))
             {
                 endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
-            var primaryUri = String.Format(
+            var primaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}.{2}.{3}/",
                 scheme,
@@ -1133,7 +1133,7 @@ namespace Azure.Storage.Common
                 Constants.ConnectionStrings.DefaultQueueHostnamePrefix,
                 endpointSuffix);
 
-            var secondaryUri = String.Format(
+            var secondaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}{2}.{3}.{4}",
                 scheme,
@@ -1164,22 +1164,22 @@ namespace Azure.Storage.Common
         /// <returns>The default table endpoint.</returns>
         private static (Uri, Uri) ConstructTableEndpoint(string scheme, string accountName, string endpointSuffix)
         {
-            if (String.IsNullOrEmpty(scheme))
+            if (string.IsNullOrEmpty(scheme))
             {
                 throw Errors.ArgumentNull(nameof(scheme));
             }
 
-            if (String.IsNullOrEmpty(accountName))
+            if (string.IsNullOrEmpty(accountName))
             {
                 throw Errors.ArgumentNull(nameof(accountName));
             }
 
-            if (String.IsNullOrEmpty(endpointSuffix))
+            if (string.IsNullOrEmpty(endpointSuffix))
             {
                 endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
-            var primaryUri = String.Format(
+            var primaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}.{2}.{3}/",
                 scheme,
@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Common
                 Constants.ConnectionStrings.DefaultTableHostnamePrefix,
                 endpointSuffix);
 
-            var secondaryUri = String.Format(
+            var secondaryUri = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}://{1}{2}.{3}.{4}",
                 scheme,
@@ -1200,25 +1200,26 @@ namespace Azure.Storage.Common
         }
     }
 
-    static class StorageCredentialsExtensions
+    internal static class StorageCredentialsExtensions
     {
         public static string ToString(object credentials, bool exportSecrets)
         {
             if (credentials is StorageSharedKeyCredential sharedKeyCredentials)
             {
-                return String.Format(
+                return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}={1};{2}={3}",
                     Constants.ConnectionStrings.AccountNameSetting,
                     sharedKeyCredentials.AccountName,
                     Constants.ConnectionStrings.AccountKeySetting,
                     exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "Sanitized");
-            } else if (credentials is SharedAccessSignatureCredentials sasCredentials)
+            }
+            else if (credentials is SharedAccessSignatureCredentials sasCredentials)
             {
-                return String.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
+                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
             }
 
-            return String.Empty;
+            return string.Empty;
         }
     }
 }

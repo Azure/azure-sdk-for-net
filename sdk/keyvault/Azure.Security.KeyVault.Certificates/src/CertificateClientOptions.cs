@@ -3,9 +3,13 @@
 // license information.
 
 using Azure.Core.Pipeline;
+using System;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// Options that allow to configure the management of the request sent to Key Vault
+    /// </summary>
     public class CertificateClientOptions : ClientOptions
     {
         /// <summary>
@@ -46,7 +50,23 @@ namespace Azure.Security.KeyVault.Certificates
         /// </param>
         public CertificateClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
-            this.Version = version;
+            Version = version;
+        }
+
+        /// <summary>
+        /// The default <see cref="CertificatePolicy"/> to be used when creating certificates with the client
+        /// </summary>
+        public CertificatePolicy DefaultPolicy { get; set; }
+
+        internal string GetVersionString()
+        {
+            var version = Version switch
+            {
+                ServiceVersion.V7_0 => "7.0",
+
+                _ => throw new ArgumentException(Version.ToString()),
+            };
+            return version;
         }
     }
 }

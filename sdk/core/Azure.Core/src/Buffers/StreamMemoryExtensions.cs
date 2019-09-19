@@ -14,15 +14,14 @@ namespace Azure.Core.Buffers
     {
         public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
         {
-            if (stream == null)
-                throw new ArgumentNullException(nameof(stream));
+            Argument.AssertNotNull(stream, nameof(stream));
 
             if (buffer.Length == 0)
                 return;
             byte[]? array = null;
             try
             {
-                if (MemoryMarshal.TryGetArray(buffer, out var arraySegment))
+                if (MemoryMarshal.TryGetArray(buffer, out ArraySegment<byte> arraySegment))
                 {
                     await stream.WriteAsync(arraySegment.Array, arraySegment.Offset, arraySegment.Count, cancellation).ConfigureAwait(false);
                 }
@@ -49,17 +48,16 @@ namespace Azure.Core.Buffers
 
         public static async Task WriteAsync(this Stream stream, ReadOnlySequence<byte> buffer, CancellationToken cancellation = default)
         {
-            if (stream == null)
-                throw new ArgumentNullException(nameof(stream));
+            Argument.AssertNotNull(stream, nameof(stream));
 
             if (buffer.Length == 0)
                 return;
             byte[]? array = null;
             try
             {
-                foreach (var segment in buffer)
+                foreach (ReadOnlyMemory<byte> segment in buffer)
                 {
-                    if (MemoryMarshal.TryGetArray(segment, out var arraySegment))
+                    if (MemoryMarshal.TryGetArray(segment, out ArraySegment<byte> arraySegment))
                     {
                         await stream.WriteAsync(arraySegment.Array, arraySegment.Offset, arraySegment.Count, cancellation).ConfigureAwait(false);
                     }

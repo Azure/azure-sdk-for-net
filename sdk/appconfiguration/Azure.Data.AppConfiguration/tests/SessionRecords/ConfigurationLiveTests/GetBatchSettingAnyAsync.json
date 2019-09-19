@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002fkey-1301486225?label=test_label",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-1301486225?label=test_label\u0026api-version=1.0",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application\u002fvnd.microsoft.appconfig.kv\u002bjson",
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
         "Content-Length": "98",
-        "Content-Type": "application\u002fjson",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Request-Id": "|e844dc39-43d9842b852579ab.",
+        "Content-Type": "application/json",
+        "Date": "Wed, 18 Sep 2019 21:33:03 GMT",
+        "traceparent": "00-f3b2ccab5304d64180f7c306adb684e9-3fe5578d7c974746-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
         ],
         "x-ms-client-request-id": "a8bc895155b673e868ac6b42d0faa7a1",
         "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
@@ -34,20 +34,20 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
-        "Content-Type": "application\u002fvnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "ETag": "\u0022DELSAe6Xr5RXZDwkMAsAeeexIsJ\u0022",
-        "Last-Modified": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Server": "nginx\u002f1.13.12",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 21:33:03 GMT",
+        "ETag": "\u0022f0Y8fclWXSyMikdBTEd7JW7AJzM\u0022",
+        "Last-Modified": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTE=;sn=444451",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDc=;sn=538707",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "a8bc895155b673e868ac6b42d0faa7a1",
-        "x-ms-correlation-request-id": "7aa2f36a-e07a-4a41-9091-5c383233f160",
-        "x-ms-request-id": "7aa2f36a-e07a-4a41-9091-5c383233f160"
+        "x-ms-correlation-request-id": "8ebf6740-5dd1-43b4-a629-95e64a524ff9",
+        "x-ms-request-id": "8ebf6740-5dd1-43b4-a629-95e64a524ff9"
       },
       "ResponseBody": {
-        "etag": "DELSAe6Xr5RXZDwkMAsAeeexIsJ",
+        "etag": "f0Y8fclWXSyMikdBTEd7JW7AJzM",
         "key": "key-1301486225",
         "label": "test_label",
         "content_type": "test_content_type",
@@ -57,24 +57,23 @@
           "tag2": "value2"
         },
         "locked": false,
-        "last_modified": "2019-08-21T19:40:00\u002b00:00"
+        "last_modified": "2019-09-18T21:33:04\u002B00:00"
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002f?key=*\u0026label=*",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/?key=*\u0026label=*\u0026api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application\u002fvnd.microsoft.appconfig.kv\u002bjson",
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Request-Id": "|e844dc3a-43d9842b852579ab.",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTE=",
+        "Date": "Wed, 18 Sep 2019 21:33:03 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDc=",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
         ],
         "x-ms-client-request-id": "581c71080662e735257b3a4653a67d1a",
-        "x-ms-content-sha256": "47DEQpj8HBSa\u002b\u002fTImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -86,16 +85,16 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
-        "Content-Type": "application\u002fvnd.microsoft.appconfig.kvset\u002bjson; charset=utf-8",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Link": "\u003c\u002fkv\u002f?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D\u003e; rel=\u0022next\u0022",
-        "Server": "nginx\u002f1.13.12",
+        "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002Bjson; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "Link": "\u003C/kv/?key=*\u0026label=*\u0026api-version=1.0\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D\u003E; rel=\u0022next\u0022",
+        "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTE=;sn=444451",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDc=;sn=538707",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "581c71080662e735257b3a4653a67d1a",
-        "x-ms-correlation-request-id": "39bfc780-9bdf-4515-9301-4ba01ce78442",
-        "x-ms-request-id": "39bfc780-9bdf-4515-9301-4ba01ce78442"
+        "x-ms-correlation-request-id": "374c77c7-fe61-4479-b9ce-8464d6a21f11",
+        "x-ms-request-id": "374c77c7-fe61-4479-b9ce-8464d6a21f11"
       },
       "ResponseBody": {
         "items": [
@@ -107,7 +106,7 @@
             "value": "0",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:14:47\u002b00:00"
+            "last_modified": "2019-04-10T23:14:47\u002B00:00"
           },
           {
             "etag": "7db9w9wCukFEW2sgvZHDkRopoTs",
@@ -117,7 +116,7 @@
             "value": "0",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+            "last_modified": "2019-04-10T23:18:13\u002B00:00"
           },
           {
             "etag": "Swe3KG4Ei41uLWRtchrlYy54PcI",
@@ -127,7 +126,7 @@
             "value": "0",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+            "last_modified": "2019-04-10T23:26:25\u002B00:00"
           },
           {
             "etag": "Al3nrQNM6vuDgq7vYDmjRtW703g",
@@ -137,7 +136,7 @@
             "value": "key-cf4ac67640fc46f2b682583c217b28da",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "s0zd1djtEPdZPdDG2PlUp1i8MZ4",
@@ -147,10 +146,10 @@
             "value": "Sample_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-07-12T20:36:44\u002b00:00"
+            "last_modified": "2019-07-12T20:36:44\u002B00:00"
           },
           {
-            "etag": "DELSAe6Xr5RXZDwkMAsAeeexIsJ",
+            "etag": "f0Y8fclWXSyMikdBTEd7JW7AJzM",
             "key": "key-1301486225",
             "label": "test_label",
             "content_type": "test_content_type",
@@ -160,7 +159,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-08-21T19:40:00\u002b00:00"
+            "last_modified": "2019-09-18T21:33:04\u002B00:00"
           },
           {
             "etag": "rniPVf34RW2LNcl6lXHzat7XjNo",
@@ -170,7 +169,7 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+            "last_modified": "2019-04-10T23:26:25\u002B00:00"
           },
           {
             "etag": "QB6ZifyjGfUn17lEKZMAK6No3jf",
@@ -183,7 +182,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-05-01T19:08:03\u002b00:00"
+            "last_modified": "2019-05-01T19:08:03\u002B00:00"
           },
           {
             "etag": "tT5ZteN3oXgr8CEJQBPx8JkAuu1",
@@ -196,7 +195,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-05-01T19:08:04\u002b00:00"
+            "last_modified": "2019-05-01T19:08:04\u002B00:00"
           },
           {
             "etag": "JmFAJhlGhqYS9XzZN5ZfdktOK3L",
@@ -209,7 +208,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:26:23\u002b00:00"
+            "last_modified": "2019-04-10T23:26:23\u002B00:00"
           },
           {
             "etag": "1jVUkRTzlwDiJ3YjMFxJxXY3XNY",
@@ -219,7 +218,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+            "last_modified": "2019-04-10T23:26:24\u002B00:00"
           },
           {
             "etag": "Z5BbCpC5iN2Qw1Tg9GiosFPgNnK",
@@ -229,7 +228,7 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:14:47\u002b00:00"
+            "last_modified": "2019-04-10T23:14:47\u002B00:00"
           },
           {
             "etag": "NNkiTFfEo9LzydkJzQXKNJKTyII",
@@ -242,7 +241,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-08T22:57:05\u002b00:00"
+            "last_modified": "2019-04-08T22:57:05\u002B00:00"
           },
           {
             "etag": "yOAsvJzz97wJK3rXYDNGKswPLfs",
@@ -255,7 +254,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T22:41:42\u002b00:00"
+            "last_modified": "2019-04-10T22:41:42\u002B00:00"
           },
           {
             "etag": "Hwxe1GRQ1v2BxfVH1SvSlAck0PC",
@@ -268,7 +267,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-05-01T19:07:48\u002b00:00"
+            "last_modified": "2019-05-01T19:07:48\u002B00:00"
           },
           {
             "etag": "kvgqu9HLXGYVrWo7IQD3kAw0hhP",
@@ -281,7 +280,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-05-01T19:07:49\u002b00:00"
+            "last_modified": "2019-05-01T19:07:49\u002B00:00"
           },
           {
             "etag": "PzXHmex5qhvK8zapRdnjKgvkEJX",
@@ -294,7 +293,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:14:46\u002b00:00"
+            "last_modified": "2019-04-10T23:14:46\u002B00:00"
           },
           {
             "etag": "rPpoe0t5YhfTsIrDj57y1QHzRpn",
@@ -307,7 +306,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:14:47\u002b00:00"
+            "last_modified": "2019-04-10T23:14:47\u002B00:00"
           },
           {
             "etag": "ytubwGBJqHHXmIvJZx23ir8rtah",
@@ -320,7 +319,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-05-15T23:51:11\u002b00:00"
+            "last_modified": "2019-05-15T23:51:11\u002B00:00"
           },
           {
             "etag": "m7EFRi22ngO0wY2LWxzcDYgMx0G",
@@ -333,7 +332,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+            "last_modified": "2019-04-10T23:26:25\u002B00:00"
           },
           {
             "etag": "Bl3dmm3GEsNjrsYiDfbVUiC0bI5",
@@ -343,7 +342,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:14:46\u002b00:00"
+            "last_modified": "2019-04-10T23:14:46\u002B00:00"
           },
           {
             "etag": "8CyYkv9oFg0BAPHmThI4s60qrQY",
@@ -353,7 +352,7 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+            "last_modified": "2019-04-10T23:18:13\u002B00:00"
           },
           {
             "etag": "m8QLwhqsr8XTjnxCNNumh8AP1M7",
@@ -366,7 +365,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+            "last_modified": "2019-04-10T23:18:12\u002B00:00"
           },
           {
             "etag": "Hkd41xJvSuXdYustHzporIKJ0wS",
@@ -379,7 +378,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-08T20:03:50\u002b00:00"
+            "last_modified": "2019-04-08T20:03:50\u002B00:00"
           },
           {
             "etag": "uAKXASYUXCUwezzzW5Jlush2m4x",
@@ -392,7 +391,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+            "last_modified": "2019-04-10T23:18:13\u002B00:00"
           },
           {
             "etag": "ajYPN5RxPfDSDLQVb163LNdi058",
@@ -405,7 +404,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:18:11\u002b00:00"
+            "last_modified": "2019-04-10T23:18:11\u002B00:00"
           },
           {
             "etag": "kOx6aqsmzjRJD9KF8IETDwer9ip",
@@ -418,7 +417,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+            "last_modified": "2019-04-10T23:26:24\u002B00:00"
           },
           {
             "etag": "7gCEPElcrZSc2KqojaReq6B0BTl",
@@ -428,7 +427,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "A295aSba8OqTpK6TuubVEnmH6WX",
@@ -438,7 +437,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "jZQGOCGk1mFlgUFtn0SjrcCtzyV",
@@ -448,7 +447,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "GrcSfdqUAx61KyzU5Qb2ENLn95e",
@@ -458,7 +457,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "dtDAm9GvnVw1gopBJAOuzOJTQ03",
@@ -468,7 +467,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "EnkfI7YFm1IDAO5HiXbFjXmOzX1",
@@ -478,7 +477,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "jYsoGa1f1YEcd0yELx5HiaGhvsR",
@@ -488,7 +487,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "tBkbnQSCkFoXjijXSGDZ03jgiwj",
@@ -498,7 +497,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "oZ5bse5uIirT9Yvuzosn11KFObK",
@@ -508,7 +507,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "n02gKlCcub63X51JWfQmppcQbEJ",
@@ -518,7 +517,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "ISyMAYEyIqz873h4fIZk0Xj9AQv",
@@ -528,7 +527,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "1xS4prbjZkBwPrZvWxgil0AFIB4",
@@ -538,7 +537,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "1fyB7zOsE2YGiJ7ObGEOsdBcqpD",
@@ -548,7 +547,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "1boCrTtA6VLKXp8PnTaPOR3FM6x",
@@ -558,7 +557,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "CZbN36eEf9yoQEyZ9O9zMbAqZbX",
@@ -568,7 +567,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "QQKFxFl1zNZIrZS3zYYi7346QdH",
@@ -578,7 +577,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "DEbldCu2zL678iULAdGN72StNVn",
@@ -588,7 +587,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "8GGP9SAoyolceIxKHTu8KY9Wvqw",
@@ -598,7 +597,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "L3ST8Lj63jdx4EjeudE1ECTS0Wr",
@@ -608,7 +607,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "oCpzWi0RVDYCPhBglMz5kDeBJ8Y",
@@ -618,7 +617,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "6FJoCtDTKS0xnuaCVRZ8uHdTCha",
@@ -628,7 +627,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "fz53meLZnSdI4b4Vpk3JyiiQR0I",
@@ -638,7 +637,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "2CDPC8Wr9DZqj9ZWfdeWT3NWagW",
@@ -648,7 +647,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "QyxYBkNjbKLBVIVxIyNY3S22qGS",
@@ -658,7 +657,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "kKK7dumcn3ltdo52E1LwfTr3Wvu",
@@ -668,7 +667,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "KC3W2UWmNsE3XGkMhM6zvCXqk4k",
@@ -678,7 +677,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "BIADUiLRaH2ljd0SEqz7PBhf1Gc",
@@ -688,7 +687,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "Ged7OeAF5oBkhmlObODaluLsQyO",
@@ -698,7 +697,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "7Mg1DqOhsJOwGdJ8cdu1NeSUidP",
@@ -708,7 +707,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "AU5oO6kWPnBT59jptGDQe7fCuBq",
@@ -718,7 +717,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "Kv4HH4sI8MbJoypIqF3Bl3fnFAK",
@@ -728,7 +727,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "Ophsnd4qtnlscjo89Zbe9C1hlCa",
@@ -738,7 +737,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "V5raFgRdRGFO9qHiCD75ixJEWXm",
@@ -748,7 +747,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "SfTQbrLzgCYXVozR3a3I8wI0oUO",
@@ -758,7 +757,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "XuVWk6t1KAu9tGW7i7TkEFBpUU7",
@@ -768,7 +767,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "foeyVp3r6HujpVSyPTUyrseexLL",
@@ -778,7 +777,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "93AZxTGVH4THERefq0bS2lbdz2F",
@@ -788,7 +787,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "Bf18rhKxGsiWqm2crApgCVNvIuU",
@@ -798,7 +797,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "KzoC7BgyPeXs9O4yTzE4PUCDi9v",
@@ -808,7 +807,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+            "last_modified": "2019-04-08T20:02:34\u002B00:00"
           },
           {
             "etag": "4CWbzerlzfUH4KzEmyyztitWnsD",
@@ -818,7 +817,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "XTejB8X3kWb5FPOaoMhC9UHpJFN",
@@ -828,7 +827,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "0Sdntni96ET7QCHpyX2dFHnkfGP",
@@ -838,7 +837,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "FJGe0i2mGByuRGsoKEA0H9tYFbn",
@@ -848,7 +847,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "2RvzVofcStvpXiM4C8cDRkgDmvp",
@@ -858,7 +857,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "5wJOq1vf6Jb9daw8tl6qxnwCZbs",
@@ -868,7 +867,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "aH9ARp7yF1pNLbV9LxmfnA6rmsT",
@@ -878,7 +877,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "HfoJ54WUcWIrPwHKI94C9vgbjOl",
@@ -888,7 +887,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "OULDr25XVx0oKQhVN3AfLw1u1Tn",
@@ -898,7 +897,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "BNYIm3m7MUd5LZBEsL8FSsvPTB2",
@@ -908,7 +907,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "nvMZebRJ1615NhfcOeeokWRzmcH",
@@ -918,7 +917,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "vHJFzwbcqcEvpdCEeVWGJzI6Abv",
@@ -928,7 +927,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "JVqP9R5MocV3mgj7CMarQoHL3Pw",
@@ -938,7 +937,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "29ddAuacRZF9S4Ggwi4CJuUDr0b",
@@ -948,7 +947,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "tNDl2T6FAqmynLMi5bCGYZ0e3IM",
@@ -958,7 +957,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "Y0y3O9X5mahuxU6OKLqfSJ3YsZn",
@@ -968,7 +967,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "eB9ZWHEr9GadlctchHGjP21xZ9Q",
@@ -978,7 +977,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "NEStkwSkBDT4sOLhWkaQvFZTvP1",
@@ -988,7 +987,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "rmtYzLG6ez2NeMChNdNmz7fePfv",
@@ -998,7 +997,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "xapjYeQYFlU6lemUiZWcrwccXKU",
@@ -1008,7 +1007,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "Bwc4jdg5dL7ox0JQWW8V4MrIoS6",
@@ -1018,7 +1017,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "AWIgzA7SnPmGAxqXmn2SWiKETnV",
@@ -1028,7 +1027,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "HOCiqquLK07UDyuFlAPkvlBYX3a",
@@ -1038,7 +1037,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "XtYirCQHjxWXwGiVYveAqVAXZZP",
@@ -1048,7 +1047,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "3wOP1BXbUTTFob1rz6c1ddR4DWA",
@@ -1058,7 +1057,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "A7mf4c8KMqK5nZa92Vz378rrZzN",
@@ -1068,7 +1067,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "A1nvM7jxrs5ZRhTw74NObMv7THh",
@@ -1078,7 +1077,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "XdjghKnwfYayZfkaCR9OH96v0vV",
@@ -1088,7 +1087,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "i8nh2PgYLj4hH6ahJMgYqvK5Xjd",
@@ -1098,7 +1097,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "4c9iiEDmklpLhH5dxxefLHeNgsl",
@@ -1108,7 +1107,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "NZOLcOuzDqkeWXKVh2UMMtzGrWp",
@@ -1118,7 +1117,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+            "last_modified": "2019-04-08T20:02:35\u002B00:00"
           },
           {
             "etag": "AsVet5OVE19T5756FNWyagyQbpR",
@@ -1128,7 +1127,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "TsyaPzXGftIIllAZqOE0lEv8RmK",
@@ -1138,7 +1137,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "TkdMb5UGORinQ2hhJHvjcPS7dLe",
@@ -1148,27 +1147,26 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           }
         ],
-        "@nextLink": "\u002fkv\u002f?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D"
+        "@nextLink": "/kv/?key=*\u0026label=*\u0026api-version=1.0\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D"
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002f?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D\u0026api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application\u002fvnd.microsoft.appconfig.kv\u002bjson",
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Request-Id": "|e844dc3b-43d9842b852579ab.",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTE=",
+        "Date": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDc=",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
         ],
         "x-ms-client-request-id": "da388f8719a6e73abbda5f29f8abea72",
-        "x-ms-content-sha256": "47DEQpj8HBSa\u002b\u002fTImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1180,15 +1178,15 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
-        "Content-Type": "application\u002fvnd.microsoft.appconfig.kvset\u002bjson; charset=utf-8",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Server": "nginx\u002f1.13.12",
+        "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002Bjson; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTE=;sn=444451",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDc=;sn=538707",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "da388f8719a6e73abbda5f29f8abea72",
-        "x-ms-correlation-request-id": "39248eb8-219e-4da1-bf06-00b825c25494",
-        "x-ms-request-id": "39248eb8-219e-4da1-bf06-00b825c25494"
+        "x-ms-correlation-request-id": "b94e21ee-5af8-45d2-88cd-24e7b2622083",
+        "x-ms-request-id": "b94e21ee-5af8-45d2-88cd-24e7b2622083"
       },
       "ResponseBody": {
         "items": [
@@ -1200,7 +1198,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "nfeiBYI6FJyUnx0Q42mdwNLgEY3",
@@ -1210,7 +1208,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "g4XWdXRlmR3Ws8VuRmgKy7h3h7y",
@@ -1220,7 +1218,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "BOFmxxvW9hWyQyMpuXdFykZYX44",
@@ -1230,7 +1228,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "GRUcn4c4UCQ4RPycFdtJpFfA3X9",
@@ -1240,7 +1238,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "jIrjYd60GFJDKJyBy3N8InxSxSO",
@@ -1250,7 +1248,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "dppuVb7okkoOBSaLjUyG0tC2VUD",
@@ -1260,7 +1258,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "yRujpaAOB1HtoUTHPnORna4xZSh",
@@ -1270,7 +1268,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "KnSSOymn6mfbXz78KOgR8mpt5tc",
@@ -1280,7 +1278,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "8gq60Y4wJkAsEKoWi54kMb0Tmne",
@@ -1290,7 +1288,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "hgQOLS8KmSmzLrgbskMrbbh5d1A",
@@ -1300,7 +1298,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "7XNxR9O2y8z8BvrsAkyheDsdgtG",
@@ -1310,7 +1308,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "rjgRl2LbJJ2egBBcdrWzCTVjJ9O",
@@ -1320,7 +1318,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "D5S8gG0unOiK9Fe1YnmjxQ3jbrH",
@@ -1330,7 +1328,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "0zuolQDEkzzXiVVvCrcTMNBc0ae",
@@ -1340,7 +1338,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "sR6Ozip69m9ZxmEpTBKeCpjLxTs",
@@ -1350,7 +1348,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "xChrqKgc2CCRmVTrrYV0smUZg0d",
@@ -1360,7 +1358,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "7JXheigBkgac1XVKkP4XhSSa1zH",
@@ -1370,7 +1368,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "vJD1ePxF8Oiu0qDIMCHJwhNXNJF",
@@ -1380,7 +1378,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "WLlRh5l1lPLmgJdSi1bCRd0YhMt",
@@ -1390,7 +1388,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "lgUe0ATlH4p4sUarlzyur9Nkrx0",
@@ -1400,7 +1398,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "jUsSTsoqlivOsXJvdl3196Y6qJ1",
@@ -1410,7 +1408,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+            "last_modified": "2019-04-08T20:02:33\u002B00:00"
           },
           {
             "etag": "pbeqUMMoXmamUV9n1AgLZnAt2bi",
@@ -1420,7 +1418,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "qSvR3IzYEUumPUH1IXnghI4ex7n",
@@ -1430,7 +1428,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "HrKByuB53G5HnxP87Lz8N4fq8e9",
@@ -1440,7 +1438,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "7NDv5NCTZZ3ECnOsp6J256PZsT9",
@@ -1450,7 +1448,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "dzevUSzenyL6YjorFcRSBAgBTez",
@@ -1460,7 +1458,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "73lCVRiJYEHZwNIBlrvUxljVzM1",
@@ -1470,7 +1468,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "SRPmlnuw9FwBlpJjtkAIGqLDCmE",
@@ -1480,7 +1478,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+            "last_modified": "2019-04-08T20:02:36\u002B00:00"
           },
           {
             "etag": "9BNihRAF6y6kq0B5kcC5dNU7y6A",
@@ -1490,7 +1488,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "AdoLCdCDYOf3Sz85y2B96XfUfXZ",
@@ -1500,7 +1498,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "ZdPxJTOtU9w782rnFZZNBjG0kyn",
@@ -1510,7 +1508,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+            "last_modified": "2019-04-08T20:02:37\u002B00:00"
           },
           {
             "etag": "k6X8vEXuZ4SNBU3cAzjDdcmGoCb",
@@ -1520,7 +1518,7 @@
             "value": "test_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+            "last_modified": "2019-04-10T23:18:12\u002B00:00"
           },
           {
             "etag": "V7KfUIanaxfhJpRKMYDi8hLnYne",
@@ -1533,7 +1531,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+            "last_modified": "2019-04-10T23:18:13\u002B00:00"
           },
           {
             "etag": "VRUB0LOThPyn5vTm95EUtIi0KUs",
@@ -1546,7 +1544,7 @@
               "tag2": "value2"
             },
             "locked": false,
-            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+            "last_modified": "2019-04-10T23:26:25\u002B00:00"
           },
           {
             "etag": "hVBFMWYZEPzw2YjCUOoDiEearLp",
@@ -1556,7 +1554,7 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+            "last_modified": "2019-04-10T23:18:12\u002B00:00"
           },
           {
             "etag": "xRncVWEnGCOgj3BcgbND0N4zq9M",
@@ -1566,7 +1564,7 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+            "last_modified": "2019-04-10T23:18:12\u002B00:00"
           },
           {
             "etag": "XhFpq03V1daNxUwYwoUKnexJH1V",
@@ -1576,7 +1574,7 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+            "last_modified": "2019-04-10T23:26:24\u002B00:00"
           },
           {
             "etag": "tWVtoES6JPJO477cIwslytSIaI9",
@@ -1586,25 +1584,25 @@
             "value": "my_value",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+            "last_modified": "2019-04-10T23:26:24\u002B00:00"
           }
         ]
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002fkey-1301486225?label=test_label",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-1301486225?label=test_label\u0026api-version=1.0",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Request-Id": "|e844dc3c-43d9842b852579ab.",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTE=",
+        "Date": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDc=",
+        "traceparent": "00-bd351bf10efd30488f6565a9836d9ead-930920b60f12f948-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
         ],
         "x-ms-client-request-id": "bb7aad96b4534b2e54d5823a1ba11fc2",
-        "x-ms-content-sha256": "47DEQpj8HBSa\u002b\u002fTImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1616,20 +1614,20 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
-        "Content-Type": "application\u002fvnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
-        "Date": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "ETag": "\u0022DELSAe6Xr5RXZDwkMAsAeeexIsJ\u0022",
-        "Last-Modified": "Wed, 21 Aug 2019 19:40:00 GMT",
-        "Server": "nginx\u002f1.13.12",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "ETag": "\u0022f0Y8fclWXSyMikdBTEd7JW7AJzM\u0022",
+        "Last-Modified": "Wed, 18 Sep 2019 21:33:04 GMT",
+        "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM0NDQ0NTI=;sn=444452",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg3MDg=;sn=538708",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "bb7aad96b4534b2e54d5823a1ba11fc2",
-        "x-ms-correlation-request-id": "7bb9c4ee-caeb-4ed3-adfc-b2c5c2aa304d",
-        "x-ms-request-id": "7bb9c4ee-caeb-4ed3-adfc-b2c5c2aa304d"
+        "x-ms-correlation-request-id": "22a544bc-3aa6-4c44-9924-f8d8b7008901",
+        "x-ms-request-id": "22a544bc-3aa6-4c44-9924-f8d8b7008901"
       },
       "ResponseBody": {
-        "etag": "DELSAe6Xr5RXZDwkMAsAeeexIsJ",
+        "etag": "f0Y8fclWXSyMikdBTEd7JW7AJzM",
         "key": "key-1301486225",
         "label": "test_label",
         "content_type": "test_content_type",
@@ -1639,12 +1637,12 @@
           "tag2": "value2"
         },
         "locked": false,
-        "last_modified": "2019-08-21T19:40:00\u002b00:00"
+        "last_modified": "2019-09-18T21:33:04\u002B00:00"
       }
     }
   ],
   "Variables": {
-    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https:\u002f\u002fpakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
+    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002BFOYz;Secret=;",
     "RandomSeed": "1340716751"
   }
 }

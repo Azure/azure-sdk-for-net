@@ -29,9 +29,9 @@ namespace Azure.Data.AppConfiguration
         private const string IfMatchName = "If-Match";
         private const string IfNoneMatch = "If-None-Match";
 
-        private static readonly char[] ReservedCharacters = new char[] { ',', '\\' };
+        private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
-        private static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
+        private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
             "application/vnd.microsoft.appconfig.kv+json"
         );
@@ -120,7 +120,7 @@ namespace Azure.Data.AppConfiguration
             string resp = string.Empty;
             for (int i = 0; i < input.Length; i++)
             {
-                if (ReservedCharacters.Contains(input[i]))
+                if (s_reservedCharacters.Contains(input[i]))
                 {
                     resp += $"\\{input[i]}";
                 }
@@ -139,7 +139,7 @@ namespace Azure.Data.AppConfiguration
                 var keysCopy = new List<string>();
                 foreach (var key in selector.Keys)
                 {
-                    if (key.IndexOfAny(ReservedCharacters) != -1)
+                    if (key.IndexOfAny(s_reservedCharacters) != -1)
                     {
                         keysCopy.Add(EscapeReservedCharacters(key));
                     }

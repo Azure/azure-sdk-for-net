@@ -13,8 +13,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,46 +22,34 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
     public static partial class AcquisitionsOperationsExtensions
     {
             /// <summary>
-            /// Returns a list of BLOB acquistions.
+            /// Returns a list of BLOB acquisitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
-            /// </param>
-            /// <param name='filter'>
-            /// Filter string
-            /// </param>
-            public static IList<Acquisition> List(this IAcquisitionsOperations operations, string resourceGroupName, string farmId, string filter = default(string))
+            public static AcquisitionList List(this IAcquisitionsOperations operations, string location)
             {
-                return operations.ListAsync(resourceGroupName, farmId, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of BLOB acquistions.
+            /// Returns a list of BLOB acquisitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
-            /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
-            /// </param>
-            /// <param name='filter'>
-            /// Filter string
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Acquisition>> ListAsync(this IAcquisitionsOperations operations, string resourceGroupName, string farmId, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AcquisitionList> ListAsync(this IAcquisitionsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, farmId, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

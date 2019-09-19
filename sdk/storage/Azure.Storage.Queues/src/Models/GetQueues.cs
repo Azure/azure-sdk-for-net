@@ -34,7 +34,7 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         /// <returns>A <see cref="ListQueuesIncludeType"/> value.</returns>
         internal IEnumerable<ListQueuesIncludeType> AsIncludeTypes() =>
-            this.IncludeMetadata ?
+            IncludeMetadata ?
                 new ListQueuesIncludeType[] { ListQueuesIncludeType.Metadata } :
                 Array.Empty<ListQueuesIncludeType>();
 
@@ -45,7 +45,7 @@ namespace Azure.Storage.Queues.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetQueuesOptions other && this.Equals(other);
+            obj is GetQueuesOptions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="GetQueuesOptions"/>.
@@ -53,8 +53,8 @@ namespace Azure.Storage.Queues.Models
         /// <returns>Hash code for the <see cref="GetQueuesOptions"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            this.IncludeMetadata.GetHashCode() ^
-            (this.Prefix?.GetHashCode() ?? 0);
+            IncludeMetadata.GetHashCode() ^
+            (Prefix?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two <see cref="GetQueuesOptions"/> instances are equal.
@@ -80,8 +80,8 @@ namespace Azure.Storage.Queues.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetQueuesOptions other) =>
-            this.IncludeMetadata == other.IncludeMetadata &&
-            this.Prefix == other.Prefix;
+            IncludeMetadata == other.IncludeMetadata &&
+            Prefix == other.Prefix;
     }
 
     internal class GetQueuesAsyncCollection : StorageAsyncCollection<QueueItem>
@@ -95,8 +95,8 @@ namespace Azure.Storage.Queues.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._options = options;
+            _client = client;
+            _options = options;
         }
 
         protected override async Task<Page<QueueItem>> GetNextPageAsync(
@@ -105,13 +105,13 @@ namespace Azure.Storage.Queues.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetQueuesInternal(
+            Task<Response<QueuesSegment>> task = _client.GetQueuesInternal(
                 continuationToken,
-                this._options,
+                _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<QueuesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 

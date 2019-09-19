@@ -30,7 +30,7 @@ namespace Azure.Storage.Common
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is ParallelTransferOptions other
-            && this.Equals(other)
+            && Equals(other)
             ;
 
         /// <summary>
@@ -39,8 +39,8 @@ namespace Azure.Storage.Common
         /// <returns>Hash code for the ParallelTransferOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => this.MaximumTransferLength.GetHashCode()
-            ^ this.MaximumThreadCount.GetHashCode()
+            => MaximumTransferLength.GetHashCode()
+            ^ MaximumThreadCount.GetHashCode()
             ;
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace Azure.Storage.Common
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(ParallelTransferOptions obj)
-            => this.MaximumTransferLength == obj.MaximumTransferLength
-            && this.MaximumThreadCount == obj.MaximumThreadCount
+            => MaximumTransferLength == obj.MaximumTransferLength
+            && MaximumThreadCount == obj.MaximumThreadCount
             ;
     }
 }

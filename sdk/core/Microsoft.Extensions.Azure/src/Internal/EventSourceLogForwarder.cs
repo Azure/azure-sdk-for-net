@@ -6,61 +6,37 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Globalization;
-using System.Text;
+using Azure.Core.Diagnostics;
+using Azure.Core.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Extensions.Azure
 {
-    internal class EventSourceLogForwarder: EventListener
+    internal class EventSourceLogForwarder: IDisposable
     {
-        private readonly Func<EventSource, bool> _filter;
-
         private readonly ILoggerFactory _loggerFactory;
 
         private readonly ConcurrentDictionary<string, ILogger> _loggers = new ConcurrentDictionary<string, ILogger>();
 
-        private readonly List<EventSource> _eventSources = new List<EventSource>();
-
         private readonly Func<EventSourceEvent, Exception, string> _formatMessage = FormatMessage;
+
+        private readonly AzureEventSourceListener _listener;
 
         public EventSourceLogForwarder(ILoggerFactory loggerFactory = null)
         {
-            _filter = eventSource => eventSource.Name == "AzureSDK";
             _loggerFactory = loggerFactory;
-
-            foreach (var eventSource in _eventSources)
-            {
-                OnEventSourceCreated(eventSource);
-            }
-
-            _eventSources.Clear();
+            _listener = new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
         }
 
-        protected override void OnEventSourceCreated(EventSource eventSource)
+        private void LogEvent(EventWrittenEventArgs eventData)
         {
-            base.OnEventSourceCreated(eventSource);
-
-            if (_filter == null)
-            {
-                _eventSources.Add(eventSource);
-            }
-            else if (_filter(eventSource) && _loggerFactory != null)
-            {
-                var logger = _loggerFactory.CreateLogger(eventSource.Name);
-                _loggers[eventSource.Name] = logger;
-                EnableEvents(eventSource, EventLevel.Verbose);
-            }
-        }
-
-        protected override void OnEventWritten(EventWrittenEventArgs eventData)
-        {
-            if (!_loggers.TryGetValue(eventData.EventSource.Name, out ILogger logger))
-            {
-                return;
-            }
-
+            var logger = _loggers.GetOrAdd(eventData.EventSource.Name, name => _loggerFactory.CreateLogger(name));
             logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
+        }
+
+        public void Dispose()
+        {
+            _listener.Dispose();
         }
 
         private static LogLevel MapLevel(EventLevel level)
@@ -84,22 +60,7 @@ namespace Microsoft.Extensions.Azure
 
         private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception exception)
         {
-            var eventData = eventSourceEvent.EventData;
-            if (eventData.Message != null)
-            {
-                return string.Format(CultureInfo.InvariantCulture, eventData.Message, eventData.Payload);
-            }
-
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append(eventData.EventName).Append(" ");
-
-            foreach (var pair in eventSourceEvent)
-            {
-                stringBuilder.AppendLine();
-                stringBuilder.Append(pair.Key).Append(" = ").Append(pair.Value);
-            }
-
-            return stringBuilder.ToString();
+            return EventSourceEventFormatting.Format(eventSourceEvent.EventData);
         }
 
         private struct EventSourceEvent: IReadOnlyList<KeyValuePair<string, object>>

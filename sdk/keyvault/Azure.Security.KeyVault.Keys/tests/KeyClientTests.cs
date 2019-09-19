@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientTests: ClientTestBase
+    public class KeyClientTests : ClientTestBase
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
@@ -21,9 +21,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void CreateKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(null, KeyType.EllipticCurve));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync("name", default));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("", KeyType.EllipticCurve));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync(null, KeyType.Ec));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("name", default));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(string.Empty, KeyType.Ec));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateEcKeyAsync(null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateRsaKeyAsync(null));
         }
@@ -31,13 +31,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void UpdateKeyArgumentValidation()
         {
-            var keyOperations = new List<KeyOperations>() { KeyOperations.Sign };
+            var keyOperations = new List<KeyOperation>() { KeyOperation.Sign };
             var key = new KeyBase("name");
 
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, keyOperations));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, keyOperations));
         }
 
         [Test]
@@ -49,43 +48,43 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void PurgeDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedKeyAsync(string.Empty));
         }
 
         [Test]
         public void GetKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.GetKeyAsync(string.Empty));
         }
 
         [Test]
         public void DeleteKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(string.Empty));
         }
 
         [Test]
         public void GetDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedKeyAsync(string.Empty));
         }
 
         [Test]
         public void RecoverDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecoverDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(string.Empty));
         }
 
         [Test]
         public void BackupKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.BackupKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupKeyAsync(string.Empty));
         }
 
         [Test]
@@ -93,16 +92,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var keyMaterial = new JsonWebKey();
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync("", keyMaterial));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(null, keyMaterial));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(null, null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(string.Empty, keyMaterial));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, keyMaterial));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, null));
         }
 
         [Test]
         public void GetKeyVersionsArgumentValidation()
         {
-            Assert.Throws<ArgumentException>(() => Client.GetKeyVersionsAsync(null));
-            Assert.Throws<ArgumentException>(() => Client.GetKeyVersionsAsync(""));
+            Assert.Throws<ArgumentNullException>(() => Client.GetKeyVersionsAsync(null));
+            Assert.Throws<ArgumentException>(() => Client.GetKeyVersionsAsync(string.Empty));
         }
     }
 }

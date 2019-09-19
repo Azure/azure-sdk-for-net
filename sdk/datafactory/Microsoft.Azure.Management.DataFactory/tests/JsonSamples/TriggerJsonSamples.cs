@@ -9,6 +9,35 @@ namespace DataFactory.Tests.JsonSamples
     public class TriggerJsonSamples : JsonSampleCollection<TriggerJsonSamples>
     {
         [JsonSample]
+        public const string ChainingTriggerSample = @"
+    {
+        ""name"": ""chainingTrigger"",
+        ""properties"": {
+            ""type"": ""ChainingTrigger"",
+            ""pipeline"": {
+              ""pipelineReference"": {
+                ""referenceName"": ""childPipeline"",
+                ""type"": ""PipelineReference""
+              },
+              ""parameters"": {}
+            },
+            ""typeProperties"": {
+              ""dependsOn"": [
+                {
+                  ""referenceName"": ""parentPipeline1"",
+                  ""type"": ""PipelineReference""
+                },
+                {
+                  ""referenceName"": ""parentPipeline2"",
+                  ""type"": ""PipelineReference""
+                }
+              ],
+              ""runDimension"": ""JobId""
+            }
+        }
+    }";
+
+        [JsonSample]
         public const string BlobTriggerSample = @"
 {
   name: ""myDemoTrigger"",

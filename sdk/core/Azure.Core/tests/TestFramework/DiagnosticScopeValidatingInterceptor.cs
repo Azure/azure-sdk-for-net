@@ -18,8 +18,10 @@ namespace Azure.Core.Testing
             if (methodName.EndsWith("Async"))
             {
                 var expectedEventPrefix = invocation.Method.DeclaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
-                var expectedEvents = new List<string>();
-                expectedEvents.Add(expectedEventPrefix + ".Start");
+                var expectedEvents = new List<string>
+                {
+                    expectedEventPrefix + ".Start"
+                };
 
                 using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
                 invocation.Proceed();

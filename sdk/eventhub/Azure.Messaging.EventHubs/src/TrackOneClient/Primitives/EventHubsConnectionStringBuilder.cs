@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Text;
+using TrackOne.Primitives;
+
 namespace TrackOne
 {
-    using System;
-    using System.Text;
-    using TrackOne.Primitives;
-
     /// <summary>
     ///  Supported transport types
     /// </summary>
@@ -47,17 +47,16 @@ namespace TrackOne
     /// </example>
     internal class EventHubsConnectionStringBuilder
     {
-        const char KeyValueSeparator = '=';
-        const char KeyValuePairDelimiter = ';';
-
-        static readonly string EndpointScheme = "amqps";
-        static readonly string EndpointConfigName = "Endpoint";
-        static readonly string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
-        static readonly string SharedAccessKeyConfigName = "SharedAccessKey";
-        static readonly string EntityPathConfigName = "EntityPath";
-        static readonly string OperationTimeoutConfigName = "OperationTimeout";
-        static readonly string TransportTypeConfigName = "TransportType";
-        static readonly string SharedAccessSignatureConfigName = "SharedAccessSignature";
+        private const char KeyValueSeparator = '=';
+        private const char KeyValuePairDelimiter = ';';
+        private static readonly string s_endpointScheme = "amqps";
+        private static readonly string s_endpointConfigName = "Endpoint";
+        private static readonly string s_sharedAccessKeyNameConfigName = "SharedAccessKeyName";
+        private static readonly string s_sharedAccessKeyConfigName = "SharedAccessKey";
+        private static readonly string s_entityPathConfigName = "EntityPath";
+        private static readonly string s_operationTimeoutConfigName = "OperationTimeout";
+        private static readonly string s_transportTypeConfigName = "TransportType";
+        private static readonly string s_sharedAccessSignatureConfigName = "SharedAccessSignature";
 
         /// <summary>
         /// Build a connection string consumable by <see cref="EventHubClient.CreateFromConnectionString(string)"/>
@@ -94,8 +93,8 @@ namespace TrackOne
             Guard.ArgumentNotNullOrWhiteSpace(nameof(sharedAccessKey), sharedAccessKey);
             Guard.ArgumentNotNullOrWhiteSpace(nameof(sharedAccessKeyName), sharedAccessKeyName);
 
-            this.SasKey = sharedAccessKey;
-            this.SasKeyName = sharedAccessKeyName;
+            SasKey = sharedAccessKey;
+            SasKeyName = sharedAccessKeyName;
         }
 
         /// <summary>
@@ -114,7 +113,7 @@ namespace TrackOne
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(sharedAccessSignature), sharedAccessSignature);
 
-            this.SharedAccessSignature = sharedAccessSignature;
+            SharedAccessSignature = sharedAccessSignature;
         }
 
         /// <summary>
@@ -127,11 +126,11 @@ namespace TrackOne
             Guard.ArgumentNotNullOrWhiteSpace(nameof(connectionString), connectionString);
 
             // Assign default values.
-            this.OperationTimeout = ClientConstants.DefaultOperationTimeout;
-            this.TransportType = TransportType.Amqp;
+            OperationTimeout = ClientConstants.DefaultOperationTimeout;
+            TransportType = TransportType.Amqp;
 
             // Parse the connection string now and override default values if any provided.
-            this.ParseConnectionString(connectionString);
+            ParseConnectionString(connectionString);
         }
 
         internal EventHubsConnectionStringBuilder(
@@ -146,13 +145,13 @@ namespace TrackOne
             // Replace the scheme. We cannot really make sure that user passed an amps:// scheme to us.
             var uriBuilder = new UriBuilder(endpointAddress.AbsoluteUri)
             {
-                Scheme = EndpointScheme
+                Scheme = s_endpointScheme
             };
-            this.Endpoint = uriBuilder.Uri;
+            Endpoint = uriBuilder.Uri;
 
-            this.EntityPath = entityPath;
-            this.OperationTimeout = operationTimeout;
-            this.TransportType = transportType;
+            EntityPath = entityPath;
+            OperationTimeout = operationTimeout;
+            TransportType = transportType;
         }
 
         /// <summary>
@@ -200,8 +199,10 @@ namespace TrackOne
         /// <returns>A new <see cref="EventHubsConnectionStringBuilder"/></returns>
         public EventHubsConnectionStringBuilder Clone()
         {
-            var clone = new EventHubsConnectionStringBuilder(this.ToString());
-            clone.OperationTimeout = this.OperationTimeout;
+            var clone = new EventHubsConnectionStringBuilder(ToString())
+            {
+                OperationTimeout = OperationTimeout
+            };
             return clone;
         }
 
@@ -211,85 +212,85 @@ namespace TrackOne
         /// <returns>the connection string</returns>
         public override string ToString()
         {
-            this.Validate();
+            Validate();
             var connectionStringBuilder = new StringBuilder();
-            if (this.Endpoint != null)
+            if (Endpoint != null)
             {
-                connectionStringBuilder.Append($"{EndpointConfigName}{KeyValueSeparator}{this.Endpoint}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_endpointConfigName}{KeyValueSeparator}{Endpoint}{KeyValuePairDelimiter}");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.EntityPath))
+            if (!string.IsNullOrWhiteSpace(EntityPath))
             {
-                connectionStringBuilder.Append($"{EntityPathConfigName}{KeyValueSeparator}{this.EntityPath}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_entityPathConfigName}{KeyValueSeparator}{EntityPath}{KeyValuePairDelimiter}");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.SasKeyName))
+            if (!string.IsNullOrWhiteSpace(SasKeyName))
             {
-                connectionStringBuilder.Append($"{SharedAccessKeyNameConfigName}{KeyValueSeparator}{this.SasKeyName}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_sharedAccessKeyNameConfigName}{KeyValueSeparator}{SasKeyName}{KeyValuePairDelimiter}");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.SasKey))
+            if (!string.IsNullOrWhiteSpace(SasKey))
             {
-                connectionStringBuilder.Append($"{SharedAccessKeyConfigName}{KeyValueSeparator}{this.SasKey}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_sharedAccessKeyConfigName}{KeyValueSeparator}{SasKey}{KeyValuePairDelimiter}");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.SharedAccessSignature))
+            if (!string.IsNullOrWhiteSpace(SharedAccessSignature))
             {
-                connectionStringBuilder.Append($"{SharedAccessSignatureConfigName}{KeyValueSeparator}{this.SharedAccessSignature}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_sharedAccessSignatureConfigName}{KeyValueSeparator}{SharedAccessSignature}{KeyValuePairDelimiter}");
             }
 
-            if (this.OperationTimeout != ClientConstants.DefaultOperationTimeout)
+            if (OperationTimeout != ClientConstants.DefaultOperationTimeout)
             {
-                connectionStringBuilder.Append($"{OperationTimeoutConfigName}{KeyValueSeparator}{this.OperationTimeout}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_operationTimeoutConfigName}{KeyValueSeparator}{OperationTimeout}{KeyValuePairDelimiter}");
             }
 
-            if (this.TransportType != ClientConstants.DefaultTransportType)
+            if (TransportType != ClientConstants.DefaultTransportType)
             {
-                connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{s_transportTypeConfigName}{KeyValueSeparator}{TransportType}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString();
         }
 
-        void Validate()
+        private void Validate()
         {
-            if (this.Endpoint == null)
+            if (Endpoint == null)
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(EndpointConfigName);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(s_endpointConfigName);
             }
 
             // if one supplied sharedAccessKeyName, they need to supply sharedAccesssecret, and vise versa
             // if SharedAccessSignature is specified, SasKey or SasKeyName should not be specified
-            var hasSasKeyName = !string.IsNullOrWhiteSpace(this.SasKeyName);
-            var hasSasKey = !string.IsNullOrWhiteSpace(this.SasKey);
-            var hasSharedAccessSignature = !string.IsNullOrWhiteSpace(this.SharedAccessSignature);
+            var hasSasKeyName = !string.IsNullOrWhiteSpace(SasKeyName);
+            var hasSasKey = !string.IsNullOrWhiteSpace(SasKey);
+            var hasSharedAccessSignature = !string.IsNullOrWhiteSpace(SharedAccessSignature);
 
             if (hasSharedAccessSignature)
             {
                 if (hasSasKeyName)
                 {
                     throw Fx.Exception.Argument(
-                        string.Format("{0},{1}", SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName),
-                        Resources.SasTokenShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName));
+                        string.Format("{0},{1}", s_sharedAccessSignatureConfigName, s_sharedAccessKeyNameConfigName),
+                        Resources.SasTokenShouldBeAlone.FormatForUser(s_sharedAccessSignatureConfigName, s_sharedAccessKeyNameConfigName));
                 }
 
                 if (hasSasKey)
                 {
                     throw Fx.Exception.Argument(
-                        string.Format("{0},{1}", SharedAccessSignatureConfigName, SharedAccessKeyConfigName),
-                        Resources.SasTokenShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyConfigName));
+                        string.Format("{0},{1}", s_sharedAccessSignatureConfigName, s_sharedAccessKeyConfigName),
+                        Resources.SasTokenShouldBeAlone.FormatForUser(s_sharedAccessSignatureConfigName, s_sharedAccessKeyConfigName));
                 }
             }
 
             if (hasSasKeyName && !hasSasKey || !hasSasKeyName && hasSasKey)
             {
                 throw Fx.Exception.Argument(
-                    string.Format("{0},{1}", SharedAccessKeyNameConfigName, SharedAccessKeyConfigName),
-                    Resources.ArgumentInvalidCombination.FormatForUser(SharedAccessKeyNameConfigName, SharedAccessKeyConfigName));
+                    string.Format("{0},{1}", s_sharedAccessKeyNameConfigName, s_sharedAccessKeyConfigName),
+                    Resources.ArgumentInvalidCombination.FormatForUser(s_sharedAccessKeyNameConfigName, s_sharedAccessKeyConfigName));
             }
         }
 
-        void ParseConnectionString(string connectionString)
+        private void ParseConnectionString(string connectionString)
         {
             // First split based on ';'
             string[] keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);
@@ -304,33 +305,33 @@ namespace TrackOne
                 }
 
                 string value = keyAndValue[1];
-                if (key.Equals(EndpointConfigName, StringComparison.OrdinalIgnoreCase))
+                if (key.Equals(s_endpointConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Endpoint = new Uri(value);
+                    Endpoint = new Uri(value);
                 }
-                else if (key.Equals(EntityPathConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(s_entityPathConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.EntityPath = value;
+                    EntityPath = value;
                 }
-                else if (key.Equals(SharedAccessKeyNameConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(s_sharedAccessKeyNameConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasKeyName = value;
+                    SasKeyName = value;
                 }
-                else if (key.Equals(SharedAccessKeyConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(s_sharedAccessKeyConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasKey = value;
+                    SasKey = value;
                 }
-                else if (key.Equals(SharedAccessSignatureConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(s_sharedAccessSignatureConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SharedAccessSignature = value;
+                    SharedAccessSignature = value;
                 }
-                else if (key.Equals(OperationTimeoutConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(s_operationTimeoutConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.OperationTimeout = TimeSpan.Parse(value);
+                    OperationTimeout = TimeSpan.Parse(value);
                 }
-                else if (key.Equals(TransportTypeConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(s_transportTypeConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.TransportType = (TransportType)Enum.Parse(typeof(TransportType), value);
+                    TransportType = (TransportType)Enum.Parse(typeof(TransportType), value);
                 }
                 else
                 {

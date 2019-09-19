@@ -43,13 +43,13 @@ namespace Azure.Security.KeyVault.Keys
         {
             Name = name;
             Hsm = hsm;
-            if(hsm)
+            if (hsm)
             {
-                KeyType = KeyType.EllipticCurveHsm;
+                KeyType = KeyType.EcHsm;
             }
             else
             {
-                KeyType = KeyType.EllipticCurve;
+                KeyType = KeyType.Ec;
             }
 
             if (curveName.HasValue)

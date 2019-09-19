@@ -19,7 +19,7 @@ namespace Azure.Identity.Tests
         {
             var cred = new InteractiveBrowserCredential(ClientId);
 
-            AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }).ConfigureAwait(false);
+            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
         }
@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests
 
             var cancelSource = new CancellationTokenSource();
 
-            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token);
+            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
 
             cancelSource.Cancel();
 
@@ -41,4 +41,3 @@ namespace Azure.Identity.Tests
     }
 
 }
-

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -22,7 +23,8 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         public KeyBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             Name = name;
         }
 
@@ -106,7 +108,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="id">The key vault object identifier.</param>
         protected void ParseId(string id)
         {
-            var idToParse = new Uri(id, UriKind.Absolute); ;
+            var idToParse = new Uri(id, UriKind.Absolute);
 
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
@@ -125,7 +127,7 @@ namespace Azure.Security.KeyVault.Keys
 
         internal virtual void ReadProperties(JsonElement json)
         {
-            foreach(JsonProperty prop in json.EnumerateObject())
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
                 switch (prop.Name)
                 {
@@ -140,7 +142,7 @@ namespace Azure.Security.KeyVault.Keys
                         break;
                     case TagsPropertyName:
                         Tags = new Dictionary<string, string>();
-                        foreach (var tagProp in prop.Value.EnumerateObject())
+                        foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                         {
                             Tags[tagProp.Name] = tagProp.Value.GetString();
                         }

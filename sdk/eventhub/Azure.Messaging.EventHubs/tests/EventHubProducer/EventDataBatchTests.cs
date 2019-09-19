@@ -88,8 +88,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, new SendOptions());
 
-            batch.AsEnumerable<String>();
-            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(String)), "The enumerable should delegated the requested type parameter.");
+            batch.AsEnumerable<string>();
+            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
         }
 
         /// <summary>

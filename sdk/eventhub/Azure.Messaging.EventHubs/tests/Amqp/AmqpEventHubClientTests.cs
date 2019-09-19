@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,11 +9,9 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
-using Microsoft.Azure.Amqp.Transport;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -88,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CloseMarksTheClientAsClosed()
         {
-            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
             Assert.That(client.Closed, Is.False, "The client should not be closed on creation");
 
             await client.CloseAsync(CancellationToken.None);
@@ -103,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CloseRespectsTheCancellationToken()
         {
-            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
             var cancellationSource = new CancellationTokenSource();
 
             cancellationSource.Cancel();
@@ -118,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task DisposeClosesTheClient()
         {
-            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
             Assert.That(client.Closed, Is.False, "The client should not be closed on creation");
 
             await client.DisposeAsync();
@@ -133,8 +130,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void UpdateRetryPolicyValidatesTheRetryPolicy()
         {
-           var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
-           Assert.That(() => client.UpdateRetryPolicy(null), Throws.ArgumentNullException);
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
+            Assert.That(() => client.UpdateRetryPolicy(null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -145,13 +142,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void UpdateRetryPolicyUpdatesTheRetryPolicy()
         {
-           var newPolicy = new BasicRetryPolicy(new RetryOptions { Delay = TimeSpan.FromMilliseconds(50) });
-           var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
+            var newPolicy = new BasicRetryPolicy(new RetryOptions { Delay = TimeSpan.FromMilliseconds(50) });
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
 
-           Assert.That(GetActiveRetryPolicy(client), Is.Not.SameAs(newPolicy), "The initial policy should be a unique instance");
+            Assert.That(GetActiveRetryPolicy(client), Is.Not.SameAs(newPolicy), "The initial policy should be a unique instance");
 
-           client.UpdateRetryPolicy(newPolicy);
-           Assert.That(GetActiveRetryPolicy(client), Is.SameAs(newPolicy), "The updated policy should match");
+            client.UpdateRetryPolicy(newPolicy);
+            Assert.That(GetActiveRetryPolicy(client), Is.SameAs(newPolicy), "The updated policy should match");
         }
 
         /// <summary>
@@ -162,17 +159,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void UpdateRetryPolicyUpdatesTheOperationTimeout()
         {
-           var initialPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
-           var initialTimeout = initialPolicy.CalculateTryTimeout(0);
-           var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  initialPolicy);
+            var initialPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            TimeSpan initialTimeout = initialPolicy.CalculateTryTimeout(0);
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), initialPolicy);
 
-           Assert.That(GetTimeout(client), Is.EqualTo(initialTimeout), "The initial timeout should match");
+            Assert.That(GetTimeout(client), Is.EqualTo(initialTimeout), "The initial timeout should match");
 
-           var newPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromMilliseconds(50) });
-           var newTimeout = newPolicy.CalculateTryTimeout(0);
+            var newPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromMilliseconds(50) });
+            TimeSpan newTimeout = newPolicy.CalculateTryTimeout(0);
 
-           client.UpdateRetryPolicy(newPolicy);
-           Assert.That(GetTimeout(client), Is.EqualTo(newTimeout), "The updated timeout should match");
+            client.UpdateRetryPolicy(newPolicy);
+            Assert.That(GetTimeout(client), Is.EqualTo(newTimeout), "The updated timeout should match");
         }
 
         /// <summary>
@@ -183,11 +180,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetPropertiesAsyncRespectsTheCancellationTokenIfSetWhenCalled()
         {
-           var cancellationSource = new CancellationTokenSource();
-           cancellationSource.Cancel();
+            var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
 
-           var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
-           Assert.That(async () => await client.GetPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
+            Assert.That(async () => await client.GetPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -205,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
@@ -236,8 +233,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void GetPartitionPropertiesAsyncValidatesThePartition(string partition)
         {
-           var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
-           Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, CancellationToken.None), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = partition is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, CancellationToken.None), typeConstraint);
         }
 
         /// <summary>
@@ -248,11 +247,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetPartitionPropertiesAsyncRespectsTheCancellationTokenIfSetWhenCalled()
         {
-           var cancellationSource = new CancellationTokenSource();
-           cancellationSource.Cancel();
+            var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
 
-           var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
-           Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -271,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
@@ -326,7 +325,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                         EventHubClientOptions clientOptions,
                                         EventHubRetryPolicy defaultRetryPolicy,
                                         AmqpConnectionScope connectionScope,
-                                        AmqpMessageConverter messageConverter) : base (host, eventHubName, credential, clientOptions, defaultRetryPolicy, connectionScope, messageConverter)
+                                        AmqpMessageConverter messageConverter) : base(host, eventHubName, credential, clientOptions, defaultRetryPolicy, connectionScope, messageConverter)
             {
             }
         }

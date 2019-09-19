@@ -55,18 +55,12 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal string GetVersionString()
         {
-            string version = string.Empty;
-
-            switch (Version)
+            var version = Version switch
             {
-                case ServiceVersion.V7_0:
-                    version = "7.0";
-                    break;
+                ServiceVersion.V7_0 => "7.0",
 
-                default:
-                    throw new ArgumentException(Version.ToString());
-            }
-
+                _ => throw new ArgumentException(Version.ToString()),
+            };
             return version;
         }
     }

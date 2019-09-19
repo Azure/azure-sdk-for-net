@@ -49,11 +49,11 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
-            if (this.Add) { sb.Append(Constants.Sas.Permissions.Add); }
-            if (this.Create) { sb.Append(Constants.Sas.Permissions.Create); }
-            if (this.Write) { sb.Append(Constants.Sas.Permissions.Write); }
-            if (this.Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
+            if (Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (Add) { sb.Append(Constants.Sas.Permissions.Add); }
+            if (Create) { sb.Append(Constants.Sas.Permissions.Create); }
+            if (Write) { sb.Append(Constants.Sas.Permissions.Write); }
+            if (Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
             return sb.ToString();
         }
 
@@ -70,12 +70,23 @@ namespace Azure.Storage.Sas
             {
                 switch (c)
                 {
-                    case Constants.Sas.Permissions.Read: p.Read = true; break;
-                    case Constants.Sas.Permissions.Add: p.Add = true; break;
-                    case Constants.Sas.Permissions.Create: p.Create = true; break;
-                    case Constants.Sas.Permissions.Write: p.Write = true; break;
-                    case Constants.Sas.Permissions.Delete: p.Delete = true; break;
-                    default: throw Errors.InvalidPermission(c);
+                    case Constants.Sas.Permissions.Read:
+                        p.Read = true;
+                        break;
+                    case Constants.Sas.Permissions.Add:
+                        p.Add = true;
+                        break;
+                    case Constants.Sas.Permissions.Create:
+                        p.Create = true;
+                        break;
+                    case Constants.Sas.Permissions.Write:
+                        p.Write = true;
+                        break;
+                    case Constants.Sas.Permissions.Delete:
+                        p.Delete = true;
+                        break;
+                    default:
+                        throw Errors.InvalidPermission(c);
                 }
             }
             return p;
@@ -88,7 +99,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is BlobSasPermissions other && this.Equals(other);
+            => obj is BlobSasPermissions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the BlobSasPermissions.
@@ -96,11 +107,11 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the BlobSasPermissions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => (this.Read   ? 0b00001 : 0)
-             + (this.Add    ? 0b00010 : 0)
-             + (this.Create ? 0b00100 : 0)
-             + (this.Write  ? 0b01000 : 0)
-             + (this.Delete ? 0b10000 : 0)
+            => (Read ? 0b00001 : 0)
+             + (Add ? 0b00010 : 0)
+             + (Create ? 0b00100 : 0)
+             + (Write ? 0b01000 : 0)
+             + (Delete ? 0b10000 : 0)
             ;
 
         /// <summary>
@@ -125,11 +136,11 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobSasPermissions other)
-            => this.Read == other.Read
-            && this.Add == other.Add
-            && this.Create == other.Create
-            && this.Write == other.Write
-            && this.Delete == other.Delete
+            => Read == other.Read
+            && Add == other.Add
+            && Create == other.Create
+            && Write == other.Write
+            && Delete == other.Delete
             ;
     }
 }

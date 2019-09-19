@@ -85,6 +85,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Samples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Samples.Tests", "Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Cryptography", "Azure.Storage.Blobs.Cryptography\src\Azure.Storage.Blobs.Cryptography.csproj", "{4384B232-1222-44C7-9946-C23FE94DF6A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{9B235463-7D89-471E-87CA-A392661255E4}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Blobs.Cryptography\BreakingChanges.txt = Azure.Storage.Blobs.Cryptography\BreakingChanges.txt
+		Azure.Storage.Blobs.Cryptography\Changelog.txt = Azure.Storage.Blobs.Cryptography\Changelog.txt
+		Azure.Storage.Blobs.Cryptography\README.md = Azure.Storage.Blobs.Cryptography\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Cryptography", "Azure.Storage.Queues.Cryptography\src\Azure.Storage.Queues.Cryptography.csproj", "{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{9260EB26-0D9A-4D71-B588-7106999C745B}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Queues.Cryptography\BreakingChanges.txt = Azure.Storage.Queues.Cryptography\BreakingChanges.txt
+		Azure.Storage.Queues.Cryptography\Changelog.txt = Azure.Storage.Queues.Cryptography\Changelog.txt
+		Azure.Storage.Queues.Cryptography\README.md = Azure.Storage.Queues.Cryptography\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +165,14 @@ Global
 		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +181,8 @@ Global
 		{69A8687B-B040-451E-A72E-295C6CFC1B8B} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
 		{AD85524A-FB82-475C-9907-27DBC2BE2945} = {9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}
 		{6EEF892F-E4EE-4610-9C94-4B206D9E7152} = {F4218B06-A246-4762-984D-5BC852B62889}
+		{9B235463-7D89-471E-87CA-A392661255E4} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
+		{9260EB26-0D9A-4D71-B588-7106999C745B} = {F4218B06-A246-4762-984D-5BC852B62889}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F236F49-3FED-4E35-AF93-48BA7EB0D42A}
