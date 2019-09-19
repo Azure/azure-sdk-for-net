@@ -1,19 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
-<!--<<LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>-->
-
 <!--<LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>-->
-    
-    <!--<LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>-->
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{205A62E4-93BC-414C-8344-2E7A46E1252A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Azure.CognitiveServices.InkRecognizer.WPF.Stroke</RootNamespace>
     <AssemblyName>Azure.CognitiveServices.InkRecognizer.WPF.Stroke</AssemblyName>
-    <!--<UseWPF>true</UseWPF>-->
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <!--<TargetFrameworkVersion>netcoreapp3.0</TargetFrameworkVersion>-->
+    <UseWPF>true</UseWPF>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>   
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -45,26 +40,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.0.0-preview.6" />
+    <PackageReference Update="Azure.Core" Version="1.0.0-preview.8" />
+  <!--<PackageReference Include="Azure.Core" Version="1.0.0-preview.8" targetFramework="net461" />-->
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
-    <PackageReference Include="Azure.Core" version="1.0.0-preview.6" targetFramework="net461" />
+    <!--<PackageReference Include="Azure.Core" version="1.0.0-preview.6" targetFramework="net461" />-->
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" version="1.0.0-preview6.19259.10" targetFramework="net461" />
     <PackageReference Include="System.Buffers" version="4.5.0" targetFramework="net461" />
     <PackageReference Include="System.Memory" version="4.5.2" targetFramework="net461" />
     <PackageReference Include="System.Numerics.Vectors" version="4.5.0" targetFramework="net461" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" version="4.5.2" targetFramework="net461" />
     <PackageReference Include="System.Threading.Tasks.Extensions" version="4.5.2" targetFramework="net461" />
+    
+    <PackageReference Include="Azure.ClientSdk.Analyzers" version="0.1.1-dev.20190716.1" targetFramework="net461" />
 
-    <!--<PackageReference Include="Azure.Core"/>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />    
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Buffers" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Numerics.Vectors" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe"  />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />-->
-    
-    
+ <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
+    <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview7.19362.9" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
+    <PackageReference Update="System.Threading.Channels" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />
+   <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />   
+   <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
+<PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" />
+<PackageReference Update="StyleCop.Analyzers" Version="1.1.118" /> 
+
+
+
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -82,18 +86,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <!--<ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="StrokeStore.cs" />
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>-->
-    <!--<Compile Update="MainWindow.xaml.cs" DependentUpon="MainWindow.xaml" />-->
-    <!--<Page Include="MainWindow.xaml" SubType="Designer" Generator="MSBuild:Compile" />
-    <Compile Update="MainWindow.xaml.cs" DependentUpon="MainWindow.xaml" />-->
     <Resource Include="Images\*.png" />
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -103,12 +95,6 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <!--<Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>-->
-    <!--<Compile Include="$(IntermediateOutputPath)*.g.cs" />-->
-    <!--<Compile Include="$(IntermediateOutputPath)**\*.g.cs" Visible="false" />
-    <None Include="$(BaseIntermediateOutputPath)" Visible="false" />-->
     <Compile Include="StrokeStore.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
