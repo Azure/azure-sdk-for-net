@@ -12,14 +12,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
 
     /// <summary>
-    /// Defines values for AcquisitionStatus.
+    /// Defines values for EncryptionKeySource.
     /// </summary>
-    public static class AcquisitionStatus
+    public static class EncryptionKeySource
     {
-        public const string Unknown = "Unknown";
-        public const string NotAcquired = "NotAcquired";
-        public const string Pending = "Pending";
-        public const string Success = "Success";
-        public const string Failed = "Failed";
+        public const string MicrosoftStorage = "Microsoft.Storage";
     }
 }

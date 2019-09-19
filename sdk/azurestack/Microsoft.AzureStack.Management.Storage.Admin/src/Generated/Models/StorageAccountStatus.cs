@@ -18,7 +18,5 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
     {
         public const string Active = "Active";
         public const string Deleted = "Deleted";
-        public const string OutOfRetentionPeriod = "OutOfRetentionPeriod";
-        public const string Recycled = "Recycled";
     }
 }

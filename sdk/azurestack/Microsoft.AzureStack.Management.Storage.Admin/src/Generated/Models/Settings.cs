@@ -16,34 +16,33 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage quota.
+    /// Storage resource provider settings
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageQuota : Resource
+    public partial class Settings : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the StorageQuota class.
+        /// Initializes a new instance of the Settings class.
         /// </summary>
-        public StorageQuota()
+        public Settings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageQuota class.
+        /// Initializes a new instance of the Settings class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="type">Resource Type.</param>
         /// <param name="location">Resource Location.</param>
-        /// <param name="numberOfStorageAccounts">Total number of storage
-        /// accounts.</param>
-        /// <param name="capacityInGb">Maximum capacity (GB).</param>
-        public StorageQuota(string id = default(string), string name = default(string), string type = default(string), string location = default(string), int? numberOfStorageAccounts = default(int?), int? capacityInGb = default(int?))
+        /// <param name="retentionPeriodForDeletedStorageAccountsInDays">The
+        /// number of days a deleted storage account is kept before being
+        /// permanently deleted.</param>
+        public Settings(string id = default(string), string name = default(string), string type = default(string), string location = default(string), int? retentionPeriodForDeletedStorageAccountsInDays = default(int?))
             : base(id, name, type, location)
         {
-            NumberOfStorageAccounts = numberOfStorageAccounts;
-            CapacityInGb = capacityInGb;
+            RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDays;
             CustomInit();
         }
 
@@ -53,16 +52,11 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets total number of storage accounts.
+        /// Gets or sets the number of days a deleted storage account is kept
+        /// before being permanently deleted.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.numberOfStorageAccounts")]
-        public int? NumberOfStorageAccounts { get; set; }
-
-        /// <summary>
-        /// Gets or sets maximum capacity (GB).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.capacityInGb")]
-        public int? CapacityInGb { get; set; }
+        [JsonProperty(PropertyName = "properties.retentionPeriodForDeletedStorageAccountsInDays")]
+        public int? RetentionPeriodForDeletedStorageAccountsInDays { get; set; }
 
     }
 }

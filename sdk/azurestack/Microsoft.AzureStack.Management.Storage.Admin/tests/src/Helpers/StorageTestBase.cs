@@ -11,7 +11,6 @@ namespace Storage.Tests
         {
         }
 
-        public string ResourceGroupName = "System.local";
         
         protected override void ValidateClient(StorageAdminClient client)
         {
@@ -19,14 +18,9 @@ namespace Storage.Tests
             Assert.NotNull(client);
 
             // validate objects
-            Assert.NotNull(client.BlobServices);
-            Assert.NotNull(client.Containers);
-            Assert.NotNull(client.Farms);
-            Assert.NotNull(client.QueueServices);
             Assert.NotNull(client.StorageQuotas);
-            Assert.NotNull(client.Shares);
+            Assert.NotNull(client.StorageSettings);
             Assert.NotNull(client.StorageAccounts);
-            Assert.NotNull(client.TableServices);
         }
     }
 }
