@@ -55,14 +55,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal string GetVersionString()
         {
-            switch (Version)
+            return Version switch
             {
-                case ServiceVersion.V7_0:
-                    return "7.0";
+                ServiceVersion.V7_0 => "7.0",
 
-                default:
-                    throw new NotSupportedException($"The service version {Version} is not supported.");
-            }
+                _ => throw new NotSupportedException($"The service version {Version} is not supported."),
+            };
         }
     }
 }

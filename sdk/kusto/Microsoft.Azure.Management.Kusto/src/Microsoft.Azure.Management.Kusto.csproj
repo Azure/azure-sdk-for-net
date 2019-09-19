@@ -5,7 +5,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
     <PackageTags>management;kusto</PackageTags>
     <PackageReleaseNotes>

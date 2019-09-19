@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
@@ -42,10 +43,8 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            if (KeyMaterial != default)
-            {
-                KeyMaterial.WriteProperties(json);
-            }
+            KeyMaterial?.WriteProperties(json);
+
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
                 json.WriteStartObject(AttributesPropertyNameBytes);
@@ -71,7 +70,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 json.WriteStartObject(TagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

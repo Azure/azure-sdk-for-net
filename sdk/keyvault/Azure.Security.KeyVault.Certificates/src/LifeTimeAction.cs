@@ -12,15 +12,15 @@ namespace Azure.Security.KeyVault.Certificates
     public class LifetimeAction : IJsonSerializable, IJsonDeserializable
     {
         private const string TriggerPropertyName = "trigger";
-        private static readonly JsonEncodedText TriggerPropertyNameBytes = JsonEncodedText.Encode(TriggerPropertyName);
+        private static readonly JsonEncodedText s_triggerPropertyNameBytes = JsonEncodedText.Encode(TriggerPropertyName);
         private const string ActionPropertyName = "action";
-        private static readonly JsonEncodedText ActionPropertyNameBytes = JsonEncodedText.Encode(ActionPropertyName);
+        private static readonly JsonEncodedText s_actionPropertyNameBytes = JsonEncodedText.Encode(ActionPropertyName);
         private const string LifetimePercentagePropertyName = "lifetime_percentage";
-        private static readonly JsonEncodedText LifetimePercentagePropertyNameBytes = JsonEncodedText.Encode(LifetimePercentagePropertyName);
+        private static readonly JsonEncodedText s_lifetimePercentagePropertyNameBytes = JsonEncodedText.Encode(LifetimePercentagePropertyName);
         private const string DaysBeforeExpiryPropertyName = "days_before_expiry";
-        private static readonly JsonEncodedText DaysBeforeExpiryPropertyNameBytes = JsonEncodedText.Encode(DaysBeforeExpiryPropertyName);
+        private static readonly JsonEncodedText s_daysBeforeExpiryPropertyNameBytes = JsonEncodedText.Encode(DaysBeforeExpiryPropertyName);
         private const string ActionTypePropertyName = "action_type";
-        private static readonly JsonEncodedText ActionTypePropertyNameBytes = JsonEncodedText.Encode(ActionTypePropertyName);
+        private static readonly JsonEncodedText s_actionTypePropertyNameBytes = JsonEncodedText.Encode(ActionTypePropertyName);
 
         /// <summary>
         /// Specifies the action should be performed the specified number of days before the certificate will expire
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case TriggerPropertyName:
                         foreach (JsonProperty triggerProp in prop.Value.EnumerateObject())
                         {
-                            switch(triggerProp.Name)
+                            switch (triggerProp.Name)
                             {
                                 case LifetimePercentagePropertyName:
                                     LifetimePercentage = triggerProp.Value.GetInt32();
@@ -76,24 +76,24 @@ namespace Azure.Security.KeyVault.Certificates
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             // trigger
-            json.WriteStartObject(TriggerPropertyNameBytes);
+            json.WriteStartObject(s_triggerPropertyNameBytes);
 
             if (DaysBeforeExpiry.HasValue)
             {
-                json.WriteNumber(DaysBeforeExpiryPropertyNameBytes, DaysBeforeExpiry.Value);
+                json.WriteNumber(s_daysBeforeExpiryPropertyNameBytes, DaysBeforeExpiry.Value);
             }
 
             if (LifetimePercentage.HasValue)
             {
-                json.WriteNumber(LifetimePercentagePropertyNameBytes, DaysBeforeExpiry.Value);
+                json.WriteNumber(s_lifetimePercentagePropertyNameBytes, DaysBeforeExpiry.Value);
             }
 
             json.WriteEndObject();
 
             // action
-            json.WriteStartObject(ActionPropertyNameBytes);
+            json.WriteStartObject(s_actionPropertyNameBytes);
 
-            json.WriteString(ActionTypePropertyNameBytes, Action);
+            json.WriteString(s_actionTypePropertyNameBytes, Action);
 
             json.WriteEndObject();
 

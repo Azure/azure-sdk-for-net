@@ -3,7 +3,7 @@
 
 namespace TrackOne.Primitives
 {
-    static class Guard
+    internal static class Guard
     {
         internal static void ArgumentNotNull(string argumentName, object value)
         {

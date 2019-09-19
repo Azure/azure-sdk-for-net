@@ -82,5 +82,10 @@ namespace Azure.Storage
 
         public static AuthenticationException InvalidCredentials(string fullName)
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
+
+        public static StorageRequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
+            => new StorageRequestFailedException(
+                    response,
+                    $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
     }
 }

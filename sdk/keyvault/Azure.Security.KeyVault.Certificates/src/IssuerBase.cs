@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText ProviderPropertyNameBytes = JsonEncodedText.Encode(ProviderPropertyName);
+        private static readonly JsonEncodedText s_providerPropertyNameBytes = JsonEncodedText.Encode(ProviderPropertyName);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!string.IsNullOrEmpty(Provider))
             {
-                json.WriteString(ProviderPropertyNameBytes, Provider);
+                json.WriteString(s_providerPropertyNameBytes, Provider);
             }
         }
     }

@@ -1,48 +1,46 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Threading.Tasks;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+
 namespace TrackOne.Amqp.Management
 {
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-
-    class AmqpServiceClient : ClientEntity
+    internal class AmqpServiceClient : ClientEntity
     {
-        static readonly string[] RequiredClaims = { ClaimConstants.Manage, ClaimConstants.Listen };
-
-        readonly AmqpEventHubClient eventHubClient;
-        readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> link;
-        readonly AsyncLock tokenLock = new AsyncLock();
-
-        SecurityToken token;
+        private static readonly string[] RequiredClaims = { ClaimConstants.Manage, ClaimConstants.Listen };
+        private readonly AmqpEventHubClient eventHubClient;
+        private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> link;
+        private readonly AsyncLock tokenLock = new AsyncLock();
+        private SecurityToken token;
 
         public AmqpServiceClient(AmqpEventHubClient eventHubClient, string address)
             : base("AmqpServiceClient-" + StringUtility.GetRandomString())
         {
             this.eventHubClient = eventHubClient;
-            this.Address = address;
-            this.link = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.OpenLinkAsync, rrlink => rrlink.CloseAsync(TimeSpan.FromSeconds(10)));
+            Address = address;
+            link = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(OpenLinkAsync, rrlink => rrlink.CloseAsync(TimeSpan.FromSeconds(10)));
         }
 
-        AmqpMessage CreateGetRuntimeInformationRequest()
+        private AmqpMessage CreateGetRuntimeInformationRequest()
         {
             AmqpMessage getRuntimeInfoRequest = AmqpMessage.Create();
             getRuntimeInfoRequest.ApplicationProperties = new ApplicationProperties();
-            getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.EntityNameKey] = this.eventHubClient.EventHubName;
+            getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.EntityNameKey] = eventHubClient.EventHubName;
             getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.ManagementOperationKey] = AmqpClientConstants.ReadOperationValue;
             getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.ManagementEntityTypeKey] = AmqpClientConstants.ManagementEventHubEntityTypeValue;
 
             return getRuntimeInfoRequest;
         }
 
-        AmqpMessage CreateGetPartitionRuntimeInformationRequest(string partitionKey)
+        private AmqpMessage CreateGetPartitionRuntimeInformationRequest(string partitionKey)
         {
             AmqpMessage getRuntimeInfoRequest = AmqpMessage.Create();
             getRuntimeInfoRequest.ApplicationProperties = new ApplicationProperties();
-            getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.EntityNameKey] = this.eventHubClient.EventHubName;
+            getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.EntityNameKey] = eventHubClient.EventHubName;
             getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.PartitionNameKey] = partitionKey;
             getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.ManagementOperationKey] = AmqpClientConstants.ReadOperationValue;
             getRuntimeInfoRequest.ApplicationProperties.Map[AmqpClientConstants.ManagementEntityTypeKey] = AmqpClientConstants.ManagementPartitionEntityTypeValue;
@@ -52,14 +50,14 @@ namespace TrackOne.Amqp.Management
 
         public async Task<EventHubRuntimeInformation> GetRuntimeInformationAsync()
         {
-            RequestResponseAmqpLink requestLink = await this.link.GetOrCreateAsync(
+            RequestResponseAmqpLink requestLink = await link.GetOrCreateAsync(
                 TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
 
             // Create request and attach token.
-            var request = this.CreateGetRuntimeInformationRequest();
+            AmqpMessage request = CreateGetRuntimeInformationRequest();
             request.ApplicationProperties.Map[AmqpClientConstants.ManagementSecurityTokenKey] = await GetTokenString().ConfigureAwait(false);
 
-            var response = await requestLink.RequestAsync(request, eventHubClient.ConnectionStringBuilder.OperationTimeout).ConfigureAwait(false);
+            AmqpMessage response = await requestLink.RequestAsync(request, eventHubClient.ConnectionStringBuilder.OperationTimeout).ConfigureAwait(false);
             int statusCode = (int)response.ApplicationProperties.Map[AmqpClientConstants.ResponseStatusCode];
             string statusDescription = (string)response.ApplicationProperties.Map[AmqpClientConstants.ResponseStatusDescription];
             if (statusCode != (int)AmqpResponseStatusCode.Accepted && statusCode != (int)AmqpResponseStatusCode.OK)
@@ -92,14 +90,14 @@ namespace TrackOne.Amqp.Management
 
         public async Task<EventHubPartitionRuntimeInformation> GetPartitionRuntimeInformationAsync(string partitionId)
         {
-            RequestResponseAmqpLink requestLink = await this.link.GetOrCreateAsync(
+            RequestResponseAmqpLink requestLink = await link.GetOrCreateAsync(
                 TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
 
             // Create request and attach token.
-            var request = this.CreateGetPartitionRuntimeInformationRequest(partitionId);
+            AmqpMessage request = CreateGetPartitionRuntimeInformationRequest(partitionId);
             request.ApplicationProperties.Map[AmqpClientConstants.ManagementSecurityTokenKey] = await GetTokenString().ConfigureAwait(false);
 
-            var response = await requestLink.RequestAsync(request, eventHubClient.ConnectionStringBuilder.OperationTimeout).ConfigureAwait(false);
+            AmqpMessage response = await requestLink.RequestAsync(request, eventHubClient.ConnectionStringBuilder.OperationTimeout).ConfigureAwait(false);
             int statusCode = (int)response.ApplicationProperties.Map[AmqpClientConstants.ResponseStatusCode];
             string statusDescription = (string)response.ApplicationProperties.Map[AmqpClientConstants.ResponseStatusDescription];
             if (statusCode != (int)AmqpResponseStatusCode.Accepted && statusCode != (int)AmqpResponseStatusCode.OK)
@@ -137,43 +135,42 @@ namespace TrackOne.Amqp.Management
 
         public override Task CloseAsync()
         {
-            return this.link.CloseAsync();
+            return link.CloseAsync();
         }
 
-        async Task<string> GetTokenString()
+        private async Task<string> GetTokenString()
         {
-            using (await this.tokenLock.LockAsync().ConfigureAwait(false))
+            using (await tokenLock.LockAsync().ConfigureAwait(false))
             {
                 // Expect maximum 5 minutes of clock skew between client and the service
                 // when checking for token expiry.
-                if (this.token == null || DateTime.UtcNow > this.token.ExpiresAtUtc.Subtract(TimeSpan.FromMinutes(5)))
+                if (token == null || DateTime.UtcNow > token.ExpiresAtUtc.Subtract(TimeSpan.FromMinutes(5)))
                 {
-                    this.token = await this.eventHubClient.InternalTokenProvider.GetTokenAsync(
-                        this.eventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri,
-                        this.eventHubClient.ConnectionStringBuilder.OperationTimeout).ConfigureAwait(false);
+                    token = await eventHubClient.InternalTokenProvider.GetTokenAsync(
+                        eventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri,
+                        eventHubClient.ConnectionStringBuilder.OperationTimeout).ConfigureAwait(false);
                 }
 
-                return this.token.TokenValue.ToString();
+                return token.TokenValue.ToString();
             }
         }
 
         internal void OnAbort()
         {
-            RequestResponseAmqpLink innerLink;
-            if (this.link.TryGetOpenedObject(out innerLink))
+            if (link.TryGetOpenedObject(out RequestResponseAmqpLink innerLink))
             {
                 innerLink?.Abort();
             }
         }
 
-        async Task<RequestResponseAmqpLink> OpenLinkAsync(TimeSpan timeout)
+        private async Task<RequestResponseAmqpLink> OpenLinkAsync(TimeSpan timeout)
         {
             ActiveClientRequestResponseLink activeClientLink = await OpenRequestResponseLinkAsync(
-                "svc", this.Address, null, AmqpServiceClient.RequiredClaims, timeout).ConfigureAwait(false);
+                "svc", Address, null, AmqpServiceClient.RequiredClaims, timeout).ConfigureAwait(false);
             return activeClientLink.Link;
         }
 
-        async Task<ActiveClientRequestResponseLink> OpenRequestResponseLinkAsync(
+        private async Task<ActiveClientRequestResponseLink> OpenRequestResponseLinkAsync(
             string type, string address, MessagingEntityType? entityType, string[] requiredClaims, TimeSpan timeout)
         {
             var timeoutHelper = new TimeoutHelper(timeout, true);
@@ -183,7 +180,7 @@ namespace TrackOne.Amqp.Management
                 // Don't need to get token for namespace scope operations, included in request
                 bool isNamespaceScope = address.Equals(AmqpClientConstants.ManagementAddress, StringComparison.OrdinalIgnoreCase);
 
-                var connection = await this.eventHubClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+                AmqpConnection connection = await eventHubClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
@@ -200,7 +197,7 @@ namespace TrackOne.Amqp.Management
                 // Create the link
                 var link = new RequestResponseAmqpLink(type, session, address, linkSettings.Properties);
 
-                var authorizationValidToUtc = DateTime.MaxValue;
+                DateTime authorizationValidToUtc = DateTime.MaxValue;
 
                 if (!isNamespaceScope)
                 {
@@ -213,8 +210,8 @@ namespace TrackOne.Amqp.Management
                 // should always use the full EndpointUri as audience.
                 return new ActiveClientRequestResponseLink(
                     link,
-                    this.eventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // audience
-                    this.eventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // endpointUri
+                    eventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // audience
+                    eventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // endpointUri
                     requiredClaims,
                     false,
                     authorizationValidToUtc);

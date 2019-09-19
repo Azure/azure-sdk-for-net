@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
-        private readonly HashSet<string> toCleanup = new HashSet<string>();
+        private readonly HashSet<string> _toCleanup = new HashSet<string>();
 
         public CertificateClient Client { get; set; }
 
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             List<Task> cleanupTasks = new List<Task>();
 
-            foreach (string certName in toCleanup)
+            foreach (string certName in _toCleanup)
             {
                 cleanupTasks.Add(WaitForDeletedCertificate(certName).ContinueWith(t => Client.PurgeDeletedCertificateAsync(certName)));
             }
@@ -104,7 +104,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         await Client.GetDeletedCertificateAsync(name);
@@ -133,9 +134,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected void RegisterForCleanup(string certificateName)
         {
-            lock(toCleanup)
+            lock (_toCleanup)
             {
-                toCleanup.Add(certificateName);
+                _toCleanup.Add(certificateName);
             }
         }
     }

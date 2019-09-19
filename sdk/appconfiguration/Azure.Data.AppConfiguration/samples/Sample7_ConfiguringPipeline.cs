@@ -35,10 +35,10 @@ namespace Azure.Data.AppConfiguration.Samples
             options.Retry.Delay = TimeSpan.FromSeconds(1);
 
             // add a policy (custom behavior) that executes once per client call
-            options.AddPolicy(HttpPipelinePosition.PerCall, new AddHeaderPolicy());
+            options.AddPolicy(new AddHeaderPolicy(), HttpPipelinePosition.PerCall);
 
             // add a policy that executes once per retry
-            options.AddPolicy(HttpPipelinePosition.PerRetry, new CustomLogPolicy());
+            options.AddPolicy(new CustomLogPolicy(), HttpPipelinePosition.PerRetry);
 
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
             // pass the policy options to the client

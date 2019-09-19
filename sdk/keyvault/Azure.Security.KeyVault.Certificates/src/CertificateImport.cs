@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -21,13 +22,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated</param>
         public CertificateImport(string name, byte[] value, CertificatePolicy policy)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty");
-            if (value == null) throw new ArgumentNullException(nameof(value));
-            if (policy == null) throw new ArgumentNullException(nameof(policy));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(policy, nameof(policy));
 
             Name = name;
-            Value = value;
-            Policy = policy;
+            Value = value ?? throw new ArgumentNullException(nameof(value));
+            Policy = policy ?? throw new ArgumentNullException(nameof(policy));
         }
 
         /// <summary>
@@ -60,28 +61,28 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public IDictionary<string, string> Tags { get; set; }
 
-        private static readonly JsonEncodedText ValuePropertyNameBytes = JsonEncodedText.Encode("value");
-        private static readonly JsonEncodedText PolicyPropertyNameBytes = JsonEncodedText.Encode("policy");
-        private static readonly JsonEncodedText PasswordPropertyNameBytes = JsonEncodedText.Encode("pwd");
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode("attributes");
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
-        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode("tags");
+        private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode("value");
+        private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode("policy");
+        private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode("pwd");
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode("attributes");
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode("tags");
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if(Value != null)
             {
-                json.WriteBase64String(ValuePropertyNameBytes, Value);
+                json.WriteBase64String(s_valuePropertyNameBytes, Value);
             }
 
             if (!string.IsNullOrEmpty(Password))
             {
-                json.WriteString(PasswordPropertyNameBytes, Password);
+                json.WriteString(s_passwordPropertyNameBytes, Password);
             }
 
             if (Policy != null)
             {
-                json.WriteStartObject(PolicyPropertyNameBytes);
+                json.WriteStartObject(s_policyPropertyNameBytes);
 
                 ((IJsonSerializable)Policy).WriteProperties(json);
 
@@ -90,18 +91,18 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Enabled.HasValue)
             {
-                json.WriteStartObject(AttributesPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
-                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
 
                 json.WriteEndObject();
             }
 
             if (Tags != null)
             {
-                json.WriteStartObject(TagsPropertyNameBytes);
+                json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -27,7 +28,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         public SecretBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             _identifier.Name = name;
         }
@@ -138,7 +139,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Tags = new Dictionary<string, string>();
 
-                foreach (var prop in tags.EnumerateObject())
+                foreach (JsonProperty prop in tags.EnumerateObject())
                 {
                     Tags[prop.Name] = prop.Value.GetString();
                 }
@@ -165,7 +166,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject("tags");
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

@@ -335,7 +335,14 @@ namespace Azure.Storage.Blobs.Test
 
                     var destination = new FileInfo(path);
 
-                    await blob.StagedDownloadAsync(
+                    // Create a special blob client for downloading that will
+                    // assign client request IDs based on the range so that out
+                    // of order operations still get predictable IDs and the
+                    // recordings work correctly
+                    var credential = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
+                    var downloadingBlob = this.InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+
+                    await downloadingBlob.StagedDownloadAsync(
                         destination,
                         singleBlockThreshold: singleBlockThreshold,
                         parallelTransferOptions: parallelTransferOptions

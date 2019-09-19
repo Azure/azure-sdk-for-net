@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Messaging.EventHubs.Processor;
+
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
@@ -17,6 +19,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>The activity name associated with Event Hub producers.</summary>
         public static readonly string ProducerActivityName = $"{ BaseActivityName }.{ nameof(EventHubProducer) }.Send";
+
+        /// <summary>The activity name associated with EventProcessor processing a list of events.</summary>
+        public static readonly string EventProcessorProcessingActivityName = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Process";
+
+        /// <summary>The activity name associated with EventProcessor creating a checkpoint.</summary>
+        public static readonly string EventProcessorCheckpointActivityName = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Checkpoint";
 
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
         public static string DiagnosticIdAttribute = "Diagnostic-Id";
@@ -38,5 +46,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>The value which identifies an Event Hub producer as the type associated with the diagnostics information.</summary>
         public const string EventHubProducerType = "producer";
+
+        /// <summary>The attribute which represents the kind of diagnostic scope.</summary>
+        public const string KindAttribute = "kind";
+
+        /// <summary>The value which identifies the Event Processor scope kind.</summary>
+        public const string ServerKind = "server";
+
+        /// <summary>The value which identifies the message instrumentation scope kind.</summary>
+        public const string InternalKind = "internal";
     }
 }

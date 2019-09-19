@@ -1,23 +1,23 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+
 namespace TrackOne.Amqp
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-
-    class AmqpPartitionReceiver : PartitionReceiver
+    internal class AmqpPartitionReceiver : PartitionReceiver
     {
-        readonly object receivePumpLock;
-        readonly ActiveClientLinkManager clientLinkManager;
-        IPartitionReceiveHandler receiveHandler;
-        CancellationTokenSource receivePumpCancellationSource;
-        Task receivePumpTask;
+        private readonly object receivePumpLock;
+        private readonly ActiveClientLinkManager clientLinkManager;
+        private IPartitionReceiveHandler receiveHandler;
+        private CancellationTokenSource receivePumpCancellationSource;
+        private Task receivePumpTask;
 
         public AmqpPartitionReceiver(
             AmqpEventHubClient eventHubClient,
@@ -29,22 +29,22 @@ namespace TrackOne.Amqp
             : base(eventHubClient, consumerGroupName, partitionId, eventPosition, epoch, receiverOptions)
         {
             string entityPath = eventHubClient.ConnectionStringBuilder.EntityPath;
-            this.Path = $"{entityPath}/ConsumerGroups/{consumerGroupName}/Partitions/{partitionId}";
-            this.ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
-            this.receivePumpLock = new object();
-            this.clientLinkManager = new ActiveClientLinkManager((AmqpEventHubClient)this.EventHubClient);
+            Path = $"{entityPath}/ConsumerGroups/{consumerGroupName}/Partitions/{partitionId}";
+            ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(CreateLinkAsync, CloseSession);
+            receivePumpLock = new object();
+            clientLinkManager = new ActiveClientLinkManager((AmqpEventHubClient)EventHubClient);
         }
 
-        string Path { get; }
+        private string Path { get; }
 
-        FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
+        private FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
 
         protected override async Task OnCloseAsync()
         {
             // Close any ReceiveHandler (this is safe if there is none) and the ReceiveLinkManager in parallel.
-            await this.ReceiveHandlerClose().ConfigureAwait(false);
-            this.clientLinkManager.Close();
-            await this.ReceiveLinkManager.CloseAsync().ConfigureAwait(false);
+            await ReceiveHandlerClose().ConfigureAwait(false);
+            clientLinkManager.Close();
+            await ReceiveLinkManager.CloseAsync().ConfigureAwait(false);
         }
 
         protected override async Task<IList<EventData>> OnReceiveAsync(int maxMessageCount, TimeSpan waitTime)
@@ -64,7 +64,7 @@ namespace TrackOne.Amqp
                     {
                         // Always use default timeout for AMQP sesssion.
                         ReceivingAmqpLink receiveLink =
-                            await this.ReceiveLinkManager.GetOrCreateAsync(
+                            await ReceiveLinkManager.GetOrCreateAsync(
                                 TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
 
                         IEnumerable<AmqpMessage> amqpMessages = null;
@@ -81,7 +81,7 @@ namespace TrackOne.Amqp
                         if (hasMessages && amqpMessages != null)
                         {
                             IList<EventData> eventDatas = null;
-                            foreach (var amqpMessage in amqpMessages)
+                            foreach (AmqpMessage amqpMessage in amqpMessages)
                             {
                                 if (eventDatas == null)
                                 {
@@ -103,8 +103,8 @@ namespace TrackOne.Amqp
                 catch (Exception ex)
                 {
                     // Evaluate retry condition?
-                    TimeSpan? retryInterval = this.RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
-                    if (retryInterval != null && !this.EventHubClient.CloseCalled)
+                    TimeSpan? retryInterval = RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
+                    if (retryInterval != null && !EventHubClient.CloseCalled)
                     {
                         await Task.Delay(retryInterval.Value).ConfigureAwait(false);
                         shouldRetry = true;
@@ -129,57 +129,57 @@ namespace TrackOne.Amqp
 
         protected override void OnSetReceiveHandler(IPartitionReceiveHandler newReceiveHandler, bool invokeWhenNoEvents)
         {
-            lock (this.receivePumpLock)
+            lock (receivePumpLock)
             {
                 if (newReceiveHandler != null)
                 {
-                    if (this.receiveHandler != null)
+                    if (receiveHandler != null)
                     {
                         // Notify existing handler first (but don't wait).
                         Task.Run(() =>
-                            this.receiveHandler.ProcessErrorAsync(new OperationCanceledException("New handler has registered for this receiver.")))
+                            receiveHandler.ProcessErrorAsync(new OperationCanceledException("New handler has registered for this receiver.")))
                             // We omit any failures from ProcessErrorAsync
                             .ContinueWith(t => t.Exception.Handle(ex => true), TaskContinuationOptions.OnlyOnFaulted);
                     }
 
-                    this.receiveHandler = newReceiveHandler;
+                    receiveHandler = newReceiveHandler;
 
                     // We have a new receiveHandler, ensure pump is running.
-                    if (this.receivePumpTask == null)
+                    if (receivePumpTask == null)
                     {
-                        this.receivePumpCancellationSource = new CancellationTokenSource();
-                        this.receivePumpTask = this.ReceivePumpAsync(this.receivePumpCancellationSource.Token, invokeWhenNoEvents);
+                        receivePumpCancellationSource = new CancellationTokenSource();
+                        receivePumpTask = ReceivePumpAsync(receivePumpCancellationSource.Token, invokeWhenNoEvents);
                     }
                 }
                 else
                 {
                     // newReceiveHandler == null, so this is an unregister call, ensure pump is shut down.
-                    if (this.receivePumpTask != null)
+                    if (receivePumpTask != null)
                     {
                         // Do not wait as could block and would still match the previous behavior
-                        this.ReceiveHandlerClose();
+                        ReceiveHandlerClose();
                     }
 
-                    this.receiveHandler = null;
+                    receiveHandler = null;
                 }
             }
         }
 
-        async Task<ReceivingAmqpLink> CreateLinkAsync(TimeSpan timeout)
+        private async Task<ReceivingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
-            var amqpEventHubClient = ((AmqpEventHubClient)this.EventHubClient);
+            var amqpEventHubClient = ((AmqpEventHubClient)EventHubClient);
 
             var timeoutHelper = new TimeoutHelper(timeout);
             AmqpConnection connection = await amqpEventHubClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Authenticate over CBS
-            var cbsLink = connection.Extensions.Find<AmqpCbsLink>();
+            AmqpCbsLink cbsLink = connection.Extensions.Find<AmqpCbsLink>();
 
             ICbsTokenProvider cbsTokenProvider = amqpEventHubClient.CbsTokenProvider;
-            Uri address = new Uri(amqpEventHubClient.ConnectionStringBuilder.Endpoint, this.Path);
+            Uri address = new Uri(amqpEventHubClient.ConnectionStringBuilder.Endpoint, Path);
             string audience = address.AbsoluteUri;
             string resource = address.AbsoluteUri;
-            var expiresAt = await cbsLink.SendTokenAsync(cbsTokenProvider, address, audience, resource, new[] { ClaimConstants.Listen }, timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            DateTime expiresAt = await cbsLink.SendTokenAsync(cbsTokenProvider, address, audience, resource, new[] { ClaimConstants.Listen }, timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             AmqpSession session = null;
             try
@@ -190,11 +190,11 @@ namespace TrackOne.Amqp
                 await session.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
                 FilterSet filterMap = null;
-                var filters = this.CreateFilters();
+                IList<AmqpDescribed> filters = CreateFilters();
                 if (filters != null && filters.Count > 0)
                 {
                     filterMap = new FilterSet();
-                    foreach (var filter in filters)
+                    foreach (AmqpDescribed filter in filters)
                     {
                         filterMap.Add(filter.DescriptorName, filter);
                     }
@@ -204,16 +204,16 @@ namespace TrackOne.Amqp
                 var linkSettings = new AmqpLinkSettings
                 {
                     Role = true,
-                    TotalLinkCredit = (uint)this.PrefetchCount,
-                    AutoSendFlow = this.PrefetchCount > 0
+                    TotalLinkCredit = (uint)PrefetchCount,
+                    AutoSendFlow = PrefetchCount > 0
                 };
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, (int)MessagingEntityType.ConsumerGroup);
                 linkSettings.Source = new Source { Address = address.AbsolutePath, FilterSet = filterMap };
-                linkSettings.Target = new Target { Address = this.ClientId };
+                linkSettings.Target = new Target { Address = ClientId };
                 linkSettings.SettleType = SettleMode.SettleOnSend;
 
                 // Receiver metrics enabled?
-                if (this.ReceiverRuntimeMetricEnabled)
+                if (ReceiverRuntimeMetricEnabled)
                 {
                     linkSettings.DesiredCapabilities = new Multiple<AmqpSymbol>(new List<AmqpSymbol>
                     {
@@ -221,14 +221,14 @@ namespace TrackOne.Amqp
                     });
                 }
 
-                if (this.Epoch.HasValue)
+                if (Epoch.HasValue)
                 {
-                    linkSettings.AddProperty(AmqpClientConstants.AttachEpoch, this.Epoch.Value);
+                    linkSettings.AddProperty(AmqpClientConstants.AttachEpoch, Epoch.Value);
                 }
 
-                if (!string.IsNullOrWhiteSpace(this.Identifier))
+                if (!string.IsNullOrWhiteSpace(Identifier))
                 {
-                    linkSettings.AddProperty(AmqpClientConstants.ReceiverIdentifierName, this.Identifier);
+                    linkSettings.AddProperty(AmqpClientConstants.ReceiverIdentifierName, Identifier);
                 }
 
                 var link = new ReceivingAmqpLink(linkSettings);
@@ -239,12 +239,12 @@ namespace TrackOne.Amqp
                 var activeClientLink = new ActiveClientLink(
                     link,
                     audience, // audience
-                    this.EventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // endpointUri
+                    EventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // endpointUri
                     new[] { ClaimConstants.Listen },
                     true,
                     expiresAt);
 
-                this.clientLinkManager.SetActiveLink(activeClientLink);
+                clientLinkManager.SetActiveLink(activeClientLink);
 
                 return link;
             }
@@ -256,24 +256,24 @@ namespace TrackOne.Amqp
             }
         }
 
-        void CloseSession(ReceivingAmqpLink link)
+        private void CloseSession(ReceivingAmqpLink link)
         {
             link.Session.SafeClose();
         }
 
-        IList<AmqpDescribed> CreateFilters()
+        private IList<AmqpDescribed> CreateFilters()
         {
             List<AmqpDescribed> filterMap = null;
 
-            if (this.EventPosition != null)
+            if (EventPosition != null)
             {
-                filterMap = new List<AmqpDescribed> { new AmqpSelectorFilter(this.EventPosition.GetExpression()) };
+                filterMap = new List<AmqpDescribed> { new AmqpSelectorFilter(EventPosition.GetExpression()) };
             }
 
             return filterMap;
         }
 
-        async Task ReceivePumpAsync(CancellationToken cancellationToken, bool invokeWhenNoEvents)
+        private async Task ReceivePumpAsync(CancellationToken cancellationToken, bool invokeWhenNoEvents)
         {
             try
             {
@@ -286,9 +286,9 @@ namespace TrackOne.Amqp
                     {
                         int batchSize;
 
-                        lock (this.receivePumpLock)
+                        lock (receivePumpLock)
                         {
-                            if (this.receiveHandler == null)
+                            if (receiveHandler == null)
                             {
                                 // Pump has been shutdown, nothing more to do.
                                 return;
@@ -297,15 +297,15 @@ namespace TrackOne.Amqp
                             batchSize = receiveHandler.MaxBatchSize > 0 ? receiveHandler.MaxBatchSize : ClientConstants.ReceiveHandlerDefaultBatchSize;
                         }
 
-                        receivedEvents = await this.ReceiveAsync(batchSize).ConfigureAwait(false);
+                        receivedEvents = await ReceiveAsync(batchSize).ConfigureAwait(false);
                     }
                     catch (Exception e)
                     {
                         // Omit any failures at exception handling. Pump should continue until cancellation is triggered.
                         try
                         {
-                            EventHubsEventSource.Log.ReceiveHandlerExitingWithError(this.ClientId, this.PartitionId, e.Message);
-                            await this.ReceiveHandlerProcessErrorAsync(e).ConfigureAwait(false);
+                            EventHubsEventSource.Log.ReceiveHandlerExitingWithError(ClientId, PartitionId, e.Message);
+                            await ReceiveHandlerProcessErrorAsync(e).ConfigureAwait(false);
 
                             // Avoid tight loop if Receieve call keeps faling.
                             await Task.Delay(100, cancellationToken).ConfigureAwait(false);
@@ -325,12 +325,12 @@ namespace TrackOne.Amqp
                     {
                         try
                         {
-                            await this.ReceiveHandlerProcessEventsAsync(receivedEvents).ConfigureAwait(false);
+                            await ReceiveHandlerProcessEventsAsync(receivedEvents).ConfigureAwait(false);
                         }
                         catch (Exception userCodeError)
                         {
-                            EventHubsEventSource.Log.ReceiveHandlerExitingWithError(this.ClientId, this.PartitionId, userCodeError.Message);
-                            await this.ReceiveHandlerProcessErrorAsync(userCodeError).ConfigureAwait(false);
+                            EventHubsEventSource.Log.ReceiveHandlerExitingWithError(ClientId, PartitionId, userCodeError.Message);
+                            await ReceiveHandlerProcessErrorAsync(userCodeError).ConfigureAwait(false);
                         }
                     }
                 }
@@ -338,31 +338,31 @@ namespace TrackOne.Amqp
             catch (Exception ex)
             {
                 // This should never throw
-                EventHubsEventSource.Log.ReceiveHandlerExitingWithError(this.ClientId, this.PartitionId, ex.Message);
+                EventHubsEventSource.Log.ReceiveHandlerExitingWithError(ClientId, PartitionId, ex.Message);
                 Environment.FailFast(ex.ToString());
             }
         }
 
         // Encapsulates taking the receivePumpLock, checking this.receiveHandler for null,
         // calls this.receiveHandler.CloseAsync (starting this operation inside the receivePumpLock).
-        Task ReceiveHandlerClose()
+        private Task ReceiveHandlerClose()
         {
             Task task = null;
 
-            lock (this.receivePumpLock)
+            lock (receivePumpLock)
             {
-                if (this.receiveHandler != null)
+                if (receiveHandler != null)
                 {
-                    if (this.receivePumpTask != null)
+                    if (receivePumpTask != null)
                     {
-                        task = this.receivePumpTask;
-                        this.receivePumpCancellationSource.Cancel();
-                        this.receivePumpCancellationSource.Dispose();
-                        this.receivePumpCancellationSource = null;
-                        this.receivePumpTask = null;
+                        task = receivePumpTask;
+                        receivePumpCancellationSource.Cancel();
+                        receivePumpCancellationSource.Dispose();
+                        receivePumpCancellationSource = null;
+                        receivePumpTask = null;
                     }
 
-                    this.receiveHandler = null;
+                    receiveHandler = null;
                 }
             }
 
@@ -371,14 +371,14 @@ namespace TrackOne.Amqp
 
         // Encapsulates taking the receivePumpLock, checking this.receiveHandler for null,
         // calls this.receiveHandler.ProcessErrorAsync (starting this operation inside the receivePumpLock).
-        Task ReceiveHandlerProcessErrorAsync(Exception error)
+        private Task ReceiveHandlerProcessErrorAsync(Exception error)
         {
             Task processErrorTask = null;
-            lock (this.receivePumpLock)
+            lock (receivePumpLock)
             {
-                if (this.receiveHandler != null)
+                if (receiveHandler != null)
                 {
-                    processErrorTask = this.receiveHandler.ProcessErrorAsync(error);
+                    processErrorTask = receiveHandler.ProcessErrorAsync(error);
                 }
             }
 
@@ -387,15 +387,15 @@ namespace TrackOne.Amqp
 
         // Encapsulates taking the receivePumpLock, checking this.receiveHandler for null,
         // calls this.receiveHandler.ProcessErrorAsync (starting this operation inside the receivePumpLock).
-        Task ReceiveHandlerProcessEventsAsync(IEnumerable<EventData> eventDatas)
+        private Task ReceiveHandlerProcessEventsAsync(IEnumerable<EventData> eventDatas)
         {
             Task processEventsTask = null;
 
-            lock (this.receivePumpLock)
+            lock (receivePumpLock)
             {
-                if (this.receiveHandler != null)
+                if (receiveHandler != null)
                 {
-                    processEventsTask = this.receiveHandler.ProcessEventsAsync(eventDatas);
+                    processEventsTask = receiveHandler.ProcessEventsAsync(eventDatas);
                 }
             }
 

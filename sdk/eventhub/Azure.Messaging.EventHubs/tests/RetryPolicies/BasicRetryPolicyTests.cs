@@ -293,12 +293,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 Mode = RetryMode.Exponential
             });
 
-            var previousDelay = TimeSpan.Zero;
+            TimeSpan previousDelay = TimeSpan.Zero;
 
             for (var index = 0; index < iterations; ++index)
             {
                 var variance = TimeSpan.FromSeconds((policy.Options.Delay.TotalSeconds * index) * policy.JitterFactor);
-                var delay = policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), index);
+                TimeSpan? delay = policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), index);
 
                 Assert.That(delay.HasValue, Is.True, $"Iteration: { index } did not have a value.");
                 Assert.That(delay.Value, Is.GreaterThan(previousDelay.Add(variance)), $"Iteration: { index } produced an unexpected delay.");

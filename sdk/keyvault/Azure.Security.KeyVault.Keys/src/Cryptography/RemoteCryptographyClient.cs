@@ -16,8 +16,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.NotNull(keyId, nameof(keyId));
-            Argument.NotNull(credential, nameof(credential));
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             _keyId = keyId;
             options ??= new CryptographyClientOptions();
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
@@ -137,7 +137,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Key = key
             };
 
@@ -160,7 +160,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Key = key
             };
 
@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Key = encryptedKey
             };
 
@@ -206,7 +206,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Key = encryptedKey
             };
 
@@ -229,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Digest = digest
             };
 
@@ -252,7 +252,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Digest = digest
             };
 
@@ -275,7 +275,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Digest = digest,
                 Signature = signature
             };
@@ -299,7 +299,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm,
                 Digest = digest,
                 Signature = signature
             };

@@ -52,6 +52,7 @@ namespace Azure.Data.AppConfiguration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipelineBuilder.Build(options,
+                    new ApiVersionPolicy(options.GetVersionString()),
                     new AuthenticationPolicy(credential, secret),
                     new SyncTokenPolicy());
         }
@@ -277,120 +278,6 @@ namespace Azure.Data.AppConfiguration
             if (setting.ETag != default)
             {
                 request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
-            }
-
-            request.Content = HttpPipelineRequestContent.Create(content);
-            return request;
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(string key, string value, string label = default, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return Update(new ConfigurationSetting(key, value, label), cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Update");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateUpdateRequest(setting);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                return response.Status switch
-                {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Update");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateUpdateRequest(setting);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                return response.Status switch
-                {
-                    200 => CreateResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateUpdateRequest(ConfigurationSetting setting)
-        {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
-
-            request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.UriBuilder, setting);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-            if (setting.ETag != default)
-            {
-                request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
-            }
-            else
-            {
-                request.Headers.Add(IfMatchName, "*");
             }
 
             request.Content = HttpPipelineRequestContent.Create(content);

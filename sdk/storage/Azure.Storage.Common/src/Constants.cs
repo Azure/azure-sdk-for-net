@@ -88,6 +88,7 @@ namespace Azure.Storage
             public const string XMsPrefix = "x-ms-";
             public const string ErrorCode = "x-ms-error-code";
             public const string RequestId = "x-ms-request-id";
+            public const string ClientRequestId = "x-ms-client-request-id";
             public const string Date = "x-ms-date";
             public const string SharedKey = "SharedKey";
             public const string Authorization = "Authorization";

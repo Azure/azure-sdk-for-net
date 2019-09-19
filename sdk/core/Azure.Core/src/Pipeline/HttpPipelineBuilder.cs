@@ -9,9 +9,9 @@ namespace Azure.Core.Pipeline
 {
     public static class HttpPipelineBuilder
     {
-        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] clientPolicies)
+        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryClientPolicies)
         {
-            return Build(options, Array.Empty<HttpPipelinePolicy>(), clientPolicies, new ResponseClassifier());
+            return Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryClientPolicies, new ResponseClassifier());
         }
 
         public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallClientPolicies, HttpPipelinePolicy[] perRetryClientPolicies, ResponseClassifier responseClassifier)
@@ -28,13 +28,16 @@ namespace Azure.Core.Pipeline
 
             var policies = new List<HttpPipelinePolicy>();
 
+            bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
+
             policies.AddRange(perCallClientPolicies);
 
             policies.AddRange(options.PerCallPolicies);
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            if (options.Diagnostics.IsTelemetryEnabled)
+            DiagnosticsOptions diagnostics = options.Diagnostics;
+            if (diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
             }
@@ -46,18 +49,21 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerRetryPolicies);
 
-            if (options.Diagnostics.IsLoggingEnabled)
+            if (diagnostics.IsLoggingEnabled)
             {
-                policies.Add(LoggingPolicy.Shared);
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
 
-            policies.Add(new RequestActivityPolicy());
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled));
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), responseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
+            return new HttpPipeline(options.Transport,
+                policies.ToArray(),
+                responseClassifier,
+                new ClientDiagnostics(isDistributedTracingEnabled));
         }
 
         // internal for testing

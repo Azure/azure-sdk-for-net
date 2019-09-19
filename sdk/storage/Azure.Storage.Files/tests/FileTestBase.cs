@@ -32,18 +32,25 @@ namespace Azure.Storage.Files.Tests
         public string GetNewFileName() => $"test-file-{this.Recording.Random.NewGuid()}";
 
         public FileClientOptions GetOptions()
-            => this.Recording.InstrumentClientOptions(
-                    new FileClientOptions
-                    {
-                        Diagnostics = { IsLoggingEnabled = true },
-                        Retry =
-                        {
-                            Mode = RetryMode.Exponential,
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                        }
-                    });
+        {
+            var options = new FileClientOptions
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                }
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
 
         public IDisposable GetNewDirectory(out DirectoryClient directory, FileServiceClient service = default)
         {
@@ -72,7 +79,7 @@ namespace Azure.Storage.Files.Tests
         {
             raise = raise ?? new IOException("Simulated connection fault");
             var options = this.GetOptions();
-            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
             return options;
         }
 

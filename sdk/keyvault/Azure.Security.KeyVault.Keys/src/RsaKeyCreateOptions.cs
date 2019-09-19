@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Name = name;
             Hsm = hsm;
-            if(hsm)
+            if (hsm)
             {
                 KeyType = KeyType.RsaHsm;
             }
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys
                 KeyType = KeyType.Rsa;
             }
 
-            if(keySize.HasValue)
+            if (keySize.HasValue)
             {
                 KeySize = keySize.Value;
             }

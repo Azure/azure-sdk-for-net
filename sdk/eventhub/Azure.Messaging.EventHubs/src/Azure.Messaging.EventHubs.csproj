@@ -6,6 +6,7 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CHANGELOG.md</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +49,9 @@
 
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+  </ItemGroup>
 
   <!--
       TRACK ONE DEPENDENCIES::TO BE REMOVED

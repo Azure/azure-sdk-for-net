@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 sourceStream.Seek(0, SeekOrigin.End);
                 await sourceStream.WriteAsync(byteSecret, 0, byteSecret.Length);
             }
-            
+
             // The storage account secret is no longer in use, so you delete it.
             await client.DeleteAsync(secretName);
 

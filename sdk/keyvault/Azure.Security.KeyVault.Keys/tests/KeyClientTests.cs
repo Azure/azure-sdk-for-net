@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientTests: ClientTestBase
+    public class KeyClientTests : ClientTestBase
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {

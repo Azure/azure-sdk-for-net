@@ -35,6 +35,6 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// A dictionary of tags with specific metadata about the key.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string> ();
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
     }
 }

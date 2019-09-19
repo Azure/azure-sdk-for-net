@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
@@ -138,7 +138,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
@@ -159,6 +159,86 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Hello world", e.GetProperty<string>("content"));
 
             CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+        }
+
+        [Test]
+        public async Task ContentIsNotLoggedAsTextWhenDisabled()
+        {
+            var response = new MockResponse(500);
+            response.ContentStream = new MemoryStream(new byte[] {1, 2, 3});
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false) });
+
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Headers.Add("Content-Type", "text/json");
+
+                await SendRequestAsync(pipeline, request);
+            }
+
+            AssertNoContentLogged();
+        }
+
+        [Test]
+        public async Task ContentIsNotLoggedWhenDisabled()
+        {
+            var response = new MockResponse(500);
+            response.ContentStream = new NonSeekableMemoryStream(new byte[] {1, 2, 3});
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false) });
+
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+
+                await SendRequestAsync(pipeline, request);
+            }
+
+            AssertNoContentLogged();
+        }
+
+
+        [Test]
+        public async Task RequestContentIsNotLoggedWhenDisabled()
+        {
+            var response = new MockResponse(500);
+            response.ContentStream = new MemoryStream(new byte[] {1, 2, 3});
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false) });
+
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+
+                await SendRequestAsync(pipeline, request);
+            }
+
+            AssertNoContentLogged();
+        }
+
+        private void AssertNoContentLogged()
+        {
+            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentTextEvent));
+
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentBlockEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentTextBlockEvent));
+
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextBlockEvent));
         }
 
         [Test]
@@ -310,7 +390,7 @@ namespace Azure.Core.Tests
             setupRequest?.Invoke(mockResponse);
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
 
             using (Request request = pipeline.CreateRequest())
             {

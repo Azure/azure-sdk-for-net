@@ -9,9 +9,9 @@ namespace Azure.Security.KeyVault.Certificates
     internal class CertificateOperationUpdateParameters : IJsonSerializable
     {
         private const string CancellationRequestedPropertyName = "cancellation_requested";
-        private static readonly JsonEncodedText CancellationRequestedPropertyNameBytes = JsonEncodedText.Encode(CancellationRequestedPropertyName);
+        private static readonly JsonEncodedText s_cancellationRequestedPropertyNameBytes = JsonEncodedText.Encode(CancellationRequestedPropertyName);
 
-        private bool _cancellationRequested;
+        private readonly bool _cancellationRequested;
 
         public CertificateOperationUpdateParameters(bool cancellationRequested)
         {
@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteBoolean(CancellationRequestedPropertyNameBytes, _cancellationRequested);
+            json.WriteBoolean(s_cancellationRequestedPropertyNameBytes, _cancellationRequested);
         }
     }
 }

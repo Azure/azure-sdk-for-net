@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message).GetAwaiter().GetResult();
         }
 
-        public sealed override async Task ProcessAsync(HttpPipelineMessage message)
+        public sealed override async ValueTask ProcessAsync(HttpPipelineMessage message)
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {

@@ -54,8 +54,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
             // To achieve this, we need to create a new version of the secret in the key vault. The update operation cannot
             // change the value of the secret.
-            var secretNewValue = new Secret(secretName, "bhjd4DDgsa");
-            secretNewValue.Expires = DateTimeOffset.Now.AddYears(1);
+            var secretNewValue = new Secret(secretName, "bhjd4DDgsa")
+            {
+                Expires = DateTimeOffset.Now.AddYears(1)
+            };
 
             await client.SetAsync(secretNewValue);
 

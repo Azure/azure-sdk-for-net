@@ -3,6 +3,7 @@
 // license information.
 
 using Azure.Core;
+using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using System;
 using System.IO;
@@ -23,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A client used to perform cryptographic operations with Azure Key Vault keys 
     /// </summary>
-    public class CryptographyClient
+    public class CryptographyClient : IKeyEncryptionKey
     {
         private readonly Uri _keyId;
         private readonly ICryptographyProvider _remoteProvider;
@@ -58,8 +59,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="NotSupportedException">The <see cref="CryptographyClientOptions.Version"/> is not supported.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.NotNull(keyId, nameof(keyId));
-            Argument.NotNull(credential, nameof(credential));
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             _keyId = keyId;
             options ??= new CryptographyClientOptions();
@@ -457,7 +458,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -489,7 +490,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -522,7 +523,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -555,7 +556,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -588,7 +589,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -621,7 +622,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -654,7 +655,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -687,7 +688,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -704,6 +705,62 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Encrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to encrypt the key</param>
+        /// <param name="key">The key to be encrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The encrypted key</returns>
+        Memory<byte> IKeyEncryptionKey.WrapKey(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
+        {
+            WrapResult result = WrapKey(new KeyWrapAlgorithm(algorithm), key.ToArray(), cancellationToken);
+
+            return result.EncryptedKey;
+        }
+
+        /// <summary>
+        /// Encrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to encrypt the key</param>
+        /// <param name="key">The key to be encrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The encrypted key</returns>
+        async Task<Memory<byte>> IKeyEncryptionKey.WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
+        {
+            WrapResult result = await WrapKeyAsync(new KeyWrapAlgorithm(algorithm), key.ToArray(), cancellationToken).ConfigureAwait(false);
+
+            return result.EncryptedKey;
+        }
+
+        /// <summary>
+        /// Decrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to decrypt the key</param>
+        /// <param name="encryptedKey">The encrypted key to be decrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The decrypted key</returns>
+        Memory<byte> IKeyEncryptionKey.UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
+        {
+            UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken);
+
+            return result.Key;
+        }
+
+        /// <summary>
+        /// Decrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to decrypt the key</param>
+        /// <param name="encryptedKey">The encrypted key to be decrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The decrypted key</returns>
+        async Task<Memory<byte>> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
+        {
+            UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken).ConfigureAwait(false);
+
+            return result.Key;
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)

@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
 
-            foreach(var tuple in queryParams)
+            foreach ((string, string) tuple in queryParams)
             {
                 firstPage.AppendQuery(tuple.Item1, tuple.Item2);
             }
@@ -217,7 +217,7 @@ namespace Azure.Security.KeyVault
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             switch (response.Status)
             {
@@ -232,7 +232,7 @@ namespace Azure.Security.KeyVault
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            var response = _pipeline.SendRequest(request, cancellationToken);
+            Response response = _pipeline.SendRequest(request, cancellationToken);
 
             switch (response.Status)
             {
