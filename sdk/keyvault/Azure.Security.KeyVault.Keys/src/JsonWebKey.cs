@@ -296,7 +296,7 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private const string KeyOpsPropertyName = "key_ops";
         private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "curveName";
+        private const string CurveNamePropertyName = "crv";
         private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
         private const string NPropertyName = "n";
         private static readonly JsonEncodedText s_nPropertyNameBytes = JsonEncodedText.Encode(NPropertyName);
@@ -320,7 +320,7 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_dPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
         private const string KPropertyName = "k";
         private static readonly JsonEncodedText s_kPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
-        private const string TPropertyName = "t";
+        private const string TPropertyName = "key_hsm";
         private static readonly JsonEncodedText s_tPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
 
         internal bool SupportsOperation(KeyOperation operation)

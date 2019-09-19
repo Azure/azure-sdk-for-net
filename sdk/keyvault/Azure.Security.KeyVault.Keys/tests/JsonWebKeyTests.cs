@@ -104,7 +104,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
             }
-            catch (PlatformNotSupportedException)
+            catch (NotSupportedException)
             {
                 Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
             }

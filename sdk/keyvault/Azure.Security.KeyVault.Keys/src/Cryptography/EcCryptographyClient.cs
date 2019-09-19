@@ -25,11 +25,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        // Types of exceptions:
-        // * Argument exceptions - data is just wrong.
-        // * Unsupported exceptions - we may not support a particular algorithm locally but Azure might.
-        // * Server exceptions - server returned an error.
-
         public bool SupportsOperation(KeyOperation operation)
         {
             if (_jwk != null)

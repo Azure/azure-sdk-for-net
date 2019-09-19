@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _keyId = keyId;
             options ??= new CryptographyClientOptions();
 
-            var remoteClient = new RemoteCryptographyClient(keyId, credential, options);
+            RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(_keyId, credential, options);
 
             _pipeline = remoteClient.Pipeline;
             _remoteClient = remoteClient;
@@ -69,6 +69,26 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 _client = remoteClient;
             }
+        }
+
+        internal CryptographyClient(JsonWebKey keyMaterial, TokenCredential credential, CryptographyClientOptions options)
+        {
+            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            if (string.IsNullOrEmpty(keyMaterial.KeyId))
+            {
+                throw new ArgumentException($"{nameof(keyMaterial.KeyId)} is required", nameof(keyMaterial));
+            }
+
+            _keyId = new Uri(keyMaterial.KeyId);
+            options ??= new CryptographyClientOptions();
+
+            RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(_keyId, credential, options);
+
+            _pipeline = remoteClient.Pipeline;
+            _remoteClient = remoteClient;
+            _client = LocalCryptographyClientFactory.Create(keyMaterial);
         }
 
         internal ICryptographyProvider RemoteClient => _remoteClient;
@@ -1069,13 +1089,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        /// <summary>
-        /// Encrypts the specified key using the specified algorithm
-        /// </summary>
-        /// <param name="algorithm">The algorithm to use to encrypt the key</param>
-        /// <param name="key">The key to be encrypted</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
-        /// <returns>The encrypted key</returns>
+        /// <inheritdoc/>
         Memory<byte> IKeyEncryptionKey.WrapKey(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
         {
             WrapResult result = WrapKey(new KeyWrapAlgorithm(algorithm), key.ToArray(), cancellationToken);
@@ -1083,13 +1097,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result.EncryptedKey;
         }
 
-        /// <summary>
-        /// Encrypts the specified key using the specified algorithm
-        /// </summary>
-        /// <param name="algorithm">The algorithm to use to encrypt the key</param>
-        /// <param name="key">The key to be encrypted</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
-        /// <returns>The encrypted key</returns>
+        /// <inheritdoc/>
         async Task<Memory<byte>> IKeyEncryptionKey.WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
         {
             WrapResult result = await WrapKeyAsync(new KeyWrapAlgorithm(algorithm), key.ToArray(), cancellationToken).ConfigureAwait(false);
@@ -1097,13 +1105,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result.EncryptedKey;
         }
 
-        /// <summary>
-        /// Decrypts the specified key using the specified algorithm
-        /// </summary>
-        /// <param name="algorithm">The algorithm to use to decrypt the key</param>
-        /// <param name="encryptedKey">The encrypted key to be decrypted</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
-        /// <returns>The decrypted key</returns>
+        /// <inheritdoc/>
         Memory<byte> IKeyEncryptionKey.UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
             UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken);
@@ -1111,13 +1113,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result.Key;
         }
 
-        /// <summary>
-        /// Decrypts the specified key using the specified algorithm
-        /// </summary>
-        /// <param name="algorithm">The algorithm to use to decrypt the key</param>
-        /// <param name="encryptedKey">The encrypted key to be decrypted</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
-        /// <returns>The decrypted key</returns>
+        /// <inheritdoc/>
         async Task<Memory<byte>> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
             UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken).ConfigureAwait(false);

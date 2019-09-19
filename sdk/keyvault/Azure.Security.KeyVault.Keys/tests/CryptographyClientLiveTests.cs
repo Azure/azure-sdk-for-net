@@ -37,6 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -56,14 +57,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(decResult.Plaintext);
 
             CollectionAssert.AreEqual(data, decResult.Plaintext);
-
-            RegisterForCleanup(key);
         }
 
         [Test]
         public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -83,14 +83,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(decResult.Key);
 
             CollectionAssert.AreEqual(data, decResult.Key);
-
-            RegisterForCleanup(key);
         }
 
         [Test]
         public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -126,14 +125,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.True(verifyResult.IsValid);
             Assert.True(verifyResult.IsValid);
-
-            RegisterForCleanup(key);
         }
 
         [Test]
         public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -175,9 +173,67 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.True(verifyResult.IsValid);
             Assert.True(verifyResult.IsValid);
-
-            RegisterForCleanup(key);
         }
+
+#if !NET461
+        [Test]
+        public async Task LocalSignVerifyRoundTrip([Fields(nameof(SignatureAlgorithm.ES256), nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.ES384), nameof(SignatureAlgorithm.ES512))]SignatureAlgorithm algorithm)
+        {
+            Key key = await CreateTestKeyWithKeyMaterial(algorithm);
+            RegisterForCleanup(key);
+
+            (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
+
+            byte[] data = new byte[32];
+            Recording.Random.NextBytes(data);
+
+            using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
+            byte[] digest = hashAlgo.ComputeHash(data);
+
+            // Sign locally...
+            SignResult signResult = await client.SignAsync(algorithm, digest);
+
+            Assert.AreEqual(algorithm, signResult.Algorithm);
+            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.NotNull(signResult.Signature);
+
+            // ...and verify remotely.
+            VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
+
+            Assert.AreEqual(algorithm, verifyResult.Algorithm);
+            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.IsTrue(verifyResult.IsValid);
+        }
+
+        [Test]
+        public async Task SignLocalVerifyRoundTrip([Fields(nameof(SignatureAlgorithm.ES256), nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.ES384), nameof(SignatureAlgorithm.ES512))]SignatureAlgorithm algorithm)
+        {
+            Key key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key);
+
+            CryptographyClient client = GetCryptoClient(key.Id);
+
+            byte[] data = new byte[32];
+            Recording.Random.NextBytes(data);
+
+            using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
+            byte[] digest = hashAlgo.ComputeHash(data);
+
+            // Should sign remotely...
+            SignResult signResult = await client.SignAsync(algorithm, digest);
+
+            Assert.AreEqual(algorithm, signResult.Algorithm);
+            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.NotNull(signResult.Signature);
+
+            // ...and verify locally.
+            VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
+
+            Assert.AreEqual(algorithm, verifyResult.Algorithm);
+            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.IsTrue(verifyResult.IsValid);
+        }
+#endif
 
         private async Task<Key> CreateTestKey(EncryptionAlgorithm algorithm)
         {
@@ -217,6 +273,23 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(client);
         }
 
+        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(JsonWebKey keyMaterial, TestRecording recording = null)
+        {
+            recording ??= Recording;
+
+            CryptographyClient client = new CryptographyClient(keyMaterial, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new CryptographyClientOptions()));
+            CryptographyClient clientProxy = InstrumentClient(client);
+
+            ICryptographyProvider remoteClientProxy = null;
+            if (client.RemoteClient != null)
+            {
+                RemoteCryptographyClientBroker remoteClientAdapter = new RemoteCryptographyClientBroker(client.RemoteClient);
+                remoteClientProxy = InstrumentClient(remoteClientAdapter);
+            }
+
+            return (clientProxy, remoteClientProxy);
+        }
+
         private async Task<Key> CreateTestKey(SignatureAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
@@ -241,6 +314,51 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
+        }
+
+        private async Task<Key> CreateTestKeyWithKeyMaterial(SignatureAlgorithm algorithm)
+        {
+            string keyName = Recording.GenerateId();
+
+            JsonWebKey keyMaterial = null;
+            switch (algorithm.ToString())
+            {
+                case SignatureAlgorithm.ES256Value:
+                case SignatureAlgorithm.ES256KValue:
+                case SignatureAlgorithm.ES384Value:
+                case SignatureAlgorithm.ES512Value:
+#if NET461
+                    Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#else
+                    KeyCurveName curveName = algorithm.GetKeyCurveName();
+                    ECCurve curve = ECCurve.CreateFromOid(curveName._oid);
+
+                    using (ECDsa ecdsa = ECDsa.Create())
+                    {
+                        try
+                        {
+                            ecdsa.GenerateKey(curve);
+                            keyMaterial = new JsonWebKey(ecdsa, includePrivateParameters: true);
+                        }
+                        catch (NotSupportedException)
+                        {
+                            Assert.Inconclusive("This platform does not support OID {0}", curveName._oid);
+                        }
+                    }
+#endif
+
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
+            }
+
+            Key key = await Client.ImportKeyAsync(keyName, keyMaterial);
+
+            keyMaterial.KeyId = key.KeyMaterial.KeyId;
+            key.KeyMaterial = keyMaterial;
+
+            return key;
         }
     }
 }
