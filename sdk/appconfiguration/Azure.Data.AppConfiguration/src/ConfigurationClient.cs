@@ -795,7 +795,7 @@ namespace Azure.Data.AppConfiguration
         /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
         /// If no etag value is passed in, then the setting is always set to read only.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> SetReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
@@ -809,7 +809,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return response;
+                        return CreateResponse(response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -830,7 +830,7 @@ namespace Azure.Data.AppConfiguration
         /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
         /// If no etag value is passed in, then the setting is always set to read only.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response SetReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
@@ -844,7 +844,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return response;
+                        return CreateResponse(response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -882,7 +882,7 @@ namespace Azure.Data.AppConfiguration
         /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
         /// If no etag value is passed in, then the setting is always set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> ClearReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> ClearReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
             scope.AddAttribute("key", key);
@@ -896,7 +896,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return response;
+                        return CreateResponse(response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -917,7 +917,7 @@ namespace Azure.Data.AppConfiguration
         /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
         /// If no etag value is passed in, then the setting is always set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response ClearReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> ClearReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
             scope.AddAttribute("key", key);
@@ -931,7 +931,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return response;
+                        return CreateResponse(response);
                     default:
                         throw response.CreateRequestFailedException();
                 }

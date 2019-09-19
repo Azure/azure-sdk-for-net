@@ -28,7 +28,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 { "tag1", "value1" },
                 { "tag2", "value2" }
-            }
+            },
+            Locked = false
         };
 
         public ConfigurationMockTests(bool isAsync) : base(isAsync) { }
@@ -270,17 +271,19 @@ namespace Azure.Data.AppConfiguration.Tests
         public async Task SetReadOnly()
         {
             var response = new MockResponse(200);
+            s_testSetting.Locked 
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
 
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.SetReadOnlyAsync(s_testSetting.Key);
+            var setting = await service.SetReadOnlyAsync(s_testSetting.Key);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/locks/test_key", request.UriBuilder.ToString());
+            Assert.IsTrue(setting.Value.Locked);
         }
 
         [Test]
@@ -292,12 +295,13 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.SetReadOnlyAsync(s_testSetting.Key, s_testSetting.Label);
+            var setting = await service.SetReadOnlyAsync(s_testSetting.Key, s_testSetting.Label);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/locks/test_key?label=test_label", request.UriBuilder.ToString());
+            Assert.IsTrue(setting.Value.Locked);
         }
 
         [Test]
@@ -324,12 +328,13 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.ClearReadOnlyAsync(s_testSetting.Key);
+            var setting = await service.ClearReadOnlyAsync(s_testSetting.Key);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/locks/test_key", request.UriBuilder.ToString());
+            Assert.IsFalse(setting.Value.Locked);
         }
 
         [Test]
@@ -341,12 +346,13 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.ClearReadOnlyAsync(s_testSetting.Key, s_testSetting.Label);
+            var setting = await service.ClearReadOnlyAsync(s_testSetting.Key, s_testSetting.Label);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/locks/test_key?label=test_label", request.UriBuilder.ToString());
+            Assert.IsFalse(setting.Value.Locked);
         }
 
         [Test]
