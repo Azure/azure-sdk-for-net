@@ -7,13 +7,14 @@ namespace Azure
 {
     public class RequestFailedException : Exception
     {
+        public const int NoStatus = 0;
         public int Status { get; }
 
-        public RequestFailedException(string message) : this(0, message)
+        public RequestFailedException(string message) : this(NoStatus, message)
         {
         }
 
-        public RequestFailedException(string message, Exception? innerException) : this(0, message, innerException)
+        public RequestFailedException(string message, Exception? innerException) : this(NoStatus, message, innerException)
         {
         }
 
