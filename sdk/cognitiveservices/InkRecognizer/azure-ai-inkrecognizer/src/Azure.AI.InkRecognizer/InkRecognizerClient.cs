@@ -190,8 +190,7 @@ namespace Azure.Data.InkRecognizer
             try
             {
                 //var policies = new HttpPipelinePolicy[] {_options.TelemetryPolicy, _options.LoggingPolicy, _options.RetryPolicy};
-
-                var pipeline = HttpPipelineBuilder.Build(_options, null);/*HttpPipelineBuilder.Build(_options, true, policies);*/
+                var pipeline = HttpPipelineBuilder.Build(_options);
                 var request = CreateInkRecognitionRequest(pipeline,
                     strokes,
                     _options.ApplicationKind,

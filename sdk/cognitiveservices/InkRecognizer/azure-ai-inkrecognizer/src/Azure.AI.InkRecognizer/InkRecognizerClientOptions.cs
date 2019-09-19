@@ -2,12 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core;
 using Azure.Core.Pipeline;
-//using Azure.Core.Pipeline.Policies;
-using Azure.Core.Http;
 using System;
-using System.Reflection;
 
 //namespace Azure.AI.InkRecognizer
 namespace Azure.Data.InkRecognizer
@@ -43,6 +39,11 @@ namespace Azure.Data.InkRecognizer
         public InkPointUnit InkPointUnit { get; set; } = InkPointUnit.Mm;
 
         /// <summary>
+        /// This is for setting up retry
+        /// </summary>
+        public RetryOptions RetryOps { get; set; }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="InkRecognizerClientOptions"/> that stores the configuration settings
         /// to use when communicating with the Ink Recognizer service.
         /// </summary>
@@ -66,14 +67,14 @@ namespace Azure.Data.InkRecognizer
             Preview1 = 0,
         }
 
-        private static void CreatePolicies()
+        private  void CreatePolicies()
         {
-            //RetryPolicy = new RetryPolicy()
-            //{
-            //    Mode = RetryMode.Exponential,
-            //    MaxDelay = TimeSpan.FromSeconds(0.8),
-            //    MaxRetries = 3
-            //};
+            RetryOps = new RetryOptions()
+            {
+                Mode = RetryMode.Exponential,
+                MaxDelay = TimeSpan.FromSeconds(0.8),
+                MaxRetries = 3
+            };
 
             //LoggingPolicy = new LoggingPolicy();
 
