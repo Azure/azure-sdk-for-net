@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
             // it has the required size.
-            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault 
+            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault
             // with the new specified size.
             var newRsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 4096)
             {

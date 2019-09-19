@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(Value != null)
+            if (Value != null)
             {
                 json.WriteBase64String(s_valuePropertyNameBytes, Value);
             }

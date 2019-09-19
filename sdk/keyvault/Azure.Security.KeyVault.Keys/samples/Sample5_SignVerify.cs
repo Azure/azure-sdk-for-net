@@ -1,4 +1,8 @@
-﻿using Azure.Core.Testing;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -41,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Key cloudEcKey = keyClient.CreateEcKey(ecKey);
             Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyMaterial.KeyType}");
 
-            // Let's create the CryptographyClient which can perform cryptographic operations with the keys we just created. 
+            // Let's create the CryptographyClient which can perform cryptographic operations with the keys we just created.
             // Again we are using the default Azure credential as above.
             var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
 
@@ -55,7 +59,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Signing with the Sign and Verify methods
             //
 
-            // The Sign and Verify methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the 
+            // The Sign and Verify methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the
             // singature algorithm being used. SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample
             using (HashAlgorithm hashAlgo = SHA256.Create())
             {
@@ -70,7 +74,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             SignResult ecSignResult = ecCryptoClient.Sign(SignatureAlgorithm.Es256K, digest);
             Debug.WriteLine($"Signed digest using the algorithm {ecSignResult.Algorithm}, with key {ecSignResult.KeyId}. The resulting signature is {Convert.ToBase64String(ecSignResult.Signature)}");
 
-            // Verify the signatures 
+            // Verify the signatures
             VerifyResult rsaVerifyResult = rsaCryptoClient.Verify(SignatureAlgorithm.Rs256, digest, rsaSignResult.Signature);
             Debug.WriteLine($"Verified the signature using the algorithm {rsaVerifyResult.Algorithm}, with key {rsaVerifyResult.KeyId}. Signature is valid: {rsaVerifyResult.IsValid}");
 
@@ -91,7 +95,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             SignResult ecSignDataResult = ecCryptoClient.SignData(SignatureAlgorithm.Es256K, data);
             Debug.WriteLine($"Signed data using the algorithm {ecSignDataResult.Algorithm}, with key {ecSignDataResult.KeyId}. The resulting signature is {Convert.ToBase64String(ecSignDataResult.Signature)}");
 
-            // Verify the signatures 
+            // Verify the signatures
             VerifyResult rsaVerifyDataResult = rsaCryptoClient.VerifyData(SignatureAlgorithm.Rs256, data, rsaSignDataResult.Signature);
             Debug.WriteLine($"Verified the signature using the algorithm {rsaVerifyDataResult.Algorithm}, with key {rsaVerifyDataResult.KeyId}. Signature is valid: {rsaVerifyDataResult.IsValid}");
 

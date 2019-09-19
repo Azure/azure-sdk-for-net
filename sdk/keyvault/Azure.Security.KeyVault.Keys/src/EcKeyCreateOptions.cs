@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public KeyCurveName? Curve { get; set; }
 
-        /// <summary> 
+        /// <summary>
         /// Determines whether or not a hardware key (HSM) is used for creation.
         /// </summary>
         ///

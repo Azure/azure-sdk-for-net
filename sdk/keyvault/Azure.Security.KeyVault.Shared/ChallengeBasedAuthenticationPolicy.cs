@@ -129,7 +129,7 @@ namespace Azure.Security.KeyVault
                     return true;
                 }
 
-                // This assumes that Scopes is always non-null and of length one.  
+                // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
                 if (obj is AuthenticationChallenge other)
                 {
