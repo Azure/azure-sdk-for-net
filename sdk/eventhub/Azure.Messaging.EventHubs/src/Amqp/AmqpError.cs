@@ -18,23 +18,41 @@ namespace Azure.Messaging.EventHubs
     ///
     internal static class AmqpError
     {
-        /// <summary>Indicates that a timeout occurred on the link.</summary>
-        public static readonly AmqpSymbol TimeoutError = AmqpConstants.Vendor + ":timeout";
+        /// <summary>
+        ///   The status text that appears when an AMQP error was due to a missing resource.
+        /// </summary>
+        ///
+        private const string NotFoundStatusText = "status-code: 404";
 
-        /// <summary>Indicates that the server was busy and could not allow the requested operation.</summary>
-        public static readonly AmqpSymbol ServerBusyError = AmqpConstants.Vendor + ":server-busy";
+        /// <summary>
+        ///   Indicates that a timeout occurred on the link.
+        /// </summary>
+        ///
+        public static AmqpSymbol TimeoutError { get; } = AmqpConstants.Vendor + ":timeout";
 
-        /// <summary>Indicates that an argument provided to the Event Hubs service was incorrect.</summary>
-        public static readonly AmqpSymbol ArgumentError = AmqpConstants.Vendor + ":argument-error";
+        /// <summary>
+        ///   Indicates that the server was busy and could not allow the requested operation.
+        /// </summary>
+        ///
+        public static AmqpSymbol ServerBusyError { get; } = AmqpConstants.Vendor + ":server-busy";
 
-        /// <summary>Indicates that an argument provided to the Event Hubs service was incorrect.</summary>
-        public static readonly AmqpSymbol ArgumentOutOfRangeError = AmqpConstants.Vendor + ":argument-out-of-range";
+        /// <summary>
+        ///   Indicates that an argument provided to the Event Hubs service was incorrect.
+        /// </summary>
+        ///
+        public static AmqpSymbol ArgumentError { get; }= AmqpConstants.Vendor + ":argument-error";
 
-        /// <summary>The status text that appears when an AMQP error was due to a missing resource.</summary>
-        private const string _notFoundStatusText = "status-code: 404";
+        /// <summary>
+        ///   Indicates that an argument provided to the Event Hubs service was incorrect.
+        /// </summary>
+        ///
+        public static AmqpSymbol ArgumentOutOfRangeError { get; } = AmqpConstants.Vendor + ":argument-out-of-range";
 
-        /// <summary>The expression to test for when the service returns a "Not Found" response to determine the context.</summary>
-        private static readonly Regex s_notFoundExpression = new Regex("The messaging entity .* could not be found", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        /// <summary>
+        ///   The expression to test for when the service returns a "Not Found" response to determine the context.
+        /// </summary>
+        ///
+        private static Regex NotFoundExpression { get; } = new Regex("The messaging entity .* could not be found", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         /// <summary>The set of mappings from AMQP error conditions to response status codes.</summary>
         private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> s_statusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
@@ -172,8 +190,8 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                if (s_notFoundExpression.IsMatch(description)
-                    || (description.IndexOf(_notFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
+                if (NotFoundExpression.IsMatch(description)
+                    || (description.IndexOf(NotFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
                 {
                     return new EventHubsResourceNotFoundException(eventHubsResource, description);
                 }

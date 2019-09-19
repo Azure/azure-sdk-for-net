@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs
             options ??= s_defaultSendOptions;
 
             Argument.AssertNotNull(events, nameof(events));
-            GuardSinglePartitionReference(PartitionId, options.PartitionKey);
+            AssertSinglePartitionReference(PartitionId, options.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
 
@@ -263,7 +263,7 @@ namespace Azure.Messaging.EventHubs
                                             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
-            GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
+            AssertSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
 
@@ -293,7 +293,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public virtual Task<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+        public virtual ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
@@ -311,12 +311,12 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public virtual async Task<EventDataBatch> CreateBatchAsync(BatchOptions options,
-                                                                   CancellationToken cancellationToken = default)
+        public virtual async ValueTask<EventDataBatch> CreateBatchAsync(BatchOptions options,
+                                                                        CancellationToken cancellationToken = default)
         {
             options = options?.Clone() ?? new BatchOptions();
 
-            GuardSinglePartitionReference(PartitionId, options.PartitionKey);
+            AssertSinglePartitionReference(PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options);
@@ -418,8 +418,8 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionId">The identifier of the partition to which the producer is bound.</param>
         /// <param name="partitionKey">The hash key for partition routing that was requested for a publish operation.</param>
         ///
-        private static void GuardSinglePartitionReference(string partitionId,
-                                                          string partitionKey)
+        private static void AssertSinglePartitionReference(string partitionId,
+                                                           string partitionKey)
         {
             if ((!string.IsNullOrEmpty(partitionId)) && (!string.IsNullOrEmpty(partitionKey)))
             {

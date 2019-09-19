@@ -7,6 +7,17 @@ using Azure.Messaging.EventHubs;
 
 namespace Azure.Core
 {
+    /// <summary>
+    ///   Provides a consistent means for verifying arguments and other invariants for a given
+    ///   member.
+    /// </summary>
+    ///
+    /// <remarks>
+    ///   This class extends the <see cref="Azure.Core.Argument" /> type, referenced as a partial
+    ///   class via shared source; the base partial class definition may be found in the "SharedSource"
+    ///   folder of this project.
+    /// </remarks>
+    ///
     internal static partial class Argument
     {
         /// <summary>
@@ -17,7 +28,9 @@ namespace Azure.Core
         ///
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
         /// <exception cref="ArgumentException">The argument is empty or contains only white-space.</exception>
+        ///
         public static void AssertNotEmptyOrWhiteSpace(string argumentValue, string argumentName)
         {
             if (argumentValue is null)
@@ -39,7 +52,9 @@ namespace Azure.Core
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="maximumLength">The maximum allowable length for the <paramref name="argumentValue"/>; its length must be less than or equal to this value.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> exceeds <paramref name="maximumLength"/> characters.</exception>
+        ///
         public static void AssertNotTooLong(string argumentValue, int maximumLength, string argumentName)
         {
             if (argumentValue != null && argumentValue.Length > maximumLength)
@@ -55,7 +70,9 @@ namespace Azure.Core
         ///
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is a negative <see cref="TimeSpan"/> value.</exception>
+        ///
         public static void AssertNotNegative(TimeSpan argumentValue, string argumentName)
         {
             if (argumentValue < TimeSpan.Zero)
@@ -72,7 +89,9 @@ namespace Azure.Core
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
+        ///
         public static void AssertAtLeast(long argumentValue, long minimumValue, string argumentName)
         {
             if (argumentValue < minimumValue)

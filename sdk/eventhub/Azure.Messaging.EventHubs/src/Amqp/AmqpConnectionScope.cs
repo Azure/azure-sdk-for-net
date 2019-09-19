@@ -33,11 +33,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
         private const string WebSocketsUriScheme = "wss";
 
-        /// <summary>The version of AMQP to use within the scope.</summary>
-        private static readonly Version s_amqpVersion = new Version(1, 0, 0, 0);
-
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private bool _disposed = false;
+
+        /// <summary>
+        ///   The version of AMQP to use within the scope.
+        /// </summary>
+        ///
+        private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
 
         /// <summary>
         ///   The unique identifier of the scope.
@@ -111,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             Proxy = proxy;
             Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
 
-            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateConnectionAsync(s_amqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
+            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(connectionFactory, CloseConnection);
         }
 
@@ -178,7 +181,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            TimeSpan timeout)
         {
             var hostName = serviceEndpoint.Host;
-            AmqpSettings amqpSettings = CreateAmpqSettings(s_amqpVersion);
+            AmqpSettings amqpSettings = CreateAmpqSettings(AmqpVersion);
             AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(hostName, scopeIdentifier);
 
             TransportSettings transportSettings = transportType.IsWebSocketTransport()
@@ -370,7 +373,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 HostName = hostName
             };
 
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.s_current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {
                 connectionSettings.AddProperty(property.Key, property.Value);
             }

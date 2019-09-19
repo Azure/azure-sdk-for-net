@@ -151,8 +151,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public override async Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
-                                                                         CancellationToken cancellationToken)
+        public override async ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));
 

@@ -498,11 +498,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 UpdateRetryPolicyCalledWith = newRetryPolicy;
             }
 
-            public override Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
-                                                                       CancellationToken cancellationToken)
+            public override ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                            CancellationToken cancellationToken)
             {
                 CreateBatchCalledWith = options;
-                return Task.FromResult((TransportEventBatch)new MockTransportBatch());
+                return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken)
