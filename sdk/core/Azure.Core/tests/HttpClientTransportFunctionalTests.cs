@@ -109,21 +109,22 @@ namespace Azure.Core.Tests
         [Test]
         public async Task StreamReadingExceptionsAreIOExceptions()
         {
-            using (TestServer testServer = new TestServer(
-                async context =>
+                using (TestServer testServer = new TestServer(
+                    async context =>
+                    {
+                        context.Response.ContentLength = 20;
+                        await context.Response.WriteAsync("Hello");
+
+                        context.Abort();
+                    }))
                 {
-                    context.Response.ContentLength = 20;
-                    await context.Response.WriteAsync("Hello");
+                    var transport = new HttpClientTransport();
+                    Request request = transport.CreateRequest();
+                    request.UriBuilder.Uri = testServer.Address;
+                    Response response = await ExecuteRequest(request, transport);
 
-                    context.Abort();
-                }))
-            {
-                var transport = new HttpClientTransport();
-                Request request = transport.CreateRequest();
-                request.UriBuilder.Uri = testServer.Address;
-                Response response = await ExecuteRequest(request, transport);
-
-                Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
+                    Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
+                }
             }
         }
     }
