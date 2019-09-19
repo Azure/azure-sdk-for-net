@@ -1684,12 +1684,12 @@ namespace Azure.Storage.Files
 
         #region UploadRangeFromUrl
         /// <summary>
-        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file.
+        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file. 
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1724,12 +1724,12 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file.
+        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file. 
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1764,12 +1764,12 @@ namespace Azure.Storage.Files
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file.
+        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file. 
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
