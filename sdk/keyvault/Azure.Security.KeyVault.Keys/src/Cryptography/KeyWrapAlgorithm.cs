@@ -7,15 +7,14 @@ using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-
     /// <summary>
     /// Describes the key wrap algorithm
     /// </summary>
     public readonly struct KeyWrapAlgorithm : IEquatable<KeyWrapAlgorithm>
     {
-        internal const string RSAOAEPValue = "RSA-OAEP";
-        internal const string RSA15Value = "RSA1_5";
-        internal const string RSAOAEP256Value = "RSA-OAEP-256";
+        internal const string RsaOaepValue = "RSA-OAEP";
+        internal const string Rsa15Value = "RSA1_5";
+        internal const string RsaOaep256Value = "RSA-OAEP-256";
 
         private readonly string _value;
 
@@ -31,17 +30,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// RSA-OAEP
         /// </summary>
-        public static readonly KeyWrapAlgorithm RSAOAEP = new KeyWrapAlgorithm(RSAOAEPValue);
+        public static readonly KeyWrapAlgorithm RsaOaep = new KeyWrapAlgorithm(RsaOaepValue);
 
         /// <summary>
         /// RSA1_5
         /// </summary>
-        public static readonly KeyWrapAlgorithm RSA15 = new KeyWrapAlgorithm(RSA15Value);
+        public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(Rsa15Value);
 
         /// <summary>
         /// RSA-OAEP-256
         /// </summary>
-        public static readonly KeyWrapAlgorithm RSAOAEP256 = new KeyWrapAlgorithm(RSAOAEP256Value);
+        public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RsaOaep256Value);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.

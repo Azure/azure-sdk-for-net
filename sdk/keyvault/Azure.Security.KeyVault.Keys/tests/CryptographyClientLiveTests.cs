@@ -265,9 +265,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             switch (algorithm.ToString())
             {
-                case EncryptionAlgorithm.RSA15Value:
-                case EncryptionAlgorithm.RSAOAEPValue:
-                case EncryptionAlgorithm.RSAOAEP256Value:
+                case EncryptionAlgorithm.Rsa15Value:
+                case EncryptionAlgorithm.RsaOaepValue:
+                case EncryptionAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
@@ -280,9 +280,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             switch (algorithm.ToString())
             {
-                case KeyWrapAlgorithm.RSA15Value:
-                case KeyWrapAlgorithm.RSAOAEPValue:
-                case KeyWrapAlgorithm.RSAOAEP256Value:
+                case KeyWrapAlgorithm.Rsa15Value:
+                case KeyWrapAlgorithm.RsaOaepValue:
+                case KeyWrapAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));

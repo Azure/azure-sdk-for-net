@@ -11,9 +11,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public readonly struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
     {
-        internal const string RSAOAEPValue = "RSA-OAEP";
-        internal const string RSA15Value = "RSA1_5";
-        internal const string RSAOAEP256Value = "RSA-OAEP-256";
+        internal const string RsaOaepValue = "RSA-OAEP";
+        internal const string Rsa15Value = "RSA1_5";
+        internal const string RsaOaep256Value = "RSA-OAEP-256";
 
         private readonly string _value;
 
@@ -29,17 +29,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// RSA-OAEP
         /// </summary>
-        public static readonly EncryptionAlgorithm RSAOAEP = new EncryptionAlgorithm(RSAOAEPValue);
+        public static readonly EncryptionAlgorithm RsaOaep = new EncryptionAlgorithm(RsaOaepValue);
 
         /// <summary>
         /// RSA1_5
         /// </summary>
-        public static readonly EncryptionAlgorithm RSA15 = new EncryptionAlgorithm(RSA15Value);
+        public static readonly EncryptionAlgorithm Rsa15 = new EncryptionAlgorithm(Rsa15Value);
 
         /// <summary>
         /// RSA-OAEP256
         /// </summary>
-        public static readonly EncryptionAlgorithm RSAOAEP256 = new EncryptionAlgorithm(RSAOAEP256Value);
+        public static readonly EncryptionAlgorithm RsaOaep256 = new EncryptionAlgorithm(RsaOaep256Value);
 
         /// <summary>
         /// Determines if two <see cref="EncryptionAlgorithm"/> values are the same.

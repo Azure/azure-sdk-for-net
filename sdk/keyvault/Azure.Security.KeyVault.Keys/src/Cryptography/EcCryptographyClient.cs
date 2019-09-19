@@ -129,7 +129,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             scope.AddAttribute("key", _jwk.KeyId);
-
             try
             {
                 ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
@@ -146,6 +145,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 using ECDsa ecdsa = _jwk.ToECDsa(false, false);
                 if (ecdsa is null)
                 {
+                    scope.AddAttribute("skip", "PlatformNotSupported");
+
                     return null;
                 }
 
