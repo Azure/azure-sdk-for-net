@@ -61,7 +61,7 @@ namespace Azure.Core.Pipeline
             _properties[name] = value;
         }
 
-        public Stream? PreserveResponseContent()
+        public Stream? ExtractResponseContent()
         {
             switch (_response?.ContentStream)
             {
@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
 
             private static Exception CreateException()
             {
-                return new InvalidOperationException("This operation returns Stream as part of the model type. It should be used instead of the response content stream.");
+                return new InvalidOperationException("The operation has called ExtractResponseContent and will provide the stream as part of its response type.");
             }
 
             public override void Flush()

@@ -44,8 +44,8 @@ namespace Azure.Core.Tests
             HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.Response = response;
 
-            Stream stream = message.PreserveResponseContent();
-            Stream stream2 = message.PreserveResponseContent();
+            Stream stream = message.ExtractResponseContent();
+            Stream stream2 = message.ExtractResponseContent();
 
             Assert.AreSame(mockStream.Object, stream);
             Assert.AreSame(stream2, stream);
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests
             HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.Response = response;
 
-            Stream stream = message.PreserveResponseContent();
+            Stream stream = message.ExtractResponseContent();
 
             Assert.AreSame(null, stream);
         }
@@ -75,11 +75,11 @@ namespace Azure.Core.Tests
             HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.Response = response;
 
-            Stream stream = message.PreserveResponseContent();
+            Stream stream = message.ExtractResponseContent();
 
             Assert.AreSame(mockStream.Object, stream);
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => response.ContentStream.Read(Array.Empty<byte>(), 0, 0));
-            Assert.AreEqual("This operation returns Stream as part of the model type. It should be used instead of the response content stream.", exception.Message);
+            Assert.AreEqual("The operation this operation has called ExtractResponseContent and will provide the stream as part of its response type.", exception.Message);
         }
     }
 }

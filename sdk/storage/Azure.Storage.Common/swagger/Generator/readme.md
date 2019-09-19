@@ -12,6 +12,7 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 - `x-az-disable-warnings`: Wraps a declaration in a `#pragma disable` when specified.
 - `x-az-skip-path-components`: Whether to skip any path components and always assume a fully formed URL to the resource (this currently must be set to `true`).
 - `x-az-include-sync-methods`: Whether to generate support for sync methods.  The default value is `false` (this flag should go away soon and always be `true`).
+- `x-az-stream`: Whether to generate a non buffered request that takes owhership of the response stream. The default value is `false`.
 
 ### Autorest plugin configuration
 The AutoRest example at https://github.com/Azure/autorest-extension-helloworld

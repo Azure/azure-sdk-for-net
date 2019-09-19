@@ -235,7 +235,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 const createResponse = `${methodName}_CreateResponse(${responseName})`;
                 if (result.returnStream)
                 {
-                    w.line(`return (${createResponse}, ${messageName}.PreserveResponseContent());`);
+                    w.line(`return (${createResponse}, ${messageName}.ExtractResponseContent());`);
                 }
                 else
                 {

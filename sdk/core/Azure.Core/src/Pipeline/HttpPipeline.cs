@@ -56,24 +56,16 @@ namespace Azure.Core.Pipeline
 
         public async ValueTask<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            HttpPipelineMessage message = BuildMessage(request);
+            HttpPipelineMessage message = new HttpPipelineMessage(request, ResponseClassifier);
             await SendAsync(message, cancellationToken).ConfigureAwait(false);
             return message.Response;
         }
 
         public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            HttpPipelineMessage message = BuildMessage(request);
+            HttpPipelineMessage message = new HttpPipelineMessage(request, ResponseClassifier);
             Send(message, cancellationToken);
             return message.Response;
-        }
-
-        private HttpPipelineMessage BuildMessage(Request request)
-        {
-            return new HttpPipelineMessage(request, ResponseClassifier)
-            {
-                Request = request
-            };
         }
     }
 }

@@ -405,6 +405,7 @@ directive:
     $.get.responses["206"]["x-az-response-name"] = "FlattenedStorageFileProperties";
     $.get.responses["206"]["x-az-public"] = false;
     $.get.responses["206"]["x-az-response-schema-name"] = "Content";
+    $.get.responses["206"]["x-az-stream"] = true;
     $.head.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.head.responses["200"].headers["Content-Encoding"].type = "array";
     $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";

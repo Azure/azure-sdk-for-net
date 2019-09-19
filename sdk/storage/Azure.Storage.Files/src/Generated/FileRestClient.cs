@@ -3717,7 +3717,7 @@ namespace Azure.Storage.Files
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return (DownloadAsync_CreateResponse(_response), _message.PreserveResponseContent());
+                        return (DownloadAsync_CreateResponse(_response), _message.ExtractResponseContent());
                     }
                 }
                 catch (System.Exception ex)
