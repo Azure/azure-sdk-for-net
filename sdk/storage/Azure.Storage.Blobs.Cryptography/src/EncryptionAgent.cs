@@ -18,6 +18,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <summary>
         /// The algorithm used for encryption.
         /// </summary>
-        public EncryptionAlgorithmType Algorithm { get; set; }
+        public ClientsideEncryptionAlgorithm Algorithm { get; set; }
     }
 }
