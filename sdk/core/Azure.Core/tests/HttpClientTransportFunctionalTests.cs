@@ -109,11 +109,13 @@ namespace Azure.Core.Tests
         [Test]
         public async Task StreamReadingExceptionsAreIOExceptions()
         {
+            var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             using (TestServer testServer = new TestServer(
                 async context =>
                 {
                     context.Response.ContentLength = 20;
                     await context.Response.WriteAsync("Hello");
+                    await tcs.Task;
 
                     context.Abort();
                 }))
@@ -122,6 +124,8 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.UriBuilder.Uri = testServer.Address;
                 Response response = await ExecuteRequest(request, transport);
+
+                tcs.SetResult(null);
 
                 Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
             }
