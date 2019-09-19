@@ -2,13 +2,17 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Testing;
+using Azure.Core.Tests;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using static Azure.Core.Tests.ClientDiagnosticListener;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -179,6 +183,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task LocalSignVerifyRoundTrip([Fields(nameof(SignatureAlgorithm.ES256), nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.ES384), nameof(SignatureAlgorithm.ES512))]SignatureAlgorithm algorithm)
         {
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key);
 
@@ -197,6 +203,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
+            listener.AssertScopeNotStarted("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Sign");
+            listener.Scopes.Clear();
+
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
@@ -208,6 +217,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task SignLocalVerifyRoundTrip([Fields(nameof(SignatureAlgorithm.ES256), nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.ES384), nameof(SignatureAlgorithm.ES512))]SignatureAlgorithm algorithm)
         {
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+
             Key key = await CreateTestKey(algorithm);
             RegisterForCleanup(key);
 
@@ -222,9 +233,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // Should sign remotely...
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
+            // Check if we failed to create the key when fetched from the server. Currently, macOS doesn't support ES256K.
+            ProducedDiagnosticScope scope = listener.GetScope("Azure.Security.KeyVault.Keys.Cryptography.EcCryptographyClient.Sign");
+            if (scope != null && scope.Activity.Tags.Contains(new KeyValuePair<string, string>("skip", "PlatformNotSupported")))
+            {
+                Assert.Inconclusive("This platform does not support {0}", algorithm);
+            }
+
             Assert.AreEqual(algorithm, signResult.Algorithm);
             Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
+
+            listener.AssertScope("Azure.Security.KeyVault.Keys.Cryptography.EcCryptographyClient.Sign", new KeyValuePair<string, string>("skip", "NoPrivateKeyMaterial"));
+            listener.Scopes.Clear();
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
@@ -232,6 +253,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
             Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
+
+            listener.AssertScope("Azure.Security.KeyVault.Keys.Cryptography.EcCryptographyClient.Verify");
+            listener.AssertScopeNotStarted("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Verify");
         }
 #endif
 

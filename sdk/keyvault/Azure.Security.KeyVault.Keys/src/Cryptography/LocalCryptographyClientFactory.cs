@@ -7,16 +7,16 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal static class LocalCryptographyClientFactory
     {
-        public static ICryptographyProvider Create(JsonWebKey key)
+        public static ICryptographyProvider Create(IKeyVaultPipeline pipeline, JsonWebKey key)
         {
             if (key.KeyType == KeyType.Rsa || key.KeyType == KeyType.RsaHsm)
             {
-                return new RsaCryptographyClient(key);
+                return new RsaCryptographyClient(pipeline, key);
             }
 
             if (key.KeyType == KeyType.Ec || key.KeyType == KeyType.EcHsm)
             {
-                return new EcCryptographyClient(key);
+                return new EcCryptographyClient(pipeline, key);
             }
 
             throw new NotSupportedException();

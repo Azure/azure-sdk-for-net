@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault
 {
-    internal class KeyVaultPipeline
+    internal class KeyVaultPipeline : IKeyVaultPipeline
     {
         private readonly Uri _vaultUri;
         private readonly HttpPipeline _pipeline;

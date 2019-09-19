@@ -9,11 +9,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RsaCryptographyClient : ICryptographyProvider
     {
+        private readonly IKeyVaultPipeline _pipeline;
         private readonly JsonWebKey _jwk;
 
-        internal RsaCryptographyClient(JsonWebKey jwk)
+        internal RsaCryptographyClient(IKeyVaultPipeline pipeline, JsonWebKey jwk)
         {
-            _jwk = jwk;
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _jwk = jwk ?? throw new ArgumentNullException(nameof(jwk));
         }
 
         public bool SupportsOperation(KeyOperation operation)

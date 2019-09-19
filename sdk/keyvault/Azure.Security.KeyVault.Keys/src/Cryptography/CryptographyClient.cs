@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = remoteClient.Pipeline;
             _remoteClient = remoteClient;
-            _client = LocalCryptographyClientFactory.Create(keyMaterial);
+            _client = LocalCryptographyClientFactory.Create(_pipeline, keyMaterial);
         }
 
         internal ICryptographyProvider RemoteClient => _remoteClient;
@@ -1147,7 +1147,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Response<Key> key = await _remoteClient.GetKeyAsync(cancellationToken).ConfigureAwait(false);
-                _client = LocalCryptographyClientFactory.Create(key.Value.KeyMaterial);
+                _client = LocalCryptographyClientFactory.Create(_pipeline, key.Value.KeyMaterial);
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
@@ -1176,7 +1176,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Response<Key> key = _remoteClient.GetKey(cancellationToken);
-                _client = LocalCryptographyClientFactory.Create(key.Value.KeyMaterial);
+                _client = LocalCryptographyClientFactory.Create(_pipeline, key.Value.KeyMaterial);
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
@@ -1189,49 +1189,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private async ValueTask<TResult> InvokeAsync<TResult>(Func<ICryptographyProvider, ValueTask<TResult>> func, CancellationToken cancellationToken) where TResult : class
-        {
-            if (_client is null)
-            {
-                await InitializeAsync(cancellationToken).ConfigureAwait(false);
-            }
-
-            TResult result = null;
-            if (_client.SupportsOperation(KeyOperation.Encrypt))
-            {
-                ValueTask<TResult> taskResult = func(_client);
-                result = taskResult.Result;
-            }
-
-            if (result is null)
-            {
-                result = func(_remoteClient).Result;
-            }
-
-            return result;
-        }
-
-        private TResult Invoke<TResult>(Func<ICryptographyProvider, TResult> func, CancellationToken cancellationToken) where TResult : class
-        {
-            if (_client is null)
-            {
-                Initialize(cancellationToken);
-            }
-
-            TResult result = null;
-            if (_client.SupportsOperation(KeyOperation.Encrypt))
-            {
-                result = func(_client);
-            }
-
-            if (result is null)
-            {
-                result = func(_remoteClient);
-            }
-
-            return result;
         }
     }
 }

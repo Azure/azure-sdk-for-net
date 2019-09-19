@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyOps = new[] { KeyOperation.Sign, KeyOperation.Verify },
             };
 
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             KeyOperation operation = new KeyOperation(operationValue);
 
             Assert.AreEqual(supported, client.SupportsOperation(operation));
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyOps = new[] { KeyOperation.Sign, KeyOperation.Verify },
             };
 
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
 
             Assert.IsFalse(client.SupportsOperation(KeyOperation.Sign));
         }
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyOps = new[] { KeyOperation.Verify },
             };
 
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
 
             Assert.IsFalse(client.SupportsOperation(KeyOperation.Sign));
         }
@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, true) { KeyId = "test" };
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
 
             JsonWebKey jwk = new JsonWebKey(ecdsa);
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.Throws<ArgumentNullException>(() => client.Sign(algorithm, null, default));
@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetInvalidKeys))]
         public void SignThrowsOnInvalidKey(JsonWebKey jwk, SignatureAlgorithm algorithm)
         {
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
 
             byte[] digest = new byte[1] { 0xff };
             Assert.Throws<ArgumentException>(() => client.Sign(algorithm, digest, default), "Expected exception with wrong key length");
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyId = "test",
             };
 
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.IsNull(client.Sign(algorithm, new byte[] { 0xff }, default));
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyOps = new[] { KeyOperation.Sign },
             };
 
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignResult result = client.Sign(default, new byte[] { 0xff }, default);
 
             Assert.IsNull(result);
@@ -141,7 +141,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, true) { KeyId = "test" };
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
 
             JsonWebKey jwk = new JsonWebKey(ecdsa);
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.Throws<ArgumentNullException>(() => client.Verify(algorithm, null, null, default));
@@ -171,7 +171,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
 
             JsonWebKey jwk = new JsonWebKey(ecdsa);
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.Throws<ArgumentNullException>(() => client.Verify(algorithm, new byte[] { 0xff }, null, default));
@@ -180,7 +180,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetInvalidKeys))]
         public void VerifyThrowsOnInvalidKey(JsonWebKey jwk, SignatureAlgorithm algorithm)
         {
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
 
             byte[] digest = new byte[] { 0xff };
             byte[] signature = new byte[] { 0xff, 0xff };
@@ -196,7 +196,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyOps = new[] { KeyOperation.Sign },
             };
 
-            EcCryptographyClient client = new EcCryptographyClient(jwk);
+            EcCryptographyClient client = new EcCryptographyClient(new MockKeyVaultPipeline(), jwk);
 
             byte[] digest = new byte[] { 0xff };
             byte[] signature = new byte[] { 0xff, 0xff };
@@ -205,7 +205,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNull(result);
         }
 
-        private static IEnumerable<object[]> GetInvalidKeys()
+        private static IEnumerable<TestCaseData> GetInvalidKeys()
         {
             static IEnumerable<(string, SignatureAlgorithm[])> GetInvalidPairs()
             {
@@ -220,23 +220,31 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 using ECDsa ecdsa = ECDsa.Create();
                 ECCurve curve = ECCurve.CreateFromValue(oid);
 
+                bool supported = true;
                 try
                 {
                     ecdsa.GenerateKey(curve);
                 }
-                catch (PlatformNotSupportedException)
+                catch (NotSupportedException)
                 {
-                    Assert.Inconclusive("This platform does not support OID {0}", oid);
+                    supported = false;
                 }
 
-                JsonWebKey jwk = new JsonWebKey(ecdsa, true)
+                if (supported)
                 {
-                    KeyId = $"key-{oid}",
-                };
+                    JsonWebKey jwk = new JsonWebKey(ecdsa, true)
+                    {
+                        KeyId = $"key-{oid}",
+                    };
 
-                foreach (SignatureAlgorithm algorithm in algorithms)
+                    foreach (SignatureAlgorithm algorithm in algorithms)
+                    {
+                        yield return new TestCaseData(jwk, algorithm);
+                    }
+                }
+                else
                 {
-                    yield return new object[] { jwk, algorithm };
+                    yield return new TestCaseData(null, default(SignatureAlgorithm)).Ignore($"This platform does not support OID {oid}");
                 }
             }
         }

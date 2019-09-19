@@ -6,16 +6,22 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class EcCryptographyClient : ICryptographyProvider
     {
+        private readonly IKeyVaultPipeline _pipeline;
         private readonly KeyCurveName _curve;
         private readonly JsonWebKey _jwk;
 
-        internal EcCryptographyClient(JsonWebKey jwk)
+        internal EcCryptographyClient(IKeyVaultPipeline pipeline, JsonWebKey jwk)
         {
+            Argument.AssertNotNull(jwk, nameof(jwk));
+
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+
             // Only set the JWK if we support the algorithm locally.
             _curve = KeyCurveName.Find(jwk.CurveName);
             if (_curve != default)
@@ -42,42 +48,61 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.EcCryptographyClient.Sign");
+            scope.Start();
+
             // The JWK is not supported by this client. Send to the server.
             if (_jwk is null)
             {
+                scope.AddAttribute("skip", "AlgorithmNotSupported");
+
                 return null;
             }
 
             // A private key is required to sign. Send to the server.
             if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
             {
+                scope.AddAttribute("skip", "NoPrivateKeyMaterial");
+
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
-            if (_curve._keySize != algorithmCurve._keySize)
+            scope.AddAttribute("key", _jwk.KeyId);
+            try
             {
-                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
-            }
 
-            if (_curve != algorithmCurve)
-            {
-                throw new ArgumentException($"Signature algorithm {algorithm} key curve name does not correspond to underlying key curve name {_curve}");
-            }
+                ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
+                if (_curve._keySize != algorithmCurve._keySize)
+                {
+                    throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
+                }
 
-            using ECDsa ecdsa = _jwk.ToECDsa(true, false);
-            if (ecdsa is null)
-            {
-                return null;
-            }
+                if (_curve != algorithmCurve)
+                {
+                    throw new ArgumentException($"Signature algorithm {algorithm} key curve name does not correspond to underlying key curve name {_curve}");
+                }
 
-            byte[] signature = ecdsa.SignHash(digest);
-            return new SignResult
+                using ECDsa ecdsa = _jwk.ToECDsa(true, false);
+                if (ecdsa is null)
+                {
+                    scope.AddAttribute("skip", "PlatformNotSupported");
+
+                    return null;
+                }
+
+                byte[] signature = ecdsa.SignHash(digest);
+                return new SignResult
+                {
+                    Algorithm = algorithm,
+                    KeyId = _jwk.KeyId,
+                    Signature = signature,
+                };
+            }
+            catch (Exception e)
             {
-                Algorithm = algorithm,
-                KeyId = _jwk.KeyId,
-                Signature = signature,
-            };
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
@@ -92,35 +117,51 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(signature, nameof(signature));
 
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.EcCryptographyClient.Verify");
+            scope.Start();
+
+            // The JWK is not supported by this client. Send to the server.
             if (_jwk is null)
             {
+                scope.AddAttribute("skip", "AlgorithmNotSupported");
+
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
-            if (_curve._keySize != algorithmCurve._keySize)
-            {
-                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
-            }
+            scope.AddAttribute("key", _jwk.KeyId);
 
-            if (_curve != algorithmCurve)
+            try
             {
-                throw new ArgumentException($"Signature algorithm {algorithm} key curve name does not correspond to underlying key curve name {_curve}");
-            }
+                ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
+                if (_curve._keySize != algorithmCurve._keySize)
+                {
+                    throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
+                }
 
-            using ECDsa ecdsa = _jwk.ToECDsa(false, false);
-            if (ecdsa is null)
-            {
-                return null;
-            }
+                if (_curve != algorithmCurve)
+                {
+                    throw new ArgumentException($"Signature algorithm {algorithm} key curve name does not correspond to underlying key curve name {_curve}");
+                }
 
-            bool isValid = ecdsa.VerifyHash(digest, signature);
-            return new VerifyResult
+                using ECDsa ecdsa = _jwk.ToECDsa(false, false);
+                if (ecdsa is null)
+                {
+                    return null;
+                }
+
+                bool isValid = ecdsa.VerifyHash(digest, signature);
+                return new VerifyResult
+                {
+                    Algorithm = algorithm,
+                    IsValid = isValid,
+                    KeyId = _jwk.KeyId,
+                };
+            }
+            catch (Exception e)
             {
-                Algorithm = algorithm,
-                IsValid = isValid,
-                KeyId = _jwk.KeyId,
-            };
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)

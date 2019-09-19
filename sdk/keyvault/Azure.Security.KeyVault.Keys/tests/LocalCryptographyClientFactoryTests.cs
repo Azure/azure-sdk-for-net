@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 
@@ -14,20 +16,24 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetCreateData))]
         public void Create(JsonWebKey jwk, Type clientType)
         {
-            ICryptographyProvider client = LocalCryptographyClientFactory.Create(jwk);
+            MockKeyVaultPipeline pipeline = new MockKeyVaultPipeline();
+
+            ICryptographyProvider client = LocalCryptographyClientFactory.Create(pipeline, jwk);
             Assert.IsInstanceOf(clientType, client, "Key {0} of type {1} did not yield client type {2}", jwk.KeyId, jwk.KeyType, clientType.Name);
         }
 
         [Test]
         public void CreateThrows()
         {
+            MockKeyVaultPipeline pipeline = new MockKeyVaultPipeline();
+
             JsonWebKey jwk = new JsonWebKey
             {
                 KeyId = "invalid",
                 KeyType = new KeyType("invalid"),
             };
 
-            Assert.Throws<NotSupportedException>(() => LocalCryptographyClientFactory.Create(jwk));
+            Assert.Throws<NotSupportedException>(() => LocalCryptographyClientFactory.Create(pipeline, jwk));
         }
 
         private static IEnumerable<object[]> GetCreateData()
