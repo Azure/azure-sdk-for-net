@@ -1,0 +1,8 @@
+{
+    "settings": {
+      "documentationRules": {
+        "copyrightText": "Copyright (c) Microsoft Corporation. All rights reserved.\nLicensed under the MIT License.",
+        "xmlHeader" : false
+      }
+    }
+  }
