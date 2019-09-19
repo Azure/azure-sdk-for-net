@@ -3,7 +3,7 @@
 
 namespace TrackOne.Amqp
 {
-    enum MappingType
+    internal enum MappingType
     {
         ApplicationProperty,
         MessageBody

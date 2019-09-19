@@ -24,9 +24,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         public IList<Contact> ToList()
         {
-            IList<Contact> ret = _contacts as IList<Contact>;
-
-            if (ret == null)
+            if (!(_contacts is IList<Contact> ret))
             {
                 ret = _contacts.ToList();
 
@@ -42,9 +40,9 @@ namespace Azure.Security.KeyVault.Certificates
         {
             var contacts = new List<Contact>();
 
-            if(json.TryGetProperty(ContactsPropertyName, out JsonElement contactsElement))
+            if (json.TryGetProperty(ContactsPropertyName, out JsonElement contactsElement))
             {
-                foreach(JsonElement entry in contactsElement.EnumerateArray())
+                foreach (JsonElement entry in contactsElement.EnumerateArray())
                 {
                     var contact = new Contact();
 
@@ -57,15 +55,15 @@ namespace Azure.Security.KeyVault.Certificates
             _contacts = contacts;
         }
 
-        private static readonly JsonEncodedText ContactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
+        private static readonly JsonEncodedText s_contactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(_contacts != null)
+            if (_contacts != null)
             {
-                json.WriteStartArray(ContactsPropertyNameBytes);
+                json.WriteStartArray(s_contactsPropertyNameBytes);
 
-                foreach(var contact in _contacts)
+                foreach (Contact contact in _contacts)
                 {
                     json.WriteStartObject();
 

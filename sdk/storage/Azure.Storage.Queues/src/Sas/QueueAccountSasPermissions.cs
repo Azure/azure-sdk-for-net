@@ -59,13 +59,13 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
-            if (this.Write) { sb.Append(Constants.Sas.Permissions.Write); }
-            if (this.Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
-            if (this.List) { sb.Append(Constants.Sas.Permissions.List); }
-            if (this.Add) { sb.Append(Constants.Sas.Permissions.Add); }
-            if (this.Update) { sb.Append(Constants.Sas.Permissions.Update); }
-            if (this.Process) { sb.Append(Constants.Sas.Permissions.Process); }
+            if (Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (Write) { sb.Append(Constants.Sas.Permissions.Write); }
+            if (Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
+            if (List) { sb.Append(Constants.Sas.Permissions.List); }
+            if (Add) { sb.Append(Constants.Sas.Permissions.Add); }
+            if (Update) { sb.Append(Constants.Sas.Permissions.Update); }
+            if (Process) { sb.Append(Constants.Sas.Permissions.Process); }
             return sb.ToString();
         }
 
@@ -84,14 +84,29 @@ namespace Azure.Storage.Sas
             {
                 switch (c)
                 {
-                    case Constants.Sas.Permissions.Read: p.Read = true; break;
-                    case Constants.Sas.Permissions.Write: p.Write = true; break;
-                    case Constants.Sas.Permissions.Delete: p.Delete = true; break;
-                    case Constants.Sas.Permissions.List: p.List = true; break;
-                    case Constants.Sas.Permissions.Add: p.Add = true; break;
-                    case Constants.Sas.Permissions.Update: p.Update = true; break;
-                    case Constants.Sas.Permissions.Process: p.Process = true; break;
-                    default: throw Errors.InvalidPermission(c);
+                    case Constants.Sas.Permissions.Read:
+                        p.Read = true;
+                        break;
+                    case Constants.Sas.Permissions.Write:
+                        p.Write = true;
+                        break;
+                    case Constants.Sas.Permissions.Delete:
+                        p.Delete = true;
+                        break;
+                    case Constants.Sas.Permissions.List:
+                        p.List = true;
+                        break;
+                    case Constants.Sas.Permissions.Add:
+                        p.Add = true;
+                        break;
+                    case Constants.Sas.Permissions.Update:
+                        p.Update = true;
+                        break;
+                    case Constants.Sas.Permissions.Process:
+                        p.Process = true;
+                        break;
+                    default:
+                        throw Errors.InvalidPermission(c);
                 }
             }
             return p;
@@ -104,7 +119,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is QueueAccountSasPermissions other && this.Equals(other);
+            obj is QueueAccountSasPermissions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the QueueAccountSasPermissions.
@@ -112,13 +127,13 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the QueueAccountSasPermissions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Add     ? 0b0000001 : 0) +
-            (this.Delete  ? 0b0000010 : 0) +
-            (this.List    ? 0b0000100 : 0) +
-            (this.Process ? 0b0001000 : 0) +
-            (this.Read    ? 0b0010000 : 0) +
-            (this.Update  ? 0b0100000 : 0) +
-            (this.Write   ? 0b1000000 : 0);
+            (Add ? 0b0000001 : 0) +
+            (Delete ? 0b0000010 : 0) +
+            (List ? 0b0000100 : 0) +
+            (Process ? 0b0001000 : 0) +
+            (Read ? 0b0010000 : 0) +
+            (Update ? 0b0100000 : 0) +
+            (Write ? 0b1000000 : 0);
 
         /// <summary>
         /// Check if two QueueAccountSasPermissions instances are equal.
@@ -126,13 +141,13 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(QueueAccountSasPermissions other) =>
-            other.Add == this.Add &&
-            other.Delete == this.Delete &&
-            other.List == this.List &&
-            other.Process == this.Process &&
-            other.Read == this.Read &&
-            other.Update == this.Update &&
-            other.Write == this.Write;
+            other.Add == Add &&
+            other.Delete == Delete &&
+            other.List == List &&
+            other.Process == Process &&
+            other.Read == Read &&
+            other.Update == Update &&
+            other.Write == Write;
 
         /// <summary>
         /// Check if two QueueAccountSasPermissions instances are equal.

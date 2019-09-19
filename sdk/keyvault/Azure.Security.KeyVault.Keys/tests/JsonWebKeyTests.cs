@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
 #endif
         }
 
@@ -198,7 +198,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
         }
 
         [TestCase(false)]
@@ -248,7 +248,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ("1.3.132.0.35", "P-521"),
             };
 
-            foreach (var oid in oids)
+            foreach ((string Oid, string FriendlyName) oid in oids)
             {
                 yield return new object[] { oid.Oid, oid.FriendlyName, false };
                 yield return new object[] { oid.Oid, oid.FriendlyName, true };
@@ -340,7 +340,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private class JsonWebKeyComparer : IEqualityComparer<JsonWebKey>
         {
-            internal static readonly IEqualityComparer<JsonWebKey> Instance = new JsonWebKeyComparer();
+            internal static readonly IEqualityComparer<JsonWebKey> s_instance = new JsonWebKeyComparer();
 
             public bool Equals(JsonWebKey x, JsonWebKey y)
             {

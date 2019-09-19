@@ -124,7 +124,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
                     case AdminDetailsPropertyName:
                         Administrators = new List<AdministratorDetails>();
-                        foreach(JsonElement elem in prop.Value.EnumerateArray())
+                        foreach (JsonElement elem in prop.Value.EnumerateArray())
                         {
                             var admin = new AdministratorDetails();
                             admin.ReadProperties(elem);
@@ -159,18 +159,18 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText CredentialsPropertyNameBytes = JsonEncodedText.Encode(CredentialsPropertyName);
-        private static readonly JsonEncodedText OrgDetailsPropertyNameBytes = JsonEncodedText.Encode(OrgDetailsPropertyName);
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_credentialsPropertyNameBytes = JsonEncodedText.Encode(CredentialsPropertyName);
+        private static readonly JsonEncodedText s_orgDetailsPropertyNameBytes = JsonEncodedText.Encode(OrgDetailsPropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
 
         internal override void WritePropertiesCore(Utf8JsonWriter json)
         {
             base.WritePropertiesCore(json);
 
-            if(!string.IsNullOrEmpty(AccountId) || !string.IsNullOrEmpty(Password))
+            if (!string.IsNullOrEmpty(AccountId) || !string.IsNullOrEmpty(Password))
             {
-                json.WriteStartObject(CredentialsPropertyNameBytes);
+                json.WriteStartObject(s_credentialsPropertyNameBytes);
 
                 WriteCredentialsProperties(json);
 
@@ -179,7 +179,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (!string.IsNullOrEmpty(OrganizationId) || Administrators != null)
             {
-                json.WriteStartObject(OrgDetailsPropertyNameBytes);
+                json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
                 WriteOrgDetailsProperties(json);
 
@@ -188,45 +188,45 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Enabled.HasValue)
             {
-                json.WriteStartObject(AttributesPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
-                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
 
                 json.WriteEndObject();
             }
         }
 
-        private static readonly JsonEncodedText AccountIdPropertyNameBytes = JsonEncodedText.Encode(AccountIdPropertyName);
-        private static readonly JsonEncodedText PasswordPropertyNameBytes = JsonEncodedText.Encode(PasswordPropertyName);
+        private static readonly JsonEncodedText s_accountIdPropertyNameBytes = JsonEncodedText.Encode(AccountIdPropertyName);
+        private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode(PasswordPropertyName);
 
         private void WriteCredentialsProperties(Utf8JsonWriter json)
         {
-            if(!string.IsNullOrEmpty(AccountId))
+            if (!string.IsNullOrEmpty(AccountId))
             {
-                json.WriteString(AccountIdPropertyNameBytes, AccountId);
+                json.WriteString(s_accountIdPropertyNameBytes, AccountId);
             }
 
             if (!string.IsNullOrEmpty(Password))
             {
-                json.WriteString(PasswordPropertyNameBytes, Password);
+                json.WriteString(s_passwordPropertyNameBytes, Password);
             }
         }
 
-        private static readonly JsonEncodedText OrganizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
-        private static readonly JsonEncodedText AdminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
+        private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
+        private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
         private void WriteOrgDetailsProperties(Utf8JsonWriter json)
         {
             if (!string.IsNullOrEmpty(OrganizationId))
             {
-                json.WriteString(OrganizationIdPropertyNameBytes, AccountId);
+                json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
             if (Administrators != null)
             {
-                json.WriteStartArray(AdminDetailsPropertyNameBytes);
+                json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach(var admin in Administrators)
+                foreach (AdministratorDetails admin in Administrators)
                 {
                     json.WriteStartObject();
 

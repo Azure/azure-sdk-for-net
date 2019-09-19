@@ -25,15 +25,8 @@ namespace Azure.Core.Pipeline
 
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            if (scopes == null)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(scopes, nameof(scopes));
 
             _credential = credential;
             _scopes = scopes.ToArray();

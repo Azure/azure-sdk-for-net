@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             //
 
             // The SignData and VerifyData methods take the raw data which is to be signed.  The calculate the digest for the user so there is no need to compute the digest
-            
+
             // Get the signature for the data with both keys. Note that the signature algorithm specified must be a valid algorithm for the key type,
             // and for EC keys the algorithm must also match the curve of the key
             SignResult rsaSignDataResult = rsaCryptoClient.SignData(SignatureAlgorithm.Rs256, data);

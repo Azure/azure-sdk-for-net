@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Certificates
     public class EcKeyOptions : KeyOptions
     {
         private const string CurvePropertyName = "crv";
-        private static readonly JsonEncodedText CurvePropertyNameBytes = JsonEncodedText.Encode(CurvePropertyName);
+        private static readonly JsonEncodedText s_curvePropertyNameBytes = JsonEncodedText.Encode(CurvePropertyName);
 
         /// <summary>
         /// The curve which back the EC key
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Curve.HasValue)
             {
-                json.WriteString(CurvePropertyNameBytes, Curve);
+                json.WriteString(s_curvePropertyNameBytes, Curve);
             }
         }
     }

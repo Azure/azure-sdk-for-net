@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(EcKeyCreateOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            if(ecKey.Curve.HasValue)
+            if (ecKey.Curve.HasValue)
             {
                 Curve = ecKey.Curve.Value;
             }
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
-            if(rsaKey.KeySize.HasValue)
+            if (rsaKey.KeySize.HasValue)
             {
                 KeySize = rsaKey.KeySize.Value;
             }
@@ -107,11 +107,11 @@ namespace Azure.Security.KeyVault.Keys
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(KeyType != default)
+            if (KeyType != default)
             {
                 json.WriteString(KeyTypePropertyNameBytes, KeyType);
             }
-            if(KeySize.HasValue)
+            if (KeySize.HasValue)
             {
                 json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
             }
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Keys
             if (KeyOperations != null)
             {
                 json.WriteStartArray(KeyOpsPropertyNameBytes);
-                foreach(var operation in KeyOperations)
+                foreach (KeyOperation operation in KeyOperations)
                 {
                     json.WriteStringValue(operation);
                 }
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 json.WriteStartObject(TagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Models
         /// <param name="error">The StorageError</param>
         static partial void CustomizeFromXml(XElement root, StorageError error)
         {
-            foreach (var element in root.Elements())
+            foreach (XElement element in root.Elements())
             {
                 switch (element.Name.LocalName)
                 {
@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Message, null, this.Code, this.AdditionalInformation);
+            => new StorageRequestFailedException(response, Message, null, Code, AdditionalInformation);
     }
 
     /// <summary>
@@ -59,6 +59,6 @@ namespace Azure.Storage.Files.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, null, null, this.ErrorCode);
+            => new StorageRequestFailedException(response, null, null, ErrorCode);
     }
 }

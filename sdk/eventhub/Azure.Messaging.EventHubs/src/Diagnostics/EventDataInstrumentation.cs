@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 messageScope.AddAttribute("kind", "internal");
                 messageScope.Start();
 
-                var activity = Activity.Current;
+                Activity activity = Activity.Current;
                 if (activity != null)
                 {
                     eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;

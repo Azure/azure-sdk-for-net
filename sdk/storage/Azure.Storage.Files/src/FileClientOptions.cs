@@ -50,7 +50,7 @@ namespace Azure.Storage.Files
         /// </param>
         public FileClientOptions(ServiceVersion version = LatestVersion)
         {
-            this.Version = version;
+            Version = version;
             this.Initialize();
         }
     }

@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -37,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendOptions DefaultSendOptions = new SendOptions();
+        private static readonly SendOptions s_defaultSendOptions = new SendOptions();
 
         /// <summary>The fully-qualified location of the Event Hub instance to which events will be sent.</summary>
         private readonly Uri _endpoint;
@@ -74,7 +75,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                Argument.AssertNotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -119,11 +120,11 @@ namespace Azure.Messaging.EventHubs
                                   EventHubProducerOptions producerOptions,
                                   EventHubRetryPolicy retryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(transportProducer), transportProducer);
-            Guard.ArgumentNotNull(nameof(endpoint), endpoint);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(producerOptions), producerOptions);
-            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+            Argument.AssertNotNull(transportProducer, nameof(transportProducer));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(producerOptions, nameof(producerOptions));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             PartitionId = producerOptions.PartitionId;
             EventHubName = eventHubName;
@@ -160,7 +161,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task SendAsync(EventData eventData,
                                       CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
+            Argument.AssertNotNull(eventData, nameof(eventData));
             return SendAsync(new[] { eventData }, null, cancellationToken);
         }
 
@@ -184,7 +185,7 @@ namespace Azure.Messaging.EventHubs
                                       SendOptions options,
                                       CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
+            Argument.AssertNotNull(eventData, nameof(eventData));
             return SendAsync(new[] { eventData }, options, cancellationToken);
         }
 
@@ -223,9 +224,9 @@ namespace Azure.Messaging.EventHubs
                                             SendOptions options,
                                             CancellationToken cancellationToken = default)
         {
-            options = options ?? DefaultSendOptions;
+            options ??= s_defaultSendOptions;
 
-            Guard.ArgumentNotNull(nameof(events), events);
+            Argument.AssertNotNull(events, nameof(events));
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -261,7 +262,7 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task SendAsync(EventDataBatch eventBatch,
                                             CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(eventBatch), eventBatch);
+            Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -317,7 +318,7 @@ namespace Azure.Messaging.EventHubs
 
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
-            var transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options);
         }
 
@@ -404,7 +405,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private void InstrumentMessages(IEnumerable<EventData> events)
         {
-            foreach (var eventData in events)
+            foreach (EventData eventData in events)
             {
                 EventDataInstrumentation.InstrumentEvent(eventData);
             }
@@ -420,9 +421,9 @@ namespace Azure.Messaging.EventHubs
         private static void GuardSinglePartitionReference(string partitionId,
                                                           string partitionKey)
         {
-            if ((!String.IsNullOrEmpty(partitionId)) && (!String.IsNullOrEmpty(partitionKey)))
+            if ((!string.IsNullOrEmpty(partitionId)) && (!string.IsNullOrEmpty(partitionKey)))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
             }
         }
     }

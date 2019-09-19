@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpEventHubClient : TransportEventHubClient
     {
         // <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
-        private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
+        private static readonly TimeSpan s_credentialRefreshBuffer = TimeSpan.FromMinutes(5);
 
         /// <summary>The active retry policy for the client.</summary>
         private EventHubRetryPolicy _retryPolicy;
@@ -136,11 +136,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                                      AmqpConnectionScope connectionScope,
                                      AmqpMessageConverter messageConverter)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
-            Guard.ArgumentNotNull(nameof(clientOptions), clientOptions);
-            Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
+            Argument.AssertNotNullOrEmpty(host, nameof(host));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
+            Argument.AssertNotNull(defaultRetryPolicy, nameof(defaultRetryPolicy));
 
             try
             {
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(newRetryPolicy), newRetryPolicy);
+            Argument.AssertNotNull(newRetryPolicy, nameof(newRetryPolicy));
 
             _retryPolicy = newRetryPolicy;
             _tryTimeout = _retryPolicy.CalculateTryTimeout(0);
@@ -210,19 +210,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                 // Create the request message and the management link.
 
                 var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                using var request = MessageConverter.CreateEventHubPropertiesRequest(EventHubName, token);
+                using AmqpMessage request = MessageConverter.CreateEventHubPropertiesRequest(EventHubName, token);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = Stopwatch.StartNew();
-                var link = await ManagementLink.GetOrCreateAsync(_tryTimeout).ConfigureAwait(false);
+                RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(_tryTimeout).ConfigureAwait(false);
 
                 // Send the request and wait for the response.
 
                 stopWatch.Stop();
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                using var response = await link.RequestAsync(request, _tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                using AmqpMessage response = await link.RequestAsync(request, _tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
 
                 // Process the response.
 
@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                                     CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             // Since the AMQP objects do not honor the cancellation token, manually check for cancellation between operation steps.
 
@@ -268,19 +268,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                 // Create the request message and the management link.
 
                 var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                using var request = MessageConverter.CreatePartitionPropertiesRequest(EventHubName, partitionId, token);
+                using AmqpMessage request = MessageConverter.CreatePartitionPropertiesRequest(EventHubName, partitionId, token);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = Stopwatch.StartNew();
-                var link = await ManagementLink.GetOrCreateAsync(_tryTimeout).ConfigureAwait(false);
+                RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(_tryTimeout).ConfigureAwait(false);
 
                 // Send the request and wait for the response.
 
                 stopWatch.Stop();
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                using var response = await link.RequestAsync(request, _tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                using AmqpMessage response = await link.RequestAsync(request, _tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
 
                 // Process the response.
 
@@ -378,18 +378,18 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var activeToken = _accessToken;
+            AccessToken activeToken = _accessToken;
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
             // overlapping requests should be within a small window, allow the acquired token to replace the current one without
             // attempting to coordinate or ensure that the most recent is kept.
 
-            if ((String.IsNullOrEmpty(activeToken.Token)) || (activeToken.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
+            if ((string.IsNullOrEmpty(activeToken.Token)) || (activeToken.ExpiresOn <= DateTimeOffset.UtcNow.Add(s_credentialRefreshBuffer)))
             {
                 activeToken = await Credential.GetTokenAsync(new TokenRequest(new string[0]), cancellationToken).ConfigureAwait(false);
 
-                if ((String.IsNullOrEmpty(activeToken.Token)))
+                if ((string.IsNullOrEmpty(activeToken.Token)))
                 {
                     throw new AuthenticationException(Resources.CouldNotAcquireAccessToken);
                 }

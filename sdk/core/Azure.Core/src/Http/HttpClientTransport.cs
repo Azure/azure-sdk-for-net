@@ -43,8 +43,17 @@ namespace Azure.Core.Pipeline
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
-                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
-                    .ConfigureAwait(false);
+                HttpResponseMessage responseMessage;
+                try
+                {
+                    responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new RequestFailedException(e.Message, e);
+                }
+
                 message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
         }

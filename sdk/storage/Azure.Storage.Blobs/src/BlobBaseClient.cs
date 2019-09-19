@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the blob's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public virtual Uri Uri => this._uri;
+        public virtual Uri Uri => _uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline => this._pipeline;
+        protected internal virtual HttpPipeline Pipeline => _pipeline;
 
         #region ctors
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.Storage.Blobs.Specialized
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-            this._uri = builder.Uri;
-            this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            _uri = builder.Uri;
+            _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            this._uri = blobUri;
-            this._pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            _uri = blobUri;
+            _pipeline = (options ?? new BlobClientOptions()).Build(authentication);
         }
 
         /// <summary>
@@ -212,8 +212,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline)
         {
-            this._uri = blobUri;
-            this._pipeline = pipeline;
+            _uri = blobUri;
+            _pipeline = pipeline;
         }
         #endregion ctors
 
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public virtual BlobBaseClient WithSnapshot(string snapshot) => this.WithSnapshotImpl(snapshot);
+        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotImpl(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -241,8 +241,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotImpl(string snapshot)
         {
-            var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.Uri, this.Pipeline);
+            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            return new BlobBaseClient(builder.Uri, Pipeline);
         }
 
         ///// <summary>
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobDownloadInfo> Download() =>
-            this.Download(CancellationToken.None);
+            Download(CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync() =>
-            await this.DownloadAsync(CancellationToken.None).ConfigureAwait(false);
+            await DownloadAsync(CancellationToken.None).ConfigureAwait(false);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobDownloadInfo> Download(
             CancellationToken cancellationToken = default) =>
-            this.Download(
+            Download(
                 accessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 
@@ -353,7 +353,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             CancellationToken cancellationToken) =>
-            await this.DownloadAsync(
+            await DownloadAsync(
                 accessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -405,7 +405,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
-            this.DownloadInternal(
+            DownloadInternal(
                 range,
                 accessConditions,
                 customerProvidedKey,
@@ -460,7 +460,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
-            await this.DownloadInternal(
+            await DownloadInternal(
                 range,
                 accessConditions,
                 customerProvidedKey,
@@ -519,13 +519,13 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(this.Uri)}: {this.Uri}");
+                Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     // Start downloading the blob
-                    var (response, stream) = await this.StartDownloadAsync(
+                    var (response, stream) = await StartDownloadAsync(
                         range,
                         accessConditions,
                         customerProvidedKey,
@@ -540,7 +540,7 @@ namespace Azure.Storage.Blobs.Specialized
                     response.Value.Content = RetriableStream.Create(
                         stream,
                          startOffset =>
-                            this.StartDownloadAsync(
+                            StartDownloadAsync(
                                     range,
                                     accessConditions,
                                     customerProvidedKey,
@@ -551,7 +551,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 .ConfigureAwait(false).GetAwaiter().GetResult()
                             .Item2,
                         async startOffset =>
-                            (await this.StartDownloadAsync(
+                            (await StartDownloadAsync(
                                 range,
                                 accessConditions,
                                 customerProvidedKey,
@@ -572,12 +572,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -634,7 +634,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
@@ -642,12 +642,12 @@ namespace Azure.Storage.Blobs.Specialized
                     range.Count.Value - startOffset :
                     (long?)null);
 
-            this.Pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
+            Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
             var (response, stream) =
                 await BlobRestClient.Blob.DownloadAsync(
-                    this.Pipeline,
-                    this.Uri,
+                    Pipeline,
+                    Uri,
                     range: pageRange.ToString(),
                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
@@ -663,7 +663,7 @@ namespace Azure.Storage.Blobs.Specialized
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-            this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
 
             return (response, stream);
         }
@@ -687,7 +687,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobProperties> Download(Stream destination) =>
-            this.Download(destination, CancellationToken.None);
+            Download(destination, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -707,7 +707,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobProperties> Download(FileInfo destination) =>
-            this.Download(destination, CancellationToken.None);
+            Download(destination, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -727,7 +727,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Task<Response<BlobProperties>> DownloadAsync(Stream destination) =>
-            this.DownloadAsync(destination, CancellationToken.None);
+            DownloadAsync(destination, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -747,7 +747,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Task<Response<BlobProperties>> DownloadAsync(FileInfo destination) =>
-            this.DownloadAsync(destination, CancellationToken.None);
+            DownloadAsync(destination, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -774,7 +774,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobProperties> Download(
             Stream destination,
             CancellationToken cancellationToken) =>
-            this.Download(
+            Download(
                 destination,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -804,7 +804,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobProperties> Download(
             FileInfo destination,
             CancellationToken cancellationToken) =>
-            this.Download(
+            Download(
                 destination,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -834,7 +834,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Task<Response<BlobProperties>> DownloadAsync(
             Stream destination,
             CancellationToken cancellationToken) =>
-            this.DownloadAsync(
+            DownloadAsync(
                 destination,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -864,7 +864,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Task<Response<BlobProperties>> DownloadAsync(
             FileInfo destination,
             CancellationToken cancellationToken) =>
-            this.DownloadAsync(
+            DownloadAsync(
                 destination,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -908,7 +908,7 @@ namespace Azure.Storage.Blobs.Specialized
             //IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedDownloadAsync(
+            StagedDownloadAsync(
                 destination,
                 blobAccessConditions,
                 //progressHandler,
@@ -955,7 +955,7 @@ namespace Azure.Storage.Blobs.Specialized
             //IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedDownloadAsync(
+            StagedDownloadAsync(
                 destination,
                 blobAccessConditions,
                 //progressHandler,
@@ -1002,7 +1002,7 @@ namespace Azure.Storage.Blobs.Specialized
             //IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedDownloadAsync(
+            StagedDownloadAsync(
                 destination,
                 blobAccessConditions,
                 //progressHandler,
@@ -1048,7 +1048,7 @@ namespace Azure.Storage.Blobs.Specialized
             //IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedDownloadAsync(
+            StagedDownloadAsync(
                 destination,
                 blobAccessConditions,
                 //progressHandler,
@@ -1106,8 +1106,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Debug.Assert(singleBlockThreshold <= Constants.Blob.Block.MaxDownloadBytes);
 
-            var client = new BlobBaseClient(this.Uri, this.Pipeline);
-            var downloadTask =
+            var client = new BlobBaseClient(Uri, Pipeline);
+            Task<Response<BlobProperties>> downloadTask =
                 PartitionedDownloader.DownloadAsync(
                     destination,
                     GetPropertiesAsync,
@@ -1138,7 +1138,7 @@ namespace Azure.Storage.Blobs.Specialized
             // Download the entire stream
             async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
             {
-                var response = await client.DownloadAsync(accessConditions: blobAccessConditions, cancellationToken: ct).ConfigureAwait(false);
+                Response<BlobDownloadInfo> response = await client.DownloadAsync(accessConditions: blobAccessConditions, cancellationToken: ct).ConfigureAwait(false);
                 await response.Value.Content.CopyToAsync(destination, 81920 /* default value */, ct).ConfigureAwait(false);
 
                 return response;
@@ -1148,10 +1148,10 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 // copy ETag to the access conditions
 
-                var accessConditions = blobAccessConditions ?? new BlobAccessConditions();
+                BlobAccessConditions accessConditions = blobAccessConditions ?? new BlobAccessConditions();
                 accessConditions.HttpAccessConditions ??= new HttpAccessConditions();
 
-                var httpAccessConditions = accessConditions.HttpAccessConditions.Value;
+                HttpAccessConditions httpAccessConditions = accessConditions.HttpAccessConditions.Value;
                 httpAccessConditions.IfMatch = eTag;
 
                 accessConditions.HttpAccessConditions = httpAccessConditions;
@@ -1211,9 +1211,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var stream = destination.OpenWrite();
+            FileStream stream = destination.OpenWrite();
 
-            return this.StagedDownloadAsync(
+            return StagedDownloadAsync(
                 stream,
                 blobAccessConditions,
                 //progressHandler,
@@ -1301,7 +1301,7 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default)
         {
-            var response = this.StartCopyFromUriInternal(
+            Response<BlobCopyInfo> response = StartCopyFromUriInternal(
                 source,
                 metadata,
                 accessTier,
@@ -1382,7 +1382,7 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default)
         {
-            var response = await this.StartCopyFromUriInternal(
+            Response<BlobCopyInfo> response = await StartCopyFromUriInternal(
                 source,
                 metadata,
                 accessTier,
@@ -1423,7 +1423,7 @@ namespace Azure.Storage.Blobs.Specialized
             string copyId,
             CancellationToken cancellationToken = default)
         {
-            var response = this.GetPropertiesInternal(
+            Response<BlobProperties> response = GetPropertiesInternal(
                 null,
                 null,
                 false, // async
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Blobs.Specialized
             string copyId,
             CancellationToken cancellationToken = default)
         {
-            var response = await this.GetPropertiesInternal(
+            Response<BlobProperties> response = await GetPropertiesInternal(
                 null,
                 null,
                 true, // async
@@ -1541,20 +1541,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(source)}: {source}\n" +
                     $"{nameof(sourceAccessConditions)}: {sourceAccessConditions}\n" +
                     $"{nameof(destinationAccessConditions)}: {destinationAccessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.StartCopyFromUriAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         copySource: source,
                         rehydratePriority: rehydratePriority,
                         tier: accessTier,
@@ -1575,12 +1575,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -1616,7 +1616,7 @@ namespace Azure.Storage.Blobs.Specialized
             string copyId,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.AbortCopyFromUriInternal(
+            AbortCopyFromUriInternal(
                 copyId,
                 leaseAccessConditions,
                 false, // async
@@ -1652,7 +1652,7 @@ namespace Azure.Storage.Blobs.Specialized
             string copyId,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.AbortCopyFromUriInternal(
+            await AbortCopyFromUriInternal(
                 copyId,
                 leaseAccessConditions,
                 true, // async
@@ -1693,19 +1693,19 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.AbortCopyFromUriAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         copyId: copyId,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
@@ -1715,12 +1715,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -1760,7 +1760,7 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.DeleteInternal(
+            DeleteInternal(
                 deleteOptions,
                 accessConditions,
                 false, // async
@@ -1800,7 +1800,7 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.DeleteInternal(
+            await DeleteInternal(
                 deleteOptions,
                 accessConditions,
                 true, // async
@@ -1845,19 +1845,19 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(deleteOptions)}: {deleteOptions}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.DeleteAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         deleteSnapshots: deleteOptions,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
@@ -1871,12 +1871,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -1903,7 +1903,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response Undelete(
             CancellationToken cancellationToken = default) =>
-            this.UndeleteInternal(
+            UndeleteInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1928,7 +1928,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response> UndeleteAsync(
             CancellationToken cancellationToken = default) =>
-            await this.UndeleteInternal(
+            await UndeleteInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1958,14 +1958,14 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(this.Uri)}: {this.Uri}");
+                Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await BlobRestClient.Blob.UndeleteAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Undelete")
@@ -1973,12 +1973,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2017,7 +2017,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesInternal(
+            GetPropertiesInternal(
                 accessConditions,
                 customerProvidedKey,
                 false, // async
@@ -2056,7 +2056,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesInternal(
+            await GetPropertiesInternal(
                 accessConditions,
                 customerProvidedKey,
                 true, // async
@@ -2100,20 +2100,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.Blob.GetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         encryptionKey: customerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
@@ -2129,12 +2129,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2175,7 +2175,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.SetHttpHeadersInternal(
+            SetHttpHeadersInternal(
                 httpHeaders,
                 accessConditions,
                 customerProvidedKey,
@@ -2217,7 +2217,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetHttpHeadersInternal(
+            await SetHttpHeadersInternal(
                 httpHeaders,
                 accessConditions,
                 customerProvidedKey,
@@ -2264,22 +2264,22 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
-                    var response =
+                    Response<SetHttpHeadersOperation> response =
                         await BlobRestClient.Blob.SetHttpHeadersAsync(
-                            this.Pipeline,
-                            this.Uri,
+                            Pipeline,
+                            Uri,
                             blobCacheControl: httpHeaders?.CacheControl,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentHash: httpHeaders?.ContentHash,
@@ -2306,12 +2306,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2352,7 +2352,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.SetMetadataInternal(
+            SetMetadataInternal(
                 metadata,
                 accessConditions,
                 customerProvidedKey,
@@ -2394,7 +2394,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetMetadataInternal(
+            await SetMetadataInternal(
                 metadata,
                 accessConditions,
                 customerProvidedKey,
@@ -2441,21 +2441,21 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
-                    var response =
+                    Response<SetMetadataOperation> response =
                         await BlobRestClient.Blob.SetMetadataAsync(
-                            this.Pipeline,
-                            this.Uri,
+                            Pipeline,
+                            Uri,
                             metadata: metadata,
                             leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                             encryptionKey: customerProvidedKey?.EncryptionKey,
@@ -2479,12 +2479,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2525,7 +2525,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateSnapshotInternal(
+            CreateSnapshotInternal(
                 metadata,
                 accessConditions,
                 customerProvidedKey,
@@ -2567,7 +2567,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateSnapshotInternal(
+            await CreateSnapshotInternal(
                 metadata,
                 accessConditions,
                 customerProvidedKey,
@@ -2614,20 +2614,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.Blob.CreateSnapshotAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         metadata: metadata,
                         encryptionKey: customerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
@@ -2644,12 +2644,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2698,7 +2698,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            this.SetTierInternal(
+            SetTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2748,7 +2748,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetTierInternal(
+            await SetTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2803,19 +2803,19 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessTier)}: {accessTier}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.SetTierAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         tier: accessTier,
                         rehydratePriority: rehydratePriority,
                         leaseId: leaseAccessConditions?.LeaseId,
@@ -2826,12 +2826,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2866,23 +2866,23 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The blob's type.
         /// </summary>
-        public BlobType BlobType => this._flattened.BlobType;
+        public BlobType BlobType => _flattened.BlobType;
 
         /// <summary>
         /// The number of bytes present in the response body.
         /// </summary>
-        public long ContentLength => this._flattened.ContentLength;
+        public long ContentLength => _flattened.ContentLength;
 
         /// <summary>
         /// Content
         /// </summary>
-        public Stream Content => this._flattened.Content;
+        public Stream Content => _flattened.Content;
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash => this._flattened.ContentHash;
+        public byte[] ContentHash => _flattened.ContentHash;
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
@@ -2896,8 +2896,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="flattened">The FlattenedDownloadProperties returned with the request</param>
         internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
         {
-            this._flattened = flattened;
-            this.Properties = new BlobDownloadProperties() { _flattened = flattened };
+            _flattened = flattened;
+            Properties = new BlobDownloadProperties() { _flattened = flattened };
         }
     }
 
@@ -2914,123 +2914,123 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
-        public DateTimeOffset LastModified => this._flattened.LastModified;
+        public DateTimeOffset LastModified => _flattened.LastModified;
 
         /// <summary>
         /// x-ms-meta
         /// </summary>
-        public IDictionary<string, string> Metadata => this._flattened.Metadata;
+        public IDictionary<string, string> Metadata => _flattened.Metadata;
 
         /// <summary>
         /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
         /// </summary>
-        public string ContentType => this._flattened.ContentType;
+        public string ContentType => _flattened.ContentType;
 
         /// <summary>
         /// Indicates the range of bytes returned in the event that the client requested a subset of the blob by setting the 'Range' request header.
         /// </summary>
-        public string ContentRange => this._flattened.ContentRange;
+        public string ContentRange => _flattened.ContentRange;
 
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public ETag ETag => this._flattened.ETag;
+        public ETag ETag => _flattened.ETag;
 
         /// <summary>
         /// This header returns the value that was specified for the Content-Encoding request header
         /// </summary>
-        public string ContentEncoding => this._flattened.ContentEncoding;
+        public string ContentEncoding => _flattened.ContentEncoding;
 
         /// <summary>
         /// This header is returned if it was previously specified for the blob.
         /// </summary>
-        public string CacheControl => this._flattened.CacheControl;
+        public string CacheControl => _flattened.CacheControl;
 
         /// <summary>
         /// This header returns the value that was specified for the 'x-ms-blob-content-disposition' header. The Content-Disposition response header field conveys additional information about how to process the response payload, and also can be used to attach additional metadata. For example, if set to attachment, it indicates that the user-agent should not display the response, but instead show a Save As dialog with a filename other than the blob name specified.
         /// </summary>
-        public string ContentDisposition => this._flattened.ContentDisposition;
+        public string ContentDisposition => _flattened.ContentDisposition;
 
         /// <summary>
         /// This header returns the value that was specified for the Content-Language request header.
         /// </summary>
-        public string ContentLanguage => this._flattened.ContentLanguage;
+        public string ContentLanguage => _flattened.ContentLanguage;
 
         /// <summary>
         /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs
         /// </summary>
-        public long BlobSequenceNumber => this._flattened.BlobSequenceNumber;
+        public long BlobSequenceNumber => _flattened.BlobSequenceNumber;
 
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
-        public DateTimeOffset CopyCompletionTime => this._flattened.CopyCompletionTime;
+        public DateTimeOffset CopyCompletionTime => _flattened.CopyCompletionTime;
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
         /// </summary>
-        public string CopyStatusDescription => this._flattened.CopyStatusDescription;
+        public string CopyStatusDescription => _flattened.CopyStatusDescription;
 
         /// <summary>
         /// String identifier for this copy operation. Use with Get Blob Properties to check the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy.
         /// </summary>
-        public string CopyId => this._flattened.CopyId;
+        public string CopyId => _flattened.CopyId;
 
         /// <summary>
         /// Contains the number of bytes copied and the total bytes in the source in the last attempted Copy Blob operation where this blob was the destination blob. Can show between 0 and Content-Length bytes copied. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
         /// </summary>
-        public string CopyProgress => this._flattened.CopyProgress;
+        public string CopyProgress => _flattened.CopyProgress;
 
         /// <summary>
         /// URL up to 2 KB in length that specifies the source blob or file used in the last attempted Copy Blob operation where this blob was the destination blob. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
-        public Uri CopySource => this._flattened.CopySource;
+        public Uri CopySource => _flattened.CopySource;
 
         /// <summary>
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
-        public CopyStatus CopyStatus => this._flattened.CopyStatus;
+        public CopyStatus CopyStatus => _flattened.CopyStatus;
 
         /// <summary>
         /// When a blob is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>
-        public LeaseDurationType LeaseDuration => this._flattened.LeaseDuration;
+        public LeaseDurationType LeaseDuration => _flattened.LeaseDuration;
 
         /// <summary>
         /// Lease state of the blob.
         /// </summary>
-        public LeaseState LeaseState => this._flattened.LeaseState;
+        public LeaseState LeaseState => _flattened.LeaseState;
 
         /// <summary>
         /// The current lease status of the blob.
         /// </summary>
-        public LeaseStatus LeaseStatus => this._flattened.LeaseStatus;
+        public LeaseStatus LeaseStatus => _flattened.LeaseStatus;
 
         /// <summary>
         /// Indicates that the service supports requests for partial blob content.
         /// </summary>
-        public string AcceptRanges => this._flattened.AcceptRanges;
+        public string AcceptRanges => _flattened.AcceptRanges;
 
         /// <summary>
         /// The number of committed blocks present in the blob. This header is returned only for append blobs.
         /// </summary>
-        public int BlobCommittedBlockCount => this._flattened.BlobCommittedBlockCount;
+        public int BlobCommittedBlockCount => _flattened.BlobCommittedBlockCount;
 
         /// <summary>
         /// The value of this header is set to true if the blob data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the blob is unencrypted, or if only parts of the blob/application metadata are encrypted).
         /// </summary>
-        public bool IsServerEncrypted => this._flattened.IsServerEncrypted;
+        public bool IsServerEncrypted => _flattened.IsServerEncrypted;
 
         /// <summary>
         /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
         /// </summary>
-        public string EncryptionKeySha256 => this._flattened.EncryptionKeySha256;
+        public string EncryptionKeySha256 => _flattened.EncryptionKeySha256;
 
         /// <summary>
         /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] BlobContentHash => this._flattened.BlobContentHash;
+        public byte[] BlobContentHash => _flattened.BlobContentHash;
 #pragma warning restore CA1819 // Properties should not return arrays
     }
 

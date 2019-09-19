@@ -1,19 +1,18 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Diagnostics;
+using System.Threading;
+
 namespace TrackOne
 {
-    using System;
-    using System.Diagnostics;
-    using System.Threading;
-
     [DebuggerStepThrough]
-    struct TimeoutHelper
+    internal struct TimeoutHelper
     {
-        DateTime deadline;
-        bool deadlineSet;
-        readonly TimeSpan originalTimeout;
-        public static readonly TimeSpan MaxWait = TimeSpan.FromMilliseconds(int.MaxValue);
+        private DateTime _deadline;
+        private bool _deadlineSet;
+        public static readonly TimeSpan s_maxWait = TimeSpan.FromMilliseconds(int.MaxValue);
 
         public TimeoutHelper(TimeSpan timeout) :
             this(timeout, false)
@@ -24,21 +23,21 @@ namespace TrackOne
         {
             Fx.Assert(timeout >= TimeSpan.Zero, "timeout must be non-negative");
 
-            this.originalTimeout = timeout;
-            this.deadline = DateTime.MaxValue;
-            this.deadlineSet = (timeout == TimeSpan.MaxValue);
+            OriginalTimeout = timeout;
+            _deadline = DateTime.MaxValue;
+            _deadlineSet = (timeout == TimeSpan.MaxValue);
 
-            if (startTimeout && !this.deadlineSet)
+            if (startTimeout && !_deadlineSet)
             {
-                this.SetDeadline();
+                SetDeadline();
             }
         }
 
-        public TimeSpan OriginalTimeout => this.originalTimeout;
+        public TimeSpan OriginalTimeout { get; }
 
         public static bool IsTooLarge(TimeSpan timeout)
         {
-            return (timeout > TimeoutHelper.MaxWait) && (timeout != TimeSpan.MaxValue);
+            return (timeout > TimeoutHelper.s_maxWait) && (timeout != TimeSpan.MaxValue);
         }
 
         public static TimeSpan FromMilliseconds(int milliseconds)
@@ -104,31 +103,31 @@ namespace TrackOne
 
         public TimeSpan RemainingTime()
         {
-            if (!this.deadlineSet)
+            if (!_deadlineSet)
             {
-                this.SetDeadline();
-                return this.originalTimeout;
+                SetDeadline();
+                return OriginalTimeout;
             }
 
-            if (this.deadline == DateTime.MaxValue)
+            if (_deadline == DateTime.MaxValue)
             {
                 return TimeSpan.MaxValue;
             }
 
-            TimeSpan remaining = this.deadline - DateTime.UtcNow;
+            TimeSpan remaining = _deadline - DateTime.UtcNow;
             return remaining <= TimeSpan.Zero ? TimeSpan.Zero : remaining;
         }
 
         public TimeSpan ElapsedTime()
         {
-            return this.originalTimeout - this.RemainingTime();
+            return OriginalTimeout - RemainingTime();
         }
 
-        void SetDeadline()
+        private void SetDeadline()
         {
-            Fx.Assert(!deadlineSet, "TimeoutHelper deadline set twice.");
-            this.deadline = DateTime.UtcNow + this.originalTimeout;
-            this.deadlineSet = true;
+            Fx.Assert(!_deadlineSet, "TimeoutHelper deadline set twice.");
+            _deadline = DateTime.UtcNow + OriginalTimeout;
+            _deadlineSet = true;
         }
 
         public static void ThrowIfNegativeArgument(TimeSpan timeout)

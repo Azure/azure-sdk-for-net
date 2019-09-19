@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -19,11 +20,11 @@ namespace Azure.Security.KeyVault.Certificates
         private JsonEncodedText _nameType;
 
         private const string DnsPropertyName = "dns_names";
-        private static readonly JsonEncodedText DnsPropertyNameBytes = JsonEncodedText.Encode(DnsPropertyName);
+        private static readonly JsonEncodedText s_dnsPropertyNameBytes = JsonEncodedText.Encode(DnsPropertyName);
         private const string EmailsPropertyName = "emails";
-        private static readonly JsonEncodedText EmailsPropertyNameBytes = JsonEncodedText.Encode(EmailsPropertyName);
+        private static readonly JsonEncodedText s_emailsPropertyNameBytes = JsonEncodedText.Encode(EmailsPropertyName);
         private const string UpnsPropertyName = "upns";
-        private static readonly JsonEncodedText UpnsPropertyNameBytes = JsonEncodedText.Encode(UpnsPropertyName);
+        private static readonly JsonEncodedText s_upnsPropertyNameBytes = JsonEncodedText.Encode(UpnsPropertyName);
 
         internal SubjectAlternativeNames()
         {
@@ -42,11 +43,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromDns(params string[] names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
-            if (names.Length == 0) throw new ArgumentException("The specified names must be non-null and non-empty");
-
-            return new SubjectAlternativeNames(DnsPropertyNameBytes, names);
+            return new SubjectAlternativeNames(s_dnsPropertyNameBytes, names);
         }
 
         /// <summary>
@@ -56,11 +55,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromDns(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
-            if (!names.Any()) throw new ArgumentException("The specified names must be non-null and non-empty");
-
-            return new SubjectAlternativeNames(DnsPropertyNameBytes, names);
+            return new SubjectAlternativeNames(s_dnsPropertyNameBytes, names);
         }
 
         /// <summary>
@@ -70,11 +67,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromEmail(params string[] names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
-            if (names.Length == 0) throw new ArgumentException("The specified names must be non-null and non-empty");
-
-            return new SubjectAlternativeNames(EmailsPropertyNameBytes, names);
+            return new SubjectAlternativeNames(s_emailsPropertyNameBytes, names);
         }
 
         /// <summary>
@@ -84,11 +79,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromEmail(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
-            if (!names.Any()) throw new ArgumentException("The specified names must be non-null and non-empty");
-
-            return new SubjectAlternativeNames(EmailsPropertyNameBytes, names);
+            return new SubjectAlternativeNames(s_emailsPropertyNameBytes, names);
         }
 
         /// <summary>
@@ -98,11 +91,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromUpn(params string[] names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
-            if (names.Length == 0) throw new ArgumentException("The specified names must be non-null and non-empty");
-
-            return new SubjectAlternativeNames(UpnsPropertyNameBytes, names);
+            return new SubjectAlternativeNames(s_upnsPropertyNameBytes, names);
         }
 
         /// <summary>
@@ -112,11 +103,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromUpn(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
-            if (!names.Any()) throw new ArgumentException("The specified names must be non-null and non-empty");
-
-            return new SubjectAlternativeNames(UpnsPropertyNameBytes, names);
+            return new SubjectAlternativeNames(s_upnsPropertyNameBytes, names);
         }
 
         /// <summary>
@@ -144,13 +133,13 @@ namespace Azure.Security.KeyVault.Certificates
                 switch (prop.Name)
                 {
                     case DnsPropertyName:
-                        _nameType = DnsPropertyNameBytes;
+                        _nameType = s_dnsPropertyNameBytes;
                         break;
                     case EmailsPropertyName:
-                        _nameType = EmailsPropertyNameBytes;
+                        _nameType = s_emailsPropertyNameBytes;
                         break;
                     case UpnsPropertyName:
-                        _nameType = UpnsPropertyNameBytes;
+                        _nameType = s_upnsPropertyNameBytes;
                         break;
                     default:
                         continue;
@@ -158,7 +147,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 List<string> altNames = new List<string>();
 
-                foreach (var element in prop.Value.EnumerateArray())
+                foreach (JsonElement element in prop.Value.EnumerateArray())
                 {
                     altNames.Add(element.ToString());
                 }

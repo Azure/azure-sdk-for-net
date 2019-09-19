@@ -18,18 +18,14 @@ namespace Azure.Core.Pipeline
 
         public RequestMethod(string method)
         {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method));
+            Argument.AssertNotNull(method, nameof(method));
 
             Method = method.ToUpperInvariant();
         }
 
         public static RequestMethod Parse(string method)
         {
-            if (method == null)
-            {
-                throw new ArgumentNullException(nameof(method));
-            }
+            Argument.AssertNotNull(method, nameof(method));
 
             // Fast-path common values
             if (method.Length == 3)

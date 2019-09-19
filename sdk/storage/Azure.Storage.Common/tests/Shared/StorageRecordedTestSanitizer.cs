@@ -37,7 +37,7 @@ namespace Azure.Storage.Test.Shared
             // Santize any copy source
             if (headers.TryGetValue(CopySourceName, out var copySource))
             {
-                headers[CopySourceName] = copySource.Select(c => this.SanitizeUri(c)).ToArray();
+                headers[CopySourceName] = copySource.Select(c => SanitizeUri(c)).ToArray();
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     // Check for auth calls to readact any access tokens
                     var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(body).AsSpan(), true, new JsonReaderState());
-                    if (JsonDocument.TryParseValue(ref reader, out var doc) &&
+                    if (JsonDocument.TryParseValue(ref reader, out JsonDocument doc) &&
                         doc.RootElement.GetProperty("token_type").GetString() == "Bearer")
                     {
                         // If we found an auth call, sanitize it
@@ -58,7 +58,7 @@ namespace Azure.Storage.Test.Shared
                             using (var writer = new Utf8JsonWriter(stream))
                             {
                                 writer.WriteStartObject();
-                                foreach (var property in doc.RootElement.EnumerateObject())
+                                foreach (JsonProperty property in doc.RootElement.EnumerateObject())
                                 {
                                     switch (doc.RootElement.GetProperty(property.Name).ValueKind)
                                     {

@@ -51,9 +51,9 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Service) { sb.Append(Constants.Sas.AccountResources.Service); }
-            if (this.Container) { sb.Append(Constants.Sas.AccountResources.Container); }
-            if (this.Object) { sb.Append(Constants.Sas.AccountResources.Object); }
+            if (Service) { sb.Append(Constants.Sas.AccountResources.Service); }
+            if (Container) { sb.Append(Constants.Sas.AccountResources.Container); }
+            if (Object) { sb.Append(Constants.Sas.AccountResources.Object); }
             return sb.ToString();
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Storage.Sas
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
             obj is AccountSasResourceTypes other &&
-            this.Equals(other);
+            Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasResourceTypes"/>.
@@ -73,9 +73,9 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="AccountSasResourceTypes"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Service ? 0b001 : 0) +
-            (this.Container ? 0b010 : 0) +
-            (this.Object ? 0b100 : 0);
+            (Service ? 0b001 : 0) +
+            (Container ? 0b010 : 0) +
+            (Object ? 0b100 : 0);
 
         /// <summary>
         /// Check if two <see cref="AccountSasResourceTypes"/> instances are equal.
@@ -83,9 +83,9 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasResourceTypes other) =>
-            other.Service == this.Service &&
-            other.Container == this.Container &&
-            other.Object == this.Object;
+            other.Service == Service &&
+            other.Container == Container &&
+            other.Object == Object;
 
         /// <summary>
         /// Check if two <see cref="AccountSasResourceTypes"/> instances are equal.
@@ -122,10 +122,17 @@ namespace Azure.Storage.Sas
             {
                 switch (ch)
                 {
-                    case Constants.Sas.AccountResources.Service: types.Service = true; break;
-                    case Constants.Sas.AccountResources.Container: types.Container = true; break;
-                    case Constants.Sas.AccountResources.Object: types.Object = true; break;
-                    default: throw Errors.InvalidResourceType(ch);
+                    case Constants.Sas.AccountResources.Service:
+                        types.Service = true;
+                        break;
+                    case Constants.Sas.AccountResources.Container:
+                        types.Container = true;
+                        break;
+                    case Constants.Sas.AccountResources.Object:
+                        types.Object = true;
+                        break;
+                    default:
+                        throw Errors.InvalidResourceType(ch);
                 }
             }
             return types;

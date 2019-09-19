@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Certificates
     public class RsaKeyOptions : KeyOptions
     {
         private const string KeySizePropertyName = "key_size";
-        private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
+        private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
 
         /// <summary>
         /// The size of the RSA key, the value must be a valid RSA key length such as 2048 or 4092
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal override bool ReadProperty(JsonProperty prop)
         {
-            if(!base.ReadProperty(prop) && string.CompareOrdinal(prop.Name, KeySizePropertyName) == 0)
+            if (!base.ReadProperty(prop) && string.CompareOrdinal(prop.Name, KeySizePropertyName) == 0)
             {
                 KeySize = prop.Value.GetInt32();
 
@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (KeySize.HasValue)
             {
-                json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
+                json.WriteNumber(s_keySizePropertyNameBytes, KeySize.Value);
             }
         }
     }

@@ -129,13 +129,11 @@ namespace Azure.Security.KeyVault
                     return true;
                 }
 
-                AuthenticationChallenge other = obj as AuthenticationChallenge;
-
-                // This assumes that Scopes is always non-null and of length one.
+                // This assumes that Scopes is always non-null and of length one.  
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
-                if(other != null)
+                if (obj is AuthenticationChallenge other)
                 {
-                    return string.Equals(this.Scopes[0], other.Scopes[0], StringComparison.OrdinalIgnoreCase);
+                    return string.Equals(Scopes[0], other.Scopes[0], StringComparison.OrdinalIgnoreCase);
                 }
 
                 return false;
@@ -146,7 +144,7 @@ namespace Azure.Security.KeyVault
                 // Currently the hash code is simply the hash of the first scope as this is what is used to determine equality
                 // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
-                return this.Scopes[0].GetHashCode();
+                return Scopes[0].GetHashCode();
             }
 
             public static AuthenticationChallenge GetChallenge(HttpPipelineMessage message)
@@ -160,7 +158,7 @@ namespace Azure.Security.KeyVault
                     // if the challenge is non-null cache it
                     if (challenge != null)
                     {
-                        lock(_cacheLock)
+                        lock (_cacheLock)
                         {
                             _cache[GetRequestAuthority(message.Request)] = challenge;
                         }
@@ -209,20 +207,20 @@ namespace Azure.Security.KeyVault
                 // Split the trimmed challenge into a set of name=value strings that
                 // are comma separated. The value fields are expected to be within
                 // quotation characters that are stripped here.
-                String[] pairs = trimmedChallenge.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                string[] pairs = trimmedChallenge.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (pairs.Length > 0)
                 {
                     // Process the name=value string
                     for (int i = 0; i < pairs.Length; i++)
                     {
-                        String[] pair = pairs[i].Split('=');
+                        string[] pair = pairs[i].Split('=');
 
                         if (pair.Length == 2)
                         {
                             // We have a key and a value, now need to trim and decode
-                            String key = pair[0].Trim().Trim(new char[] { '\"' });
-                            String value = pair[1].Trim().Trim(new char[] { '\"' });
+                            string key = pair[0].Trim().Trim(new char[] { '\"' });
+                            string value = pair[1].Trim().Trim(new char[] { '\"' });
 
                             if (!string.IsNullOrEmpty(key))
                             {

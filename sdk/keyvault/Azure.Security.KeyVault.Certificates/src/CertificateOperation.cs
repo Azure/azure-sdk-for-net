@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private bool _hasValue = false;
         private bool _completed = false;
-        private CertificateClient _client;
+        private readonly CertificateClient _client;
 
         internal CertificateOperation(Response<CertificateOperationProperties> properties, CertificateClient client)
             : base(properties.Value.Id.ToString())

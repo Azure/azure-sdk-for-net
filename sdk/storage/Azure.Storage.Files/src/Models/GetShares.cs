@@ -45,8 +45,8 @@ namespace Azure.Storage.Files.Models
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation. 
             var items = new List<ListSharesIncludeType>();
-            if (this.IncludeMetadata) { items.Add(ListSharesIncludeType.Metadata); }
-            if (this.IncludeSnapshots) { items.Add(ListSharesIncludeType.Snapshots); }
+            if (IncludeMetadata) { items.Add(ListSharesIncludeType.Metadata); }
+            if (IncludeSnapshots) { items.Add(ListSharesIncludeType.Snapshots); }
             return items.Count > 0 ? items : null;
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetSharesOptions other && this.Equals(other);
+            obj is GetSharesOptions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the GetSharesOptions.
@@ -65,9 +65,9 @@ namespace Azure.Storage.Files.Models
         /// <returns>Hash code for the GetSharesOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Prefix?.GetHashCode() ?? 0) ^
-            ((this.IncludeMetadata  ? 0b01 : 0) +
-             (this.IncludeSnapshots ? 0b10 : 0));
+            (Prefix?.GetHashCode() ?? 0) ^
+            ((IncludeMetadata ? 0b01 : 0) +
+             (IncludeSnapshots ? 0b10 : 0));
 
         /// <summary>
         /// Check if two GetSharesOptions instances are equal.
@@ -93,9 +93,9 @@ namespace Azure.Storage.Files.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetSharesOptions other) =>
-            this.Prefix == other.Prefix &&
-            this.IncludeMetadata == other.IncludeMetadata &&
-            this.IncludeSnapshots == other.IncludeSnapshots;
+            Prefix == other.Prefix &&
+            IncludeMetadata == other.IncludeMetadata &&
+            IncludeSnapshots == other.IncludeSnapshots;
     }
 
     internal class GetSharesAsyncCollection : StorageAsyncCollection<ShareItem>
@@ -109,8 +109,8 @@ namespace Azure.Storage.Files.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._options = options;
+            _client = client;
+            _options = options;
         }
 
         protected override async Task<Page<ShareItem>> GetNextPageAsync(
@@ -119,13 +119,13 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetSharesInternal(
+            Task<Response<SharesSegment>> task = _client.GetSharesInternal(
                 continuationToken,
-                this._options,
+                _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<SharesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 

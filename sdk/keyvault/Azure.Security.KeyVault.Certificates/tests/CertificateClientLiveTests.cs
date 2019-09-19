@@ -181,7 +181,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            CertificateWithPolicy recovered = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.RecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 

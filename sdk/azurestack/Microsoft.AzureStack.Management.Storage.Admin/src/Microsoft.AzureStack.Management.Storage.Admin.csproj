@@ -7,18 +7,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.AzureStack.Management.Storage.Admin</PackageId>
         <Description>Provides developers with libraries for the Storage admin under AzureStack to manage Storage infrastructure.</Description>
-        <VersionPrefix>0.1.0-preview</VersionPrefix>
+        <VersionPrefix>1.9.0-preview</VersionPrefix>
         <AssemblyName>Microsoft.AzureStack.Management.Storage.Admin</AssemblyName>
         <PackageTags>Microsoft Azure Stack;Storage;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                Preview release of the AzureStack Storage administrator SDK.  In this release we provide the functionality to 
-                1) Manage storage quotas 
-                2) Garbage collect deleted storage resources 
-                3) Restore deleted storage accounts 
-                4) Migrate containers from one share to another. 
-                5) View information about the individual storage components. 
-                6) View usage and performance information 
+                Preview release of the AzureStack Storage administrator SDK.  In this release we remove the function of ''Migrate containers from one share to another''. 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

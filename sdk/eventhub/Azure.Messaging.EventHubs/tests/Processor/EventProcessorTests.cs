@@ -26,9 +26,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
-            var mockClient = Mock.Of<EventHubClient>();
+            EventHubClient mockClient = Mock.Of<EventHubClient>();
             Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            var mockPartitionManager = Mock.Of<PartitionManager>();
+            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             yield return new object[] { new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager), "no options" };
             yield return new object[] { new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager, null), "null options" };
@@ -44,9 +44,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
-            var mockClient = Mock.Of<EventHubClient>();
+            EventHubClient mockClient = Mock.Of<EventHubClient>();
             Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            var mockPartitionManager = Mock.Of<PartitionManager>();
+            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             Assert.That(() => new EventProcessor<PartitionProcessor>(consumerGroup, mockClient, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
         }
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheEventHubClient()
         {
             Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            var mockPartitionManager = Mock.Of<PartitionManager>();
+            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             Assert.That(() => new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, null, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
         }
@@ -73,8 +73,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesThePartitionProcessorFactory()
         {
-            var mockClient = Mock.Of<EventHubClient>();
-            var mockPartitionManager = Mock.Of<PartitionManager>();
+            EventHubClient mockClient = Mock.Of<EventHubClient>();
+            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             Assert.That(() => new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, null, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
         }
@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesThePartitionManager()
         {
-            var mockClient = Mock.Of<EventHubClient>();
+            EventHubClient mockClient = Mock.Of<EventHubClient>();
             Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
 
             Assert.That(() => new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, null), Throws.InstanceOf<ArgumentException>());
@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                      string constructorDescription)
         {
             var defaultOptions = new EventProcessorOptions();
-            var options = eventProcessor.Options;
+            EventProcessorOptions options = eventProcessor.Options;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
@@ -121,9 +121,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorClonesOptions()
         {
-            var mockClient = Mock.Of<EventHubClient>();
+            EventHubClient mockClient = Mock.Of<EventHubClient>();
             Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            var mockPartitionManager = Mock.Of<PartitionManager>();
+            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             var options = new EventProcessorOptions
             {
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var eventProcessor = new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager, options);
-            var clonedOptions = eventProcessor.Options;
+            EventProcessorOptions clonedOptions = eventProcessor.Options;
 
             Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
             Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
@@ -150,9 +150,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorCreatesTheIdentifier()
         {
-            var mockClient = Mock.Of<EventHubClient>();
+            EventHubClient mockClient = Mock.Of<EventHubClient>();
             Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            var mockPartitionManager = Mock.Of<PartitionManager>();
+            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             var eventProcessor = new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager);
 

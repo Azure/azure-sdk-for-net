@@ -32,8 +32,8 @@ namespace Azure.Storage.Files
         /// </summary>
         public string Scheme
         {
-            get => this._scheme;
-            set { this.ResetUri(); this._scheme = value; }
+            get => _scheme;
+            set { ResetUri(); _scheme = value; }
         }
         private string _scheme;
 
@@ -45,8 +45,8 @@ namespace Azure.Storage.Files
         /// </summary>
         public string Host
         {
-            get => this._host;
-            set { this.ResetUri(); this._host = value; }
+            get => _host;
+            set { ResetUri(); _host = value; }
         }
         private string _host;
 
@@ -55,8 +55,8 @@ namespace Azure.Storage.Files
         /// </summary>
         public int Port
         {
-            get => this._port;
-            set { this.ResetUri(); this._port = value; }
+            get => _port;
+            set { ResetUri(); _port = value; }
         }
         private int _port;
 
@@ -66,45 +66,45 @@ namespace Azure.Storage.Files
         /// </summary>
         public string AccountName
         {
-            get => this._accountName;
-            set { this.ResetUri(); this._accountName = value; }
+            get => _accountName;
+            set { ResetUri(); _accountName = value; }
         }
         private string _accountName;
 
         /// <summary>
         /// Gets or sets the name of a file storage share.  The value defaults
-        /// to <see cref="String.Empty"/> if not present in the
+        /// to <see cref="string.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
         /// </summary>
         public string ShareName
         {
-            get => this._shareName;
-            set { this.ResetUri(); this._shareName = value; }
+            get => _shareName;
+            set { ResetUri(); _shareName = value; }
         }
         private string _shareName;
 
         /// <summary>
         /// Gets or sets the path of the directory or file.  The value defaults
-        /// to <see cref="String.Empty"/> if not present in the
+        /// to <see cref="string.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
         /// 
         /// Example: "mydirectory/myfile"
         /// </summary>
         public string DirectoryOrFilePath
         {
-            get => this._directoryOrFilePath;
-            set { this.ResetUri(); this._directoryOrFilePath = value; }
+            get => _directoryOrFilePath;
+            set { ResetUri(); _directoryOrFilePath = value; }
         }
         private string _directoryOrFilePath;
 
         /// <summary>
         /// Gets or sets the name of a file snapshot.  The value defaults to
-        /// <see cref="String.Empty"/> if not present in the <see cref="System.Uri"/>.
+        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
         public string Snapshot
         {
-            get => this._snapshot;
-            set { this.ResetUri(); this._snapshot = value; }
+            get => _snapshot;
+            set { ResetUri(); _snapshot = value; }
         }
         private string _snapshot;
 
@@ -114,8 +114,8 @@ namespace Azure.Storage.Files
         /// </summary>
         public SasQueryParameters Sas
         {
-            get => this._sas;
-            set { this.ResetUri(); this._sas = value; }
+            get => _sas;
+            set { ResetUri(); _sas = value; }
         }
         private SasQueryParameters _sas;
 
@@ -125,8 +125,8 @@ namespace Azure.Storage.Files
         /// </summary>
         public string Query
         {
-            get => this._query;
-            set { this.ResetUri(); this._query = value; }
+            get => _query;
+            set { ResetUri(); _query = value; }
         }
         private string _query;
 
@@ -139,19 +139,19 @@ namespace Azure.Storage.Files
         /// </param>
         public FileUriBuilder(Uri uri)
         {
-            this.Scheme = uri.Scheme;
-            this.Host = uri.Host;
-            this.Port = uri.Port;
-            this.AccountName = "";
+            Scheme = uri.Scheme;
+            Host = uri.Host;
+            Port = uri.Port;
+            AccountName = "";
 
-            this.ShareName = "";
-            this.DirectoryOrFilePath = "";
+            ShareName = "";
+            DirectoryOrFilePath = "";
 
-            this.Snapshot = "";
-            this.Sas = null;
+            Snapshot = "";
+            Sas = null;
 
             // Find the share & directory/file path (if any)
-            if (!String.IsNullOrEmpty(uri.AbsolutePath))
+            if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
                 // If path starts with a slash, remove it
 
@@ -169,12 +169,12 @@ namespace Azure.Storage.Files
                     // Slash not found; path has account name & no share name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path;
+                        AccountName = path;
                         startIndex = path.Length;
                     }
                     else
                     {
-                        this.AccountName = path.Substring(0, accountEndIndex);
+                        AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
                 }
@@ -184,12 +184,12 @@ namespace Azure.Storage.Files
                 var shareEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (shareEndIndex == -1)
                 {
-                    this.ShareName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
+                    ShareName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
                 }
                 else
                 {
-                    this.ShareName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
-                    this.DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
+                    ShareName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
+                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
                 }
             }
 
@@ -199,7 +199,7 @@ namespace Azure.Storage.Files
 
             if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
-                this.Snapshot = snapshotTime;
+                Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
                 paramsMap.Remove(Constants.SnapshotParameterName);
@@ -207,10 +207,10 @@ namespace Azure.Storage.Files
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                this.Sas = new SasQueryParameters(paramsMap);
+                Sas = new SasQueryParameters(paramsMap);
             }
 
-            this.Query = paramsMap.ToString();
+            Query = paramsMap.ToString();
         }
 
         /// <summary>
@@ -222,11 +222,11 @@ namespace Azure.Storage.Files
         {
             get
             {
-                if (this._uri == null)
+                if (_uri == null)
                 {
-                    this._uri = this.BuildUri().Uri;
+                    _uri = BuildUri().Uri;
                 }
-                return this._uri;
+                return _uri;
             }
         }
 
@@ -239,13 +239,13 @@ namespace Azure.Storage.Files
         /// instance.
         /// </returns>
         public override string ToString() =>
-            this.BuildUri().ToString();
+            BuildUri().ToString();
 
         /// <summary>
         /// Reset our cached URI.
         /// </summary>
         private void ResetUri() =>
-            this._uri = null;
+            _uri = null;
 
         /// <summary>
         /// Construct a <see cref="RequestUriBuilder"/> representing the
@@ -257,28 +257,28 @@ namespace Azure.Storage.Files
         {
             // Concatenate account, share & directory/file path (if they exist)
             var path = new StringBuilder("");
-            if (!String.IsNullOrWhiteSpace(this.AccountName))
+            if (!string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(this.AccountName);
+                path.Append("/").Append(AccountName);
             }
-            if (!String.IsNullOrWhiteSpace(this.ShareName))
+            if (!string.IsNullOrWhiteSpace(ShareName))
             {
-                path.Append("/").Append(this.ShareName);
-                if (!String.IsNullOrWhiteSpace(this.DirectoryOrFilePath))
+                path.Append("/").Append(ShareName);
+                if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
-                    path.Append("/").Append(this.DirectoryOrFilePath);
+                    path.Append("/").Append(DirectoryOrFilePath);
                 }
             }
 
             // Concatenate query parameters
-            var query = new StringBuilder(this.Query);
-            if (!String.IsNullOrWhiteSpace(this.Snapshot))
+            var query = new StringBuilder(Query);
+            if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0) { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(this.Snapshot);
+                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
-            var sas = this.Sas?.ToString();
-            if (!String.IsNullOrWhiteSpace(sas))
+            var sas = Sas?.ToString();
+            if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0) { query.Append("&"); }
                 query.Append(sas);
@@ -287,9 +287,9 @@ namespace Azure.Storage.Files
             // Use RequestUriBuilder, which has slightly nicer formatting
             return new RequestUriBuilder
             {
-                Scheme = this.Scheme,
-                Host = this.Host,
-                Port = this.Port,
+                Scheme = Scheme,
+                Host = Host,
+                Port = Port,
                 Path = path.ToString(),
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
@@ -298,6 +298,6 @@ namespace Azure.Storage.Files
         // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
         // TODO refactor to shared method
         private static bool IsHostIPEndPointStyle(string host)
-            => String.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out _);
+            => string.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out _);
     }
 }
