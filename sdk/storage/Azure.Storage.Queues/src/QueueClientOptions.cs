@@ -52,7 +52,7 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClientOptions(ServiceVersion version = LatestVersion)
         {
-            this.Version = version;
+            Version = version;
             this.Initialize();
         }
     }

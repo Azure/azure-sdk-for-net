@@ -21,6 +21,6 @@ namespace Azure.Storage
         /// The SAS token used to authenticate requests to the Storage service.
         /// </param>
         public SharedAccessSignatureCredentials(string sasToken) =>
-            this.SasToken = sasToken;
+            SasToken = sasToken;
     }
 }

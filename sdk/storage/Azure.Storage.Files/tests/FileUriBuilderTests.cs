@@ -21,10 +21,10 @@ namespace Azure.Storage.Files.Test
         [Test]
         public void FileUriBuilder_RoundTrip()
         {
-            var serviceUri = this.GetServiceClient_AccountSas();
+            FileServiceClient serviceUri = GetServiceClient_AccountSas();
             var blobUriBuilder = new FileUriBuilder(serviceUri.Uri);
 
-            var blobUri = blobUriBuilder.Uri;
+            Uri blobUri = blobUriBuilder.Uri;
 
             var expectedUri = WebUtility.UrlDecode(serviceUri.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -133,7 +133,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);

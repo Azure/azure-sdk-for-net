@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <returns>A ListContainersIncludeType value.</returns>
         internal ListContainersIncludeType? AsIncludeType()
-            => this.IncludeMetadata ?
+            => IncludeMetadata ?
                 ListContainersIncludeType.Metadata :
                 (ListContainersIncludeType?)null;
 
@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetContainersOptions other && this.Equals(other);
+            obj is GetContainersOptions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the GetContainersOptions.
@@ -52,8 +52,8 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>Hash code for the GetContainersOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            this.IncludeMetadata.GetHashCode() ^
-            this.Prefix.GetHashCode();
+            IncludeMetadata.GetHashCode() ^
+            Prefix.GetHashCode();
 
         /// <summary>
         /// Check if two GetContainersOptions instances are equal.
@@ -79,8 +79,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetContainersOptions other) =>
-            this.IncludeMetadata == other.IncludeMetadata &&
-            this.Prefix == other.Prefix;
+            IncludeMetadata == other.IncludeMetadata &&
+            Prefix == other.Prefix;
     }
 
     internal class GetContainersAsyncCollection : StorageAsyncCollection<ContainerItem>
@@ -94,8 +94,8 @@ namespace Azure.Storage.Blobs.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._options = options;
+            _client = client;
+            _options = options;
         }
 
         protected override async Task<Page<ContainerItem>> GetNextPageAsync(
@@ -104,13 +104,13 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetContainersInternal(
+            Task<Response<ContainersSegment>> task = _client.GetContainersInternal(
                 continuationToken,
-                this._options,
+                _options,
                 pageHintSize,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<ContainersSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
             return new Page<ContainerItem>(

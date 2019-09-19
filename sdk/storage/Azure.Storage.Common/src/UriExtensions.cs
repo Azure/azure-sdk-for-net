@@ -38,7 +38,7 @@ namespace Azure.Storage
         {
             var parameters = new Dictionary<string, string>();
             var query = uri.Query ?? "";
-            if (!String.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))
             {
                 if (query.StartsWith("?", true, CultureInfo.InvariantCulture))
                 {

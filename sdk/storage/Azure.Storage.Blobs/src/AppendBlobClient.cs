@@ -198,8 +198,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
-            var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(builder.Uri, this.Pipeline);
+            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            return new AppendBlobClient(builder.Uri, Pipeline);
         }
 
         #region Create
@@ -244,7 +244,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateInternal(
+            CreateInternal(
                 httpHeaders,
                 metadata,
                 accessConditions,
@@ -294,7 +294,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateInternal(
+            await CreateInternal(
                 httpHeaders,
                 metadata,
                 accessConditions,
@@ -349,21 +349,21 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.CreateAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         contentLength: default,
                         blobContentType: httpHeaders?.ContentType,
                         blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -387,12 +387,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
                 }
             }
         }
@@ -451,7 +451,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.AppendBlockInternal(
+            AppendBlockInternal(
                 content,
                 transactionalContentHash,
                 accessConditions,
@@ -513,7 +513,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.AppendBlockInternal(
+            await AppendBlockInternal(
                 content,
                 transactionalContentHash,
                 accessConditions,
@@ -580,16 +580,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var appendAttempt = 0;
@@ -601,10 +601,10 @@ namespace Azure.Storage.Blobs.Specialized
                         operation:
                             () =>
                             {
-                                this.Pipeline.LogTrace($"Append attempt {++appendAttempt}");
+                                Pipeline.LogTrace($"Append attempt {++appendAttempt}");
                                 return BlobRestClient.AppendBlob.AppendBlockAsync(
-                                    this.Pipeline,
-                                    this.Uri,
+                                    Pipeline,
+                                    Uri,
                                     body: content,
                                     contentLength: content.Length,
                                     transactionalContentHash: transactionalContentHash,
@@ -627,12 +627,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
                 }
             }
         }
@@ -703,7 +703,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? sourceAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.AppendBlockFromUriInternal(
+            AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,
                 sourceContentHash,
@@ -778,7 +778,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? sourceAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.AppendBlockFromUriInternal(
+            await AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,
                 sourceContentHash,
@@ -858,21 +858,21 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken = default)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         sourceUri: sourceUri,
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
@@ -898,12 +898,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
                 }
             }
         }

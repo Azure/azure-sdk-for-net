@@ -30,8 +30,8 @@ namespace Azure.Storage
         /// </summary>
         internal byte[] AccountKeyValue
         {
-            get => Volatile.Read(ref this._accountKeyValue);
-            private set => Volatile.Write(ref this._accountKeyValue, value);
+            get => Volatile.Read(ref _accountKeyValue);
+            private set => Volatile.Write(ref _accountKeyValue, value);
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace Azure.Storage
             string accountName,
             string accountKey)
         {
-            this.AccountName = accountName;
-            this.SetAccountKey(accountKey);
+            AccountName = accountName;
+            SetAccountKey(accountKey);
         }
 
         /// <summary>
@@ -55,16 +55,16 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="accountKey">A Storage Account access key.</param>
         public void SetAccountKey(string accountKey) =>
-            this.AccountKeyValue = Convert.FromBase64String(accountKey);
+            AccountKeyValue = Convert.FromBase64String(accountKey);
 
         /// <summary>
         /// Exports the value of the account's key to a Base64-encoded string.
         /// </summary>
         /// <returns>The account's key.</returns>
         internal string ExportBase64EncodedKey() =>
-            this.AccountKeyValue == null ?
+            AccountKeyValue == null ?
                 null :
-                Convert.ToBase64String(this.AccountKeyValue);
+                Convert.ToBase64String(AccountKeyValue);
 
         /// <summary>
         /// Generates a base-64 hash signature string for an HTTP request or
@@ -73,6 +73,6 @@ namespace Azure.Storage
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
         internal string ComputeHMACSHA256(string message) =>
-            Convert.ToBase64String(new HMACSHA256(this.AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
+            Convert.ToBase64String(new HMACSHA256(AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
     }
 }

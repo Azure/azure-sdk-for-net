@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace Azure.Storage.Common
 {
-    static class StringExtensions
+    internal static class StringExtensions
     {
         public static string Invariant(FormattableString formattable)
             => formattable.ToString(CultureInfo.InvariantCulture);

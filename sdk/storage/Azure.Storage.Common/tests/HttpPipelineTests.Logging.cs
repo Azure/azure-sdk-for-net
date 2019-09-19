@@ -4,7 +4,7 @@
 
 namespace Azure.Storage.Common.Test
 {
-    partial class HttpPipelineTests
+    internal partial class HttpPipelineTests
     {
         /*
         [Test]

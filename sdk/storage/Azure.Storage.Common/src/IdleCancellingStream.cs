@@ -12,104 +12,104 @@ namespace Azure.Storage.Common
         /// <summary>
         /// The <see cref="Stream"/> wrapped stream that is being read or written to.
         /// </summary>
-        readonly Stream stream;
+        private readonly Stream _stream;
 
         /// <summary>
         /// A <see cref="System.Threading.CancellationToken"/> which fires if the stream has
         /// not been read from or written to within the idle timeout.
         /// </summary>
-        public CancellationToken CancellationToken => this.cancellationTokenSource.Token;
+        public CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
-        readonly int maxIdleTimeInMs;
-        readonly CancellationTokenSource cancellationTokenSource;
+        private readonly int _maxIdleTimeInMs;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
-        public override bool CanRead => this.stream.CanRead;
+        public override bool CanRead => _stream.CanRead;
 
-        public override bool CanSeek => this.stream.CanSeek;
+        public override bool CanSeek => _stream.CanSeek;
 
-        public override bool CanWrite => this.stream.CanWrite;
+        public override bool CanWrite => _stream.CanWrite;
 
-        public override long Length => this.stream.Length;
+        public override long Length => _stream.Length;
 
         public override long Position
         {
-            get => this.stream.Position;
-            set => this.stream.Position = value;
+            get => _stream.Position;
+            set => _stream.Position = value;
         }
 
         public override int ReadTimeout
         {
-            get => this.stream.ReadTimeout;
-            set => this.stream.ReadTimeout = value;
+            get => _stream.ReadTimeout;
+            set => _stream.ReadTimeout = value;
         }
 
         public override int WriteTimeout
         {
-            get => this.stream.WriteTimeout;
-            set => this.stream.WriteTimeout = value;
+            get => _stream.WriteTimeout;
+            set => _stream.WriteTimeout = value;
         }
 
         public IdleCancellingStream(Stream downloadStream, int maxIdleTimeInMs)
         {
-            this.stream = downloadStream;
-            this.maxIdleTimeInMs = maxIdleTimeInMs;
-            this.cancellationTokenSource = new CancellationTokenSource(this.maxIdleTimeInMs);
+            _stream = downloadStream;
+            _maxIdleTimeInMs = maxIdleTimeInMs;
+            _cancellationTokenSource = new CancellationTokenSource(_maxIdleTimeInMs);
         }
 
-        public override long Seek(long offset, SeekOrigin origin) => this.stream.Seek(offset, origin);
+        public override long Seek(long offset, SeekOrigin origin) => _stream.Seek(offset, origin);
 
-        public override void SetLength(long value) => this.stream.SetLength(value);
+        public override void SetLength(long value) => _stream.SetLength(value);
 
         public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            return this.stream.CopyToAsync(destination, bufferSize, cancellationToken);
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            return _stream.CopyToAsync(destination, bufferSize, cancellationToken);
         }
 
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            return this.stream.ReadAsync(buffer, offset, count, cancellationToken);
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            return _stream.ReadAsync(buffer, offset, count, cancellationToken);
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            return this.stream.Read(buffer, offset, count);
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            return _stream.Read(buffer, offset, count);
         }
 
         public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            return this.stream.WriteAsync(buffer, offset, count, cancellationToken);
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            return _stream.WriteAsync(buffer, offset, count, cancellationToken);
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            this.stream.Write(buffer, offset, count);
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            _stream.Write(buffer, offset, count);
         }
 
         public override Task FlushAsync(CancellationToken cancellationToken)
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            return this.stream.FlushAsync(cancellationToken);
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            return _stream.FlushAsync(cancellationToken);
         }
 
         public override void Flush()
         {
-            this.cancellationTokenSource.CancelAfter(this.maxIdleTimeInMs);
-            this.stream.Flush();
+            _cancellationTokenSource.CancelAfter(_maxIdleTimeInMs);
+            _stream.Flush();
         }
 
-        public override void Close() => this.cancellationTokenSource.Dispose();
+        public override void Close() => _cancellationTokenSource.Dispose();
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 // this.stream.Dispose(); // We don't dispose of the inner stream, because we didn't create it.
-                this.cancellationTokenSource.Dispose();
+                _cancellationTokenSource.Dispose();
             }
         }
     }

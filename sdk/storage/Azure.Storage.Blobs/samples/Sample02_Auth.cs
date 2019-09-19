@@ -148,7 +148,7 @@ namespace Azure.Storage.Blobs.Samples
                 ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
 
                 // Allow read access
-                Permissions = new AccountSasPermissions() {  Read = true }.ToString(),
+                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
 
                 // Access expires in 1 hour!
                 ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs.Samples
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex = 
+            StorageRequestFailedException ex =
                 Assert.ThrowsAsync<StorageRequestFailedException>(
                     async () => await service.CreateBlobContainerAsync(Randomize("sample-container")));
             Assert.AreEqual(403, ex.Status);
@@ -194,7 +194,7 @@ namespace Azure.Storage.Blobs.Samples
         {
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
-            TokenCredential credential = 
+            TokenCredential credential =
                 new ClientSecretCredential(
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,

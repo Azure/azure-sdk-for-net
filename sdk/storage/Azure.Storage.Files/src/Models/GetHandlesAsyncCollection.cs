@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
+            _client = client;
         }
 
         protected override async Task<Page<StorageHandle>> GetNextPageAsync(
@@ -26,12 +26,12 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetHandlesInternal(
+            Task<Response<StorageHandlesSegment>> task = _client.GetHandlesInternal(
                 continuationToken,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<StorageHandlesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
             return new Page<StorageHandle>(
@@ -52,8 +52,8 @@ namespace Azure.Storage.Files.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._recursive = recursive;
+            _client = client;
+            _recursive = recursive;
         }
 
         protected override async Task<Page<StorageHandle>> GetNextPageAsync(
@@ -62,13 +62,13 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetHandlesInternal(
+            Task<Response<StorageHandlesSegment>> task = _client.GetHandlesInternal(
                 continuationToken,
                 pageSizeHint,
-                this._recursive,
+                _recursive,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<StorageHandlesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
             return new Page<StorageHandle>(

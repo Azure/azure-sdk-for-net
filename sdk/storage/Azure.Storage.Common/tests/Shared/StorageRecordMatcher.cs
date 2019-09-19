@@ -40,7 +40,7 @@ namespace Azure.Storage.Test.Shared
         /// A list of field names that contain values which we don't expect to
         /// be the same across re-recordings.
         /// </summary>
-        private static readonly HashSet<string> VolatileFieldNames = new HashSet<string>()
+        private static readonly HashSet<string> s_volatileFieldNames = new HashSet<string>()
         {
             // General
             "LastModified",
@@ -89,22 +89,22 @@ namespace Azure.Storage.Test.Shared
             : base(sanitizer)
         {
             // Storage specific request headers to ignore
-            this.VolatileHeaders.Add("x-ms-source-if-match");
-            this.VolatileHeaders.Add("x-ms-source-if-none-match");
-            this.VolatileHeaders.Add("x-ms-source-if-modified-since");
-            this.VolatileHeaders.Add("x-ms-source-if-unmodified-since");
-            this.VolatileHeaders.Add("x-ms-copy-source");
+            VolatileHeaders.Add("x-ms-source-if-match");
+            VolatileHeaders.Add("x-ms-source-if-none-match");
+            VolatileHeaders.Add("x-ms-source-if-modified-since");
+            VolatileHeaders.Add("x-ms-source-if-unmodified-since");
+            VolatileHeaders.Add("x-ms-copy-source");
 
             // Storage specific response headers to ignore
-            this.VolatileResponseHeaders.Add("Server");
-            this.VolatileResponseHeaders.Add("x-ms-snapshot");
-            this.VolatileResponseHeaders.Add("x-ms-copy-id");
-            this.VolatileResponseHeaders.Add("x-ms-creation-time");
-            this.VolatileResponseHeaders.Add("x-ms-copy-completion-time");
-            this.VolatileResponseHeaders.Add("x-ms-copy-destination-snapshot");
-            this.VolatileResponseHeaders.Add("x-ms-copy-source");
-            this.VolatileResponseHeaders.Add("Set-Cookie");
-            this.VolatileResponseHeaders.Add("Referrer-Policy");
+            VolatileResponseHeaders.Add("Server");
+            VolatileResponseHeaders.Add("x-ms-snapshot");
+            VolatileResponseHeaders.Add("x-ms-copy-id");
+            VolatileResponseHeaders.Add("x-ms-creation-time");
+            VolatileResponseHeaders.Add("x-ms-copy-completion-time");
+            VolatileResponseHeaders.Add("x-ms-copy-destination-snapshot");
+            VolatileResponseHeaders.Add("x-ms-copy-source");
+            VolatileResponseHeaders.Add("Set-Cookie");
+            VolatileResponseHeaders.Add("Referrer-Policy");
         }
 
         /// <summary>
@@ -138,21 +138,25 @@ namespace Azure.Storage.Test.Shared
         {
             switch (a, b)
             {
-                case (null, null): return true;
-                case (null, _): return false;
-                case (_, null): return false;
+                case (null, null):
+                    return true;
+                case (null, _):
+                    return false;
+                case (_, null):
+                    return false;
                 case (string sa, string sb):
-                    return String.Equals(sa, sb, StringComparison.Ordinal);
+                    return string.Equals(sa, sb, StringComparison.Ordinal);
                 case (byte[] ba, byte[] bb):
                     return (ba ?? Array.Empty<byte>()).SequenceEqual(bb ?? Array.Empty<byte>());
                 case (Dictionary<string, object> da, Dictionary<string, object> db):
                     return da.Keys.Union(db.Keys).All(key =>
                         da.TryGetValue(key, out var va) &&
                         db.TryGetValue(key, out var vb) &&
-                        (VolatileFieldNames.Contains(key) || AreSimilar(va, vb)));
+                        (s_volatileFieldNames.Contains(key) || AreSimilar(va, vb)));
                 // We just assume any other types contain differences since we
                 // can't analyze them
-                default: return false;
+                default:
+                    return false;
 
             }
         }
@@ -183,7 +187,7 @@ namespace Azure.Storage.Test.Shared
             parts.Add("Path", path);
 
             var query = new Dictionary<string, object>();
-            foreach (var pair in new UriQueryParamsCollection(builder.Query))
+            foreach (KeyValuePair<string, string> pair in new UriQueryParamsCollection(builder.Query))
             {
                 query.Add(pair.Key, pair.Value);
             }
@@ -203,7 +207,7 @@ namespace Azure.Storage.Test.Shared
         private static object ParseBody(RecordEntry entry)
         {
             // Switch on the Content-Type to check for XML or JSON
-            var body = entry.ResponseBody ?? Array.Empty<byte>(); ;
+            var body = entry.ResponseBody ?? Array.Empty<byte>();
             if (body.Length > 0 &&
                 entry.ResponseHeaders.TryGetValue("Content-Type", out var types) &&
                 types?.Length > 0)
@@ -236,7 +240,7 @@ namespace Azure.Storage.Test.Shared
             var doc = XDocument.Load(stream);
             return Parse(doc.Root);
 
-            object Parse(XElement element)
+            static object Parse(XElement element)
             {
                 // Return null or the inner text for simple elements
                 if (element == null) { return null; }
@@ -245,13 +249,15 @@ namespace Azure.Storage.Test.Shared
                     return new Dictionary<string, object> { { element.Name.LocalName, element.Value } };
                 }
 
-                var value = new Dictionary<string, object>();
-                value.Add("Name", element.Name.LocalName);
+                var value = new Dictionary<string, object>
+                {
+                    { "Name", element.Name.LocalName }
+                };
 
                 if (element.HasAttributes)
                 {
                     var attrs = new Dictionary<string, object>();
-                    foreach (var attr in element.Attributes())
+                    foreach (XAttribute attr in element.Attributes())
                     {
                         attrs.Add(attr.Name.LocalName, attr.Value);
                     }
@@ -262,13 +268,13 @@ namespace Azure.Storage.Test.Shared
                 {
                     var elts = new Dictionary<string, object>();
                     var index = 0;
-                    foreach (var child in element.Elements())
+                    foreach (XElement child in element.Elements())
                     {
                         elts.Add(index++.ToString(CultureInfo.InvariantCulture), Parse(child));
                     }
                     value.Add("Elements", elts);
                 }
-                else if (!String.IsNullOrEmpty(element.Value))
+                else if (!string.IsNullOrEmpty(element.Value))
                 {
                     value.Add("Value", element.Value);
                 }
@@ -288,23 +294,28 @@ namespace Azure.Storage.Test.Shared
         private static object ParseJsonBody(byte[] body)
         {
             var reader = new Utf8JsonReader(body.AsSpan(), true, new JsonReaderState());
-            return JsonDocument.TryParseValue(ref reader, out var doc) ?
+            return JsonDocument.TryParseValue(ref reader, out JsonDocument doc) ?
                 Parse(doc.RootElement) :
                 null;
 
-            object Parse(JsonElement element)
+            static object Parse(JsonElement element)
             {
                 switch (element.ValueKind)
                 {
                     // Keep all primitives (except null) as strings
-                    case JsonValueKind.False: return "false";
-                    case JsonValueKind.True: return "true";
-                    case JsonValueKind.Undefined: return "undefined";
-                    case JsonValueKind.Number: return element.GetRawText();
-                    case JsonValueKind.String: return element.GetString();
+                    case JsonValueKind.False:
+                        return "false";
+                    case JsonValueKind.True:
+                        return "true";
+                    case JsonValueKind.Undefined:
+                        return "undefined";
+                    case JsonValueKind.Number:
+                        return element.GetRawText();
+                    case JsonValueKind.String:
+                        return element.GetString();
                     case JsonValueKind.Object:
                         var obj = new Dictionary<string, object>();
-                        foreach (var property in element.EnumerateObject())
+                        foreach (JsonProperty property in element.EnumerateObject())
                         {
                             obj.Add(property.Name, Parse(property.Value));
                         }
@@ -312,7 +323,7 @@ namespace Azure.Storage.Test.Shared
                     case JsonValueKind.Array:
                         var values = new Dictionary<string, object>();
                         var index = 0;
-                        foreach (var value in element.EnumerateArray())
+                        foreach (JsonElement value in element.EnumerateArray())
                         {
                             values.Add(index++.ToString(CultureInfo.InvariantCulture), Parse(value));
                         }

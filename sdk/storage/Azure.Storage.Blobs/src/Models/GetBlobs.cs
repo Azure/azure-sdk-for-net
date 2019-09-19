@@ -66,11 +66,11 @@ namespace Azure.Storage.Blobs.Models
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation. 
             var items = new List<ListBlobsIncludeItem>();
-            if (this.IncludeCopyOperationStatus) { items.Add(ListBlobsIncludeItem.Copy); }
-            if (this.IncludeDeletedBlobs) { items.Add(ListBlobsIncludeItem.Deleted); }
-            if (this.IncludeMetadata) { items.Add(ListBlobsIncludeItem.Metadata); }
-            if (this.IncludeSnapshots) { items.Add(ListBlobsIncludeItem.Snapshots); }
-            if (this.IncludeUncommittedBlobs) { items.Add(ListBlobsIncludeItem.Uncommittedblobs); }
+            if (IncludeCopyOperationStatus) { items.Add(ListBlobsIncludeItem.Copy); }
+            if (IncludeDeletedBlobs) { items.Add(ListBlobsIncludeItem.Deleted); }
+            if (IncludeMetadata) { items.Add(ListBlobsIncludeItem.Metadata); }
+            if (IncludeSnapshots) { items.Add(ListBlobsIncludeItem.Snapshots); }
+            if (IncludeUncommittedBlobs) { items.Add(ListBlobsIncludeItem.Uncommittedblobs); }
             return items.Count > 0 ? items : null;
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetBlobsOptions other && this.Equals(other);
+            obj is GetBlobsOptions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the GetBlobsOptions.
@@ -89,12 +89,12 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>Hash code for the GetBlobsOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            ((this.IncludeCopyOperationStatus ? 0b00001 : 0) +
-             (this.IncludeDeletedBlobs        ? 0b00010 : 0) +
-             (this.IncludeMetadata            ? 0b00100 : 0) +
-             (this.IncludeSnapshots           ? 0b01000 : 0) +
-             (this.IncludeUncommittedBlobs    ? 0b10000 : 0)) ^
-            (this.Prefix?.GetHashCode() ?? 0);
+            ((IncludeCopyOperationStatus ? 0b00001 : 0) +
+             (IncludeDeletedBlobs ? 0b00010 : 0) +
+             (IncludeMetadata ? 0b00100 : 0) +
+             (IncludeSnapshots ? 0b01000 : 0) +
+             (IncludeUncommittedBlobs ? 0b10000 : 0)) ^
+            (Prefix?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two GetBlobsOptions instances are equal.
@@ -120,12 +120,12 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetBlobsOptions other) =>
-            this.IncludeCopyOperationStatus == other.IncludeCopyOperationStatus &&
-            this.IncludeDeletedBlobs == other.IncludeDeletedBlobs &&
-            this.IncludeMetadata == other.IncludeMetadata &&
-            this.IncludeSnapshots == other.IncludeSnapshots &&
-            this.IncludeUncommittedBlobs == other.IncludeUncommittedBlobs &&
-            this.Prefix == other.Prefix;
+            IncludeCopyOperationStatus == other.IncludeCopyOperationStatus &&
+            IncludeDeletedBlobs == other.IncludeDeletedBlobs &&
+            IncludeMetadata == other.IncludeMetadata &&
+            IncludeSnapshots == other.IncludeSnapshots &&
+            IncludeUncommittedBlobs == other.IncludeUncommittedBlobs &&
+            Prefix == other.Prefix;
     }
 
     internal class GetBlobsAsyncCollection : StorageAsyncCollection<BlobItem>
@@ -139,8 +139,8 @@ namespace Azure.Storage.Blobs.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._options = options;
+            _client = client;
+            _options = options;
         }
 
         protected override async Task<Page<BlobItem>> GetNextPageAsync(
@@ -149,13 +149,13 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetBlobsInternal(
+            Task<Response<BlobsFlatSegment>> task = _client.GetBlobsInternal(
                 continuationToken,
-                this._options,
+                _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<BlobsFlatSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
             return new Page<BlobItem>(
@@ -178,9 +178,9 @@ namespace Azure.Storage.Blobs.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._delimiter = delimiter;
-            this._options = options;
+            _client = client;
+            _delimiter = delimiter;
+            _options = options;
         }
 
         protected override async Task<Page<BlobHierarchyItem>> GetNextPageAsync(
@@ -189,14 +189,14 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetBlobsByHierarchyInternal(
+            Task<Response<BlobsHierarchySegment>> task = _client.GetBlobsByHierarchyInternal(
                 continuationToken,
-                this._delimiter,
-                this._options,
+                _delimiter,
+                _options,
                 pageHintSize,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<BlobsHierarchySegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
@@ -229,12 +229,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Gets a value indicating if this item represents a <see cref="Prefix"/>.
         /// </summary>
-        public bool IsPrefix => this.Prefix != null;
+        public bool IsPrefix => Prefix != null;
 
         /// <summary>
         /// Gets a value indicating if this item represents a <see cref="Blob"/>.
         /// </summary>
-        public bool IsBlob => this.Blob != null;
+        public bool IsBlob => Blob != null;
 
         /// <summary>
         /// Initialies a new instance of the BlobHierarchyItem class.
@@ -247,8 +247,8 @@ namespace Azure.Storage.Blobs.Models
         /// </param>
         internal BlobHierarchyItem(string prefix, BlobItem blob)
         {
-            this.Prefix = prefix;
-            this.Blob = blob;
+            Prefix = prefix;
+            Blob = blob;
         }
     }
 
