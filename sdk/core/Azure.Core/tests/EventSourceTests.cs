@@ -174,7 +174,8 @@ namespace Azure.Core.Tests
 
             using (Request request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
 
@@ -196,7 +197,8 @@ namespace Azure.Core.Tests
 
             using (Request request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
 
                 await SendRequestAsync(pipeline, request);
@@ -218,7 +220,8 @@ namespace Azure.Core.Tests
 
             using (Request request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
 
                 await SendRequestAsync(pipeline, request);
