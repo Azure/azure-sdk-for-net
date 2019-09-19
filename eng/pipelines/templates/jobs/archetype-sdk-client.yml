@@ -17,7 +17,7 @@ jobs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}}
-          /p:PublicSign=false ${{ parameters.VersioningProperties }} /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+          /p:PublicSign=false ${{ parameters.VersioningProperties }} /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion) /v:normal
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -117,7 +117,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" 
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
