@@ -811,7 +811,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     // Start downloading the file
-                    var (response, stream) = await StartDownloadAsync(
+                    (Response<FlattenedStorageFileProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
                         rangeGetContentHash,
                         async: async,
@@ -909,7 +909,7 @@ namespace Azure.Storage.Files
                     range.Count.Value - startOffset :
                     (long?)null);
             Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
-            var (response, stream) =
+            (Response<FlattenedStorageFileProperties> response, Stream stream) =
                 await FileRestClient.File.DownloadAsync(
                     Pipeline,
                     Uri,

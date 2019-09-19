@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     // Start downloading the blob
-                    var (response, stream) = await StartDownloadAsync(
+                    (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
                         accessConditions,
                         customerProvidedKey,
@@ -644,7 +644,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
-            var (response, stream) =
+            (Response<FlattenedDownloadProperties> response, Stream stream) =
                 await BlobRestClient.Blob.DownloadAsync(
                     Pipeline,
                     Uri,
