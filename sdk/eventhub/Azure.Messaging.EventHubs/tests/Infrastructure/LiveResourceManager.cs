@@ -214,4 +214,3 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         }
     }
 }
-
