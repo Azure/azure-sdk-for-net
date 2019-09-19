@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             transportMock
                 .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(batchTransportMock.Object));
+                .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducer(transportMock.Object, endpoint, eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
@@ -194,7 +194,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             transportMock
                 .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(batchTransportMock.Object));
+                .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducer(transportMock.Object, endpoint, eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 

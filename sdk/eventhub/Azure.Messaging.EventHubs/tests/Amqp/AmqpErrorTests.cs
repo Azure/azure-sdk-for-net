@@ -454,7 +454,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static string GetNotFoundStatusText() =>
             (string)
                 typeof(AmqpError)
-                    .GetField("_notFoundStatusText", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetField("NotFoundStatusText", BindingFlags.Static | BindingFlags.NonPublic)
                     .GetValue(null);
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static Regex GetNotFoundExpression() =>
             (Regex)
                 typeof(AmqpError)
-                    .GetField("s_notFoundExpression", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetProperty("NotFoundExpression", BindingFlags.Static | BindingFlags.NonPublic)
                     .GetValue(null);
     }
 }
