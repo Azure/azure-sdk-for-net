@@ -1140,7 +1140,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("#7309 - upgrading to 2019-02-02")]
         public async Task GetPropertiesAsync_ContainerIdentitySAS()
         {
             var oauthService = this.GetServiceClient_OauthAccount();
@@ -1196,7 +1195,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("#7309 - upgrading to 2019-02-02")]
         public async Task GetPropertiesAsync_BlobIdentitySAS()
         {
             var oauthService = this.GetServiceClient_OauthAccount();
@@ -1256,7 +1254,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("#7309 - upgrading to 2019-02-02")]
         public async Task GetPropertiesAsync_SnapshotIdentitySAS()
         {
             var oauthService = this.GetServiceClient_OauthAccount();
