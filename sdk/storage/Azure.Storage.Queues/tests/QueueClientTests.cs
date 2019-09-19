@@ -33,9 +33,9 @@ namespace Azure.Storage.Queues.Test
 
             var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
 
-            var queueName = this.GetNewQueueName();
+            var queueName = GetNewQueueName();
 
-            var client = this.InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, this.GetOptions()));
+            QueueClient client = InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, GetOptions()));
 
             var builder = new QueueUriBuilder(client.Uri);
 
@@ -47,14 +47,14 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -68,12 +68,12 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task CreateAsync_FromService()
         {
-            var name = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
+            var name = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                var result = await service.CreateQueueAsync(name);
-                var properties = await result.Value.GetPropertiesAsync();
+                Response<QueueClient> result = await service.CreateQueueAsync(name);
+                Response<Models.QueueProperties> properties = await result.Value.GetPropertiesAsync();
                 Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
             }
             finally
@@ -86,14 +86,14 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_OauthAccount();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_OauthAccount();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -108,14 +108,14 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_AccountSas();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_AccountSas();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -130,15 +130,15 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithQueueServiceSas()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_QueueServiceSas(queueName);
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_QueueServiceSas(queueName);
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
             var pass = false;
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
 
                 // Assert
@@ -161,9 +161,9 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
             await queue.CreateAsync();
 
             // Act
@@ -176,10 +176,10 @@ namespace Azure.Storage.Queues.Test
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                var queueProperties = await queue.GetPropertiesAsync();
+                Response<Models.QueueProperties> queueProperties = await queue.GetPropertiesAsync();
 
                 // Assert
                 Assert.IsNotNull(queueProperties);
@@ -190,9 +190,9 @@ namespace Azure.Storage.Queues.Test
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -204,11 +204,11 @@ namespace Azure.Storage.Queues.Test
         public async Task SetMetadataAsync_OnCreate()
         {
             // Arrange
-            var metadata = this.BuildMetadata();
-            using (this.GetNewQueue(out var queue, metadata: metadata))
+            IDictionary<string, string> metadata = BuildMetadata();
+            using (GetNewQueue(out QueueClient queue, metadata: metadata))
             {
                 // Assert
-                var result = await queue.GetPropertiesAsync();
+                Response<Models.QueueProperties> result = await queue.GetPropertiesAsync();
                 Assert.AreEqual("bar", result.Value.Metadata["foo"]);
                 Assert.AreEqual("data", result.Value.Metadata["meta"]);
             }
@@ -218,14 +218,14 @@ namespace Azure.Storage.Queues.Test
         public async Task SetMetadataAsync_Metadata()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                var metadata = this.BuildMetadata();
+                IDictionary<string, string> metadata = BuildMetadata();
                 await queue.SetMetadataAsync(metadata);
 
                 // Assert
-                var result = await queue.GetPropertiesAsync();
+                Response<Models.QueueProperties> result = await queue.GetPropertiesAsync();
                 Assert.AreEqual("bar", result.Value.Metadata["foo"]);
                 Assert.AreEqual("data", result.Value.Metadata["meta"]);
             }
@@ -236,10 +236,10 @@ namespace Azure.Storage.Queues.Test
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
-            var metadata = this.BuildMetadata();
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -251,16 +251,16 @@ namespace Azure.Storage.Queues.Test
         public async Task GetAccessPolicyAsync()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
-                var signedIdentifiers = this.BuildSignedIdentifiers();
+                Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
-                var setResult = await queue.SetAccessPolicyAsync(signedIdentifiers);
+                Response setResult = await queue.SetAccessPolicyAsync(signedIdentifiers);
 
                 // Assert
-                var result = await queue.GetAccessPolicyAsync();
-                var acl = result.Value.First();
+                Response<IEnumerable<Models.SignedIdentifier>> result = await queue.GetAccessPolicyAsync();
+                Models.SignedIdentifier acl = result.Value.First();
 
                 Assert.AreEqual(1, result.Value.Count());
                 Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
@@ -275,9 +275,9 @@ namespace Azure.Storage.Queues.Test
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -288,11 +288,11 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task SetAccessPolicyAsync()
         {
-            using (this.GetNewQueue(out var queue))
+            using (GetNewQueue(out QueueClient queue))
             {
-                var signedIdentifiers = this.BuildSignedIdentifiers();
-                var result = await queue.SetAccessPolicyAsync(signedIdentifiers);
-                Assert.IsFalse(String.IsNullOrWhiteSpace(result.Headers.RequestId));
+                Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                Response result = await queue.SetAccessPolicyAsync(signedIdentifiers);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(result.Headers.RequestId));
             }
         }
 
@@ -301,10 +301,10 @@ namespace Azure.Storage.Queues.Test
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
-            var signedIdentifiers = this.BuildSignedIdentifiers();
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -316,13 +316,13 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
             await queue.CreateAsync();
 
             // Act
-            var result = await queue.DeleteAsync();
+            Response result = await queue.DeleteAsync();
 
             // Assert
             Assert.AreNotEqual(default, result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -331,11 +331,11 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task DeleteAsync_FromService()
         {
-            var name = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
+            var name = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                var queue = (await service.CreateQueueAsync(name)).Value;
+                QueueClient queue = (await service.CreateQueueAsync(name)).Value;
                 await service.DeleteQueueAsync(name);
 
                 // Ensure the queue no longer returns values
@@ -353,9 +353,9 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(

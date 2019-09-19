@@ -19,7 +19,7 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Whether to always add the x-ms-date header.
         /// </summary>
-        const bool IncludeXMsDate = true;
+        private const bool IncludeXMsDate = true;
 
         /// <summary>
         /// Shared key credentials used to sign requests
@@ -31,7 +31,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="credentials">SharedKeyCredentials to authenticate requests.</param>
         public StorageSharedKeyPipelinePolicy(StorageSharedKeyCredential credentials)
-            => this._credentials = credentials;
+            => _credentials = credentials;
 
         /// <summary>
         /// Sign the request using the shared key credentials.
@@ -48,10 +48,10 @@ namespace Azure.Storage.Common
                 message.Request.Headers.Add(Constants.HeaderNames.Date, date);
             }
 
-            var stringToSign = this.BuildStringToSign(message);
-            var signature = this._credentials.ComputeHMACSHA256(stringToSign);
+            var stringToSign = BuildStringToSign(message);
+            var signature = _credentials.ComputeHMACSHA256(stringToSign);
 
-            var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, this._credentials.AccountName + ":" + signature).ToString();
+            var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.Storage.Common
             message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
-            var stringToSign = String.Join("\n",
+            var stringToSign = string.Join("\n",
                 message.Request.Method.ToString().ToUpperInvariant(),
                 contentEncoding ?? "",
                 contentLanguage ?? "",
@@ -84,7 +84,7 @@ namespace Azure.Storage.Common
                 ifUnmodifiedSince ?? "",
                 range ?? "",
                 BuildCanonicalizedHeaders(message),
-                this.BuildCanonicalizedResource(message.Request.UriBuilder.Uri));
+                BuildCanonicalizedResource(message.Request.UriBuilder.Uri));
             return stringToSign;
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Storage.Common
         private string BuildCanonicalizedResource(Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services
-            var cr = new StringBuilder("/").Append(this._credentials.AccountName);
+            StringBuilder cr = new StringBuilder("/").Append(_credentials.AccountName);
             if (resource.AbsolutePath.Length > 0)
             {
                 // Any portion of the CanonicalizedResource string that is derived from
@@ -128,7 +128,7 @@ namespace Azure.Storage.Common
                 cr.Append('/');
             }
 
-            var parameters = resource.GetQueryParameters(); // Returns URL decoded values
+            System.Collections.Generic.IDictionary<string, string> parameters = resource.GetQueryParameters(); // Returns URL decoded values
             if (parameters.Count > 0)
             {
                 foreach (var name in parameters.Keys.OrderBy(key => key, StringComparer.Ordinal))

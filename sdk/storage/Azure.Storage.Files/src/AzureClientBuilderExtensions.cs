@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="FileServiceClient"/> instance with the provided <paramref name="connectionString"/>
         /// </summary>
         public static IAzureClientBuilder<FileServiceClient, FileClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, string connectionString)
-            where TBuilder: IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<FileServiceClient, FileClientOptions>(options => new FileServiceClient(connectionString, options));
         }
@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="FileServiceClient"/> instance with the provided <paramref name="serviceUri"/>
         /// </summary>
         public static IAzureClientBuilder<FileServiceClient, FileClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
-            where TBuilder: IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<FileServiceClient, FileClientOptions>(options => new FileServiceClient(serviceUri, options));
         }
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="FileServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sharedKeyCredential"/>
         /// </summary>
         public static IAzureClientBuilder<FileServiceClient, FileClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, StorageSharedKeyCredential sharedKeyCredential)
-            where TBuilder: IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<FileServiceClient, FileClientOptions>(options => new FileServiceClient(serviceUri, sharedKeyCredential, options));
         }
@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="FileServiceClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         public static IAzureClientBuilder<FileServiceClient, FileClientOptions> AddFileServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder: IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<FileServiceClient, FileClientOptions>(configuration);
         }

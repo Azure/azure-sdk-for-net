@@ -97,44 +97,44 @@ namespace Azure.Storage.Sas
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            if (this.ExpiryTime == default || String.IsNullOrEmpty(this.Permissions) || String.IsNullOrEmpty(this.ResourceTypes) || String.IsNullOrEmpty(this.Services))
+            if (ExpiryTime == default || string.IsNullOrEmpty(Permissions) || string.IsNullOrEmpty(ResourceTypes) || string.IsNullOrEmpty(Services))
             {
                 throw Errors.AccountSasMissingData();
             }
-            if (String.IsNullOrEmpty(this.Version))
+            if (string.IsNullOrEmpty(Version))
             {
-                this.Version = SasQueryParameters.DefaultSasVersion;
+                Version = SasQueryParameters.DefaultSasVersion;
             }
             // Make sure the permission characters are in the correct order
-            this.Permissions = AccountSasPermissions.Parse(this.Permissions).ToString();
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(this.StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(this.ExpiryTime);
+            Permissions = AccountSasPermissions.Parse(Permissions).ToString();
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
+            var stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
-                this.Permissions,
-                this.Services,
-                this.ResourceTypes,
+                Permissions,
+                Services,
+                ResourceTypes,
                 startTime,
                 expiryTime,
-                this.IPRange.ToString(),
-                this.Protocol.ToString(),
-                this.Version,
+                IPRange.ToString(),
+                Protocol.ToString(),
+                Version,
                 "");  // That's right, the account SAS requires a terminating extra newline
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             var p = new SasQueryParameters(
-                this.Version,
-                this.Services,
-                this.ResourceTypes,
-                this.Protocol,
-                this.StartTime,
-                this.ExpiryTime,
-                this.IPRange,
+                Version,
+                Services,
+                ResourceTypes,
+                Protocol,
+                StartTime,
+                ExpiryTime,
+                IPRange,
                 null, // Identifier
                 null, // Resource
-                this.Permissions,
+                Permissions,
                 signature);
             return p;
         }
@@ -155,7 +155,7 @@ namespace Azure.Storage.Sas
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
             obj is AccountSasBuilder other &&
-            this.Equals(other);
+            Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasBuilder"/>.
@@ -163,14 +163,14 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="AccountSasBuilder"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            this.ExpiryTime.GetHashCode() ^
-            this.IPRange.GetHashCode() ^
-            (this.Permissions?.GetHashCode() ?? 0) ^
-            this.Protocol.GetHashCode() ^
-            (this.ResourceTypes?.GetHashCode() ?? 0) ^
-            (this.Services?.GetHashCode() ?? 0) ^
-            this.StartTime.GetHashCode() ^
-            (this.Version?.GetHashCode() ?? 0);
+            ExpiryTime.GetHashCode() ^
+            IPRange.GetHashCode() ^
+            (Permissions?.GetHashCode() ?? 0) ^
+            Protocol.GetHashCode() ^
+            (ResourceTypes?.GetHashCode() ?? 0) ^
+            (Services?.GetHashCode() ?? 0) ^
+            StartTime.GetHashCode() ^
+            (Version?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
@@ -197,13 +197,13 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasBuilder other) =>
-            this.ExpiryTime == other.ExpiryTime &&
-            this.IPRange == other.IPRange &&
-            this.Permissions == other.Permissions &&
-            this.Protocol == other.Protocol &&
-            this.ResourceTypes == other.ResourceTypes &&
-            this.Services == other.Services &&
-            this.StartTime == other.StartTime &&
-            this.Version == other.Version;
+            ExpiryTime == other.ExpiryTime &&
+            IPRange == other.IPRange &&
+            Permissions == other.Permissions &&
+            Protocol == other.Protocol &&
+            ResourceTypes == other.ResourceTypes &&
+            Services == other.Services &&
+            StartTime == other.StartTime &&
+            Version == other.Version;
     }
 }

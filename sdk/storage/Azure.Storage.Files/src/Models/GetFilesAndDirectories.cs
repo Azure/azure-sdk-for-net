@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetFilesAndDirectoriesOptions other && this.Equals(other);
+            obj is GetFilesAndDirectoriesOptions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the GetFilesAndDirectoriesOptions.
@@ -47,8 +47,8 @@ namespace Azure.Storage.Files.Models
         /// <returns>Hash code for the GetFilesAndDirectoriesOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.ShareSnapshot?.GetHashCode() ?? 0) ^
-            (this.Prefix?.GetHashCode() ?? 0);
+            (ShareSnapshot?.GetHashCode() ?? 0) ^
+            (Prefix?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two GetFilesAndDirectoriesOptions instances are equal.
@@ -74,8 +74,8 @@ namespace Azure.Storage.Files.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetFilesAndDirectoriesOptions other) =>
-            this.ShareSnapshot == other.ShareSnapshot &&
-            this.Prefix == other.Prefix;
+            ShareSnapshot == other.ShareSnapshot &&
+            Prefix == other.Prefix;
     }
 
     internal class GetFilesAndDirectoriesAsyncCollection : StorageAsyncCollection<StorageFileItem>
@@ -89,8 +89,8 @@ namespace Azure.Storage.Files.Models
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
-            this._client = client;
-            this._options = options;
+            _client = client;
+            _options = options;
         }
 
         protected override async Task<Page<StorageFileItem>> GetNextPageAsync(
@@ -99,13 +99,13 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetFilesAndDirectoriesInternal(
+            Task<Response<FilesAndDirectoriesSegment>> task = _client.GetFilesAndDirectoriesInternal(
                 continuationToken,
-                this._options,
+                _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            var response = isAsync ?
+            Response<FilesAndDirectoriesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
@@ -143,9 +143,9 @@ namespace Azure.Storage.Files.Models
 
         internal StorageFileItem(bool isDirectory, string name, long? fileSize = null)
         {
-            this.IsDirectory = isDirectory;
-            this.Name = name;
-            this.FileSize = fileSize;
+            IsDirectory = isDirectory;
+            Name = name;
+            FileSize = fileSize;
         }
     }
 

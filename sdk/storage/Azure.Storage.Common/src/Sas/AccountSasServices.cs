@@ -43,9 +43,9 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Blobs) { sb.Append(Constants.Sas.AccountServices.Blob); }
-            if (this.Queues) { sb.Append(Constants.Sas.AccountServices.Queue); }
-            if (this.Files) { sb.Append(Constants.Sas.AccountServices.File); }
+            if (Blobs) { sb.Append(Constants.Sas.AccountServices.Blob); }
+            if (Queues) { sb.Append(Constants.Sas.AccountServices.Queue); }
+            if (Files) { sb.Append(Constants.Sas.AccountServices.File); }
             return sb.ToString();
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Storage.Sas
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
             obj is AccountSasServices other &&
-            this.Equals(other);
+            Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasServices"/>.
@@ -67,9 +67,9 @@ namespace Azure.Storage.Sas
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Blobs  ? 0b001 : 0) +
-            (this.Queues ? 0b010 : 0) +
-            (this.Files  ? 0b100 : 0);
+            (Blobs ? 0b001 : 0) +
+            (Queues ? 0b010 : 0) +
+            (Files ? 0b100 : 0);
 
         /// <summary>
         /// Check if two <see cref="AccountSasServices"/> instances are equal.
@@ -77,9 +77,9 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasServices other) =>
-            other.Blobs == this.Blobs &&
-            other.Queues == this.Queues &&
-            other.Files == this.Files;
+            other.Blobs == Blobs &&
+            other.Queues == Queues &&
+            other.Files == Files;
 
         /// <summary>
         /// Check if two <see cref="AccountSasServices"/> instances are equal.
@@ -117,10 +117,17 @@ namespace Azure.Storage.Sas
             {
                 switch (ch)
                 {
-                    case Constants.Sas.AccountServices.Blob: svcs.Blobs = true; break;
-                    case Constants.Sas.AccountServices.Queue: svcs.Queues = true; break;
-                    case Constants.Sas.AccountServices.File: svcs.Files = true; break;
-                    default: throw Errors.InvalidService(ch);
+                    case Constants.Sas.AccountServices.Blob:
+                        svcs.Blobs = true;
+                        break;
+                    case Constants.Sas.AccountServices.Queue:
+                        svcs.Queues = true;
+                        break;
+                    case Constants.Sas.AccountServices.File:
+                        svcs.Files = true;
+                        break;
+                    default:
+                        throw Errors.InvalidService(ch);
                 }
             }
             return svcs;
