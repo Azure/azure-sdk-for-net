@@ -14,15 +14,6 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public static class RandomExtensions
-    {
-        public static Guid NewGuid(this Random random)
-        {
-            var bytes = new byte[16];
-            random.NextBytes(bytes);
-            return new Guid(bytes);
-        }
-    }
     public class RecordTransport : HttpPipelineTransport
     {
         private readonly HttpPipelineTransport _innerTransport;
