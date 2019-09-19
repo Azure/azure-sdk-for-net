@@ -171,7 +171,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return Task.FromResult(result);
         }
 
-        #region Unsupported operations
+#region Unsupported operations
         DecryptResult ICryptographyProvider.Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
         {
             throw new NotSupportedException();
@@ -211,6 +211,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             throw new NotSupportedException();
         }
-        #endregion
+#endregion
     }
 }
