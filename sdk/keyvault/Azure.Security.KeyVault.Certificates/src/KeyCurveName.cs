@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public struct KeyCurveName
     {
-        private string _value;
+        private readonly string _value;
 
         public KeyCurveName(string curveName)
         {

@@ -20,28 +20,28 @@ namespace Azure.Security.KeyVault.Certificates
         public IDictionary<string, string> Tags { get; private set; }
 
         private const string AttributesPropertyName = "attributes";
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private const string EnabledPropertyName = "enabled";
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private const string TagsPropertyName = "tags";
-        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(Enabled.HasValue)
+            if (Enabled.HasValue)
             {
-                json.WriteStartObject(AttributesPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
-                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
 
                 json.WriteEndObject();
             }
 
-            if(Tags != null)
+            if (Tags != null)
             {
-                json.WriteStartObject(TagsPropertyNameBytes);
+                json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

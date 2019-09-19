@@ -41,16 +41,15 @@ namespace Azure.Messaging.EventHubs.Core
                 Argument.AssertNotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
             }
 
-            T result;
 
-            var waitToken = cancellationToken;
+            CancellationToken waitToken = cancellationToken;
             var waitSource = default(CancellationTokenSource);
 
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    if (reader.TryRead(out result))
+                    if (reader.TryRead(out T result))
                     {
                         waitSource?.CancelAfter(Timeout.Infinite);
                         yield return result;

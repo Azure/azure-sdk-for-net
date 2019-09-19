@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Test
         {
             try
             {
-                foreach (var cleanupItem in _secretsToCleanup)
+                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     if (cleanupItem.Delete)
                     {
@@ -57,17 +57,17 @@ namespace Azure.Security.KeyVault.Test
                     }
                 }
 
-                foreach (var cleanupItem in _secretsToCleanup)
+                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     await WaitForDeletedSecret(cleanupItem.Secret.Name);
                 }
 
-                foreach (var cleanupItem in _secretsToCleanup)
+                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     await Client.PurgeDeletedAsync(cleanupItem.Secret.Name);
                 }
 
-                foreach (var cleanupItem in _secretsToCleanup)
+                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     await WaitForPurgedSecret(cleanupItem.Secret.Name);
                 }

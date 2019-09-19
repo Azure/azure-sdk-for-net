@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             options ??= new CertificateClientOptions();
 
-            var pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential));
 
             _defaultPolicy = options.DefaultPolicy ?? CreateDefaultPolicy();
 
@@ -80,7 +80,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>A <see cref="CertificateOperation"/> which contians details on the create operation, and can be used to retrieve updated status</returns>
         public virtual CertificateOperation StartCreateCertificate(string name, CancellationToken cancellationToken = default)
         {
-            return this.StartCreateCertificate(name, _defaultPolicy, cancellationToken: cancellationToken);
+            return StartCreateCertificate(name, _defaultPolicy, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>A <see cref="CertificateOperation"/> which contians details on the create operation, and can be used to retrieve updated status</returns>
         public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await this.StartCreateCertificateAsync(name, _defaultPolicy, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await StartCreateCertificateAsync(name, _defaultPolicy, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            version = version ?? string.Empty;
+            version ??= string.Empty;
 
             var parameters = new CertificateUpdateParameters(enabled, tags);
 
@@ -317,7 +317,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            version = version ?? string.Empty;
+            version ??= string.Empty;
 
             var parameters = new CertificateUpdateParameters(enabled, tags);
 
@@ -560,7 +560,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                var backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup");
+                Response<CertificateBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup");
 
                 return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
             }
@@ -588,7 +588,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                var backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup").ConfigureAwait(false);
+                Response<CertificateBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup").ConfigureAwait(false);
 
                 return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
             }

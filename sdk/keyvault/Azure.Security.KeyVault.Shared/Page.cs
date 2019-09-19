@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault
         where T : IJsonDeserializable
     {
         private T[] _items;
-        private Func<T> _itemFactory;
+        private readonly Func<T> _itemFactory;
 
         internal KeyVaultPage(Func<T> itemFactory)
         {
@@ -36,13 +36,13 @@ namespace Azure.Security.KeyVault
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
-                if(value.ValueKind != JsonValueKind.Null)
+                if (value.ValueKind != JsonValueKind.Null)
                 {
                     _items = new T[value.GetArrayLength()];
 
                     int i = 0;
 
-                    foreach (var elem in value.EnumerateArray())
+                    foreach (JsonElement elem in value.EnumerateArray())
                     {
                         _items[i] = _itemFactory();
 

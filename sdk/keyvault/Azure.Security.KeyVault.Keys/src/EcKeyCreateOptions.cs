@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Name = name;
             Hsm = hsm;
-            if(hsm)
+            if (hsm)
             {
                 KeyType = KeyType.EcHsm;
             }

@@ -49,10 +49,10 @@ namespace Azure.Messaging.EventHubs.Authorization
         private const char TokenValuePairDelimiter = '&';
 
         /// <summary>The default length of time to consider a signature valid, if not otherwise specified.</summary>
-        private static readonly TimeSpan DefaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
+        private static readonly TimeSpan s_defaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
 
         /// <summary>Represents the Unix epoch time value, January 1, 1970 12:00:00, UTC.</summary>
-        private static readonly DateTimeOffset Epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        private static readonly DateTimeOffset s_epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         /// <summary>
         ///   The name of the shared access key, either for the Event Hubs namespace
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                                      string sharedAccessKey,
                                      TimeSpan? signatureValidityDuration = default)
         {
-            signatureValidityDuration = signatureValidityDuration ?? DefaultSignatureValidityDuration;
+            signatureValidityDuration ??= s_defaultSignatureValidityDuration;
 
             Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
             Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             // The key must have been provided at construction in order to manipulate the signature.
 
-            if (String.IsNullOrEmpty(SharedAccessKey))
+            if (string.IsNullOrEmpty(SharedAccessKey))
             {
                 throw new InvalidOperationException(Resources.SharedAccessKeyIsRequired);
             }
@@ -288,19 +288,19 @@ namespace Azure.Messaging.EventHubs.Authorization
 
                     // Guard against leading and trailing spaces, only trimming if there is a need.
 
-                    if ((!String.IsNullOrEmpty(token)) && (Char.IsWhiteSpace(token[0])) || Char.IsWhiteSpace(token[token.Length - 1]))
+                    if ((!string.IsNullOrEmpty(token)) && (char.IsWhiteSpace(token[0])) || char.IsWhiteSpace(token[token.Length - 1]))
                     {
                         token = token.Trim();
                     }
 
-                    if ((!String.IsNullOrEmpty(value)) && (Char.IsWhiteSpace(value[0]) || Char.IsWhiteSpace(value[value.Length - 1])))
+                    if ((!string.IsNullOrEmpty(value)) && (char.IsWhiteSpace(value[0]) || char.IsWhiteSpace(value[value.Length - 1])))
                     {
                         value = value.Trim();
                     }
 
                     // If there was no value for a key, then consider the signature to be malformed.
 
-                    if (String.IsNullOrEmpty(value))
+                    if (string.IsNullOrEmpty(value))
                     {
                         throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                     }
@@ -308,17 +308,17 @@ namespace Azure.Messaging.EventHubs.Authorization
                     // Compare the token against the known signature properties and capture the
                     // pair if they are a known attribute.
 
-                    if (String.Compare(SignedResourceFullIdentifierToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Compare(SignedResourceFullIdentifierToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.Resource = WebUtility.UrlDecode(value);
                     }
-                    else if (String.Compare(SignedKeyNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    else if (string.Compare(SignedKeyNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.KeyName = WebUtility.UrlDecode(value);
                     }
-                    else if (String.Compare(SignedExpiryToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    else if (string.Compare(SignedExpiryToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        if (!Int64.TryParse(WebUtility.UrlDecode(value), out var unixTime))
+                        if (!long.TryParse(WebUtility.UrlDecode(value), out var unixTime))
                         {
                             throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                         }
@@ -341,8 +341,8 @@ namespace Azure.Messaging.EventHubs.Authorization
             // Validate that the required components were able to be parsed from the
             // signature.
 
-            if ((String.IsNullOrEmpty(parsedValues.Resource))
-                || (String.IsNullOrEmpty(parsedValues.KeyName))
+            if ((string.IsNullOrEmpty(parsedValues.Resource))
+                || (string.IsNullOrEmpty(parsedValues.KeyName))
                 || (parsedValues.ExpirationTime == default))
             {
                 throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
@@ -374,7 +374,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                 var expiration = Convert.ToString(ConvertToUnixTime(expirationTime), CultureInfo.InvariantCulture);
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes($"{ encodedAudience }\n{ expiration }")));
 
-                return String.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
+                return string.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
                     AuthenticationTypeToken,
                     SignedResourceToken, encodedAudience,
                     SignatureToken, WebUtility.UrlEncode(signature),
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The date/time, in UTC, which corresponds to the specified timestamp.</returns>
         ///
         private static DateTimeOffset ConvertFromUnixTime(long unixTime) =>
-            Epoch.AddSeconds(unixTime);
+            s_epoch.AddSeconds(unixTime);
 
         /// <summary>
         ///   Converts a <see cref="DateTimeOffset" /> value to the corresponding Unix-style timestamp.
@@ -404,7 +404,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The Unix-style timestamp which corresponds to the specified date/time.</returns>
         ///
         private static long ConvertToUnixTime(DateTimeOffset dateTimeOffset) =>
-            Convert.ToInt64((dateTimeOffset - Epoch).TotalSeconds);
+            Convert.ToInt64((dateTimeOffset - s_epoch).TotalSeconds);
 
 
     }

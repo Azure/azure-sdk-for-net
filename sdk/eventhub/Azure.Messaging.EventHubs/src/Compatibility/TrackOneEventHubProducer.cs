@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             try
             {
-                var events = eventBatch.AsEnumerable<AmqpMessage>().Select(TransformMessage);
+                IEnumerable<TrackOne.EventData> events = eventBatch.AsEnumerable<AmqpMessage>().Select(TransformMessage);
                 await TrackOneSender.SendAsync(events, eventBatch.SendOptions?.PartitionKey).ConfigureAwait(false);
             }
             catch (TrackOne.EventHubsException ex)
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             // Ensure that there was a maximum size populated; if none was provided,
             // default to the maximum size allowed by the link.
 
-            options.MaximumizeInBytes = options.MaximumizeInBytes ?? TrackOneSender.MaxMessageSize;
+            options.MaximumizeInBytes ??= TrackOneSender.MaxMessageSize;
 
             Argument.AssertInRange(options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize, nameof(options.MaximumizeInBytes));
 

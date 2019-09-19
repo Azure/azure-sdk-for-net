@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             set
             {
-                Argument.AssertInRange(value, 1, Int32.MaxValue, nameof(MaximumMessageCount));
+                Argument.AssertInRange(value, 1, int.MaxValue, nameof(MaximumMessageCount));
                 _maximumMessageCount = value;
             }
         }
@@ -73,9 +73,9 @@ namespace Azure.Messaging.EventHubs.Processor
         internal EventProcessorOptions Clone() =>
             new EventProcessorOptions
             {
-                InitialEventPosition = this.InitialEventPosition,
-                MaximumMessageCount = this.MaximumMessageCount,
-                MaximumReceiveWaitTime = this.MaximumReceiveWaitTime
+                InitialEventPosition = InitialEventPosition,
+                MaximumMessageCount = MaximumMessageCount,
+                MaximumReceiveWaitTime = MaximumReceiveWaitTime
             };
     }
 }

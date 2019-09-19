@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ListOwnershipAsyncReturnsEmptyIEnumerableWhenThereAreNoOwnership()
         {
             var partitionManager = new InMemoryPartitionManager();
-            var ownership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> ownership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(ownership, Is.Not.Null.And.Empty);
         }
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -162,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -196,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(ownershipCount));
@@ -256,7 +256,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ));
             }
 
-            var claimedOwnership = await partitionManager.ClaimOwnershipAsync(ownershipList);
+            IEnumerable<PartitionOwnership> claimedOwnership = await partitionManager.ClaimOwnershipAsync(ownershipList);
 
             Assert.That(claimedOwnership, Is.Not.Null);
             Assert.That(claimedOwnership.Count, Is.EqualTo(expectedClaimedCount));
@@ -308,8 +308,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
-            var storedOwnership2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup2");
+            IEnumerable<PartitionOwnership> storedOwnership1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
+            IEnumerable<PartitionOwnership> storedOwnership2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup2");
 
             Assert.That(storedOwnership1, Is.Not.Null);
             Assert.That(storedOwnership1.Count, Is.EqualTo(1));
@@ -365,8 +365,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup");
-            var storedOwnership2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName2", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName2", "consumerGroup");
 
             Assert.That(storedOwnership1, Is.Not.Null);
             Assert.That(storedOwnership1.Count, Is.EqualTo(1));
@@ -422,8 +422,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership1 = await partitionManager.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup");
-            var storedOwnership2 = await partitionManager.ListOwnershipAsync("namespace2", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership1 = await partitionManager.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership2 = await partitionManager.ListOwnershipAsync("namespace2", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership1, Is.Not.Null);
             Assert.That(storedOwnership1.Count, Is.EqualTo(1));
@@ -447,7 +447,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
                 ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership, Is.Empty);
@@ -472,7 +472,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // ETag must have been set by the partition manager.
 
-            var originalLastModifiedTime = originalOwnership.LastModifiedTime;
+            DateTimeOffset? originalLastModifiedTime = originalOwnership.LastModifiedTime;
             var originalETag = originalOwnership.ETag;
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Make sure the ownership hasn't changed.
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -512,7 +512,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // ETag must have been set by the partition manager.
 
-            var originalLastModifiedTime = originalOwnership.LastModifiedTime;
+            DateTimeOffset? originalLastModifiedTime = originalOwnership.LastModifiedTime;
             var originalETag = originalOwnership.ETag;
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
@@ -520,7 +520,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Make sure the ownership has changed, even though the instance should be the same.
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+            IEnumerable<PartitionOwnership> storedOwnership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));

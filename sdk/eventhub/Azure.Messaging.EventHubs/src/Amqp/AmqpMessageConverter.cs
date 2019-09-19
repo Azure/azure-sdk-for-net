@@ -158,11 +158,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            var responseData = response.ValueBody?.Value as AmqpMap;
 
-            if (responseData == null)
+            if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
             }
 
             return new EventHubProperties(
@@ -223,11 +222,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            var responseData = response.ValueBody?.Value as AmqpMap;
 
-            if (responseData == null)
+            if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
             }
 
             return new PartitionProperties(
@@ -235,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 (string)responseData[AmqpManagement.ResponseMap.PartitionIdentifier],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
-                Int64.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset]),
+                long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset]),
                 (DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc],
                 (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty]);
         }
@@ -286,7 +284,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }));
             }
 
-            if (!String.IsNullOrEmpty(partitionKey))
+            if (!string.IsNullOrEmpty(partitionKey))
             {
                 batchEnvelope.MessageAnnotations.Map[AmqpAnnotation.PartitionKey] = partitionKey;
             }
@@ -314,9 +312,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Properties?.Count > 0)
             {
-                message.ApplicationProperties = message.ApplicationProperties ?? new ApplicationProperties();
+                message.ApplicationProperties ??= new ApplicationProperties();
 
-                foreach (var pair in source.Properties)
+                foreach (KeyValuePair<string, object> pair in source.Properties)
                 {
                     if (TryCreateAmqpPropertyValueForEventProperty(pair.Value, out var amqpValue))
                     {
@@ -325,7 +323,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }
             }
 
-            if (!String.IsNullOrEmpty(partitionKey))
+            if (!string.IsNullOrEmpty(partitionKey))
             {
                 message.MessageAnnotations.Map[AmqpAnnotation.PartitionKey] = partitionKey;
             }
@@ -343,11 +341,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static EventData BuildEventFromAmqpMessage(AmqpMessage source)
         {
-            var body = (source.BodyType.HasFlag(SectionFlag.Data))
+            ReadOnlyMemory<byte> body = (source.BodyType.HasFlag(SectionFlag.Data))
                 ? ReadStreamToMemory(source.BodyStream)
                 : ReadOnlyMemory<byte>.Empty;
 
-            var systemAnnotations = ParseSystemAnnotations(source);
+            ParsedAnnotations systemAnnotations = ParseSystemAnnotations(source);
 
             // If there were application properties associated with the message, translate them
             // to the event.
@@ -356,11 +354,10 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.ApplicationProperties))
             {
-                object propertyValue;
 
-                foreach (var pair in source.ApplicationProperties.Map)
+                foreach (KeyValuePair<MapKey, object> pair in source.ApplicationProperties.Map)
                 {
-                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out propertyValue))
+                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out object propertyValue))
                     {
                         properties[pair.Key.ToString()] = propertyValue;
                     }
@@ -391,8 +388,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static ParsedAnnotations ParseSystemAnnotations(AmqpMessage source)
         {
-            var systemProperties = new ParsedAnnotations();
-            systemProperties.ServiceAnnotations = new Dictionary<string, object>();
+            var systemProperties = new ParsedAnnotations
+            {
+                ServiceAnnotations = new Dictionary<string, object>()
+            };
 
             object amqpValue;
             object propertyValue;
@@ -401,7 +400,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.MessageAnnotations))
             {
-                var annotations = source.MessageAnnotations.Map;
+                Annotations annotations = source.MessageAnnotations.Map;
                 var processed = new HashSet<string>();
 
                 if ((annotations.TryGetValue(AmqpProperty.EnqueuedTime, out amqpValue))
@@ -420,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if ((annotations.TryGetValue(AmqpProperty.Offset, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
-                    && (Int64.TryParse((string)propertyValue, out var offset)))
+                    && (long.TryParse((string)propertyValue, out var offset)))
                 {
                     systemProperties.Offset = offset;
                     processed.Add(AmqpProperty.Offset.ToString());
@@ -435,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 string key;
 
-                foreach (var pair in annotations)
+                foreach (KeyValuePair<MapKey, object> pair in annotations)
                 {
                     key = pair.Key.ToString();
 
@@ -466,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
-                    && (Int64.TryParse((string)propertyValue, out var offset)))
+                    && (long.TryParse((string)propertyValue, out var offset)))
                 {
                     systemProperties.LastOffset = offset;
                 }
@@ -476,7 +475,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.Properties))
             {
-                var properties = source.Properties;
+                Properties properties = source.Properties;
 
                 void conditionalAdd(string name, object value, bool condition)
                 {
@@ -562,7 +561,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     break;
 
                 case AmqpProperty.Type.Unknown:
-                    var exception = new SerializationException(String.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
+                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
                     EventHubsEventSource.Log.UnexpectedException(exception.Message);
                     throw exception;
             }
@@ -648,7 +647,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     break;
 
                 default:
-                    var exception = new SerializationException(String.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
+                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
                     EventHubsEventSource.Log.UnexpectedException(exception.Message);
                     throw exception;
             }

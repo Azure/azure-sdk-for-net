@@ -25,9 +25,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             // in record mode we reset the challenge cache before each test so that the challenge call
             // is always made.  This allows tests to be replayed independently and in any order
-            if (this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                this.Client = this.GetClient();
+                Client = GetClient();
 
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task CreateKeyWithOptions()
         {
             var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
-            var nbf = exp.AddDays(-30);
+            DateTimeOffset nbf = exp.AddDays(-30);
 
             var keyOptions = new KeyCreateOptions()
             {

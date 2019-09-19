@@ -160,13 +160,13 @@ namespace Azure.Messaging.EventHubs.Tests
         public void UpdateRetryPolicyUpdatesTheOperationTimeout()
         {
             var initialPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
-            var initialTimeout = initialPolicy.CalculateTryTimeout(0);
+            TimeSpan initialTimeout = initialPolicy.CalculateTryTimeout(0);
             var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), initialPolicy);
 
             Assert.That(GetTimeout(client), Is.EqualTo(initialTimeout), "The initial timeout should match");
 
             var newPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromMilliseconds(50) });
-            var newTimeout = newPolicy.CalculateTryTimeout(0);
+            TimeSpan newTimeout = newPolicy.CalculateTryTimeout(0);
 
             client.UpdateRetryPolicy(newPolicy);
             Assert.That(GetTimeout(client), Is.EqualTo(newTimeout), "The updated timeout should match");

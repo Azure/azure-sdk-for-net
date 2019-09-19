@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
     internal sealed class TrackOneGenericTokenProvider : TokenProvider
     {
         /// <summary>The default scope to use for token acquisition with the Event Hubs service.</summary>
-        private static readonly string[] EventHubsDefaultScopes = new[] { "https://eventhubs.azure.net/.default" };
+        private static readonly string[] s_eventHubsDefaultScopes = new[] { "https://eventhubs.azure.net/.default" };
 
         /// <summary>
         ///   The <see cref="EventHubTokenCredential" /> that forms the basis of this security token.
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <returns>The security token.</returns>
         ///
-        public async override Task<SecurityToken> GetTokenAsync(string resource,
+        public override async Task<SecurityToken> GetTokenAsync(string resource,
                                                                 TimeSpan tokenValidityDuration)
         {
             Argument.AssertNotNullOrEmpty(resource, nameof(resource));
@@ -81,10 +81,10 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             if (resource.IndexOf(Credential.Resource, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, Credential.Resource), nameof(resource));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, Credential.Resource), nameof(resource));
             }
 
-            var accessToken = await Credential.GetTokenAsync(new TokenRequest(EventHubsDefaultScopes), CancellationToken.None).ConfigureAwait(false);
+            AccessToken accessToken = await Credential.GetTokenAsync(new TokenRequest(s_eventHubsDefaultScopes), CancellationToken.None).ConfigureAwait(false);
 
             return new TrackOneGenericToken
             (

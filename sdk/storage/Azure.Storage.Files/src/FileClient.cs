@@ -1869,6 +1869,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<StorageFileUploadInfo> Upload(
             Stream content,
             IProgress<StorageProgress> progressHandler = default,
@@ -1906,6 +1907,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StorageFileUploadInfo>> UploadAsync(
             Stream content,
             IProgress<StorageProgress> progressHandler = default,

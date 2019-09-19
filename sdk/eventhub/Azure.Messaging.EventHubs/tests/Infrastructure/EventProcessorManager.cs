@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consecutiveStabilizedStatus = 0;
             List<PartitionOwnership> previousActiveOwnership = null;
 
-            var timeoutToken = (new CancellationTokenSource(TimeSpan.FromMinutes(1))).Token;
+            CancellationToken timeoutToken = (new CancellationTokenSource(TimeSpan.FromMinutes(1))).Token;
 
             while (!stabilizedStatusAchieved)
             {
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var activeOwnership = (await InnerPartitionManager
                     .ListOwnershipAsync(InnerClient.FullyQualifiedNamespace, InnerClient.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.s_shortOwnershipExpiration)
                     .ToList();
 
                 // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Wait a load balance update cycle before the next verification.  Give up if the whole process takes more than 1 minute.
 
-                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdate, timeoutToken);
+                    await Task.Delay(ShortWaitTimeMock.s_shortLoadBalanceUpdate, timeoutToken);
                 }
                 else
                 {
@@ -396,22 +396,22 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ShortWaitTimeMock : EventProcessor<PartitionProcessor>
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
-            public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
+            public static readonly TimeSpan s_shortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
 
             /// <summary>A value used to override event processors' ownership expiration time span.</summary>
-            public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
+            public static readonly TimeSpan s_shortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
             /// <summary>
             ///   The minimum amount of time to be elapsed between two load balancing verifications.
             /// </summary>
             ///
-            protected override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
+            protected override TimeSpan LoadBalanceUpdate => s_shortLoadBalanceUpdate;
 
             /// <summary>
             ///   The minimum amount of time for an ownership to be considered expired without further updates.
             /// </summary>
             ///
-            protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
+            protected override TimeSpan OwnershipExpiration => s_shortOwnershipExpiration;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>
     /// Provides information about a security token such as audience, expiry time, and the string token value.
     /// </summary>
@@ -13,22 +13,12 @@ namespace TrackOne
         /// <summary>
         /// Token literal
         /// </summary>
-        readonly string token;
-
-        /// <summary>
-        /// Expiry date-time
-        /// </summary>
-        readonly DateTime expiresAtUtc;
-
-        /// <summary>
-        /// Token audience
-        /// </summary>
-        readonly string audience;
+        private readonly string _token;
 
         /// <summary>
         /// Token type
         /// </summary>
-        readonly string tokenType;
+        private readonly string _tokenType;
 
         /// <summary>
         /// Creates a new instance of the <see cref="SecurityToken"/> class.
@@ -49,30 +39,30 @@ namespace TrackOne
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(audience));
             }
 
-            this.token = tokenString;
-            this.expiresAtUtc = expiresAtUtc;
-            this.audience = audience;
-            this.tokenType = tokenType;
+            _token = tokenString;
+            ExpiresAtUtc = expiresAtUtc;
+            Audience = audience;
+            _tokenType = tokenType;
         }
 
         /// <summary>
         /// Gets the audience of this token.
         /// </summary>
-        public string Audience => this.audience;
+        public string Audience { get; }
 
         /// <summary>
         /// Gets the expiration time of this token.
         /// </summary>
-        public DateTime ExpiresAtUtc => this.expiresAtUtc;
+        public DateTime ExpiresAtUtc { get; }
 
         /// <summary>
         /// Gets the actual token.
         /// </summary>
-        public virtual string TokenValue => this.token;
+        public virtual string TokenValue => _token;
 
         /// <summary>
         /// Gets the token type.
         /// </summary>
-        public virtual string TokenType => this.tokenType;
+        public virtual string TokenType => _tokenType;
     }
 }
