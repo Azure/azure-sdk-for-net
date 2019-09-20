@@ -19,9 +19,9 @@ namespace Azure.Storage.Common.Tests
         public void OnSendingRequest_FirstTry_ShouldUsePrimary_ShouldSetAlternateToSecondary()
         {
             var message = new HttpPipelineMessage(
-                this.CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None);
+                CreateMockRequest(MockPrimaryUri),
+                new StorageResponseClassifier(MockSecondaryUri));
+
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
             policy.OnSendingRequest(message);
@@ -35,9 +35,9 @@ namespace Azure.Storage.Common.Tests
         public void OnSendingRequest_SecondTry_ShouldUseSecondary_ShouldSetAlternateToPrimary()
         {
             var message = new HttpPipelineMessage(
-                this.CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None);
+                CreateMockRequest(MockPrimaryUri),
+                new StorageResponseClassifier(MockSecondaryUri));
+
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
@@ -52,9 +52,9 @@ namespace Azure.Storage.Common.Tests
         public void OnSendingRequest_ThirdTry_ShouldUsePrimary_ShouldSetAlternateToSecondary()
         {
             var message = new HttpPipelineMessage(
-                this.CreateMockRequest(MockSecondaryUri),
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None);
+                CreateMockRequest(MockSecondaryUri),
+                new StorageResponseClassifier(MockSecondaryUri));
+
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockPrimaryUri.Host);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
@@ -69,9 +69,9 @@ namespace Azure.Storage.Common.Tests
         public void OnSendingRequest_404onSecondary_ShouldSetNotFoundFlag_ShouldUsePrimary()
         {
             var message = new HttpPipelineMessage(
-                this.CreateMockRequest(MockSecondaryUri),
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None)
+                CreateMockRequest(MockSecondaryUri),
+                new StorageResponseClassifier(MockSecondaryUri))
+
             {
                 Response = new MockResponse(Constants.HttpStatusCode.NotFound)
             };
@@ -89,9 +89,9 @@ namespace Azure.Storage.Common.Tests
         public void OnSendingRequest_404FlagSet_ShouldUsePrimary()
         {
             var message = new HttpPipelineMessage(
-                this.CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None);
+                CreateMockRequest(MockPrimaryUri),
+                new StorageResponseClassifier(MockSecondaryUri));
+
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             message.SetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, true);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
@@ -104,12 +104,12 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void OnSendingRequest_PutRequest_ShouldIgnore()
         {
-            var request = CreateMockRequest(MockPrimaryUri);
+            MockRequest request = CreateMockRequest(MockPrimaryUri);
             request.Method = RequestMethod.Put;
             var message = new HttpPipelineMessage(
                 request,
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None);
+                new StorageResponseClassifier(MockSecondaryUri));
+
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
             policy.OnSendingRequest(message);
