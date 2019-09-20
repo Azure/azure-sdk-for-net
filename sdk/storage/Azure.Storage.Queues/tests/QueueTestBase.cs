@@ -79,16 +79,16 @@ namespace Azure.Storage.Queues.Tests
             GetServiceClientFromOauthConfig(TestConfigOAuth);
 
         public QueueServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
-=> this.GetSecondaryReadServiceClient(this.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
+=> GetSecondaryReadServiceClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
 
         public QueueClient GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
-=> this.GetSecondaryReadQueueClient(this.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
+=> GetSecondaryReadQueueClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
 
         private QueueServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
-            var options = this.getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            QueueClientOptions options = getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
 
-            return this.InstrumentClient(
+            return InstrumentClient(
                  new QueueServiceClient(
                     new Uri(config.QueueServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
@@ -97,18 +97,18 @@ namespace Azure.Storage.Queues.Tests
 
         private QueueClient GetSecondaryReadQueueClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
-            var options = this.getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            QueueClientOptions options = getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
             
-            return this.InstrumentClient(
+            return InstrumentClient(
                  new QueueClient(
-                    new Uri(config.QueueServiceEndpoint).AppendToPath(this.GetNewQueueName()),
+                    new Uri(config.QueueServiceEndpoint).AppendToPath(GetNewQueueName()),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     options));
         }
 
         private QueueClientOptions getSecondaryStorageOptions(TenantConfiguration config, out TestExceptionPolicy testExceptionPolicy, int numberOfReadFailuresToSimulate = 1, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
-            var options = this.GetOptions();
+            QueueClientOptions options = GetOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.QueueServiceSecondaryEndpoint);
             options.Retry.MaxRetries = 4;
             testExceptionPolicy = new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404, enabledRequestMethods);

@@ -45,8 +45,8 @@ namespace Azure.Storage.Blobs.Test
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
 
-            var blob1 = this.InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName, this.GetOptions()));
-            var blob2 = this.InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName));
+            BlobBaseClient blob1 = InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName, GetOptions()));
+            BlobBaseClient blob2 = InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName));
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var accountName = "accountName";
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
-            var blob = this.InstrumentClient(new BlobBaseClient(blobEndpoint));
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(blobEndpoint));
             var builder = new BlobUriBuilder(blob.Uri);
 
             Assert.AreEqual(accountName, builder.AccountName);
@@ -101,19 +101,18 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
-            TestExceptionPolicy testExceptionPolicy;
-            using (this.GetNewContainer(out var container, this.GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out testExceptionPolicy)))
+            using (GetNewContainer(out BlobContainerClient container, GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy)))
             {
                 // Arrange
-                var data = this.GetRandomBuffer(Constants.KB);
-                var blockBlobClient = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var data = GetRandomBuffer(Constants.KB);
+                BlockBlobClient blockBlobClient = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await blockBlobClient.UploadAsync(stream);
                 }
 
                 // Act
-                var response = await this.EnsurePropagatedAsync(
+                Response<BlobDownloadInfo> response = await EnsurePropagatedAsync(
                     async () => await blockBlobClient.DownloadAsync(),
                     downloadInfo => downloadInfo.GetRawResponse().Status != 404);
 
@@ -122,33 +121,32 @@ namespace Azure.Storage.Blobs.Test
                 var actual = new MemoryStream();
                 await response.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
-                Assert.AreEqual(this.SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[0]);
-                Assert.AreEqual(this.SecondaryStorageTenantSecondaryHost(), testExceptionPolicy.HostsSetInRequests[1]);
+                Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[0]);
+                Assert.AreEqual(SecondaryStorageTenantSecondaryHost(), testExceptionPolicy.HostsSetInRequests[1]);
             }
         }
 
         [Test]
         public async Task DownloadAsync_ReadFromSecondaryStorageShouldNotPut()
         {
-            TestExceptionPolicy testExceptionPolicy;
             BlobServiceClient serviceClient = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
-                1, 
-                out testExceptionPolicy,
+                1,
+                out TestExceptionPolicy testExceptionPolicy,
                 false,
                 new List<Core.Pipeline.RequestMethod>(new Core.Pipeline.RequestMethod[] { RequestMethod.Put }));
 
-            using (GetNewContainer(out var container, serviceClient))
+            using (GetNewContainer(out BlobContainerClient container, serviceClient))
             {
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
-                var blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.UploadAsync(stream);
                 }
 
                 // Act
-                var response = await blob.DownloadAsync();
+                Response<BlobDownloadInfo> response = await blob.DownloadAsync();
 
                 // Assert
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
