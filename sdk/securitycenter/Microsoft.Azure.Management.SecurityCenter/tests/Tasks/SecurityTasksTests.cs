@@ -44,7 +44,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var recommendations = securityCenterClient.Tasks.List();
@@ -55,7 +55,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_GetResourceGroupLevelTask()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var recommendation = securityCenterClient.Tasks.GetResourceGroupLevelTask("myService1", "dcfb6365-799e-5ed4-f344-d86a0a4c2992");
@@ -66,7 +66,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_GetSubscriptionLevelTask()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var recommendation = securityCenterClient.Tasks.GetSubscriptionLevelTask("08357a1e-c534-756f-cbb9-7b45e73f3137");
@@ -77,7 +77,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_ListByHomeRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var recommendations = securityCenterClient.Tasks.ListByHomeRegion();
@@ -88,7 +88,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_ListByResourceGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var recommendations = securityCenterClient.Tasks.ListByResourceGroup("myService1");
@@ -99,7 +99,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_UpdateResourceGroupLevelTask()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 securityCenterClient.Tasks.UpdateResourceGroupLevelTaskState("myService1", "dcfb6365-799e-5ed4-f344-d86a0a4c2992", "Dismiss");
@@ -109,7 +109,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityTaskRecommendations_UpdateSubscriptionLevelTask()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 securityCenterClient.Tasks.UpdateSubscriptionLevelTaskState("08357a1e-c534-756f-cbb9-7b45e73f3137", "Dismiss");
