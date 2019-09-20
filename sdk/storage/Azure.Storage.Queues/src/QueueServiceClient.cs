@@ -82,9 +82,9 @@ namespace Azure.Storage.Queues
         public QueueServiceClient(string connectionString, QueueClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            this._uri = conn.QueueEndpoint;
+            _uri = conn.QueueEndpoint;
             options ??= new QueueClientOptions();
-            this._pipeline = options.Build(conn.Credentials);
+            _pipeline = options.Build(conn.Credentials);
         }
 
         /// <summary>
@@ -161,9 +161,9 @@ namespace Azure.Storage.Queues
         /// </param>
         internal QueueServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, QueueClientOptions options)
         {
-            this._uri = serviceUri;
+            _uri = serviceUri;
             options ??= new QueueClientOptions();
-            this._pipeline = options.Build(authentication);
+            _pipeline = options.Build(authentication);
         }
 
         /// <summary>

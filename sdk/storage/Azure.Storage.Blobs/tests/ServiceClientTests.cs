@@ -35,8 +35,8 @@ namespace Azure.Storage.Blobs.Test
 
             var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
-            var service1 = this.InstrumentClient(new BlobServiceClient(connectionString.ToString(true)));
-            var service2 = this.InstrumentClient(new BlobServiceClient(connectionString.ToString(true), this.GetOptions()));
+            BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(connectionString.ToString(true)));
+            BlobServiceClient service2 = InstrumentClient(new BlobServiceClient(connectionString.ToString(true), GetOptions()));
 
             var builder1 = new BlobUriBuilder(service1.Uri);
             var builder2 = new BlobUriBuilder(service2.Uri);
@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            var service = this.InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
+            BlobServiceClient service = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
             var builder = new BlobUriBuilder(service.Uri);
 
             Assert.IsEmpty(builder.ContainerName);
@@ -86,41 +86,40 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
         {
-            var testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageSecondRetrySuccessful()
         {
-            var testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
             AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageThirdRetrySuccessful()
         {
-            var testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorage404OnSecondary()
         {
-            var testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
             AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
         {
-            TestExceptionPolicy testExceptionPolicy;
-            var service = this.GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
-                numberOfReadFailuresToSimulate, 
-                out testExceptionPolicy, 
+            BlobServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
+                numberOfReadFailuresToSimulate,
+                out TestExceptionPolicy testExceptionPolicy,
                 retryOn404);
-            using (this.GetNewContainer(out _, service: service))
+            using (GetNewContainer(out _, service: service))
             {
-                var containers = await this.EnsurePropagatedAsync(
+                IList<Response<ContainerItem>> containers = await EnsurePropagatedAsync(
                     async () => await service.GetContainersAsync().ToListAsync(),
                     containers => containers.Count > 0);
                 Assert.IsTrue(containers.Count >= 1);

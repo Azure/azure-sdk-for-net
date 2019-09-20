@@ -36,9 +36,9 @@ namespace Azure.Storage.Queues.Test
 
             var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
 
-            var client1 = this.InstrumentClient(new QueueServiceClient(connectionString.ToString(true), this.GetOptions()));
+            QueueServiceClient client1 = InstrumentClient(new QueueServiceClient(connectionString.ToString(true), GetOptions()));
 
-            var client2 = this.InstrumentClient(new QueueServiceClient(connectionString.ToString(true)));
+            QueueServiceClient client2 = InstrumentClient(new QueueServiceClient(connectionString.ToString(true)));
 
             var builder1 = new QueueUriBuilder(client1.Uri);
             var builder2 = new QueueUriBuilder(client2.Uri);
@@ -56,7 +56,7 @@ namespace Azure.Storage.Queues.Test
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            var service = this.InstrumentClient(new QueueServiceClient(queueEndpoint, credentials));
+            QueueServiceClient service = InstrumentClient(new QueueServiceClient(queueEndpoint, credentials));
             var builder = new QueueUriBuilder(service.Uri);
 
             Assert.IsEmpty(builder.QueueName);
@@ -158,38 +158,37 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task GetQueuesAsync_SecondaryStorageFirstRetrySuccessful()
         {
-            var testExceptionPolicy = await this.PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
-            this.AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         [Test]
         public async Task GetQueuesAsync_SecondaryStorageSecondRetrySuccessful()
         {
-            var testExceptionPolicy = await this.PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
-            this.AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         [Test]
         public async Task GetQueuesAsync_SecondaryStorageThirdRetrySuccessful()
         {
-            var testExceptionPolicy = await this.PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
-            this.AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         [Test]
         public async Task GetQueuesAsync_SecondaryStorage404OnSecondary()
         {
-            var testExceptionPolicy = await this.PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
-            this.AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
         private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
         {
-            TestExceptionPolicy testExceptionPolicy;
-            var service = this.GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out testExceptionPolicy, retryOn404);
-            using (this.GetNewQueue(out _, service: service))
+            QueueServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
+            using (GetNewQueue(out _, service: service))
             {
-                var queues = await this.EnsurePropagatedAsync(
+                IList<Response<QueueItem>> queues = await EnsurePropagatedAsync(
                     async () => await service.GetQueuesAsync().ToListAsync(),
                     queues => queues.Count > 0);
                 Assert.AreEqual(1, queues.Count);
