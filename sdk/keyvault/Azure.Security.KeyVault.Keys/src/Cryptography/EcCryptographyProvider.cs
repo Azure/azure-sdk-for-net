@@ -6,21 +6,17 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal class EcCryptographyClient : ICryptographyProvider
+    internal class EcCryptographyProvider : ICryptographyProvider
     {
-        private readonly IKeyVaultPipeline _pipeline;
         private readonly KeyCurveName _curve;
         private readonly JsonWebKey _jwk;
 
-        internal EcCryptographyClient(IKeyVaultPipeline pipeline, JsonWebKey jwk)
+        internal EcCryptographyProvider(JsonWebKey jwk)
         {
             Argument.AssertNotNull(jwk, nameof(jwk));
-
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
 
             // Only set the JWK if we support the algorithm locally.
             _curve = KeyCurveName.Find(jwk.CurveName);

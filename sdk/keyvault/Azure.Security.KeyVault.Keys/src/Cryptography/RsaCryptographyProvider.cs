@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal class RsaCryptographyClient : ICryptographyProvider
+    internal class RsaCryptographyProvider : ICryptographyProvider
     {
-        private readonly IKeyVaultPipeline _pipeline;
         private readonly JsonWebKey _jwk;
 
-        internal RsaCryptographyClient(IKeyVaultPipeline pipeline, JsonWebKey jwk)
+        internal RsaCryptographyProvider(JsonWebKey jwk)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _jwk = jwk ?? throw new ArgumentNullException(nameof(jwk));
         }
 

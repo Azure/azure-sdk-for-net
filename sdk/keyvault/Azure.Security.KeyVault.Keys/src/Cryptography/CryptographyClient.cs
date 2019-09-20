@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = remoteClient.Pipeline;
             _remoteClient = remoteClient;
-            _client = LocalCryptographyClientFactory.Create(_pipeline, keyMaterial);
+            _client = LocalCryptographyProviderFactory.Create(keyMaterial);
         }
 
         internal ICryptographyProvider RemoteClient => _remoteClient;
@@ -1147,7 +1147,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Response<Key> key = await _remoteClient.GetKeyAsync(cancellationToken).ConfigureAwait(false);
-                _client = LocalCryptographyClientFactory.Create(_pipeline, key.Value.KeyMaterial);
+                _client = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
@@ -1176,7 +1176,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Response<Key> key = _remoteClient.GetKey(cancellationToken);
-                _client = LocalCryptographyClientFactory.Create(_pipeline, key.Value.KeyMaterial);
+                _client = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {

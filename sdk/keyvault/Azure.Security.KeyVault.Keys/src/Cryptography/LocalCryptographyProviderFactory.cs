@@ -5,18 +5,18 @@ using System;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal static class LocalCryptographyClientFactory
+    internal static class LocalCryptographyProviderFactory
     {
-        public static ICryptographyProvider Create(IKeyVaultPipeline pipeline, JsonWebKey key)
+        public static ICryptographyProvider Create(JsonWebKey key)
         {
             if (key.KeyType == KeyType.Rsa || key.KeyType == KeyType.RsaHsm)
             {
-                return new RsaCryptographyClient(pipeline, key);
+                return new RsaCryptographyProvider(key);
             }
 
             if (key.KeyType == KeyType.Ec || key.KeyType == KeyType.EcHsm)
             {
-                return new EcCryptographyClient(pipeline, key);
+                return new EcCryptographyProvider(key);
             }
 
             throw new NotSupportedException();

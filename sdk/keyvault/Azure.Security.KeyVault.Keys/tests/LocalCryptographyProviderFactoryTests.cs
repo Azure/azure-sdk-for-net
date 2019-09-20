@@ -11,42 +11,38 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class LocalCryptographyClientFactoryTests
+    public class LocalCryptographyProviderFactoryTests
     {
         [TestCaseSource(nameof(GetCreateData))]
         public void Create(JsonWebKey jwk, Type clientType)
         {
-            MockKeyVaultPipeline pipeline = new MockKeyVaultPipeline();
-
-            ICryptographyProvider client = LocalCryptographyClientFactory.Create(pipeline, jwk);
+            ICryptographyProvider client = LocalCryptographyProviderFactory.Create(jwk);
             Assert.IsInstanceOf(clientType, client, "Key {0} of type {1} did not yield client type {2}", jwk.KeyId, jwk.KeyType, clientType.Name);
         }
 
         [Test]
         public void CreateThrows()
         {
-            MockKeyVaultPipeline pipeline = new MockKeyVaultPipeline();
-
             JsonWebKey jwk = new JsonWebKey
             {
                 KeyId = "invalid",
                 KeyType = new KeyType("invalid"),
             };
 
-            Assert.Throws<NotSupportedException>(() => LocalCryptographyClientFactory.Create(pipeline, jwk));
+            Assert.Throws<NotSupportedException>(() => LocalCryptographyProviderFactory.Create(jwk));
         }
 
         private static IEnumerable<object[]> GetCreateData()
         {
 #if !NET461
             ECDsa ecdsa = ECDsa.Create();
-            yield return new object[] { new JsonWebKey(ecdsa, false) { KeyId = "ecdsaPublic" }, typeof(EcCryptographyClient) };
-            yield return new object[] { new JsonWebKey(ecdsa, true) { KeyId = "ecdsaPrivate" }, typeof(EcCryptographyClient) };
+            yield return new object[] { new JsonWebKey(ecdsa, false) { KeyId = "ecdsaPublic" }, typeof(EcCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(ecdsa, true) { KeyId = "ecdsaPrivate" }, typeof(EcCryptographyProvider) };
 #endif
 
             RSA rsa = RSA.Create();
-            yield return new object[] { new JsonWebKey(rsa, false) { KeyId = "rsaPublic" }, typeof(RsaCryptographyClient) };
-            yield return new object[] { new JsonWebKey(rsa, true) { KeyId = "rsaPrivate" }, typeof(RsaCryptographyClient) };
+            yield return new object[] { new JsonWebKey(rsa, false) { KeyId = "rsaPublic" }, typeof(RsaCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(rsa, true) { KeyId = "rsaPrivate" }, typeof(RsaCryptographyProvider) };
         }
     }
 }
