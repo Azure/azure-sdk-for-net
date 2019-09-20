@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/IotHub-CUS/analyticsModels/default?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDc1NDIzZTktN2QzMy00MTY2LThiZGYtMzkyMGIwNGUzNzM1L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXAtQ1VTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvaW90U2VjdXJpdHlTb2x1dGlvbnMvSW90SHViLUNVUy9hbmFseXRpY3NNb2RlbHMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7a8f5639-3da4-4f50-a09e-9c8967a36f02"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 15 Sep 2019 09:09:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "1e610bc0-b3e7-4e58-bd10-9ef8f1c1e878"
+        ],
+        "x-ms-correlation-request-id": [
+          "1e610bc0-b3e7-4e58-bd10-9ef8f1c1e878"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190915T090947Z:1e610bc0-b3e7-4e58-bd10-9ef8f1c1e878"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1053"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n  \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n  \"type\": \"Microsoft.Security/IoTSecuritySolutionAnalyticsModel\",\r\n  \"properties\": {\r\n    \"metrics\": {\r\n      \"high\": 0,\r\n      \"medium\": 1,\r\n      \"low\": 0\r\n    },\r\n    \"unhealthyDeviceCount\": 1,\r\n    \"devicesMetrics\": [\r\n      {\r\n        \"date\": \"2019-09-15\",\r\n        \"devicesMetrics\": {\r\n          \"high\": 0,\r\n          \"medium\": 1,\r\n          \"low\": 0\r\n        }\r\n      }\r\n    ],\r\n    \"topAlertedDevices\": [\r\n      {\r\n        \"deviceId\": \"vm-amamit-bagbash-A\",\r\n        \"alertsCount\": 3\r\n      }\r\n    ],\r\n    \"mostPrevalentDeviceAlerts\": [\r\n      {\r\n        \"alertDisplayName\": \"Detected suspicious use of the useradd command\",\r\n        \"alertsCount\": 2,\r\n        \"reportedSeverity\": \"Medium\"\r\n      }\r\n    ],\r\n    \"mostPrevalentDeviceRecommendations\": [\r\n      {\r\n        \"recommendationDisplayName\": \"Permissive firewall policy in one of the chains\",\r\n        \"devicesCount\": 1,\r\n        \"reportedSeverity\": \"Medium\"\r\n      },\r\n      {\r\n        \"recommendationDisplayName\": \"Device has open ports\",\r\n        \"devicesCount\": 1,\r\n        \"reportedSeverity\": \"Medium\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": { "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735" }
+}

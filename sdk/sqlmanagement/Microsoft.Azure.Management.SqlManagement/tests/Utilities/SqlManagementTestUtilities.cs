@@ -186,6 +186,16 @@ namespace Sql.Tests
             {
                 AssertCollection(expected.Tags, actual.Tags);
             }
+
+            if (expected.ReadScale != null)
+            {
+                Assert.Equal(expected.ReadScale, actual.ReadScale);
+            }
+
+            if (expected.ReadReplicaCount != null)
+            {
+                Assert.Equal(expected.ReadReplicaCount, actual.ReadReplicaCount);
+            }
         }
 
         public static void ValidateDatabaseEx(Database expected, Database actual)

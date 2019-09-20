@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// "192.168.0.0/16".</param>
         /// <param name="allowedSourceAddressPrefixes">Mutually exclusive with
         /// the "allowedSourceAddressPrefix" parameter.</param>
-        public JitNetworkAccessRequestPort(int number, System.DateTime endTimeUtc, string status, string statusReason, string allowedSourceAddressPrefix = default(string), IList<string> allowedSourceAddressPrefixes = default(IList<string>))
+        /// <param name="mappedPort">The port which is mapped to this port's
+        /// `number` in the Azure Firewall, if applicable</param>
+        public JitNetworkAccessRequestPort(int number, System.DateTime endTimeUtc, string status, string statusReason, string allowedSourceAddressPrefix = default(string), IList<string> allowedSourceAddressPrefixes = default(IList<string>), int? mappedPort = default(int?))
         {
             Number = number;
             AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.Security.Models
             EndTimeUtc = endTimeUtc;
             Status = status;
             StatusReason = statusReason;
+            MappedPort = mappedPort;
             CustomInit();
         }
 
@@ -101,6 +104,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "statusReason")]
         public string StatusReason { get; set; }
+
+        /// <summary>
+        /// Gets or sets the port which is mapped to this port's `number` in
+        /// the Azure Firewall, if applicable
+        /// </summary>
+        [JsonProperty(PropertyName = "mappedPort")]
+        public int? MappedPort { get; set; }
 
         /// <summary>
         /// Validate the object.
