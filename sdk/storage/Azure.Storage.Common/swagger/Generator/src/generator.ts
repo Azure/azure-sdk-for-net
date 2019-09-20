@@ -26,6 +26,12 @@ export async function generate(model: IServiceModel) : Promise<void> {
     w.line(`// This file was automatically generated.  Do not edit.`);
     w.line();
 
+    w.line(`#pragma warning disable IDE0016 // Null check can be simplified `);
+    w.line(`#pragma warning disable IDE0017 // Variable declaration can be inlined`);
+    w.line(`#pragma warning disable IDE0018 // Object initialization can be simplified`);
+    w.line(`#pragma warning disable SA1402  // File may only contain a single type`);
+    w.line();
+
     generateService(w, model);
     generateModels(w, model);
 
@@ -695,32 +701,30 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                 w.scope('{', '}', () => {
                     w.line(`public static string ToString(${types.getName(type)} value)`);
                     w.scope('{', '}', () => {
-                        w.line(`switch (value)`);
-                        w.scope('{', '}', () => {
+                        w.line(`return value switch`);
+                        w.scope('{', '};', () => {
                             // Write the values
                             for (const value of type.values) {
-                                w.write(`case ${types.getName(type)}.${naming.enumField(value.name || value.value)}:`);
-                                w.scope(() => w.line(`return ${value.value == null ? 'null' : '"' + value.value + '"'};`));
+                                w.write(`${types.getName(type)}.${naming.enumField(value.name || value.value)} =>`);
+                                w.line(` ${value.value == null ? 'null' : '"' + value.value + '"'},`);
                             }
                             // Throw for random values
-                            w.write(`default:`);
-                            w.scope(() => w.line(`throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown ${types.getName(type)} value.");`));
+                            w.line(`_ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown ${types.getName(type)} value.")`);
                         });
                     });
                     w.line();
 
                     w.line(`public static ${types.getName(type)} Parse${naming.pascalCase(type.name)}(string value)`);
-                    w.scope('{', '}', () => {
-                        w.line(`switch (value)`);
+                    w.scope('{', '};', () => {
+                        w.line(`return value switch`);
                         w.scope('{', '}', () => {
                             // Write the values
                             for (const value of type.values) {
-                                w.write(`case ${value.value == null ? 'null' : '"' + value.value + '"'}:`);
-                                w.scope(() => w.line(`return ${types.getName(type)}.${naming.enumField(value.name || value.value)};`));
+                                w.write(`${value.value == null ? 'null' : '"' + value.value + '"'} => `);
+                                w.line(`${types.getName(type)}.${naming.enumField(value.name || value.value)},`);
                             }
                             // Throw for random values
-                            w.write(`default:`);
-                            w.scope(() => w.line(`throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown ${types.getName(type)} value.");`));
+                            w.line(`_ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown ${types.getName(type)} value.")`);
                         });
                     });
                 });
@@ -753,7 +757,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
                 w.line(`/// <summary>`);
                 w.line(`/// ${value.description || text}`);
                 w.line(`/// </summary>`);
-                w.line(`public static ${enumFullName} ${name} = @"${text}";`)
+                w.line(`public static ${enumFullName} ${name} { get; } = @"${text}";`)
             }
             w.line(`#pragma warning restore CA2211 // Non-constant fields should not be visible`);
             if (separator()) { w.line(); }
@@ -768,33 +772,33 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
             w.line(`/// Creates a new ${enumName} instance.`);
             w.line(`/// </summary>`);
             w.line(`/// <param name="value">The ${enumName} value.</param>`);
-            w.line(`private ${enumName}(string value) { this._value = value; }`);
+            w.line(`private ${enumName}(string value) { _value = value; }`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Check if two ${enumName} instances are equal.`);
             w.line(`/// </summary>`);
             w.line(`/// <param name="other">The instance to compare to.</param>`);
             w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public bool Equals(${enumFullName} other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);`)
+            w.line(`public bool Equals(${enumFullName} other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);`)
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Check if two ${enumName} instances are equal.`);
             w.line(`/// </summary>`);
             w.line(`/// <param name="o">The instance to compare to.</param>`);
             w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public override bool Equals(object o) => o is ${enumFullName} other && this.Equals(other);`);
+            w.line(`public override bool Equals(object o) => o is ${enumFullName} other && Equals(other);`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Get a hash code for the ${enumName}.`);
             w.line(`/// </summary>`);
             w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
-            w.line(`public override int GetHashCode() => this._value.GetHashCode();`);
+            w.line(`public override int GetHashCode() => _value.GetHashCode();`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Convert the ${enumName} to a string.`);
             w.line(`/// </summary>`);
             w.line(`/// <returns>String representation of the ${enumName}.</returns>`);
-            w.line(`public override string ToString() => this._value;`);
+            w.line(`public override string ToString() => _value;`);
             w.line(``);
             w.line(`#pragma warning disable CA2225 // Operator overloads have named alternates`);
             w.line(`/// <summary>`);
@@ -892,7 +896,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                         w.pushScope(`{`);
                     }
                     for (const property of nested) {
-                        w.write(`this.${naming.property(property.clientName)} = `);
+                        w.write(`${naming.property(property.clientName)} = `);
                         if (isObjectType(property.model)) {
                             w.line(`new ${types.getName(property.model)}();`);
                         } else if (property.model.type === `dictionary`) {
@@ -961,11 +965,14 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.write(`)`);
                 });
                 w.scope('{', '}', () => {
-                    w.line(`var ${modelName} = new ${typeName}();`);
-                    for (const property of props) {
-                        w.line(`${modelName}.${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);
-                    }
-                    w.line(`return ${modelName};`);
+                    w.line(`return new ${typeName}()`);
+
+                    w.scope('{', '}', () => {
+                        for (const property of props) {
+                            w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)},`);
+                        }
+                    });
+                    w.line(";");
                 });
             });
         }
