@@ -28,7 +28,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -39,7 +38,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -48,19 +46,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         properties,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetPropertiesAsync_CreateResponse(_response);
                     }
@@ -84,8 +88,8 @@ namespace Azure.Storage.Queues
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.SetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
+            /// <returns>The Service.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueServiceProperties properties,
@@ -103,7 +107,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -123,7 +128,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -162,7 +167,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
@@ -172,7 +176,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -181,18 +184,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -215,8 +224,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Service.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -229,7 +238,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -242,7 +252,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -291,7 +301,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
@@ -301,7 +310,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -310,18 +318,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetStatisticsAsync_CreateResponse(_response);
                     }
@@ -344,8 +358,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.GetStatisticsAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetStatisticsAsync_CreateRequest(
+            /// <returns>The Service.GetStatisticsAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -358,7 +372,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -371,7 +386,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -424,7 +439,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling List Queues on a Queue Service.</returns>
@@ -438,7 +452,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.ListQueuesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -447,7 +460,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ListQueuesSegmentAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListQueuesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -457,12 +470,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListQueuesSegmentAsync_CreateResponse(_response);
                     }
@@ -489,8 +508,8 @@ namespace Azure.Storage.Queues
             /// <param name="include">Include this parameter to specify that the queues's metadata be returned as part of the response body.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.ListQueuesSegmentAsync Request.</returns>
-            internal static Azure.Core.Http.Request ListQueuesSegmentAsync_CreateRequest(
+            /// <returns>The Service.ListQueuesSegmentAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListQueuesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -507,7 +526,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -523,7 +543,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -581,7 +601,6 @@ namespace Azure.Storage.Queues
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -592,7 +611,6 @@ namespace Azure.Storage.Queues
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -601,19 +619,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -637,8 +661,8 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.CreateAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
+            /// <returns>The Queue.CreateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -652,7 +676,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -669,7 +694,7 @@ namespace Azure.Storage.Queues
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -712,7 +737,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -722,7 +746,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -731,18 +754,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -765,8 +794,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The Queue.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -779,7 +808,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -790,7 +820,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -829,7 +859,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.QueueProperties}</returns>
@@ -839,7 +868,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -848,18 +876,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -882,8 +916,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Queue.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -896,7 +930,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -908,7 +943,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -972,7 +1007,6 @@ namespace Azure.Storage.Queues
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -983,7 +1017,6 @@ namespace Azure.Storage.Queues
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -992,19 +1025,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -1028,8 +1067,8 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.SetMetadataAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
+            /// <returns>The Queue.SetMetadataAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1043,7 +1082,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1061,7 +1101,7 @@ namespace Azure.Storage.Queues
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1100,7 +1140,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>a collection of signed identifiers</returns>
@@ -1110,7 +1149,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1119,18 +1157,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1153,8 +1197,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.GetAccessPolicyAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetAccessPolicyAsync_CreateRequest(
+            /// <returns>The Queue.GetAccessPolicyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1167,7 +1211,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1179,7 +1224,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1233,7 +1278,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -1244,7 +1288,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1253,19 +1296,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         permissions,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1289,8 +1338,8 @@ namespace Azure.Storage.Queues
             /// <param name="permissions">the acls for the queue</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.SetAccessPolicyAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetAccessPolicyAsync_CreateRequest(
+            /// <returns>The Queue.SetAccessPolicyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier> permissions = default,
@@ -1304,7 +1353,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1330,7 +1380,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1379,7 +1429,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Get Messages on a Queue</returns>
@@ -1391,7 +1440,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Dequeue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1400,7 +1448,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DequeueAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DequeueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         numberOfMessages,
@@ -1408,12 +1456,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DequeueAsync_CreateResponse(_response);
                     }
@@ -1438,8 +1492,8 @@ namespace Azure.Storage.Queues
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.DequeueAsync Request.</returns>
-            internal static Azure.Core.Http.Request DequeueAsync_CreateRequest(
+            /// <returns>The Messages.DequeueAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DequeueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1454,7 +1508,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1467,7 +1522,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1520,7 +1575,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -1530,7 +1584,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Clear",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1539,18 +1592,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ClearAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ClearAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ClearAsync_CreateResponse(_response);
                     }
@@ -1573,8 +1632,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.ClearAsync Request.</returns>
-            internal static Azure.Core.Http.Request ClearAsync_CreateRequest(
+            /// <returns>The Messages.ClearAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ClearAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1587,7 +1646,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -1598,7 +1658,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1640,7 +1700,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Put Message on a Queue</returns>
@@ -1653,7 +1712,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Enqueue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1662,7 +1720,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = EnqueueAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = EnqueueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         message,
@@ -1671,12 +1729,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return EnqueueAsync_CreateResponse(_response);
                     }
@@ -1702,8 +1766,8 @@ namespace Azure.Storage.Queues
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.EnqueueAsync Request.</returns>
-            internal static Azure.Core.Http.Request EnqueueAsync_CreateRequest(
+            /// <returns>The Messages.EnqueueAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage EnqueueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -1723,7 +1787,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
@@ -1743,7 +1808,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1797,7 +1862,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Peek Messages on a Queue</returns>
@@ -1808,7 +1872,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Peek",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1817,19 +1880,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = PeekAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = PeekAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         numberOfMessages,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return PeekAsync_CreateResponse(_response);
                     }
@@ -1853,8 +1922,8 @@ namespace Azure.Storage.Queues
             /// <param name="numberOfMessages">Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.PeekAsync Request.</returns>
-            internal static Azure.Core.Http.Request PeekAsync_CreateRequest(
+            /// <returns>The Messages.PeekAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage PeekAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1868,7 +1937,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1881,7 +1951,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1945,7 +2015,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.UpdatedMessage}</returns>
@@ -1958,7 +2027,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1967,7 +2035,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = UpdateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UpdateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         message,
@@ -1976,12 +2044,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return UpdateAsync_CreateResponse(_response);
                     }
@@ -2007,8 +2081,8 @@ namespace Azure.Storage.Queues
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The MessageId.UpdateAsync Request.</returns>
-            internal static Azure.Core.Http.Request UpdateAsync_CreateRequest(
+            /// <returns>The MessageId.UpdateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage UpdateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -2032,7 +2106,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -2052,7 +2127,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2112,7 +2187,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -2123,7 +2197,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2132,19 +2205,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         popReceipt,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -2168,8 +2247,8 @@ namespace Azure.Storage.Queues
             /// <param name="popReceipt">Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The MessageId.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The MessageId.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string popReceipt,
@@ -2187,7 +2266,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -2199,7 +2279,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
