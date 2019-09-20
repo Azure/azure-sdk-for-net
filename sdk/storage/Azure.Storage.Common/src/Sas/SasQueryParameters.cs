@@ -1,6 +1,5 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace Azure.Storage.Sas
     /// parameters.  It includes components used by all Azure Storage resources
     /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
-    /// 
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public partial class SasQueryParameters
@@ -96,7 +94,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared
-        /// access signature. 
+        /// access signature.
         /// </summary>
         public string Services => _services ?? string.Empty;
 
@@ -220,7 +218,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type.
-        /// 
+        ///
         /// Expects decoded values.
         /// </summary>
         internal SasQueryParameters(

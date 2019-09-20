@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// Specifies options for listing queues with the 
+    /// Specifies options for listing queues with the
     /// <see cref="QueueServiceClient.GetQueuesAsync"/> operation.
     /// </summary>
     public struct GetQueuesOptions : IEquatable<GetQueuesOptions>

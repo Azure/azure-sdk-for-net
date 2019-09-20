@@ -11,10 +11,10 @@ using Azure.Storage.Sas;
 namespace Azure.Storage.Files
 {
     /// <summary>
-    /// The <see cref="FileUriBuilder"/> class provides a convenient way to 
+    /// The <see cref="FileUriBuilder"/> class provides a convenient way to
     /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, share, or file.
-    /// 
+    ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata" />.
     /// </summary>
     public class FileUriBuilder
@@ -40,7 +40,6 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
-        /// 
         /// Example: "account.file.core.windows.net"
         /// </summary>
         public string Host
@@ -87,7 +86,6 @@ namespace Azure.Storage.Files
         /// Gets or sets the path of the directory or file.  The value defaults
         /// to <see cref="string.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
-        /// 
         /// Example: "mydirectory/myfile"
         /// </summary>
         public string DirectoryOrFilePath
@@ -132,7 +130,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileUriBuilder"/>
-        /// class with the specified <see cref="System.Uri"/>. 
+        /// class with the specified <see cref="System.Uri"/>.
         /// </summary>
         /// <param name="uri">
         /// The <see cref="System.Uri"/> to a storage resource.

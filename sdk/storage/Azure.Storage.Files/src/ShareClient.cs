@@ -1386,12 +1386,12 @@ namespace Azure.Storage.Files
 
         #region CreatePermission
         /// <summary>
-        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
-        /// can be used for the files/directories in the share. 
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
-        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
-        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
         /// </param>
         /// <param name="cancellationToken">
@@ -1411,12 +1411,12 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
-        /// can be used for the files/directories in the share. 
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
-        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
-        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
         /// </param>
         /// <param name="cancellationToken">
