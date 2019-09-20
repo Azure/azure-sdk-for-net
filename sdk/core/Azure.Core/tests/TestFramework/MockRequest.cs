@@ -18,6 +18,8 @@ namespace Azure.Core.Testing
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
+        public bool IsDisposed { get; private set; }
+
         public override HttpPipelineRequestContent Content
         {
             get { return base.Content; }
@@ -107,6 +109,7 @@ namespace Azure.Core.Testing
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }
