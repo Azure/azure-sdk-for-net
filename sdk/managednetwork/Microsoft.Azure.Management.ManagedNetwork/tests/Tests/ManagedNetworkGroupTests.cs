@@ -83,6 +83,7 @@ namespace ManagedNetwork.Tests
                 string managedNetworkGroupName = TestUtilities.GenerateName("myGroup");
                 ManagedNetworkGroup managedNetworkGroup = new ManagedNetworkGroup()
                 {
+                    Location = location,
                     VirtualNetworks = new List<ResourceId>()
                     {
                             new ResourceId()

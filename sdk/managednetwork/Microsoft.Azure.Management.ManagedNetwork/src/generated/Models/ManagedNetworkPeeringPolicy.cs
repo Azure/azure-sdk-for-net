@@ -37,10 +37,12 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="properties">Gets or sets the properties of a Managed
         /// Network Policy</param>
-        public ManagedNetworkPeeringPolicy(string id = default(string), string name = default(string), string type = default(string), ManagedNetworkPeeringPolicyProperties properties = default(ManagedNetworkPeeringPolicyProperties))
-            : base(id, name, type)
+        public ManagedNetworkPeeringPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ManagedNetworkPeeringPolicyProperties properties = default(ManagedNetworkPeeringPolicyProperties))
+            : base(id, name, type, location)
         {
             Properties = properties;
             CustomInit();
