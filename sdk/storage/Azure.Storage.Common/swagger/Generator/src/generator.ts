@@ -715,9 +715,9 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                     w.line();
 
                     w.line(`public static ${types.getName(type)} Parse${naming.pascalCase(type.name)}(string value)`);
-                    w.scope('{', '};', () => {
+                    w.scope('{', '}', () => {
                         w.line(`return value switch`);
-                        w.scope('{', '}', () => {
+                        w.scope('{', '};', () => {
                             // Write the values
                             for (const value of type.values) {
                                 w.write(`${value.value == null ? 'null' : '"' + value.value + '"'} => `);
@@ -967,12 +967,11 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.scope('{', '}', () => {
                     w.line(`return new ${typeName}()`);
 
-                    w.scope('{', '}', () => {
+                    w.scope('{', '};', () => {
                         for (const property of props) {
                             w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)},`);
                         }
                     });
-                    w.line(";");
                 });
             });
         }

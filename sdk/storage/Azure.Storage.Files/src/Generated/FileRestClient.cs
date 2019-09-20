@@ -6122,8 +6122,8 @@ namespace Azure.Storage.Files
                     "aborted" => Azure.Storage.Files.Models.CopyStatus.Aborted,
                     "failed" => Azure.Storage.Files.Models.CopyStatus.Failed,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -6250,8 +6250,8 @@ namespace Azure.Storage.Files
                 {
                     "include" => Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -6853,8 +6853,8 @@ namespace Azure.Storage.Files
                     "update" => Azure.Storage.Files.Models.FileRangeWriteType.Update,
                     "clear" => Azure.Storage.Files.Models.FileRangeWriteType.Clear,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -7332,8 +7332,8 @@ namespace Azure.Storage.Files
                     "snapshots" => Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots,
                     "metadata" => Azure.Storage.Files.Models.ListSharesIncludeType.Metadata,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -7480,8 +7480,7 @@ namespace Azure.Storage.Files.Models
             return new PermissionInfo()
             {
                 FilePermissionKey = filePermissionKey,
-            }
-            ;
+            };
         }
     }
 }
@@ -7539,8 +7538,7 @@ namespace Azure.Storage.Files.Models
             {
                 Start = start,
                 End = end,
-            }
-            ;
+            };
         }
     }
 }
@@ -7630,8 +7628,7 @@ namespace Azure.Storage.Files.Models
                 FileChangeTime = fileChangeTime,
                 FileId = fileId,
                 FileParentId = fileParentId,
-            }
-            ;
+            };
         }
     }
 }
@@ -7743,8 +7740,7 @@ namespace Azure.Storage.Files.Models
                 FileId = fileId,
                 FileParentId = fileParentId,
                 FileCreationTime = fileCreationTime,
-            }
-            ;
+            };
         }
     }
 }
@@ -7841,8 +7837,7 @@ namespace Azure.Storage.Files.Models
                 FileChangeTime = fileChangeTime,
                 FileId = fileId,
                 FileParentId = fileParentId,
-            }
-            ;
+            };
         }
     }
 }
@@ -8056,8 +8051,7 @@ namespace Azure.Storage.Files.Models
                 Metadata = metadata,
                 FileParentId = fileParentId,
                 CopyStatusDescription = copyStatusDescription,
-            }
-            ;
+            };
         }
     }
 }
@@ -8166,8 +8160,7 @@ namespace Azure.Storage.Files.Models
             {
                 ETag = eTag,
                 LastModified = lastModified,
-            }
-            ;
+            };
         }
     }
 }
@@ -8275,8 +8268,7 @@ namespace Azure.Storage.Files.Models
                 Properties = properties,
                 Snapshot = snapshot,
                 Metadata = metadata,
-            }
-            ;
+            };
         }
     }
 }
@@ -8355,8 +8347,7 @@ namespace Azure.Storage.Files.Models
                 LastModified = lastModified,
                 Etag = etag,
                 Quota = quota,
-            }
-            ;
+            };
         }
     }
 }
@@ -8419,8 +8410,7 @@ namespace Azure.Storage.Files.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 Quota = quota,
-            }
-            ;
+            };
         }
     }
 }
@@ -8468,8 +8458,7 @@ namespace Azure.Storage.Files.Models
                 Snapshot = snapshot,
                 ETag = eTag,
                 LastModified = lastModified,
-            }
-            ;
+            };
         }
     }
 }
@@ -8519,8 +8508,7 @@ namespace Azure.Storage.Files.Models
             return new ShareStatistics()
             {
                 ShareUsageBytes = shareUsageBytes,
-            }
-            ;
+            };
         }
     }
 }
@@ -8751,8 +8739,7 @@ namespace Azure.Storage.Files.Models
             {
                 Marker = marker,
                 NumberOfHandlesClosed = numberOfHandlesClosed,
-            }
-            ;
+            };
         }
     }
 }
@@ -8854,8 +8841,7 @@ namespace Azure.Storage.Files.Models
                 LastModified = lastModified,
                 CopyId = copyId,
                 CopyStatus = copyStatus,
-            }
-            ;
+            };
         }
     }
 }
@@ -8918,8 +8904,7 @@ namespace Azure.Storage.Files.Models
                 ETag = eTag,
                 FileContentLength = fileContentLength,
                 Ranges = ranges,
-            }
-            ;
+            };
         }
     }
 }
@@ -8976,8 +8961,7 @@ namespace Azure.Storage.Files.Models
                 LastModified = lastModified,
                 ContentHash = contentHash,
                 IsServerEncrypted = isServerEncrypted,
-            }
-            ;
+            };
         }
     }
 }
@@ -9092,8 +9076,7 @@ namespace Azure.Storage.Files.Models
                 OpenTime = openTime,
                 ParentId = parentId,
                 LastReconnectTime = lastReconnectTime,
-            }
-            ;
+            };
         }
     }
 }

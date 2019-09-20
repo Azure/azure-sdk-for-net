@@ -2564,8 +2564,7 @@ namespace Azure.Storage.Queues.Models
                 TimeNextVisible = timeNextVisible,
                 DequeueCount = dequeueCount,
                 MessageText = messageText,
-            }
-            ;
+            };
         }
     }
 }
@@ -2647,8 +2646,7 @@ namespace Azure.Storage.Queues.Models
                 ExpirationTime = expirationTime,
                 PopReceipt = popReceipt,
                 TimeNextVisible = timeNextVisible,
-            }
-            ;
+            };
         }
     }
 }
@@ -2706,8 +2704,7 @@ namespace Azure.Storage.Queues.Models
             {
                 Status = status,
                 LastSyncTime = lastSyncTime,
-            }
-            ;
+            };
         }
     }
 }
@@ -2846,8 +2843,8 @@ namespace Azure.Storage.Queues
                 {
                     "metadata" => Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -3160,8 +3157,7 @@ namespace Azure.Storage.Queues.Models
                 ExpirationTime = expirationTime,
                 DequeueCount = dequeueCount,
                 MessageText = messageText,
-            }
-            ;
+            };
         }
     }
 }
@@ -3585,8 +3581,7 @@ namespace Azure.Storage.Queues.Models
             {
                 Name = name,
                 Metadata = metadata,
-            }
-            ;
+            };
         }
     }
 }
@@ -3668,8 +3663,7 @@ namespace Azure.Storage.Queues.Models
             {
                 Metadata = metadata,
                 ApproximateMessagesCount = approximateMessagesCount,
-            }
-            ;
+            };
         }
     }
 }
@@ -3876,8 +3870,7 @@ namespace Azure.Storage.Queues.Models
             return new QueueServiceStatistics()
             {
                 GeoReplication = geoReplication,
-            }
-            ;
+            };
         }
     }
 }
@@ -4219,8 +4212,7 @@ namespace Azure.Storage.Queues.Models
             {
                 PopReceipt = popReceipt,
                 TimeNextVisible = timeNextVisible,
-            }
-            ;
+            };
         }
     }
 }

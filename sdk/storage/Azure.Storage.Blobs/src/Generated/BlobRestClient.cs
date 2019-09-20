@@ -12802,8 +12802,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 SkuName = skuName,
                 AccountKind = accountKind,
-            }
-            ;
+            };
         }
     }
 }
@@ -12990,8 +12989,7 @@ namespace Azure.Storage.Blobs.Models
                 XMSGroup = xMSGroup,
                 XMSPermissions = xMSPermissions,
                 XMSAcl = xMSAcl,
-            }
-            ;
+            };
         }
     }
 }
@@ -13039,8 +13037,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 ContentLength = contentLength,
-            }
-            ;
+            };
         }
     }
 }
@@ -13081,8 +13078,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 ETag = eTag,
                 LastModified = lastModified,
-            }
-            ;
+            };
         }
     }
 }
@@ -13169,8 +13165,7 @@ namespace Azure.Storage.Blobs.Models
                 BlobCommittedBlockCount = blobCommittedBlockCount,
                 IsServerEncrypted = isServerEncrypted,
                 EncryptionKeySha256 = encryptionKeySha256,
-            }
-            ;
+            };
         }
     }
 }
@@ -13234,8 +13229,7 @@ namespace Azure.Storage.Blobs.Models
                 ContentHash = contentHash,
                 EncryptionKeySha256 = encryptionKeySha256,
                 BlobSequenceNumber = blobSequenceNumber,
-            }
-            ;
+            };
         }
     }
 }
@@ -13290,8 +13284,7 @@ namespace Azure.Storage.Blobs.Models
                 LastModified = lastModified,
                 CopyId = copyId,
                 CopyStatus = copyStatus,
-            }
-            ;
+            };
         }
     }
 }
@@ -13939,8 +13932,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 ETag = eTag,
                 LastModified = lastModified,
-            }
-            ;
+            };
         }
     }
 }
@@ -14060,8 +14052,7 @@ namespace Azure.Storage.Blobs.Models
                 Deleted = deleted,
                 Snapshot = snapshot,
                 Metadata = metadata,
-            }
-            ;
+            };
         }
     }
 }
@@ -14478,8 +14469,7 @@ namespace Azure.Storage.Blobs.Models
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
                 AccessTierChangeTime = accessTierChangeTime,
                 ETag = eTag,
-            }
-            ;
+            };
         }
     }
 }
@@ -14774,8 +14764,7 @@ namespace Azure.Storage.Blobs.Models
                 CreationTime = creationTime,
                 AccessTierChangeTime = accessTierChangeTime,
                 ContentType = contentType,
-            }
-            ;
+            };
         }
     }
 }
@@ -15028,8 +15017,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobServiceStatistics()
             {
                 GeoReplication = geoReplication,
-            }
-            ;
+            };
         }
     }
 }
@@ -15084,8 +15072,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
-            }
-            ;
+            };
         }
     }
 }
@@ -15431,8 +15418,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 Name = name,
                 Size = size,
-            }
-            ;
+            };
         }
     }
 }
@@ -15484,8 +15470,7 @@ namespace Azure.Storage.Blobs.Models
                 ContentHash = contentHash,
                 XMSContentCrc64 = xMSContentCrc64,
                 EncryptionKeySha256 = encryptionKeySha256,
-            }
-            ;
+            };
         }
     }
 }
@@ -15587,8 +15572,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 CommittedBlocks = committedBlocks,
                 UncommittedBlocks = uncommittedBlocks,
-            }
-            ;
+            };
         }
     }
 }
@@ -15644,8 +15628,8 @@ namespace Azure.Storage.Blobs
                     "uncommitted" => Azure.Storage.Blobs.Models.BlockListType.Uncommitted,
                     "all" => Azure.Storage.Blobs.Models.BlockListType.All,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.BlockListType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -15800,8 +15784,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 Start = start,
                 End = end,
-            }
-            ;
+            };
         }
     }
 }
@@ -15880,8 +15863,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 SignedIdentifiers = signedIdentifiers,
-            }
-            ;
+            };
         }
     }
 }
@@ -15922,8 +15904,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 ETag = eTag,
                 LastModified = lastModified,
-            }
-            ;
+            };
         }
     }
 }
@@ -16019,8 +16000,7 @@ namespace Azure.Storage.Blobs.Models
                 Name = name,
                 Properties = properties,
                 Metadata = metadata,
-            }
-            ;
+            };
         }
     }
 }
@@ -16151,8 +16131,7 @@ namespace Azure.Storage.Blobs.Models
                 PublicAccess = publicAccess,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
                 HasLegalHold = hasLegalHold,
-            }
-            ;
+            };
         }
     }
 }
@@ -16323,8 +16302,8 @@ namespace Azure.Storage.Blobs
                     "aborted" => Azure.Storage.Blobs.Models.CopyStatus.Aborted,
                     "failed" => Azure.Storage.Blobs.Models.CopyStatus.Failed,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.CopyStatus value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -16515,8 +16494,8 @@ namespace Azure.Storage.Blobs
                     "include" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Include,
                     "only" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Only,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.DeleteSnapshotsOption value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -16564,8 +16543,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 ContentLength = contentLength,
-            }
-            ;
+            };
         }
     }
 }
@@ -16599,8 +16577,7 @@ namespace Azure.Storage.Blobs.Models
             return new DirectoryDeleteResult()
             {
                 Marker = marker,
-            }
-            ;
+            };
         }
     }
 }
@@ -16669,8 +16646,7 @@ namespace Azure.Storage.Blobs.Models
                 XMSGroup = xMSGroup,
                 XMSPermissions = xMSPermissions,
                 XMSAcl = xMSAcl,
-            }
-            ;
+            };
         }
     }
 }
@@ -16725,8 +16701,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 ContentLength = contentLength,
-            }
-            ;
+            };
         }
     }
 }
@@ -16767,8 +16742,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 ETag = eTag,
                 LastModified = lastModified,
-            }
-            ;
+            };
         }
     }
 }
@@ -17076,8 +17050,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 Status = status,
                 LastSyncTime = lastSyncTime,
-            }
-            ;
+            };
         }
     }
 }
@@ -17135,8 +17108,8 @@ namespace Azure.Storage.Blobs
                     "bootstrap" => Azure.Storage.Blobs.Models.GeoReplicationStatus.Bootstrap,
                     "unavailable" => Azure.Storage.Blobs.Models.GeoReplicationStatus.Unavailable,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.GeoReplicationStatus value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -17272,8 +17245,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 LeaseId = leaseId,
-            }
-            ;
+            };
         }
     }
 }
@@ -17322,8 +17294,8 @@ namespace Azure.Storage.Blobs
                     "infinite" => Azure.Storage.Blobs.Models.LeaseDurationType.Infinite,
                     "fixed" => Azure.Storage.Blobs.Models.LeaseDurationType.Fixed,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseDurationType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -17393,8 +17365,8 @@ namespace Azure.Storage.Blobs
                     "breaking" => Azure.Storage.Blobs.Models.LeaseState.Breaking,
                     "broken" => Azure.Storage.Blobs.Models.LeaseState.Broken,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseState value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -17445,8 +17417,8 @@ namespace Azure.Storage.Blobs
                     "locked" => Azure.Storage.Blobs.Models.LeaseStatus.Locked,
                     "unlocked" => Azure.Storage.Blobs.Models.LeaseStatus.Unlocked,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStatus value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -17516,8 +17488,8 @@ namespace Azure.Storage.Blobs
                     "snapshots" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Snapshots,
                     "uncommittedblobs" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Uncommittedblobs,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobsIncludeItem value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -17559,8 +17531,8 @@ namespace Azure.Storage.Blobs
                 {
                     "metadata" => Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -17839,8 +17811,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 BlobSequenceNumber = blobSequenceNumber,
-            }
-            ;
+            };
         }
     }
 }
@@ -17913,8 +17884,7 @@ namespace Azure.Storage.Blobs.Models
                 XMSContentCrc64 = xMSContentCrc64,
                 BlobSequenceNumber = blobSequenceNumber,
                 EncryptionKeySha256 = encryptionKeySha256,
-            }
-            ;
+            };
         }
     }
 }
@@ -17999,8 +17969,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 PageRange = pageRange,
                 ClearRange = clearRange,
-            }
-            ;
+            };
         }
     }
 }
@@ -18058,8 +18027,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 Start = start,
                 End = end,
-            }
-            ;
+            };
         }
     }
 }
@@ -18122,8 +18090,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 BlobContentLength = blobContentLength,
                 Body = body,
-            }
-            ;
+            };
         }
     }
 }
@@ -18172,8 +18139,8 @@ namespace Azure.Storage.Blobs
                     "legacy" => Azure.Storage.Blobs.Models.PathRenameMode.Legacy,
                     "posix" => Azure.Storage.Blobs.Models.PathRenameMode.Posix,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.PathRenameMode value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -18229,8 +18196,8 @@ namespace Azure.Storage.Blobs
                     "container" => Azure.Storage.Blobs.Models.PublicAccessType.Container,
                     "blob" => Azure.Storage.Blobs.Models.PublicAccessType.Blob,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.PublicAccessType value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -18446,8 +18413,8 @@ namespace Azure.Storage.Blobs
                     "update" => Azure.Storage.Blobs.Models.SequenceNumberAction.Update,
                     "increment" => Azure.Storage.Blobs.Models.SequenceNumberAction.Increment,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.SequenceNumberAction value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -18488,8 +18455,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 ContentType = contentType,
                 Body = body,
-            }
-            ;
+            };
         }
     }
 }
@@ -18692,8 +18658,8 @@ namespace Azure.Storage.Blobs
                     "Standard_ZRS" => Azure.Storage.Blobs.Models.SkuName.StandardZRS,
                     "Premium_LRS" => Azure.Storage.Blobs.Models.SkuName.PremiumLRS,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.SkuName value.")
-                }
-            };
+                };
+            }
         }
     }
 }
@@ -18922,8 +18888,7 @@ namespace Azure.Storage.Blobs.Models
                 SignedService = signedService,
                 SignedVersion = signedVersion,
                 Value = value,
-            }
-            ;
+            };
         }
     }
 }
@@ -18990,8 +18955,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 Code = code,
                 Message = message,
-            }
-            ;
+            };
         }
     }
 }
