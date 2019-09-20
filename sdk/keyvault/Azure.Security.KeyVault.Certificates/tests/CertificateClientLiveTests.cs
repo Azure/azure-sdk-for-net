@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -181,7 +184,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            CertificateWithPolicy recovered = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.RecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 

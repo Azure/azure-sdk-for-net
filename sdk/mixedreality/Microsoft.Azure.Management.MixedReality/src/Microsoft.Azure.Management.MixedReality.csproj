@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.MixedReality</PackageId>
     <Description>Microsoft Azure Management Library of Mixed Reality cloud services.</Description>
-    <Version>0.9.0-preview</Version>
+    <Version>0.9.0-preview.1</Version>
     <AssemblyName>Microsoft.Azure.Management.MixedReality</AssemblyName>
     <PackageTags>mixed reality;spatial anchors</PackageTags>
     <PackageReleaseNotes>

@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 TryTimeout = TimeSpan.FromSeconds(3)
             };
 
-            var clone = options.Clone();
+            RetryOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.Mode, Is.EqualTo(options.Mode), "The mode of the clone should match.");

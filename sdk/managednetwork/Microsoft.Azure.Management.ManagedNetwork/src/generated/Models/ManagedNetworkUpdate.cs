@@ -31,9 +31,8 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// <summary>
         /// Initializes a new instance of the ManagedNetworkUpdate class.
         /// </summary>
-        /// <param name="tags">Updates the tags property of the Managed
-        /// Network</param>
-        public ManagedNetworkUpdate(IList<string> tags = default(IList<string>))
+        /// <param name="tags">Resource tags</param>
+        public ManagedNetworkUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Tags = tags;
             CustomInit();
@@ -45,10 +44,10 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets updates the tags property of the Managed Network
+        /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public IList<string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

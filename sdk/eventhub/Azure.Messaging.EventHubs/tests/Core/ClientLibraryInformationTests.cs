@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
@@ -78,9 +79,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void PropertiesCanBeEnumerated()
         {
-            foreach (var property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {
-                var matchingProperty = typeof(ClientLibraryInformation).GetProperty(property.Key, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                PropertyInfo matchingProperty = typeof(ClientLibraryInformation).GetProperty(property.Key, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
                 Assert.That(matchingProperty, Is.Not.Null, $"The property, { property.Key }, was not found.");
                 Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for { property.Key } should match.");

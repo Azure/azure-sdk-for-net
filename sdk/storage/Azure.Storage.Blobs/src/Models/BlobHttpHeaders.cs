@@ -65,19 +65,19 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is BlobHttpHeaders other && this.Equals(other);
+            => obj is BlobHttpHeaders other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the BlobHttpHeaders.
         /// </summary>
         /// <returns>Hash code for the BlobHttpHeaders.</returns>
         public override int GetHashCode()
-            => this.CacheControl.GetHashCode()
-            ^ this.ContentDisposition.GetHashCode()
-            ^ this.ContentEncoding.GetHashCode()
-            ^ this.ContentLanguage.GetHashCode()
-            ^ this.ContentHash.GetHashCode()
-            ^ this.ContentType.GetHashCode()
+            => CacheControl.GetHashCode()
+            ^ ContentDisposition.GetHashCode()
+            ^ ContentEncoding.GetHashCode()
+            ^ ContentLanguage.GetHashCode()
+            ^ ContentHash.GetHashCode()
+            ^ ContentType.GetHashCode()
             ;
 
         /// <summary>
@@ -101,12 +101,12 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         public bool Equals(BlobHttpHeaders other)
-            => this.CacheControl == other.CacheControl
-            && this.ContentDisposition == other.ContentDisposition
-            && this.ContentEncoding == other.ContentEncoding
-            && this.ContentLanguage == other.ContentLanguage
-            && this.ContentHash == other.ContentHash
-            && this.ContentType == other.ContentType
+            => CacheControl == other.CacheControl
+            && ContentDisposition == other.ContentDisposition
+            && ContentEncoding == other.ContentEncoding
+            && ContentLanguage == other.ContentLanguage
+            && ContentHash == other.ContentHash
+            && ContentType == other.ContentType
             ;
     }
 }

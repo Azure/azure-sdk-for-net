@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public void SetArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.SetAsync(null, "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync(null, "value"));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync("name", null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync(null));
 
@@ -45,42 +45,42 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public void PurgeDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedAsync(""));
         }
 
         [Test]
         public void GetArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.GetAsync(""));
         }
 
         [Test]
         public void DeleteArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteAsync(""));
         }
 
         [Test]
         public void GetDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedAsync(""));
         }
 
         [Test]
         public void RecoverDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecoverDeletedAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedAsync(""));
         }
 
         [Test]
         public void GetSecretVersionsArgumentValidation()
         {
-            Assert.Throws<ArgumentException>(() => Client.GetSecretVersionsAsync(null));
+            Assert.Throws<ArgumentNullException>(() => Client.GetSecretVersionsAsync(null));
             Assert.Throws<ArgumentException>(() => Client.GetSecretVersionsAsync(""));
         }
     }

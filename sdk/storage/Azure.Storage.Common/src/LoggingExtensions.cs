@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common
 {
-    static class LoggingExtensions
+    internal static class LoggingExtensions
     {
         // The Azure.Core logging plan is still being settled, so we're adding
         // [Condtional] extensions we can implement later to light up logging

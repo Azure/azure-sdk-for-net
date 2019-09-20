@@ -22,17 +22,17 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public ETag ETag => this._rawStorageFileInfo.ETag;
+        public ETag ETag => _rawStorageFileInfo.ETag;
 
         /// <summary>
         /// Returns the date and time the file was last modified.
         /// </summary>
-        public DateTimeOffset LastModified => this._rawStorageFileInfo.LastModified;
+        public DateTimeOffset LastModified => _rawStorageFileInfo.LastModified;
 
         /// <summary>
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
-        public bool IsServerEncrypted => this._rawStorageFileInfo.IsServerEncrypted;
+        public bool IsServerEncrypted => _rawStorageFileInfo.IsServerEncrypted;
 
         /// <summary>
         /// The file's SMB properties.
@@ -41,8 +41,8 @@ namespace Azure.Storage.Files.Models
 
         internal StorageFileInfo(RawStorageFileInfo rawStorageFileInfo)
         {
-            this._rawStorageFileInfo = rawStorageFileInfo;
-            this.SmbProperties = new FileSmbProperties(rawStorageFileInfo);
+            _rawStorageFileInfo = rawStorageFileInfo;
+            SmbProperties = new FileSmbProperties(rawStorageFileInfo);
         }
     }
 

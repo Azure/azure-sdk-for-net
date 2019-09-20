@@ -69,6 +69,6 @@ namespace Azure.Messaging.EventHubs.Errors
         private static string FormatDefaultMessage(uint messageId,
                                                    ulong sizeInBytes,
                                                    ulong maximumSizeInBytes) =>
-            String.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, messageId, sizeInBytes, maximumSizeInBytes);
+            string.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, messageId, sizeInBytes, maximumSizeInBytes);
     }
 }

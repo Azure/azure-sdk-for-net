@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Firewall Policy NAT Rule
+    /// Firewall Policy NAT Rule.
     /// </summary>
     public partial class FirewallPolicyNatRule : FirewallPolicyRule
     {
@@ -29,17 +29,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the FirewallPolicyNatRule class.
         /// </summary>
-        /// <param name="name">Name of the Rule</param>
+        /// <param name="name">The name of the rule.</param>
         /// <param name="priority">Priority of the Firewall Policy Rule
         /// resource.</param>
-        /// <param name="action">The action type of a Nat rule, SNAT or
-        /// DNAT</param>
+        /// <param name="action">The action type of a Nat rule.</param>
         /// <param name="translatedAddress">The translated address for this NAT
         /// rule.</param>
         /// <param name="translatedPort">The translated port for this NAT
         /// rule.</param>
         /// <param name="ruleCondition">The match conditions for incoming
-        /// traffic</param>
+        /// traffic.</param>
         public FirewallPolicyNatRule(string name = default(string), int? priority = default(int?), FirewallPolicyNatRuleAction action = default(FirewallPolicyNatRuleAction), string translatedAddress = default(string), string translatedPort = default(string), FirewallPolicyRuleCondition ruleCondition = default(FirewallPolicyRuleCondition))
             : base(name, priority)
         {
@@ -56,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the action type of a Nat rule, SNAT or DNAT
+        /// Gets or sets the action type of a Nat rule.
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public FirewallPolicyNatRuleAction Action { get; set; }
@@ -74,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string TranslatedPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the match conditions for incoming traffic
+        /// Gets or sets the match conditions for incoming traffic.
         /// </summary>
         [JsonProperty(PropertyName = "ruleCondition")]
         public FirewallPolicyRuleCondition RuleCondition { get; set; }

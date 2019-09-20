@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,7 +12,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public struct CertificateContentType
     {
-        private string _value;
+        private readonly string _value;
 
         public CertificateContentType(string curveName)
         {
@@ -28,7 +31,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         public override bool Equals(object obj)
         {
-            return obj is CertificateContentType && this.Equals((CertificateContentType)obj);
+            return obj is CertificateContentType && Equals((CertificateContentType)obj);
         }
 
         public bool Equals(CertificateContentType other)

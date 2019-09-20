@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -63,7 +62,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText ProviderPropertyNameBytes = JsonEncodedText.Encode(ProviderPropertyName);
+        private static readonly JsonEncodedText s_providerPropertyNameBytes = JsonEncodedText.Encode(ProviderPropertyName);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
@@ -74,7 +73,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!string.IsNullOrEmpty(Provider))
             {
-                json.WriteString(ProviderPropertyNameBytes, Provider);
+                json.WriteString(s_providerPropertyNameBytes, Provider);
             }
         }
     }

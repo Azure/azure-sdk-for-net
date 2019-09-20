@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// List of supported <see cref="KeyOperations"/>.
         /// </summary>
-        public IList<KeyOperations> KeyOperations { get; set; }
+        public IList<KeyOperation> KeyOperations { get; set; }
 
         /// <summary>
         /// Not before date in UTC.
@@ -35,6 +34,6 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// A dictionary of tags with specific metadata about the key.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string> ();
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
     }
 }

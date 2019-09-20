@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
@@ -11,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys
         public byte[] Value { get; set; }
 
         private const string ValuePropertyName = "value";
-        private static readonly JsonEncodedText ValuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
+        private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -23,7 +22,7 @@ namespace Azure.Security.KeyVault.Keys
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteString(ValuePropertyNameBytes, Base64Url.Encode(Value));
+            json.WriteString(s_valuePropertyNameBytes, Base64Url.Encode(Value));
         }
     }
 }

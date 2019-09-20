@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics.Tracing;
@@ -57,12 +57,12 @@ namespace Azure.Core.Tests
         public void MatchesNameAndGuid()
         {
             // Arrange & Act
-            var eventSourceType = typeof(HttpPipelineEventSource);
+            Type eventSourceType = typeof(HttpPipelineEventSource);
 
             // Assert
             Assert.NotNull(eventSourceType);
-            Assert.AreEqual("AzureSDK", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("1015ab6c-4cd8-53d6-aec3-9b937011fa95"), EventSource.GetGuid(eventSourceType));
+            Assert.AreEqual("Azure-Core", EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("44cbc7c6-6776-5f3c-36c1-75cd3ef19ea9"), EventSource.GetGuid(eventSourceType));
             Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
 
@@ -73,14 +73,15 @@ namespace Azure.Core.Tests
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
             response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
 
-            var mockTransport = CreateMockTransport(response);
+            MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
@@ -89,7 +90,7 @@ namespace Azure.Core.Tests
                 await SendRequestAsync(pipeline, request);
             }
 
-            var e = _listener.SingleEventById(RequestEvent);
+            EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
@@ -135,14 +136,15 @@ namespace Azure.Core.Tests
         public async Task RequestContentIsLoggedAsText()
         {
             var response = new MockResponse(500);
-            var mockTransport = CreateMockTransport(response);
+            MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
@@ -150,13 +152,96 @@ namespace Azure.Core.Tests
                 await SendRequestAsync(pipeline, request);
             }
 
-            var e = _listener.SingleEventById(RequestContentTextEvent);
+            EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContentText", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", e.GetProperty<string>("content"));
 
             CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+        }
+
+        [Test]
+        public async Task ContentIsNotLoggedAsTextWhenDisabled()
+        {
+            var response = new MockResponse(500);
+            response.ContentStream = new MemoryStream(new byte[] {1, 2, 3});
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false) });
+
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
+                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Headers.Add("Content-Type", "text/json");
+
+                await SendRequestAsync(pipeline, request);
+            }
+
+            AssertNoContentLogged();
+        }
+
+        [Test]
+        public async Task ContentIsNotLoggedWhenDisabled()
+        {
+            var response = new MockResponse(500);
+            response.ContentStream = new NonSeekableMemoryStream(new byte[] {1, 2, 3});
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false) });
+
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
+                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+
+                await SendRequestAsync(pipeline, request);
+            }
+
+            AssertNoContentLogged();
+        }
+
+
+        [Test]
+        public async Task RequestContentIsNotLoggedWhenDisabled()
+        {
+            var response = new MockResponse(500);
+            response.ContentStream = new MemoryStream(new byte[] {1, 2, 3});
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false) });
+
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
+                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+
+                await SendRequestAsync(pipeline, request);
+            }
+
+            AssertNoContentLogged();
+        }
+
+        private void AssertNoContentLogged()
+        {
+            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentTextEvent));
+
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentBlockEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentTextBlockEvent));
+
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextEvent));
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextBlockEvent));
         }
 
         [Test]
@@ -307,12 +392,13 @@ namespace Azure.Core.Tests
             }
             setupRequest?.Invoke(mockResponse);
 
-            var mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
 
             using (Request request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("https://contoso.a.io");
 
                 Response response = await SendRequestAsync(pipeline, request);
 

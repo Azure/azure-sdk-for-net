@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
@@ -58,31 +57,31 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText FirstNamePropertyNameBytes = JsonEncodedText.Encode(FirstNamePropertyName);
-        private static readonly JsonEncodedText LastNamePropertyNameBytes = JsonEncodedText.Encode(LastNamePropertyName);
-        private static readonly JsonEncodedText EmailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
-        private static readonly JsonEncodedText PhonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
+        private static readonly JsonEncodedText s_firstNamePropertyNameBytes = JsonEncodedText.Encode(FirstNamePropertyName);
+        private static readonly JsonEncodedText s_lastNamePropertyNameBytes = JsonEncodedText.Encode(LastNamePropertyName);
+        private static readonly JsonEncodedText s_emailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
+        private static readonly JsonEncodedText s_phonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
 
         internal void WriteProperties(Utf8JsonWriter json)
         {
             if (!string.IsNullOrEmpty(FirstName))
             {
-                json.WriteString(FirstNamePropertyNameBytes, FirstName);
+                json.WriteString(s_firstNamePropertyNameBytes, FirstName);
             }
 
             if (!string.IsNullOrEmpty(LastName))
             {
-                json.WriteString(LastNamePropertyNameBytes, LastName);
+                json.WriteString(s_lastNamePropertyNameBytes, LastName);
             }
 
             if (!string.IsNullOrEmpty(Email))
             {
-                json.WriteString(EmailPropertyNameBytes, Email);
+                json.WriteString(s_emailPropertyNameBytes, Email);
             }
 
             if (!string.IsNullOrEmpty(Phone))
             {
-                json.WriteString(PhonePropertyNameBytes, Phone);
+                json.WriteString(s_phonePropertyNameBytes, Phone);
             }
         }
     }

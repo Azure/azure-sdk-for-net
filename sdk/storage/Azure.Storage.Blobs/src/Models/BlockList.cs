@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs
         /// <returns>The BlockList response.</returns>
         internal static Response<BlockList> ToBlockList(this Response<GetBlockListOperation> response)
         {
-            var blocks = response.Value.Body;
+            BlockList blocks = response.Value.Body;
             blocks.LastModified = response.Value.LastModified;
             blocks.ETag = response.Value.ETag;
             blocks.ContentType = response.Value.ContentType;

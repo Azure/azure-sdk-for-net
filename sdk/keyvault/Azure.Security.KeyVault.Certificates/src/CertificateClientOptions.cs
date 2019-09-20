@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
 using System;
@@ -14,14 +13,14 @@ namespace Azure.Security.KeyVault.Certificates
     {
         /// <summary>
         /// The latest service version supported by this client library.
-        /// For more information, see 
+        /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V7_0;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
-        /// library. 
+        /// library.
         /// </summary>
         public enum ServiceVersion
         {
@@ -35,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
-        /// making requests. For more information, see 
+        /// making requests. For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>
         /// </summary>
         public ServiceVersion Version { get; }
@@ -50,7 +49,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </param>
         public CertificateClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
-            this.Version = version;
+            Version = version;
         }
 
         /// <summary>
@@ -60,18 +59,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal string GetVersionString()
         {
-            var version = string.Empty;
-
-            switch (this.Version)
+            var version = Version switch
             {
-                case ServiceVersion.V7_0:
-                    version = "7.0";
-                    break;
+                ServiceVersion.V7_0 => "7.0",
 
-                default:
-                    throw new ArgumentException(this.Version.ToString());
-            }
-
+                _ => throw new ArgumentException(Version.ToString()),
+            };
             return version;
         }
     }

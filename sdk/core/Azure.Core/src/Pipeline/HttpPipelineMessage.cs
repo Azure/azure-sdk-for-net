@@ -5,24 +5,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
-    public class HttpPipelineMessage
+    public sealed class HttpPipelineMessage: IDisposable
     {
         private Dictionary<string, object>? _properties;
 
         private Response? _response;
 
-        public CancellationToken CancellationToken { get; }
-
-        public HttpPipelineMessage(Request request, ResponseClassifier responseClassifier, CancellationToken cancellationToken)
+        public HttpPipelineMessage(Request request, ResponseClassifier responseClassifier)
         {
             Request = request;
             ResponseClassifier = responseClassifier;
-            CancellationToken = cancellationToken;
         }
 
         public Request Request { get; set; }
@@ -44,7 +42,9 @@ namespace Azure.Core.Pipeline
 
         public bool HasResponse => _response != null;
 
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public CancellationToken CancellationToken { get; internal set; }
+
+        public ResponseClassifier ResponseClassifier { get; }
 
         public bool BufferResponse { get; set; }
 
@@ -59,6 +59,77 @@ namespace Azure.Core.Pipeline
             _properties ??= new Dictionary<string, object>();
 
             _properties[name] = value;
+        }
+
+        public Stream? ExtractResponseContent()
+        {
+            switch (_response?.ContentStream)
+            {
+                case ResponseShouldNotBeUsedStream responseContent:
+                    return responseContent.Original;
+                case Stream stream :
+                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    return stream;
+                default:
+                    return null;
+            }
+        }
+
+        public void Dispose()
+        {
+            Request?.Dispose();
+            _response?.Dispose();
+        }
+
+        private class ResponseShouldNotBeUsedStream: Stream
+        {
+            public Stream Original { get; }
+
+            public ResponseShouldNotBeUsedStream(Stream original)
+            {
+                Original = original;
+            }
+
+            private static Exception CreateException()
+            {
+                return new InvalidOperationException("The operation has called ExtractResponseContent and will provide the stream as part of its response type.");
+            }
+
+            public override void Flush()
+            {
+                throw CreateException();
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                throw CreateException();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                throw CreateException();
+            }
+
+            public override void SetLength(long value)
+            {
+                throw CreateException();
+            }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                throw CreateException();
+            }
+
+            public override bool CanRead => throw CreateException();
+            public override bool CanSeek => throw CreateException();
+            public override bool CanWrite => throw CreateException();
+            public override long Length => throw CreateException();
+
+            public override long Position
+            {
+                get => throw CreateException();
+                set => throw CreateException();
+            }
         }
     }
 }

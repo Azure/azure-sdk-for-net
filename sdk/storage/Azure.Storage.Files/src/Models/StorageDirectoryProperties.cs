@@ -22,24 +22,24 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// A set of name-value pairs that contain metadata for the directory.
         /// </summary>
-        public IDictionary<string, string> Metadata => this._rawStorageDirectoryProperties.Metadata;
+        public IDictionary<string, string> Metadata => _rawStorageDirectoryProperties.Metadata;
 
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public ETag ETag => this._rawStorageDirectoryProperties.ETag;
+        public ETag ETag => _rawStorageDirectoryProperties.ETag;
 
         /// <summary>
         /// Returns DateTimeOffest the directory was last modified. Operations on files within the directory 
         /// do not affect the last modified time of the directory.
         /// </summary>
-        public DateTimeOffset LastModified => this._rawStorageDirectoryProperties.LastModified;
+        public DateTimeOffset LastModified => _rawStorageDirectoryProperties.LastModified;
 
         /// <summary>
         /// Set to true if the directory metadata is completely encrypted using the specified algorithm. 
         /// Otherwise, the value is set to false.
         /// </summary>
-        public bool IsServerEncrypted => this._rawStorageDirectoryProperties.IsServerEncrypted;
+        public bool IsServerEncrypted => _rawStorageDirectoryProperties.IsServerEncrypted;
 
         /// <summary>
         /// The SMB properties for the directory.
@@ -48,8 +48,8 @@ namespace Azure.Storage.Files.Models
 
         internal StorageDirectoryProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
         {
-            this._rawStorageDirectoryProperties = rawStorageDirectoryProperties;
-            this.SmbProperties = new FileSmbProperties(rawStorageDirectoryProperties);
+            _rawStorageDirectoryProperties = rawStorageDirectoryProperties;
+            SmbProperties = new FileSmbProperties(rawStorageDirectoryProperties);
         }
     }
 

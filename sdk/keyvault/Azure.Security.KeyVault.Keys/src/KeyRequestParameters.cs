@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -15,14 +14,14 @@ namespace Azure.Security.KeyVault.Keys
         public KeyType KeyType { get; set; }
         public int? KeySize { get; set; }
         public KeyAttributes Attributes { get; set; }
-        public IList<KeyOperations> KeyOperations { get; set; }
+        public IList<KeyOperation> KeyOperations { get; set; }
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
         public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
 
-        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperations> operations)
+        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperation> operations)
         {
             if (key.Enabled.HasValue)
             {
@@ -42,14 +41,14 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (operations != null)
             {
-                KeyOperations = new List<KeyOperations>(operations);
+                KeyOperations = new List<KeyOperation>(operations);
             }
         }
 
         internal KeyRequestParameters(KeyType type, KeyCreateOptions options = default)
         {
             KeyType = type;
-            if (options != default)
+            if (options != null)
             {
                 if (options.Enabled.HasValue)
                 {
@@ -65,7 +64,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
                 if (options.KeyOperations != null)
                 {
-                    KeyOperations = new List<KeyOperations>(options.KeyOperations);
+                    KeyOperations = new List<KeyOperation>(options.KeyOperations);
                 }
                 if (options.Tags != null)
                 {
@@ -77,7 +76,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(EcKeyCreateOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            if(ecKey.Curve.HasValue)
+            if (ecKey.Curve.HasValue)
             {
                 Curve = ecKey.Curve.Value;
             }
@@ -86,7 +85,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
-            if(rsaKey.KeySize.HasValue)
+            if (rsaKey.KeySize.HasValue)
             {
                 KeySize = rsaKey.KeySize.Value;
             }
@@ -107,17 +106,17 @@ namespace Azure.Security.KeyVault.Keys
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(KeyType != default)
+            if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyType);
             }
-            if(KeySize.HasValue)
+            if (KeySize.HasValue)
             {
                 json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
             }
             if (Curve.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, KeyCurveNameExtensions.AsString(Curve.Value));
+                json.WriteString(CurveNamePropertyNameBytes, Curve.Value);
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
@@ -130,9 +129,9 @@ namespace Azure.Security.KeyVault.Keys
             if (KeyOperations != null)
             {
                 json.WriteStartArray(KeyOpsPropertyNameBytes);
-                foreach(var operation in KeyOperations)
+                foreach (KeyOperation operation in KeyOperations)
                 {
-                    json.WriteStringValue(KeyOperationsExtensions.AsString(operation));
+                    json.WriteStringValue(operation);
                 }
                 json.WriteEndArray();
             }
@@ -140,7 +139,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 json.WriteStartObject(TagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

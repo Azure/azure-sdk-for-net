@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
@@ -45,6 +46,23 @@ namespace Azure.Data.AppConfiguration
         public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
             this.Version = version;
+        }
+
+        internal string GetVersionString()
+        {
+            string version = string.Empty;
+
+            switch (this.Version)
+            {
+                case ServiceVersion.V1_0:
+                    version = "1.0";
+                    break;
+
+                default:
+                    throw new ArgumentException(this.Version.ToString());
+            }
+
+            return version;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
     using System.Net.Http;
 
     /// <summary>
-    /// Storag Admin Client
+    /// Storage Admin Client
     /// </summary>
     public partial class StorageAdminClient : ServiceClient<StorageAdminClient>, IStorageAdminClient, IAzureClient
     {
@@ -47,31 +47,47 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription Id.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// REST Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// Subscription Id.
+        /// </summary>
+        public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IStorageQuotasOperations.
+        /// </summary>
+        public virtual IStorageQuotasOperations StorageQuotas { get; private set; }
+
+        /// <summary>
+        /// Gets the IStorageSettingsOperations.
+        /// </summary>
+        public virtual IStorageSettingsOperations StorageSettings { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -84,44 +100,17 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         public virtual IAcquisitionsOperations Acquisitions { get; private set; }
 
         /// <summary>
-        /// Gets the IBlobServicesOperations.
+        /// Initializes a new instance of the StorageAdminClient class.
         /// </summary>
-        public virtual IBlobServicesOperations BlobServices { get; private set; }
-
-        /// <summary>
-        /// Gets the IContainersOperations.
-        /// </summary>
-        public virtual IContainersOperations Containers { get; private set; }
-
-        /// <summary>
-        /// Gets the IFarmsOperations.
-        /// </summary>
-        public virtual IFarmsOperations Farms { get; private set; }
-
-        /// <summary>
-        /// Gets the IQueueServicesOperations.
-        /// </summary>
-        public virtual IQueueServicesOperations QueueServices { get; private set; }
-
-        /// <summary>
-        /// Gets the IStorageQuotasOperations.
-        /// </summary>
-        public virtual IStorageQuotasOperations StorageQuotas { get; private set; }
-
-        /// <summary>
-        /// Gets the ISharesOperations.
-        /// </summary>
-        public virtual ISharesOperations Shares { get; private set; }
-
-        /// <summary>
-        /// Gets the IStorageAccountsOperations.
-        /// </summary>
-        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
-
-        /// <summary>
-        /// Gets the ITableServicesOperations.
-        /// </summary>
-        public virtual ITableServicesOperations TableServices { get; private set; }
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling StorageAdminClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected StorageAdminClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the StorageAdminClient class.
@@ -206,6 +195,33 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// Thrown when a required parameter is null
         /// </exception>
         public StorageAdminClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageAdminClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling StorageAdminClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public StorageAdminClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -324,18 +340,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// </summary>
         private void Initialize()
         {
+            StorageAccounts = new StorageAccountsOperations(this);
+            StorageQuotas = new StorageQuotasOperations(this);
+            StorageSettings = new StorageSettingsOperations(this);
             Operations = new Operations(this);
             Acquisitions = new AcquisitionsOperations(this);
-            BlobServices = new BlobServicesOperations(this);
-            Containers = new ContainersOperations(this);
-            Farms = new FarmsOperations(this);
-            QueueServices = new QueueServicesOperations(this);
-            StorageQuotas = new StorageQuotasOperations(this);
-            Shares = new SharesOperations(this);
-            StorageAccounts = new StorageAccountsOperations(this);
-            TableServices = new TableServicesOperations(this);
             BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");
-            ApiVersion = "2015-12-01-preview";
+            ApiVersion = "2019-08-08-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

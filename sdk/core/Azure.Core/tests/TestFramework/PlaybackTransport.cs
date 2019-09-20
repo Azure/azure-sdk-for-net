@@ -43,7 +43,7 @@ namespace Azure.Core.Testing
             message.Response = GetResponse(_session.Lookup(message.Request, _matcher));
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message)
         {
             // Some tests will check if the Request Content is being read (to
             // verify their Progress handling) so we'll just copy it to a

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -9,7 +8,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public struct CertificateKeyType
     {
-        private string _value;
+        private readonly string _value;
         internal const string EC_KTY = "EC";
         internal const string EC_HSM_KTY = "EC-HSM";
         internal const string RSA_KTY = "RSA";
@@ -52,7 +51,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         public override bool Equals(object obj)
         {
-            return obj is CertificateKeyType && this.Equals((CertificateKeyType)obj);
+            return obj is CertificateKeyType && Equals((CertificateKeyType)obj);
         }
 
         public bool Equals(CertificateKeyType other)

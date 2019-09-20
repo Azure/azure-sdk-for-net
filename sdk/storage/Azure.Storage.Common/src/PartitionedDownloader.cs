@@ -83,12 +83,12 @@ namespace Azure.Storage
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var properties =
+            Response<TProperties> properties =
                 async
                 ? await getPropertiesAsync(async, cancellationToken).ConfigureAwait(false)
                 : getPropertiesAsync(async, cancellationToken).EnsureCompleted();
 
-            var etag = getEtag(properties);
+            ETag etag = getEtag(properties);
             var length = getLength(properties);
 
             // if zero length is reported, there's nothing to write
@@ -109,15 +109,15 @@ namespace Azure.Storage
                 {
                     // When possible, download as a single partition
 
-                    var downloadTask = downloadStreamAsync(async, cancellationToken);
+                    Task<Response<T>> downloadTask = downloadStreamAsync(async, cancellationToken);
 
                     if (async)
                     {
-                        var response = await downloadTask.ConfigureAwait(false);
+                        Response<T> response = await downloadTask.ConfigureAwait(false);
                     }
                     else
                     {
-                        var response = downloadTask.EnsureCompleted();
+                        Response<T> response = downloadTask.EnsureCompleted();
                     }
 
                     return properties;
@@ -139,9 +139,9 @@ namespace Azure.Storage
                     var maximumActivePartitionCount = maximumThreadCount;
                     var maximumLoadedPartitionCount = 2 * maximumThreadCount;
 
-                    var ranges = GetRanges(length, maximumPartitionLength);
+                    IEnumerable<HttpRange> ranges = GetRanges(length, maximumPartitionLength);
 
-                    var downloadTask =
+                    Task downloadTask =
                         DownloadRangesImplAsync(
                         destinationStream,
                             etag,
@@ -209,7 +209,7 @@ namespace Azure.Storage
         /// <remarks>
         /// This method assumes that individual downloads are automatically retried.
         /// </remarks>
-        static async Task DownloadRangesImplAsync<P>(
+        private static async Task DownloadRangesImplAsync<P>(
             Stream destinationStream,
             ETag etag,
             IEnumerable<HttpRange> ranges,
@@ -236,7 +236,7 @@ namespace Azure.Storage
             var activeTaskQueue = new Queue<Task<Response<P>>>();
             var loadedResponseQueue = new Queue<Response<P>>();
 
-            var rangesEnumerator = ranges.GetEnumerator();
+            IEnumerator<HttpRange> rangesEnumerator = ranges.GetEnumerator();
 
             while (true)
             {
@@ -247,9 +247,9 @@ namespace Azure.Storage
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    var responseTask = activeTaskQueue.Dequeue();
+                    Task<Response<P>> responseTask = activeTaskQueue.Dequeue();
 
-                    var response =
+                    Response<P> response =
                         async
                         ? await responseTask.ConfigureAwait(false)
                         : responseTask.EnsureCompleted();
@@ -267,11 +267,11 @@ namespace Azure.Storage
                         break;
                     }
 
-                    var currentRange = rangesEnumerator.Current;
+                    HttpRange currentRange = rangesEnumerator.Current;
 
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    var newTask = Task.Factory.StartNew(
+                    Task<Task<Response<P>>> newTask = Task.Factory.StartNew(
                         async () => await downloadPartitionAsync(etag, currentRange, async, cancellationToken).ConfigureAwait(false),
                         cancellationToken,
                         TaskCreationOptions.None,
@@ -287,9 +287,9 @@ namespace Azure.Storage
 
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    var response = loadedResponseQueue.Dequeue();
+                    Response<P> response = loadedResponseQueue.Dequeue();
 
-                    var writePartitionTask = writePartitionAsync(response, destinationStream, async, cancellationToken);
+                    Task writePartitionTask = writePartitionAsync(response, destinationStream, async, cancellationToken);
 
                     if (async)
                     {
@@ -319,7 +319,7 @@ namespace Azure.Storage
         /// <param name="length">Length of the content to be partitioned.</param>
         /// <param name="maximumPartitionLength">Maximum number of bytes in each partition.</param>
         /// <returns></returns>
-        static IEnumerable<HttpRange> GetRanges(long length, long maximumPartitionLength)
+        private static IEnumerable<HttpRange> GetRanges(long length, long maximumPartitionLength)
         {
             for (var i = 0L; i < length; i += maximumPartitionLength)
             {

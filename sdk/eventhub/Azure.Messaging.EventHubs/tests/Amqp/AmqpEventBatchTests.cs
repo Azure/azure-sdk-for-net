@@ -87,9 +87,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var batchEnvelopeSize = 767;
             var mockMessage = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object;
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object
+            };
 
             mockMessage
                 .Setup(message => message.SerializedMessageSize)
@@ -148,10 +149,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = maximumSize };
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockEvent = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => mockEvent.Object;
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => mockEvent.Object
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -179,10 +181,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = maximumSize };
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockEvent = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => mockEvent.Object;
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => mockEvent.Object
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -210,10 +213,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = maximumSize };
             var eventMessages = new AmqpMessage[5];
             var mockEnvelope = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex];
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -260,10 +264,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = 5000 };
             var eventMessages = new AmqpMessage[5];
             var mockEnvelope = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex];
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -296,9 +301,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new BatchOptions { MaximumizeInBytes = 5000 };
             var mockEnvelope = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -321,10 +327,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = maximumSize };
             var eventMessages = new AmqpMessage[5];
             var mockEnvelope = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex];
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -344,7 +351,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 batch.TryAdd(new EventData(new byte[0]));
             }
 
-            var batchEnumerable = batch.AsEnumerable<AmqpMessage>();
+            IEnumerable<AmqpMessage> batchEnumerable = batch.AsEnumerable<AmqpMessage>();
             Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
 
             var batchEnumerableList = batchEnumerable.ToList();
@@ -368,10 +375,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = 5000 };
             var eventMessages = new AmqpMessage[5];
             var mockEnvelope = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex];
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -413,10 +421,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new BatchOptions { MaximumizeInBytes = 5000 };
             var eventMessages = new AmqpMessage[5];
             var mockEnvelope = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object;
-            mockConverter.CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex];
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
+            };
 
             mockEnvelope
                 .Setup(message => message.SerializedMessageSize)
@@ -451,9 +460,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DisposeClearsTheSize()
         {
             var mockMessage = new Mock<AmqpMessage>();
-            var mockConverter = new InjectableMockConverter();
-
-            mockConverter.CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object;
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object
+            };
 
             mockMessage
                 .Setup(message => message.SerializedMessageSize)

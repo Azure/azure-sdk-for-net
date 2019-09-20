@@ -15,10 +15,10 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
-        private string _username;
-        private MsalCacheReader _cacheReader;
-        private string _clientId;
+        private readonly IPublicClientApplication _pubApp = null;
+        private readonly string _username;
+        private readonly MsalCacheReader _cacheReader;
+        private readonly string _clientId;
 
         /// <summary>
         /// Creates a new SharedTokenCacheCredential which will authenticate users with the specified application.
@@ -47,7 +47,7 @@ namespace Azure.Identity
 
             _username = username;
 
-            var pipeline = HttpPipelineBuilder.Build(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).Build();
 
@@ -57,25 +57,25 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(scopes, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
             try
             {
-                AuthenticationResult result = await _pubApp.AcquireTokenSilent(scopes, _username).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, _username).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }

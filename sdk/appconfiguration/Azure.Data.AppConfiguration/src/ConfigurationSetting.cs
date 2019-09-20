@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -78,7 +77,7 @@ namespace Azure.Data.AppConfiguration
         public IDictionary<string, string> Tags
         {
             get => _tags ?? (_tags = new Dictionary<string, string>());
-            set => _tags = value;
+            internal set => _tags = value;
         }
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace Azure.Data.AppConfiguration
                 return false;
             if (Tags.Count != other.Count)
                 return false;
-            foreach (var pair in Tags)
+            foreach (KeyValuePair<string, string> pair in Tags)
             {
                 if (!other.TryGetValue(pair.Key, out string value))
                     return false;

@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheEventHubName()
         {
-            Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), null, Mock.Of<TokenCredential>(), TransportType.AmqpWebSockets, Mock.Of<IWebProxy>()), Throws.ArgumentException);
+            Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), null, Mock.Of<TokenCredential>(), TransportType.AmqpWebSockets, Mock.Of<IWebProxy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -74,8 +74,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
-            var credential = Mock.Of<TokenCredential>();
-            var transport = TransportType.AmqpTcp;
+            TokenCredential credential = Mock.Of<TokenCredential>();
+            TransportType transport = TransportType.AmqpTcp;
             var identifier = "customIdentIFIER";
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
 
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
-            var connection = await GetActiveConnection(mockScope.Object).GetOrCreateAsync(TimeSpan.FromDays(1));
+            AmqpConnection connection = await GetActiveConnection(mockScope.Object).GetOrCreateAsync(TimeSpan.FromDays(1));
             Assert.That(connection, Is.SameAs(mockConnection), "The connection instance should have been returned");
 
             mockScope.VerifyAll();
@@ -112,8 +112,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
-            var credential = Mock.Of<TokenCredential>();
-            var transport = TransportType.AmqpTcp;
+            TokenCredential credential = Mock.Of<TokenCredential>();
+            TransportType transport = TransportType.AmqpTcp;
             var identifier = "customIdentIFIER";
 
             using var scope = new AmqpConnectionScope(endpoint, eventHub, credential, transport, null, identifier);
@@ -134,8 +134,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
-            var credential = Mock.Of<TokenCredential>();
-            var transport = TransportType.AmqpTcp;
+            TokenCredential credential = Mock.Of<TokenCredential>();
+            TransportType transport = TransportType.AmqpTcp;
             var identifier = "customIdentIFIER";
 
             var scope = new AmqpConnectionScope(endpoint, eventHub, credential, transport, null, identifier);
@@ -154,8 +154,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
-            var credential = Mock.Of<TokenCredential>();
-            var transport = TransportType.AmqpTcp;
+            TokenCredential credential = Mock.Of<TokenCredential>();
+            TransportType transport = TransportType.AmqpTcp;
             var identifier = "customIdentIFIER";
             var cancellationSource = new CancellationTokenSource();
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(default(RequestResponseAmqpLink)))
                 .Verifiable();
 
-            var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            RequestResponseAmqpLink link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
             Assert.That(link, Is.Null, "The mock return was null");
 
             mockScope.VerifyAll();

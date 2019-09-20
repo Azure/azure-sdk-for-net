@@ -19,17 +19,17 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
-            var mockTransport = CreateMockTransport();
-            var task = SendGetRequest(mockTransport, policy, responseClassifier);
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
-            var delay = await policy.DelayGate.Cycle();
+            TimeSpan delay = await policy.DelayGate.Cycle();
             AssertExponentialDelay(TimeSpan.FromSeconds(1), delay);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
-            var response = await task.TimeoutAfterDefault();
+            Response response = await task.TimeoutAfterDefault();
             Assert.AreEqual(200, response.Status);
         }
 
@@ -38,21 +38,21 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
-            var mockTransport = CreateMockTransport();
-            var task = SendGetRequest(mockTransport, policy, responseClassifier);
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 8 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
             for (int i = 0; i < 4; i++)
             {
-                var delay = await policy.DelayGate.Cycle();
+                TimeSpan delay = await policy.DelayGate.Cycle();
                 AssertExponentialDelay(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
 
                 await mockTransport.RequestGate.Cycle(new MockResponse(500));
             }
 
-            var response = await task.TimeoutAfterDefault();
+            Response response = await task.TimeoutAfterDefault();
             Assert.AreEqual(500, response.Status);
         }
 
@@ -61,21 +61,21 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
-            var mockTransport = CreateMockTransport();
-            var task = SendGetRequest(mockTransport, policy, responseClassifier);
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 5, 5, 5 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
             for (int i = 0; i < 6; i++)
             {
-                var delay = await policy.DelayGate.Cycle();
+                TimeSpan delay = await policy.DelayGate.Cycle();
                 AssertExponentialDelay(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
 
                 await mockTransport.RequestGate.Cycle(new MockResponse(500));
             }
 
-            var response = await task.TimeoutAfterDefault();
+            Response response = await task.TimeoutAfterDefault();
             Assert.AreEqual(500, response.Status);
         }
 
@@ -87,19 +87,19 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
-            var mockTransport = CreateMockTransport();
-            var task = SendGetRequest(mockTransport, policy, responseClassifier);
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));
 
             await mockTransport.RequestGate.Cycle(mockResponse);
 
-            var retryDelay = await policy.DelayGate.Cycle();
+            TimeSpan retryDelay = await policy.DelayGate.Cycle();
 
             await mockTransport.RequestGate.Cycle(new MockResponse(501));
 
-            var response = await task.TimeoutAfterDefault();
+            Response response = await task.TimeoutAfterDefault();
 
             AssertExponentialDelay(TimeSpan.FromSeconds(expected), retryDelay);
             Assert.AreEqual(501, response.Status);

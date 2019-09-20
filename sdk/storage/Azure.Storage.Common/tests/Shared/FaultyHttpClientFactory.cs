@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Test.Shared
 {
-    sealed class FaultyDownloadPipelinePolicy : HttpPipelinePolicy
+    internal sealed class FaultyDownloadPipelinePolicy : HttpPipelinePolicy
     {
-        readonly int _raiseExceptionAt;
-        readonly Exception _exceptionToRaise;
+        private readonly int _raiseExceptionAt;
+        private readonly Exception _exceptionToRaise;
 
         public FaultyDownloadPipelinePolicy(int raiseExceptionAt, Exception exceptionToRaise)
         {
-            this._raiseExceptionAt = raiseExceptionAt;
-            this._exceptionToRaise = exceptionToRaise;
+            _raiseExceptionAt = raiseExceptionAt;
+            _exceptionToRaise = exceptionToRaise;
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            await this.InjectFaultAsync(message, pipeline, isAsync: true).ConfigureAwait(false);
+            await InjectFaultAsync(message, isAsync: true).ConfigureAwait(false);
         }
-        
+
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
-            this.InjectFaultAsync(message, pipeline, isAsync: false).EnsureCompleted();
+            InjectFaultAsync(message, isAsync: false).EnsureCompleted();
         }
 
-        private async Task InjectFaultAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private async Task InjectFaultAsync(HttpPipelineMessage message, bool isAsync)
         {
             if (message.Response != null)
             {
@@ -52,122 +52,122 @@ namespace Azure.Storage.Test.Shared
                     {
                         message.Response.ContentStream.CopyTo(intermediate);
                     }
-                    
+
                     intermediate.Seek(0, SeekOrigin.Begin);
                 }
 
                 // Use a faulty stream for the Response Content
                 message.Response.ContentStream = new FaultyStream(
                     intermediate,
-                    this._raiseExceptionAt,
+                    _raiseExceptionAt,
                     1,
-                    this._exceptionToRaise);
+                    _exceptionToRaise);
             }
         }
     }
 
-    class FaultyHttpContent : HttpContent
+    internal class FaultyHttpContent : HttpContent
     {
-        readonly HttpContent innerContent;
-        readonly Stream faultyStream;
+        private readonly HttpContent _innerContent;
+        private readonly Stream _faultyStream;
 
         public FaultyHttpContent(HttpContent httpContent, FaultyStream faultyStream)
         {
-            this.innerContent = httpContent;
-            foreach (var item in this.innerContent.Headers)
+            _innerContent = httpContent;
+            foreach (System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>> item in _innerContent.Headers)
             {
-                this.Headers.Add(item.Key, item.Value);
+                Headers.Add(item.Key, item.Value);
             }
 
-            this.faultyStream = faultyStream;
+            _faultyStream = faultyStream;
         }
 
-        protected override Task<Stream> CreateContentReadStreamAsync() => Task.FromResult(this.faultyStream);
+        protected override Task<Stream> CreateContentReadStreamAsync() => Task.FromResult(_faultyStream);
 
-        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context) => this.faultyStream.CopyToAsync(stream);
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context) => _faultyStream.CopyToAsync(stream);
 
         protected override bool TryComputeLength(out long length)
         {
-            length = this.faultyStream.Length;
+            length = _faultyStream.Length;
             return true;
         }
     }
 
-    class FaultyStream : Stream
+    internal class FaultyStream : Stream
     {
-        readonly Stream innerStream;
-        readonly int raiseExceptionAt;
-        readonly Exception exceptionToRaise;
-        int remainingExceptions;
+        private readonly Stream _innerStream;
+        private readonly int _raiseExceptionAt;
+        private readonly Exception _exceptionToRaise;
+        private int _remainingExceptions;
 
         public FaultyStream(Stream innerStream, int raiseExceptionAt, int maxExceptions, Exception exceptionToRaise)
         {
-            this.innerStream = innerStream;
-            this.raiseExceptionAt = raiseExceptionAt;
-            this.exceptionToRaise = exceptionToRaise;
-            this.remainingExceptions = maxExceptions;
+            _innerStream = innerStream;
+            _raiseExceptionAt = raiseExceptionAt;
+            _exceptionToRaise = exceptionToRaise;
+            _remainingExceptions = maxExceptions;
         }
 
-        public override bool CanRead => this.innerStream.CanRead;
+        public override bool CanRead => _innerStream.CanRead;
 
-        public override bool CanSeek => this.innerStream.CanSeek;
+        public override bool CanSeek => _innerStream.CanSeek;
 
-        public override bool CanWrite => this.innerStream.CanWrite;
+        public override bool CanWrite => _innerStream.CanWrite;
 
-        public override long Length => this.innerStream.Length;
+        public override long Length => _innerStream.Length;
 
         public override long Position
         {
-            get => this.innerStream.Position;
-            set => this.innerStream.Position = value;
+            get => _innerStream.Position;
+            set => _innerStream.Position = value;
         }
 
-        public override void Flush() => this.innerStream.Flush();
+        public override void Flush() => _innerStream.Flush();
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (this.remainingExceptions == 0 || this.Position + count <= this.raiseExceptionAt || this.Position + count >= this.innerStream.Length)
+            if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || Position + count >= _innerStream.Length)
             {
-                return this.innerStream.Read(buffer, offset, count);
+                return _innerStream.Read(buffer, offset, count);
             }
             else
             {
-                this.remainingExceptions--;
-                throw this.exceptionToRaise;
+                _remainingExceptions--;
+                throw _exceptionToRaise;
             }
         }
 
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            if (this.remainingExceptions == 0 || this.Position + count <= this.raiseExceptionAt || this.Position + count >= this.innerStream.Length)
+            if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || Position + count >= _innerStream.Length)
             {
-                return this.innerStream.ReadAsync(buffer, offset, count, cancellationToken);
+                return _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
             }
             else
             {
-                this.remainingExceptions--;
-                throw this.exceptionToRaise;
+                _remainingExceptions--;
+                throw _exceptionToRaise;
             }
         }
 
         public override int ReadByte()
         {
-            if (this.remainingExceptions == 0 || this.Position <= this.raiseExceptionAt || this.Position >= this.innerStream.Length)
+            if (_remainingExceptions == 0 || Position <= _raiseExceptionAt || Position >= _innerStream.Length)
             {
-                return this.innerStream.ReadByte();
+                return _innerStream.ReadByte();
             }
             else
             {
-                this.remainingExceptions--;
-                throw this.exceptionToRaise;
+                _remainingExceptions--;
+                throw _exceptionToRaise;
             }
         }
 
-        public override long Seek(long offset, SeekOrigin origin) => this.innerStream.Seek(offset, origin);
+        public override long Seek(long offset, SeekOrigin origin) => _innerStream.Seek(offset, origin);
 
-        public override void SetLength(long value) => this.innerStream.SetLength(value);
+        public override void SetLength(long value) => _innerStream.SetLength(value);
 
-        public override void Write(byte[] buffer, int offset, int count) => this.innerStream.Write(buffer, offset, count);
+        public override void Write(byte[] buffer, int offset, int count) => _innerStream.Write(buffer, offset, count);
     }
 
 }

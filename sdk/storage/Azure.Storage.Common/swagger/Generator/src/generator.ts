@@ -120,10 +120,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const methodName = naming.method(operation.name, true);
     const regionName = (operation.group ? naming.type(operation.group) + '.' : '') + methodName;
     const pipelineName = "pipeline";
-    const bufferResponseName = "bufferResponse";
     const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
+    const messageName = "_message";
     const headerName = "_header";
     const xmlName = "_xml";
     const textName = "_text";
@@ -136,9 +136,17 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
-    const returnType = result.type === 'void' ?
-        'Azure.Response' : 
-        `Azure.Response<${types.getName(result)}>`;
+    const returnType = result.type === 'void' ? 'Azure.Response' : `Azure.Response<${types.getName(result)}>`;
+    const returnTypeArguments = [];
+
+    returnTypeArguments.push(returnType);
+
+    if (result.returnStream)
+    {
+        returnTypeArguments.push("System.IO.Stream");
+    }
+
+    const sendMethodReturnType = returnTypeArguments.length == 1? returnTypeArguments[0] : `(${returnTypeArguments.join(", ")})`;
 
     w.line(`#region ${regionName}`);
 
@@ -157,11 +165,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
-    w.line(`/// <param name="${bufferResponseName}">Whether to buffer the response content.  The default value is true.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
-    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
+    w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);        
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -174,7 +181,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
-        w.line(`bool ${bufferResponseName} = true,`);
         w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
         w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
@@ -191,7 +197,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 }
             }
             w.line(`${scopeName}.Start();`);
-            w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
+            w.write(`using (Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
                 for (const arg of operation.request.arguments) {
@@ -201,22 +207,40 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.write(`))`);
             });
             w.scope('{', '}', () => {
-                w.write(`Azure.Response ${responseName} = `);
-                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${bufferResponseName}, ${cancellationName}).ConfigureAwait(false)`;
+                if (result.returnStream){
+                    w.line(`// Avoid buffering if stream is going to be returned to the caller`);
+                    w.line(`${messageName}.BufferResponse = false;`);
+                }
+
+                const asyncCall = `await ${pipelineName}.SendAsync(${messageName}, ${cancellationName}).ConfigureAwait(false)`;
                 if (sync) {
-                    w.write('async ?');
-                    w.scope(() => {
+                    w.line(`if (async)`);
+                    w.scope('{', '}', () => {
                         w.line(`// Send the request asynchronously if we're being called via an async path`);
-                        w.line(`${asyncCall} :`);
+                        w.line(`${asyncCall};`);
+                    });
+                    w.line(`else`);
+                    w.scope('{', '}', () => {
                         w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
                         w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                        w.line(`${pipelineName}.SendRequest(${requestName}, ${bufferResponseName}, ${cancellationName});`);
+                        w.line(`${pipelineName}.Send(${messageName}, ${cancellationName});`);
                     });
                 } else {
                     w.line(`${asyncCall};`);
                 }
+
+                w.line(`Azure.Response ${responseName} = ${messageName}.Response;`);
                 w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
-                w.line(`return ${methodName}_CreateResponse(${responseName});`);
+
+                const createResponse = `${methodName}_CreateResponse(${responseName})`;
+                if (result.returnStream)
+                {
+                    w.line(`return (${createResponse}, ${messageName}.ExtractResponseContent());`);
+                }
+                else
+                {
+                    w.line(`return ${createResponse};`);
+                }
             });
         });
         w.line(`catch (System.Exception ex)`);
@@ -245,8 +269,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
         }
     }
-    w.line(`/// <returns>The ${regionName} Request.</returns>`);
-    w.write(`internal static Azure.Core.Http.Request ${methodName}_CreateRequest(`);
+    w.line(`/// <returns>The ${regionName} Message.</returns>`);
+    w.write(`internal static Azure.Core.Pipeline.HttpPipelineMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -312,7 +336,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Core.Http.Request ${requestName} = ${pipelineName}.CreateRequest();`);
+        w.line(`Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${pipelineName}.CreateMessage();`);
+        w.line(`Azure.Core.Http.Request ${requestName} = ${messageName}.Request;`);
         w.line();
 
         w.line(`// Set the endpoint`);
@@ -410,7 +435,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line();
         }
 
-        w.line(`return ${requestName};`);
+        w.line(`return ${messageName};`);
     });
     w.line();
     // #endregion Create Request

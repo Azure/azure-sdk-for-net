@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -37,10 +38,7 @@ namespace Azure.Messaging.EventHubs
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendOptions DefaultSendOptions = new SendOptions();
-
-        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private static readonly SendOptions s_defaultSendOptions = new SendOptions();
 
         /// <summary>The fully-qualified location of the Event Hub instance to which events will be sent.</summary>
         private readonly Uri _endpoint;
@@ -77,7 +75,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                Argument.AssertNotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -122,11 +120,11 @@ namespace Azure.Messaging.EventHubs
                                   EventHubProducerOptions producerOptions,
                                   EventHubRetryPolicy retryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(transportProducer), transportProducer);
-            Guard.ArgumentNotNull(nameof(endpoint), endpoint);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(producerOptions), producerOptions);
-            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+            Argument.AssertNotNull(transportProducer, nameof(transportProducer));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(producerOptions, nameof(producerOptions));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             PartitionId = producerOptions.PartitionId;
             EventHubName = eventHubName;
@@ -135,7 +133,6 @@ namespace Azure.Messaging.EventHubs
 
             _endpoint = endpoint;
             _retryPolicy = retryPolicy;
-            _clientDiagnostics = new ClientDiagnostics(true);
         }
 
         /// <summary>
@@ -164,7 +161,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task SendAsync(EventData eventData,
                                       CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
+            Argument.AssertNotNull(eventData, nameof(eventData));
             return SendAsync(new[] { eventData }, null, cancellationToken);
         }
 
@@ -188,7 +185,7 @@ namespace Azure.Messaging.EventHubs
                                       SendOptions options,
                                       CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
+            Argument.AssertNotNull(eventData, nameof(eventData));
             return SendAsync(new[] { eventData }, options, cancellationToken);
         }
 
@@ -227,10 +224,10 @@ namespace Azure.Messaging.EventHubs
                                             SendOptions options,
                                             CancellationToken cancellationToken = default)
         {
-            options = options ?? DefaultSendOptions;
+            options ??= s_defaultSendOptions;
 
-            Guard.ArgumentNotNull(nameof(events), events);
-            GuardSinglePartitionReference(PartitionId, options.PartitionKey);
+            Argument.AssertNotNull(events, nameof(events));
+            AssertSinglePartitionReference(PartitionId, options.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
 
@@ -265,8 +262,8 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task SendAsync(EventDataBatch eventBatch,
                                             CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(eventBatch), eventBatch);
-            GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
+            Argument.AssertNotNull(eventBatch, nameof(eventBatch));
+            AssertSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
 
@@ -296,7 +293,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public virtual Task<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+        public virtual ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
@@ -314,14 +311,14 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public virtual async Task<EventDataBatch> CreateBatchAsync(BatchOptions options,
-                                                                   CancellationToken cancellationToken = default)
+        public virtual async ValueTask<EventDataBatch> CreateBatchAsync(BatchOptions options,
+                                                                        CancellationToken cancellationToken = default)
         {
             options = options?.Clone() ?? new BatchOptions();
 
-            GuardSinglePartitionReference(PartitionId, options.PartitionKey);
+            AssertSinglePartitionReference(PartitionId, options.PartitionKey);
 
-            var transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options);
         }
 
@@ -390,7 +387,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = _clientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
+            DiagnosticScope scope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
@@ -408,9 +405,9 @@ namespace Azure.Messaging.EventHubs
         ///
         private void InstrumentMessages(IEnumerable<EventData> events)
         {
-            foreach (var eventData in events)
+            foreach (EventData eventData in events)
             {
-                EventDataInstrumentation.InstrumentEvent(_clientDiagnostics, eventData);
+                EventDataInstrumentation.InstrumentEvent(eventData);
             }
         }
 
@@ -421,12 +418,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionId">The identifier of the partition to which the producer is bound.</param>
         /// <param name="partitionKey">The hash key for partition routing that was requested for a publish operation.</param>
         ///
-        private static void GuardSinglePartitionReference(string partitionId,
-                                                          string partitionKey)
+        private static void AssertSinglePartitionReference(string partitionId,
+                                                           string partitionKey)
         {
-            if ((!String.IsNullOrEmpty(partitionId)) && (!String.IsNullOrEmpty(partitionKey)))
+            if ((!string.IsNullOrEmpty(partitionId)) && (!string.IsNullOrEmpty(partitionKey)))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
             }
         }
     }
