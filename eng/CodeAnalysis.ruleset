@@ -122,7 +122,7 @@
         <Rule Id="SA1119"  Action="None" />          <!-- Statement should not use unnecessary parenthesis -->
         <Rule Id="SA1400"  Action="Warning" />       <!-- Access modifier should be declared -->
         <Rule Id="SA1401"  Action="None" />          <!-- Fields should be private -->
-        <Rule Id="SA1402"  Action="None" />          <!-- File may only contain a single type -->
+        <Rule Id="SA1402"  Action="Warning" />       <!-- File may only contain a single type -->
         <Rule Id="SA1403"  Action="None" />          <!-- File may only contain a single namespace -->
         <Rule Id="SA1404"  Action="None" />          <!-- Code analysis suppression should have justification -->
         <Rule Id="SA1405"  Action="None" />          <!-- Debug.Assert should provide message text -->
@@ -210,7 +210,7 @@
         <Rule Id="SA1646"  Action="None" />          <!-- Included documentation XPath does not exist -->
         <Rule Id="SA1647"  Action="None" />          <!-- Include node does not contain valid file and path -->
         <Rule Id="SA1648"  Action="None" />          <!-- Inheritdoc should be used with inheriting class -->
-        <Rule Id="SA1649"  Action="None" />          <!-- File name should match first type name -->
+        <Rule Id="SA1649"  Action="Warning" />       <!-- File name should match first type name -->
         <Rule Id="SA1650"  Action="None" />          <!-- Element documentation should be spelled correctly -->
         <Rule Id="SA1651"  Action="None" />          <!-- Do not use placeholder elements -->
     </Rules>
