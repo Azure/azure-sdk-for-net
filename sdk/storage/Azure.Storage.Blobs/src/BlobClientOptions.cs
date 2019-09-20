@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
         /// </summary>
-        public CustomerProvidedKey? CustomerProvidedKey { get; }
+        public CustomerProvidedKey? CustomerProvidedKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClientOptions"/>
@@ -54,10 +54,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
+        /// making requests
         /// </param>
         /// <param name="customerProvidedKey">
-        /// The <see cref="CustomerProvidedKey"/> to be used when making requests.
+        /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         public BlobClientOptions(
             ServiceVersion version = LatestVersion,

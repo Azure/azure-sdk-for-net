@@ -87,10 +87,7 @@ namespace Azure.Storage.Blobs.Test
                 var data = GetRandomBuffer(Constants.KB);
                 BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new BlockBlobClient(
-                    GetHttpsUri(blob.Uri), 
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.UploadAsync(stream);
@@ -118,10 +115,7 @@ namespace Azure.Storage.Blobs.Test
                     httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                BlockBlobClient httpsblob = InstrumentClient(new BlockBlobClient(
-                    GetHttpsUri(httpBlob.Uri), 
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                BlockBlobClient httpsblob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
                 using (var stream = new MemoryStream(data))
                 {
                     await httpsblob.UploadAsync(stream);
@@ -1095,10 +1089,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new AppendBlobClient(
-                    GetHttpsUri(blob.Uri),
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
                 await blob.CreateAsync();
 
                 // Act
@@ -1497,10 +1488,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new AppendBlobClient(
-                    GetHttpsUri(blob.Uri), 
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
                 IDictionary<string, string> metadata = BuildMetadata();
                 await blob.CreateAsync();
 
@@ -1522,10 +1510,7 @@ namespace Azure.Storage.Blobs.Test
                     httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                AppendBlobClient httpsBlob = InstrumentClient(new AppendBlobClient(
-                    GetHttpsUri(httpBlob.Uri),
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
                 IDictionary<string, string> metadata = BuildMetadata();
                 await httpsBlob.CreateAsync();
 
@@ -1630,10 +1615,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new AppendBlobClient(
-                    GetHttpsUri(blob.Uri),
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
                 await blob.CreateAsync();
 
                 // Act
@@ -1657,10 +1639,7 @@ namespace Azure.Storage.Blobs.Test
                     httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                AppendBlobClient httpsBlob = InstrumentClient(new AppendBlobClient(
-                    GetHttpsUri(httpBlob.Uri), 
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
                 await httpsBlob.CreateAsync();
 
                 // Act

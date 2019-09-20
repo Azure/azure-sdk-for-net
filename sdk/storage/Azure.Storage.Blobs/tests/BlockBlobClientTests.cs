@@ -120,10 +120,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new BlockBlobClient(
-                    GetHttpsUri(blob.Uri),
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
                 var data = GetRandomBuffer(Size);
 
                 // Create BlockBlob
@@ -158,10 +155,7 @@ namespace Azure.Storage.Blobs.Test
                     httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                BlockBlobClient httpsBlob = InstrumentClient(new BlockBlobClient(
-                    GetHttpsUri(httpBlob.Uri),
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                BlockBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
 
                 var data = GetRandomBuffer(Size);
 
@@ -356,10 +350,7 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                destBlob = InstrumentClient(new BlockBlobClient(
-                    GetHttpsUri(destBlob.Uri),
-                    destBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
 
                 // Act
                 await destBlob.StageBlockFromUriAsync(
@@ -1220,10 +1211,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new BlockBlobClient(
-                    GetHttpsUri(blob.Uri),
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
                 var data = GetRandomBuffer(Size);
 
                 // Act
