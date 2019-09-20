@@ -19,7 +19,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void IsRetriableResponse_404OnSecondary_ShouldBeTrue()
         {
-            var message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
+            HttpPipelineMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
             message.Request.UriBuilder.Host = MockSecondaryUri.Host;
 
             Assert.IsTrue(classifier.IsRetriableResponse(message));
@@ -31,7 +31,7 @@ namespace Azure.Storage.Common.Tests
         [TestCase(503)]
         public void IsRetriableResponse_OtherStatusCodeOnSecondary_ShouldMatchBase(int statusCode)
         {
-            var message = BuildMessage(new MockResponse(statusCode));
+            HttpPipelineMessage message = BuildMessage(new MockResponse(statusCode));
             message.Request.UriBuilder.Host = MockSecondaryUri.Host;
 
             Assert.AreEqual(new ResponseClassifier().IsRetriableResponse(message), classifier.IsRetriableResponse(message));
@@ -40,7 +40,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void IsRetriableResponse_404OnPrimary_ShouldBeFalse()
         {
-            var message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
+            HttpPipelineMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
             message.Request.UriBuilder.Host = MockPrimaryUri.Host;
 
             Assert.IsFalse(classifier.IsRetriableResponse(message));

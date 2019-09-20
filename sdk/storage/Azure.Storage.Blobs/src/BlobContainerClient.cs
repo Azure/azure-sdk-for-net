@@ -108,9 +108,9 @@ namespace Azure.Storage.Blobs
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { ContainerName = containerName };
-            this._uri = builder.Uri;
+            _uri = builder.Uri;
             options ??= new BlobClientOptions();
-            this._pipeline = options.Build(conn.Credentials);
+            _pipeline = options.Build(conn.Credentials);
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobContainerClient(Uri containerUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            this._uri = containerUri;
+            _uri = containerUri;
             options ??= new BlobClientOptions();
-            this._pipeline = options.Build(authentication);
+            _pipeline = options.Build(authentication);
         }
 
         /// <summary>
