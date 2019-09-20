@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure ManagedNetwork Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure ManagedNetwork management functions for managing the Microsoft Azure ManagedNetwork service.")]
 
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
