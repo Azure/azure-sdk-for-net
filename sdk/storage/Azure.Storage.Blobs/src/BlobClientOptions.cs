@@ -5,6 +5,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
@@ -43,16 +44,27 @@ namespace Azure.Storage.Blobs
         public ServiceVersion Version { get; }
 
         /// <summary>
+        /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
+        /// </summary>
+        public CustomerProvidedKey? CustomerProvidedKey { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobClientOptions"/>
         /// class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
+        /// making requests
         /// </param>
-        public BlobClientOptions(ServiceVersion version = LatestVersion)
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        public BlobClientOptions(
+            ServiceVersion version = LatestVersion,
+            CustomerProvidedKey? customerProvidedKey = default)
         {
             Version = version;
+            CustomerProvidedKey = customerProvidedKey;
             this.Initialize();
         }
     }

@@ -111,6 +111,7 @@ namespace Azure.Storage
         {
             public const string Https = "https";
             public const string Http = "http";
+            public const int HttpsPort = 443;
 
             internal static class Append
             {
