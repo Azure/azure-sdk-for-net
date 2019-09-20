@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
