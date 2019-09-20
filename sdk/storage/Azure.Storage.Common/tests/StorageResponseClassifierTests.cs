@@ -53,8 +53,7 @@ namespace Azure.Storage.Common.Tests
                 {
                     Method = RequestMethod.Get
                 },
-                new StorageResponseClassifier(MockSecondaryUri),
-                CancellationToken.None)
+                new StorageResponseClassifier(MockSecondaryUri))
             {
                 Response = response
             };
