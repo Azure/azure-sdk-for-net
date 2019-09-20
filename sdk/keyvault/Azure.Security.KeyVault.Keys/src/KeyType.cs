@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// <see cref="JsonWebKey"/> key types.
     /// </summary>
-    public struct KeyType : IEquatable<KeyType>
+    public readonly struct KeyType : IEquatable<KeyType>
     {
         private readonly string _value;
 

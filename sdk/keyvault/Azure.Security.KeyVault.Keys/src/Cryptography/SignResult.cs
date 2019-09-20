@@ -16,12 +16,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
-        public string KeyId { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The signature
         /// </summary>
-        public byte[] Signature { get; private set; }
+        public byte[] Signature { get; internal set; }
 
         /// <summary>
         /// The algorithm used to sign. This must be stored alongside the <see cref="Signature"/> as the same algorithm must be used to verify it.

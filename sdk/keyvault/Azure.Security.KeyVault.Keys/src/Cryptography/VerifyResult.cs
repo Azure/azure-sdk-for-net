@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The result of the verification, true if the signature was valid otherwise false.
         /// </summary>
-        public bool IsValid { get; private set; }
+        public bool IsValid { get; internal set; }
 
         /// <summary>
         /// The algorithm used

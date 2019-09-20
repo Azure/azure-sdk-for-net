@@ -13,6 +13,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly Uri _keyId;
 
+        protected RemoteCryptographyClient()
+        {
+        }
+
         internal RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
@@ -30,11 +34,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal KeyVaultPipeline Pipeline { get; }
 
-        public async Task<Response<EncryptResult>> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
+        public bool SupportsOperation(KeyOperation operation) => true;
+
+        public virtual async Task<Response<EncryptResult>> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
@@ -55,11 +61,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public Response<EncryptResult> Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
+        public virtual Response<EncryptResult> Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
@@ -80,11 +86,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public async Task<Response<DecryptResult>> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DecryptResult>> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
@@ -106,11 +112,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public Response<DecryptResult> Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
+        public virtual Response<DecryptResult> Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
@@ -132,11 +138,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public async Task<Response<WrapResult>> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WrapResult>> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = key
             };
 
@@ -155,11 +161,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public Response<WrapResult> WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
+        public virtual Response<WrapResult> WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = key
             };
 
@@ -178,11 +184,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public async Task<Response<UnwrapResult>> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UnwrapResult>> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = encryptedKey
             };
 
@@ -201,11 +207,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public Response<UnwrapResult> UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
+        public virtual Response<UnwrapResult> UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = encryptedKey
             };
 
@@ -224,11 +230,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public async Task<Response<SignResult>> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SignResult>> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest
             };
 
@@ -247,11 +253,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public Response<SignResult> Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
+        public virtual Response<SignResult> Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest
             };
 
@@ -270,11 +276,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public async Task<Response<VerifyResult>> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VerifyResult>> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest,
                 Signature = signature
             };
@@ -294,11 +300,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public Response<VerifyResult> Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
+        public virtual Response<VerifyResult> Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest,
                 Signature = signature
             };
@@ -310,6 +316,40 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken, "/verify");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal virtual async Task<Response<Key>> GetKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Get, () => new Key(), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal virtual Response<Key> GetKey(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Get, () => new Key(), cancellationToken);
             }
             catch (Exception e)
             {

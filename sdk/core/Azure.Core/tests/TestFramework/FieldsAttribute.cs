@@ -15,8 +15,15 @@ namespace Azure.Core.Testing
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
     public class FieldsAttribute : Attribute, IParameterDataSource
     {
+        private readonly string[] _names;
+
         public FieldsAttribute()
         {
+        }
+
+        public FieldsAttribute(params string[] names)
+        {
+            _names = names;
         }
 
         public IEnumerable GetData(IParameterInfo parameter)
@@ -27,12 +34,31 @@ namespace Azure.Core.Testing
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
                 for (int i = 0; i < fields.Length; ++i)
                 {
-                    if (fields[i].FieldType == type)
+                    FieldInfo field = fields[i];
+                    if (field.FieldType == type && Contains(field.Name))
                     {
-                        yield return fields[i].GetValue(null);
+                        yield return field.GetValue(null);
                     }
                 }
             }
+        }
+
+        private bool Contains(string name)
+        {
+            if (_names is null || _names.Length == 0)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < _names.Length; ++i)
+            {
+                if (string.Equals(_names[i], name, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
