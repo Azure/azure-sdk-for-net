@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -66,6 +67,34 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(s_testSetting, setting);
         }
 
+        [Test]
+        public void GetIfChangedNotFound()
+        {
+            var response = new MockResponse(404);
+            ConfigurationSetting testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                }
+            };
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = service.GetIfChanged(testSetting, System.DateTime.Now);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.UriBuilder.ToString());
+            Assert.AreEqual(testSetting, setting);
+            Assert.AreEqual(testSetting.ETag, setting.ETag);
+        }
 
         [Test]
         public async Task GetWithLabel()

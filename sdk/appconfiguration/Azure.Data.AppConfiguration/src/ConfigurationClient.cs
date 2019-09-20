@@ -437,6 +437,44 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="acceptDateTime"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<ConfigurationSetting> GetIfChanged(ConfigurationSetting setting, DateTime acceptDateTime, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
+            scope.AddAttribute(nameof(setting), setting);
+            scope.Start();
+
+            try
+            {
+                // TODO: implement actual use of ETag & if-none-match
+                using (Request request = CreateGetRequest(setting.Key, setting.Label, acceptDateTime))
+                {
+                    Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                    switch (response.Status)
+                    {
+                        case 200:
+                            return CreateResponse(response);
+                        case 304:
+                        case 404:
+                            return new Response<ConfigurationSetting>(response, setting);
+                        default:
+                            throw response.CreateRequestFailedException();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
