@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// A client used to perform cryptographic operations with Azure Key Vault keys 
+    /// A client used to perform cryptographic operations with Azure Key Vault keys
     /// </summary>
     public class CryptographyClient : IKeyEncryptionKey
     {

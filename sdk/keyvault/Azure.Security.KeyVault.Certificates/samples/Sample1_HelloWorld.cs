@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            // Instantiate a certificate client that will be used to call the service. Notice that the client is using 
+            // Instantiate a certificate client that will be used to call the service. Notice that the client is using
             // default Azure credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -34,8 +34,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             CertificateOperation certOp = client.StartCreateCertificate(certName);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic 
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well 
+            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
             while (!certOp.HasCompleted)

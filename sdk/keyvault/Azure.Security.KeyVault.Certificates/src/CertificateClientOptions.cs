@@ -14,14 +14,14 @@ namespace Azure.Security.KeyVault.Certificates
     {
         /// <summary>
         /// The latest service version supported by this client library.
-        /// For more information, see 
+        /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V7_0;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
-        /// library. 
+        /// library.
         /// </summary>
         public enum ServiceVersion
         {
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
-        /// making requests. For more information, see 
+        /// making requests. For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>
         /// </summary>
         public ServiceVersion Version { get; }

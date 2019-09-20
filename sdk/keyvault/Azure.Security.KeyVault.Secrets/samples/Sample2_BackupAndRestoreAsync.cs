@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to backup and restore secrets in the key vault using the 
+    /// Sample demonstrates how to backup and restore secrets in the key vault using the
     /// asynchronous methods of the SecretClient.
     /// </summary>
     [LiveOnly]
