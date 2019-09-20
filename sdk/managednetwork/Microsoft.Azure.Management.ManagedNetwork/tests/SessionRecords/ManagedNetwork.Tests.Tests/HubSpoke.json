@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "778fa564-cfdf-4ff4-9bbe-7f897eae298c"
+          "098acaf9-69d6-4ff4-bd95-13d2ce7db8ec"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "0ccead90-d30b-4d7b-b413-b854e8d267f2"
+          "8564451a-66b7-48bc-b24f-b10a4584e41a"
         ],
         "x-ms-correlation-request-id": [
-          "0ccead90-d30b-4d7b-b413-b854e8d267f2"
+          "8564451a-66b7-48bc-b24f-b10a4584e41a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190917T221100Z:0ccead90-d30b-4d7b-b413-b854e8d267f2"
+          "WESTUS:20190920T050654Z:8564451a-66b7-48bc-b24f-b10a4584e41a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 17 Sep 2019 22:11:00 GMT"
+          "Fri, 20 Sep 2019 05:06:54 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -67,7 +67,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke11\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke12\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke13\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Hub\"\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"tags\": {\r\n    \"SampleKey\": \"SampleValue\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "92defe85-c548-4df7-aa7d-76f67df1f3d9"
+          "14e14b15-f036-490a-bf64-9948b7aae2ce"
         ],
         "Accept-Language": [
           "en-US"
@@ -102,19 +102,19 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "807a385d-589f-4f90-b649-98c324368a0e"
+          "39d32e4d-22a0-480d-8d90-1cec05325505"
         ],
         "x-ms-correlation-request-id": [
-          "807a385d-589f-4f90-b649-98c324368a0e"
+          "39d32e4d-22a0-480d-8d90-1cec05325505"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190917T221102Z:807a385d-589f-4f90-b649-98c324368a0e"
+          "WESTUS:20190920T050655Z:39d32e4d-22a0-480d-8d90-1cec05325505"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 17 Sep 2019 22:11:01 GMT"
+          "Fri, 20 Sep 2019 05:06:55 GMT"
         ],
         "Content-Length": [
           "1048"
@@ -136,7 +136,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke11\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke12\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke13\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a56cb833-7088-4d47-9340-fb73e78f79bb"
+          "8764e3fb-3b40-4fe5-aa80-c66325e220f6"
         ],
         "Accept-Language": [
           "en-US"
@@ -171,19 +171,19 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "28fdc990-6ef1-446b-9981-c19a6e68684a"
+          "dc07cf30-62e5-4752-97cb-36c1d756654e"
         ],
         "x-ms-correlation-request-id": [
-          "28fdc990-6ef1-446b-9981-c19a6e68684a"
+          "dc07cf30-62e5-4752-97cb-36c1d756654e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190917T221102Z:28fdc990-6ef1-446b-9981-c19a6e68684a"
+          "WESTUS:20190920T050656Z:dc07cf30-62e5-4752-97cb-36c1d756654e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 17 Sep 2019 22:11:01 GMT"
+          "Fri, 20 Sep 2019 05:06:55 GMT"
         ],
         "Content-Length": [
           "876"
@@ -205,7 +205,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"HubAndSpokeTopology\",\r\n    \"hub\": {\r\n      \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Hub\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/Portal_ManagedNetwork18/managedNetworkGroups/Portal_SpokeGroup1\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2905d856-f491-4b06-bb8c-e4eb4f7dfe91"
+          "afa6f134-c0a0-418d-963a-1c66ba9a784f"
         ],
         "Accept-Language": [
           "en-US"
@@ -240,19 +240,19 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "c7e67f43-c6cb-436a-b95c-c413391ae7e9"
+          "fa54b228-06bf-4174-bdee-9ba3257a7273"
         ],
         "x-ms-correlation-request-id": [
-          "c7e67f43-c6cb-436a-b95c-c413391ae7e9"
+          "fa54b228-06bf-4174-bdee-9ba3257a7273"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190917T221103Z:c7e67f43-c6cb-436a-b95c-c413391ae7e9"
+          "WESTUS:20190920T050656Z:fa54b228-06bf-4174-bdee-9ba3257a7273"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 17 Sep 2019 22:11:03 GMT"
+          "Fri, 20 Sep 2019 05:06:55 GMT"
         ],
         "Content-Length": [
           "771"
