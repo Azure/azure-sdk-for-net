@@ -49,12 +49,12 @@ namespace Azure.Storage.Common.Test
 
         public BlobServiceClient GetSecondaryStorageReadEnabledServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, bool simulate404 = false)
         {
-            var options = this.GetBlobOptions();
+            BlobClientOptions options = GetBlobOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.BlobServiceSecondaryEndpoint);
             options.Retry.MaxRetries = 4;
             options.AddPolicy(new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404), HttpPipelinePosition.PerRetry);
 
-            return this.InstrumentClient(
+            return InstrumentClient(
                  new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
