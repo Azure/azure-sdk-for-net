@@ -611,7 +611,8 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         bodyClientName: <string>optional(() => swagger[`x-az-response-schema-name`], `Body`), // TODO: switch from 'Body' to body.name?
         headers,
         exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
-        public: isPublic
+        public: isPublic,
+        returnStream: <boolean>optional(() => swagger[`x-az-stream`])
     };
 }
 
@@ -900,6 +901,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             successes.forEach(s => s.model = model);
             break;
     }
+    model.returnStream = successes[0].returnStream;
     
     // Return all the responses
     return {
