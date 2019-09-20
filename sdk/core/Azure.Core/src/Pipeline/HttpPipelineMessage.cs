@@ -21,6 +21,7 @@ namespace Azure.Core.Pipeline
         {
             Request = request;
             ResponseClassifier = responseClassifier;
+            BufferResponse = true;
         }
 
         public Request Request { get; set; }
