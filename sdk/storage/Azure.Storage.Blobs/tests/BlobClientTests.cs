@@ -39,9 +39,9 @@ namespace Azure.Storage.Blobs.Test
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
 
-            var blob1 = this.InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName, this.GetOptions()));
+            BlobClient blob1 = InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName, GetOptions()));
 
-            var blob2 = this.InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName));
+            BlobClient blob2 = InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName));
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);

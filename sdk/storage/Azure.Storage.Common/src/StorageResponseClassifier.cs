@@ -13,7 +13,7 @@ namespace Azure.Storage.Common
 
         public StorageResponseClassifier(Uri secondaryStorageUri)
         {
-            this.SecondaryStorageUri = secondaryStorageUri;
+            SecondaryStorageUri = secondaryStorageUri;
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace Azure.Storage.Common
             {
                 throw Errors.ArgumentNull(nameof(secondaryStorageUri));
             }
-            this._secondaryStorageHost = secondaryStorageUri.Host;
+            _secondaryStorageHost = secondaryStorageUri.Host;
         }
 
         public override void OnSendingRequest(HttpPipelineMessage message)
@@ -42,7 +42,7 @@ namespace Azure.Storage.Common
             if (alternateHost == null)
             {
                 // queue up the secondary host for subsequent retries
-                message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, this._secondaryStorageHost);
+                message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, _secondaryStorageHost);
                 return;
             }
 
@@ -65,7 +65,7 @@ namespace Azure.Storage.Common
             // If necessary, set the flag to indicate that the resource has not yet been propagated to the secondary host.
             if (message.HasResponse
                 && message.Response.Status == Constants.HttpStatusCode.NotFound
-                && lastTriedHost == this._secondaryStorageHost)
+                && lastTriedHost == _secondaryStorageHost)
             {
                 message.SetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, true);
             }

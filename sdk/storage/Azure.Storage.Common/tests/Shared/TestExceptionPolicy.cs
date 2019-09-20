@@ -26,16 +26,16 @@ namespace Azure.Storage.Common.Test
 
         public TestExceptionPolicy(int numberOfReadFailuresToSimulate, Uri secondaryUri, bool simulate404 = false, List<RequestMethod> trackedRequestMethods = null)
         {
-            this.NumberOfReadFailuresToSimulate = numberOfReadFailuresToSimulate;
-            this.Simulate404 = simulate404;
-            this.SecondaryUri = secondaryUri;
-            this.HostsSetInRequests = new List<string>();
-            this.TrackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
+            NumberOfReadFailuresToSimulate = numberOfReadFailuresToSimulate;
+            Simulate404 = simulate404;
+            SecondaryUri = secondaryUri;
+            HostsSetInRequests = new List<string>();
+            TrackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!this.SimulateFailure(message))
+            if (!SimulateFailure(message))
             {
                 ProcessNext(message, pipeline);
             }
@@ -43,7 +43,7 @@ namespace Azure.Storage.Common.Test
 
         public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!this.SimulateFailure(message))
+            if (!SimulateFailure(message))
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
@@ -51,13 +51,13 @@ namespace Azure.Storage.Common.Test
 
         private bool SimulateFailure(HttpPipelineMessage message)
         {
-            if (this.TrackedRequestMethods.Contains(message.Request.Method))
+            if (TrackedRequestMethods.Contains(message.Request.Method))
             {
-                this.CurrentInvocationNumber++;
-                this.HostsSetInRequests.Add(message.Request.UriBuilder.Host);
-                if (this.CurrentInvocationNumber <= this.NumberOfReadFailuresToSimulate)
+                CurrentInvocationNumber++;
+                HostsSetInRequests.Add(message.Request.UriBuilder.Host);
+                if (CurrentInvocationNumber <= NumberOfReadFailuresToSimulate)
                 {
-                    message.Response = new MockResponse(this.Simulate404 && message.Request.UriBuilder.Host == this.SecondaryUri.Host ? 404 : 429);
+                    message.Response = new MockResponse(Simulate404 && message.Request.UriBuilder.Host == SecondaryUri.Host ? 404 : 429);
                     return true;
                 }
             }

@@ -37,9 +37,9 @@ namespace Azure.Storage.Queues.Test
 
             var queueName = GetNewQueueName();
 
-            var client1 = this.InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, this.GetOptions()));
+            QueueClient client1 = InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, GetOptions()));
 
-            var client2 = this.InstrumentClient(new QueueClient(connectionString.ToString(true), queueName));
+            QueueClient client2 = InstrumentClient(new QueueClient(connectionString.ToString(true), queueName));
 
             var builder1 = new QueueUriBuilder(client1.Uri);
             var builder2 = new QueueUriBuilder(client2.Uri);
@@ -58,7 +58,7 @@ namespace Azure.Storage.Queues.Test
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            var queue = this.InstrumentClient(new QueueClient(queueEndpoint, credentials));
+            QueueClient queue = InstrumentClient(new QueueClient(queueEndpoint, credentials));
             var builder = new QueueUriBuilder(queue.Uri);
 
             Assert.AreEqual(accountName, builder.AccountName);
@@ -226,10 +226,9 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task GetPropertiesAsync_SecondaryStorage()
         {
-            TestExceptionPolicy testExceptionPolicy;
-            var queueClient = this.GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out testExceptionPolicy);
+            QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy);
             await queueClient.CreateAsync();
-            var properties = await this.EnsurePropagatedAsync(
+            Response<QueueProperties> properties = await EnsurePropagatedAsync(
                 async () => await queueClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
 
@@ -237,7 +236,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 
             await queueClient.DeleteAsync();
-            this.AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
         #endregion
 
