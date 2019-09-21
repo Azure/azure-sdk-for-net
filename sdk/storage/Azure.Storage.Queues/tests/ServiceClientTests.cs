@@ -3,11 +3,13 @@
 // license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Test;
@@ -17,9 +19,48 @@ namespace Azure.Storage.Queues.Test
 {
     public class ServiceClientTests : QueueTestBase
     {
+
         public ServiceClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+        [Test]
+        public void Ctor_ConnectionString()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
+
+            QueueServiceClient client1 = InstrumentClient(new QueueServiceClient(connectionString.ToString(true), GetOptions()));
+
+            QueueServiceClient client2 = InstrumentClient(new QueueServiceClient(connectionString.ToString(true)));
+
+            var builder1 = new QueueUriBuilder(client1.Uri);
+            var builder2 = new QueueUriBuilder(client2.Uri);
+            Assert.IsEmpty(builder1.QueueName);
+            Assert.AreEqual(accountName, builder1.AccountName);
+            Assert.IsEmpty(builder2.QueueName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+
+            QueueServiceClient service = InstrumentClient(new QueueServiceClient(queueEndpoint, credentials));
+            var builder = new QueueUriBuilder(service.Uri);
+
+            Assert.IsEmpty(builder.QueueName);
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -112,5 +153,49 @@ namespace Azure.Storage.Queues.Test
                 service.GetQueuesAsync().ByPage(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
+
+        #region Secondary Storage
+        [Test]
+        public async Task GetQueuesAsync_SecondaryStorageFirstRetrySuccessful()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task GetQueuesAsync_SecondaryStorageSecondRetrySuccessful()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task GetQueuesAsync_SecondaryStorageThirdRetrySuccessful()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task GetQueuesAsync_SecondaryStorage404OnSecondary()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
+        {
+            QueueServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
+            using (GetNewQueue(out _, service: service))
+            {
+                IList<Response<QueueItem>> queues = await EnsurePropagatedAsync(
+                    async () => await service.GetQueuesAsync().ToListAsync(),
+                    queues => queues.Count > 0);
+                Assert.AreEqual(1, queues.Count);
+                Assert.AreEqual(200, queues[0].GetRawResponse().Status);
+            }
+            return testExceptionPolicy;
+        }
+        #endregion
     }
 }

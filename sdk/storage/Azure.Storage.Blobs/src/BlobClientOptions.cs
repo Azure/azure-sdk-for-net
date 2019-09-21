@@ -3,7 +3,6 @@
 // license information.
 
 using System;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 
@@ -66,6 +65,38 @@ namespace Azure.Storage.Blobs
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
             this.Initialize();
+        }
+
+        /// <summary>
+        /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
+        /// account is enabled for RA-GRS.
+        /// 
+        /// If this property is set, the secondary Uri will be used for GET or HEAD requests during retries.
+        /// If the status of the response from the secondary Uri is a 404, then subsequent retries for 
+        /// the request will not use the secondary Uri again, as this indicates that the resource
+        /// may not have propagated there yet. Otherwise, subsequent retries will alternate back and forth
+        /// between primary and secondary Uri.
+        /// </summary>
+        public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Create an HttpPipeline from BlobClientOptions.
+        /// </summary>
+        /// <param name="authentication">Optional authentication policy.</param>
+        /// <returns>An HttpPipeline to use for Storage requests.</returns>
+        internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
+        {
+            return this.Build(authentication, GeoRedundantSecondaryUri);
+        }
+
+        /// <summary>
+        /// Create an HttpPipeline from BlobClientOptions.
+        /// </summary>
+        /// <param name="credentials">Optional authentication credentials.</param>
+        /// <returns>An HttpPipeline to use for Storage requests.</returns>
+        internal HttpPipeline Build(object credentials)
+        {
+           return this.Build(credentials, GeoRedundantSecondaryUri);
         }
     }
 }

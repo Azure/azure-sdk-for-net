@@ -119,7 +119,8 @@ namespace Azure.Storage.Queues
                 };
             _uri = builder.Uri;
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
-            _pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
+            options ??= new QueueClientOptions();
+            _pipeline = options.Build(conn.Credentials);
         }
 
         /// <summary>
@@ -202,7 +203,8 @@ namespace Azure.Storage.Queues
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
-            _pipeline = (options ?? new QueueClientOptions()).Build(authentication);
+            options ??= new QueueClientOptions();
+            _pipeline = options.Build(authentication);
         }
 
         /// <summary>
