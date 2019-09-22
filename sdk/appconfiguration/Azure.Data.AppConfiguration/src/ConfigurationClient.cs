@@ -657,5 +657,86 @@ namespace Azure.Data.AppConfiguration
 
             return request;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<bool>> HasChangedAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.HasChanged");
+            scope.AddAttribute("key", setting.Key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateGetHeadRequest(setting.Key, setting.Label);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                    case 404:
+                        ConfigurationSetting other = await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        return new Response<bool>(response, setting.ETag != other.ETag);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<bool> HasChanged(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.HasChanged");
+            scope.AddAttribute(nameof(setting.Key), setting.Key);
+            scope.Start();
+
+            try
+            {
+                using (Request request = CreateGetHeadRequest(setting.Key, setting.Label))
+                {
+                    Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                    switch (response.Status)
+                    {
+                        case 200:
+                        case 404:
+                            ConfigurationSetting other = CreateResponse(response);
+                            return new Response<bool>(response, setting.ETag != other.ETag);
+                        default:
+                            throw response.CreateRequestFailedException();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateGetHeadRequest(string key, string label)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
+
+            Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Head;
+            BuildUriForKvRoute(request.UriBuilder, key, label);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            return request;
+        }
     }
 }
