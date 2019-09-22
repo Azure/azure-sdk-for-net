@@ -62,10 +62,10 @@ namespace Azure.Data.AppConfiguration.Samples
             }
 
             // Once we don't need the Configuration Setting, we can delete them.
-            await client.DeleteAsync(betaEndpoint.Key, betaEndpoint.Label);
-            await client.DeleteAsync(betaInstances.Key, betaInstances.Label);
-            await client.DeleteAsync(productionEndpoint.Key, productionEndpoint.Label);
-            await client.DeleteAsync(productionInstances.Key, productionInstances.Label);
+            await client.DeleteAsync(betaEndpoint);
+            await client.DeleteAsync(betaInstances);
+            await client.DeleteAsync(productionEndpoint);
+            await client.DeleteAsync(productionInstances);
         }
     }
 }

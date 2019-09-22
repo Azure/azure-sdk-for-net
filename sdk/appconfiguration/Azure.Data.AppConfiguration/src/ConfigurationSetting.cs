@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
-        public ETag ETag { get; set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The last time a modifying operation was performed on the given configuration setting.

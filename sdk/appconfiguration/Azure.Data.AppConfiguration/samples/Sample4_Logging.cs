@@ -25,14 +25,16 @@ namespace Azure.Data.AppConfiguration.Samples
             // Setup a listener to monitor logged events.
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
 
-            Response<ConfigurationSetting> setResponse = client.Set(new ConfigurationSetting("some_key", "some_value"));
+            ConfigurationSetting setting = new ConfigurationSetting("some_key", "some_value");
+
+            Response<ConfigurationSetting> setResponse = client.Set(setting);
             if (setResponse.GetRawResponse().Status != 200)
             {
                 throw new Exception("could not set configuration setting");
             }
 
             // Delete the setting when you don't need it anymore.
-            client.Delete("some_key");
+            client.Delete(setting);
         }
     }
 }

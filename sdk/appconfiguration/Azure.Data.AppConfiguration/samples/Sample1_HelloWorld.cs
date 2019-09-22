@@ -34,7 +34,7 @@ namespace Azure.Data.AppConfiguration.Samples
             Debug.WriteLine(gotSetting.Value);
 
             // Delete the Configuration Setting from the Configuration Store when you don't need it anymore.
-            client.Delete("some_key");
+            client.Delete(setting);
         }
     }
 }

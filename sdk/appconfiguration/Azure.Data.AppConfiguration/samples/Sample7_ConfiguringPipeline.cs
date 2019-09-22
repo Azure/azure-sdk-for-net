@@ -43,8 +43,9 @@ namespace Azure.Data.AppConfiguration.Samples
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
-            client.Set(new ConfigurationSetting("some_key", "some_value"));
-            client.Delete("some_key");
+            ConfigurationSetting setting = new ConfigurationSetting("some_key", "some_value");
+            client.Set(setting);
+            client.Delete(setting);
         }
 
         private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
