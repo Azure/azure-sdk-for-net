@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs
         public const string DefaultConsumerGroupName = "$Default";
 
         /// <summary>The size of event batch requested by the background publishing operation used for subscriptions.</summary>
-        private const int _backgroundPublishReceiveBatchSize = 50;
+        private const int BackgroundPublishReceiveBatchSize = 50;
 
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
         private readonly TimeSpan _backgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
@@ -292,7 +292,7 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (_backgroundPublishReceiveBatchSize * 2));
+            var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
             (Guid Identifier, ChannelReader<EventData> ChannelReader) subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
 
             try
@@ -493,7 +493,7 @@ namespace Azure.Messaging.EventHubs
                         // Receive items in batches and then write them to the subscribed channels.  The channels will naturally
                         // block if they reach their maximum queue size, so there is no need to throttle publishing.
 
-                        receivedItems = await InnerConsumer.ReceiveAsync(_backgroundPublishReceiveBatchSize, _backgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
+                        receivedItems = await InnerConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, _backgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
                         publishChannels = _activeChannels.Values;
 
                         foreach (EventData item in receivedItems)

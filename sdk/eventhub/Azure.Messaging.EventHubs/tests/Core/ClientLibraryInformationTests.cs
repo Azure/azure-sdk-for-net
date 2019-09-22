@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CurentReturnsAnInstance()
         {
-            Assert.That(ClientLibraryInformation.s_current, Is.Not.Null);
+            Assert.That(ClientLibraryInformation.Current, Is.Not.Null);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void PlatformIsPopulated()
         {
-            Assert.That(ClientLibraryInformation.s_current.Platform, Is.Not.Null.And.Not.Empty);
+            Assert.That(ClientLibraryInformation.Current.Platform, Is.Not.Null.And.Not.Empty);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProductCanBeAccessed()
         {
-            Assert.That(() => ClientLibraryInformation.s_current.Product, Throws.Nothing);
+            Assert.That(() => ClientLibraryInformation.Current.Product, Throws.Nothing);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void VersionCanBeAccessed()
         {
-            Assert.That(() => ClientLibraryInformation.s_current.Version, Throws.Nothing);
+            Assert.That(() => ClientLibraryInformation.Current.Version, Throws.Nothing);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void FrameworkCanBeAccessed()
         {
-            Assert.That(() => ClientLibraryInformation.s_current.Framework, Throws.Nothing);
+            Assert.That(() => ClientLibraryInformation.Current.Framework, Throws.Nothing);
         }
 
         /// <summary>
@@ -79,12 +79,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void PropertiesCanBeEnumerated()
         {
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.s_current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {
                 PropertyInfo matchingProperty = typeof(ClientLibraryInformation).GetProperty(property.Key, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
                 Assert.That(matchingProperty, Is.Not.Null, $"The property, { property.Key }, was not found.");
-                Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.s_current, null), Is.EqualTo(property.Value), $"The value for { property.Key } should match.");
+                Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for { property.Key } should match.");
             }
         }
     }

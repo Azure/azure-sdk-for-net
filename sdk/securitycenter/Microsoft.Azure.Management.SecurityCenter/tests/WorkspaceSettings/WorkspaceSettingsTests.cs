@@ -45,7 +45,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void WorkspaceSettings_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var workspaceSettings = securityCenterClient.WorkspaceSettings.List();
@@ -56,7 +56,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void WorkspaceSettings_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var workspaceSettings = securityCenterClient.WorkspaceSettings.Get("default");
@@ -67,7 +67,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void WorkspaceSettings_Create()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -81,7 +81,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void WorkspaceSettings_Update()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -95,7 +95,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void WorkspaceSettings_Delete()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 securityCenterClient.WorkspaceSettings.Delete("default");

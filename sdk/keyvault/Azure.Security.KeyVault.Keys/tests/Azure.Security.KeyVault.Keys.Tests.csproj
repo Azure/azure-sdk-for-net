@@ -22,6 +22,7 @@
   </ItemGroup>
  
   <ItemGroup>
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ForwardsClientCallsAttribute.cs" />
     <Compile Include="..\..\..\core\Azure.Core\src\Shared\HashCodeBuilder.cs" />
   </ItemGroup>
 </Project>

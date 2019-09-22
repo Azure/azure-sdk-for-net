@@ -4,6 +4,11 @@
 
 // This file was automatically generated.  Do not edit.
 
+#pragma warning disable IDE0016 // Null check can be simplified 
+#pragma warning disable IDE0017 // Variable declaration can be inlined
+#pragma warning disable IDE0018 // Object initialization can be simplified
+#pragma warning disable SA1402  // File may only contain a single type
+
 #region Service
 namespace Azure.Storage.Files
 {
@@ -6098,36 +6103,26 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.CopyStatus value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.CopyStatus.Pending:
-                        return "pending";
-                    case Azure.Storage.Files.Models.CopyStatus.Success:
-                        return "success";
-                    case Azure.Storage.Files.Models.CopyStatus.Aborted:
-                        return "aborted";
-                    case Azure.Storage.Files.Models.CopyStatus.Failed:
-                        return "failed";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
-                }
+                    Azure.Storage.Files.Models.CopyStatus.Pending => "pending",
+                    Azure.Storage.Files.Models.CopyStatus.Success => "success",
+                    Azure.Storage.Files.Models.CopyStatus.Aborted => "aborted",
+                    Azure.Storage.Files.Models.CopyStatus.Failed => "failed",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.CopyStatus ParseCopyStatus(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "pending":
-                        return Azure.Storage.Files.Models.CopyStatus.Pending;
-                    case "success":
-                        return Azure.Storage.Files.Models.CopyStatus.Success;
-                    case "aborted":
-                        return Azure.Storage.Files.Models.CopyStatus.Aborted;
-                    case "failed":
-                        return Azure.Storage.Files.Models.CopyStatus.Failed;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
-                }
+                    "pending" => Azure.Storage.Files.Models.CopyStatus.Pending,
+                    "success" => Azure.Storage.Files.Models.CopyStatus.Success,
+                    "aborted" => Azure.Storage.Files.Models.CopyStatus.Aborted,
+                    "failed" => Azure.Storage.Files.Models.CopyStatus.Failed,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.")
+                };
             }
         }
     }
@@ -6242,24 +6237,20 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.DeleteSnapshotsOptionType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include:
-                        return "include";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
-                }
+                    Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include => "include",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.DeleteSnapshotsOptionType ParseDeleteSnapshotsOptionType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "include":
-                        return Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
-                }
+                    "include" => Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.")
+                };
             }
         }
     }
@@ -6359,302 +6350,302 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// AccountAlreadyExists
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists { get; } = @"AccountAlreadyExists";
 
         /// <summary>
         /// AccountBeingCreated
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated = @"AccountBeingCreated";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated { get; } = @"AccountBeingCreated";
 
         /// <summary>
         /// AccountIsDisabled
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled = @"AccountIsDisabled";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled { get; } = @"AccountIsDisabled";
 
         /// <summary>
         /// AuthenticationFailed
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed = @"AuthenticationFailed";
+        public static Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed { get; } = @"AuthenticationFailed";
 
         /// <summary>
         /// AuthorizationFailure
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure = @"AuthorizationFailure";
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure { get; } = @"AuthorizationFailure";
 
         /// <summary>
         /// ConditionHeadersNotSupported
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported { get; } = @"ConditionHeadersNotSupported";
 
         /// <summary>
         /// ConditionNotMet
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ConditionNotMet = @"ConditionNotMet";
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionNotMet { get; } = @"ConditionNotMet";
 
         /// <summary>
         /// EmptyMetadataKey
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
+        public static Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey { get; } = @"EmptyMetadataKey";
 
         /// <summary>
         /// InsufficientAccountPermissions
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
+        public static Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions { get; } = @"InsufficientAccountPermissions";
 
         /// <summary>
         /// InternalError
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InternalError = @"InternalError";
+        public static Azure.Storage.Files.Models.FileErrorCode InternalError { get; } = @"InternalError";
 
         /// <summary>
         /// InvalidAuthenticationInfo
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo { get; } = @"InvalidAuthenticationInfo";
 
         /// <summary>
         /// InvalidHeaderValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue { get; } = @"InvalidHeaderValue";
 
         /// <summary>
         /// InvalidHttpVerb
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb { get; } = @"InvalidHttpVerb";
 
         /// <summary>
         /// InvalidInput
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidInput = @"InvalidInput";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidInput { get; } = @"InvalidInput";
 
         /// <summary>
         /// InvalidMd5
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidMd5 = @"InvalidMd5";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMd5 { get; } = @"InvalidMd5";
 
         /// <summary>
         /// InvalidMetadata
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidMetadata = @"InvalidMetadata";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMetadata { get; } = @"InvalidMetadata";
 
         /// <summary>
         /// InvalidQueryParameterValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue { get; } = @"InvalidQueryParameterValue";
 
         /// <summary>
         /// InvalidRange
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidRange = @"InvalidRange";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidRange { get; } = @"InvalidRange";
 
         /// <summary>
         /// InvalidResourceName
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidResourceName = @"InvalidResourceName";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidResourceName { get; } = @"InvalidResourceName";
 
         /// <summary>
         /// InvalidUri
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidUri = @"InvalidUri";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidUri { get; } = @"InvalidUri";
 
         /// <summary>
         /// InvalidXmlDocument
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument { get; } = @"InvalidXmlDocument";
 
         /// <summary>
         /// InvalidXmlNodeValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue { get; } = @"InvalidXmlNodeValue";
 
         /// <summary>
         /// Md5Mismatch
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode Md5Mismatch = @"Md5Mismatch";
+        public static Azure.Storage.Files.Models.FileErrorCode Md5Mismatch { get; } = @"Md5Mismatch";
 
         /// <summary>
         /// MetadataTooLarge
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge = @"MetadataTooLarge";
+        public static Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge { get; } = @"MetadataTooLarge";
 
         /// <summary>
         /// MissingContentLengthHeader
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader { get; } = @"MissingContentLengthHeader";
 
         /// <summary>
         /// MissingRequiredQueryParameter
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter { get; } = @"MissingRequiredQueryParameter";
 
         /// <summary>
         /// MissingRequiredHeader
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader { get; } = @"MissingRequiredHeader";
 
         /// <summary>
         /// MissingRequiredXmlNode
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode { get; } = @"MissingRequiredXmlNode";
 
         /// <summary>
         /// MultipleConditionHeadersNotSupported
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported { get; } = @"MultipleConditionHeadersNotSupported";
 
         /// <summary>
         /// OperationTimedOut
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode OperationTimedOut = @"OperationTimedOut";
+        public static Azure.Storage.Files.Models.FileErrorCode OperationTimedOut { get; } = @"OperationTimedOut";
 
         /// <summary>
         /// OutOfRangeInput
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput = @"OutOfRangeInput";
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput { get; } = @"OutOfRangeInput";
 
         /// <summary>
         /// OutOfRangeQueryParameterValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue { get; } = @"OutOfRangeQueryParameterValue";
 
         /// <summary>
         /// RequestBodyTooLarge
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
+        public static Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge { get; } = @"RequestBodyTooLarge";
 
         /// <summary>
         /// ResourceTypeMismatch
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch { get; } = @"ResourceTypeMismatch";
 
         /// <summary>
         /// RequestUrlFailedToParse
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
+        public static Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse { get; } = @"RequestUrlFailedToParse";
 
         /// <summary>
         /// ResourceAlreadyExists
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists { get; } = @"ResourceAlreadyExists";
 
         /// <summary>
         /// ResourceNotFound
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ResourceNotFound = @"ResourceNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceNotFound { get; } = @"ResourceNotFound";
 
         /// <summary>
         /// ServerBusy
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ServerBusy = @"ServerBusy";
+        public static Azure.Storage.Files.Models.FileErrorCode ServerBusy { get; } = @"ServerBusy";
 
         /// <summary>
         /// UnsupportedHeader
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader = @"UnsupportedHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader { get; } = @"UnsupportedHeader";
 
         /// <summary>
         /// UnsupportedXmlNode
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode { get; } = @"UnsupportedXmlNode";
 
         /// <summary>
         /// UnsupportedQueryParameter
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter { get; } = @"UnsupportedQueryParameter";
 
         /// <summary>
         /// UnsupportedHttpVerb
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb { get; } = @"UnsupportedHttpVerb";
 
         /// <summary>
         /// CannotDeleteFileOrDirectory
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory = @"CannotDeleteFileOrDirectory";
+        public static Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory { get; } = @"CannotDeleteFileOrDirectory";
 
         /// <summary>
         /// ClientCacheFlushDelay
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay = @"ClientCacheFlushDelay";
+        public static Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay { get; } = @"ClientCacheFlushDelay";
 
         /// <summary>
         /// DeletePending
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode DeletePending = @"DeletePending";
+        public static Azure.Storage.Files.Models.FileErrorCode DeletePending { get; } = @"DeletePending";
 
         /// <summary>
         /// DirectoryNotEmpty
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty = @"DirectoryNotEmpty";
+        public static Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty { get; } = @"DirectoryNotEmpty";
 
         /// <summary>
         /// FileLockConflict
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode FileLockConflict = @"FileLockConflict";
+        public static Azure.Storage.Files.Models.FileErrorCode FileLockConflict { get; } = @"FileLockConflict";
 
         /// <summary>
         /// InvalidFileOrDirectoryPathName
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName = @"InvalidFileOrDirectoryPathName";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName { get; } = @"InvalidFileOrDirectoryPathName";
 
         /// <summary>
         /// ParentNotFound
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ParentNotFound = @"ParentNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ParentNotFound { get; } = @"ParentNotFound";
 
         /// <summary>
         /// ReadOnlyAttribute
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute = @"ReadOnlyAttribute";
+        public static Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute { get; } = @"ReadOnlyAttribute";
 
         /// <summary>
         /// ShareAlreadyExists
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists = @"ShareAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists { get; } = @"ShareAlreadyExists";
 
         /// <summary>
         /// ShareBeingDeleted
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted = @"ShareBeingDeleted";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted { get; } = @"ShareBeingDeleted";
 
         /// <summary>
         /// ShareDisabled
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareDisabled = @"ShareDisabled";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareDisabled { get; } = @"ShareDisabled";
 
         /// <summary>
         /// ShareNotFound
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareNotFound = @"ShareNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareNotFound { get; } = @"ShareNotFound";
 
         /// <summary>
         /// SharingViolation
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode SharingViolation = @"SharingViolation";
+        public static Azure.Storage.Files.Models.FileErrorCode SharingViolation { get; } = @"SharingViolation";
 
         /// <summary>
         /// ShareSnapshotInProgress
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress = @"ShareSnapshotInProgress";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress { get; } = @"ShareSnapshotInProgress";
 
         /// <summary>
         /// ShareSnapshotCountExceeded
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded = @"ShareSnapshotCountExceeded";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded { get; } = @"ShareSnapshotCountExceeded";
 
         /// <summary>
         /// ShareSnapshotOperationNotSupported
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported = @"ShareSnapshotOperationNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported { get; } = @"ShareSnapshotOperationNotSupported";
 
         /// <summary>
         /// ShareHasSnapshots
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots = @"ShareHasSnapshots";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots { get; } = @"ShareHasSnapshots";
 
         /// <summary>
         /// ContainerQuotaDowngradeNotAllowed
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed = @"ContainerQuotaDowngradeNotAllowed";
+        public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed { get; } = @"ContainerQuotaDowngradeNotAllowed";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>
@@ -6666,33 +6657,33 @@ namespace Azure.Storage.Files.Models
         /// Creates a new FileErrorCode instance.
         /// </summary>
         /// <param name="value">The FileErrorCode value.</param>
-        private FileErrorCode(string value) { this._value = value; }
+        private FileErrorCode(string value) { _value = value; }
 
         /// <summary>
         /// Check if two FileErrorCode instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Files.Models.FileErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public bool Equals(Azure.Storage.Files.Models.FileErrorCode other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
 
         /// <summary>
         /// Check if two FileErrorCode instances are equal.
         /// </summary>
         /// <param name="o">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Files.Models.FileErrorCode other && this.Equals(other);
+        public override bool Equals(object o) => o is Azure.Storage.Files.Models.FileErrorCode other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the FileErrorCode.
         /// </summary>
         /// <returns>Hash code for the FileErrorCode.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
+        public override int GetHashCode() => _value.GetHashCode();
 
         /// <summary>
         /// Convert the FileErrorCode to a string.
         /// </summary>
         /// <returns>String representation of the FileErrorCode.</returns>
-        public override string ToString() => this._value;
+        public override string ToString() => _value;
 
         #pragma warning disable CA2225 // Operator overloads have named alternates
         /// <summary>
@@ -6763,7 +6754,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.Properties = new Azure.Storage.Files.Models.FileProperty();
+                Properties = new Azure.Storage.Files.Models.FileProperty();
             }
         }
 
@@ -6847,28 +6838,22 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.FileRangeWriteType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.FileRangeWriteType.Update:
-                        return "update";
-                    case Azure.Storage.Files.Models.FileRangeWriteType.Clear:
-                        return "clear";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
-                }
+                    Azure.Storage.Files.Models.FileRangeWriteType.Update => "update",
+                    Azure.Storage.Files.Models.FileRangeWriteType.Clear => "clear",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.FileRangeWriteType ParseFileRangeWriteType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "update":
-                        return Azure.Storage.Files.Models.FileRangeWriteType.Update;
-                    case "clear":
-                        return Azure.Storage.Files.Models.FileRangeWriteType.Clear;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
-                }
+                    "update" => Azure.Storage.Files.Models.FileRangeWriteType.Update,
+                    "clear" => Azure.Storage.Files.Models.FileRangeWriteType.Clear,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.")
+                };
             }
         }
     }
@@ -6914,9 +6899,9 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.HourMetrics = new Azure.Storage.Files.Models.Metrics();
-                this.MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
-                this.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
+                HourMetrics = new Azure.Storage.Files.Models.Metrics();
+                MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
+                Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
             }
         }
 
@@ -7066,8 +7051,8 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.DirectoryItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.DirectoryItem>();
-                this.FileItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.FileItem>();
+                DirectoryItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.DirectoryItem>();
+                FileItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.FileItem>();
             }
         }
 
@@ -7296,9 +7281,9 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public FlattenedStorageFileProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            this.ContentEncoding = new System.Collections.Generic.List<string>();
-            this.ContentLanguage = new System.Collections.Generic.List<string>();
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            ContentEncoding = new System.Collections.Generic.List<string>();
+            ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
 }
@@ -7332,28 +7317,22 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.ListSharesIncludeType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots:
-                        return "snapshots";
-                    case Azure.Storage.Files.Models.ListSharesIncludeType.Metadata:
-                        return "metadata";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
-                }
+                    Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots => "snapshots",
+                    Azure.Storage.Files.Models.ListSharesIncludeType.Metadata => "metadata",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.ListSharesIncludeType ParseListSharesIncludeType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "snapshots":
-                        return Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots;
-                    case "metadata":
-                        return Azure.Storage.Files.Models.ListSharesIncludeType.Metadata;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
-                }
+                    "snapshots" => Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots,
+                    "metadata" => Azure.Storage.Files.Models.ListSharesIncludeType.Metadata,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.")
+                };
             }
         }
     }
@@ -7404,7 +7383,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
+                RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
             }
         }
 
@@ -7498,9 +7477,10 @@ namespace Azure.Storage.Files.Models
         public static PermissionInfo PermissionInfo(
             string filePermissionKey)
         {
-            var _model = new PermissionInfo();
-            _model.FilePermissionKey = filePermissionKey;
-            return _model;
+            return new PermissionInfo()
+            {
+                FilePermissionKey = filePermissionKey,
+            };
         }
     }
 }
@@ -7554,10 +7534,11 @@ namespace Azure.Storage.Files.Models
             long start,
             long end)
         {
-            var _model = new Range();
-            _model.Start = start;
-            _model.End = end;
-            return _model;
+            return new Range()
+            {
+                Start = start,
+                End = end,
+            };
         }
     }
 }
@@ -7636,17 +7617,18 @@ namespace Azure.Storage.Files.Models
             string fileId,
             string fileParentId)
         {
-            var _model = new RawStorageDirectoryInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileAttributes = fileAttributes;
-            _model.FileCreationTime = fileCreationTime;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.FileChangeTime = fileChangeTime;
-            _model.FileId = fileId;
-            _model.FileParentId = fileParentId;
-            return _model;
+            return new RawStorageDirectoryInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                FilePermissionKey = filePermissionKey,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId,
+            };
         }
     }
 }
@@ -7720,7 +7702,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public RawStorageDirectoryProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -7745,19 +7727,20 @@ namespace Azure.Storage.Files.Models
             string fileParentId,
             System.DateTimeOffset fileCreationTime)
         {
-            var _model = new RawStorageDirectoryProperties();
-            _model.Metadata = metadata;
-            _model.LastModified = lastModified;
-            _model.IsServerEncrypted = isServerEncrypted;
-            _model.FileAttributes = fileAttributes;
-            _model.ETag = eTag;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.FileChangeTime = fileChangeTime;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileId = fileId;
-            _model.FileParentId = fileParentId;
-            _model.FileCreationTime = fileCreationTime;
-            return _model;
+            return new RawStorageDirectoryProperties()
+            {
+                Metadata = metadata,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                FileAttributes = fileAttributes,
+                ETag = eTag,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FilePermissionKey = filePermissionKey,
+                FileId = fileId,
+                FileParentId = fileParentId,
+                FileCreationTime = fileCreationTime,
+            };
         }
     }
 }
@@ -7842,18 +7825,19 @@ namespace Azure.Storage.Files.Models
             string fileId,
             string fileParentId)
         {
-            var _model = new RawStorageFileInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.IsServerEncrypted = isServerEncrypted;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileAttributes = fileAttributes;
-            _model.FileCreationTime = fileCreationTime;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.FileChangeTime = fileChangeTime;
-            _model.FileId = fileId;
-            _model.FileParentId = fileParentId;
-            return _model;
+            return new RawStorageFileInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                FilePermissionKey = filePermissionKey,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId,
+            };
         }
     }
 }
@@ -7999,9 +7983,9 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public RawStorageFileProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            this.ContentEncoding = new System.Collections.Generic.List<string>();
-            this.ContentLanguage = new System.Collections.Generic.List<string>();
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            ContentEncoding = new System.Collections.Generic.List<string>();
+            ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
 
@@ -8040,33 +8024,34 @@ namespace Azure.Storage.Files.Models
             string fileParentId,
             string copyStatusDescription)
         {
-            var _model = new RawStorageFileProperties();
-            _model.LastModified = lastModified;
-            _model.ContentDisposition = contentDisposition;
-            _model.ContentLanguage = contentLanguage;
-            _model.CopyCompletionTime = copyCompletionTime;
-            _model.CacheControl = cacheControl;
-            _model.CopyId = copyId;
-            _model.CopyProgress = copyProgress;
-            _model.CopySource = copySource;
-            _model.CopyStatus = copyStatus;
-            _model.IsServerEncrypted = isServerEncrypted;
-            _model.ContentEncoding = contentEncoding;
-            _model.FileAttributes = fileAttributes;
-            _model.ContentHash = contentHash;
-            _model.FileCreationTime = fileCreationTime;
-            _model.ETag = eTag;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.ContentType = contentType;
-            _model.FileChangeTime = fileChangeTime;
-            _model.ContentLength = contentLength;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileType = fileType;
-            _model.FileId = fileId;
-            _model.Metadata = metadata;
-            _model.FileParentId = fileParentId;
-            _model.CopyStatusDescription = copyStatusDescription;
-            return _model;
+            return new RawStorageFileProperties()
+            {
+                LastModified = lastModified,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletionTime = copyCompletionTime,
+                CacheControl = cacheControl,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsServerEncrypted = isServerEncrypted,
+                ContentEncoding = contentEncoding,
+                FileAttributes = fileAttributes,
+                ContentHash = contentHash,
+                FileCreationTime = fileCreationTime,
+                ETag = eTag,
+                FileLastWriteTime = fileLastWriteTime,
+                ContentType = contentType,
+                FileChangeTime = fileChangeTime,
+                ContentLength = contentLength,
+                FilePermissionKey = filePermissionKey,
+                FileType = fileType,
+                FileId = fileId,
+                Metadata = metadata,
+                FileParentId = fileParentId,
+                CopyStatusDescription = copyStatusDescription,
+            };
         }
     }
 }
@@ -8171,10 +8156,11 @@ namespace Azure.Storage.Files.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
-            var _model = new ShareInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
+            return new ShareInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+            };
         }
     }
 }
@@ -8224,8 +8210,8 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.Properties = new Azure.Storage.Files.Models.ShareItemProperties();
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                Properties = new Azure.Storage.Files.Models.ShareItemProperties();
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -8276,12 +8262,13 @@ namespace Azure.Storage.Files.Models
             string snapshot = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
-            var _model = new ShareItem();
-            _model.Name = name;
-            _model.Properties = properties;
-            _model.Snapshot = snapshot;
-            _model.Metadata = metadata;
-            return _model;
+            return new ShareItem()
+            {
+                Name = name,
+                Properties = properties,
+                Snapshot = snapshot,
+                Metadata = metadata,
+            };
         }
     }
 }
@@ -8355,11 +8342,12 @@ namespace Azure.Storage.Files.Models
             Azure.Core.Http.ETag? etag = default,
             int? quota = default)
         {
-            var _model = new ShareItemProperties();
-            _model.LastModified = lastModified;
-            _model.Etag = etag;
-            _model.Quota = quota;
-            return _model;
+            return new ShareItemProperties()
+            {
+                LastModified = lastModified,
+                Etag = etag,
+                Quota = quota,
+            };
         }
     }
 }
@@ -8398,7 +8386,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public ShareProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -8416,12 +8404,13 @@ namespace Azure.Storage.Files.Models
             System.DateTimeOffset lastModified,
             int quota)
         {
-            var _model = new ShareProperties();
-            _model.Metadata = metadata;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.Quota = quota;
-            return _model;
+            return new ShareProperties()
+            {
+                Metadata = metadata,
+                ETag = eTag,
+                LastModified = lastModified,
+                Quota = quota,
+            };
         }
     }
 }
@@ -8464,11 +8453,12 @@ namespace Azure.Storage.Files.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
-            var _model = new ShareSnapshotInfo();
-            _model.Snapshot = snapshot;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
+            return new ShareSnapshotInfo()
+            {
+                Snapshot = snapshot,
+                ETag = eTag,
+                LastModified = lastModified,
+            };
         }
     }
 }
@@ -8515,9 +8505,10 @@ namespace Azure.Storage.Files.Models
         public static ShareStatistics ShareStatistics(
             int shareUsageBytes)
         {
-            var _model = new ShareStatistics();
-            _model.ShareUsageBytes = shareUsageBytes;
-            return _model;
+            return new ShareStatistics()
+            {
+                ShareUsageBytes = shareUsageBytes,
+            };
         }
     }
 }
@@ -8577,7 +8568,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
+                ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
             }
         }
 
@@ -8663,7 +8654,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.AccessPolicy = new Azure.Storage.Files.Models.AccessPolicy();
+                AccessPolicy = new Azure.Storage.Files.Models.AccessPolicy();
             }
         }
 
@@ -8744,10 +8735,11 @@ namespace Azure.Storage.Files.Models
             string marker,
             int numberOfHandlesClosed)
         {
-            var _model = new StorageClosedHandlesSegment();
-            _model.Marker = marker;
-            _model.NumberOfHandlesClosed = numberOfHandlesClosed;
-            return _model;
+            return new StorageClosedHandlesSegment()
+            {
+                Marker = marker,
+                NumberOfHandlesClosed = numberOfHandlesClosed,
+            };
         }
     }
 }
@@ -8843,12 +8835,13 @@ namespace Azure.Storage.Files.Models
             string copyId,
             Azure.Storage.Files.Models.CopyStatus copyStatus)
         {
-            var _model = new StorageFileCopyInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.CopyId = copyId;
-            _model.CopyStatus = copyStatus;
-            return _model;
+            return new StorageFileCopyInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+            };
         }
     }
 }
@@ -8887,7 +8880,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public StorageFileRangeInfo()
         {
-            this.Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.Range>();
+            Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.Range>();
         }
     }
 
@@ -8905,12 +8898,13 @@ namespace Azure.Storage.Files.Models
             long fileContentLength,
             System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> ranges)
         {
-            var _model = new StorageFileRangeInfo();
-            _model.LastModified = lastModified;
-            _model.ETag = eTag;
-            _model.FileContentLength = fileContentLength;
-            _model.Ranges = ranges;
-            return _model;
+            return new StorageFileRangeInfo()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                FileContentLength = fileContentLength,
+                Ranges = ranges,
+            };
         }
     }
 }
@@ -8961,12 +8955,13 @@ namespace Azure.Storage.Files.Models
             byte[] contentHash,
             bool isServerEncrypted)
         {
-            var _model = new StorageFileUploadInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.ContentHash = contentHash;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
+            return new StorageFileUploadInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                IsServerEncrypted = isServerEncrypted,
+            };
         }
     }
 }
@@ -9071,16 +9066,17 @@ namespace Azure.Storage.Files.Models
             string parentId = default,
             System.DateTimeOffset? lastReconnectTime = default)
         {
-            var _model = new StorageHandle();
-            _model.HandleId = handleId;
-            _model.Path = path;
-            _model.FileId = fileId;
-            _model.SessionId = sessionId;
-            _model.ClientIp = clientIp;
-            _model.OpenTime = openTime;
-            _model.ParentId = parentId;
-            _model.LastReconnectTime = lastReconnectTime;
-            return _model;
+            return new StorageHandle()
+            {
+                HandleId = handleId,
+                Path = path,
+                FileId = fileId,
+                SessionId = sessionId,
+                ClientIp = clientIp,
+                OpenTime = openTime,
+                ParentId = parentId,
+                LastReconnectTime = lastReconnectTime,
+            };
         }
     }
 }
@@ -9120,7 +9116,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
+                Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
             }
         }
 

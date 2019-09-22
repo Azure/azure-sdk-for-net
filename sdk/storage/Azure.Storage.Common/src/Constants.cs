@@ -111,6 +111,7 @@ namespace Azure.Storage
         {
             public const string Https = "https";
             public const string Http = "http";
+            public const int HttpsPort = 443;
 
             internal static class Append
             {
@@ -426,6 +427,17 @@ namespace Azure.Storage
         {
             internal const string Code = "Code";
             internal const string Message = "Message";
+        }
+
+        internal static class GeoRedundantRead
+        {
+            internal const string AlternateHostKey  = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
+        }
+
+        internal static class HttpStatusCode
+        {
+            internal const int NotFound = 404;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void DiscoveredSecuritySolutions_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var discoveredSecuritySolutions = securityCenterClient.DiscoveredSecuritySolutions.List();
@@ -55,7 +55,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void DiscoveredSecuritySolutions_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var discoveredSecuritySolution = securityCenterClient.DiscoveredSecuritySolutions.Get("myService1", "ContosoWAF2");
@@ -66,7 +66,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void DiscoveredSecuritySolutions_ListByHomeRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var discoveredSecuritySolutions = securityCenterClient.DiscoveredSecuritySolutions.ListByHomeRegion();

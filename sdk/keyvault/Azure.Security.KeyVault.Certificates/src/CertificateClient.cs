@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,8 +14,8 @@ namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// The CertificateClient provides synchronous and asynchronous methods to manage <see cref="Certificate"/>s in Azure Key Vault. The client
-    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring and listing the <see cref="Certificate"/>, along with managing 
-    /// certificate <see cref="Issuer"/>s and <see cref="Contact"/>s. The client also supports listing <see cref="DeletedCertificate"/> for a soft-delete 
+    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring and listing the <see cref="Certificate"/>, along with managing
+    /// certificate <see cref="Issuer"/>s and <see cref="Contact"/>s. The client also supports listing <see cref="DeletedCertificate"/> for a soft-delete
     /// enabled key vault.
     /// </summary>
     public class CertificateClient
@@ -337,7 +336,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Deletes all versions of the specified <see cref="Certificate"/>. If the vault is soft delete enabled, the <see cref="Certificate"/> will be marked for perminent deletion 
+        /// Deletes all versions of the specified <see cref="Certificate"/>. If the vault is soft delete enabled, the <see cref="Certificate"/> will be marked for perminent deletion
         /// and can be recovered with <see cref="RecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
         /// </summary>
         /// <param name="name">The name of the <see cref="Certificate"/> to delete</param>
@@ -363,7 +362,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Deletes all versions of the specified <see cref="Certificate"/>. If the vault is soft delete enabled, the <see cref="Certificate"/> will be marked for perminent deletion 
+        /// Deletes all versions of the specified <see cref="Certificate"/>. If the vault is soft delete enabled, the <see cref="Certificate"/> will be marked for perminent deletion
         /// and can be recovered with <see cref="RecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
         /// </summary>
         /// <param name="name">The name of the <see cref="Certificate"/> to delete</param>
@@ -544,7 +543,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a backup of the certificate, including all versions, which can be used to restore the certificate to the state at the time of the backup in the case the certificate is deleted, or to 
+        /// Creates a backup of the certificate, including all versions, which can be used to restore the certificate to the state at the time of the backup in the case the certificate is deleted, or to
         /// restore the certificate to a different vault in the same region as the original value. This operation requires the certificate/backup permission.
         /// </summary>
         /// <param name="name">The name of the <see cref="Certificate"/> to backup</param>
@@ -572,7 +571,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a backup of the certificate, including all versions, which can be used to restore the certificate to the state at the time of the backup in the case the certificate is deleted, or to 
+        /// Creates a backup of the certificate, including all versions, which can be used to restore the certificate to the state at the time of the backup in the case the certificate is deleted, or to
         /// restore the certificate to a different vault in the same region as the original value. This operation requires the certificate/backup permission.
         /// </summary>
         /// <param name="name">The name of the <see cref="Certificate"/> to backup</param>
@@ -650,7 +649,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the 
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the
         /// certifcates/import permission
         /// </summary>
         /// <param name="import">The details of the certificate to import to the key vault</param>
@@ -677,7 +676,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the 
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the
         /// certifcates/import permission
         /// </summary>
         /// <param name="import">The details of the certificate to import to the key vault</param>
@@ -730,7 +729,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Enumerates the versions of a specific certificate in the vault, returning select properties of the certificate versions, sensative feilds of the certificate will not be returned.  This operation requires 
+        /// Enumerates the versions of a specific certificate in the vault, returning select properties of the certificate versions, sensative feilds of the certificate will not be returned.  This operation requires
         /// the certificates/list permission.
         /// </summary>
         /// <param name="name">The name of the certificate to retrieve the versions of</param>
@@ -746,7 +745,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Enumerates the versions of a specific certificate in the vault, returning select properties of the certificate versions, sensative feilds of the certificate will not be returned.  This operation requires 
+        /// Enumerates the versions of a specific certificate in the vault, returning select properties of the certificate versions, sensative feilds of the certificate will not be returned.  This operation requires
         /// the certificates/list permission.
         /// </summary>
         /// <param name="name">The name of the certificate to retrieve the versions of</param>

@@ -12,22 +12,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     internal static class DiagnosticProperty
     {
         /// <summary>The common root for activity names in the Event Hubs context.</summary>
-        public static readonly string BaseActivityName = "Azure.Messaging.EventHubs";
-
-        /// <summary>The activity name associated with events.</summary>
-        public static readonly string EventActivityName = $"{ BaseActivityName }.Message";
-
-        /// <summary>The activity name associated with Event Hub producers.</summary>
-        public static readonly string ProducerActivityName = $"{ BaseActivityName }.{ nameof(EventHubProducer) }.Send";
-
-        /// <summary>The activity name associated with EventProcessor processing a list of events.</summary>
-        public static readonly string EventProcessorProcessingActivityName = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Process";
-
-        /// <summary>The activity name associated with EventProcessor creating a checkpoint.</summary>
-        public static readonly string EventProcessorCheckpointActivityName = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Checkpoint";
+        public const string BaseActivityName = "Azure.Messaging.EventHubs";
 
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
-        public static string DiagnosticIdAttribute = "Diagnostic-Id";
+        public const string DiagnosticIdAttribute = "Diagnostic-Id";
 
         /// <summary>The attribute which represents the type of diagnostics information.</summary>
         public const string TypeAttribute = "kind";
@@ -55,5 +43,29 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>The value which identifies the message instrumentation scope kind.</summary>
         public const string InternalKind = "internal";
+
+        /// <summary>
+        ///   The activity name associated with events.
+        /// </summary>
+        ///
+        public static string EventActivityName { get; } = $"{ BaseActivityName }.Message";
+
+        /// <summary>
+        ///   The activity name associated with Event Hub producers.
+        /// </summary>
+        ///
+        public static string ProducerActivityName { get; } = $"{ BaseActivityName }.{ nameof(EventHubProducer) }.Send";
+
+        /// <summary>
+        ///   The activity name associated with EventProcessor processing a list of events.
+        /// </summary>
+        ///
+        public static string EventProcessorProcessingActivityName { get; } = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Process";
+
+        /// <summary>
+        ///   The activity name associated with EventProcessor creating a checkpoint.
+        /// </summary>
+        ///
+        public static string EventProcessorCheckpointActivityName { get; } = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Checkpoint";
     }
 }

@@ -39,13 +39,20 @@ namespace Azure.Storage.Blobs.Test
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
 
-            BlobClient blob = InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName, GetOptions()));
+            BlobClient blob1 = InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName, GetOptions()));
 
-            var builder = new BlobUriBuilder(blob.Uri);
+            BlobClient blob2 = InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName));
 
-            Assert.AreEqual(containerName, builder.ContainerName);
-            Assert.AreEqual(blobName, builder.BlobName);
-            Assert.AreEqual("accountName", builder.AccountName);
+            var builder1 = new BlobUriBuilder(blob1.Uri);
+            var builder2 = new BlobUriBuilder(blob2.Uri);
+
+            Assert.AreEqual(containerName, builder1.ContainerName);
+            Assert.AreEqual(blobName, builder1.BlobName);
+            Assert.AreEqual("accountName", builder1.AccountName);
+
+            Assert.AreEqual(containerName, builder2.ContainerName);
+            Assert.AreEqual(blobName, builder2.BlobName);
+            Assert.AreEqual("accountName", builder2.AccountName);
         }
 
         #region Upload
@@ -430,7 +437,6 @@ namespace Azure.Storage.Blobs.Test
                         blobHttpHeaders: default,
                         metadata: default,
                         blobAccessConditions: default,
-                        customerProvidedKey: default,
                         progressHandler: default,
                         singleBlockThreshold: singleBlockThreshold,
                         parallelTransferOptions: parallelTransferOptions,
@@ -483,7 +489,6 @@ namespace Azure.Storage.Blobs.Test
                             blobHttpHeaders: default,
                             metadata: default,
                             blobAccessConditions: default,
-                            customerProvidedKey: default,
                             progressHandler: default,
                             singleBlockThreshold: singleBlockThreshold,
                             parallelTransferOptions: parallelTransferOptions,

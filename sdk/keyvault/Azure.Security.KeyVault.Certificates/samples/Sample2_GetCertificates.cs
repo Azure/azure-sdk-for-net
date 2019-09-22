@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -40,8 +39,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             CertificateOperation certOp2 = client.StartCreateCertificate(certName1);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic 
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well 
+            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
             while (!certOp1.HasCompleted)
@@ -80,7 +79,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 Debug.WriteLine($"Certificate {cert.Name} with name {cert.Version}");
             }
 
-            // The certificates are no longer needed. 
+            // The certificates are no longer needed.
             // You need to delete them from the Key Vault.
             client.DeleteCertificate(certName1);
             client.DeleteCertificate(certName2);

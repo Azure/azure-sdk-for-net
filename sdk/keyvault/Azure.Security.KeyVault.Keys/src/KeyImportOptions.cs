@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Text.Json;
@@ -36,6 +35,8 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText NotBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
         private const string ExpiresPropertyName = "exp";
         private static readonly JsonEncodedText ExpiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+        private const string KeyPropertyName = "key";
+        private static readonly JsonEncodedText KeyPropertyNameBytes = JsonEncodedText.Encode(KeyPropertyName);
         private const string TagsPropertyName = "tags";
         private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
         private const string HsmPropertyName = "hsm";
@@ -43,7 +44,12 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            KeyMaterial?.WriteProperties(json);
+            if (KeyMaterial != null)
+            {
+                json.WriteStartObject(KeyPropertyNameBytes);
+                KeyMaterial.WriteProperties(json);
+                json.WriteEndObject();
+            }
 
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
@@ -66,6 +72,7 @@ namespace Azure.Security.KeyVault.Keys
 
                 json.WriteEndObject();
             }
+
             if (Tags != null && Tags.Count > 0)
             {
                 json.WriteStartObject(TagsPropertyNameBytes);
@@ -77,6 +84,7 @@ namespace Azure.Security.KeyVault.Keys
 
                 json.WriteEndObject();
             }
+
             if (Hsm.HasValue)
             {
                 json.WriteBoolean(HsmPropertyNameBytes, Hsm.Value);

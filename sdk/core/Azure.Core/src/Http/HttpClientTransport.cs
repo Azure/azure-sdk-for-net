@@ -323,12 +323,15 @@ namespace Azure.Core.Pipeline
         {
             private readonly HttpResponseMessage _responseMessage;
 
+            private readonly HttpContent _responseContent;
+
             private Stream? _contentStream;
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
+                _responseContent = _responseMessage.Content;
             }
 
             public override int Status => (int)_responseMessage.StatusCode;
@@ -364,19 +367,22 @@ namespace Azure.Core.Pipeline
                 }
                 set
                 {
+                    // Make sure we don't dispose the content if the stream was replaced
+                    _responseMessage.Content = null;
+
                     _contentStream = value;
                 }
             }
 
             public override string ClientRequestId { get; set; }
 
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
 
-            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out values);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out values);
 
-            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_responseMessage.Headers, _responseMessage.Content, name);
+            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_responseMessage.Headers, _responseContent, name);
 
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseContent);
 
             public override void Dispose()
             {

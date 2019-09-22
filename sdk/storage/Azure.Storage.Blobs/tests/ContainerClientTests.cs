@@ -12,6 +12,7 @@ using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -45,7 +46,21 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(containerName, builder.ContainerName);
             Assert.AreEqual("", builder.BlobName);
-            Assert.AreEqual("accountName", builder.AccountName);
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+
+            var blob = this.InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
+            var builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -1540,6 +1555,33 @@ namespace Azure.Storage.Blobs.Test
                     async () => await blob.GetPropertiesAsync());
             }
         }
+
+        #region Secondary Storage
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
+        {
+            var testExceptionPolicy = await this.PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
+            this.AssertSecondaryStorageFirstRetrySuccessful(this.SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+
+        private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
+        {
+            TestExceptionPolicy testExceptionPolicy;
+            var containerClient = this.GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out testExceptionPolicy, retryOn404);
+            await containerClient.CreateAsync();
+
+            var properties = await this.EnsurePropagatedAsync(
+                async () => await containerClient.GetPropertiesAsync(),
+                properties => properties.GetRawResponse().Status != 404);
+            
+            Assert.IsNotNull(properties);
+            Assert.AreEqual(200, properties.GetRawResponse().Status);
+
+            await containerClient.DeleteAsync();
+            return testExceptionPolicy;
+        }
+        #endregion
 
         private string[] BlobNames
             => new[]

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core;
 using Azure.Core.Http;
@@ -129,7 +128,7 @@ namespace Azure.Security.KeyVault
                     return true;
                 }
 
-                // This assumes that Scopes is always non-null and of length one.  
+                // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
                 if (obj is AuthenticationChallenge other)
                 {

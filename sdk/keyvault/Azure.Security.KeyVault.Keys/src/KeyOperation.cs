@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 
@@ -9,7 +8,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// An operation that can be performed with the key.
     /// </summary>
-    public struct KeyOperation : IEquatable<KeyOperation>
+    public readonly struct KeyOperation : IEquatable<KeyOperation>
     {
         private readonly string _value;
 

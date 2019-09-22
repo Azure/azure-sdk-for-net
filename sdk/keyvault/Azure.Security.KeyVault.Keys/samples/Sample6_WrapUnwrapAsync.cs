@@ -1,4 +1,7 @@
-﻿using Azure.Core.Testing;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -34,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Key cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
             Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
-            // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created. 
+            // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created.
             // Again we are using the default Azure credential as above.
             var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
 

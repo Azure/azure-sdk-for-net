@@ -1188,7 +1188,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private int GetBackgroundPublishReceiveBatchSize(EventHubConsumer consumer) =>
             (int)
                 typeof(EventHubConsumer)
-                    .GetField("_backgroundPublishReceiveBatchSize", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetField("BackgroundPublishReceiveBatchSize", BindingFlags.Static | BindingFlags.NonPublic)
                     .GetValue(consumer);
 
         /// <summary>

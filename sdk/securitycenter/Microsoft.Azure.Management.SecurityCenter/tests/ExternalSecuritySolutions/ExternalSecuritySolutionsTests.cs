@@ -43,7 +43,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void ExternalSecuritySolutions_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var externalSecuritySolutions = securityCenterClient.ExternalSecuritySolutions.List();
@@ -54,7 +54,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void ExternalSecuritySolutions_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var externalSecuritySolution = securityCenterClient.ExternalSecuritySolutions.Get("defaultresourcegroup-eus", "aad_defaultworkspace-487bb485-b5b0-471e-9c0d-10717612f869-eus");
@@ -65,7 +65,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void ExternalSecuritySolutions_ListByHomeRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var externalSecuritySolutions = securityCenterClient.ExternalSecuritySolutions.ListByHomeRegion();

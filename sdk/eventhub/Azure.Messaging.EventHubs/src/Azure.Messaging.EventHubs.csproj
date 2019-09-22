@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
@@ -26,6 +27,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Azure.Messaging.EventHubs.Reference.props" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,11 +52,13 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
+  <!-- Import Azure.Core shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Argument.cs"/>
+  </ItemGroup>
+
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
-  </ItemGroup>
 
   <!--
       TRACK ONE DEPENDENCIES::TO BE REMOVED

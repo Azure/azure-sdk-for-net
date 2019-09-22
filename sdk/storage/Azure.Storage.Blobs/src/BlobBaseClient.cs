@@ -46,6 +46,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         protected internal virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        private readonly CustomerProvidedKey? _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        public virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
@@ -110,6 +120,7 @@ namespace Azure.Storage.Blobs.Specialized
                 };
             _uri = builder.Uri;
             _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            _customerProvidedKey = options?.CustomerProvidedKey;
         }
 
         /// <summary>
@@ -196,6 +207,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             _uri = blobUri;
             _pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            _customerProvidedKey = options?.CustomerProvidedKey;
         }
 
         /// <summary>
@@ -210,10 +222,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline)
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// </param>
+        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions options = default)
         {
             _uri = blobUri;
             _pipeline = pipeline;
+            _customerProvidedKey = options?.CustomerProvidedKey;
         }
         #endregion ctors
 
@@ -243,6 +260,41 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
             return new BlobBaseClient(builder.Uri, Pipeline);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/> class
+        /// with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/> customer provided key.
+        /// </summary>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        /// <returns>A new <see cref="BlobClient"/></returns>
+        public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) =>
+            WithCustomerProvidedKeyImpl(customerProvidedKey);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BlobClient"/> class
+        /// with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/> customer provided key.
+        /// </summary>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        /// <returns>A new <see cref="BlobClient"/></returns>
+        protected virtual BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        {
+            var uriBuilder = new UriBuilder(Uri)
+            {
+                Scheme = Constants.Blob.Https,
+                Port = Constants.Blob.HttpsPort
+            };
+            return new BlobBaseClient(
+                uriBuilder.Uri,
+                Pipeline,
+                new BlobClientOptions(customerProvidedKey: customerProvidedKey));
+
         }
 
         ///// <summary>
@@ -360,7 +412,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Download(HttpRange, BlobAccessConditions?, CustomerProvidedKey?, Boolean, CancellationToken)"/>
+        /// The <see cref="Download(HttpRange, BlobAccessConditions?, Boolean, CancellationToken)"/>
         /// operation downloads a blob from the service, including its metadata
         /// and properties.
         ///
@@ -373,10 +425,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// donwloading this blob.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -402,20 +450,18 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobDownloadInfo> Download(
             HttpRange range = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 range,
                 accessConditions,
-                customerProvidedKey,
                 rangeGetContentHash,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadAsync(HttpRange, BlobAccessConditions?, CustomerProvidedKey?, Boolean, CancellationToken)"/>
+        /// The <see cref="DownloadAsync(HttpRange, BlobAccessConditions?, Boolean, CancellationToken)"/>
         /// operation downloads a blob from the service, including its metadata
         /// and properties.
         ///
@@ -428,10 +474,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// donwloading this blob.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -457,13 +499,11 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 range,
                 accessConditions,
-                customerProvidedKey,
                 rangeGetContentHash,
                 true, // async
                 cancellationToken)
@@ -482,10 +522,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// donwloading this blob.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -514,7 +550,6 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobDownloadInfo>> DownloadInternal(
             HttpRange range,
             BlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken)
@@ -528,7 +563,6 @@ namespace Azure.Storage.Blobs.Specialized
                     (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
                         accessConditions,
-                        customerProvidedKey,
                         rangeGetContentHash,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -543,7 +577,6 @@ namespace Azure.Storage.Blobs.Specialized
                             StartDownloadAsync(
                                     range,
                                     accessConditions,
-                                    customerProvidedKey,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
@@ -554,7 +587,6 @@ namespace Azure.Storage.Blobs.Specialized
                             (await StartDownloadAsync(
                                 range,
                                 accessConditions,
-                                customerProvidedKey,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,
@@ -594,10 +626,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// donwloading this blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
         /// the service returns the MD5 hash for the range, as long as the
@@ -628,13 +656,12 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<(Response<FlattenedDownloadProperties>, Stream)> StartDownloadAsync(
             HttpRange range = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
@@ -651,9 +678,9 @@ namespace Azure.Storage.Blobs.Specialized
                     range: pageRange.ToString(),
                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    encryptionKey: customerProvidedKey?.EncryptionKey,
-                    encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                    encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                     ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                     ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
@@ -1425,7 +1452,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Response<BlobProperties> response = GetPropertiesInternal(
                 null,
-                null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1461,7 +1487,6 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             Response<BlobProperties> response = await GetPropertiesInternal(
-                null,
                 null,
                 true, // async
                 cancellationToken)
@@ -1997,10 +2022,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on getting the blob's properties.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2015,11 +2036,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobProperties> GetProperties(
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2036,10 +2055,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on getting the blob's properties.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2054,11 +2069,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2074,10 +2087,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on getting the blob's properties.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2096,7 +2105,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2109,15 +2117,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.Blob.GetPropertiesAsync(
                         Pipeline,
                         Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
@@ -2154,10 +2162,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2173,12 +2177,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobInfo> SetHttpHeaders(
             BlobHttpHeaders? httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
                 httpHeaders,
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2196,10 +2198,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2215,12 +2213,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobInfo>> SetHttpHeadersAsync(
             BlobHttpHeaders? httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
                 httpHeaders,
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2237,10 +2233,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2260,7 +2252,6 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobInfo>> SetHttpHeadersInternal(
             BlobHttpHeaders? httpHeaders,
             BlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2274,7 +2265,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     Response<SetHttpHeadersOperation> response =
                         await BlobRestClient.Blob.SetHttpHeadersAsync(
@@ -2331,10 +2322,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's metadata.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2350,12 +2337,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobInfo> SetMetadata(
             Metadata metadata,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             SetMetadataInternal(
                 metadata,
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2373,10 +2358,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's metadata.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2392,12 +2373,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobInfo>> SetMetadataAsync(
             Metadata metadata,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await SetMetadataInternal(
                 metadata,
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2414,10 +2393,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's metadata.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2437,7 +2412,6 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobInfo>> SetMetadataInternal(
             Metadata metadata,
             BlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2450,7 +2424,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     Response<SetMetadataOperation> response =
                         await BlobRestClient.Blob.SetMetadataAsync(
@@ -2458,9 +2432,9 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             metadata: metadata,
                             leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                            encryptionKey: customerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                             ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
@@ -2504,10 +2478,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting creating this snapshot.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>s
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2523,12 +2493,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobSnapshotInfo> CreateSnapshot(
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             CreateSnapshotInternal(
                 metadata,
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2546,10 +2514,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting creating this snapshot.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2565,12 +2529,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await CreateSnapshotInternal(
                 metadata,
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2587,10 +2549,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting creating this snapshot.
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2610,7 +2568,6 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobSnapshotInfo>> CreateSnapshotInternal(
             Metadata metadata,
             BlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2623,15 +2580,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.Blob.CreateSnapshotAsync(
                         Pipeline,
                         Uri,
                         metadata: metadata,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,

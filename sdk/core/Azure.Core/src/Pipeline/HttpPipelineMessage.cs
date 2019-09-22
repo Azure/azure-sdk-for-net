@@ -21,6 +21,7 @@ namespace Azure.Core.Pipeline
         {
             Request = request;
             ResponseClassifier = responseClassifier;
+            BufferResponse = true;
         }
 
         public Request Request { get; set; }
@@ -46,6 +47,9 @@ namespace Azure.Core.Pipeline
 
         public ResponseClassifier ResponseClassifier { get; }
 
+        /// <summary>
+        /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
+        /// </summary>
         public bool BufferResponse { get; set; }
 
         public bool TryGetProperty(string name, out object? value)

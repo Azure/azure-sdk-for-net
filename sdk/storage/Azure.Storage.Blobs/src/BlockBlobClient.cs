@@ -231,8 +231,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline)
-            : base(blobUri, pipeline)
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions options = default)
+            : base(blobUri, pipeline, options)
         {
         }
         #endregion ctors
@@ -263,6 +268,39 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
             return new BlockBlobClient(builder.Uri, Pipeline);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/> customer provided key.
+        /// </summary>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        public new BlockBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (BlockBlobClient)WithCustomerProvidedKeyImpl(customerProvidedKey);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BlockBlobClient"/> class
+        /// with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/> customer provided key.
+        /// </summary>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        protected sealed override BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        {
+            var uriBuilder = new UriBuilder(Uri)
+            {
+                Scheme = Constants.Blob.Https,
+                Port = Constants.Blob.HttpsPort
+            };
+            return new BlockBlobClient(
+                uriBuilder.Uri,
+                Pipeline,
+                new BlobClientOptions(customerProvidedKey: customerProvidedKey));
         }
 
         ///// <summary>
@@ -309,10 +347,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on the creation of this new block blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -338,7 +372,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
@@ -347,7 +380,6 @@ namespace Azure.Storage.Blobs.Specialized
                 blobHttpHeaders,
                 metadata,
                 blobAccessConditions,
-                customerProvidedKey,
                 accessTier: accessTier,
                 progressHandler,
                 false, // async
@@ -381,10 +413,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on the creation of this new block blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -410,7 +438,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
@@ -419,7 +446,6 @@ namespace Azure.Storage.Blobs.Specialized
                 blobHttpHeaders,
                 metadata,
                 blobAccessConditions,
-                customerProvidedKey,
                 accessTier: accessTier,
                 progressHandler,
                 true, // async
@@ -453,10 +479,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on the creation of this new block blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -485,7 +507,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             AccessTier? accessTier,
             IProgress<StorageProgress> progressHandler,
             bool async,
@@ -503,7 +524,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await ReliableOperation.DoAsync(
                         async () =>
@@ -522,9 +543,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 metadata: metadata,
                                 leaseId: blobAccessConditions?.LeaseAccessConditions?.LeaseId,
                                 blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                                encryptionKey: customerProvidedKey?.EncryptionKey,
-                                encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                                encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                                encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                                encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                                encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                                 tier: accessTier,
                                 ifModifiedSince: blobAccessConditions?.HttpAccessConditions?.IfModifiedSince,
                                 ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -585,10 +606,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the upload of this block.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -610,7 +627,6 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             StageBlockInternal(
@@ -618,7 +634,6 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 transactionalContentHash,
                 leaseAccessConditions,
-                customerProvidedKey,
                 progressHandler,
                 false, // async
                 cancellationToken)
@@ -656,10 +671,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the upload of this block.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -681,7 +692,6 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await StageBlockInternal(
@@ -689,7 +699,6 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 transactionalContentHash,
                 leaseAccessConditions,
-                customerProvidedKey,
                 progressHandler,
                 true, // async
                 cancellationToken)
@@ -727,10 +736,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the upload of this block.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -755,7 +760,6 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash,
             LeaseAccessConditions? leaseAccessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -770,7 +774,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var stageBlockAttempt = 0;
@@ -791,9 +795,9 @@ namespace Azure.Storage.Blobs.Specialized
                                     contentLength: content.Length,
                                     transactionalContentHash: transactionalContentHash,
                                     leaseId: leaseAccessConditions?.LeaseId,
-                                    encryptionKey: customerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                                     async: async,
                                     operationName: Constants.Blob.Block.StageBlockOperationName,
                                     cancellationToken: cancellationToken);
@@ -861,10 +865,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the staging of this block.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -884,7 +884,6 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             HttpAccessConditions? sourceAccessConditions = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             StageBlockFromUriInternal(
                 sourceUri,
@@ -893,7 +892,6 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceAccessConditions,
                 leaseAccessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -944,10 +942,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the staging of this block.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -967,7 +961,6 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             HttpAccessConditions? sourceAccessConditions = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await StageBlockFromUriInternal(
                 sourceUri,
@@ -976,7 +969,6 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceAccessConditions,
                 leaseAccessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1027,10 +1019,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the staging of this block.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1053,7 +1041,6 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             HttpAccessConditions? sourceAccessConditions,
             LeaseAccessConditions? leaseAccessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1068,7 +1055,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.BlockBlob.StageBlockFromUriAsync(
                         Pipeline,
@@ -1078,9 +1065,9 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceUri: sourceUri,
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         leaseId: leaseAccessConditions?.LeaseId,
                         sourceIfModifiedSince: sourceAccessConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceAccessConditions?.IfUnmodifiedSince,
@@ -1139,10 +1126,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -1164,7 +1147,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             CommitBlockListInternal(
@@ -1172,7 +1154,6 @@ namespace Azure.Storage.Blobs.Specialized
                 blobHttpHeaders,
                 metadata,
                 blobAccessConditions,
-                customerProvidedKey,
                 accessTier,
                 false, // async
                 cancellationToken)
@@ -1212,10 +1193,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -1237,7 +1214,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             await CommitBlockListInternal(
@@ -1245,7 +1221,6 @@ namespace Azure.Storage.Blobs.Specialized
                 blobHttpHeaders,
                 metadata,
                 blobAccessConditions,
-                customerProvidedKey,
                 accessTier,
                 true, // async
                 cancellationToken)
@@ -1285,10 +1260,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -1313,7 +1284,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             AccessTier? accessTier,
             bool async,
             CancellationToken cancellationToken)
@@ -1329,7 +1299,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
@@ -1344,9 +1314,9 @@ namespace Azure.Storage.Blobs.Specialized
                         metadata: metadata,
                         leaseId: blobAccessConditions?.LeaseAccessConditions?.LeaseId,
                         blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         tier: accessTier,
                         ifModifiedSince: blobAccessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
@@ -85,7 +84,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (LifetimePercentage.HasValue)
             {
-                json.WriteNumber(s_lifetimePercentagePropertyNameBytes, DaysBeforeExpiry.Value);
+                json.WriteNumber(s_lifetimePercentagePropertyNameBytes, LifetimePercentage.Value);
             }
 
             json.WriteEndObject();
