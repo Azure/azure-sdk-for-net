@@ -55,7 +55,7 @@ namespace NetApp.Tests.Helpers
             Rules = defaultExportPolicyRuleList
         };
 
-        private const int delay = 30000;
+        private const int delay = 5000;
         private const int retryAttempts = 4;
 
         public static NetAppAccount CreateAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, ActiveDirectory activeDirectory = null)
