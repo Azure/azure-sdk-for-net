@@ -24,31 +24,6 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IManagedDatabasesOperations
     {
         /// <summary>
-        /// Completes the restore operation on a managed database.
-        /// </summary>
-        /// <param name='locationName'>
-        /// The name of the region where the resource is located.
-        /// </param>
-        /// <param name='operationId'>
-        /// Management operation id that this request tries to complete.
-        /// </param>
-        /// <param name='parameters'>
-        /// The definition for completing the restore of this managed database.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> CompleteRestoreWithHttpMessagesAsync(string locationName, System.Guid operationId, CompleteDatabaseRestoreDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets a list of managed databases.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -201,11 +176,16 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Completes the restore operation on a managed database.
         /// </summary>
-        /// <param name='locationName'>
-        /// The name of the region where the resource is located.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
         /// </param>
-        /// <param name='operationId'>
-        /// Management operation id that this request tries to complete.
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
         /// The definition for completing the restore of this managed database.
@@ -222,7 +202,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginCompleteRestoreWithHttpMessagesAsync(string locationName, System.Guid operationId, CompleteDatabaseRestoreDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CompleteRestoreWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new database or updates an existing database.
         /// </summary>
@@ -316,6 +296,36 @@ namespace Microsoft.Azure.Management.Sql
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ManagedDatabase>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Completes the restore operation on a managed database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='parameters'>
+        /// The definition for completing the restore of this managed database.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginCompleteRestoreWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of managed databases.
         /// </summary>

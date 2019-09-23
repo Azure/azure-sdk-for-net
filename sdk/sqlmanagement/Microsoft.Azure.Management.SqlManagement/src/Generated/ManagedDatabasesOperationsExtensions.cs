@@ -22,49 +22,6 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ManagedDatabasesOperationsExtensions
     {
             /// <summary>
-            /// Completes the restore operation on a managed database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='locationName'>
-            /// The name of the region where the resource is located.
-            /// </param>
-            /// <param name='operationId'>
-            /// Management operation id that this request tries to complete.
-            /// </param>
-            /// <param name='parameters'>
-            /// The definition for completing the restore of this managed database.
-            /// </param>
-            public static void CompleteRestore(this IManagedDatabasesOperations operations, string locationName, System.Guid operationId, CompleteDatabaseRestoreDefinition parameters)
-            {
-                operations.CompleteRestoreAsync(locationName, operationId, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Completes the restore operation on a managed database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='locationName'>
-            /// The name of the region where the resource is located.
-            /// </param>
-            /// <param name='operationId'>
-            /// Management operation id that this request tries to complete.
-            /// </param>
-            /// <param name='parameters'>
-            /// The definition for completing the restore of this managed database.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task CompleteRestoreAsync(this IManagedDatabasesOperations operations, string locationName, System.Guid operationId, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.CompleteRestoreWithHttpMessagesAsync(locationName, operationId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Gets a list of managed databases.
             /// </summary>
             /// <param name='operations'>
@@ -313,18 +270,22 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationName'>
-            /// The name of the region where the resource is located.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
-            /// <param name='operationId'>
-            /// Management operation id that this request tries to complete.
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
             /// </param>
             /// <param name='parameters'>
             /// The definition for completing the restore of this managed database.
             /// </param>
-            public static void BeginCompleteRestore(this IManagedDatabasesOperations operations, string locationName, System.Guid operationId, CompleteDatabaseRestoreDefinition parameters)
+            public static void CompleteRestore(this IManagedDatabasesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition parameters)
             {
-                operations.BeginCompleteRestoreAsync(locationName, operationId, parameters).GetAwaiter().GetResult();
+                operations.CompleteRestoreAsync(resourceGroupName, managedInstanceName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -333,11 +294,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationName'>
-            /// The name of the region where the resource is located.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
-            /// <param name='operationId'>
-            /// Management operation id that this request tries to complete.
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
             /// </param>
             /// <param name='parameters'>
             /// The definition for completing the restore of this managed database.
@@ -345,9 +310,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginCompleteRestoreAsync(this IManagedDatabasesOperations operations, string locationName, System.Guid operationId, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CompleteRestoreAsync(this IManagedDatabasesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginCompleteRestoreWithHttpMessagesAsync(locationName, operationId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CompleteRestoreWithHttpMessagesAsync(resourceGroupName, managedInstanceName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -501,6 +466,57 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Completes the restore operation on a managed database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='parameters'>
+            /// The definition for completing the restore of this managed database.
+            /// </param>
+            public static void BeginCompleteRestore(this IManagedDatabasesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition parameters)
+            {
+                operations.BeginCompleteRestoreAsync(resourceGroupName, managedInstanceName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Completes the restore operation on a managed database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='parameters'>
+            /// The definition for completing the restore of this managed database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginCompleteRestoreAsync(this IManagedDatabasesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginCompleteRestoreWithHttpMessagesAsync(resourceGroupName, managedInstanceName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
