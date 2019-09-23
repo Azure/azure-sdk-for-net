@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 }
 
                 EncryptResult result = null;
-                if (_provider.SupportsOperation(KeyOperation.Decrypt))
+                if (_provider.SupportsOperation(KeyOperation.Encrypt))
                 {
                     try
                     {
@@ -189,7 +189,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 }
 
                 EncryptResult result = null;
-                if (_provider.SupportsOperation(KeyOperation.Decrypt))
+                if (_provider.SupportsOperation(KeyOperation.Encrypt))
                 {
                     try
                     {
