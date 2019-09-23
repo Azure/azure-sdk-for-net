@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await foreach (SecretProperties secret in client.GetSecretsAsync())
             {
                 Secret secretWithValue = await client.GetAsync(secret.Name);
-                Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
+                Debug.WriteLine($"Secret is returned with name {secretWithValue.Properties.Name} and value {secretWithValue.Value}");
             }
 
             // The bank account password got updated, so you want to update the secret in key vault to ensure it reflects the new password.

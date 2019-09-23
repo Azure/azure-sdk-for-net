@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Test
             Secret version2 = await Client.SetAsync(secretName, "value2");
             await Client.SetAsync(secretName, "value3");
 
-            Secret secret = await Client.GetAsync(secretName, version2.Version);
+            Secret secret = await Client.GetAsync(secretName, version2.Properties.Version);
 
             Assert.AreEqual("value2", secret.Value);
         }
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Test
             Secret version2 = await Client.SetAsync(secretName, "value2");
             await Client.SetAsync(secretName, "value3");
 
-            Secret secret = await Client.GetAsync(secretName, version2.Version);
+            Secret secret = await Client.GetAsync(secretName, version2.Properties.Version);
 
             Assert.AreEqual("value2", secret.Value);
         }
@@ -378,14 +378,14 @@ namespace Azure.Security.KeyVault.Test
             {
                 Secret secret = await Client.SetAsync(secretName + i, i.ToString());
                 deletedSecrets.Add(secret);
-                await Client.DeleteAsync(secret.Name);
+                await Client.DeleteAsync(secret.Properties.Name);
 
                 RegisterForCleanup(secret.Name, delete: false);
             }
 
             foreach (Secret deletedSecret in deletedSecrets)
             {
-                await WaitForDeletedSecret(deletedSecret.Name);
+                await WaitForDeletedSecret(deletedSecret.Properties.Name);
             }
 
             List<Response<DeletedSecret>> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
