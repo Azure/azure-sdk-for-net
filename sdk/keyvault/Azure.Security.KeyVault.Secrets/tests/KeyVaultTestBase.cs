@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Test
 
         public Uri VaultUri { get; set; }
 
-        private readonly Queue<(SecretBase Secret, bool Delete)> _secretsToCleanup = new Queue<(SecretBase, bool)>();
+        private readonly Queue<(SecretProperties Secret, bool Delete)> _secretsToCleanup = new Queue<(SecretProperties, bool)>();
 
         protected KeyVaultTestBase(bool isAsync) : base(isAsync)
         {
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Test
         {
             try
             {
-                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
+                foreach ((SecretProperties Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     if (cleanupItem.Delete)
                     {
@@ -57,17 +57,17 @@ namespace Azure.Security.KeyVault.Test
                     }
                 }
 
-                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
+                foreach ((SecretProperties Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     await WaitForDeletedSecret(cleanupItem.Secret.Name);
                 }
 
-                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
+                foreach ((SecretProperties Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     await Client.PurgeDeletedAsync(cleanupItem.Secret.Name);
                 }
 
-                foreach ((SecretBase Secret, bool Delete) cleanupItem in _secretsToCleanup)
+                foreach ((SecretProperties Secret, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     await WaitForPurgedSecret(cleanupItem.Secret.Name);
                 }
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Test
             }
         }
 
-        protected void RegisterForCleanup(SecretBase secret, bool delete = true)
+        protected void RegisterForCleanup(SecretProperties secret, bool delete = true)
         {
             _secretsToCleanup.Enqueue((secret, delete));
         }
@@ -86,10 +86,10 @@ namespace Azure.Security.KeyVault.Test
         protected void AssertSecretsEqual(Secret exp, Secret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
-            AssertSecretsEqual((SecretBase)exp, (SecretBase)act);
+            AssertSecretsEqual(exp.Properties, act.Properties);
         }
 
-        protected void AssertSecretsEqual(SecretBase exp, SecretBase act, bool compareId = true)
+        protected void AssertSecretsEqual(SecretProperties exp, SecretProperties act, bool compareId = true)
         {
             if (compareId)
             {

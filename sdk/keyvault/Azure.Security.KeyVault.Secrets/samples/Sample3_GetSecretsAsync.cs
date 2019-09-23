@@ -37,12 +37,18 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var bankSecret = new Secret(bankSecretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             var storageSecret = new Secret(storageSecretName, "f4G34fMh8v547")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             await client.SetAsync(bankSecret);
@@ -51,10 +57,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // You need to check if any of the secrets are sharing same values. Let's list the secrets and print their values.
             // List operations don't return the secrets with value information.
             // So, for each returned secret we call Get to get the secret with its value information.
-            await foreach (SecretBase secret in client.GetSecretsAsync())
+            await foreach (SecretProperties secret in client.GetSecretsAsync())
             {
                 Secret secretWithValue = await client.GetAsync(secret.Name);
-                Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
+                Debug.WriteLine($"Secret is returned with name {secretWithValue.Properties.Name} and value {secretWithValue.Value}");
             }
 
             // The bank account password got updated, so you want to update the secret in key vault to ensure it reflects the new password.
@@ -63,7 +69,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
-            await foreach (SecretBase secret in client.GetSecretVersionsAsync(bankSecretName))
+            await foreach (SecretProperties secret in client.GetSecretVersionsAsync(bankSecretName))
             {
                 Debug.WriteLine($"Secret's version {secret.Version} with name {secret.Name}");
             }
