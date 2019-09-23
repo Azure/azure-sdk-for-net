@@ -726,7 +726,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateGetHeadRequest(string key, string label)
+        private Request CreateHeadRequest(string key, string label)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");

@@ -18,7 +18,7 @@ namespace Azure.Data.AppConfiguration
 
         internal ConfigurationSetting()
         {
-            ETag = new ETag(default);
+            ETag = new ETag();
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Azure.Data.AppConfiguration
             Key = key;
             Value = value;
             Label = label;
-            ETag = new ETag(default);
+            ETag = new ETag();
         }
 
         /// <summary>
