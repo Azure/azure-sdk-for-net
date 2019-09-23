@@ -103,6 +103,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptograph
 		Azure.Storage.Queues.Cryptography\README.md = Azure.Storage.Queues.Cryptography\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.Cryptography.Tests", "Azure.Storage.Queues.Cryptography\tests\Azure.Storage.Blobs.Cryptography.Tests\Azure.Storage.Blobs.Cryptography.Tests.csproj", "{7CE1CF31-BA54-4717-A08E-C748B04FE802}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -173,6 +175,10 @@ Global
 		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CE1CF31-BA54-4717-A08E-C748B04FE802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CE1CF31-BA54-4717-A08E-C748B04FE802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CE1CF31-BA54-4717-A08E-C748B04FE802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE1CF31-BA54-4717-A08E-C748B04FE802}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
