@@ -71,10 +71,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/areddish/azure-rest-api-specs/blob/custom_vision_3_1/specification/cognitiveservices/data-plane/CustomVision/Training/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net2\\sdk";
-      public static readonly String GithubForkName = "areddish";
-      public static readonly String GithubBranchName = "custom_vision_3_1";
-      public static readonly String GithubCommidId = "ced4ebb8a9642ad232d3c80e9ceaa825b1518c89";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Training/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net2\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "a942bf5703a34a66ca0fb7190bdb6e0c0875e12a";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
