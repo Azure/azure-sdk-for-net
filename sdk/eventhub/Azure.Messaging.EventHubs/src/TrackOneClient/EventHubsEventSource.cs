@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Diagnostics.Tracing;
+
 namespace TrackOne
 {
-    using System;
-    using System.Diagnostics.Tracing;
-
     /// <summary>
     /// EventSource for Microsoft-Azure-EventHubs traces.
     /// 
     /// When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// 
-    /// Do not explicity include the Guid here, since EventSource has a mechanism to automatically
+    /// Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     /// map to an EventSource Guid based on the Name (Microsoft-Azure-EventHubs).
     /// </summary>
     [EventSource(Name = "Microsoft-Azure-EventHubs")]
@@ -19,7 +19,7 @@ namespace TrackOne
     {
         public static EventHubsEventSource Log { get; } = new EventHubsEventSource();
 
-        EventHubsEventSource() { }
+        private EventHubsEventSource() { }
 
         [Event(1, Level = EventLevel.Informational, Message = "Creating EventHubClient (Namespace '{0}'; EventHub '{1}').")]
         public void EventHubClientCreateStart(string nameSpace, string eventHubName)
@@ -216,27 +216,27 @@ namespace TrackOne
         [Event(100, Level = EventLevel.Verbose, Message = "User plugin {0} called on client {1}")]
         public void PluginCallStarted(string pluginName, string clientId)
         {
-            if (this.IsEnabled())
+            if (IsEnabled())
             {
-                this.WriteEvent(100, pluginName, clientId);
+                WriteEvent(100, pluginName, clientId);
             }
         }
 
         [Event(101, Level = EventLevel.Verbose, Message = "User plugin {0} completed on client {1}")]
         public void PluginCallCompleted(string pluginName, string clientId)
         {
-            if (this.IsEnabled())
+            if (IsEnabled())
             {
-                this.WriteEvent(101, pluginName, clientId);
+                WriteEvent(101, pluginName, clientId);
             }
         }
 
         [Event(102, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. clientId: {1}, Exception {2}")]
         public void PluginCallFailed(string pluginName, string clientId, Exception exception)
         {
-            if (this.IsEnabled())
+            if (IsEnabled())
             {
-                this.WriteEvent(102, pluginName, clientId, exception);
+                WriteEvent(102, pluginName, clientId, exception);
             }
         }
 

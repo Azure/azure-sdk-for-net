@@ -12,20 +12,20 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
     using Microsoft.Azure.EventHubs.Processor;
+    using Microsoft.Azure.Storage;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
-    using Microsoft.WindowsAzure.Storage;
     using Xunit;
 
     public class ProcessorTestBase
     {
-              
+
         public string[] GetPartitionIds(string connectionString)
         {
             var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
             var eventHubInfo = ehClient.GetRuntimeInformationAsync().WaitAndUnwrapException();
             return eventHubInfo.PartitionIds;
         }
-      
+
         /// <summary>
         /// Validating cases where entity path is provided through eventHubPath and EH connection string parameters
         /// on the EPH constructor.
@@ -35,79 +35,79 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public void ProcessorHostEntityPathSetting()
         {
-                var connectionString = TestUtility.BuildEventHubsConnectionString("dimmyeventhubname");
-                var csb = new EventHubsConnectionStringBuilder(connectionString)
-                {
-                    EntityPath = "myeh"
-                };
+            var connectionString = TestUtility.BuildEventHubsConnectionString("dimmyeventhubname");
+            var csb = new EventHubsConnectionStringBuilder(connectionString)
+            {
+                EntityPath = "myeh"
+            };
 
-                // Entity path provided in the connection string.
-                TestUtility.Log("Testing condition: Entity path provided in the connection string only.");
-                var eventProcessorHost = new EventProcessorHost(
-                    null,
+            // Entity path provided in the connection string.
+            TestUtility.Log("Testing condition: Entity path provided in the connection string only.");
+            var eventProcessorHost = new EventProcessorHost(
+                null,
+                PartitionReceiver.DefaultConsumerGroupName,
+                csb.ToString(),
+                TestUtility.StorageConnectionString,
+                "dimmyeventhubname".ToLower());
+            Assert.Equal("myeh", eventProcessorHost.EventHubPath);
+
+            // Entity path provided in the eventHubPath parameter.
+            TestUtility.Log("Testing condition: Entity path provided in the eventHubPath only.");
+            csb.EntityPath = null;
+            eventProcessorHost = new EventProcessorHost(
+                "myeh2",
+                PartitionReceiver.DefaultConsumerGroupName,
+                csb.ToString(),
+                TestUtility.StorageConnectionString,
+                "dimmyeventhubname".ToLower());
+            Assert.Equal("myeh2", eventProcessorHost.EventHubPath);
+
+            // The same entity path provided in both eventHubPath parameter and the connection string.
+            TestUtility.Log("Testing condition: The same entity path provided in the eventHubPath and connection string.");
+            csb.EntityPath = "mYeH";
+            eventProcessorHost = new EventProcessorHost(
+                "myeh",
+                PartitionReceiver.DefaultConsumerGroupName,
+                csb.ToString(),
+                TestUtility.StorageConnectionString,
+                "dimmyeventhubname".ToLower());
+            Assert.Equal("myeh", eventProcessorHost.EventHubPath);
+
+            // Entity path not provided in both eventHubPath and the connection string.
+            TestUtility.Log("Testing condition: Entity path not provided in both eventHubPath and connection string.");
+            try
+            {
+                csb.EntityPath = null;
+                new EventProcessorHost(
+                    string.Empty,
                     PartitionReceiver.DefaultConsumerGroupName,
                     csb.ToString(),
                     TestUtility.StorageConnectionString,
                     "dimmyeventhubname".ToLower());
-                Assert.Equal("myeh", eventProcessorHost.EventHubPath);
+                throw new Exception("Entity path wasn't provided and this new call was supposed to fail");
+            }
+            catch (ArgumentException)
+            {
+                TestUtility.Log("Caught ArgumentException as expected.");
+            }
 
-                // Entity path provided in the eventHubPath parameter.
-                TestUtility.Log("Testing condition: Entity path provided in the eventHubPath only.");
-                csb.EntityPath = null;
-                eventProcessorHost = new EventProcessorHost(
+            // Entity path conflict.
+            TestUtility.Log("Testing condition: Entity path conflict.");
+            try
+            {
+                csb.EntityPath = "myeh";
+                new EventProcessorHost(
                     "myeh2",
                     PartitionReceiver.DefaultConsumerGroupName,
                     csb.ToString(),
                     TestUtility.StorageConnectionString,
                     "dimmyeventhubname".ToLower());
-                Assert.Equal("myeh2", eventProcessorHost.EventHubPath);
-
-                // The same entity path provided in both eventHubPath parameter and the connection string.
-                TestUtility.Log("Testing condition: The same entity path provided in the eventHubPath and connection string.");
-                csb.EntityPath = "mYeH";
-                eventProcessorHost = new EventProcessorHost(
-                    "myeh",
-                    PartitionReceiver.DefaultConsumerGroupName,
-                    csb.ToString(),
-                    TestUtility.StorageConnectionString,
-                    "dimmyeventhubname".ToLower());
-                Assert.Equal("myeh", eventProcessorHost.EventHubPath);
-
-                // Entity path not provided in both eventHubPath and the connection string.
-                TestUtility.Log("Testing condition: Entity path not provided in both eventHubPath and connection string.");
-                try
-                {
-                    csb.EntityPath = null;
-                    new EventProcessorHost(
-                        string.Empty,
-                        PartitionReceiver.DefaultConsumerGroupName,
-                        csb.ToString(),
-                        TestUtility.StorageConnectionString,
-                        "dimmyeventhubname".ToLower());
-                    throw new Exception("Entity path wasn't provided and this new call was supposed to fail");
-                }
-                catch (ArgumentException)
-                {
-                    TestUtility.Log("Caught ArgumentException as expected.");
-                }
-
-                // Entity path conflict.
-                TestUtility.Log("Testing condition: Entity path conflict.");
-                try
-                {
-                    csb.EntityPath = "myeh";
-                    new EventProcessorHost(
-                        "myeh2",
-                        PartitionReceiver.DefaultConsumerGroupName,
-                        csb.ToString(),
-                        TestUtility.StorageConnectionString,
-                        "dimmyeventhubname".ToLower());
-                    throw new Exception("Entity path values conflict and this new call was supposed to fail");
-                }
-                catch (ArgumentException)
-                {
-                    TestUtility.Log("Caught ArgumentException as expected.");
-                }
+                throw new Exception("Entity path values conflict and this new call was supposed to fail");
+            }
+            catch (ArgumentException)
+            {
+                TestUtility.Log("Caught ArgumentException as expected.");
+            }
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         {
             await using (var scope = await EventHubScope.CreateAsync(3))
             {
-                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);              
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 string[] PartitionIds = GetPartitionIds(connectionString);
                 int hostCount = 3;
 
@@ -683,7 +683,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);              
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 string[] PartitionIds = GetPartitionIds(connectionString);
                 // We will target one partition and do validation on it.
                 var targetPartition = PartitionIds.First();
@@ -887,8 +887,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     {
                         TestUtility.Log($"{hostName} > {consumerGroupName} > Partition {partitionId} TestEventProcessor process error {errorArgs.Item2.Message}");
 
-                    // Throw once more here depending on where we are at exception sequence.
-                    if (errorArgs.Item2.Message.Contains("ExceptionSequence1"))
+                        // Throw once more here depending on where we are at exception sequence.
+                        if (errorArgs.Item2.Message.Contains("ExceptionSequence1"))
                         {
                             throw new Exception("ExceptionSequence2");
                         }
@@ -906,16 +906,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
 
                             foreach (var e in eventsArgs.Item2.events)
                             {
-                            // If this is poisoned event then throw.
-                            if (!poisonMessageReceived && e.Properties.ContainsKey(poisonMessageProperty))
+                                // If this is poisoned event then throw.
+                                if (!poisonMessageReceived && e.Properties.ContainsKey(poisonMessageProperty))
                                 {
                                     poisonMessageReceived = true;
                                     TestUtility.Log($"Received poisoned message from partition {partitionId}");
                                     throw new Exception("ExceptionSequence1");
                                 }
 
-                            // Track received events so we can validate at the end.
-                            if (!receivedEventCounts.ContainsKey(partitionId))
+                                // Track received events so we can validate at the end.
+                                if (!receivedEventCounts.ContainsKey(partitionId))
                                 {
                                     receivedEventCounts[partitionId] = 0;
                                 }
@@ -939,7 +939,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     TestUtility.Log("Waiting for partition ownership to settle...");
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
-                   
+
 
                     // Send first set of messages.
                     TestUtility.Log("Sending an event to each partition as the first set of messages.");
@@ -1105,7 +1105,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         private async Task<Dictionary<string, Tuple<string, DateTime>>> DiscoverEndOfStream(string connectionString)
         {
             string[] PartitionIds = GetPartitionIds(connectionString);
-            var ehClient = EventHubClient.CreateFromConnectionString(connectionString);    
+            var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
             var partitions = new Dictionary<string, Tuple<string, DateTime>>();
 
             foreach (var pid in PartitionIds)
@@ -1184,7 +1184,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 if (totalNumberOfEventsToSend > 0)
                 {
                     var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.BuildEventHubsConnectionString(eventProcessorHost.EventHubPath));
-                    TestUtility.Log($"Sending {totalNumberOfEventsToSend} event(s) to each partition");                    
+                    TestUtility.Log($"Sending {totalNumberOfEventsToSend} event(s) to each partition");
                     var sendTasks = new List<Task>();
                     foreach (var partitionId in PartitionIds)
                     {
@@ -1221,7 +1221,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
 
         private async Task<EventProcessorOptions> GetOptionsAsync(string connectionString)
         {
-            var partitions = await DiscoverEndOfStream( connectionString);
+            var partitions = await DiscoverEndOfStream(connectionString);
             return new EventProcessorOptions
             {
                 MaxBatchSize = 100,

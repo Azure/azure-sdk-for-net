@@ -1,19 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
-	<!-- Please do not move/edit code below this line -->
+	<!-- Please do not move/edit code above this line -->
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.13.0-preview</Version>
-		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<Version>19.15.0-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added VpnSiteLink and VpnSiteLinkConnection operations
-            - Added UpdateTags operation for AzureFirewall
-            - Update operations for PrivateEndpoint and PrivateLinkService
+            - Added operation to update Connection Monitor's tags
+            - Added operations for new top-level resource Virtual Router
+            - Added operations to start and stop packet capture on Virtual Network Gateways and Virtual Network Gateway Connections
+            - Added property VpnGatewayGeneration to Virtual Network Gateway
+            - Added property TrafficSelectorPolicies to Virtual Network Gateway Connection
+            - Added property Priority to Application Gateway's Request Routing Rule
+            - Added read-only property PrivateLinkConnectionProperties to Network Interface's IP Configuration
+            - WorkspaceId, WorkspaceRegion and WorkspaceResourceId are no longer required parameters for Traffic Analytics Configuration
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

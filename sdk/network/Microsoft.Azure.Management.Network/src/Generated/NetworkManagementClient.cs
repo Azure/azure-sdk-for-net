@@ -194,6 +194,16 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteLinksOperations ExpressRouteLinks { get; private set; }
 
         /// <summary>
+        /// Gets the IFirewallPoliciesOperations.
+        /// </summary>
+        public virtual IFirewallPoliciesOperations FirewallPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyRuleGroupsOperations.
+        /// </summary>
+        public virtual IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; private set; }
+
+        /// <summary>
         /// Gets the ILoadBalancersOperations.
         /// </summary>
         public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
@@ -412,6 +422,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualNetworkTapsOperations.
         /// </summary>
         public virtual IVirtualNetworkTapsOperations VirtualNetworkTaps { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualRoutersOperations.
+        /// </summary>
+        public virtual IVirtualRoutersOperations VirtualRouters { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualRouterPeeringsOperations.
+        /// </summary>
+        public virtual IVirtualRouterPeeringsOperations VirtualRouterPeerings { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualWansOperations.
@@ -742,6 +762,8 @@ namespace Microsoft.Azure.Management.Network
             ExpressRoutePortsLocations = new ExpressRoutePortsLocationsOperations(this);
             ExpressRoutePorts = new ExpressRoutePortsOperations(this);
             ExpressRouteLinks = new ExpressRouteLinksOperations(this);
+            FirewallPolicies = new FirewallPoliciesOperations(this);
+            FirewallPolicyRuleGroups = new FirewallPolicyRuleGroupsOperations(this);
             LoadBalancers = new LoadBalancersOperations(this);
             LoadBalancerBackendAddressPools = new LoadBalancerBackendAddressPoolsOperations(this);
             LoadBalancerFrontendIPConfigurations = new LoadBalancerFrontendIPConfigurationsOperations(this);
@@ -786,6 +808,8 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
+            VirtualRouters = new VirtualRoutersOperations(this);
+            VirtualRouterPeerings = new VirtualRouterPeeringsOperations(this);
             VirtualWans = new VirtualWansOperations(this);
             VpnSites = new VpnSitesOperations(this);
             VpnSiteLinks = new VpnSiteLinksOperations(this);
@@ -829,6 +853,10 @@ namespace Microsoft.Azure.Management.Network
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRule>("ruleType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRule>("ruleType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRuleCondition>("ruleConditionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRuleCondition>("ruleConditionType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
@@ -879,7 +907,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1077,7 +1105,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

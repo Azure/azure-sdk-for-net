@@ -4,81 +4,148 @@
 
 using System;
 using System.Net;
+using System.Text;
+using Azure.Core.Http;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Queues
 {
     /// <summary>
-    /// Constructs a Queue URI.
+    /// The <see cref="QueueUriBuilder"/> class provides a convenient way to
+    /// modify the contents of a <see cref="System.Uri"/> instance to point to
+    /// different Azure Storage resources like an account, queue, or message.
+    ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
     /// </summary>
-    internal struct QueueUriBuilder : IEquatable<QueueUriBuilder>
+    public class QueueUriBuilder
     {
         /// <summary>
-        /// Scheme.
-        /// Example: "http"
+        /// The Uri instance constructed by this builder.  It will be reset to
+        /// null when changes are made and reconstructed when <see cref="System.Uri"/>
+        /// is accessed.
         /// </summary>
-        public string Scheme;
+        private Uri _uri;
 
         /// <summary>
-        /// Host.
-        /// Example: "account.query.core.windows.net"
+        /// Gets or sets the scheme name of the URI.
+        /// Example: "https"
         /// </summary>
-        public string Host;
+        public string Scheme
+        {
+            get => _scheme;
+            set { ResetUri(); _scheme = value; }
+        }
+        private string _scheme;
 
         /// <summary>
-        /// Port.
+        /// Gets or sets the Domain Name System (DNS) host name or IP address
+        /// of a server.
+        /// 
+        /// Example: "account.queue.core.windows.net"
         /// </summary>
-        public int Port;
+        public string Host
+        {
+            get => _host;
+            set { ResetUri(); _host = value; }
+        }
+        private string _host;
 
         /// <summary>
-        /// Account Name.  Used for IP-style URLs.  This field will be an empty string for non-IP-style URLs.
+        /// Gets or sets the port number of the URI.
         /// </summary>
-        public string AccountName;
+        public int Port
+        {
+            get => _port;
+            set { ResetUri(); _port = value; }
+        }
+        private int _port;
 
         /// <summary>
-        /// Queue Name.  Empty string if not present in URL.
+        /// Gets or sets the Azure Storage account name.  This is only
+        /// populated for IP-style <see cref="System.Uri"/>s.
         /// </summary>
-        public string QueueName;
+        public string AccountName
+        {
+            get => _accountName;
+            set { ResetUri(); _accountName = value; }
+        }
+        private string _accountName;
 
         /// <summary>
-        /// If this URI includes /messages/ component.
+        /// Gets or sets the name of a Azure Storage Queue.  The value defaults
+        /// to <see cref="string.Empty"/> if not present in the
+        /// <see cref="System.Uri"/>.
         /// </summary>
-        public bool Messages;
+        public string QueueName
+        {
+            get => _queueName;
+            set { ResetUri(); _queueName = value; }
+        }
+        private string _queueName;
 
         /// <summary>
-        /// Message Id.  Empty string if not present in URL.
+        /// Gets or sets whether to reference a queue's messages.
         /// </summary>
-        public string MessageId;
+        public bool Messages
+        {
+            get => _messages;
+            set { ResetUri(); _messages = value; }
+        }
+        private bool _messages;
 
         /// <summary>
-        /// SAS query parameters.  Null if not present in URL.
+        /// Gets or sets the ID of a message in a queue.  The value defaults to
+        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas;
+        public string MessageId
+        {
+            get => _messageId;
+            set { ResetUri(); _messageId = value; }
+        }
+        private string _messageId;
 
         /// <summary>
-        /// Unparsed query parameters.
+        /// Gets or sets the Shared Access Signature query parameters, or null
+        /// if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public string UnparsedParams;
+        public SasQueryParameters Sas
+        {
+            get => _sas;
+            set { ResetUri(); _sas = value; }
+        }
+        private SasQueryParameters _sas;
 
         /// <summary>
-        /// Parses a URL initializing QueueUriBuilder's fields including any SAS-related query parameters.
-        /// Any other query parameters remain in the UnparsedParams field.
+        /// Gets or sets any query information included in the URI that's not
+        /// relevant to addressing Azure storage resources.
         /// </summary>
-        /// <param name="uri"><see cref="Uri"/></param>
+        public string Query
+        {
+            get => _query;
+            set { ResetUri(); _query = value; }
+        }
+        private string _query;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueUriBuilder"/>
+        /// class with the specified <see cref="System.Uri"/>.
+        /// </summary>
+        /// <param name="uri">
+        /// The <see cref="System.Uri"/> to a storage resource.
+        /// </param>
         public QueueUriBuilder(Uri uri)
         {
-            this.Scheme = uri.Scheme;
-            this.Host = uri.Host;
-            this.Port = uri.Port;
-            this.AccountName = "";
-            this.QueueName = "";
-            this.Messages = false;
-            this.MessageId = "";
-            this.Sas = null;
+            Scheme = uri.Scheme;
+            Host = uri.Host;
+            Port = uri.Port;
+            AccountName = "";
+            QueueName = "";
+            Messages = false;
+            MessageId = "";
+            Sas = null;
 
-            // Find the account, container, & blob names (if any)
-            if (!String.IsNullOrEmpty(uri.AbsolutePath))
+            // Find the account, queue, and message id (if any)
+            if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
                 // If path starts with a slash, remove it
                 var path =
@@ -95,12 +162,12 @@ namespace Azure.Storage.Queues
                     // Slash not found; path has account name & no queue name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path;
+                        AccountName = path;
                         startIndex = path.Length;
                     }
                     else
                     {
-                        this.AccountName = path.Substring(0, accountEndIndex);
+                        AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
                 }
@@ -111,146 +178,119 @@ namespace Azure.Storage.Queues
                 // Slash not found; path has queue name & no message id
                 if (queueEndIndex == -1)
                 {
-                    this.QueueName = path.Substring(startIndex);
+                    QueueName = path.Substring(startIndex);
                 }
                 else
                 {
                     // The queue name is the part between the slashes
-                    this.QueueName = path.Substring(startIndex, queueEndIndex - startIndex);
+                    QueueName = path.Substring(startIndex, queueEndIndex - startIndex);
 
                     // skip "messages"
-                    this.Messages = true;
+                    Messages = true;
                     startIndex = startIndex + (queueEndIndex - startIndex) + 1;
                     startIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture) + 1;
 
-                    if(startIndex != 0)
+                    if (startIndex != 0)
                     {
                         // set messageId
-                        this.MessageId = path.Substring(startIndex, path.Length - startIndex);
+                        MessageId = path.Substring(startIndex, path.Length - startIndex);
                     }
                 }
             }
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
             var paramsMap = new UriQueryParamsCollection(uri.Query);
-            if(paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                this.Sas = new SasQueryParameters(paramsMap);
+                Sas = new SasQueryParameters(paramsMap);
             }
-            this.UnparsedParams = paramsMap.ToString();
+            Query = paramsMap.ToString();
         }
 
         /// <summary>
-        /// URL returns a URL object whose fields are initialized from the QueueUriBuilder fields. The URL's RawQuery
-        /// field contains the SAS and unparsed query parameters.
+        /// Gets a <see cref="System.Uri"/> representing the
+        /// <see cref="QueueUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
+        /// property contains the SAS and additional query parameters.
         /// </summary>
-        /// <returns><see cref="Uri"/></returns>
-        public Uri ToUri()
+        public Uri Uri
         {
-            var path = "";
+            get
+            {
+                if (_uri == null)
+                {
+                    _uri = BuildUri().Uri;
+                }
+                return _uri;
+            }
+        }
 
+        /// <summary>
+        /// Returns the display string for the specified
+        /// <see cref="QueueUriBuilder"/> instance.
+        /// </summary>
+        /// <returns>
+        /// The display string for the specified <see cref="QueueUriBuilder"/>
+        /// instance.
+        /// </returns>
+        public override string ToString() =>
+            BuildUri().ToString();
+
+        /// <summary>
+        /// Reset our cached URI.
+        /// </summary>
+        private void ResetUri() =>
+            _uri = null;
+
+        /// <summary>
+        /// Construct a <see cref="RequestUriBuilder"/> representing the
+        /// <see cref="QueueUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
+        /// property contains the SAS, snapshot, and unparsed query parameters.
+        /// </summary>
+        /// <returns>The constructed <see cref="RequestUriBuilder"/>.</returns>
+        private RequestUriBuilder BuildUri()
+        {
             // Concatenate account, queue, & messageId (if they exist)
-            if(!String.IsNullOrWhiteSpace(this.AccountName))
+            var path = new StringBuilder("");
+            if (!string.IsNullOrWhiteSpace(AccountName))
             {
-                path += "/" + this.AccountName;
+                path.Append("/").Append(AccountName);
             }
 
-            if(!String.IsNullOrWhiteSpace(this.QueueName))
+            if (!string.IsNullOrWhiteSpace(QueueName))
             {
-                path += "/" + this.QueueName;
-
-                if(this.Messages)
+                path.Append("/").Append(QueueName);
+                if (Messages)
                 {
-                    path += "/messages";
-                }
-
-                if(!String.IsNullOrWhiteSpace(this.MessageId))
-                {
-                    path += "/" + this.MessageId;
-                }
-            }
-
-            var rawQuery = this.UnparsedParams;
-
-            if (this.Sas != null)
-            {
-                var sas = this.Sas.ToString();
-
-                if (!String.IsNullOrWhiteSpace(sas))
-                {
-                    if (rawQuery.Length > 0)
+                    path.Append("/messages");
+                    if (!string.IsNullOrWhiteSpace(MessageId))
                     {
-                        rawQuery += "&";
+                        path.Append("/").Append(MessageId);
                     }
-
-                    rawQuery += sas;
                 }
             }
 
-            rawQuery = "?" + rawQuery;
+            // Concatenate query parameters
+            var query = new StringBuilder(Query);
+            var sas = Sas?.ToString();
+            if (!string.IsNullOrWhiteSpace(sas))
+            {
+                if (query.Length > 0) { query.Append("&"); }
+                query.Append(sas);
+            }
 
-            var uriBuilder = new UriBuilder(this.Scheme, this.Host, this.Port, path, rawQuery);
-
-            return uriBuilder.Uri;
+            // Use RequestUriBuilder, which has slightly nicer formatting
+            return new RequestUriBuilder
+            {
+                Scheme = Scheme,
+                Host = Host,
+                Port = Port,
+                Path = path.ToString(),
+                Query = query.Length > 0 ? "?" + query.ToString() : null
+            };
         }
 
         // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
         private static bool IsHostIPEndPointStyle(string host)
-            => String.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out var _);
-
-        /// <summary>
-        /// Check if two QueueUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is QueueUriBuilder other && this.Equals(other);
-
-        /// <summary>
-        /// Check if two QueueUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(QueueUriBuilder other)
-            => this.Scheme == other.Scheme
-            && this.Host == other.Host
-            && this.Port == other.Port
-            && this.AccountName == other.AccountName
-            && this.QueueName == other.QueueName
-            && this.MessageId == other.MessageId
-            && this.Sas == other.Sas
-            && this.UnparsedParams == other.UnparsedParams
-            ;
-
-        /// <summary>
-        /// Get a hash code for the QueueUriBuilder.
-        /// </summary>
-        /// <returns>Hash code for the QueueUriBuilder.</returns>
-        public override int GetHashCode()
-            => (this.Scheme?.GetHashCode() ?? 0)
-            ^ (this.Host?.GetHashCode() ?? 0)
-            ^ this.Port.GetHashCode()
-            ^ (this.AccountName?.GetHashCode() ?? 0)
-            ^ (this.QueueName?.GetHashCode() ?? 0)
-            ^ (this.MessageId?.GetHashCode() ?? 0)
-            ^ (this.Sas?.GetHashCode() ?? 0)
-            ^ (this.UnparsedParams?.GetHashCode() ?? 0)
-            ;
-
-        /// <summary>
-        /// Check if two QueueUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(QueueUriBuilder left, QueueUriBuilder right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two QueueUriBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(QueueUriBuilder left, QueueUriBuilder right) => !(left == right);
+            => string.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out IPAddress _);
     }
 }

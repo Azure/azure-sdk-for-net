@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings/MCAS?api-version=2019-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODFkZTZhMjEtODc5OS00YmI1LWEyOGMtY2JjMjkyZjhlMDIzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "230243ea-2f05-4431-802a-e1943d0bd632"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 04 Sep 2019 12:01:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "c01d4788-5a80-4dcb-874c-a303f104b100"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-correlation-request-id": [
+          "f86c19d4-57b2-45b1-bec0-fc62f7840b6c"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190904T120140Z:f86c19d4-57b2-45b1-bec0-fc62f7840b6c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "212"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings/MCAS\",\r\n  \"name\": \"MCAS\",\r\n  \"type\": \"Microsoft.Security/settings\",\r\n  \"kind\": \"DataExportSettings\",\r\n  \"properties\": {\r\n    \"enabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "81de6a21-8799-4bb5-a28c-cbc292f8e023"
+  }
+}

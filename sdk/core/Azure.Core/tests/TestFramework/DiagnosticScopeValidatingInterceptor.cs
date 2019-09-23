@@ -18,10 +18,12 @@ namespace Azure.Core.Testing
             if (methodName.EndsWith("Async"))
             {
                 var expectedEventPrefix = invocation.Method.DeclaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
-                var expectedEvents = new List<string>();
-                expectedEvents.Add(expectedEventPrefix + ".Start");
+                var expectedEvents = new List<string>
+                {
+                    expectedEventPrefix + ".Start"
+                };
 
-                TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
+                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
@@ -49,14 +51,13 @@ namespace Azure.Core.Testing
                 }
                 finally
                 {
-                    diagnosticListener.Dispose();
                     if (strict)
                     {
                         foreach (var expectedEvent in expectedEvents)
                         {
                             if (!diagnosticListener.Events.Any(e => e.Key == expectedEvent))
                             {
-                                throw new InvalidOperationException($"Expected diagnostic event not fired {expectedEvent} {Environment.NewLine}    fired events {string.Join(", ", diagnosticListener.Events)}");
+                                throw new InvalidOperationException($"Expected diagnostic event not fired {expectedEvent} {Environment.NewLine}    fired events {string.Join(", ", diagnosticListener.Events)} {Environment.NewLine}    You may have forgotten to set your operationId to {expectedEvent} in {methodName} or applied the Azure.Core.ForwardsClientCallsAttribute to {methodName}.");
                             }
                         }
                     }

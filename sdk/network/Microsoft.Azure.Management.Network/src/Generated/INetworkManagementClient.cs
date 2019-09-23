@@ -191,6 +191,16 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteLinksOperations ExpressRouteLinks { get; }
 
         /// <summary>
+        /// Gets the IFirewallPoliciesOperations.
+        /// </summary>
+        IFirewallPoliciesOperations FirewallPolicies { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyRuleGroupsOperations.
+        /// </summary>
+        IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; }
+
+        /// <summary>
         /// Gets the ILoadBalancersOperations.
         /// </summary>
         ILoadBalancersOperations LoadBalancers { get; }
@@ -409,6 +419,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualNetworkTapsOperations.
         /// </summary>
         IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
+
+        /// <summary>
+        /// Gets the IVirtualRoutersOperations.
+        /// </summary>
+        IVirtualRoutersOperations VirtualRouters { get; }
+
+        /// <summary>
+        /// Gets the IVirtualRouterPeeringsOperations.
+        /// </summary>
+        IVirtualRouterPeeringsOperations VirtualRouterPeerings { get; }
 
         /// <summary>
         /// Gets the IVirtualWansOperations.

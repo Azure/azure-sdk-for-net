@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v2.1/areaOfInterest",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2FyZWFPZkludGVyZXN0",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.3815.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18362.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "186"
+        ]
+      },
+      "ResponseHeaders": {
+        "apim-request-id": [
+          "04fc2f4a-b58e-448c-9449-6a251d68179e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 22 Aug 2019 04:06:33 GMT"
+        ],
+        "Content-Length": [
+          "155"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"04fc2f4a-b58e-448c-9449-6a251d68179e\",\r\n  \"metadata\": {\r\n    \"width\": 600,\r\n    \"height\": 462,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

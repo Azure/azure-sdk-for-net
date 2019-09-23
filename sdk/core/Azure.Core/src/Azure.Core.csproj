@@ -6,14 +6,11 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Support for distributed tracing added.
-      Support for TokenCredential in ASP.NET Core integration added.
-      Shared types for long running operations and async collections added.
-      .NET Core dependencies updated to preview7.
-      Bug fixes.
+      Minor improvements and bug fixes.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
@@ -28,7 +25,6 @@
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 </Project>

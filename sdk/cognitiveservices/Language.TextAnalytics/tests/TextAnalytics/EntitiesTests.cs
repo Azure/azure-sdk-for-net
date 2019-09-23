@@ -13,9 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task EntitiesBatchAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "EntitiesBatchAsync");
+                HttpMockServer.Initialize(this.GetType(), "EntitiesBatchAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 EntitiesBatchResult result = await client.EntitiesBatchAsync(
                     new MultiLanguageBatchInput(
@@ -41,9 +41,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task EntitiesAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "EntitiesAsync");
+                HttpMockServer.Initialize(this.GetType(), "EntitiesAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 EntitiesResult result = await client.EntitiesAsync("Microsoft released Windows 10");
 
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void EntitiesBatch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "EntitiesBatch");
+                HttpMockServer.Initialize(this.GetType(), "EntitiesBatch");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 EntitiesBatchResult result = client.EntitiesBatch(
                     new MultiLanguageBatchInput(
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void Entities()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "Entities");
+                HttpMockServer.Initialize(this.GetType(), "Entities");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 EntitiesResult result = client.Entities("Microsoft released Windows 10");
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.HybridData;
+using Microsoft.Azure.Management.HybridData;
 using Microsoft.Azure.Management.HybridData.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -54,7 +54,7 @@ namespace HybridData.Tests.Tests
             var helper = (TestOutputHelper)testOutputHelper;
             ITest test = (ITest)helper.GetType().GetField("test", BindingFlags.NonPublic | BindingFlags.Instance)
                                   .GetValue(helper);
-            this.Context = MockContext.Start(this.GetType().FullName, test.TestCase.TestMethod.Method.Name);
+            this.Context = MockContext.Start(this.GetType(), test.TestCase.TestMethod.Method.Name);
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
             this.ResourceGroupName = TestConstants.DefaultResourceGroupName;
             this.DataManagerName = TestConstants.DefaultDataManagerName;
@@ -103,3 +103,4 @@ namespace HybridData.Tests.Tests
 
     }
 }
+

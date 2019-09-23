@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Identifier = "an_event_consumer"
             };
 
-            var clone = options.Clone();
+            EventHubConsumerOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IdentifierIsValidated()
         {
             var options = new MockOptions();
-            var tooLongIdentifier = new String('x', (options.MaxIdentifierLength + 1));
+            var tooLongIdentifier = new string('x', (options.MaxIdentifierLength + 1));
 
             Assert.That(() => options.Identifier = tooLongIdentifier, Throws.ArgumentException);
         }
@@ -83,10 +83,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase(0)]
-        public void DefaultMaximumReceiveWaitTimeUsesNormalizesValueINotSpecified(int? noTimeoutValue)
+        public void DefaultMaximumReceiveWaitTimeUsesNormalizedValueIfNotSpecified(int? noTimeoutValue)
         {
             var options = new EventHubConsumerOptions();
-            var timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;
+            TimeSpan? timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;
 
             options.DefaultMaximumReceiveWaitTime = timeoutValue;
             Assert.That(options.DefaultMaximumReceiveWaitTime, Is.EqualTo(timeoutValue), "The value supplied by the caller should be preserved.");

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -32,9 +31,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
-            base.WriteProperties(ref json);
+            base.WriteProperties(json);
 
             if (RecoveryId != null)
             {
@@ -43,12 +42,12 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (DeletedDate.HasValue)
             {
-                json.WriteNumber("deletedDate", DeletedDate.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber("deletedDate", DeletedDate.Value.ToUnixTimeSeconds());
             }
 
             if (ScheduledPurgeDate.HasValue)
             {
-                json.WriteNumber("scheduledPurgeDate", ScheduledPurgeDate.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber("scheduledPurgeDate", ScheduledPurgeDate.Value.ToUnixTimeSeconds());
             }
         }
 
@@ -63,12 +62,12 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (json.TryGetProperty("deletedDate", out JsonElement deletedDate))
             {
-                DeletedDate = DateTimeOffset.FromUnixTimeMilliseconds(deletedDate.GetInt64());
+                DeletedDate = DateTimeOffset.FromUnixTimeSeconds(deletedDate.GetInt64());
             }
 
             if (json.TryGetProperty("scheduledPurgeDate", out JsonElement scheduledPurgeDate))
             {
-                ScheduledPurgeDate = DateTimeOffset.FromUnixTimeMilliseconds(scheduledPurgeDate.GetInt64());
+                ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(scheduledPurgeDate.GetInt64());
             }
         }
     }

@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(1, eventHubsNamespace ?? String.Empty, eventHubName ?? String.Empty);
+                WriteEvent(1, eventHubsNamespace ?? string.Empty, eventHubName ?? string.Empty);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(2, eventHubsNamespace ?? String.Empty, eventHubName ?? String.Empty);
+                WriteEvent(2, eventHubsNamespace ?? string.Empty, eventHubName ?? string.Empty);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(3, eventHubName ?? String.Empty, partitionIdOrKey ?? String.Empty, eventHash ?? String.Empty);
+                WriteEvent(3, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(4, eventHubName ?? String.Empty, partitionIdOrKey ?? String.Empty, eventHash ?? String.Empty);
+                WriteEvent(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(5, eventHubName ?? String.Empty, partitionIdOrKey ?? String.Empty, eventHash ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(5, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(6, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(6, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(7, eventHubName ?? String.Empty, partitionId ?? String.Empty, eventCount);
+                WriteEvent(7, eventHubName ?? string.Empty, partitionId ?? string.Empty, eventCount);
             }
         }
 
@@ -179,12 +179,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(8, eventHubName ?? String.Empty, partitionId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(8, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
         /// <summary>
-        ///   Indicates that a client is closing, which may corespond to an <see cref="EventHubClient" />,
+        ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubClient" />,
         ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
         /// </summary>
         ///
@@ -199,12 +199,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(9, clientType.Name, eventHubName ?? String.Empty, clientId ?? String.Empty);
+                WriteEvent(9, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
         /// <summary>
-        ///   Indicates that a client has been closed, which may corespond to an <see cref="EventHubClient" />,
+        ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubClient" />,
         ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
         /// </summary>
         ///
@@ -219,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(10, clientType.Name, eventHubName ?? String.Empty, clientId ?? String.Empty);
+                WriteEvent(10, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(11, clientType.Name, eventHubName ?? String.Empty, clientId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(11, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(12, eventHubName ?? String.Empty);
+                WriteEvent(12, eventHubName ?? string.Empty);
             }
         }
 
@@ -270,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(13, eventHubName ?? String.Empty);
+                WriteEvent(13, eventHubName ?? string.Empty);
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(14, eventHubName ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(14, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(15, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(15, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -321,7 +321,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(16, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(16, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(17, eventHubName ?? String.Empty, partitionId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(17, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -357,7 +357,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(18, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(18, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -374,7 +374,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(19, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(19, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(20, eventHubName ?? String.Empty, partitionId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(20, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 

@@ -126,10 +126,10 @@ Console.WriteLine(secret.Value);
 ```
 
 ### Update an existing Secret
-`Update` updates a secret previously stored in the Key Vault.
+`Update` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.Set` on a `Secret` with the same name.
 
 ```c#
-Secret secret = new Secret("secret-name");
+Secret secret = new Secret("secret-name", "secret-value");
 
 // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved
 secret.ContentType = "text/plain";
@@ -156,12 +156,12 @@ Console.WriteLine(secret.Value);
 ```
 
 ### List secrets
-This example lists all the secrets in the specified Key Vault.
+This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.Get` to retrive the value.
 
 ```c#
 IEnumerable<Response<SecretBase>> allSecrets = client.GetSecrets();
 
-  foreach (Secret secret in allSecrets)
+  foreach (SecretBase secret in allSecrets)
   {
     Console.WriteLine(secret.Name);
   }

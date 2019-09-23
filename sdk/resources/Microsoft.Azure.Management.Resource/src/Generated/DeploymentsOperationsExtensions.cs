@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
-            public static void CheckExistenceAtScope(this IDeploymentsOperations operations, string scope, string deploymentName)
+            public static bool CheckExistenceAtScope(this IDeploymentsOperations operations, string scope, string deploymentName)
             {
-                operations.CheckExistenceAtScopeAsync(scope, deploymentName).GetAwaiter().GetResult();
+                return operations.CheckExistenceAtScopeAsync(scope, deploymentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,9 +113,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckExistenceAtScopeAsync(this IDeploymentsOperations operations, string scope, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckExistenceAtScopeAsync(this IDeploymentsOperations operations, string scope, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckExistenceAtScopeWithHttpMessagesAsync(scope, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckExistenceAtScopeWithHttpMessagesAsync(scope, deploymentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -451,9 +454,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
-            public static void CheckExistenceAtTenantScope(this IDeploymentsOperations operations, string deploymentName)
+            public static bool CheckExistenceAtTenantScope(this IDeploymentsOperations operations, string deploymentName)
             {
-                operations.CheckExistenceAtTenantScopeAsync(deploymentName).GetAwaiter().GetResult();
+                return operations.CheckExistenceAtTenantScopeAsync(deploymentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -468,9 +471,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckExistenceAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckExistenceAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckExistenceAtTenantScopeWithHttpMessagesAsync(deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckExistenceAtTenantScopeWithHttpMessagesAsync(deploymentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -779,9 +785,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
-            public static void CheckExistenceAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName)
+            public static bool CheckExistenceAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName)
             {
-                operations.CheckExistenceAtManagementGroupScopeAsync(groupId, deploymentName).GetAwaiter().GetResult();
+                return operations.CheckExistenceAtManagementGroupScopeAsync(groupId, deploymentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -799,9 +805,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckExistenceAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckExistenceAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckExistenceAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckExistenceAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1137,9 +1146,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
-            public static void CheckExistenceAtSubscriptionScope(this IDeploymentsOperations operations, string deploymentName)
+            public static bool CheckExistenceAtSubscriptionScope(this IDeploymentsOperations operations, string deploymentName)
             {
-                operations.CheckExistenceAtSubscriptionScopeAsync(deploymentName).GetAwaiter().GetResult();
+                return operations.CheckExistenceAtSubscriptionScopeAsync(deploymentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1154,9 +1163,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckExistenceAtSubscriptionScopeAsync(this IDeploymentsOperations operations, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckExistenceAtSubscriptionScopeAsync(this IDeploymentsOperations operations, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckExistenceAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckExistenceAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1470,9 +1482,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
-            public static void CheckExistence(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
+            public static bool CheckExistence(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                operations.CheckExistenceAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
+                return operations.CheckExistenceAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1491,9 +1503,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckExistenceAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckExistenceAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

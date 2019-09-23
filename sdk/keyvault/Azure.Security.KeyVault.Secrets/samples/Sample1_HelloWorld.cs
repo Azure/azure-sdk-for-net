@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// <summary>
     /// Sample demonstrates how to set, get, update and delete a secret using the synchronous methods of the SecretClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class HelloWorld
     {
         [Test]
@@ -52,8 +52,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
             // To achieve this, we need to create a new version of the secret in the key vault. The update operation cannot
             // change the value of the secret.
-            var secretNewValue = new Secret(secretName, "bhjd4DDgsa");
-            secretNewValue.Expires = DateTimeOffset.Now.AddYears(1);
+            var secretNewValue = new Secret(secretName, "bhjd4DDgsa")
+            {
+                Expires = DateTimeOffset.Now.AddYears(1)
+            };
 
             client.Set(secretNewValue);
 

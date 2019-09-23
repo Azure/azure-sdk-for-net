@@ -31,6 +31,7 @@ namespace Azure.Storage.Common.Test
         /// </summary>
         [Test]
         [Explicit]
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task CollectGarbage_Explicit()
         {
             // Get all of our configs
@@ -40,11 +41,11 @@ namespace Azure.Storage.Common.Test
             try { configs.Add(TestConfigurations.DefaultTargetPremiumBlobTenant); } catch (InconclusiveException) { }
             try { configs.Add(TestConfigurations.DefaultTargetPreviewBlobTenant); } catch (InconclusiveException) { }
             try { configs.Add(TestConfigurations.DefaultTargetOAuthTenant); } catch (InconclusiveException) { }
-            foreach (var config in configs)
+            foreach (TenantConfiguration config in configs)
             {
                 // Blobs
                 var blobs = new BlobServiceClient(config.ConnectionString);
-                await foreach (var container in blobs.GetContainersAsync())
+                await foreach (Response<ContainerItem> container in blobs.GetContainersAsync())
                 {
                     try
                     {
@@ -63,7 +64,7 @@ namespace Azure.Storage.Common.Test
 
                 // Queues
                 var queues = new QueueServiceClient(config.ConnectionString);
-                await foreach (var queue in queues.GetQueuesAsync())
+                await foreach (Response<QueueItem> queue in queues.GetQueuesAsync())
                 {
                     try
                     {
@@ -77,7 +78,7 @@ namespace Azure.Storage.Common.Test
 
                 // Files
                 var files = new FileServiceClient(config.ConnectionString);
-                await foreach (var share in files.GetSharesAsync())
+                await foreach (Response<ShareItem> share in files.GetSharesAsync())
                 {
                     try
                     {

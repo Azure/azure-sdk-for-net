@@ -9,12 +9,12 @@ namespace Azure.Core.Tests.TestFramework
 {
     public sealed class TestOperation<T> : Operation<T>
     {
-        TimeSpan _after;
-        T _finalResult;
-        Response _finalResponse;
+        private TimeSpan _after;
+        private readonly T _finalResult;
+        private readonly Response _finalResponse;
 
-        bool _completed;
-        DateTimeOffset _started;
+        private bool _completed;
+        private DateTimeOffset _started;
 
         public override bool HasCompleted => _completed;
 

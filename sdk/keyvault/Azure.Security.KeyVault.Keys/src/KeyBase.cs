@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
     /// KeyBase is the resource containing all the properties of the key except <see cref="JsonWebKey"/> properties.
     /// </summary>
-    public class KeyBase : Model
+    public class KeyBase : IJsonDeserializable, IJsonSerializable
     {
         internal KeyBase() { }
 
@@ -22,7 +22,8 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         public KeyBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             Name = name;
         }
 
@@ -106,7 +107,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="id">The key vault object identifier.</param>
         protected void ParseId(string id)
         {
-            var idToParse = new Uri(id, UriKind.Absolute); ;
+            var idToParse = new Uri(id, UriKind.Absolute);
 
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
@@ -121,11 +122,11 @@ namespace Azure.Security.KeyVault.Keys
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
 
-        internal override void WriteProperties(Utf8JsonWriter json) { }
+        internal virtual void WriteProperties(Utf8JsonWriter json) { }
 
-        internal override void ReadProperties(JsonElement json)
+        internal virtual void ReadProperties(JsonElement json)
         {
-            foreach(JsonProperty prop in json.EnumerateObject())
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
                 switch (prop.Name)
                 {
@@ -140,7 +141,7 @@ namespace Azure.Security.KeyVault.Keys
                         break;
                     case TagsPropertyName:
                         Tags = new Dictionary<string, string>();
-                        foreach (var tagProp in prop.Value.EnumerateObject())
+                        foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                         {
                             Tags[tagProp.Name] = tagProp.Value.GetString();
                         }
@@ -148,5 +149,9 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

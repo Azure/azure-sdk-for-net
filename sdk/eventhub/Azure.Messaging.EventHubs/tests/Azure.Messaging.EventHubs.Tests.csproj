@@ -4,7 +4,12 @@
     <VersionPrefix>5.0.0</VersionPrefix>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
   </PropertyGroup>
+
+   <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -17,6 +22,7 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
@@ -26,4 +32,7 @@
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Samples.csproj" />
   </ItemGroup>
+
+  <!-- Import the Azure.Core test framework (shared source) -->
+  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>

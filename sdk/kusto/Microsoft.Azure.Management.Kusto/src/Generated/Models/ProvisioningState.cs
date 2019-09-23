@@ -21,5 +21,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string Deleting = "Deleting";
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
+        public const string Moving = "Moving";
     }
 }

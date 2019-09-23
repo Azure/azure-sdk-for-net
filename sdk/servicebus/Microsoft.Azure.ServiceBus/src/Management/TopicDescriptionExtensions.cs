@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     {
                         var topicList = new List<TopicDescription>();
 
-                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
                             topicList.Add(ParseFromEntryElement(entry));
@@ -62,11 +62,11 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         private static TopicDescription ParseFromEntryElement(XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
             var topicDesc = new TopicDescription(name);
 
-            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                .Element(XName.Get("TopicDescription", ManagementClientConstants.SbNs));
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
+                .Element(XName.Get("TopicDescription", ManagementClientConstants.ServiceBusNamespace));
 
             if (qdXml == null)
             {
@@ -139,19 +139,19 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             var topicDescriptionElements = new List<object>
             {
-                description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxSizeInMB)),
-                new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresDuplicateDetection)),
+                description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
+                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxSizeInMB)),
+                new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.RequiresDuplicateDetection)),
                 description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
-                    new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
+                    new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
                     : null,
-                new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
+                new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableBatchedOperations)),
                 description.AuthorizationRules?.Serialize(),
-                new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
-                description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
-                new XElement(XName.Get("SupportOrdering", ManagementClientConstants.SbNs), XmlConvert.ToString(description.SupportOrdering)),
-                description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
-                new XElement(XName.Get("EnablePartitioning", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnablePartitioning))
+                new XElement(XName.Get("Status", ManagementClientConstants.ServiceBusNamespace), description.Status.ToString()),
+                description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.ServiceBusNamespace), description.UserMetadata) : null,
+                new XElement(XName.Get("SupportOrdering", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.SupportOrdering)),
+                description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
+                new XElement(XName.Get("EnablePartitioning", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnablePartitioning))
             };
 
             if (description.UnknownProperties != null)
@@ -160,10 +160,10 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
 
             XDocument doc = new XDocument(
-                new XElement(XName.Get("entry", ManagementClientConstants.AtomNs),
-                    new XElement(XName.Get("content", ManagementClientConstants.AtomNs),
+                new XElement(XName.Get("entry", ManagementClientConstants.AtomNamespace),
+                    new XElement(XName.Get("content", ManagementClientConstants.AtomNamespace),
                         new XAttribute("type", "application/xml"),
-                        new XElement(XName.Get("TopicDescription", ManagementClientConstants.SbNs),
+                        new XElement(XName.Get("TopicDescription", ManagementClientConstants.ServiceBusNamespace),
                             topicDescriptionElements
                         ))
                     ));

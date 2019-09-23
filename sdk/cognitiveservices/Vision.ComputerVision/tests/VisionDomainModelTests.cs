@@ -10,12 +10,12 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionDomainModelTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeCelebritiesDomainImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeCelebritiesDomainImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeCelebritiesDomainImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("satya.jpg"), FileMode.Open))
@@ -31,19 +31,19 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.98);
+                    Assert.True(celebrity.Confidence > 0.97);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeCelebritiesDomainImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeCelebritiesDomainTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeCelebritiesDomainTest");
 
                 string celebrityUrl = GetTestImageUrl("satya.jpg");
 
@@ -60,19 +60,19 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.98);
+                    Assert.True(celebrity.Confidence > 0.97);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeLandmarksDomainImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeLandmarksDomainImageTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeLandmarksDomainImageTest");
 
                 string landmarksUrl = GetTestImageUrl("spaceneedle.jpg");
                 const string Portuguese = "pt";

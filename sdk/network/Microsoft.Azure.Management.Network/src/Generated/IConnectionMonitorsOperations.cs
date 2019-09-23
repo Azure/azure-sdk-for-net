@@ -109,6 +109,37 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update tags of the specified connection monitor.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkWatcherName'>
+        /// The name of the network watcher.
+        /// </param>
+        /// <param name='connectionMonitorName'>
+        /// The name of the connection monitor.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to update connection monitor tags.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConnectionMonitorResult>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Stops the specified connection monitor.
         /// </summary>
         /// <param name='resourceGroupName'>

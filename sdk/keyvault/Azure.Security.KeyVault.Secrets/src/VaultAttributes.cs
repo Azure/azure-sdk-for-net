@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -54,22 +53,22 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (json.TryGetProperty("nbf", out JsonElement nbf))
             {
-                NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(nbf.GetInt64());
+                NotBefore = DateTimeOffset.FromUnixTimeSeconds(nbf.GetInt64());
             }
 
             if (json.TryGetProperty("exp", out JsonElement exp))
             {
-                Expires = DateTimeOffset.FromUnixTimeMilliseconds(exp.GetInt64());
+                Expires = DateTimeOffset.FromUnixTimeSeconds(exp.GetInt64());
             }
 
             if (json.TryGetProperty("created", out JsonElement created))
             {
-                Created = DateTimeOffset.FromUnixTimeMilliseconds(created.GetInt64());
+                Created = DateTimeOffset.FromUnixTimeSeconds(created.GetInt64());
             }
 
             if (json.TryGetProperty("updated", out JsonElement updated))
             {
-                Updated = DateTimeOffset.FromUnixTimeMilliseconds(updated.GetInt64());
+                Updated = DateTimeOffset.FromUnixTimeSeconds(updated.GetInt64());
             }
 
             if (json.TryGetProperty("recoveryLevel", out JsonElement recoveryLevel))
@@ -78,7 +77,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        internal void WriteProperties(ref Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (Enabled.HasValue)
             {
@@ -87,12 +86,12 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeSeconds());
             }
 
             if (Expires.HasValue)
             {
-                json.WriteNumber("exp", Expires.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber("exp", Expires.Value.ToUnixTimeSeconds());
             }
 
             // Created is read-only don't serialize

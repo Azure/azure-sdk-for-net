@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>
     /// The exception is thrown when the message size exceeds what AMQP allows on the link.
     /// </summary>

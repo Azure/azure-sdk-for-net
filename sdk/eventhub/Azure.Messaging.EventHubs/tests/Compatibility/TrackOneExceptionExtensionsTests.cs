@@ -27,12 +27,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             TrackOne.EventHubsException exception;
 
-            exception = new TrackOne.EventHubsCommunicationException("One");
-            exception.EventHubsNamespace = "test_thing";
+            exception = new TrackOne.EventHubsCommunicationException("One")
+            {
+                EventHubsNamespace = "test_thing"
+            };
             yield return new object[] { exception, typeof(Errors.EventHubsCommunicationException) };
 
-            exception = new TrackOne.EventHubsTimeoutException("Two");
-            exception.EventHubsNamespace = "OMG!-Thing!";
+            exception = new TrackOne.EventHubsTimeoutException("Two")
+            {
+                EventHubsNamespace = "OMG!-Thing!"
+            };
             yield return new object[] { exception, typeof(Errors.EventHubsTimeoutException) };
 
             yield return new object[] { new TrackOne.MessagingEntityNotFoundException("Three"), typeof(Errors.EventHubsResourceNotFoundException) };
@@ -65,13 +69,13 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     Type expectedMappedType)
         {
             var eventHubsException = (TrackOne.EventHubsException)exception;
-            var mappedException = eventHubsException.MapToTrackTwoException();
+            EventHubsException mappedException = eventHubsException.MapToTrackTwoException();
 
             Assert.That(mappedException, Is.Not.Null, "The mapping should produce an exception.");
             Assert.That(mappedException.GetType(), Is.EqualTo(expectedMappedType), "The mapped exception type was incorrect.");
             Assert.That(mappedException.IsTransient, Is.EqualTo(eventHubsException.IsTransient), "The mapped exception should agree on being transient.");
             Assert.That(mappedException.ResourceName, Is.EqualTo(eventHubsException.EventHubsNamespace), "The mapped exception should use the namespace as its resource name.");
-            Assert.That(mappedException.Message, Does.Contain(eventHubsException.EventHubsNamespace ?? String.Empty), "The mapped exception should include the namespace in its message.");
+            Assert.That(mappedException.Message, Does.Contain(eventHubsException.EventHubsNamespace ?? string.Empty), "The mapped exception should include the namespace in its message.");
             Assert.That(mappedException.Message, Does.Contain(eventHubsException.RawMessage), "The mapped exception should include the message text in its message.");
             Assert.That(mappedException.InnerException, Is.EqualTo(eventHubsException), "The mapped exception should wrap the original instance.");
         }
@@ -84,14 +88,14 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EventHubsExceptionTypesShouldHaveMappings()
         {
-            var allDerrivedTypes = typeof(EventHubsException)
+            IOrderedEnumerable<string> allDerrivedTypes = typeof(EventHubsException)
                .Assembly
                .GetTypes()
                .Where(type => typeof(EventHubsException).IsAssignableFrom(type))
                .Select(type => type.Name)
                .OrderBy(name => name);
 
-            var knownDerrivedTypes = ExceptionMappingTestCases()
+            IOrderedEnumerable<string> knownDerrivedTypes = ExceptionMappingTestCases()
                 .Select(testCase => ((Type)testCase[1]).Name)
                 .OrderBy(name => name);
 

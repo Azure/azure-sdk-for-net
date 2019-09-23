@@ -14,15 +14,6 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public static class RandomExtensions
-    {
-        public static Guid NewGuid(this Random random)
-        {
-            var bytes = new byte[16];
-            random.NextBytes(bytes);
-            return new Guid(bytes);
-        }
-    }
     public class RecordTransport : HttpPipelineTransport
     {
         private readonly HttpPipelineTransport _innerTransport;
@@ -47,7 +38,7 @@ namespace Azure.Core.Testing
             Record(message);
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message)
         {
             await _innerTransport.ProcessAsync(message);
             Record(message);
@@ -98,7 +89,7 @@ namespace Azure.Core.Testing
             // Make sure we record Content-Length even if it's not set explicitly
             if (!request.Headers.TryGetValue("Content-Length", out _) && request.Content != null && request.Content.TryComputeLength(out long computedLength))
             {
-                entry.RequestHeaders.Add("Content-Length", new [] { computedLength.ToString(CultureInfo.InvariantCulture) });
+                entry.RequestHeaders.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
             }
 
             foreach (HttpHeader responseHeader in response.Headers)

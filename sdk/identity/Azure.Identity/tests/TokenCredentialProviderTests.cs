@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Identity.Tests
 {
     public class TokenCredentialProviderTests
-    { 
+    {
         public class MockException : Exception
         {
 
@@ -18,8 +18,8 @@ namespace Azure.Identity.Tests
 
         public class SimpleMockTokenCredential : TokenCredential
         {
-            private string _scope;
-            private string _token;
+            private readonly string _scope;
+            private readonly string _token;
 
             public SimpleMockTokenCredential(string scope, string token)
             {
@@ -27,27 +27,27 @@ namespace Azure.Identity.Tests
                 _token = token;
             }
 
-            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+            public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken)
             {
-                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default(AccessToken);
+                return _scope == request.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default;
             }
 
-            public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;
 
-                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default(AccessToken);
+                return _scope == request.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default;
             }
         }
 
         public class ExceptionalMockTokenCredential : TokenCredential
         {
-            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+            public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken)
             {
                 throw new MockException();
             }
 
-            public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            public override Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken)
             {
                 throw new MockException();
             }
@@ -74,10 +74,10 @@ namespace Azure.Identity.Tests
             var cred4 = new SimpleMockTokenCredential("scopeC", "tokenC");
             var provider = new ChainedTokenCredential(cred1, cred2, cred3, cred4);
 
-            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new string[] { "scopeA" })).Token);
-            Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new string[] { "scopeB" })).Token);
-            Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new string[] { "scopeC" })).Token);
-            Assert.IsNull((await provider.GetTokenAsync(new string[] { "scopeD" })).Token);
+            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequest(new string[] { "scopeA" }))).Token);
+            Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new TokenRequest(new string[] { "scopeB" }))).Token);
+            Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new TokenRequest(new string[] { "scopeC" }))).Token);
+            Assert.IsNull((await provider.GetTokenAsync(new TokenRequest(new string[] { "scopeD" }))).Token);
         }
 
         [Test]
@@ -88,9 +88,9 @@ namespace Azure.Identity.Tests
             var cred3 = new SimpleMockTokenCredential("scopeB", "tokenB");
             var provider = new ChainedTokenCredential(cred1, cred2, cred3);
 
-            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new string[] { "scopeA" })).Token);
-            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeB" }));
-            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeC" }));
+            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequest(new string[] { "scopeA" }))).Token);
+            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new TokenRequest(new string[] { "ScopeB" })));
+            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new TokenRequest(new string[] { "ScopeC" })));
         }
     }
 }

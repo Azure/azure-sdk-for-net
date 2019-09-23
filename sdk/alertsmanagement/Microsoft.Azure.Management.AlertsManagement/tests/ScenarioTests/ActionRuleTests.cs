@@ -27,7 +27,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void FilterByParametersGetActionRulesTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
@@ -60,7 +60,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void FilterByResourceGroupGetActionRulesTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
@@ -79,7 +79,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void CreateAndDeleteActionRule()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
@@ -145,7 +145,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void CreateAndUpdateActionRule()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -43,87 +42,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public string RecoveryLevel { get; private set; }
 
+        private const string EnabledPropertyName = "enabled";
+        private const string NotBeforePropertyName = "nbf";
+        private const string ExpiresPropertyName = "exp";
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+        private const string RecoveryLevelPropertyName = "recoveryLevel";
+
         internal void ReadProperties(JsonElement json)
         {
-            if (json.TryGetProperty("enabled", out JsonElement enabled))
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
-                Enabled = enabled.GetBoolean();
-            }
-
-            if (json.TryGetProperty("nbf", out JsonElement nbf))
-            {
-                if (nbf.ValueKind == JsonValueKind.Null)
+                switch (prop.Name)
                 {
-                    NotBefore = null;
-                }
-                else
-                {
-                    NotBefore = DateTimeOffset.Parse(nbf.GetString(), CultureInfo.InvariantCulture);
-                }
-            }
-
-            if (json.TryGetProperty("exp", out JsonElement exp))
-            {
-                if (exp.ValueKind == JsonValueKind.Null)
-                {
-                    Expires = null;
-                }
-                else
-                {
-                    Expires = DateTimeOffset.Parse(exp.GetString(), CultureInfo.InvariantCulture);
+                    case EnabledPropertyName:
+                        Enabled = prop.Value.GetBoolean();
+                        break;
+                    case NotBeforePropertyName:
+                        NotBefore = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+                    case ExpiresPropertyName:
+                        Expires = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+                    case CreatedPropertyName:
+                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+                    case UpdatedPropertyName:
+                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+                    case RecoveryLevelPropertyName:
+                        RecoveryLevel = prop.Value.GetString();
+                        break;
                 }
             }
-
-            if (json.TryGetProperty("created", out JsonElement created))
-            {
-                if (created.ValueKind == JsonValueKind.Null)
-                {
-                    Created = null;
-                }
-                else
-                {
-                    Created = DateTimeOffset.Parse(created.GetString(), CultureInfo.InvariantCulture);
-                }
-            }
-
-            if (json.TryGetProperty("updated", out JsonElement updated))
-            {
-                if (updated.ValueKind == JsonValueKind.Null)
-                {
-                    Updated = null;
-                }
-                else
-                {
-                    Updated = DateTimeOffset.Parse(updated.GetString(), CultureInfo.InvariantCulture);
-                }
-            }
-
-            if (json.TryGetProperty("recoveryLevel", out JsonElement recoveryLevel))
-            {
-                RecoveryLevel = recoveryLevel.GetString();
-            }
-        }
-
-        internal void WriteProperties(ref Utf8JsonWriter json)
-        {
-            if (Enabled.HasValue)
-            {
-                json.WriteBoolean("enabled", Enabled.Value);
-            }
-
-            if (NotBefore.HasValue)
-            {
-                json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeMilliseconds());
-            }
-
-            if (Expires.HasValue)
-            {
-                json.WriteNumber("exp", Expires.Value.ToUnixTimeMilliseconds());
-            }
-
-            // Created is read-only don't serialize
-            // Updated is read-only don't serialize
-            // RecoveryLevel is read-only don't serialize
         }
     }
 }

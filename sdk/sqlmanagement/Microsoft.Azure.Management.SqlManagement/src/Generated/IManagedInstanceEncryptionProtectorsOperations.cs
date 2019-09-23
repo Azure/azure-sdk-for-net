@@ -24,6 +24,30 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IManagedInstanceEncryptionProtectorsOperations
     {
         /// <summary>
+        /// Revalidates an existing encryption protector.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RevalidateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a list of managed instance encryption protectors
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -107,6 +131,30 @@ namespace Microsoft.Azure.Management.Sql
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ManagedInstanceEncryptionProtector>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ManagedInstanceEncryptionProtector parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Revalidates an existing encryption protector.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginRevalidateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing encryption protector.
         /// </summary>

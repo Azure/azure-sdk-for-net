@@ -90,9 +90,9 @@ namespace Azure.Messaging.EventHubs
         internal EventHubClientOptions Clone() =>
             new EventHubClientOptions
             {
-                TransportType = this.TransportType,
-                Proxy = this.Proxy,
-                _retryOptions = this.RetryOptions.Clone()
+                TransportType = TransportType,
+                Proxy = Proxy,
+                _retryOptions = RetryOptions.Clone()
             };
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs
         ///   Validates the retry options are specified, throwing an <see cref="ArgumentException" /> if it is not valid.
         /// </summary>
         ///
-        /// <param name="retryOptions">The set of retry options to validae.</param>
+        /// <param name="retryOptions">The set of retry options to validate.</param>
         ///
         private void ValidateRetryOptions(RetryOptions retryOptions)
         {

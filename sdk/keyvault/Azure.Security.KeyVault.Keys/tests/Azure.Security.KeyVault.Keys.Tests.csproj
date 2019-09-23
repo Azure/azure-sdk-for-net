@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!-- ECParameters is defined in netstandard2.0 but not net461 (introduced in net47). Test against net461 to make sure a TypeLoadException is not thrown when referencing JsonWebKey. -->
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
@@ -18,5 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Keys.csproj" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ForwardsClientCallsAttribute.cs" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\HashCodeBuilder.cs" />
   </ItemGroup>
 </Project>

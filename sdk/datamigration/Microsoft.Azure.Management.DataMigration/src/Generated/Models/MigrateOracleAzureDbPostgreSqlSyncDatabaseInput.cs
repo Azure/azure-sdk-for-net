@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the
         /// MigrateOracleAzureDbPostgreSqlSyncDatabaseInput class.
         /// </summary>
+        /// <param name="caseManipulation">How to handle object name casing:
+        /// either Preserve or ToLower</param>
         /// <param name="name">Name of the migration pipeline</param>
         /// <param name="schemaName">Name of the source schema</param>
         /// <param name="tableMap">Mapping of source to target tables</param>
@@ -46,8 +48,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// migration behavior</param>
         /// <param name="targetSetting">Target settings to tune target endpoint
         /// migration behavior</param>
-        public MigrateOracleAzureDbPostgreSqlSyncDatabaseInput(string name = default(string), string schemaName = default(string), IDictionary<string, string> tableMap = default(IDictionary<string, string>), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>))
+        public MigrateOracleAzureDbPostgreSqlSyncDatabaseInput(string caseManipulation = default(string), string name = default(string), string schemaName = default(string), IDictionary<string, string> tableMap = default(IDictionary<string, string>), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>))
         {
+            CaseManipulation = caseManipulation;
             Name = name;
             SchemaName = schemaName;
             TableMap = tableMap;
@@ -62,6 +65,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets how to handle object name casing: either Preserve or
+        /// ToLower
+        /// </summary>
+        [JsonProperty(PropertyName = "caseManipulation")]
+        public string CaseManipulation { get; set; }
 
         /// <summary>
         /// Gets or sets name of the migration pipeline

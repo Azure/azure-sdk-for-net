@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -66,8 +68,8 @@ namespace Azure.Messaging.EventHubs
         internal EventDataBatch(TransportEventBatch transportBatch,
                                 SendOptions sendOptions)
         {
-            Guard.ArgumentNotNull(nameof(transportBatch), transportBatch);
-            Guard.ArgumentNotNull(nameof(sendOptions), sendOptions);
+            Argument.AssertNotNull(transportBatch, nameof(transportBatch));
+            Argument.AssertNotNull(sendOptions, nameof(sendOptions));
 
             InnerBatch = transportBatch;
             SendOptions = sendOptions;
@@ -82,7 +84,18 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
-        public bool TryAdd(EventData eventData) => InnerBatch.TryAdd(eventData);
+        public bool TryAdd(EventData eventData)
+        {
+            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
+            bool added = InnerBatch.TryAdd(eventData);
+
+            if (!added && instrumented)
+            {
+                EventDataInstrumentation.ResetEvent(eventData);
+            }
+
+            return added;
+        }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventDataBatch" />.

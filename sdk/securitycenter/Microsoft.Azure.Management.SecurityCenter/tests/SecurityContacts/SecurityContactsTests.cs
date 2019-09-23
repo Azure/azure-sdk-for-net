@@ -44,7 +44,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityContacts_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var securityContacts = securityCenterClient.SecurityContacts.List();
@@ -55,7 +55,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityContacts_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var securityContact = securityCenterClient.SecurityContacts.Get("default2");
@@ -66,7 +66,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityContacts_Create()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -80,7 +80,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityContacts_Delete()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 securityCenterClient.SecurityContacts.Delete("default2");
@@ -90,7 +90,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityContacts_Update()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 

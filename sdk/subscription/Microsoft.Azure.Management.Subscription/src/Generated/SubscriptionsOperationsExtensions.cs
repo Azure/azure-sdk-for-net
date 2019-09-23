@@ -24,52 +24,64 @@ namespace Microsoft.Azure.Management.Subscription
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
-            /// Cancels the subscription
+            /// The operation to cancel a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static CanceledSubscriptionId Cancel(this ISubscriptionsOperations operations)
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            public static CanceledSubscriptionId Cancel(this ISubscriptionsOperations operations, string subscriptionId)
             {
-                return operations.CancelAsync().GetAwaiter().GetResult();
+                return operations.CancelAsync(subscriptionId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Cancels the subscription
+            /// The operation to cancel a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CanceledSubscriptionId> CancelAsync(this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CanceledSubscriptionId> CancelAsync(this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CancelWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CancelWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Renames the subscription
+            /// The operation to rename a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
             /// </param>
             /// <param name='body'>
             /// Subscription Name
             /// </param>
-            public static RenamedSubscriptionId Rename(this ISubscriptionsOperations operations, SubscriptionName body)
+            public static RenamedSubscriptionId Rename(this ISubscriptionsOperations operations, string subscriptionId, SubscriptionName body)
             {
-                return operations.RenameAsync(body).GetAwaiter().GetResult();
+                return operations.RenameAsync(subscriptionId, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Renames the subscription
+            /// The operation to rename a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
             /// </param>
             /// <param name='body'>
             /// Subscription Name
@@ -77,9 +89,43 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RenamedSubscriptionId> RenameAsync(this ISubscriptionsOperations operations, SubscriptionName body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RenamedSubscriptionId> RenameAsync(this ISubscriptionsOperations operations, string subscriptionId, SubscriptionName body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RenameWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RenameWithHttpMessagesAsync(subscriptionId, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to enable a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            public static EnabledSubscriptionId Enable(this ISubscriptionsOperations operations, string subscriptionId)
+            {
+                return operations.EnableAsync(subscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to enable a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EnabledSubscriptionId> EnableAsync(this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.EnableWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

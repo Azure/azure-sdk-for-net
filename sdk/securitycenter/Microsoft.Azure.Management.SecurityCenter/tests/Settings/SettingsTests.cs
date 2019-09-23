@@ -16,7 +16,7 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static string SubscriptionId = "81de6a21-8799-4bb5-a28c-cbc292f8e023";
         private static string SettingName = "MCAS";
 
         public static TestEnvironment TestEnvironment { get; private set; }
@@ -47,7 +47,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void Settings_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -59,7 +59,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void Settings_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var setting = securityCenterClient.Settings.Get(SettingName);

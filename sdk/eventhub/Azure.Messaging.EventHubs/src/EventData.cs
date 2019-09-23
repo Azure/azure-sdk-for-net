@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -31,17 +29,6 @@ namespace Azure.Messaging.EventHubs
         public ReadOnlyMemory<byte> Body { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventData"/> class.
-        /// </summary>
-        ///
-        /// <param name="eventBody">The raw data to use as the body of the event.</param>
-        ///
-        public EventData(ReadOnlyMemory<byte> eventBody)
-        {
-            Body = eventBody;
-        }
-
-        /// <summary>
         ///   The set of free-form event properties which may be used for passing metadata associated with the event with the event body
         ///   during Event Hubs operations.
         /// </summary>
@@ -58,38 +45,144 @@ namespace Azure.Messaging.EventHubs
         ///   </code>
         /// </example>
         ///
-        public IDictionary<string, object> Properties { get; internal set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Properties { get; }
+
+        /// <summary>
+        ///   The set of free-form event properties which were provided by the Event Hubs service to pass metadata associated with the
+        ///   event or associated Event Hubs operation.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   These properties are only populated for events received from the Event Hubs service.  The set is otherwise
+        ///   empty.
+        /// </remarks>
+        ///
+        public IReadOnlyDictionary<string, object> SystemProperties { get; }
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
         /// </summary>
         ///
-        public long SequenceNumber => SystemProperties.SequenceNumber;
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service.
+        /// </remarks>
+        ///
+        public long? SequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
-        public long Offset => SystemProperties.Offset;
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service.
+        /// </remarks>
+        ///
+        public long? Offset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
-        public DateTimeOffset EnqueuedTime => SystemProperties.EnqueuedTime;
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service.
+        /// </remarks>
+        ///
+        public DateTimeOffset? EnqueuedTime { get; }
 
         /// <summary>
-        ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.
+        ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was published with.
         /// </summary>
         ///
-        public string PartitionKey => SystemProperties.PartitionKey;
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service.
+        /// </remarks>
+        ///
+        public string PartitionKey { get; }
 
         /// <summary>
-        ///   The set of event properties which are owned and populated by the Event Hubs service during
-        ///   operations.
+        ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
+        ///   event was received.
         /// </summary>
         ///
-        internal SystemEventProperties SystemProperties { get; set; }
+        /// <remarks>
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        /// </remarks>
+        ///
+        protected internal long? LastPartitionSequenceNumber { get; }
+
+        /// <summary>
+        ///   The offset of the event that was last enqueued into the Event Hub partition from which this event was
+        ///   received.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        /// </remarks>
+        ///
+        protected internal long? LastPartitionOffset { get; }
+
+        /// <summary>
+        ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from
+        ///   which this event was received.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        /// </remarks>
+        ///
+        protected internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data to use as the body of the event.</param>
+        ///
+        public EventData(ReadOnlyMemory<byte> eventBody) : this(eventBody, null)
+
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
+        ///
+        protected internal EventData(ReadOnlyMemory<byte> eventBody,
+                                     IDictionary<string, object> properties = null,
+                                     IReadOnlyDictionary<string, object> systemProperties = null,
+                                     long? sequenceNumber = null,
+                                     long? offset = null,
+                                     DateTimeOffset? enqueuedTime = null,
+                                     string partitionKey = null,
+                                     long? lastPartitionSequenceNumber = null,
+                                     long? lastPartitionOffset = null,
+                                     DateTimeOffset? lastPartitionEnqueuedTime = null)
+        {
+            Body = eventBody;
+            Properties = properties ?? new Dictionary<string, object>();
+            SystemProperties = systemProperties ?? new Dictionary<string, object>();
+            SequenceNumber = sequenceNumber;
+            Offset = offset;
+            EnqueuedTime = enqueuedTime;
+            PartitionKey = partitionKey;
+            LastPartitionSequenceNumber = lastPartitionSequenceNumber;
+            LastPartitionOffset = lastPartitionOffset;
+            LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -119,150 +212,5 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        ///   The set of event properties which are owned and populated by the Event Hubs service.
-        /// </summary>
-        ///
-        internal sealed class SystemEventProperties : Dictionary<string, object>
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="SystemEventProperties"/> class.
-            /// </summary>
-            ///
-            internal SystemEventProperties()
-            {
-            }
-
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="SystemEventProperties"/> class.
-            /// </summary>
-            ///
-            /// <param name="sequenceNumber">The logical sequence number of the event within the partition stream of the Event Hub.</param>
-            /// <param name="enqueuedTime">The date and time, in UTC, that the event was received by the partition.</param>
-            /// <param name="offset">The offset of the event relative to the Event Hub partition stream.</param>
-            /// <param name="partitionKey">The partition hashing key associate with the batch that the event was grouped with when sent.</param>
-            ///
-            internal SystemEventProperties(long sequenceNumber,
-                                           DateTimeOffset enqueuedTime,
-                                           string offset,
-                                           string partitionKey)
-            {
-                this[MessagePropertyName.SequenceNumber] = sequenceNumber;
-                this[MessagePropertyName.EnqueuedTime] = enqueuedTime;
-                this[MessagePropertyName.Offset] = offset;
-                this[MessagePropertyName.PartitionKey] = partitionKey;
-            }
-
-            /// <summary>
-            ///   The logical sequence number of the <see cref="EventData" /> within the partition stream of the Event Hub.
-            /// </summary>
-            ///
-            internal long SequenceNumber
-            {
-                get
-                {
-                    if (this.TryGetValue(MessagePropertyName.SequenceNumber, out var value))
-                    {
-                        return (long)value;
-                    }
-
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.MissingSystemProperty, MessagePropertyName.SequenceNumber));
-                }
-            }
-
-            /// <summary>
-            ///   The date and time, in UTC, that the <see cref="EventData" /> was received by the partition.
-            /// </summary>
-            ///
-            internal DateTimeOffset EnqueuedTime
-            {
-                get
-                {
-                    if (this.TryGetValue(MessagePropertyName.EnqueuedTime, out var value))
-                    {
-                        return (DateTimeOffset)value;
-                    }
-
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.MissingSystemProperty, MessagePropertyName.EnqueuedTime));
-                }
-            }
-
-            /// <summary>
-            ///   The offset of the <see cref="EventData" /> relative to the Event Hub partition stream.
-            /// </summary>
-            ///
-            /// <remarks>
-            ///   The offset is a marker or identifier for an event within the Event Hubs stream. The
-            ///   identifier is unique within a partition of the Event Hubs stream.
-            /// </remarks>
-            ///
-            internal long Offset
-            {
-                get
-                {
-                    if (this.TryGetValue(MessagePropertyName.Offset, out var value))
-                    {
-                        if (value is long offset)
-                        {
-                            return offset;
-                        }
-
-                        if ((value is string token) && (Int64.TryParse(token, out var parsedOffset)))
-                        {
-                            return parsedOffset;
-                        }
-                    }
-
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.MissingSystemProperty, MessagePropertyName.Offset));
-                }
-            }
-
-            /// <summary>
-            ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.
-            /// </summary>
-            ///
-            internal string PartitionKey
-            {
-                get
-                {
-                    if (this.TryGetValue(MessagePropertyName.PartitionKey, out var value))
-                    {
-                        return (string)value;
-                    }
-
-                    return null;
-                }
-            }
-
-            /// <summary>
-            ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
-            /// </summary>
-            ///
-            /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-            ///
-            /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-            ///
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override bool Equals(object obj) => base.Equals(obj);
-
-            /// <summary>
-            ///   Returns a hash code for this instance.
-            /// </summary>
-            ///
-            /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-            ///
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override int GetHashCode() => base.GetHashCode();
-
-            /// <summary>
-            ///   Converts the instance to string representation.
-            /// </summary>
-            ///
-            /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-            ///
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override string ToString() => base.ToString();
-        }
     }
 }

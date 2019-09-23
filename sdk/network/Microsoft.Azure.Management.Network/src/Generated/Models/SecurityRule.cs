@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// rule in the collection. The lower the priority number, the higher
         /// the priority of the rule.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// security rule resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -221,8 +221,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Direction { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the public IP resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the security rule resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

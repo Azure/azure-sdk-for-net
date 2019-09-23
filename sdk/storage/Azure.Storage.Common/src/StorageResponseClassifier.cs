@@ -1,0 +1,33 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System;
+using Azure.Core.Pipeline;
+
+namespace Azure.Storage.Common
+{
+    internal class StorageResponseClassifier : ResponseClassifier
+    {
+        public Uri SecondaryStorageUri { get; }
+
+        public StorageResponseClassifier(Uri secondaryStorageUri)
+        {
+            SecondaryStorageUri = secondaryStorageUri;
+        }
+
+        /// <summary>
+        /// Overridden version of IsRetriableResponse that allows for retrying 404 that occurs against the secondary host.
+        /// </summary>
+        /// <param name="message">The message containing both Response and Request</param>
+        /// <returns></returns>
+        public override bool IsRetriableResponse(HttpPipelineMessage message)
+        {
+            if (message.Request.UriBuilder.Host == SecondaryStorageUri.Host && message.Response.Status == Constants.HttpStatusCode.NotFound)
+            {
+                return true;
+            }
+            return base.IsRetriableResponse(message);
+        }
+    }
+}

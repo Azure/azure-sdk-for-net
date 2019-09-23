@@ -3,9 +3,12 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -15,10 +18,9 @@ namespace Azure.Storage.Common.Test
     public class StreamPartitionerTests
     {
         [Test]
-        public async Task ReadAsync()
+        public async Task GetNextPartitionAsync()
         {
             var expected = TestHelper.GetRandomBuffer(10 * Constants.MB);
-            _ = new ReadOnlyMemory<byte>(expected);
             var actual = new byte[expected.Length];
 
             Assert.AreNotSame(expected, actual);
@@ -32,7 +34,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (StreamPartition buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -58,7 +60,6 @@ namespace Azure.Storage.Common.Test
         public async Task Read_WithReadOnlyMemory()
         {
             var expected = TestHelper.GetRandomBuffer(10 * Constants.MB);
-            _ = new ReadOnlyMemory<byte>(expected);
             var actual = new byte[expected.Length];
 
             Assert.AreNotSame(expected, actual);
@@ -72,7 +73,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (StreamPartition buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -84,7 +85,7 @@ namespace Azure.Storage.Common.Test
                             Assert.IsTrue(buffer.CanRead);
                             Assert.IsTrue(buffer.CanSeek);
 
-                            buffer.Read(out var memory, (int)buffer.Length);
+                            buffer.Read(out ReadOnlyMemory<byte> memory, (int)buffer.Length);
 
                             memory.CopyTo(new Memory<byte>(actual, (int)position, (int)buffer.Length));
                         }
@@ -98,7 +99,7 @@ namespace Azure.Storage.Common.Test
 
         [Test]
         [NonParallelizable]
-        public async Task ReadAsync_1GB()
+        public async Task GetNextPartitionAsync_1GB()
         {
             long memoryStart;
             long memoryEnd;
@@ -117,7 +118,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (StreamPartition buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -149,8 +150,9 @@ namespace Azure.Storage.Common.Test
         }
 
         [Test]
+        [LiveOnly]
         [NonParallelizable]
-        public async Task ReadAsync_1GB_WithReadOnlyMemory()
+        public async Task GetNextPartitionAsync_1GB_WithReadOnlyMemory()
         {
             long memoryStart;
             long memoryEnd;
@@ -169,7 +171,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (StreamPartition buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -182,8 +184,8 @@ namespace Azure.Storage.Common.Test
 
                             Assert.IsTrue(buffer.CanRead);
                             Assert.IsTrue(buffer.CanSeek);
-                            
-                            buffer.Read(out var memory, (int)buffer.Length);
+
+                            buffer.Read(out ReadOnlyMemory<byte> memory, (int)buffer.Length);
 
                             Assert.AreEqual((int)buffer.Length, memory.Length);
                         }
@@ -204,7 +206,63 @@ namespace Azure.Storage.Common.Test
             Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
         }
 
-        class NonSeekableStream : MemoryStream
+        [Test]
+        [LiveOnly]
+        [NonParallelizable]
+        public async Task GetNextPartitionAsync_1GB_Sequencing()
+        {
+            var length = (511 * Constants.MB) - (1 * Constants.KB);
+            var numberOfBytesToSample = 1 * Constants.KB;
+            var maxActivePartitions = 4;
+            var maxLoadedPartitions = 8;
+
+            var expected = TestHelper.GetRandomBuffer(length);
+            var actual = new byte[expected.Length];
+
+            Assert.AreNotSame(expected, actual);
+
+            var sequence = new List<(long position, ReadOnlyMemory<byte> bytes)>();
+
+            using (var expectedStream = new NonSeekableStream(expected))
+            using (var reader = new StreamPartitioner(expectedStream))
+            {
+                Assert.IsTrue(expectedStream.CanRead);
+                Assert.IsFalse(expectedStream.CanSeek);
+
+                await foreach (StreamPartition buffer in reader.GetPartitionsAsync(maxActivePartitions, maxLoadedPartitions))
+                {
+                    using (buffer)
+                    {
+                        if (buffer.Length == 0)
+                        {
+                            Assert.AreEqual(expectedStream.Length, expectedStream.Position);
+                            break;
+                        }
+                        else
+                        {
+                            buffer.Read(out ReadOnlyMemory<byte> memory, numberOfBytesToSample);
+
+                            sequence.Add((buffer.ParentPosition, memory));
+                        }
+                    }
+                }
+            }
+
+            var currentPosition = 0L;
+
+            foreach ((long position, ReadOnlyMemory<byte> bytes) buffer in sequence.Skip(1))
+            {
+                Assert.IsTrue(currentPosition < buffer.position, "Partitions received out of order");
+                var expectedBytes = new byte[buffer.bytes.Length];
+                Array.Copy(expected, buffer.position, expectedBytes, 0, buffer.bytes.Length);
+
+                TestHelper.AssertSequenceEqual(expectedBytes, buffer.bytes.ToArray());
+
+                currentPosition = buffer.position;
+            }
+        }
+
+        private class NonSeekableStream : MemoryStream
         {
             public NonSeekableStream(byte[] buffer) : base(buffer)
             {
@@ -221,20 +279,19 @@ namespace Azure.Storage.Common.Test
             public override long Seek(long offset, SeekOrigin loc) => throw new InvalidOperationException();
         }
 
-        class MockNonSeekableStream : Stream
+        private class MockNonSeekableStream : Stream
         {
-            static int seed = Environment.TickCount;
+            private static int s_seed = Environment.TickCount;
+            private static readonly ThreadLocal<Random> s_random =
+                new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_seed)));
 
-            static readonly ThreadLocal<Random> random =
-                new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
-
-            public static Random Random => random.Value;
+            public static Random Random => s_random.Value;
 
             public MockNonSeekableStream(long length, bool randomizeData = false)
             {
-                this.Length = length;
-                this.position = 0;
-                this.randomizeData = randomizeData;
+                Length = length;
+                _position = 0;
+                _randomizeData = randomizeData;
             }
 
             public override bool CanRead => true;
@@ -245,13 +302,12 @@ namespace Azure.Storage.Common.Test
 
             public override long Length { get; }
 
-            long position;
-
-            readonly bool randomizeData;
+            private long _position;
+            private readonly bool _randomizeData;
 
             public override long Position
             {
-                get => this.position;
+                get => _position;
                 set => throw new InvalidOperationException();
             }
 
@@ -261,16 +317,16 @@ namespace Azure.Storage.Common.Test
 
             public override int Read(byte[] buffer, int offset, int count)
             {
-                if (this.randomizeData)
+                if (_randomizeData)
                 {
                     lock (this)
                     {
                         var i = 0;
 
-                        for (i = 0; i < count && this.position < this.Length; i++)
+                        for (i = 0; i < count && _position < Length; i++)
                         {
                             buffer[offset + i] = (byte)Random.Next(256);
-                            Interlocked.Increment(ref this.position);
+                            Interlocked.Increment(ref _position);
                         }
 
                         return i;
@@ -280,9 +336,9 @@ namespace Azure.Storage.Common.Test
                 {
                     lock (this)
                     {
-                        var i = (int)Math.Min(count, this.Length - this.position);
+                        var i = (int)Math.Min(count, Length - _position);
 
-                        Interlocked.Add(ref this.position, i);
+                        Interlocked.Add(ref _position, i);
 
                         return i;
                     }

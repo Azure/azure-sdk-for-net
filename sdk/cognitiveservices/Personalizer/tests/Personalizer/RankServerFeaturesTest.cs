@@ -12,9 +12,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6213")]
         public async Task RankServerFeatures()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "RankServerFeatures");
+                HttpMockServer.Initialize(this.GetType(), "RankServerFeatures");
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 

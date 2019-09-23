@@ -78,7 +78,7 @@ function DisplayHelp
   Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
-  Write-Host "$($indent)fare used for testing.  When running Live tests, please be sure to have these environment variables available,"
+  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
   Write-Host "$($indent)either within Visual Studio or command line environment."
   Write-Host ""
   Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
@@ -98,7 +98,7 @@ function DisplayHelp
   Write-Host "$($indent)`t`t`t`tused for the tests.  This will be created if it does not exist."
   Write-Host ""
 
-  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will be"
+  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will"
   Write-Host "$($indent)`t`t`t`tbe created to manage the Event Hub instances dynamically for the tests.  This"
   Write-Host "$($indent)`t`t`t`tprincipal must not already exist."
   Write-Host ""
@@ -159,10 +159,10 @@ function TearDownResources
 {
     <#
       .SYNOPSIS
-        Cleans up any Azure resoruces created by the script.
+        Cleans up any Azure resources created by the script.
         
       .DESCRIPTION
-        Responsible for cleaning up any Azure resoruces created 
+        Responsible for cleaning up any Azure resources created 
         by the script in case of failure.
     #>
     
@@ -205,7 +205,7 @@ if ([String]::IsNullOrEmpty($AzureRegion))
     $AzureRegion = "southcentralus"
 }
 
-# Disallow prinicpal names with a space.
+# Disallow principal names with a space.
 
 if ($ServicePrincipalName.Contains(" "))
 {
@@ -254,22 +254,22 @@ if ($resourceGroup -eq $null)
 
 if ($createResourceGroup)
 {
-    Write-Host "`t...Creaating new resource group"
+    Write-Host "`t...Creating new resource group"
     $resourceGroup = (New-AzResourceGroup -Name "$($ResourceGroupName)" -Location "$($AzureRegion)")
 }
 
 if ($resourceGroup -eq $null)
 {
-    Write-Error "Unable to locate or create the resource goup: $($ResourceGroupName)"
+    Write-Error "Unable to locate or create the resource group: $($ResourceGroupName)"
     exit -1
 }
 
 # At this point, we may have created a resource, so be safe and allow for removing any
-# resoruces created should the script fail.
+# resources created should the script fail.
 
 try 
 {
-    # Create the service prinicpal and grant contributor access for management in the resource group.
+    # Create the service principal and grant contributor access for management in the resource group.
 
     Write-Host "`t...Creating new service principal"
     Start-Sleep 1
@@ -301,7 +301,7 @@ try
         New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
     }    
 
-    # Write the environment variables
+    # Write the environment variables.
 
     Write-Host "Done."
     Write-Host ""

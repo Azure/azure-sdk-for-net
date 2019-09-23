@@ -1,6 +1,19 @@
 # Release History
 
+## 4.0.0-preview.4
+
+### Breaking changes
+
+- `KeyType` enumeration values have been changed to match other languages, e.g. `KeyType.EllipticCurve` is now `KeyType.Ec`.
+- `KeyOperations` has been renamed `KeyOperation`.
+- Enumerations including `KeyCurveName`, `KeyOperation`, and `KeyType` are now structures that define well-known, supported static fields.
+
+### Major changes
+
+- `KeyClient.UpdateKey` and `KeyClient.UpdateKeyAsync` now allow the `keyOperations` parameter to be null, resulting in no changes to the allowed key operations.
+
 ## 4.0.0-preview.1 (2019-06-28)
+
 Version 4.0.0-preview.1 is the first preview of our efforts to create a user-friendly client library for Azure Key Vault. For more information about
 preview releases of other Azure SDK libraries, please visit
 https://aka.ms/azure-sdk-preview1-net.
@@ -14,9 +27,10 @@ and
 demonstrate the new API.
 
 ### Major changes from `Microsoft.Azure.KeyVault`
+
 - Packages scoped by functionality
-    - `Azure.Security.KeyVault.Keys` contains a client for key operations.
-    - `Azure.Security.KeyVault.Secrets` contains a client for secret operations.
+  - `Azure.Security.KeyVault.Keys` contains a client for key operations.
+  - `Azure.Security.KeyVault.Secrets` contains a client for secret operations.
 - Client instances are scoped to vaults (an instance interacts with one vault
 only).
 - Asynchronous and synchronous APIs in the `Azure.Security.KeyVault.Keys` package.
@@ -28,8 +42,9 @@ only).
   for more information
 
 ### `Microsoft.Azure.KeyVault` features not implemented in this release:
+
 - Certificate management APIs
 - Cryptographic operations, e.g. sign, un/wrap, verify, en- and
 decrypt
 - National cloud support. This release supports public global cloud vaults,
-    e.g. https://{vault-name}.vault.azure.net
+    e.g. `https://{vault-name}.vault.azure.net`

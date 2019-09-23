@@ -3,7 +3,7 @@
 
 namespace TrackOne
 {
-    enum MessagingEntityType
+    internal enum MessagingEntityType
     {
         Queue = 0,
         Topic = 1,

@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
     /// SecretBase is the resource containing all the properties of the secret except its value.
     /// </summary>
-    public class SecretBase : Model
+    public class SecretBase : IJsonDeserializable, IJsonSerializable
     {
         private ObjectId _identifier;
         private VaultAttributes _attributes;
@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         public SecretBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             _identifier.Name = name;
         }
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
 
-        internal override void ReadProperties(JsonElement json)
+        internal virtual void ReadProperties(JsonElement json)
         {
             _identifier.ParseId("secrets", json.GetProperty("id").GetString());
 
@@ -138,14 +138,14 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Tags = new Dictionary<string, string>();
 
-                foreach (var prop in tags.EnumerateObject())
+                foreach (JsonProperty prop in tags.EnumerateObject())
                 {
                     Tags[prop.Name] = prop.Value.GetString();
                 }
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal virtual void WriteProperties(Utf8JsonWriter json)
         {
             if (ContentType != null)
             {
@@ -156,7 +156,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject("attributes");
 
-                _attributes.WriteProperties(ref json);
+                _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }
@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject("tags");
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }
@@ -177,5 +177,9 @@ namespace Azure.Security.KeyVault.Secrets
 
             // Managed is read-only don't serialize
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

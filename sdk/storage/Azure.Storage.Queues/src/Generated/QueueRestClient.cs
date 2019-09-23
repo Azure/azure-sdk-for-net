@@ -1,8 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
 // This file was automatically generated.  Do not edit.
+
+#pragma warning disable IDE0016 // Null check can be simplified 
+#pragma warning disable IDE0017 // Variable declaration can be inlined
+#pragma warning disable IDE0018 // Object initialization can be simplified
+#pragma warning disable SA1402  // File may only contain a single type
 
 #region Service
 namespace Azure.Storage.Queues
@@ -31,7 +36,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueServiceProperties properties,
@@ -46,19 +51,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         properties,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetPropertiesAsync_CreateResponse(_response);
                     }
@@ -82,8 +93,8 @@ namespace Azure.Storage.Queues
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.SetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
+            /// <returns>The Service.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueServiceProperties properties,
@@ -101,7 +112,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -121,7 +133,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -163,7 +175,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -177,18 +189,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -211,8 +229,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Service.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -225,7 +243,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -238,7 +257,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -290,7 +309,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics>> GetStatisticsAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -304,18 +323,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetStatisticsAsync_CreateResponse(_response);
                     }
@@ -338,8 +363,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.GetStatisticsAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetStatisticsAsync_CreateRequest(
+            /// <returns>The Service.GetStatisticsAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -352,7 +377,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -365,7 +391,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -421,7 +447,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling List Queues on a Queue Service.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueuesSegment>> ListQueuesSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueuesSegment>> ListQueuesSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -439,7 +465,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ListQueuesSegmentAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListQueuesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -449,12 +475,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListQueuesSegmentAsync_CreateResponse(_response);
                     }
@@ -481,8 +513,8 @@ namespace Azure.Storage.Queues
             /// <param name="include">Include this parameter to specify that the queues's metadata be returned as part of the response body.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.ListQueuesSegmentAsync Request.</returns>
-            internal static Azure.Core.Http.Request ListQueuesSegmentAsync_CreateRequest(
+            /// <returns>The Service.ListQueuesSegmentAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListQueuesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -499,7 +531,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -515,7 +548,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -576,7 +609,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -591,19 +624,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -627,8 +666,8 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.CreateAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
+            /// <returns>The Queue.CreateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -642,7 +681,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -659,7 +699,7 @@ namespace Azure.Storage.Queues
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -705,7 +745,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -719,18 +759,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -753,8 +799,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The Queue.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -767,7 +813,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -778,7 +825,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -820,7 +867,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.QueueProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueueProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -834,18 +881,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -868,8 +921,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Queue.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -882,7 +935,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -894,7 +948,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -961,7 +1015,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -976,19 +1030,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -1012,8 +1072,8 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.SetMetadataAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
+            /// <returns>The Queue.SetMetadataAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1027,7 +1087,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1045,7 +1106,7 @@ namespace Azure.Storage.Queues
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1087,7 +1148,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>a collection of signed identifiers</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier>>> GetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier>>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1101,18 +1162,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1135,8 +1202,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.GetAccessPolicyAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetAccessPolicyAsync_CreateRequest(
+            /// <returns>The Queue.GetAccessPolicyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1149,7 +1216,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1161,7 +1229,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1218,7 +1286,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier> permissions = default,
@@ -1233,19 +1301,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         permissions,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1269,8 +1343,8 @@ namespace Azure.Storage.Queues
             /// <param name="permissions">the acls for the queue</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Queue.SetAccessPolicyAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetAccessPolicyAsync_CreateRequest(
+            /// <returns>The Queue.SetAccessPolicyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier> permissions = default,
@@ -1284,7 +1358,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1310,7 +1385,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1362,7 +1437,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Get Messages on a Queue</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.DequeuedMessage>>> DequeueAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.DequeuedMessage>>> DequeueAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1378,7 +1453,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DequeueAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DequeueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         numberOfMessages,
@@ -1386,12 +1461,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DequeueAsync_CreateResponse(_response);
                     }
@@ -1416,8 +1497,8 @@ namespace Azure.Storage.Queues
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.DequeueAsync Request.</returns>
-            internal static Azure.Core.Http.Request DequeueAsync_CreateRequest(
+            /// <returns>The Messages.DequeueAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DequeueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1432,7 +1513,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1445,7 +1527,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1501,7 +1583,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> ClearAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> ClearAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1515,18 +1597,24 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ClearAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ClearAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ClearAsync_CreateResponse(_response);
                     }
@@ -1549,8 +1637,8 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.ClearAsync Request.</returns>
-            internal static Azure.Core.Http.Request ClearAsync_CreateRequest(
+            /// <returns>The Messages.ClearAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ClearAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1563,7 +1651,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -1574,7 +1663,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1619,7 +1708,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Put Message on a Queue</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.EnqueuedMessage>>> EnqueueAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.EnqueuedMessage>>> EnqueueAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -1636,7 +1725,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = EnqueueAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = EnqueueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         message,
@@ -1645,12 +1734,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return EnqueueAsync_CreateResponse(_response);
                     }
@@ -1676,8 +1771,8 @@ namespace Azure.Storage.Queues
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.EnqueueAsync Request.</returns>
-            internal static Azure.Core.Http.Request EnqueueAsync_CreateRequest(
+            /// <returns>The Messages.EnqueueAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage EnqueueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -1697,7 +1792,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
@@ -1717,7 +1813,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1774,7 +1870,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Peek Messages on a Queue</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>> PeekAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>> PeekAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1789,19 +1885,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = PeekAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = PeekAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         numberOfMessages,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return PeekAsync_CreateResponse(_response);
                     }
@@ -1825,8 +1927,8 @@ namespace Azure.Storage.Queues
             /// <param name="numberOfMessages">Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Messages.PeekAsync Request.</returns>
-            internal static Azure.Core.Http.Request PeekAsync_CreateRequest(
+            /// <returns>The Messages.PeekAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage PeekAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1840,7 +1942,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1853,7 +1956,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1920,7 +2023,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.UpdatedMessage}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UpdatedMessage>> UpdateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.UpdatedMessage>> UpdateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -1937,7 +2040,7 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = UpdateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UpdateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         message,
@@ -1946,12 +2049,18 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return UpdateAsync_CreateResponse(_response);
                     }
@@ -1977,8 +2086,8 @@ namespace Azure.Storage.Queues
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The MessageId.UpdateAsync Request.</returns>
-            internal static Azure.Core.Http.Request UpdateAsync_CreateRequest(
+            /// <returns>The MessageId.UpdateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage UpdateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -2002,7 +2111,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -2022,7 +2132,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2085,7 +2195,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string popReceipt,
@@ -2100,19 +2210,25 @@ namespace Azure.Storage.Queues
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         popReceipt,
                         timeout,
                         requestId))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -2136,8 +2252,8 @@ namespace Azure.Storage.Queues
             /// <param name="popReceipt">Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The MessageId.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The MessageId.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string popReceipt,
@@ -2155,7 +2271,8 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -2167,7 +2284,7 @@ namespace Azure.Storage.Queues
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2270,81 +2387,425 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class AccessPolicy
 
-#region class SignedIdentifier
+#region class CorsRule
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// signed identifier
+    /// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
     /// </summary>
-    public partial class SignedIdentifier
+    public partial class CorsRule
     {
         /// <summary>
-        /// a unique id
+        /// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
         /// </summary>
-        public string Id { get; set; }
+        public string AllowedOrigins { get; set; }
 
         /// <summary>
-        /// An Access policy
+        /// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
         /// </summary>
-        public Azure.Storage.Queues.Models.AccessPolicy AccessPolicy { get; set; }
+        public string AllowedMethods { get; set; }
 
         /// <summary>
-        /// Creates a new SignedIdentifier instance
+        /// the request headers that the origin domain may specify on the CORS request.
         /// </summary>
-        public SignedIdentifier()
-            : this(false)
-        {
-        }
+        public string AllowedHeaders { get; set; }
 
         /// <summary>
-        /// Creates a new SignedIdentifier instance
+        /// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
         /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SignedIdentifier(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.AccessPolicy = new Azure.Storage.Queues.Models.AccessPolicy();
-            }
-        }
+        public string ExposedHeaders { get; set; }
 
         /// <summary>
-        /// Serialize a SignedIdentifier instance as XML.
+        /// The maximum amount time that a browser should cache the preflight OPTIONS request.
         /// </summary>
-        /// <param name="value">The SignedIdentifier instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
+        public int MaxAgeInSeconds { get; set; }
+
+        /// <summary>
+        /// Serialize a CorsRule instance as XML.
+        /// </summary>
+        /// <param name="value">The CorsRule instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "CorsRule".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.CorsRule value, string name = "CorsRule", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Id", ""),
-                value.Id));
-            _element.Add(Azure.Storage.Queues.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+                System.Xml.Linq.XName.Get("AllowedOrigins", ""),
+                value.AllowedOrigins));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedMethods", ""),
+                value.AllowedMethods));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedHeaders", ""),
+                value.AllowedHeaders));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("ExposedHeaders", ""),
+                value.ExposedHeaders));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""),
+                value.MaxAgeInSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)));
             return _element;
         }
 
         /// <summary>
-        /// Deserializes XML into a new SignedIdentifier instance.
+        /// Deserializes XML into a new CorsRule instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SignedIdentifier instance.</returns>
-        internal static Azure.Storage.Queues.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized CorsRule instance.</returns>
+        internal static Azure.Storage.Queues.Models.CorsRule FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Queues.Models.SignedIdentifier _value = new Azure.Storage.Queues.Models.SignedIdentifier(true);
-            _value.Id = element.Element(System.Xml.Linq.XName.Get("Id", "")).Value;
-            _value.AccessPolicy = Azure.Storage.Queues.Models.AccessPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("AccessPolicy", "")));
+            Azure.Storage.Queues.Models.CorsRule _value = new Azure.Storage.Queues.Models.CorsRule();
+            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
+            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
+            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
+            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
+            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.SignedIdentifier value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.CorsRule value);
     }
 }
-#endregion class SignedIdentifier
+#endregion class CorsRule
+
+#region class DequeuedMessage
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// The object returned in the QueueMessageList array when calling Get Messages on a Queue.
+    /// </summary>
+    public partial class DequeuedMessage
+    {
+        /// <summary>
+        /// The Id of the Message.
+        /// </summary>
+        public string MessageId { get; internal set; }
+
+        /// <summary>
+        /// The time the Message was inserted into the Queue.
+        /// </summary>
+        public System.DateTimeOffset InsertionTime { get; internal set; }
+
+        /// <summary>
+        /// The time that the Message will expire and be automatically deleted.
+        /// </summary>
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
+
+        /// <summary>
+        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
+        /// </summary>
+        public string PopReceipt { get; internal set; }
+
+        /// <summary>
+        /// The time that the message will again become visible in the Queue.
+        /// </summary>
+        public System.DateTimeOffset TimeNextVisible { get; internal set; }
+
+        /// <summary>
+        /// The number of times the message has been dequeued.
+        /// </summary>
+        public long DequeueCount { get; internal set; }
+
+        /// <summary>
+        /// The content of the Message.
+        /// </summary>
+        public string MessageText { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new DequeuedMessage instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized DequeuedMessage instance.</returns>
+        internal static Azure.Storage.Queues.Models.DequeuedMessage FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Queues.Models.DequeuedMessage _value = new Azure.Storage.Queues.Models.DequeuedMessage();
+            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
+            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.PopReceipt = element.Element(System.Xml.Linq.XName.Get("PopReceipt", "")).Value;
+            _value.TimeNextVisible = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.DequeueCount = long.Parse(element.Element(System.Xml.Linq.XName.Get("DequeueCount", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.MessageText = element.Element(System.Xml.Linq.XName.Get("MessageText", "")).Value;
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.DequeuedMessage value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new DequeuedMessage instance for mocking.
+        /// </summary>
+        public static DequeuedMessage DequeuedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible,
+            long dequeueCount,
+            string messageText)
+        {
+            return new DequeuedMessage()
+            {
+                MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                PopReceipt = popReceipt,
+                TimeNextVisible = timeNextVisible,
+                DequeueCount = dequeueCount,
+                MessageText = messageText,
+            };
+        }
+    }
+}
+#endregion class DequeuedMessage
+
+#region class EnqueuedMessage
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// The object returned in the QueueMessageList array when calling Put Message on a Queue
+    /// </summary>
+    public partial class EnqueuedMessage
+    {
+        /// <summary>
+        /// The Id of the Message.
+        /// </summary>
+        public string MessageId { get; internal set; }
+
+        /// <summary>
+        /// The time the Message was inserted into the Queue.
+        /// </summary>
+        public System.DateTimeOffset InsertionTime { get; internal set; }
+
+        /// <summary>
+        /// The time that the Message will expire and be automatically deleted.
+        /// </summary>
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
+
+        /// <summary>
+        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
+        /// </summary>
+        public string PopReceipt { get; internal set; }
+
+        /// <summary>
+        /// The time that the message will again become visible in the Queue.
+        /// </summary>
+        public System.DateTimeOffset TimeNextVisible { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new EnqueuedMessage instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized EnqueuedMessage instance.</returns>
+        internal static Azure.Storage.Queues.Models.EnqueuedMessage FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Queues.Models.EnqueuedMessage _value = new Azure.Storage.Queues.Models.EnqueuedMessage();
+            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
+            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.PopReceipt = element.Element(System.Xml.Linq.XName.Get("PopReceipt", "")).Value;
+            _value.TimeNextVisible = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.EnqueuedMessage value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new EnqueuedMessage instance for mocking.
+        /// </summary>
+        public static EnqueuedMessage EnqueuedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible)
+        {
+            return new EnqueuedMessage()
+            {
+                MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                PopReceipt = popReceipt,
+                TimeNextVisible = timeNextVisible,
+            };
+        }
+    }
+}
+#endregion class EnqueuedMessage
+
+#region class GeoReplication
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// GeoReplication
+    /// </summary>
+    public partial class GeoReplication
+    {
+        /// <summary>
+        /// The status of the secondary location
+        /// </summary>
+        public Azure.Storage.Queues.Models.GeoReplicationStatus Status { get; internal set; }
+
+        /// <summary>
+        /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
+        /// </summary>
+        public System.DateTimeOffset LastSyncTime { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new GeoReplication instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized GeoReplication instance.</returns>
+        internal static Azure.Storage.Queues.Models.GeoReplication FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Queues.Models.GeoReplication _value = new Azure.Storage.Queues.Models.GeoReplication();
+            _value.Status = element.Element(System.Xml.Linq.XName.Get("Status", "")).Value;
+            _value.LastSyncTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("LastSyncTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.GeoReplication value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new GeoReplication instance for mocking.
+        /// </summary>
+        public static GeoReplication GeoReplication(
+            Azure.Storage.Queues.Models.GeoReplicationStatus status,
+            System.DateTimeOffset lastSyncTime)
+        {
+            return new GeoReplication()
+            {
+                Status = status,
+                LastSyncTime = lastSyncTime,
+            };
+        }
+    }
+}
+#endregion class GeoReplication
+
+#region enum strings GeoReplicationStatus
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// The status of the secondary location
+    /// </summary>
+    public partial struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
+    {
+        #pragma warning disable CA2211 // Non-constant fields should not be visible
+        /// <summary>
+        /// live
+        /// </summary>
+        public static Azure.Storage.Queues.Models.GeoReplicationStatus Live { get; } = @"live";
+
+        /// <summary>
+        /// bootstrap
+        /// </summary>
+        public static Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap { get; } = @"bootstrap";
+
+        /// <summary>
+        /// unavailable
+        /// </summary>
+        public static Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable { get; } = @"unavailable";
+        #pragma warning restore CA2211 // Non-constant fields should not be visible
+
+        /// <summary>
+        /// The GeoReplicationStatus value.
+        /// </summary>
+        private readonly string _value;
+
+        /// <summary>
+        /// Creates a new GeoReplicationStatus instance.
+        /// </summary>
+        /// <param name="value">The GeoReplicationStatus value.</param>
+        private GeoReplicationStatus(string value) { _value = value; }
+
+        /// <summary>
+        /// Check if two GeoReplicationStatus instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
+
+        /// <summary>
+        /// Check if two GeoReplicationStatus instances are equal.
+        /// </summary>
+        /// <param name="o">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.GeoReplicationStatus other && Equals(other);
+
+        /// <summary>
+        /// Get a hash code for the GeoReplicationStatus.
+        /// </summary>
+        /// <returns>Hash code for the GeoReplicationStatus.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Convert the GeoReplicationStatus to a string.
+        /// </summary>
+        /// <returns>String representation of the GeoReplicationStatus.</returns>
+        public override string ToString() => _value;
+
+        #pragma warning disable CA2225 // Operator overloads have named alternates
+        /// <summary>
+        /// Convert a string a GeoReplicationStatus.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>The GeoReplicationStatus value.</returns>
+        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
+        #pragma warning restore CA2225 // Operator overloads have named alternates
+
+        /// <summary>
+        /// Convert an GeoReplicationStatus to a string.
+        /// </summary>
+        /// <param name="o">The GeoReplicationStatus value.</param>
+        /// <returns>String representation of the GeoReplicationStatus value.</returns>
+        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus o) => o._value;
+
+        /// <summary>
+        /// Check if two GeoReplicationStatus instances are equal.
+        /// </summary>
+        /// <param name="a">The first instance to compare.</param>
+        /// <param name="b">The second instance to compare.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => a.Equals(b);
+
+        /// <summary>
+        /// Check if two GeoReplicationStatus instances are not equal.
+        /// </summary>
+        /// <param name="a">The first instance to compare.</param>
+        /// <param name="b">The second instance to compare.</param>
+        /// <returns>True if they're not equal, false otherwise.</returns>
+        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => !a.Equals(b);
+    }
+}
+#endregion enum strings GeoReplicationStatus
 
 #region enum ListQueuesIncludeType
 namespace Azure.Storage.Queues.Models
@@ -2369,130 +2830,25 @@ namespace Azure.Storage.Queues
         {
             public static string ToString(Azure.Storage.Queues.Models.ListQueuesIncludeType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata:
-                        return "metadata";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.");
-                }
+                    Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata => "metadata",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.")
+                };
             }
 
             public static Azure.Storage.Queues.Models.ListQueuesIncludeType ParseListQueuesIncludeType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "metadata":
-                        return Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.");
-                }
+                    "metadata" => Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.")
+                };
             }
         }
     }
 }
 #endregion enum ListQueuesIncludeType
-
-#region class QueueMessage
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// A Message object which can be stored in a Queue
-    /// </summary>
-    internal partial class QueueMessage
-    {
-        /// <summary>
-        /// The content of the message
-        /// </summary>
-        public string MessageText { get; set; }
-
-        /// <summary>
-        /// Serialize a QueueMessage instance as XML.
-        /// </summary>
-        /// <param name="value">The QueueMessage instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "QueueMessage".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueMessage value, string name = "QueueMessage", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("MessageText", ""),
-                value.MessageText));
-            return _element;
-        }
-    }
-}
-#endregion class QueueMessage
-
-#region class RetentionPolicy
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// the retention policy
-    /// </summary>
-    public partial class RetentionPolicy
-    {
-        /// <summary>
-        /// Indicates whether a retention policy is enabled for the storage service
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
-        /// </summary>
-        public int? Days { get; set; }
-
-        /// <summary>
-        /// Serialize a RetentionPolicy instance as XML.
-        /// </summary>
-        /// <param name="value">The RetentionPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.RetentionPolicy value, string name = "RetentionPolicy", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.Days != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Days", ""),
-                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new RetentionPolicy instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized RetentionPolicy instance.</returns>
-        internal static Azure.Storage.Queues.Models.RetentionPolicy FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.RetentionPolicy _value = new Azure.Storage.Queues.Models.RetentionPolicy();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
-            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
-            if (_child != null)
-            {
-                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.RetentionPolicy value);
-    }
-}
-#endregion class RetentionPolicy
 
 #region class Logging
 namespace Azure.Storage.Queues.Models
@@ -2545,7 +2901,7 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                this.RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
+                RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
             }
         }
 
@@ -2649,7 +3005,7 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                this.RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
+                RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
             }
         }
 
@@ -2725,90 +3081,593 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class Metrics
 
-#region class CorsRule
+#region class PeekedMessage
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
+    /// The object returned in the QueueMessageList array when calling Peek Messages on a Queue
     /// </summary>
-    public partial class CorsRule
+    public partial class PeekedMessage
     {
         /// <summary>
-        /// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
+        /// The Id of the Message.
         /// </summary>
-        public string AllowedOrigins { get; set; }
+        public string MessageId { get; internal set; }
 
         /// <summary>
-        /// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+        /// The time the Message was inserted into the Queue.
         /// </summary>
-        public string AllowedMethods { get; set; }
+        public System.DateTimeOffset InsertionTime { get; internal set; }
 
         /// <summary>
-        /// the request headers that the origin domain may specify on the CORS request.
+        /// The time that the Message will expire and be automatically deleted.
         /// </summary>
-        public string AllowedHeaders { get; set; }
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
 
         /// <summary>
-        /// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+        /// The number of times the message has been dequeued.
         /// </summary>
-        public string ExposedHeaders { get; set; }
+        public long DequeueCount { get; internal set; }
 
         /// <summary>
-        /// The maximum amount time that a browser should cache the preflight OPTIONS request.
+        /// The content of the Message.
         /// </summary>
-        public int MaxAgeInSeconds { get; set; }
+        public string MessageText { get; internal set; }
 
         /// <summary>
-        /// Serialize a CorsRule instance as XML.
-        /// </summary>
-        /// <param name="value">The CorsRule instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "CorsRule".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.CorsRule value, string name = "CorsRule", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedOrigins", ""),
-                value.AllowedOrigins));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedMethods", ""),
-                value.AllowedMethods));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedHeaders", ""),
-                value.AllowedHeaders));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("ExposedHeaders", ""),
-                value.ExposedHeaders));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""),
-                value.MaxAgeInSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new CorsRule instance.
+        /// Deserializes XML into a new PeekedMessage instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized CorsRule instance.</returns>
-        internal static Azure.Storage.Queues.Models.CorsRule FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized PeekedMessage instance.</returns>
+        internal static Azure.Storage.Queues.Models.PeekedMessage FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Queues.Models.CorsRule _value = new Azure.Storage.Queues.Models.CorsRule();
-            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
-            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
-            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
-            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
-            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            Azure.Storage.Queues.Models.PeekedMessage _value = new Azure.Storage.Queues.Models.PeekedMessage();
+            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
+            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.DequeueCount = long.Parse(element.Element(System.Xml.Linq.XName.Get("DequeueCount", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.MessageText = element.Element(System.Xml.Linq.XName.Get("MessageText", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.CorsRule value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.PeekedMessage value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new PeekedMessage instance for mocking.
+        /// </summary>
+        public static PeekedMessage PeekedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            long dequeueCount,
+            string messageText)
+        {
+            return new PeekedMessage()
+            {
+                MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                DequeueCount = dequeueCount,
+                MessageText = messageText,
+            };
+        }
     }
 }
-#endregion class CorsRule
+#endregion class PeekedMessage
+
+#region enum strings QueueErrorCode
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// Error codes returned by the service
+    /// </summary>
+    public partial struct QueueErrorCode : System.IEquatable<QueueErrorCode>
+    {
+        #pragma warning disable CA2211 // Non-constant fields should not be visible
+        /// <summary>
+        /// AccountAlreadyExists
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists { get; } = @"AccountAlreadyExists";
+
+        /// <summary>
+        /// AccountBeingCreated
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated { get; } = @"AccountBeingCreated";
+
+        /// <summary>
+        /// AccountIsDisabled
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled { get; } = @"AccountIsDisabled";
+
+        /// <summary>
+        /// AuthenticationFailed
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed { get; } = @"AuthenticationFailed";
+
+        /// <summary>
+        /// AuthorizationFailure
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure { get; } = @"AuthorizationFailure";
+
+        /// <summary>
+        /// ConditionHeadersNotSupported
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported { get; } = @"ConditionHeadersNotSupported";
+
+        /// <summary>
+        /// ConditionNotMet
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet { get; } = @"ConditionNotMet";
+
+        /// <summary>
+        /// EmptyMetadataKey
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey { get; } = @"EmptyMetadataKey";
+
+        /// <summary>
+        /// InsufficientAccountPermissions
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions { get; } = @"InsufficientAccountPermissions";
+
+        /// <summary>
+        /// InternalError
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InternalError { get; } = @"InternalError";
+
+        /// <summary>
+        /// InvalidAuthenticationInfo
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo { get; } = @"InvalidAuthenticationInfo";
+
+        /// <summary>
+        /// InvalidHeaderValue
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue { get; } = @"InvalidHeaderValue";
+
+        /// <summary>
+        /// InvalidHttpVerb
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb { get; } = @"InvalidHttpVerb";
+
+        /// <summary>
+        /// InvalidInput
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidInput { get; } = @"InvalidInput";
+
+        /// <summary>
+        /// InvalidMd5
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 { get; } = @"InvalidMd5";
+
+        /// <summary>
+        /// InvalidMetadata
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata { get; } = @"InvalidMetadata";
+
+        /// <summary>
+        /// InvalidQueryParameterValue
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue { get; } = @"InvalidQueryParameterValue";
+
+        /// <summary>
+        /// InvalidRange
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidRange { get; } = @"InvalidRange";
+
+        /// <summary>
+        /// InvalidResourceName
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName { get; } = @"InvalidResourceName";
+
+        /// <summary>
+        /// InvalidUri
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidUri { get; } = @"InvalidUri";
+
+        /// <summary>
+        /// InvalidXmlDocument
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument { get; } = @"InvalidXmlDocument";
+
+        /// <summary>
+        /// InvalidXmlNodeValue
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue { get; } = @"InvalidXmlNodeValue";
+
+        /// <summary>
+        /// Md5Mismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch { get; } = @"Md5Mismatch";
+
+        /// <summary>
+        /// MetadataTooLarge
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge { get; } = @"MetadataTooLarge";
+
+        /// <summary>
+        /// MissingContentLengthHeader
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader { get; } = @"MissingContentLengthHeader";
+
+        /// <summary>
+        /// MissingRequiredQueryParameter
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter { get; } = @"MissingRequiredQueryParameter";
+
+        /// <summary>
+        /// MissingRequiredHeader
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader { get; } = @"MissingRequiredHeader";
+
+        /// <summary>
+        /// MissingRequiredXmlNode
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode { get; } = @"MissingRequiredXmlNode";
+
+        /// <summary>
+        /// MultipleConditionHeadersNotSupported
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported { get; } = @"MultipleConditionHeadersNotSupported";
+
+        /// <summary>
+        /// OperationTimedOut
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut { get; } = @"OperationTimedOut";
+
+        /// <summary>
+        /// OutOfRangeInput
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput { get; } = @"OutOfRangeInput";
+
+        /// <summary>
+        /// OutOfRangeQueryParameterValue
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue { get; } = @"OutOfRangeQueryParameterValue";
+
+        /// <summary>
+        /// RequestBodyTooLarge
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge { get; } = @"RequestBodyTooLarge";
+
+        /// <summary>
+        /// ResourceTypeMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch { get; } = @"ResourceTypeMismatch";
+
+        /// <summary>
+        /// RequestUrlFailedToParse
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse { get; } = @"RequestUrlFailedToParse";
+
+        /// <summary>
+        /// ResourceAlreadyExists
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists { get; } = @"ResourceAlreadyExists";
+
+        /// <summary>
+        /// ResourceNotFound
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound { get; } = @"ResourceNotFound";
+
+        /// <summary>
+        /// ServerBusy
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode ServerBusy { get; } = @"ServerBusy";
+
+        /// <summary>
+        /// UnsupportedHeader
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader { get; } = @"UnsupportedHeader";
+
+        /// <summary>
+        /// UnsupportedXmlNode
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode { get; } = @"UnsupportedXmlNode";
+
+        /// <summary>
+        /// UnsupportedQueryParameter
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter { get; } = @"UnsupportedQueryParameter";
+
+        /// <summary>
+        /// UnsupportedHttpVerb
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb { get; } = @"UnsupportedHttpVerb";
+
+        /// <summary>
+        /// InvalidMarker
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker { get; } = @"InvalidMarker";
+
+        /// <summary>
+        /// MessageNotFound
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound { get; } = @"MessageNotFound";
+
+        /// <summary>
+        /// MessageTooLarge
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge { get; } = @"MessageTooLarge";
+
+        /// <summary>
+        /// PopReceiptMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch { get; } = @"PopReceiptMismatch";
+
+        /// <summary>
+        /// QueueAlreadyExists
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists { get; } = @"QueueAlreadyExists";
+
+        /// <summary>
+        /// QueueBeingDeleted
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted { get; } = @"QueueBeingDeleted";
+
+        /// <summary>
+        /// QueueDisabled
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled { get; } = @"QueueDisabled";
+
+        /// <summary>
+        /// QueueNotEmpty
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty { get; } = @"QueueNotEmpty";
+
+        /// <summary>
+        /// QueueNotFound
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound { get; } = @"QueueNotFound";
+        #pragma warning restore CA2211 // Non-constant fields should not be visible
+
+        /// <summary>
+        /// The QueueErrorCode value.
+        /// </summary>
+        private readonly string _value;
+
+        /// <summary>
+        /// Creates a new QueueErrorCode instance.
+        /// </summary>
+        /// <param name="value">The QueueErrorCode value.</param>
+        private QueueErrorCode(string value) { _value = value; }
+
+        /// <summary>
+        /// Check if two QueueErrorCode instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
+
+        /// <summary>
+        /// Check if two QueueErrorCode instances are equal.
+        /// </summary>
+        /// <param name="o">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.QueueErrorCode other && Equals(other);
+
+        /// <summary>
+        /// Get a hash code for the QueueErrorCode.
+        /// </summary>
+        /// <returns>Hash code for the QueueErrorCode.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Convert the QueueErrorCode to a string.
+        /// </summary>
+        /// <returns>String representation of the QueueErrorCode.</returns>
+        public override string ToString() => _value;
+
+        #pragma warning disable CA2225 // Operator overloads have named alternates
+        /// <summary>
+        /// Convert a string a QueueErrorCode.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>The QueueErrorCode value.</returns>
+        public static implicit operator QueueErrorCode(string value) => new Azure.Storage.Queues.Models.QueueErrorCode(value);
+        #pragma warning restore CA2225 // Operator overloads have named alternates
+
+        /// <summary>
+        /// Convert an QueueErrorCode to a string.
+        /// </summary>
+        /// <param name="o">The QueueErrorCode value.</param>
+        /// <returns>String representation of the QueueErrorCode value.</returns>
+        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode o) => o._value;
+
+        /// <summary>
+        /// Check if two QueueErrorCode instances are equal.
+        /// </summary>
+        /// <param name="a">The first instance to compare.</param>
+        /// <param name="b">The second instance to compare.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => a.Equals(b);
+
+        /// <summary>
+        /// Check if two QueueErrorCode instances are not equal.
+        /// </summary>
+        /// <param name="a">The first instance to compare.</param>
+        /// <param name="b">The second instance to compare.</param>
+        /// <returns>True if they're not equal, false otherwise.</returns>
+        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => !a.Equals(b);
+    }
+}
+#endregion enum strings QueueErrorCode
+
+#region class QueueItem
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// An Azure Storage Queue.
+    /// </summary>
+    public partial class QueueItem
+    {
+        /// <summary>
+        /// The name of the Queue.
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Metadata
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// Creates a new QueueItem instance
+        /// </summary>
+        public QueueItem()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new QueueItem instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal QueueItem(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new QueueItem instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized QueueItem instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueItem FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.QueueItem _value = new Azure.Storage.Queues.Models.QueueItem(true);
+            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            if (_child != null)
+            {
+                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
+                {
+                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
+                }
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueItem value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueItem instance for mocking.
+        /// </summary>
+        public static QueueItem QueueItem(
+            string name,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            return new QueueItem()
+            {
+                Name = name,
+                Metadata = metadata,
+            };
+        }
+    }
+}
+#endregion class QueueItem
+
+#region class QueueMessage
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// A Message object which can be stored in a Queue
+    /// </summary>
+    internal partial class QueueMessage
+    {
+        /// <summary>
+        /// The content of the message
+        /// </summary>
+        public string MessageText { get; set; }
+
+        /// <summary>
+        /// Serialize a QueueMessage instance as XML.
+        /// </summary>
+        /// <param name="value">The QueueMessage instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "QueueMessage".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueMessage value, string name = "QueueMessage", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("MessageText", ""),
+                value.MessageText));
+            return _element;
+        }
+    }
+}
+#endregion class QueueMessage
+
+#region class QueueProperties
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// QueueProperties
+    /// </summary>
+    public partial class QueueProperties
+    {
+        /// <summary>
+        /// x-ms-meta
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// The approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher.
+        /// </summary>
+        public int ApproximateMessagesCount { get; internal set; }
+
+        /// <summary>
+        /// Creates a new QueueProperties instance
+        /// </summary>
+        public QueueProperties()
+        {
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueProperties instance for mocking.
+        /// </summary>
+        public static QueueProperties QueueProperties(
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            int approximateMessagesCount)
+        {
+            return new QueueProperties()
+            {
+                Metadata = metadata,
+                ApproximateMessagesCount = approximateMessagesCount,
+            };
+        }
+    }
+}
+#endregion class QueueProperties
 
 #region class QueueServiceProperties
 namespace Azure.Storage.Queues.Models
@@ -2854,10 +3713,10 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                this.Logging = new Azure.Storage.Queues.Models.Logging();
-                this.HourMetrics = new Azure.Storage.Queues.Models.Metrics();
-                this.MinuteMetrics = new Azure.Storage.Queues.Models.Metrics();
-                this.Cors = new System.Collections.Generic.List<Azure.Storage.Queues.Models.CorsRule>();
+                Logging = new Azure.Storage.Queues.Models.Logging();
+                HourMetrics = new Azure.Storage.Queues.Models.Metrics();
+                MinuteMetrics = new Azure.Storage.Queues.Models.Metrics();
+                Cors = new System.Collections.Generic.List<Azure.Storage.Queues.Models.CorsRule>();
             }
         }
 
@@ -2942,69 +3801,59 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class QueueServiceProperties
 
-#region class QueueItem
+#region class QueueServiceStatistics
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// An Azure Storage Queue.
+    /// Statistics for the storage service.
     /// </summary>
-    public partial class QueueItem
+    public partial class QueueServiceStatistics
     {
         /// <summary>
-        /// The name of the Queue.
+        /// Geo-Replication information for the Secondary Storage Service
         /// </summary>
-        public string Name { get; internal set; }
+        public Azure.Storage.Queues.Models.GeoReplication GeoReplication { get; internal set; }
 
         /// <summary>
-        /// Metadata
+        /// Creates a new QueueServiceStatistics instance
         /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// Creates a new QueueItem instance
-        /// </summary>
-        public QueueItem()
+        public QueueServiceStatistics()
             : this(false)
         {
         }
 
         /// <summary>
-        /// Creates a new QueueItem instance
+        /// Creates a new QueueServiceStatistics instance
         /// </summary>
         /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal QueueItem(bool skipInitialization)
+        internal QueueServiceStatistics(bool skipInitialization)
         {
             if (!skipInitialization)
             {
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                GeoReplication = new Azure.Storage.Queues.Models.GeoReplication();
             }
         }
 
         /// <summary>
-        /// Deserializes XML into a new QueueItem instance.
+        /// Deserializes XML into a new QueueServiceStatistics instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized QueueItem instance.</returns>
-        internal static Azure.Storage.Queues.Models.QueueItem FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized QueueServiceStatistics instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueServiceStatistics FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.QueueItem _value = new Azure.Storage.Queues.Models.QueueItem(true);
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            Azure.Storage.Queues.Models.QueueServiceStatistics _value = new Azure.Storage.Queues.Models.QueueServiceStatistics(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("GeoReplication", ""));
             if (_child != null)
             {
-                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
-                {
-                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
+                _value.GeoReplication = Azure.Storage.Queues.Models.GeoReplication.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueItem value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueServiceStatistics value);
     }
 
     /// <summary>
@@ -3013,20 +3862,19 @@ namespace Azure.Storage.Queues.Models
     public static partial class QueuesModelFactory
     {
         /// <summary>
-        /// Creates a new QueueItem instance for mocking.
+        /// Creates a new QueueServiceStatistics instance for mocking.
         /// </summary>
-        public static QueueItem QueueItem(
-            string name,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        public static QueueServiceStatistics QueueServiceStatistics(
+            Azure.Storage.Queues.Models.GeoReplication geoReplication = default)
         {
-            var _model = new QueueItem();
-            _model.Name = name;
-            _model.Metadata = metadata;
-            return _model;
+            return new QueueServiceStatistics()
+            {
+                GeoReplication = geoReplication,
+            };
         }
     }
 }
-#endregion class QueueItem
+#endregion class QueueServiceStatistics
 
 #region class QueuesSegment
 namespace Azure.Storage.Queues.Models
@@ -3082,7 +3930,7 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                this.QueueItems = new System.Collections.Generic.List<Azure.Storage.Queues.Models.QueueItem>();
+                QueueItems = new System.Collections.Generic.List<Azure.Storage.Queues.Models.QueueItem>();
             }
         }
 
@@ -3138,496 +3986,149 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class QueuesSegment
 
-#region enum strings QueueErrorCode
+#region class RetentionPolicy
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// Error codes returned by the service
+    /// the retention policy
     /// </summary>
-    public partial struct QueueErrorCode : System.IEquatable<QueueErrorCode>
-    {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// AccountAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
-
-        /// <summary>
-        /// AccountBeingCreated
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated = @"AccountBeingCreated";
-
-        /// <summary>
-        /// AccountIsDisabled
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled = @"AccountIsDisabled";
-
-        /// <summary>
-        /// AuthenticationFailed
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed = @"AuthenticationFailed";
-
-        /// <summary>
-        /// AuthorizationFailure
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure = @"AuthorizationFailure";
-
-        /// <summary>
-        /// ConditionHeadersNotSupported
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
-
-        /// <summary>
-        /// ConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet = @"ConditionNotMet";
-
-        /// <summary>
-        /// EmptyMetadataKey
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
-
-        /// <summary>
-        /// InsufficientAccountPermissions
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
-
-        /// <summary>
-        /// InternalError
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InternalError = @"InternalError";
-
-        /// <summary>
-        /// InvalidAuthenticationInfo
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
-
-        /// <summary>
-        /// InvalidHeaderValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
-
-        /// <summary>
-        /// InvalidHttpVerb
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
-
-        /// <summary>
-        /// InvalidInput
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidInput = @"InvalidInput";
-
-        /// <summary>
-        /// InvalidMd5
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 = @"InvalidMd5";
-
-        /// <summary>
-        /// InvalidMetadata
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata = @"InvalidMetadata";
-
-        /// <summary>
-        /// InvalidQueryParameterValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
-
-        /// <summary>
-        /// InvalidRange
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidRange = @"InvalidRange";
-
-        /// <summary>
-        /// InvalidResourceName
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName = @"InvalidResourceName";
-
-        /// <summary>
-        /// InvalidUri
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidUri = @"InvalidUri";
-
-        /// <summary>
-        /// InvalidXmlDocument
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
-
-        /// <summary>
-        /// InvalidXmlNodeValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
-
-        /// <summary>
-        /// Md5Mismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch = @"Md5Mismatch";
-
-        /// <summary>
-        /// MetadataTooLarge
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge = @"MetadataTooLarge";
-
-        /// <summary>
-        /// MissingContentLengthHeader
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
-
-        /// <summary>
-        /// MissingRequiredQueryParameter
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
-
-        /// <summary>
-        /// MissingRequiredHeader
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
-
-        /// <summary>
-        /// MissingRequiredXmlNode
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
-
-        /// <summary>
-        /// MultipleConditionHeadersNotSupported
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
-
-        /// <summary>
-        /// OperationTimedOut
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut = @"OperationTimedOut";
-
-        /// <summary>
-        /// OutOfRangeInput
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput = @"OutOfRangeInput";
-
-        /// <summary>
-        /// OutOfRangeQueryParameterValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
-
-        /// <summary>
-        /// RequestBodyTooLarge
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
-
-        /// <summary>
-        /// ResourceTypeMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
-
-        /// <summary>
-        /// RequestUrlFailedToParse
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
-
-        /// <summary>
-        /// ResourceAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
-
-        /// <summary>
-        /// ResourceNotFound
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound = @"ResourceNotFound";
-
-        /// <summary>
-        /// ServerBusy
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ServerBusy = @"ServerBusy";
-
-        /// <summary>
-        /// UnsupportedHeader
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader = @"UnsupportedHeader";
-
-        /// <summary>
-        /// UnsupportedXmlNode
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
-
-        /// <summary>
-        /// UnsupportedQueryParameter
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
-
-        /// <summary>
-        /// UnsupportedHttpVerb
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
-
-        /// <summary>
-        /// InvalidMarker
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker = @"InvalidMarker";
-
-        /// <summary>
-        /// MessageNotFound
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound = @"MessageNotFound";
-
-        /// <summary>
-        /// MessageTooLarge
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge = @"MessageTooLarge";
-
-        /// <summary>
-        /// PopReceiptMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch = @"PopReceiptMismatch";
-
-        /// <summary>
-        /// QueueAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists = @"QueueAlreadyExists";
-
-        /// <summary>
-        /// QueueBeingDeleted
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted = @"QueueBeingDeleted";
-
-        /// <summary>
-        /// QueueDisabled
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled = @"QueueDisabled";
-
-        /// <summary>
-        /// QueueNotEmpty
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty = @"QueueNotEmpty";
-
-        /// <summary>
-        /// QueueNotFound
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound = @"QueueNotFound";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The QueueErrorCode value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new QueueErrorCode instance.
-        /// </summary>
-        /// <param name="value">The QueueErrorCode value.</param>
-        private QueueErrorCode(string value) { this._value = value; }
-
-        /// <summary>
-        /// Check if two QueueErrorCode instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two QueueErrorCode instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.QueueErrorCode other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the QueueErrorCode.
-        /// </summary>
-        /// <returns>Hash code for the QueueErrorCode.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
-
-        /// <summary>
-        /// Convert the QueueErrorCode to a string.
-        /// </summary>
-        /// <returns>String representation of the QueueErrorCode.</returns>
-        public override string ToString() => this._value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a QueueErrorCode.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The QueueErrorCode value.</returns>
-        public static implicit operator QueueErrorCode(string value) => new Azure.Storage.Queues.Models.QueueErrorCode(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an QueueErrorCode to a string.
-        /// </summary>
-        /// <param name="o">The QueueErrorCode value.</param>
-        /// <returns>String representation of the QueueErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode o) => o._value;
-
-        /// <summary>
-        /// Check if two QueueErrorCode instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two QueueErrorCode instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => !a.Equals(b);
-    }
-}
-#endregion enum strings QueueErrorCode
-
-#region enum strings GeoReplicationStatus
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The status of the secondary location
-    /// </summary>
-    public partial struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
-    {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// live
-        /// </summary>
-        public static Azure.Storage.Queues.Models.GeoReplicationStatus Live = @"live";
-
-        /// <summary>
-        /// bootstrap
-        /// </summary>
-        public static Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap = @"bootstrap";
-
-        /// <summary>
-        /// unavailable
-        /// </summary>
-        public static Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable = @"unavailable";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The GeoReplicationStatus value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new GeoReplicationStatus instance.
-        /// </summary>
-        /// <param name="value">The GeoReplicationStatus value.</param>
-        private GeoReplicationStatus(string value) { this._value = value; }
-
-        /// <summary>
-        /// Check if two GeoReplicationStatus instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two GeoReplicationStatus instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.GeoReplicationStatus other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the GeoReplicationStatus.
-        /// </summary>
-        /// <returns>Hash code for the GeoReplicationStatus.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
-
-        /// <summary>
-        /// Convert the GeoReplicationStatus to a string.
-        /// </summary>
-        /// <returns>String representation of the GeoReplicationStatus.</returns>
-        public override string ToString() => this._value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a GeoReplicationStatus.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The GeoReplicationStatus value.</returns>
-        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an GeoReplicationStatus to a string.
-        /// </summary>
-        /// <param name="o">The GeoReplicationStatus value.</param>
-        /// <returns>String representation of the GeoReplicationStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus o) => o._value;
-
-        /// <summary>
-        /// Check if two GeoReplicationStatus instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two GeoReplicationStatus instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => !a.Equals(b);
-    }
-}
-#endregion enum strings GeoReplicationStatus
-
-#region class GeoReplication
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// GeoReplication
-    /// </summary>
-    public partial class GeoReplication
+    public partial class RetentionPolicy
     {
         /// <summary>
-        /// The status of the secondary location
+        /// Indicates whether a retention policy is enabled for the storage service
         /// </summary>
-        public Azure.Storage.Queues.Models.GeoReplicationStatus Status { get; internal set; }
+        public bool Enabled { get; set; }
 
         /// <summary>
-        /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
+        /// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
         /// </summary>
-        public System.DateTimeOffset LastSyncTime { get; internal set; }
+        public int? Days { get; set; }
 
         /// <summary>
-        /// Deserializes XML into a new GeoReplication instance.
+        /// Serialize a RetentionPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The RetentionPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.RetentionPolicy value, string name = "RetentionPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.Days != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Days", ""),
+                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new RetentionPolicy instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized GeoReplication instance.</returns>
-        internal static Azure.Storage.Queues.Models.GeoReplication FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized RetentionPolicy instance.</returns>
+        internal static Azure.Storage.Queues.Models.RetentionPolicy FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Queues.Models.GeoReplication _value = new Azure.Storage.Queues.Models.GeoReplication();
-            _value.Status = element.Element(System.Xml.Linq.XName.Get("Status", "")).Value;
-            _value.LastSyncTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("LastSyncTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.RetentionPolicy _value = new Azure.Storage.Queues.Models.RetentionPolicy();
+            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
+            if (_child != null)
+            {
+                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.GeoReplication value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new GeoReplication instance for mocking.
-        /// </summary>
-        public static GeoReplication GeoReplication(
-            Azure.Storage.Queues.Models.GeoReplicationStatus status,
-            System.DateTimeOffset lastSyncTime)
-        {
-            var _model = new GeoReplication();
-            _model.Status = status;
-            _model.LastSyncTime = lastSyncTime;
-            return _model;
-        }
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.RetentionPolicy value);
     }
 }
-#endregion class GeoReplication
+#endregion class RetentionPolicy
+
+#region class SignedIdentifier
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// signed identifier
+    /// </summary>
+    public partial class SignedIdentifier
+    {
+        /// <summary>
+        /// a unique id
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// An Access policy
+        /// </summary>
+        public Azure.Storage.Queues.Models.AccessPolicy AccessPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new SignedIdentifier instance
+        /// </summary>
+        public SignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new SignedIdentifier instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal SignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                AccessPolicy = new Azure.Storage.Queues.Models.AccessPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a SignedIdentifier instance as XML.
+        /// </summary>
+        /// <param name="value">The SignedIdentifier instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Id", ""),
+                value.Id));
+            _element.Add(Azure.Storage.Queues.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SignedIdentifier instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SignedIdentifier instance.</returns>
+        internal static Azure.Storage.Queues.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Queues.Models.SignedIdentifier _value = new Azure.Storage.Queues.Models.SignedIdentifier(true);
+            _value.Id = element.Element(System.Xml.Linq.XName.Get("Id", "")).Value;
+            _value.AccessPolicy = Azure.Storage.Queues.Models.AccessPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("AccessPolicy", "")));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.SignedIdentifier value);
+    }
+}
+#endregion class SignedIdentifier
 
 #region class StorageError
 namespace Azure.Storage.Queues.Models
@@ -3638,14 +4139,14 @@ namespace Azure.Storage.Queues.Models
     internal partial class StorageError
     {
         /// <summary>
-        /// Code
-        /// </summary>
-        public string Code { get; internal set; }
-
-        /// <summary>
         /// Message
         /// </summary>
         public string Message { get; internal set; }
+
+        /// <summary>
+        /// Code
+        /// </summary>
+        public string Code { get; internal set; }
 
         /// <summary>
         /// Deserializes XML into a new StorageError instance.
@@ -3657,15 +4158,15 @@ namespace Azure.Storage.Queues.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.StorageError _value = new Azure.Storage.Queues.Models.StorageError();
-            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
-            if (_child != null)
-            {
-                _value.Code = _child.Value;
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
             if (_child != null)
             {
                 _value.Message = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
+            if (_child != null)
+            {
+                _value.Code = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -3675,387 +4176,6 @@ namespace Azure.Storage.Queues.Models
     }
 }
 #endregion class StorageError
-
-#region class DequeuedMessage
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Get Messages on a Queue.
-    /// </summary>
-    public partial class DequeuedMessage
-    {
-        /// <summary>
-        /// The Id of the Message.
-        /// </summary>
-        public string MessageId { get; internal set; }
-
-        /// <summary>
-        /// The time the Message was inserted into the Queue.
-        /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
-
-        /// <summary>
-        /// The time that the Message will expire and be automatically deleted.
-        /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
-
-        /// <summary>
-        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
-        /// </summary>
-        public string PopReceipt { get; internal set; }
-
-        /// <summary>
-        /// The time that the message will again become visible in the Queue.
-        /// </summary>
-        public System.DateTimeOffset TimeNextVisible { get; internal set; }
-
-        /// <summary>
-        /// The number of times the message has been dequeued.
-        /// </summary>
-        public long DequeueCount { get; internal set; }
-
-        /// <summary>
-        /// The content of the Message.
-        /// </summary>
-        public string MessageText { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new DequeuedMessage instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized DequeuedMessage instance.</returns>
-        internal static Azure.Storage.Queues.Models.DequeuedMessage FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Queues.Models.DequeuedMessage _value = new Azure.Storage.Queues.Models.DequeuedMessage();
-            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
-            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.PopReceipt = element.Element(System.Xml.Linq.XName.Get("PopReceipt", "")).Value;
-            _value.TimeNextVisible = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.DequeueCount = long.Parse(element.Element(System.Xml.Linq.XName.Get("DequeueCount", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.MessageText = element.Element(System.Xml.Linq.XName.Get("MessageText", "")).Value;
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.DequeuedMessage value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new DequeuedMessage instance for mocking.
-        /// </summary>
-        public static DequeuedMessage DequeuedMessage(
-            string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
-            string popReceipt,
-            System.DateTimeOffset timeNextVisible,
-            long dequeueCount,
-            string messageText)
-        {
-            var _model = new DequeuedMessage();
-            _model.MessageId = messageId;
-            _model.InsertionTime = insertionTime;
-            _model.ExpirationTime = expirationTime;
-            _model.PopReceipt = popReceipt;
-            _model.TimeNextVisible = timeNextVisible;
-            _model.DequeueCount = dequeueCount;
-            _model.MessageText = messageText;
-            return _model;
-        }
-    }
-}
-#endregion class DequeuedMessage
-
-#region class PeekedMessage
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Peek Messages on a Queue
-    /// </summary>
-    public partial class PeekedMessage
-    {
-        /// <summary>
-        /// The Id of the Message.
-        /// </summary>
-        public string MessageId { get; internal set; }
-
-        /// <summary>
-        /// The time the Message was inserted into the Queue.
-        /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
-
-        /// <summary>
-        /// The time that the Message will expire and be automatically deleted.
-        /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
-
-        /// <summary>
-        /// The number of times the message has been dequeued.
-        /// </summary>
-        public long DequeueCount { get; internal set; }
-
-        /// <summary>
-        /// The content of the Message.
-        /// </summary>
-        public string MessageText { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new PeekedMessage instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized PeekedMessage instance.</returns>
-        internal static Azure.Storage.Queues.Models.PeekedMessage FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Queues.Models.PeekedMessage _value = new Azure.Storage.Queues.Models.PeekedMessage();
-            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
-            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.DequeueCount = long.Parse(element.Element(System.Xml.Linq.XName.Get("DequeueCount", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.MessageText = element.Element(System.Xml.Linq.XName.Get("MessageText", "")).Value;
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.PeekedMessage value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new PeekedMessage instance for mocking.
-        /// </summary>
-        public static PeekedMessage PeekedMessage(
-            string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
-            long dequeueCount,
-            string messageText)
-        {
-            var _model = new PeekedMessage();
-            _model.MessageId = messageId;
-            _model.InsertionTime = insertionTime;
-            _model.ExpirationTime = expirationTime;
-            _model.DequeueCount = dequeueCount;
-            _model.MessageText = messageText;
-            return _model;
-        }
-    }
-}
-#endregion class PeekedMessage
-
-#region class EnqueuedMessage
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Put Message on a Queue
-    /// </summary>
-    public partial class EnqueuedMessage
-    {
-        /// <summary>
-        /// The Id of the Message.
-        /// </summary>
-        public string MessageId { get; internal set; }
-
-        /// <summary>
-        /// The time the Message was inserted into the Queue.
-        /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
-
-        /// <summary>
-        /// The time that the Message will expire and be automatically deleted.
-        /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
-
-        /// <summary>
-        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
-        /// </summary>
-        public string PopReceipt { get; internal set; }
-
-        /// <summary>
-        /// The time that the message will again become visible in the Queue.
-        /// </summary>
-        public System.DateTimeOffset TimeNextVisible { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new EnqueuedMessage instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized EnqueuedMessage instance.</returns>
-        internal static Azure.Storage.Queues.Models.EnqueuedMessage FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Queues.Models.EnqueuedMessage _value = new Azure.Storage.Queues.Models.EnqueuedMessage();
-            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
-            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.PopReceipt = element.Element(System.Xml.Linq.XName.Get("PopReceipt", "")).Value;
-            _value.TimeNextVisible = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.EnqueuedMessage value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new EnqueuedMessage instance for mocking.
-        /// </summary>
-        public static EnqueuedMessage EnqueuedMessage(
-            string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
-            string popReceipt,
-            System.DateTimeOffset timeNextVisible)
-        {
-            var _model = new EnqueuedMessage();
-            _model.MessageId = messageId;
-            _model.InsertionTime = insertionTime;
-            _model.ExpirationTime = expirationTime;
-            _model.PopReceipt = popReceipt;
-            _model.TimeNextVisible = timeNextVisible;
-            return _model;
-        }
-    }
-}
-#endregion class EnqueuedMessage
-
-#region class QueueServiceStatistics
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// Statistics for the storage service.
-    /// </summary>
-    public partial class QueueServiceStatistics
-    {
-        /// <summary>
-        /// Geo-Replication information for the Secondary Storage Service
-        /// </summary>
-        public Azure.Storage.Queues.Models.GeoReplication GeoReplication { get; internal set; }
-
-        /// <summary>
-        /// Creates a new QueueServiceStatistics instance
-        /// </summary>
-        public QueueServiceStatistics()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new QueueServiceStatistics instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal QueueServiceStatistics(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.GeoReplication = new Azure.Storage.Queues.Models.GeoReplication();
-            }
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new QueueServiceStatistics instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized QueueServiceStatistics instance.</returns>
-        internal static Azure.Storage.Queues.Models.QueueServiceStatistics FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.QueueServiceStatistics _value = new Azure.Storage.Queues.Models.QueueServiceStatistics(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("GeoReplication", ""));
-            if (_child != null)
-            {
-                _value.GeoReplication = Azure.Storage.Queues.Models.GeoReplication.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueServiceStatistics value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new QueueServiceStatistics instance for mocking.
-        /// </summary>
-        public static QueueServiceStatistics QueueServiceStatistics(
-            Azure.Storage.Queues.Models.GeoReplication geoReplication = default)
-        {
-            var _model = new QueueServiceStatistics();
-            _model.GeoReplication = geoReplication;
-            return _model;
-        }
-    }
-}
-#endregion class QueueServiceStatistics
-
-#region class QueueProperties
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// QueueProperties
-    /// </summary>
-    public partial class QueueProperties
-    {
-        /// <summary>
-        /// x-ms-meta
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// The approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher.
-        /// </summary>
-        public int ApproximateMessagesCount { get; internal set; }
-
-        /// <summary>
-        /// Creates a new QueueProperties instance
-        /// </summary>
-        public QueueProperties()
-        {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new QueueProperties instance for mocking.
-        /// </summary>
-        public static QueueProperties QueueProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            int approximateMessagesCount)
-        {
-            var _model = new QueueProperties();
-            _model.Metadata = metadata;
-            _model.ApproximateMessagesCount = approximateMessagesCount;
-            return _model;
-        }
-    }
-}
-#endregion class QueueProperties
 
 #region class UpdatedMessage
 namespace Azure.Storage.Queues.Models
@@ -4088,10 +4208,11 @@ namespace Azure.Storage.Queues.Models
             string popReceipt,
             System.DateTimeOffset timeNextVisible)
         {
-            var _model = new UpdatedMessage();
-            _model.PopReceipt = popReceipt;
-            _model.TimeNextVisible = timeNextVisible;
-            return _model;
+            return new UpdatedMessage()
+            {
+                PopReceipt = popReceipt,
+                TimeNextVisible = timeNextVisible,
+            };
         }
     }
 }

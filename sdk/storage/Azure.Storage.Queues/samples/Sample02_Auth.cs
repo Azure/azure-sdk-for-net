@@ -119,8 +119,10 @@ namespace Azure.Storage.Queues.Samples
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
 
             // Build a SAS URI
-            UriBuilder sasUri = new UriBuilder(StorageAccountQueueUri);
-            sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
+            UriBuilder sasUri = new UriBuilder(StorageAccountQueueUri)
+            {
+                Query = sas.ToSasQueryParameters(credential).ToString()
+            };
 
             // Create a client that can authenticate with the SAS URI
             QueueServiceClient service = new QueueServiceClient(sasUri.Uri);

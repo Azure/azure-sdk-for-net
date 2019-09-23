@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Authorization
 {
@@ -42,8 +41,8 @@ namespace Azure.Messaging.EventHubs.Authorization
         public EventHubSharedKeyCredential(string sharedAccessKeyName,
                                            string sharedAccessKey)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKeyName), sharedAccessKeyName);
-            Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKey), sharedAccessKey);
+            Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
+            Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
@@ -54,24 +53,24 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="scopes">The access scopes to request a token for.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
-        /// <returns>The token representating the shared access signature for this credential.</returns>
+        /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="scopes">The access scopes to request a token for.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
-        /// <returns>The token representating the shared access signature for this credential.</returns>
+        /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
+        public override Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         /// Coverts to shared access signature credential.

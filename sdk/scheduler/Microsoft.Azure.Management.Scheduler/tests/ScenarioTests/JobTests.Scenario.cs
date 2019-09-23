@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Scheduler;
@@ -27,7 +27,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForDay()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -140,7 +140,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForWeek()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -249,7 +249,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForMonth()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -373,7 +373,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForMonthlyOccurrence()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -517,7 +517,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateUpdateDeleteHttpJob()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -646,7 +646,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateHttpJobWithBasicAuth()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -783,7 +783,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateHttpJobWithOAuth()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -922,7 +922,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateHttpJobWithClientCertAuth()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1058,7 +1058,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreatePatchDeleteStorageJob()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1186,7 +1186,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateUpdateDeleteServiceBusQueueJob()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1361,7 +1361,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateUpdateDeleteServiceBusTopicJob()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1535,7 +1535,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobList()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName1 = TestUtilities.GenerateName("j1");
@@ -1630,7 +1630,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobHistoryList()
         {
-            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 const string existingJobCollectionName = "sdk-test";
                 const string existingJobName = "http_job";

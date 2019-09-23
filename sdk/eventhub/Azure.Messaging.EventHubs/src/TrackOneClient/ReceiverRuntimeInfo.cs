@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>Represents the approximate receiver runtime information for a logical partition of an Event Hub.</summary>
     internal class ReceiverRuntimeInformation
     {
@@ -14,7 +14,7 @@ namespace TrackOne
         /// <param name="partitionId"></param>
         public ReceiverRuntimeInformation(string partitionId)
         {
-            this.PartitionId = partitionId;
+            PartitionId = partitionId;
         }
 
         /// <summary>Gets the partition ID for a logical partition of an Event Hub.</summary>
@@ -43,10 +43,10 @@ namespace TrackOne
         /// <param name="updateFrom"></param>
         public void Update(EventData updateFrom)
         {
-            this.LastSequenceNumber = updateFrom.LastSequenceNumber;
-            this.LastEnqueuedOffset = updateFrom.LastEnqueuedOffset;
-            this.LastEnqueuedTimeUtc = updateFrom.LastEnqueuedTime;
-            this.RetrievalTime = updateFrom.RetrievalTime;
+            LastSequenceNumber = updateFrom.LastSequenceNumber;
+            LastEnqueuedOffset = updateFrom.LastEnqueuedOffset;
+            LastEnqueuedTimeUtc = updateFrom.LastEnqueuedTime;
+            RetrievalTime = updateFrom.RetrievalTime;
         }
     }
 }

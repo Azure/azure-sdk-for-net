@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
         /// <param name="storeSettings">Binary store settings.</param>
-        public BinarySink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings))
+        public BinarySink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
@@ -63,20 +63,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets binary store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
-        public StoreReadSettings StoreSettings { get; set; }
+        public StoreWriteSettings StoreSettings { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StoreSettings != null)
-            {
-                StoreSettings.Validate();
-            }
-        }
     }
 }

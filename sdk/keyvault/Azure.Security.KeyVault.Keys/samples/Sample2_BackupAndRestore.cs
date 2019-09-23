@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// Sample demonstrates how to backup and restore keys in the Key Vault
     /// using the synchronous methods of the KeyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class BackupAndRestore
     {
         [Test]
@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            
+
             // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.

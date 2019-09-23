@@ -65,8 +65,8 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public abstract Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
-                                                                   CancellationToken cancellationToken);
+        public abstract ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                        CancellationToken cancellationToken);
 
         /// <summary>
         ///   Closes the connection to the transport producer instance.

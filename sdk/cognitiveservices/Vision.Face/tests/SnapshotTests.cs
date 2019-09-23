@@ -24,9 +24,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceSnapshotTestFaceList()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceSnapshotTestFaceList");
+                HttpMockServer.Initialize(this.GetType(), "FaceSnapshotTestFaceList");
 
                 var sourceFaceListId = "source-face-list-id";
                 var name = $"name{sourceFaceListId}";
@@ -79,9 +79,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceSnapshotTestLargeFaceList()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceSnapshotTestLargeFaceList");
+                HttpMockServer.Initialize(this.GetType(), "FaceSnapshotTestLargeFaceList");
 
                 var sourceLargeFacelistId = "source-large-face-list-id";
                 var name = $"name{sourceLargeFacelistId}";
@@ -140,9 +140,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceSnapshotTestLargePersonGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceSnapshotTestLargePersonGroup");
+                HttpMockServer.Initialize(this.GetType(), "FaceSnapshotTestLargePersonGroup");
 
                 var sourceLargePersonGroupId = "source-large-person-group-id";
                 var name = $"name{sourceLargePersonGroupId}";
@@ -210,9 +210,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceSnapshotTestPersonGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceSnapshotTestPersonGroup");
+                HttpMockServer.Initialize(this.GetType(), "FaceSnapshotTestPersonGroup");
 
                 var sourcePersonGroupId = "source-person-group-id";
                 var name = $"name{sourcePersonGroupId}";

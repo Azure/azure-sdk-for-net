@@ -7,15 +7,14 @@ using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {
     public static class RetriableStream
     {
         public static Stream Create(
-            Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Func<long, Stream> responseFactory,
+            Func<long, ValueTask<Stream>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
@@ -23,8 +22,8 @@ namespace Azure.Core.Pipeline
         }
 
         public static async Task<Stream> CreateAsync(
-            Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Func<long, Stream> responseFactory,
+            Func<long, ValueTask<Stream>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
@@ -32,22 +31,22 @@ namespace Azure.Core.Pipeline
         }
 
         public static Stream Create(
-            Response initialResponse,
-            Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Stream initialResponse,
+            Func<long, Stream> streamFactory,
+            Func<long, ValueTask<Stream>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
-            return new RetriableStreamImpl(initialResponse, responseFactory, asyncResponseFactory, responseClassifier, maxRetries);
+            return new RetriableStreamImpl(initialResponse, streamFactory, asyncResponseFactory, responseClassifier, maxRetries);
         }
 
         private class RetriableStreamImpl : ReadOnlyStream
         {
             private readonly ResponseClassifier _responseClassifier;
 
-            private readonly Func<long, Response> _responseFactory;
+            private readonly Func<long, Stream> _streamFactory;
 
-            private readonly Func<long, Task<Response>> _asyncResponseFactory;
+            private readonly Func<long, ValueTask<Stream>> _asyncStreamFactory;
 
             private readonly int _maxRetries;
 
@@ -61,13 +60,13 @@ namespace Azure.Core.Pipeline
 
             private List<Exception>? _exceptions;
 
-            public RetriableStreamImpl(Response initialResponse,  Func<long, Response> responseFactory, Func<long, Task<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
+            public RetriableStreamImpl(Stream initialStream, Func<long, Stream> streamFactory, Func<long, ValueTask<Stream>> asyncStreamFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
-                _initialStream = EnsureStream(initialResponse);
-                _currentStream = EnsureStream(initialResponse);
-                _responseFactory = responseFactory;
+                _initialStream = EnsureStream(initialStream);
+                _currentStream = EnsureStream(initialStream);
+                _streamFactory = streamFactory;
                 _responseClassifier = responseClassifier;
-                _asyncResponseFactory = asyncResponseFactory;
+                _asyncStreamFactory = asyncStreamFactory;
                 _maxRetries = maxRetries;
             }
 
@@ -114,7 +113,7 @@ namespace Azure.Core.Pipeline
                     throw new AggregateException($"Retry failed after {_retryCount} tries", _exceptions);
                 }
 
-                _currentStream = EnsureStream(async ? (await _asyncResponseFactory(_position).ConfigureAwait(false)) : _responseFactory(_position));
+                _currentStream = EnsureStream(async ? (await _asyncStreamFactory(_position).ConfigureAwait(false)) : _streamFactory(_position));
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -145,14 +144,14 @@ namespace Azure.Core.Pipeline
                 set => throw new NotSupportedException();
             }
 
-            private static Stream EnsureStream(Response response)
+            private static Stream EnsureStream(Stream stream)
             {
-                if (response.ContentStream == null)
+                if (stream == null)
                 {
                     throw new InvalidOperationException("The response didn't have content");
                 }
 
-                return response.ContentStream;
+                return stream;
             }
         }
     }
