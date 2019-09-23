@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 
@@ -42,12 +42,12 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <seealso cref="MessageSession"/>
-    public sealed class SessionClient: IAsyncDisposable
+    public sealed class SessionClient : IAsyncDisposable
     {
         private const int DefaultPrefetchCount = 0;
 
         private readonly ServiceBusDiagnosticSource diagnosticSource;
-        
+
         internal ClientEntity ClientEntity { get; set; }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.Messaging.ServiceBus
 
             return session;
         }
-        
+
         internal Task OnClosingAsync()
         {
             return Task.CompletedTask;

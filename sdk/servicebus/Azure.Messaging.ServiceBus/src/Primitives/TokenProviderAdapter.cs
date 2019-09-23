@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Threading;
 using Azure.Core;
@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
         public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress, string appliesTo, string[] requiredClaims)
         {
             var claim = requiredClaims?.FirstOrDefault();
-            var securityToken = await this.tokenProvider.GetTokenAsync(new [] { appliesTo }, CancellationToken.None).ConfigureAwait(false);
+            var securityToken = await this.tokenProvider.GetTokenAsync(new TokenRequest(new[] { appliesTo }), CancellationToken.None).ConfigureAwait(false);
             return new CbsToken(securityToken.Token, CbsConstants.ServiceBusSasTokenType, securityToken.ExpiresOn.DateTime);
         }
     }

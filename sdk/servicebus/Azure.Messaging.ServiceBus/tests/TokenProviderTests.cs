@@ -1,7 +1,5 @@
-﻿//// Copyright (c) Microsoft. All rights reserved.
-//// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-//using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 //namespace Azure.Messaging.ServiceBus.UnitTests
 //{

@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -397,7 +397,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
 
                 connection = sender.ClientEntity.ServiceBusConnection;
-                await using  var sender2 = new MessageSender(connection, queueName);
+                await using var sender2 = new MessageSender(connection, queueName);
                 messageBody = Encoding.UTF8.GetBytes("Message 2");
                 message = new Message(messageBody);
                 await sender2.SendAsync(message);

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.IO;
 using Azure.Core;
@@ -18,10 +18,6 @@ namespace Azure.Messaging.ServiceBus.Management
     using System.Xml.Linq;
     using Azure.Messaging.ServiceBus.Primitives;
 
-    public class ManagementClientOptions : ClientOptions
-    {
-
-    }
     public class ManagementClient
     {
         private HttpPipeline _pipeline;
@@ -57,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Management
         internal ManagementClient(ServiceBusConnectionStringBuilder connectionStringBuilder, TokenCredential tokenProvider = default)
         {
             this.tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
-            this._pipeline = HttpPipelineBuilder.Build(new ManagementClientOptions(), true);
+            this._pipeline = HttpPipelineBuilder.Build(new ManagementClientOptions());
             this.endpointFQDN = connectionStringBuilder.Endpoint;
             this.port = GetPort(connectionStringBuilder.Endpoint);
             this.clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -74,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public virtual async Task<Response<NamespaceInfo>> GetNamespaceInfoAsync(CancellationToken cancellationToken = default)
         {
             var content = await GetEntity("$namespaceinfo", null, false, cancellationToken).ConfigureAwait(false);
-            return new Response<NamespaceInfo>(content.GetRawResponse(),NamespaceInfoExtensions.ParseFromContent(content));
+            return new Response<NamespaceInfo>(content.GetRawResponse(), NamespaceInfoExtensions.ParseFromContent(content));
         }
 
         #region DeleteEntity
@@ -182,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await GetEntity(queuePath, null, false, cancellationToken).ConfigureAwait(false);
 
-            return new Response<QueueDescription>(content.GetRawResponse(),QueueDescriptionExtensions.ParseFromContent(content));
+            return new Response<QueueDescription>(content.GetRawResponse(), QueueDescriptionExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -204,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await GetEntity(topicPath, null, false, cancellationToken).ConfigureAwait(false);
 
-            return new Response<TopicDescription>(content.GetRawResponse(),TopicDescriptionExtensions.ParseFromContent(content));
+            return new Response<TopicDescription>(content.GetRawResponse(), TopicDescriptionExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -228,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await GetEntity(EntityNameHelper.FormatSubscriptionPath(topicPath, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
 
-            return new Response<SubscriptionDescription>(content.GetRawResponse(),SubscriptionDescriptionExtensions.ParseFromContent(topicPath, content));
+            return new Response<SubscriptionDescription>(content.GetRawResponse(), SubscriptionDescriptionExtensions.ParseFromContent(topicPath, content));
         }
 
         /// <summary>
@@ -256,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await GetEntity(EntityNameHelper.FormatRulePath(topicPath, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
 
-            return new Response<RuleDescription>(content.GetRawResponse(),RuleDescriptionExtensions.ParseFromContent(content));
+            return new Response<RuleDescription>(content.GetRawResponse(), RuleDescriptionExtensions.ParseFromContent(content));
         }
 
         #endregion
@@ -303,7 +299,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await GetEntity(topicPath, null, true, cancellationToken).ConfigureAwait(false);
 
-            return new Response<TopicRuntimeInfo>(content.GetRawResponse(),TopicRuntimeInfoExtensions.ParseFromContent(content));
+            return new Response<TopicRuntimeInfo>(content.GetRawResponse(), TopicRuntimeInfoExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -327,7 +323,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await GetEntity(EntityNameHelper.FormatSubscriptionPath(topicPath, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
 
-            return new Response<SubscriptionRuntimeInfo>(content.GetRawResponse(),SubscriptionRuntimeInfoExtensions.ParseFromContent(topicPath, content));
+            return new Response<SubscriptionRuntimeInfo>(content.GetRawResponse(), SubscriptionRuntimeInfoExtensions.ParseFromContent(topicPath, content));
         }
 
         #endregion
@@ -359,7 +355,7 @@ namespace Azure.Messaging.ServiceBus.Management
             }
 
             var content = await GetEntity("$Resources/queues", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
-            return new Response<IList<QueueDescription>>(content.GetRawResponse(),QueueDescriptionExtensions.ParseCollectionFromContent(content));
+            return new Response<IList<QueueDescription>>(content.GetRawResponse(), QueueDescriptionExtensions.ParseCollectionFromContent(content));
         }
 
         /// <summary>
@@ -388,7 +384,7 @@ namespace Azure.Messaging.ServiceBus.Management
             }
 
             var content = await GetEntity("$Resources/topics", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
-            return new Response<IList<TopicDescription>>(content.GetRawResponse(),TopicDescriptionExtensions.ParseCollectionFromContent(content));
+            return new Response<IList<TopicDescription>>(content.GetRawResponse(), TopicDescriptionExtensions.ParseCollectionFromContent(content));
         }
 
         /// <summary>
@@ -419,7 +415,7 @@ namespace Azure.Messaging.ServiceBus.Management
             }
 
             var content = await GetEntity($"{topicPath}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
-            return new Response<IList<SubscriptionDescription>>(content.GetRawResponse(),SubscriptionDescriptionExtensions.ParseCollectionFromContent(topicPath, content));
+            return new Response<IList<SubscriptionDescription>>(content.GetRawResponse(), SubscriptionDescriptionExtensions.ParseCollectionFromContent(topicPath, content));
         }
 
         /// <summary>
@@ -507,7 +503,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 queueDescription.ForwardTo,
                 queueDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<QueueDescription>(content.GetRawResponse(),QueueDescriptionExtensions.ParseFromContent(content));
+            return new Response<QueueDescription>(content.GetRawResponse(), QueueDescriptionExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -551,7 +547,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await PutEntity(topicDescription.Path, atomRequest, false, null, null, cancellationToken).ConfigureAwait(false);
 
-            return new Response<TopicDescription>(content.GetRawResponse(),TopicDescriptionExtensions.ParseFromContent(content));
+            return new Response<TopicDescription>(content.GetRawResponse(), TopicDescriptionExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -627,7 +623,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 subscriptionDescription.ForwardTo,
                 subscriptionDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<SubscriptionDescription>(content.GetRawResponse(),SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicPath, content));
+            return new Response<SubscriptionDescription>(content.GetRawResponse(), SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicPath, content));
         }
 
         /// <summary>
@@ -661,7 +657,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 null,
                 cancellationToken).ConfigureAwait(false);
 
-            return new Response<RuleDescription>(content.GetRawResponse(),RuleDescriptionExtensions.ParseFromContent(content));
+            return new Response<RuleDescription>(content.GetRawResponse(), RuleDescriptionExtensions.ParseFromContent(content));
         }
 
         #endregion CreateEntity
@@ -695,7 +691,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 queueDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
 
-            return new Response<QueueDescription>(content.GetRawResponse(),QueueDescriptionExtensions.ParseFromContent(content));
+            return new Response<QueueDescription>(content.GetRawResponse(), QueueDescriptionExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -718,7 +714,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             var content = await PutEntity(topicDescription.Path, atomRequest, true, null, null, cancellationToken).ConfigureAwait(false);
 
-            return new Response<TopicDescription>(content.GetRawResponse(),TopicDescriptionExtensions.ParseFromContent(content));
+            return new Response<TopicDescription>(content.GetRawResponse(), TopicDescriptionExtensions.ParseFromContent(content));
         }
 
         /// <summary>
@@ -746,7 +742,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 subscriptionDescription.ForwardTo,
                 subscriptionDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<SubscriptionDescription>(content.GetRawResponse(),SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicPath, content));
+            return new Response<SubscriptionDescription>(content.GetRawResponse(), SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicPath, content));
         }
 
         /// <summary>
@@ -890,7 +886,7 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 return null;
             }
-            
+
             string exceptionMessage = string.Empty;
             if (response.ContentStream != null)
             {
@@ -1005,7 +1001,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
         private async Task<string> GetToken(string requestUri)
         {
-            var token = await this.tokenProvider.GetTokenAsync(new [] { requestUri }, CancellationToken.None).ConfigureAwait(false);
+            var token = await this.tokenProvider.GetTokenAsync(new TokenRequest(new[] { requestUri }), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 

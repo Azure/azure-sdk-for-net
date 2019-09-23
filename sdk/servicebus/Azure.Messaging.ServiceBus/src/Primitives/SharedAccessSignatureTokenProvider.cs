@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Linq;
 using System.Threading;
@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    internal class SharedAccessSignatureTokenProvider: TokenCredential
+    internal class SharedAccessSignatureTokenProvider : TokenCredential
     {
         private const TokenScope DefaultTokenScope = TokenScope.Entity;
 
@@ -160,17 +160,17 @@ namespace Azure.Messaging.ServiceBus.Primitives
             }
         }
 
-        public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+        public override Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken)
         {
-            var appliesTo = NormalizeAppliesTo(scopes);
+            var appliesTo = NormalizeAppliesTo(request.Scopes);
             string tokenString = this.BuildSignature(appliesTo);
             var securityToken = new AccessToken(tokenString, DateTimeOffset.MaxValue);
             return Task.FromResult<AccessToken>(securityToken);
         }
 
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken)
         {
-            var appliesTo = NormalizeAppliesTo(scopes);
+            var appliesTo = NormalizeAppliesTo(request.Scopes);
             string tokenString = this.BuildSignature(appliesTo);
             var securityToken = new AccessToken(tokenString, DateTimeOffset.MaxValue);
             return securityToken;

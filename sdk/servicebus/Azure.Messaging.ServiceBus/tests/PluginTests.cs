@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -164,74 +164,73 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 Assert.True(messageReceived);
             });
         }
-    }
-
-    internal class FirstSendPlugin : ServiceBusPlugin
-    {
-        public override string Name => nameof(SendReceivePlugin);
-
-        public override Task<Message> BeforeMessageSend(Message message)
+        internal class FirstSendPlugin : ServiceBusPlugin
         {
-            message.UserProperties.Add("FirstSendPlugin", true);
-            return Task.FromResult(message);
-        }
-    }
+            public override string Name => nameof(SendReceivePlugin);
 
-    internal class SecondSendPlugin : ServiceBusPlugin
-    {
-        public override string Name => nameof(SendReceivePlugin);
-
-        public override Task<Message> BeforeMessageSend(Message message)
-        {
-            // Ensure that the first plugin actually ran first
-            Assert.True((bool)message.UserProperties["FirstSendPlugin"]);
-            message.UserProperties.Add("SecondSendPlugin", true);
-            return Task.FromResult(message);
-        }
-    }
-
-    internal class SendReceivePlugin : ServiceBusPlugin
-    {
-        // Null the body on send, and replace it when received.
-        public Dictionary<string, ReadOnlyMemory<byte>> MessageBodies = new Dictionary<string, ReadOnlyMemory<byte>>();
-
-        public override string Name => nameof(SendReceivePlugin);
-
-        public override Task<Message> BeforeMessageSend(Message message)
-        {
-            this.MessageBodies.Add(message.MessageId, message.Body);
-            var clonedMessage = message.Clone();
-            clonedMessage.Body = null;
-            return Task.FromResult(clonedMessage);
+            public override Task<Message> BeforeMessageSend(Message message)
+            {
+                message.UserProperties.Add("FirstSendPlugin", true);
+                return Task.FromResult(message);
+            }
         }
 
-        public override Task<ReceivedMessage> AfterMessageReceive(ReceivedMessage message)
+        internal class SecondSendPlugin : ServiceBusPlugin
         {
-            Assert.True(message.Body.IsEmpty);
-            message.Body = this.MessageBodies[message.MessageId];
-            return Task.FromResult(message);
+            public override string Name => nameof(SendReceivePlugin);
+
+            public override Task<Message> BeforeMessageSend(Message message)
+            {
+                // Ensure that the first plugin actually ran first
+                Assert.True((bool)message.UserProperties["FirstSendPlugin"]);
+                message.UserProperties.Add("SecondSendPlugin", true);
+                return Task.FromResult(message);
+            }
         }
-    }
 
-    internal class ExceptionPlugin : ServiceBusPlugin
-    {
-        public override string Name => nameof(ExceptionPlugin);
-
-        public override Task<Message> BeforeMessageSend(Message message)
+        internal class SendReceivePlugin : ServiceBusPlugin
         {
-            throw new NotImplementedException();
+            // Null the body on send, and replace it when received.
+            public Dictionary<string, ReadOnlyMemory<byte>> MessageBodies = new Dictionary<string, ReadOnlyMemory<byte>>();
+
+            public override string Name => nameof(SendReceivePlugin);
+
+            public override Task<Message> BeforeMessageSend(Message message)
+            {
+                this.MessageBodies.Add(message.MessageId, message.Body);
+                var clonedMessage = message.Clone();
+                clonedMessage.Body = null;
+                return Task.FromResult(clonedMessage);
+            }
+
+            public override Task<ReceivedMessage> AfterMessageReceive(ReceivedMessage message)
+            {
+                Assert.True(message.Body.IsEmpty);
+                message.Body = this.MessageBodies[message.MessageId];
+                return Task.FromResult(message);
+            }
         }
-    }
 
-    internal class ShouldCompleteAnywayExceptionPlugin : ServiceBusPlugin
-    {
-        public override bool ShouldContinueOnException => true;
-
-        public override string Name => nameof(ShouldCompleteAnywayExceptionPlugin);
-
-        public override Task<Message> BeforeMessageSend(Message message)
+        internal class ExceptionPlugin : ServiceBusPlugin
         {
-            throw new NotImplementedException();
+            public override string Name => nameof(ExceptionPlugin);
+
+            public override Task<Message> BeforeMessageSend(Message message)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        internal class ShouldCompleteAnywayExceptionPlugin : ServiceBusPlugin
+        {
+            public override bool ShouldContinueOnException => true;
+
+            public override string Name => nameof(ShouldCompleteAnywayExceptionPlugin);
+
+            public override Task<Message> BeforeMessageSend(Message message)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

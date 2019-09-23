@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -258,7 +258,7 @@ namespace Azure.Messaging.ServiceBus
             return false;
         }
 
-        public static bool operator == (CorrelationFilter o1, CorrelationFilter o2)
+        public static bool operator ==(CorrelationFilter o1, CorrelationFilter o2)
         {
             if (ReferenceEquals(o1, o2))
             {
@@ -273,7 +273,7 @@ namespace Azure.Messaging.ServiceBus
             return o1.Equals(o2);
         }
 
-        public static bool operator != (CorrelationFilter p1, CorrelationFilter p2)
+        public static bool operator !=(CorrelationFilter p1, CorrelationFilter p2)
         {
             return !(p1 == p2);
         }

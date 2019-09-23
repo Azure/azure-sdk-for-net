@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                await using  var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,

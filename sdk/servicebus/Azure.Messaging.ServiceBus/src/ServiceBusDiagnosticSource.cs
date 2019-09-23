@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus
         public const string BaseActivityName = "Microsoft.Azure.ServiceBus.";
 
         public const string ExceptionEventName = BaseActivityName + "Exception";
-        public const string ProcessActivityName =  BaseActivityName + "Process";
+        public const string ProcessActivityName = BaseActivityName + "Process";
 
         public const string ActivityIdPropertyName = "Diagnostic-Id";
         public const string CorrelationContextPropertyName = "Correlation-Context";
@@ -45,11 +45,11 @@ namespace Azure.Messaging.ServiceBus
         internal Activity SendStart(IList<Message> messageList)
         {
             Activity activity = Start("Send", () => new
-                {
-                    Messages = messageList,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                Messages = messageList,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetTags(a, messageList)
             );
 
@@ -80,11 +80,11 @@ namespace Azure.Messaging.ServiceBus
         internal Activity ProcessStart(Message message)
         {
             return ProcessStart("Process", message, () => new
-                {
-                    Message = message,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                Message = message,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetTags(a, message));
         }
 
@@ -110,12 +110,12 @@ namespace Azure.Messaging.ServiceBus
         internal Activity ProcessSessionStart(MessageSession session, Message message)
         {
             return ProcessStart("ProcessSession", message, () => new
-                {
-                    Session = session,
-                    Message = message,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                Session = session,
+                Message = message,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetTags(a, message));
         }
 
@@ -142,12 +142,12 @@ namespace Azure.Messaging.ServiceBus
         internal Activity ScheduleStart(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
             Activity activity = Start("Schedule", () => new
-                {
-                    Message = message,
-                    ScheduleEnqueueTimeUtc = scheduleEnqueueTimeUtc,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                Message = message,
+                ScheduleEnqueueTimeUtc = scheduleEnqueueTimeUtc,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetTags(a, message));
 
             Inject(message);
@@ -493,11 +493,11 @@ namespace Azure.Messaging.ServiceBus
         internal Activity AcceptMessageSessionStart(string sessionId)
         {
             return Start("AcceptMessageSession", () => new
-                {
-                    SessionId = sessionId,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                SessionId = sessionId,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetSessionTag(a, sessionId)
             );
         }
@@ -524,11 +524,11 @@ namespace Azure.Messaging.ServiceBus
         internal Activity GetSessionStateStart(string sessionId)
         {
             return Start("GetSessionState", () => new
-                {
-                    SessionId = sessionId,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                SessionId = sessionId,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetSessionTag(a, sessionId));
         }
 
@@ -555,12 +555,12 @@ namespace Azure.Messaging.ServiceBus
         internal Activity SetSessionStateStart(string sessionId, byte[] state)
         {
             return Start("SetSessionState", () => new
-                {
-                    State = state,
-                    SessionId = sessionId,
-                    Entity = this.entityPath,
-                    Endpoint = this.endpoint
-                },
+            {
+                State = state,
+                SessionId = sessionId,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
                 a => SetSessionTag(a, sessionId));
         }
 
@@ -682,7 +682,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private string SerializeCorrelationContext(IList<KeyValuePair<string,string>> baggage)
+        private string SerializeCorrelationContext(IList<KeyValuePair<string, string>> baggage)
         {
             if (baggage != null && baggage.Count > 0)
             {

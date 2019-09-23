@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 using Microsoft.Azure.Amqp;
@@ -36,10 +36,10 @@ namespace Azure.Messaging.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
-    public class MessageSender: IAsyncDisposable
+    public class MessageSender : IAsyncDisposable
     {
         private int deliveryCount;
-        
+
         private readonly ActiveClientLinkManager clientLinkManager;
         private readonly ActiveClientLinkManager requestResponseLinkManager;
 
@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string entityPath,
             string viaEntityPath,
             AmqpClientOptions options = null)
-            :this(viaEntityPath, entityPath, null, serviceBusConnection, options)
+            : this(viaEntityPath, entityPath, null, serviceBusConnection, options)
         {
             ClientEntity.OwnsConnection = false;
         }
@@ -637,14 +637,14 @@ namespace Azure.Messaging.ServiceBus.Core
                 audience = new string[] { endpointUri.AbsoluteUri };
             }
 
-            string[] claims = {ClaimConstants.Send};
+            string[] claims = { ClaimConstants.Send };
             var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.SendingLinkDestination, ClientEntity.ServiceBusConnection, endpointUri, audience, claims, amqpLinkSettings, ClientEntity.ClientId);
             var linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             this.clientLinkManager.SetLink(linkDetails);
 
             MessagingEventSource.Log.AmqpSendLinkCreateStop(ClientEntity.ClientId);
-            return (SendingAmqpLink) linkDetails.Link;
+            return (SendingAmqpLink)linkDetails.Link;
         }
 
         private async Task<RequestResponseAmqpLink> CreateRequestResponseLinkAsync(TimeSpan timeout)
@@ -681,7 +681,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             this.requestResponseLinkManager.SetLink(linkDetails);
 
-            return (RequestResponseAmqpLink) linkDetails.Link;
+            return (RequestResponseAmqpLink)linkDetails.Link;
         }
 
         private ArraySegment<byte> GetNextDeliveryTag()
@@ -690,7 +690,7 @@ namespace Azure.Messaging.ServiceBus.Core
             return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));
         }
 
-        public  async ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync()
         {
             await ClientEntity.CloseAsync(OnClosingAsync).ConfigureAwait(false);
         }

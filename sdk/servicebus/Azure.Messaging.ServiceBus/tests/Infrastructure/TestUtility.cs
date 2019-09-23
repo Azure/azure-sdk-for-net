@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -13,13 +13,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
     using Core;
     using Polly;
 
-    static class TestUtility
+    internal static class TestUtility
     {
         private static readonly Lazy<string> NamespaceConnectionStringInstance =
-            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> SocketNamespaceConnectionStringInstance =
-            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()){TransportType = TransportType.AmqpWebSockets}.ToString(), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()) { TransportType = TransportType.AmqpWebSockets }.ToString(), LazyThreadSafetyMode.PublicationOnly);
 
         internal static string NamespaceConnectionString => NamespaceConnectionStringInstance.Value;
 
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         internal static async Task<IList<ReceivedMessage>> ReceiveDeferredMessagesAsync(MessageReceiver messageReceiver, IEnumerable<long> sequenceNumbers)
         {
             var messagesToReturn = new List<ReceivedMessage>();
-            foreach(var sequenceNumber in sequenceNumbers)
+            foreach (var sequenceNumber in sequenceNumbers)
             {
                 var msg = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumber);
                 if (msg != null)

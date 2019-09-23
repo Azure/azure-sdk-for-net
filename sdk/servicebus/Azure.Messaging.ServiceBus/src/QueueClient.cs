@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 
@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus
     /// </example>
     /// <remarks>Use <see cref="MessageSender"/> or <see cref="MessageReceiver"/> for advanced set of functionality.
     /// It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class QueueClient: IAsyncDisposable
+    public class QueueClient : IAsyncDisposable
     {
         internal ClientEntity ClientEntity { get; set; }
 
@@ -136,15 +136,15 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string Path => this.QueueName;
 
-        
+
         public MessageSender CreateSender()
         {
-           return new MessageSender(
-                                this.QueueName,
-                                null,
-                                MessagingEntityType.Queue,
-                                ClientEntity.ServiceBusConnection,
-                                ClientEntity.Options);
+            return new MessageSender(
+                                 this.QueueName,
+                                 null,
+                                 MessagingEntityType.Queue,
+                                 ClientEntity.ServiceBusConnection,
+                                 ClientEntity.Options);
         }
 
         public MessageReceiver CreateReceiver(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         internal SessionClient CreateSessionClient(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
-        {            
+        {
             receiveOptions ??= ReceiveOptions.Default;
 
             return new SessionClient(

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus
         /// </example>
         /// <param name="endpoint">Fully qualified endpoint.</param>
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, TransportType transportType)
-            :this(endpoint, entityPath, sharedAccessSignature)
+            : this(endpoint, entityPath, sharedAccessSignature)
         {
             this.TransportType = transportType;
         }
@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus
             set => this.sasKey = value.Trim();
         }
 
-         /// <summary>
+        /// <summary>
         /// Get the shared access signature token from the connection string
         /// </summary>
         /// <value>Shared Access Signature token</value>
@@ -272,13 +272,13 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (!string.IsNullOrWhiteSpace(this.SasKeyName))
                 {
-                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
+                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName),
                         Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
 
                 if (!string.IsNullOrWhiteSpace(this.SasToken))
                 {
-                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
+                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName),
                         Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
                 this.authType = value;

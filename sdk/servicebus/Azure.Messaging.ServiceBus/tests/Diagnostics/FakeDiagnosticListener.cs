@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
 {
@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
 
     public sealed class FakeDiagnosticListener : IObserver<DiagnosticListener>, IDisposable
     {
-        private  IDisposable subscription;
+        private IDisposable subscription;
         private class FakeDiagnosticSourceWriteObserver : IObserver<KeyValuePair<string, object>>
         {
             private readonly Action<KeyValuePair<string, object>> writeCallback;
@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
 
         public FakeDiagnosticListener(Action<KeyValuePair<string, object>> writeCallback)
         {
-            this.writeCallback = writeCallback;            
+            this.writeCallback = writeCallback;
         }
 
         public void OnCompleted()

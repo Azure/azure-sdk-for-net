@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus
         {
             var remainingTime = lockedUntilUtc - DateTime.UtcNow;
 
-            if(remainingTime < TimeSpan.FromMilliseconds(400))
+            if (remainingTime < TimeSpan.FromMilliseconds(400))
             {
                 return TimeSpan.Zero;
             }

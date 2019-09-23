@@ -1,10 +1,5 @@
-﻿//// Copyright (c) Microsoft. All rights reserved.
-//// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-//namespace Azure.Messaging.ServiceBus.UnitTests.Primitives
-//{
-//    using Azure.Messaging.ServiceBus.Primitives;
-//    using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 //    public class ServiceBusNamespaceConnectionTests
 //    {

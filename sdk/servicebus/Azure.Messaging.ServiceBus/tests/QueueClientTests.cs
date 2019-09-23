@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
+        public async Task PeekLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -41,10 +41,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
                 await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-                
+
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
-                
+
                 try
                 {
 
@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
                 await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-                
+
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
 
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                 // Create DLQ Client To Receive DeadLetteredMessages
                 var deadLetterQueueClient = new QueueClient(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName));
-                
+
                 await using var deadLetterreceiver = deadLetterQueueClient.CreateReceiver();
                 await
                     this.PeekLockWithDeadLetterTestCase(

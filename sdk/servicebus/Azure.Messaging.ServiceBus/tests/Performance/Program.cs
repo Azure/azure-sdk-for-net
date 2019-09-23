@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.Performance
 {
@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Performance
     using System.Threading;
     using System.Threading.Tasks;
 
-    class Program
+    internal class Program
     {
         private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Performance
 
         private static long _messages;
 
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var maxInflight = (args.Length >= 1 ? int.Parse(args[0]) : 1);
             Log($"Maximum inflight messages: {maxInflight}");
@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Performance
             {
                 await sender.SendAsync(new Message(_payload));
             }
-            
+
             // Undo last increment, since a message was never sent on the final loop iteration
             Interlocked.Decrement(ref _messages);
         }
@@ -79,7 +79,8 @@ namespace Azure.Messaging.ServiceBus.Performance
                 var currentElapsed = elapsed - lastElapsed;
                 lastElapsed = elapsed;
 
-                if ((currentMessages / currentElapsed.TotalSeconds) > (maxMessages / maxElapsed.TotalSeconds)) {
+                if ((currentMessages / currentElapsed.TotalSeconds) > (maxMessages / maxElapsed.TotalSeconds))
+                {
                     maxMessages = currentMessages;
                     maxElapsed = currentElapsed;
                 }

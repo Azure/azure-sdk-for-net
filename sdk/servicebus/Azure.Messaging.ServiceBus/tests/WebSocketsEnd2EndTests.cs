@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Linq;
 
@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             {
                 var tcs = new TaskCompletionSource<Message>(TaskCreationOptions.RunContinuationsAsynchronously);
                 await using var queueClient = new QueueClient(TestUtility.WebSocketsNamespaceConnectionString, queueName);
-                
+
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                 var random = new Random();

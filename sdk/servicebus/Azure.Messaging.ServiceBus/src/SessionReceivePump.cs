@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                         {
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false); 
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false);
                         }
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus
 
                         if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                         {
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                         }
                         break;
                     }
@@ -332,7 +332,7 @@ namespace Azure.Messaging.ServiceBus
                     MessagingEventSource.Log.SessionReceivePumpSessionRenewLockException(this.clientId, session.SessionId, exception);
 
                     // TaskCanceled is expected here as renewTasks will be cancelled after the Complete call is made.
-                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point 
+                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException) && !(exception is ObjectDisposedException))
                     {

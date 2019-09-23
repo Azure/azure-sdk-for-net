@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with service bus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
-    public class SubscriptionClient: IAsyncDisposable
+    public class SubscriptionClient : IAsyncDisposable
     {
         private readonly object syncLock;
 
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus
                             ClientEntity.ServiceBusConnection,
                             ClientEntity.Options,
                             // TODO: if should matter
-                            0, // 
+                            0, //
                             ReceiveMode.PeekLock);
                     }
                 }
@@ -188,7 +188,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         internal SessionClient CreateSessionClient(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
-        {            
+        {
             receiveOptions ??= ReceiveOptions.Default;
 
             return new SessionClient(
@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
                 ClientEntity.Options);
         }
 
-        
+
         internal SessionPumpHost CreateSessionPumpHost(ReceiveMode mode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
         {
             return new SessionPumpHost(
@@ -360,7 +360,7 @@ namespace Azure.Messaging.ServiceBus
             MessagingEventSource.Log.GetRulesStop(ClientEntity.ClientId);
             return rules;
         }
-        
+
         internal async Task OnClosingAsync()
         {
             if (this.innerSubscriptionClient != null)

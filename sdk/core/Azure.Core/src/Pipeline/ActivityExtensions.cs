@@ -19,16 +19,18 @@ namespace Azure.Core.Pipeline
 
         public static bool SetW3CFormat(this Activity activity)
         {
-            if (s_setIdFormatMethod == null) return false;
+            if (s_setIdFormatMethod == null)
+                return false;
 
-            s_setIdFormatMethod.Invoke(activity, new object[]{ 2 /* ActivityIdFormat.W3C */});
+            s_setIdFormatMethod.Invoke(activity, new object[] { 2 /* ActivityIdFormat.W3C */});
 
             return true;
         }
 
         public static bool IsW3CFormat(this Activity activity)
         {
-            if (s_getIdFormatMethod == null) return false;
+            if (s_getIdFormatMethod == null)
+                return false;
 
             object result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
@@ -39,7 +41,8 @@ namespace Azure.Core.Pipeline
         {
             traceState = null;
 
-            if (s_getTraceStateStringMethod == null) return false;
+            if (s_getTraceStateStringMethod == null)
+                return false;
 
             traceState = s_getTraceStateStringMethod.Invoke(activity, Array.Empty<object>()) as string;
 

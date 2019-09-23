@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         }
 
         public static IEnumerable<object[]> TestData_ConnectionStringBuilderEndpointShouldFormatUri
-            => new [] {
+            => new[] {
                 new object[] { "ns1.servicebus.windows.net", "amqps://ns1.servicebus.windows.net" },
                 new object[] { " ns2.servicebus.windows.net ", "amqps://ns2.servicebus.windows.net" },
                 new object[] { "amqps://ns3.servicebus.windows.net", "amqps://ns3.servicebus.windows.net" },
@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         public void ConnectionStringBuilderShouldParseToken()
         {
             var token = "SharedAccessSignature sr=https%3a%2f%2fmynamespace.servicebus.windows.net%2fvendor-&sig=somesignature&se=64953734126&skn=PolicyName";
-            var csBuilder = new ServiceBusConnectionStringBuilder("SharedAccessSignature=" + token+";Endpoint=sb://contoso.servicebus.windows.net");
+            var csBuilder = new ServiceBusConnectionStringBuilder("SharedAccessSignature=" + token + ";Endpoint=sb://contoso.servicebus.windows.net");
             Assert.Equal("sb://contoso.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal(token, csBuilder.SasToken);
         }

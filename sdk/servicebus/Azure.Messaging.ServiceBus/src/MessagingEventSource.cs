@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -7,7 +7,6 @@ namespace Azure.Messaging.ServiceBus
     using System.Collections.Generic;
     using System.Diagnostics.Tracing;
     using System.Reflection;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Azure.Messaging.ServiceBus.Amqp;
@@ -241,7 +240,7 @@ namespace Azure.Messaging.ServiceBus
         [Event(21, Level = EventLevel.Error, Message = "{0}: DeferAsync Exception: {1}.")]
         private void MessageDeferException(string clientId, string exception)
         {
-                this.WriteEvent(21, clientId, exception);
+            this.WriteEvent(21, clientId, exception);
         }
 
         [Event(22, Level = EventLevel.Informational, Message = "{0}: DeadLetterAsync start. MessageCount = {1}, LockToken = {2}")]
@@ -1040,7 +1039,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(91, Level = EventLevel.Error, Message = "AmqpLinkCreatorException Exception: EntityPath: {0}, SessionString: {1}, SessionState: {2}, TerminalException: {3}, ConnectionInfo: {4}, ConnectionState: {5}, Exception: {6}")]
-        private void AmqpLinkCreationException(string entityPath, string session, string sessionState, string terminalException,  string connectionInfo, string connectionState, string exception)
+        private void AmqpLinkCreationException(string entityPath, string session, string sessionState, string terminalException, string connectionInfo, string connectionState, string exception)
         {
             this.WriteEvent(91, entityPath, session, sessionState, terminalException, connectionInfo, connectionState, exception);
         }
@@ -1379,14 +1378,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 this.WriteEvent(117, objectName, details);
             }
-        }
-    }
-
-    internal static class TraceHelper
-    {
-        public static string GetAsciiString(this ArraySegment<byte> arraySegment)
-        {
-            return arraySegment.Array == null ? string.Empty : Encoding.ASCII.GetString(arraySegment.Array, arraySegment.Offset, arraySegment.Count);
         }
     }
 }

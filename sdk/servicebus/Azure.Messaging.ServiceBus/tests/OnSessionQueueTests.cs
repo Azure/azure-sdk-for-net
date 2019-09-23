@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),
                         AutoComplete = true
                     };
-                    
+
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateSessionPumpHost();
 
@@ -120,9 +120,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                             }
                             return Task.CompletedTask;
                         })
-                    { MaxConcurrentSessions = 1 };
+                { MaxConcurrentSessions = 1 };
 
-                    
+
                 await using var receiver = queueClient.CreateSessionPumpHost();
                 receiver.RegisterSessionHandler(
                     (session, message, token) =>
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),
                         AutoComplete = autoComplete
                     };
-                    
+
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateSessionPumpHost(mode);
                 var testSessionHandler = new TestSessionHandler(

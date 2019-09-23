@@ -1,7 +1,6 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-// TODO: Commenting the whole file. It will be updated once OnSession() is implemented.
 /*
 namespace Azure.Messaging.ServiceBus.UnitTests
 {

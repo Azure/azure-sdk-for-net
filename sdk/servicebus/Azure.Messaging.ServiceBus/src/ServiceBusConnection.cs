@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 
@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Connection object to service bus namespace
     /// </summary>
-    internal class ServiceBusConnection: IAsyncDisposable
+    internal class ServiceBusConnection : IAsyncDisposable
     {
         private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
 
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public TokenCredential TokenCredential { get; set; }
 
-        public  ICbsTokenProvider CbsTokenProvider => new TokenProviderAdapter(TokenCredential, OperationTimeout);
+        public ICbsTokenProvider CbsTokenProvider => new TokenProviderAdapter(TokenCredential, OperationTimeout);
         /// <summary>
         /// Returns true if the Service Bus Connection is closed or closing.
         /// </summary>

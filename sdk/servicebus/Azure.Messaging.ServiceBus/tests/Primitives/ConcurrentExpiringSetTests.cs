@@ -1,8 +1,5 @@
-﻿// ----------------------------------------------------------------------------
-// <copyright company="Microsoft Corporation" file="ConcurrentExpiringSetTests.cs">
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// ----------------------------------------------------------------------------
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests.Primitives
 {

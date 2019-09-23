@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Framing;
     using Primitives;
 
-    internal sealed class AmqpSubscriptionClient: IAsyncDisposable
+    internal sealed class AmqpSubscriptionClient : IAsyncDisposable
     {
         private int prefetchCount;
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         public ValueTask DisposeAsync()
-        {            
+        {
             return this.innerReceiver?.DisposeAsync() ?? default;
         }
     }

@@ -1,4 +1,7 @@
-﻿namespace Azure.Messaging.ServiceBus.UnitTests
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Messaging.ServiceBus.UnitTests
 {
     using System;
     using System.Threading.Tasks;

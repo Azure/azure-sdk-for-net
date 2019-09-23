@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.InteropExtensions
 {
@@ -75,22 +75,22 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
         /// </summary>
         public static T GetBody<T>(this ReceivedMessage message, XmlObjectSerializer serializer = null)
         {
-            if(message == null)
+            if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            if(message.BodyObject != null)
+            if (message.BodyObject != null)
             {
                 return (T)message.BodyObject;
             }
 
-            if(message.Body.IsEmpty)
+            if (message.Body.IsEmpty)
             {
                 return default;
             }
 
-            if(serializer == null)
+            if (serializer == null)
             {
                 serializer = DataContractBinarySerializer<T>.Instance;
             }

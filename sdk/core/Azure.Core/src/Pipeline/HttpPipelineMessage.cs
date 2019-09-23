@@ -11,7 +11,7 @@ using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
-    public sealed class HttpPipelineMessage: IDisposable
+    public sealed class HttpPipelineMessage : IDisposable
     {
         private Dictionary<string, object>? _properties;
 
@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
-                case Stream stream :
+                case Stream stream:
                     _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
                     return stream;
                 default:
@@ -85,7 +85,7 @@ namespace Azure.Core.Pipeline
             _response?.Dispose();
         }
 
-        private class ResponseShouldNotBeUsedStream: Stream
+        private class ResponseShouldNotBeUsedStream : Stream
         {
             public Stream Original { get; }
 

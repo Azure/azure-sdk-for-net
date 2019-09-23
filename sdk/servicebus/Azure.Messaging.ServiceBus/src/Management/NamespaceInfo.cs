@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.Management
 {
@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public MessagingSku MessagingSku { get; set; }
 
         /// <summary>
-        /// Number of messaging units allocated for namespace. 
+        /// Number of messaging units allocated for namespace.
         /// Valid only for <see cref="NamespaceType.ServiceBus"/> and <see cref="MessagingSku.Premium"/>
         /// </summary>
         public int MessagingUnits { get; set; }

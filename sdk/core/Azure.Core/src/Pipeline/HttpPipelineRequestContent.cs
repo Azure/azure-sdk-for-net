@@ -57,7 +57,8 @@ namespace Azure.Core.Pipeline
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         cancellationToken.ThrowIfCancellationRequested();
                         stream.Write(buffer, 0, read);
                     }

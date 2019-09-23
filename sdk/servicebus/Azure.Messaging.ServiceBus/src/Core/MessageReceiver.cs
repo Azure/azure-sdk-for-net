@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 
@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// you to manually renew locks using <see cref="RenewLockAsync(ReceivedMessage)"/>.
     /// It uses AMQP protocol to communicate with service.
     /// </remarks>
-    public class MessageReceiver: IAsyncDisposable
+    public class MessageReceiver : IAsyncDisposable
     {
         private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Core
         private readonly bool isSessionReceiver;
 
         private readonly object messageReceivePumpSyncLock;
-        
+
         private readonly ActiveClientLinkManager clientLinkManager;
         private readonly ActiveClientLinkManager requestResponseLinkManager;
 
@@ -925,7 +925,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             return AmqpResponseMessage.CreateResponse(responseAmqpMessage);
         }
-        
+
         internal async Task OnClosingAsync()
         {
             this.clientLinkManager.Close();
@@ -955,7 +955,7 @@ namespace Azure.Messaging.ServiceBus.Core
             try
             {
                 var timeoutHelper = new TimeoutHelper(serverWaitTime, true);
-                if(!this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                if (!this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
                 {
                     MessagingEventSource.Log.CreatingNewLink(ClientEntity.ClientId, this.isSessionReceiver, this.SessionIdInternal, false, this.LinkException);
                     receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
@@ -1289,7 +1289,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         private async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome)
         {
-            if(this.isSessionReceiver)
+            if (this.isSessionReceiver)
             {
                 this.ThrowIfSessionLockLost();
             }

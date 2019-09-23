@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var messageId2 = Guid.NewGuid().ToString();
                     await topicClientSender.SendAsync(new Message { MessageId = messageId2, Label = "Red" });
                     TestUtility.Log($"Sent Message: {messageId2}");
-                    
+
                     await using var receiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                     var messages = await receiver.ReceiveAsync(maxMessageCount: 2);
                     Assert.NotNull(messages);
@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     {
                         await subscriptionClient.RemoveRuleAsync(RuleDescription.DefaultRuleName);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         TestUtility.Log($"Remove Default Rule failed with: {e.Message}");
                     }
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         Filter = new SqlFilter("Color = 'RedSql'"),
                         Name = "RedSql"
                     });
-                    
+
                     var topicClientSender = topicClient.CreateSender();
                     var messageId1 = Guid.NewGuid().ToString();
                     await topicClientSender.SendAsync(new Message
@@ -128,7 +128,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         UserProperties = { { "color", "RedSql" } }
                     });
                     TestUtility.Log($"Sent Message: {messageId2}");
-                    
+
                     await using var receiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                     var messages = await receiver.ReceiveAsync(maxMessageCount: 2);
                     Assert.NotNull(messages);
@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         Action = new SqlRuleAction("SET Color = 'RedSqlActionProcessed'"),
                         Name = "RedSqlAction"
                     });
-                    
+
                     var topicClientSender = topicClient.CreateSender();
                     var messageId1 = Guid.NewGuid().ToString();
                     await topicClientSender.SendAsync(new Message
@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         UserProperties = { { "color", "RedSqlAction" } }
                     });
                     TestUtility.Log($"Sent Message: {messageId2}");
-                    
+
                     await using var receiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                     var messages = await receiver.ReceiveAsync(maxMessageCount: 2);
                     Assert.NotNull(messages);
@@ -268,7 +268,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     Assert.NotNull(sqlRule);
                     Assert.Null(sqlRule.Action);
                     Assert.IsType<SqlFilter>(sqlRule.Filter);
-                    Assert.Equal("price > 10", ((SqlFilter) sqlRule.Filter).SqlExpression);
+                    Assert.Equal("price > 10", ((SqlFilter)sqlRule.Filter).SqlExpression);
 
                     var correlationRule = rules.FirstOrDefault(rule => rule.Name.Equals(correlationRuleName));
                     Assert.NotNull(correlationRule);

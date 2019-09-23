@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.InteropExtensions
 {
@@ -104,16 +104,5 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
         {
             this.dataContractSerializer.WriteStartObject(writer, graph);
         }
-    }
-
-    /// <summary>
-    /// Returns a static <see cref="DataContractBinarySerializer"/> instance of type T
-    /// </summary>
-    internal static class DataContractBinarySerializer<T>
-    {
-        /// <summary>
-        /// Initializes a DataContractBinarySerializer instance of type T
-        /// </summary>
-        public static readonly XmlObjectSerializer Instance = new DataContractBinarySerializer(typeof(T));
     }
 }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
 {
@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 using (var subscription = this.SubscribeToEvents(listener))
                 {
                     listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
-                        
+
                     await using var sender = queueClient.CreateSender();
                     await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
 
@@ -164,7 +164,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 using (var listener = this.CreateEventListener(queueName, eventQueue))
                 using (var subscription = this.SubscribeToEvents(listener))
                 {
-                    listener.Enable((name, queue, arg) => 
+                    listener.Enable((name, queue, arg) =>
                         !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));
 
                     await using var sender = queueClient.CreateSender();
@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
                         },
-                        exArgs => 
+                        exArgs =>
                         {
                             // An exception is not interesting in this context; ignore any
                             // that may occur.

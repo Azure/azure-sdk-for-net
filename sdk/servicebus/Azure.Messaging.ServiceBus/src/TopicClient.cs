@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Azure.Core;
 
@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class TopicClient: IAsyncDisposable
+    public class TopicClient : IAsyncDisposable
     {
         internal ClientEntity ClientEntity { get; set; }
         /// <summary>

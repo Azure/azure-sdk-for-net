@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
                     var maxSizeMessage = new Message(maxPayload);
 
-                        
+
                     await using var sender = queueClient.CreateSender();
                     await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
 
