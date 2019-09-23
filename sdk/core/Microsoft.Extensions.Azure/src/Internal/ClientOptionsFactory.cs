@@ -11,6 +11,8 @@ namespace Microsoft.Extensions.Azure
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsFactory.cs
     internal class ClientOptionsFactory<TClient, TOptions> where TOptions : class
     {
+        private const string ServiceVersionParameterTypeName = "ServiceVersion";
+
         private readonly IEnumerable<IConfigureOptions<TOptions>> _setups;
         private readonly IEnumerable<IPostConfigureOptions<TOptions>> _postConfigures;
 
@@ -96,15 +98,8 @@ namespace Microsoft.Extensions.Azure
             return (TOptions)Activator.CreateInstance(typeof(TOptions), constructorArguments);
         }
 
-        private static bool IsServiceVersionParameter(ParameterInfo parameter)
-        {
-            if (parameter.ParameterType.Name == "ServiceVersion")
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private static bool IsServiceVersionParameter(ParameterInfo parameter) =>
+            parameter.ParameterType.Name == ServiceVersionParameterTypeName;
 
         /// <summary>
         /// Returns a configured <typeparamref name="TOptions"/> instance with the given <paramref name="name"/>.
