@@ -5,7 +5,7 @@
 ### Breaking changes
 
 - `SecretBase` has been renamed to `SecretProperties`.
-- `Secret` and `DeletedSecret` no longer extend `SecretProperties`, but instead contain a `SecretProperties`.
+- `Secret` and `DeletedSecret` no longer extend `SecretProperties`, but instead contain a `SecretProperties` property named `Properties`.
 - `SecretProperties.Vault` has been renamed to `SecretProperties.VaultUri`.
 
 ## 4.0.0-preview.1 (2019-06-28)
