@@ -153,31 +153,32 @@ namespace Azure.Storage.Sas
         public string Permissions => _permissions ?? string.Empty;
 
         /// <summary>
-        /// Gets the cache control to be used in the Cache-Control response header.
+        /// Gets the Cache-Control response header, which allows for 
+        /// specifying the client-side caching to be used for blob and file downloads.
         /// </summary>
         public string CacheControl => _cacheControl ?? string.Empty;
 
         /// <summary>
-        /// Gets the content disposition to be used in the Content-Disposition
-        /// response header.
+        /// Gets the Content-Disposition response header, which allows for 
+        /// specifying the way that the blob or file content can be displayed in the browser.
         /// </summary>
         public string ContentDisposition => _contentDisposition ?? string.Empty;
 
         /// <summary>
-        /// Gets the content encoding to be used in the Content-Encoding
-        /// response header.
+        /// Gets the Content-Encoding response header, which allows for specifying
+        /// the type of encoding used for blob and file downloads.
         /// </summary>
         public string ContentEncoding => _contentEncoding ?? string.Empty;
 
         /// <summary>
-        /// Gets the content language to be used in the Content-Language
-        /// response header.
+        /// Gets the Content-Language response header, which allows for specifying the 
+        /// language of the downloaded blob or file content.
         /// </summary>
         public string ContentLanguage => _contentLanguage ?? string.Empty;
 
         /// <summary>
-        /// Gets the content type to be used in the Content-Type response
-        /// header.
+        /// Gets the Content-Type response header, which allows for specifying the 
+        /// type of the downloaded blob or file content.
         /// </summary>
         public string ContentType => _contentType ?? string.Empty;
 
