@@ -56,6 +56,66 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
+        /// <summary>
+        /// The Storage account name corresponding to the blob client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the blob client.
+        /// </summary>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new BlobUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The container name corresponding to the blob client.
+        /// </summary>
+        private string _containerName;
+
+        /// <summary>
+        /// Gets the container name corresponding to the blob client.
+        /// </summary>
+        public string ContainerName
+        {
+            get
+            {
+                if (_containerName == null)
+                {
+                    _containerName = new BlobUriBuilder(Uri).ContainerName;
+                }
+                return _containerName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the blob.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the blob.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    _name = new BlobUriBuilder(Uri).BlobName;
+                }
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>

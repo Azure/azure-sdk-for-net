@@ -47,6 +47,66 @@ namespace Azure.Storage.Files
         /// </summary>
         protected virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The Storage account name corresponding to the file client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the file client.
+        /// </summary>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new FileUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The share name corresponding to the file client.
+        /// </summary>
+        private string _shareName;
+
+        /// <summary>
+        /// Gets the share name corresponding to the file client.
+        /// </summary>
+        public string ShareName
+        {
+            get
+            {
+                if (_shareName == null)
+                {
+                    _shareName = new FileUriBuilder(Uri).ShareName;
+                }
+                return _shareName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the file.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the file.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    _name = new FileUriBuilder(Uri).TerminalPiece;
+                }
+                return _name;
+            }
+        }
+
         //const string fileType = "file";
 
         //// FileMaxUploadRangeBytes indicates the maximum number of bytes that can be sent in a call to UploadRange.

@@ -52,13 +52,19 @@ namespace Azure.Storage.Files.Test
             using (GetNewShare(out ShareClient share))
             {
                 // Arrange
-                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                var name = GetNewDirectoryName();
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
 
                 // Act
                 Response<StorageDirectoryInfo> response = await directory.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                var accountName = new FileUriBuilder(directory.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
+                var shareName = new FileUriBuilder(directory.Uri).ShareName;
+                TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
+                TestHelper.AssertCacheableProperty(name, () => directory.Name);
             }
         }
 

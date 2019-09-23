@@ -62,6 +62,46 @@ namespace Azure.Storage.Queues
         /// </summary>
         public const int MessageMaxBytes = Constants.Queue.QueueMessageMaxBytes;
 
+        /// <summary>
+        /// The Storage account name corresponding to the queue client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the queue client.
+        /// </summary>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new QueueUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the queue.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the queue.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    _name = new QueueUriBuilder(Uri).QueueName;
+                }
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueClient"/>

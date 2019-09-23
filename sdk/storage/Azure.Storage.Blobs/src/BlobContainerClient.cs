@@ -57,6 +57,46 @@ namespace Azure.Storage.Blobs
         /// </summary>
         protected internal virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The Storage account name corresponding to the container client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the container client.
+        /// </summary>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new BlobUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the container.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the container.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    _name = new BlobUriBuilder(Uri).ContainerName;
+                }
+                return _name;
+            }
+        }
+
         #region ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>

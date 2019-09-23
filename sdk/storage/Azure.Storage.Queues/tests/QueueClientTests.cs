@@ -94,8 +94,12 @@ namespace Azure.Storage.Queues.Test
             try
             {
                 Response<QueueClient> result = await service.CreateQueueAsync(name);
-                Response<Models.QueueProperties> properties = await result.Value.GetPropertiesAsync();
+                QueueClient queue = result.Value;
+                Response<QueueProperties> properties = await queue.GetPropertiesAsync();
                 Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
+                var accountName = new QueueUriBuilder(service.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => queue.AccountName);
+                TestHelper.AssertCacheableProperty(name, () => queue.Name);
             }
             finally
             {

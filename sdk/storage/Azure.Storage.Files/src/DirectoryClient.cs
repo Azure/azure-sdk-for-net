@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -40,6 +41,66 @@ namespace Azure.Storage.Files
         /// every request.
         /// </summary>
         protected virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the directory client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the directory client.
+        /// </summary>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new FileUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The share name corresponding to the directory client.
+        /// </summary>
+        private string _shareName;
+
+        /// <summary>
+        /// Gets the share name corresponding to the directory client.
+        /// </summary>
+        public string ShareName
+        {
+            get
+            {
+                if (_shareName == null)
+                {
+                    _shareName = new FileUriBuilder(Uri).ShareName;
+                }
+                return _shareName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the directory.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the directory.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    _name = new FileUriBuilder(Uri).TerminalPiece;
+                }
+                return _name;
+            }
+        }
 
         #region ctors
         /// <summary>

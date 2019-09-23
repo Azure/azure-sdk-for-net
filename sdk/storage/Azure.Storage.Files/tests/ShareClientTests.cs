@@ -64,6 +64,9 @@ namespace Azure.Storage.Files.Test
             builder = new FileUriBuilder(share.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
+            var accountName = new FileUriBuilder(share.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => share.AccountName);
+            TestHelper.AssertCacheableProperty(shareName, () => share.Name);
         }
 
         [Test]

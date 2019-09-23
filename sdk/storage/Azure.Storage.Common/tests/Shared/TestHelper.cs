@@ -106,5 +106,12 @@ namespace Azure.Storage.Test
                 assertion(expectedException, actualException);
             }
         }
+
+        public static void AssertCacheableProperty<T>(string expected, Func<T> property)
+        {
+            T actual = property();
+            Assert.AreEqual(expected, actual); // first call calculates and caches value
+            Assert.AreSame(actual, property()); // subsequent calls use cached value
+        }
     }
 }
