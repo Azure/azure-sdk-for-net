@@ -61,7 +61,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
-
         }
 
         [Test]
@@ -96,7 +95,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
-
         }
 
         [Test]
@@ -125,7 +123,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
-
         }
 
         [Test]
@@ -160,7 +157,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
-
         }
 
         [Test]
@@ -189,7 +185,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
-
         }
 
         [Test]
@@ -224,7 +219,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
-
         }
 
         [Test]
@@ -342,8 +336,5 @@ namespace Azure.Storage.Blobs.Test
                 new HMACSHA256(
                     Convert.FromBase64String(userDelegationKeyValue))
                 .ComputeHash(Encoding.UTF8.GetBytes(message)));
-
     }
-
-    
 }

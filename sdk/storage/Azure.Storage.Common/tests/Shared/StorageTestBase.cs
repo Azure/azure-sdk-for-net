@@ -16,7 +16,6 @@ using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
-
 namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
