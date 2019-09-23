@@ -3,10 +3,13 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <!--
-      Disable NuGet Pack warning that the version is SemVer 2.0.
+      Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
+
+      Disable NU5048 warning which is complaining about using a url for our package icon. Currently most packages still use
+      url's instead of embedded icons so sticking with that approach until there becomes a real reason not to.
     -->
-    <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <NoWarn>$(NoWarn);NU5105;NU5048</NoWarn>
     <!--
       Disable some FxCop rules
      -->
