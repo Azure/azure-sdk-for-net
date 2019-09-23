@@ -36,7 +36,8 @@ namespace Microsoft.Extensions.Azure
             }
 
             ConstructorInfo parameterlessConstructor = null;
-            ParameterInfo versionConstructor = null;
+            int versionParameterIndex = 0;
+            object[] constructorArguments = null;
 
             foreach (var constructor in typeof(TOptions).GetConstructors())
             {
@@ -44,19 +45,44 @@ namespace Microsoft.Extensions.Azure
                 if (parameters.Length == 0)
                 {
                     parameterlessConstructor = constructor;
+                    continue;
                 }
 
-                if (parameters.Length == 1)
+                bool allParametersHaveDefaultValue = true;
+                for (int i = 0; i < parameters.Length; i++)
                 {
-                    versionConstructor = parameters[0];
+                    ParameterInfo parameter = parameters[i];
+                    if (parameter.HasDefaultValue)
+                    {
+                        if (IsServiceVersionParameter(parameter))
+                        {
+                            versionParameterIndex = i;
+                        }
+                    }
+                    else
+                    {
+                        allParametersHaveDefaultValue = false;
+                        break;
+                    }
+                }
+
+                if (allParametersHaveDefaultValue)
+                {
+                    constructorArguments = new object[parameters.Length];
+
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        constructorArguments[i] = parameters[i].DefaultValue;
+                    }
                 }
             }
 
             if (version != null)
             {
-                if (versionConstructor != null)
+                if (constructorArguments != null)
                 {
-                    return (TOptions)Activator.CreateInstance(typeof(TOptions), version);
+                    constructorArguments[versionParameterIndex] = version;
+                    return (TOptions)Activator.CreateInstance(typeof(TOptions), constructorArguments);
                 }
 
                 throw new InvalidOperationException("Unable to find constructor that takes service version");
@@ -67,7 +93,17 @@ namespace Microsoft.Extensions.Azure
                 return Activator.CreateInstance<TOptions>();
             }
 
-            return (TOptions)Activator.CreateInstance(typeof(TOptions), versionConstructor.DefaultValue);
+            return (TOptions)Activator.CreateInstance(typeof(TOptions), constructorArguments);
+        }
+
+        private static bool IsServiceVersionParameter(ParameterInfo parameter)
+        {
+            if (parameter.ParameterType.Name == "ServiceVersion")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
