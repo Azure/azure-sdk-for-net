@@ -7,7 +7,6 @@ using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-
     /// <summary>
     /// A digital signature algorithm
     /// </summary>
@@ -132,20 +131,48 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case SignatureAlgorithm.ES256Value:
                 case SignatureAlgorithm.ES256KValue:
                     return SHA256.Create();
+
                 case SignatureAlgorithm.RS384Value:
                 case SignatureAlgorithm.PS384Value:
                 case SignatureAlgorithm.ES384Value:
                     return SHA384.Create();
+
                 case SignatureAlgorithm.RS512Value:
                 case SignatureAlgorithm.PS512Value:
                 case SignatureAlgorithm.ES512Value:
                     return SHA512.Create();
+
                 default:
                     throw new InvalidOperationException("Invalid Algorithm");
             }
         }
 
-        internal ref readonly KeyCurveName GetKeyCurveName()
+        internal HashAlgorithmName GetHashAlgorithmName()
+        {
+            switch (_value)
+            {
+                case SignatureAlgorithm.RS256Value:
+                case SignatureAlgorithm.PS256Value:
+                case SignatureAlgorithm.ES256Value:
+                case SignatureAlgorithm.ES256KValue:
+                    return HashAlgorithmName.SHA256;
+
+                case SignatureAlgorithm.RS384Value:
+                case SignatureAlgorithm.PS384Value:
+                case SignatureAlgorithm.ES384Value:
+                    return HashAlgorithmName.SHA384;
+
+                case SignatureAlgorithm.RS512Value:
+                case SignatureAlgorithm.PS512Value:
+                case SignatureAlgorithm.ES512Value:
+                    return HashAlgorithmName.SHA512;
+                default:
+
+                    return default;
+            }
+        }
+
+        internal ref readonly KeyCurveName GetEcKeyCurveName()
         {
             switch (_value)
             {
@@ -163,6 +190,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 default:
                     return ref KeyCurveName.s_default;
+            }
+        }
+
+        internal RSASignaturePadding GetRsaSignaturePadding()
+        {
+            switch (_value)
+            {
+                case SignatureAlgorithm.RS256Value:
+                case SignatureAlgorithm.RS384Value:
+                case SignatureAlgorithm.RS512Value:
+                    return RSASignaturePadding.Pkcs1;
+
+                case SignatureAlgorithm.PS256Value:
+                case SignatureAlgorithm.PS384Value:
+                case SignatureAlgorithm.PS512Value:
+                    return RSASignaturePadding.Pss;
+
+                default:
+                    return null;
             }
         }
     }

@@ -27,6 +27,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
+        public bool ShouldRemote => _jwk.KeyId != null;
+
         public bool SupportsOperation(KeyOperation operation)
         {
             if (_jwk != null)
@@ -53,10 +55,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // A private key is required to sign. Send to the server.
             if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
             {
+                // TODO: Log that we need a private key.
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
+            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
             if (_curve._keySize != algorithmCurve._keySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
@@ -100,7 +103,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
+            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
             if (_curve._keySize != algorithmCurve._keySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");

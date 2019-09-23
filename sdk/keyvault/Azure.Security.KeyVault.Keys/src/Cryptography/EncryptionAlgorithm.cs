@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -11,8 +13,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public readonly struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
     {
-        internal const string RsaOaepValue = "RSA-OAEP";
         internal const string Rsa15Value = "RSA1_5";
+        internal const string RsaOaepValue = "RSA-OAEP";
         internal const string RsaOaep256Value = "RSA-OAEP-256";
 
         private readonly string _value;
@@ -27,14 +29,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// RSA-OAEP
-        /// </summary>
-        public static readonly EncryptionAlgorithm RsaOaep = new EncryptionAlgorithm(RsaOaepValue);
-
-        /// <summary>
         /// RSA1_5
         /// </summary>
         public static readonly EncryptionAlgorithm Rsa15 = new EncryptionAlgorithm(Rsa15Value);
+
+        /// <summary>
+        /// RSA-OAEP
+        /// </summary>
+        public static readonly EncryptionAlgorithm RsaOaep = new EncryptionAlgorithm(RsaOaepValue);
 
         /// <summary>
         /// RSA-OAEP256
@@ -78,5 +80,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
+
+        internal RSAEncryptionPadding GetRsaEncryptionPadding() => _value switch
+        {
+            Rsa15Value => RSAEncryptionPadding.Pkcs1,
+            RsaOaepValue => RSAEncryptionPadding.OaepSHA1,
+            RsaOaep256Value => RSAEncryptionPadding.OaepSHA256,
+            _ => null,
+        };
     }
 }

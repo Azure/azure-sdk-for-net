@@ -17,14 +17,27 @@ namespace Azure.Core.Testing
     {
         private readonly string[] _names;
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="FieldsAttribute"/> class.
+        /// All public, static, read-only fields of the declared type are included.
+        /// </summary>
         public FieldsAttribute()
         {
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="FieldsAttribute"/> class.
+        /// Only public, static, read-only fields of the declared type with any of the specified <paramref name="names"/> are included.
+        /// </summary>
         public FieldsAttribute(params string[] names)
         {
             _names = names;
         }
+
+        /// <summary>
+        /// Gets or sets a list of field names to exclude. Fields names specified here will be excluded even if specified in the <see cref="FieldsAttribute(string[])"/> constructor.
+        /// </summary>
+        public string[] Exclude { get; set; }
 
         public IEnumerable GetData(IParameterInfo parameter)
         {
@@ -35,7 +48,7 @@ namespace Azure.Core.Testing
                 for (int i = 0; i < fields.Length; ++i)
                 {
                     FieldInfo field = fields[i];
-                    if (field.FieldType == type && Contains(field.Name))
+                    if (field.FieldType == type && Includes(field.Name) && !Excludes(field.Name))
                     {
                         yield return field.GetValue(null);
                     }
@@ -43,7 +56,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        private bool Contains(string name)
+        private bool Includes(string name)
         {
             if (_names is null || _names.Length == 0)
             {
@@ -55,6 +68,22 @@ namespace Azure.Core.Testing
                 if (string.Equals(_names[i], name, StringComparison.Ordinal))
                 {
                     return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool Excludes(string name)
+        {
+            if (Exclude != null)
+            {
+                for (int i = 0; i < Exclude.Length; ++i)
+                {
+                    if (string.Equals(Exclude[i], name, StringComparison.Ordinal))
+                    {
+                        return true;
+                    }
                 }
             }
 
