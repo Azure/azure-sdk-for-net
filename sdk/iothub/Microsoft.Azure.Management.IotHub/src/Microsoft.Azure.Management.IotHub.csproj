@@ -10,7 +10,7 @@
 		<AssemblyName>Microsoft.Azure.Management.IotHub</AssemblyName>
 		<Version>2.10.0-preview</Version>
 		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
-		<PackageReleaseNotes>Regenerated IotHub Sdk.</PackageReleaseNotes>
+		<PackageReleaseNotes>Regenerated IotHub Sdk with updated routing source enum.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
