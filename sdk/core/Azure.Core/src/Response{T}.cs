@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ComponentModel;
 
 namespace Azure
 {
-    public readonly struct Response<T>
+    public class Response<T>
     {
         private readonly Response _rawResponse;
 
@@ -16,9 +15,9 @@ namespace Azure
             Value = parsed;
         }
 
-        public Response GetRawResponse() => _rawResponse;
+        public virtual Response GetRawResponse() => _rawResponse;
 
-        public T Value { get; }
+        public virtual T Value { get; }
 
         public static implicit operator T(Response<T> response) => response.Value;
 
