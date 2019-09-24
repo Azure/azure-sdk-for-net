@@ -99,7 +99,7 @@ namespace Azure.Storage.Blobs
             if (_name == null || _accountName == null)
             {
                 var builder = new BlobUriBuilder(Uri);
-                _name = builder.BlobName;
+                _name = builder.ContainerName;
                 _accountName = builder.AccountName;
             }
         }
