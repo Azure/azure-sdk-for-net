@@ -51,7 +51,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                Request(request.ClientRequestId, request.Method.ToString().ToUpperInvariant(), request.UriBuilder.ToString(), FormatHeaders(request.Headers));
+                Request(request.ClientRequestId, request.Method.ToString().ToUpperInvariant(), request.Uri.ToString(), FormatHeaders(request.Headers));
             }
         }
 

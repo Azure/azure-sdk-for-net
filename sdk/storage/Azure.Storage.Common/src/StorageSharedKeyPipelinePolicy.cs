@@ -84,7 +84,7 @@ namespace Azure.Storage.Common
                 ifUnmodifiedSince ?? "",
                 range ?? "",
                 BuildCanonicalizedHeaders(message),
-                BuildCanonicalizedResource(message.Request.UriBuilder.ToUri()));
+                BuildCanonicalizedResource(message.Request.Uri.ToUri()));
             return stringToSign;
         }
 

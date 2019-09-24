@@ -301,9 +301,9 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.UriBuilder.Assign(s_imdsEndpoint);
+                request.Uri.Assign(s_imdsEndpoint);
 
-                request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+                request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
                 CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
@@ -333,9 +333,9 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.UriBuilder.Assign(s_imdsEndpoint);
+                request.Uri.Assign(s_imdsEndpoint);
 
-                request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+                request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
                 CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
@@ -367,15 +367,15 @@ namespace Azure.Identity
 
             request.Headers.Add("Metadata", "true");
 
-            request.UriBuilder.Assign(s_endpoint);
+            request.Uri.Assign(s_endpoint);
 
-            request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+            request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
             }
 
             return request;
@@ -392,15 +392,15 @@ namespace Azure.Identity
 
             request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
-            request.UriBuilder.Assign(s_endpoint);
+            request.Uri.Assign(s_endpoint);
 
-            request.UriBuilder.AppendQuery("api-version", AppServiceMsiApiVersion);
+            request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
 
-            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
             }
 
             return request;
@@ -417,7 +417,7 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Assign(s_endpoint);
+            request.Uri.Assign(s_endpoint);
 
             request.Headers.Add("Metadata", "true");
 

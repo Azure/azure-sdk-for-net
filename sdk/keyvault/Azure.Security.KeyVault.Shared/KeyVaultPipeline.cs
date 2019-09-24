@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.UriBuilder.Assign(uri);
+            request.Uri.Assign(uri);
 
             return request;
         }
@@ -71,14 +71,14 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.UriBuilder.Assign(_vaultUri);
+            request.Uri.Assign(_vaultUri);
 
             foreach (var p in path)
             {
-                request.UriBuilder.AppendPath(p);
+                request.Uri.AppendPath(p);
             }
 
-            request.UriBuilder.AppendQuery("api-version", ApiVersion);
+            request.Uri.AppendQuery("api-version", ApiVersion);
 
             return request;
         }
