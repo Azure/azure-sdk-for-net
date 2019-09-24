@@ -271,12 +271,12 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(secret, nameof(secret));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Set");
-            scope.AddAttribute("secret", secret.Properties.Name);
+            scope.AddAttribute("secret", secret.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Properties.Name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -300,12 +300,12 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(secret, nameof(secret));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Set");
-            scope.AddAttribute("secret", secret.Properties.Name);
+            scope.AddAttribute("secret", secret.Name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Properties.Name);
+                return _pipeline.SendRequest(RequestMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name);
             }
             catch (Exception e)
             {

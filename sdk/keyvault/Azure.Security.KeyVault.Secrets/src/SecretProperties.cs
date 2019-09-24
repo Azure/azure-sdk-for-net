@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Vault base URL.
         /// </summary>
-        public Uri Vault => _identifier.Vault;
+        public Uri VaultUri => _identifier.Vault;
 
         /// <summary>
         /// Name of the secret.

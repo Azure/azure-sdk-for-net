@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // Let's Get the bank secret from the key vault.
             Secret bankSecret = await client.GetAsync(secretName);
-            Debug.WriteLine($"Secret is returned with name {bankSecret.Properties.Name} and value {bankSecret.Value}");
+            Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 
             // After one year, the bank account is still active, we need to update the expiry time of the secret.
             // The update method can be used to update the expiry attribute of the secret. It cannot be used to update

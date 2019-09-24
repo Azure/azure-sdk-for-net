@@ -6,6 +6,7 @@
 
 - `SecretBase` has been renamed to `SecretProperties`.
 - `Secret` and `DeletedSecret` no longer extend `SecretProperties`, but instead contain a `SecretProperties`.
+- `SecretProperties.Vault` has been renamed to `SecretProperties.VaultUri`.
 
 ## 4.0.0-preview.1 (2019-06-28)
 Version 4.0.0-preview.1 is the first preview of our efforts to create a user-friendly client library for Azure Key Vault. For more information about

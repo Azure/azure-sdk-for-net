@@ -34,6 +34,26 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
+        /// Secret identifier.
+        /// </summary>
+        public Uri Id => Properties.Id;
+
+        /// <summary>
+        /// Vault base URL.
+        /// </summary>
+        public Uri VaultUri => Properties.VaultUri;
+
+        /// <summary>
+        /// Name of the secret.
+        /// </summary>
+        public string Name => Properties.Name;
+
+        /// <summary>
+        /// Version of the secret.
+        /// </summary>
+        public string Version => Properties.Version;
+
+        /// <summary>
         /// Gets or sets the attributes of the <see cref="Secret"/>.
         /// </summary>
         public SecretProperties Properties { get; }
