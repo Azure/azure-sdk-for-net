@@ -57,9 +57,9 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
         /// account is enabled for RA-GRS.
-        /// 
+        ///
         /// If this property is set, the secondary Uri will be used for GET or HEAD requests during retries.
-        /// If the status of the response from the secondary Uri is a 404, then subsequent retries for 
+        /// If the status of the response from the secondary Uri is a 404, then subsequent retries for
         /// the request will not use the secondary Uri again, as this indicates that the resource
         /// may not have propagated there yet. Otherwise, subsequent retries will alternate back and forth
         /// between primary and secondary Uri.
