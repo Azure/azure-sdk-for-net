@@ -7550,7 +7550,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageDirectoryInfo
     /// </summary>
-    public partial class RawStorageDirectoryInfo
+    internal partial class RawStorageDirectoryInfo
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
@@ -7597,40 +7597,6 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public string FileParentId { get; internal set; }
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new RawStorageDirectoryInfo instance for mocking.
-        /// </summary>
-        public static RawStorageDirectoryInfo RawStorageDirectoryInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string filePermissionKey,
-            string fileAttributes,
-            System.DateTimeOffset fileCreationTime,
-            System.DateTimeOffset fileLastWriteTime,
-            System.DateTimeOffset fileChangeTime,
-            string fileId,
-            string fileParentId)
-        {
-            return new RawStorageDirectoryInfo()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                FilePermissionKey = filePermissionKey,
-                FileAttributes = fileAttributes,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FileId = fileId,
-                FileParentId = fileParentId,
-            };
-        }
-    }
 }
 #endregion class RawStorageDirectoryInfo
 
@@ -7640,7 +7606,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageDirectoryProperties
     /// </summary>
-    public partial class RawStorageDirectoryProperties
+    internal partial class RawStorageDirectoryProperties
     {
         /// <summary>
         /// A set of name-value pairs that contain metadata for the directory.
@@ -7705,44 +7671,6 @@ namespace Azure.Storage.Files.Models
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new RawStorageDirectoryProperties instance for mocking.
-        /// </summary>
-        public static RawStorageDirectoryProperties RawStorageDirectoryProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            System.DateTimeOffset lastModified,
-            bool isServerEncrypted,
-            string fileAttributes,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset fileLastWriteTime,
-            System.DateTimeOffset fileChangeTime,
-            string filePermissionKey,
-            string fileId,
-            string fileParentId,
-            System.DateTimeOffset fileCreationTime)
-        {
-            return new RawStorageDirectoryProperties()
-            {
-                Metadata = metadata,
-                LastModified = lastModified,
-                IsServerEncrypted = isServerEncrypted,
-                FileAttributes = fileAttributes,
-                ETag = eTag,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FilePermissionKey = filePermissionKey,
-                FileId = fileId,
-                FileParentId = fileParentId,
-                FileCreationTime = fileCreationTime,
-            };
-        }
-    }
 }
 #endregion class RawStorageDirectoryProperties
 
@@ -7752,7 +7680,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageFileInfo
     /// </summary>
-    public partial class RawStorageFileInfo
+    internal partial class RawStorageFileInfo
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
@@ -7804,42 +7732,6 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public string FileParentId { get; internal set; }
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new RawStorageFileInfo instance for mocking.
-        /// </summary>
-        public static RawStorageFileInfo RawStorageFileInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            bool isServerEncrypted,
-            string filePermissionKey,
-            string fileAttributes,
-            System.DateTimeOffset fileCreationTime,
-            System.DateTimeOffset fileLastWriteTime,
-            System.DateTimeOffset fileChangeTime,
-            string fileId,
-            string fileParentId)
-        {
-            return new RawStorageFileInfo()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                IsServerEncrypted = isServerEncrypted,
-                FilePermissionKey = filePermissionKey,
-                FileAttributes = fileAttributes,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FileId = fileId,
-                FileParentId = fileParentId,
-            };
-        }
-    }
 }
 #endregion class RawStorageFileInfo
 
@@ -7849,7 +7741,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageFileProperties
     /// </summary>
-    public partial class RawStorageFileProperties
+    internal partial class RawStorageFileProperties
     {
         /// <summary>
         /// Returns the date and time the file was last modified. The date format follows RFC 1123. Any operation that modifies the file or its properties updates the last modified time.
@@ -7986,72 +7878,6 @@ namespace Azure.Storage.Files.Models
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             ContentEncoding = new System.Collections.Generic.List<string>();
             ContentLanguage = new System.Collections.Generic.List<string>();
-        }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new RawStorageFileProperties instance for mocking.
-        /// </summary>
-        public static RawStorageFileProperties RawStorageFileProperties(
-            System.DateTimeOffset lastModified,
-            string contentDisposition,
-            System.Collections.Generic.IEnumerable<string> contentLanguage,
-            System.DateTimeOffset copyCompletionTime,
-            string cacheControl,
-            string copyId,
-            string copyProgress,
-            string copySource,
-            Azure.Storage.Files.Models.CopyStatus copyStatus,
-            bool isServerEncrypted,
-            System.Collections.Generic.IEnumerable<string> contentEncoding,
-            string fileAttributes,
-            byte[] contentHash,
-            System.DateTimeOffset fileCreationTime,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset fileLastWriteTime,
-            string contentType,
-            System.DateTimeOffset fileChangeTime,
-            long contentLength,
-            string filePermissionKey,
-            Azure.Storage.Files.Models.Header fileType,
-            string fileId,
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            string fileParentId,
-            string copyStatusDescription)
-        {
-            return new RawStorageFileProperties()
-            {
-                LastModified = lastModified,
-                ContentDisposition = contentDisposition,
-                ContentLanguage = contentLanguage,
-                CopyCompletionTime = copyCompletionTime,
-                CacheControl = cacheControl,
-                CopyId = copyId,
-                CopyProgress = copyProgress,
-                CopySource = copySource,
-                CopyStatus = copyStatus,
-                IsServerEncrypted = isServerEncrypted,
-                ContentEncoding = contentEncoding,
-                FileAttributes = fileAttributes,
-                ContentHash = contentHash,
-                FileCreationTime = fileCreationTime,
-                ETag = eTag,
-                FileLastWriteTime = fileLastWriteTime,
-                ContentType = contentType,
-                FileChangeTime = fileChangeTime,
-                ContentLength = contentLength,
-                FilePermissionKey = filePermissionKey,
-                FileType = fileType,
-                FileId = fileId,
-                Metadata = metadata,
-                FileParentId = fileParentId,
-                CopyStatusDescription = copyStatusDescription,
-            };
         }
     }
 }
