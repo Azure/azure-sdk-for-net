@@ -16,12 +16,14 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         public const string AES = "AES";
 
-        public const string AGENT_METADATA_VALUE = "JavaTrack2" + ServiceConfiguration.BlobConfiguration.VERSION;
+        public const string AGENT_METADATA_VALUE = ".NETTrack2" + ServiceConfiguration.BlobConfiguration.VERSION;
 
         public const string ENCRYPTION_DATA_KEY = "encryptiondata";
 
         public const string ENCRYPTION_MODE = "FullBlob";
 
         public const int ENCRYPTION_BLOCK_SIZE = 16;
+
+        public const int ENCRYPTION_KEY_SIZE = 256;
     }
 }

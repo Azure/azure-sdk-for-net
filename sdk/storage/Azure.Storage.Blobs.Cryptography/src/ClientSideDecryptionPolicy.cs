@@ -15,6 +15,11 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
 {
+    /// <summary>
+    /// An <see cref="HttpPipelinePolicy"/> for appropriately downloading a blob using client-side encryption.
+    /// Adjusts the download range requested, if any, to ensure enough info is present to decrypt, as well as
+    /// pipes the returned content stream through a decryption stream.
+    /// </summary>
     public class ClientSideBlobDecryptionPolicy : HttpPipelinePolicy
     {
         /// <summary>
@@ -46,6 +51,13 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         #region Process
 
+        /// <summary>
+        /// If the request is fetching a specific range from the blob, adjust that range to download the extra bytes
+        /// needed for decryption. On return, pipe the content through a CryptoStream to decrypt the data.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpPipelineMessage"/> this policy would be applied to.</param>
+        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
+        /// <returns></returns>
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range);
@@ -55,14 +67,26 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
             if (message.Response.ContentStream != null)
             {
+                if (!message.Response.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange))
+                {
+                    throw new ArgumentException($"HTTP response with body content did not specify {Constants.HeaderNames.ContentLength}");
+                }
+
                 message.Response.ContentStream = DecryptBlob(
                     message.Response.ContentStream,
                     ExtractMetadata(message.Request.Headers),
                     encryptedRange,
-                    false /*padding*/); //TODO resolve how this works
+                    IgnorePadding(message.Response.Headers));
             }
         }
 
+        /// <summary>
+        /// If the request is fetching a specific range from the blob, adjust that range to download the extra bytes
+        /// needed for decryption. On return, pipe the content through a CryptoStream to decrypt the data.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpPipelineMessage"/> this policy would be applied to.</param>
+        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
+        /// <returns></returns>
         public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range);
@@ -76,7 +100,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     message.Response.ContentStream,
                     ExtractMetadata(message.Request.Headers),
                     encryptedRange,
-                    false /*padding*/).ConfigureAwait(false); //TODO resolve how this works
+                    IgnorePadding(message.Response.Headers)).ConfigureAwait(false);
             }
         }
 
@@ -90,10 +114,40 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             }
         }
 
+        /// <summary>
+        /// Gets whether to ignore padding options for decryption.
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// If the last cipher block of the blob was returned, we need the padding. Otherwise, we can ignore it.
+        /// </remarks>
+        private static bool IgnorePadding(ResponseHeaders headers)
+        {
+            // if Content-Range not present, we requested the whole blob
+            if (!headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange))
+            {
+                return false;
+            }
+
+            // parse header value (e.g. "bytes <start>-<end>/<blobSize>")
+            // end is the inclusive last byte; header "bytes 0-7/8" is the entire 8-byte blob
+            var tokens = contentRange.Split(new char[] { ' ', '-', '/' }); // ["bytes", "<start>", "<end>", "<blobSize>"]
+
+            // did we request the last block?
+            if (long.Parse(tokens[3], System.Globalization.CultureInfo.InvariantCulture) -
+                long.Parse(tokens[2], System.Globalization.CultureInfo.InvariantCulture) < 16)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #region DecryptBlob
 
         private Stream DecryptBlob(Stream ciphertext, Metadata metadata,
-            EncryptedBlobRange encryptedBlobRange, bool padding)
+            EncryptedBlobRange encryptedBlobRange, bool noPadding)
         {
             AssertKeyAccessPresent();
             var encryptionData = GetAndValidateEncryptionData(metadata);
@@ -111,7 +165,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 read = IV.Length;
             }
 
-            CryptoStream plaintext = WrapStream(ciphertext, GetKeyEncryptionKey(encryptionData).ToArray(), encryptionData, IV, padding);
+            CryptoStream plaintext = WrapStream(ciphertext, GetKeyEncryptionKey(encryptionData).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -123,7 +177,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         }
 
         private async Task<Stream> DecryptBlobAsync(Stream ciphertext, Metadata metadata,
-            EncryptedBlobRange encryptedBlobRange, bool padding)
+            EncryptedBlobRange encryptedBlobRange, bool noPadding)
         {
             AssertKeyAccessPresent();
             var encryptionData = GetAndValidateEncryptionData(metadata);
@@ -141,7 +195,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 read = IV.Length;
             }
 
-            CryptoStream plaintext = WrapStream(ciphertext, (await GetKeyEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, padding);
+            CryptoStream plaintext = WrapStream(ciphertext, (await GetKeyEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -289,7 +343,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         #endregion
 
         private CryptoStream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
-            EncryptionData encryptionData, byte[] iv, bool padding)
+            EncryptionData encryptionData, byte[] iv, bool noPadding)
         {
             switch (encryptionData.EncryptionAgent.Algorithm)
             {
@@ -299,7 +353,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                         aesProvider.IV = iv ?? encryptionData.ContentEncryptionIV;
                         aesProvider.Key = contentEncryptionKey;
 
-                        if (!padding)
+                        if (noPadding)
                         {
                             aesProvider.Padding = PaddingMode.None;
                         }

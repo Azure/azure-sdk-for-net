@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -66,7 +67,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public EncryptedBlockBlobClient(string connectionString,
+        public EncryptedBlockBlobClient(
+            string connectionString,
             string containerName,
             string blobName,
             ClientSideEncryptionKey key,
@@ -76,29 +78,29 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             _blockBlobClient = new BlobClient(connectionString, containerName, blobName, options);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobUri">
-        /// A <see cref="Uri"/> referencing the encrypted block blob that includes the
-        /// name of the account, the name of the container, and the name of
-        /// the blob.
-        /// </param>
-        /// <param name="key"></param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public EncryptedBlockBlobClient(
-            Uri blobUri,
-            ClientSideEncryptionKey key,
-            BlobClientOptions options = default)
-            : base(blobUri, FluentAddPolicy(options, new ClientSideBlobDecryptionPolicy(key)))
-        {
-            _blockBlobClient = new BlobClient(blobUri, options);
-        }
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        ///// class.
+        ///// </summary>
+        ///// <param name="blobUri">
+        ///// A <see cref="Uri"/> referencing the encrypted block blob that includes the
+        ///// name of the account, the name of the container, and the name of
+        ///// the blob.
+        ///// </param>
+        ///// <param name="key"></param>
+        ///// <param name="options">
+        ///// Optional client options that define the transport pipeline
+        ///// policies for authentication, retries, etc., that are applied to
+        ///// every request.
+        ///// </param>
+        //public EncryptedBlockBlobClient(
+        //    Uri blobUri,
+        //    ClientSideEncryptionKey key,
+        //    BlobClientOptions options = default)
+        //    : base(blobUri, FluentAddPolicy(options, new ClientSideBlobDecryptionPolicy(key)))
+        //{
+        //    _blockBlobClient = new BlobClient(blobUri, options);
+        //}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
@@ -118,8 +120,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public EncryptedBlockBlobClient
-            (Uri blobUri,
+        public EncryptedBlockBlobClient(
+            Uri blobUri,
             StorageSharedKeyCredential credential,
             ClientSideEncryptionKey key,
             BlobClientOptions options = default)
@@ -189,153 +191,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         #endregion ctors
 
         #region Upload
-        /// <summary>
-        /// The <see cref="Upload(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
-        ///
-        /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
-        /// append blobs, please see <see cref="PageBlobClient"/> or
-        /// <see cref="AppendBlobClient"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content to upload.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Response<BlobContentInfo> Upload(
-            Stream content,
-            CancellationToken cancellationToken = default) =>
-            this.Upload(
-                content,
-                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
-                cancellationToken: cancellationToken);
-
-        /// <summary>
-        /// The <see cref="Upload(FileInfo, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
-        ///
-        /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
-        /// append blobs, please see <see cref="PageBlobClient"/> or
-        /// <see cref="AppendBlobClient"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="FileInfo"/> containing the content to upload.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Response<BlobContentInfo> Upload(
-            FileInfo content,
-            CancellationToken cancellationToken = default) =>
-            this.Upload(
-                content,
-                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
-                cancellationToken: cancellationToken);
-
-        /// <summary>
-        /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
-        ///
-        /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
-        /// append blobs, please see <see cref="PageBlobClient"/> or
-        /// <see cref="AppendBlobClient"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content to upload.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Task<Response<BlobContentInfo>> UploadAsync(
-            Stream content,
-            CancellationToken cancellationToken = default) =>
-            this.UploadAsync(
-                content,
-                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
-                cancellationToken: cancellationToken);
-
-        /// <summary>
-        /// The <see cref="UploadAsync(FileInfo, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
-        ///
-        /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
-        /// append blobs, please see <see cref="PageBlobClient"/> or
-        /// <see cref="AppendBlobClient"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="FileInfo"/> containing the content to upload.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Task<Response<BlobContentInfo>> UploadAsync(
-            FileInfo content,
-            CancellationToken cancellationToken = default) =>
-            this.UploadAsync(
-                content,
-                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
-                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
@@ -915,23 +770,54 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         }
         #endregion Upload
 
-        private Stream EncryptStream(Stream plaintext, byte[] key, byte[] iv, bool padding)
+        private Stream EncryptStream(Stream plaintext, byte[] keyEncryptionKey, out EncryptionData encryptionData)
         {
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())
-            {
-                aesProvider.IV = iv;
-                aesProvider.Key = key;
+            var generatedKey = CreateKey(EncryptionConstants.ENCRYPTION_KEY_SIZE);
 
-                if (!padding)
+            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
+            {
+                encryptionData = new EncryptionData()
                 {
-                    aesProvider.Padding = PaddingMode.None;
-                }
+                    EncryptionMode = "FullBlob",
+                    ContentEncryptionIV = aesProvider.IV,
+                    EncryptionAgent = new EncryptionAgent()
+                    {
+                        Algorithm = ClientsideEncryptionAlgorithm.AES_CBC_256,
+                        Protocol = EncryptionConstants.ENCRYPTION_PROTOCOL_V1
+                    },
+                    KeyWrappingMetadata = new Dictionary<string, string>()
+                    {
+                        { EncryptionConstants.AGENT_METADATA_KEY, EncryptionConstants.AGENT_METADATA_VALUE }
+                    },
+                    WrappedContentKey = new WrappedKey()
+                    {
+                        Algorithm = null, // TODO
+                        EncryptedKey = null, // TODO
+                        KeyId = null // TODO
+                    }
+                };
 
                 return new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Write);
             }
         }
+
+        /// <summary>
+        /// Securely generate a key.
+        /// </summary>
+        /// <param name="numBytes">Key size.</param>
+        /// <returns>The generated key bytes.</returns>
+        private static byte[] CreateKey(int numBytes)
+        {
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                var buff = new byte[numBytes];
+                rng.GetBytes(buff);
+                return buff;
+            }
+        }
     }
 
+    // TODO to be re-added upon resolution of https://github.com/Azure/azure-sdk-for-net/issues/7713
     ///// <summary>
     ///// Add easy to discover methods to <see cref="BlobContainerClient"/> for
     ///// creating <see cref="EncryptedBlockBlobClient"/> instances.

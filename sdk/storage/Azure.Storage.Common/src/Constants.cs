@@ -101,6 +101,7 @@ namespace Azure.Storage
             public const string IfNoneMatch = "If-None-Match";
             public const string IfUnmodifiedSince = "If-Unmodified-Since";
             public const string Range = "Range";
+            public const string ContentRange = "Content-Range";
         }
 
         /// <summary>
