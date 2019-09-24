@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus", "src\Azure.Messaging.ServiceBus.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.Tests", "tests\Azure.Messaging.ServiceBus.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.Performance", "tests\Performance\Azure.Messaging.ServiceBus.Performance.csproj", "{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ServiceBus", "..\Microsoft.Azure.Management.ServiceBus\src\Microsoft.Azure.Management.ServiceBus.csproj", "{C52EFBD7-0955-43DE-BB10-38AC43985274}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52EFBD7-0955-43DE-BB10-38AC43985274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52EFBD7-0955-43DE-BB10-38AC43985274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52EFBD7-0955-43DE-BB10-38AC43985274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52EFBD7-0955-43DE-BB10-38AC43985274}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}
+	EndGlobalSection
+EndGlobal

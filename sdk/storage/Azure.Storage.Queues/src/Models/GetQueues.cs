@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// Specifies options for listing queues with the 
+    /// Specifies options for listing queues with the
     /// <see cref="QueueServiceClient.GetQueuesAsync"/> operation.
     /// </summary>
     public struct GetQueuesOptions : IEquatable<GetQueuesOptions>
@@ -84,22 +84,20 @@ namespace Azure.Storage.Queues.Models
             Prefix == other.Prefix;
     }
 
-    internal class GetQueuesAsyncCollection : StorageAsyncCollection<QueueItem>
+    internal class GetQueuesAsyncCollection : StorageCollectionEnumerator<QueueItem>
     {
         private readonly QueueServiceClient _client;
         private readonly GetQueuesOptions? _options;
 
         public GetQueuesAsyncCollection(
             QueueServiceClient client,
-            GetQueuesOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetQueuesOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<QueueItem>> GetNextPageAsync(
+        public override async ValueTask<Page<QueueItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,

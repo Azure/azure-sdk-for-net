@@ -2187,9 +2187,9 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<StorageHandle>> GetHandles(
+        public virtual SyncCollection<StorageHandle> GetHandles(
             CancellationToken cancellationToken = default) =>
-            new GetFileHandlesAsyncCollection(this, cancellationToken);
+            new GetFileHandlesAsyncCollection(this).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns an async
@@ -2213,7 +2213,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
             CancellationToken cancellationToken = default) =>
-            new GetFileHandlesAsyncCollection(this, cancellationToken);
+            new GetFileHandlesAsyncCollection(this).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesInternal"/> operation returns a list of open

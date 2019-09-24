@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Specifies options for listing containers with the 
+    /// Specifies options for listing containers with the
     /// <see cref="BlobServiceClient.GetContainersAsync"/> operation.
     /// </summary>
     public struct GetContainersOptions : IEquatable<GetContainersOptions>
@@ -83,22 +83,20 @@ namespace Azure.Storage.Blobs.Models
             Prefix == other.Prefix;
     }
 
-    internal class GetContainersAsyncCollection : StorageAsyncCollection<ContainerItem>
+    internal class GetContainersAsyncCollection : StorageCollectionEnumerator<ContainerItem>
     {
         private readonly BlobServiceClient _client;
         private readonly GetContainersOptions? _options;
 
         public GetContainersAsyncCollection(
             BlobServiceClient client,
-            GetContainersOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetContainersOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<ContainerItem>> GetNextPageAsync(
+        public override async ValueTask<Page<ContainerItem>> GetNextPageAsync(
             string continuationToken,
             int? pageHintSize,
             bool isAsync,

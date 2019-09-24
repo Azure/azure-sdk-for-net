@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var selector = new SettingSelector(null, "production");
 
             Debug.WriteLine("Settings for Production environmnet");
-            await foreach (Response<ConfigurationSetting> setting in client.GetSettingsAsync(selector))
+            await foreach (ConfigurationSetting setting in client.GetSettingsAsync(selector))
             {
                 Debug.WriteLine(setting);
             }

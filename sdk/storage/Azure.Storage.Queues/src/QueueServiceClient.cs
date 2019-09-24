@@ -216,10 +216,10 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// The queues in the storage account.
         /// </returns>
-        public virtual IEnumerable<Response<QueueItem>> GetQueues(
+        public virtual SyncCollection<QueueItem> GetQueues(
             GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetQueuesAsyncCollection(this, options, cancellationToken);
+            new GetQueuesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetQueuesAsync"/> operation returns an async
@@ -245,7 +245,7 @@ namespace Azure.Storage.Queues
         public virtual AsyncCollection<QueueItem> GetQueuesAsync(
             GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetQueuesAsyncCollection(this, options, cancellationToken);
+            new GetQueuesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// Returns a single segment of containers starting from the specified marker.

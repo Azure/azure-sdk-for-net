@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Specifies options for listing blobs with the 
+    /// Specifies options for listing blobs with the
     /// <see cref="BlobContainerClient.GetBlobsAsync"/> and
     /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
     /// operations.
@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Models
         internal IEnumerable<ListBlobsIncludeItem> AsIncludeItems()
         {
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
-            // TODO: Remove this requirement by pushing it closer to header generation. 
+            // TODO: Remove this requirement by pushing it closer to header generation.
             var items = new List<ListBlobsIncludeItem>();
             if (IncludeCopyOperationStatus) { items.Add(ListBlobsIncludeItem.Copy); }
             if (IncludeDeletedBlobs) { items.Add(ListBlobsIncludeItem.Deleted); }
@@ -128,22 +128,20 @@ namespace Azure.Storage.Blobs.Models
             Prefix == other.Prefix;
     }
 
-    internal class GetBlobsAsyncCollection : StorageAsyncCollection<BlobItem>
+    internal class GetBlobsAsyncCollection : StorageCollectionEnumerator<BlobItem>
     {
         private readonly BlobContainerClient _client;
         private readonly GetBlobsOptions? _options;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
-            GetBlobsOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetBlobsOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<BlobItem>> GetNextPageAsync(
+        public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,
@@ -165,7 +163,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 
-    internal class GetBlobsByHierarchyAsyncCollection : StorageAsyncCollection<BlobHierarchyItem>
+    internal class GetBlobsByHierarchyAsyncCollection : StorageCollectionEnumerator<BlobHierarchyItem>
     {
         private readonly BlobContainerClient _client;
         private readonly GetBlobsOptions? _options;
@@ -174,16 +172,14 @@ namespace Azure.Storage.Blobs.Models
         public GetBlobsByHierarchyAsyncCollection(
             BlobContainerClient client,
             string delimiter,
-            GetBlobsOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetBlobsOptions? options)
         {
             _client = client;
             _delimiter = delimiter;
             _options = options;
         }
 
-        protected override async Task<Page<BlobHierarchyItem>> GetNextPageAsync(
+        public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
             string continuationToken,
             int? pageHintSize,
             bool isAsync,

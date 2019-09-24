@@ -45,16 +45,16 @@ namespace Azure.Storage.Common.Test
             {
                 // Blobs
                 var blobs = new BlobServiceClient(config.ConnectionString);
-                await foreach (Response<ContainerItem> container in blobs.GetContainersAsync())
+                await foreach (ContainerItem container in blobs.GetContainersAsync())
                 {
                     try
                     {
-                        await blobs.DeleteBlobContainerAsync(container.Value.Name);
+                        await blobs.DeleteBlobContainerAsync(container.Name);
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
                     {
                         // Break any lingering leases
-                        await blobs.GetBlobContainerClient(container.Value.Name).GetLeaseClient().BreakAsync();
+                        await blobs.GetBlobContainerClient(container.Name).GetLeaseClient().BreakAsync();
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
                     {
@@ -64,11 +64,11 @@ namespace Azure.Storage.Common.Test
 
                 // Queues
                 var queues = new QueueServiceClient(config.ConnectionString);
-                await foreach (Response<QueueItem> queue in queues.GetQueuesAsync())
+                await foreach (QueueItem queue in queues.GetQueuesAsync())
                 {
                     try
                     {
-                        await queues.DeleteQueueAsync(queue.Value.Name);
+                        await queues.DeleteQueueAsync(queue.Name);
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == QueueErrorCode.QueueBeingDeleted)
                     {
@@ -78,11 +78,11 @@ namespace Azure.Storage.Common.Test
 
                 // Files
                 var files = new FileServiceClient(config.ConnectionString);
-                await foreach (Response<ShareItem> share in files.GetSharesAsync())
+                await foreach (ShareItem share in files.GetSharesAsync())
                 {
                     try
                     {
-                        await files.DeleteShareAsync(share.Value.Name);
+                        await files.DeleteShareAsync(share.Name);
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
                     {

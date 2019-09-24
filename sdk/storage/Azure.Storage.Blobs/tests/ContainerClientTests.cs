@@ -1207,10 +1207,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeMetadata = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeMetadata = true }).ToListAsync();
 
                 // Assert
-                AssertMetadataEquality(metadata, blobs.First().Value.Metadata);
+                AssertMetadataEquality(metadata, blobs.First().Metadata);
             }
         }
 
@@ -1228,7 +1228,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1236,7 +1236,7 @@ namespace Azure.Storage.Blobs.Test
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Name);
+                Assert.AreEqual(blobName, blobs.First().Name);
 
                 // Cleanup
                 await DisableSoftDelete();
@@ -1262,11 +1262,11 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Name);
+                Assert.AreEqual(blobName, blobs.First().Name);
             }
         }
 
@@ -1281,11 +1281,11 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Value.Snapshot);
+                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
             }
         }
 
@@ -1298,7 +1298,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(3, blobs.Count);
@@ -1332,8 +1332,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
                     await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
-                    Response<BlobItem> blobItem = await container.GetBlobsAsync().FirstAsync();
-                    Assert.AreEqual(blobName, blobItem.Value.Name);
+                    BlobItem blobItem = await container.GetBlobsAsync().FirstAsync();
+                    Assert.AreEqual(blobName, blobItem.Name);
                 }
             }
         }
@@ -1412,10 +1412,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                Response<BlobHierarchyItem> item = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeMetadata = true }).FirstAsync();
+                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeMetadata = true }).FirstAsync();
 
                 // Assert
-                AssertMetadataEquality(metadata, item.Value.Blob.Metadata);
+                AssertMetadataEquality(metadata, item.Blob.Metadata);
             }
         }
 
@@ -1433,7 +1433,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1441,7 +1441,7 @@ namespace Azure.Storage.Blobs.Test
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Blob.Name);
+                Assert.AreEqual(blobName, blobs.First().Blob.Name);
 
                 // Cleanup
                 await DisableSoftDelete();
@@ -1467,11 +1467,11 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Blob.Name);
+                Assert.AreEqual(blobName, blobs.First().Blob.Name);
             }
         }
 
@@ -1486,11 +1486,11 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Value.Blob.Snapshot);
+                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
             }
         }
 
@@ -1503,7 +1503,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
 
 
                 // Assert
@@ -1574,7 +1574,7 @@ namespace Azure.Storage.Blobs.Test
             var properties = await this.EnsurePropagatedAsync(
                 async () => await containerClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
-            
+
             Assert.IsNotNull(properties);
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 

@@ -1157,10 +1157,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<BlobItem>> GetBlobs(
+        public virtual SyncCollection<BlobItem> GetBlobs(
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsAsyncCollection(this, options, cancellationToken);
+            new GetBlobsAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync"/> operation returns an async
@@ -1189,7 +1189,7 @@ namespace Azure.Storage.Blobs
         public virtual AsyncCollection<BlobItem> GetBlobsAsync(
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsAsyncCollection(this, options, cancellationToken);
+            new GetBlobsAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -1320,11 +1320,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<BlobHierarchyItem>> GetBlobsByHierarchy(
+        public virtual SyncCollection<BlobHierarchyItem> GetBlobsByHierarchy(
             string delimiter = default,
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
@@ -1373,7 +1373,7 @@ namespace Azure.Storage.Blobs
             string delimiter = default,
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns

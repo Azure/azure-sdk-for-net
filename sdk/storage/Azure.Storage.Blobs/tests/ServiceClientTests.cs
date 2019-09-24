@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out _, service: service))
             {
                 // Act
-                IList<Response<ContainerItem>> containers = await service.GetContainersAsync().ToListAsync();
+                IList<ContainerItem> containers = await service.GetContainersAsync().ToListAsync();
 
                 // Assert
                 Assert.IsTrue(containers.Count() >= 1);
@@ -119,11 +119,10 @@ namespace Azure.Storage.Blobs.Test
                 retryOn404);
             using (GetNewContainer(out _, service: service))
             {
-                IList<Response<ContainerItem>> containers = await EnsurePropagatedAsync(
+                IList<ContainerItem> containers = await EnsurePropagatedAsync(
                     async () => await service.GetContainersAsync().ToListAsync(),
                     containers => containers.Count > 0);
                 Assert.IsTrue(containers.Count >= 1);
-                Assert.AreEqual(200, containers[0].GetRawResponse().Status);
             }
             return testExceptionPolicy;
         }
@@ -181,11 +180,11 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Act
                 AsyncCollection<ContainerItem> containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
-                IList<Response<ContainerItem>> items = await containers.ToListAsync();
+                IList<ContainerItem> items = await containers.ToListAsync();
                 // Assert
                 Assert.AreNotEqual(0, items.Count());
-                Assert.IsTrue(items.All(c => c.Value.Name.StartsWith(prefix)));
-                Assert.IsNotNull(items.Single(c => c.Value.Name == containerName));
+                Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
+                Assert.IsNotNull(items.Single(c => c.Name == containerName));
             }
         }
 
@@ -201,10 +200,10 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Act
-                Response<ContainerItem> first = await service.GetContainersAsync(new GetContainersOptions { IncludeMetadata = true }).FirstAsync();
+                ContainerItem first = await service.GetContainersAsync(new GetContainersOptions { IncludeMetadata = true }).FirstAsync();
 
                 // Assert
-                Assert.IsNotNull(first.Value.Metadata);
+                Assert.IsNotNull(first.Metadata);
             }
         }
 

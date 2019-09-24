@@ -205,10 +205,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<ShareItem>> GetShares(
+        public virtual SyncCollection<ShareItem> GetShares(
             GetSharesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options, cancellationToken);
+            new GetSharesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesAsync"/> operation returns an async collection
@@ -237,7 +237,7 @@ namespace Azure.Storage.Files
         public virtual AsyncCollection<ShareItem> GetSharesAsync(
             GetSharesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options, cancellationToken);
+            new GetSharesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesInternal"/> operation returns a

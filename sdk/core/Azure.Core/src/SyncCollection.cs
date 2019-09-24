@@ -1,19 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure
 {
-    /// <summary>
-    /// A collection of values that may take multiple service requests to
-    /// iterate over.
-    /// </summary>
-    /// <typeparam name="T">The type of the values.</typeparam>
-    public abstract class AsyncCollection<T> : IAsyncEnumerable<T> where T : notnull
+    public abstract class SyncCollection<T> : IEnumerable<T> where T : notnull
     {
         /// <summary>
         /// Gets a <see cref="CancellationToken"/> used for requests made while
@@ -25,7 +20,7 @@ namespace Azure
         /// Initializes a new instance of the <see cref="AsyncCollection{T}"/>
         /// class for mocking.
         /// </summary>
-        protected AsyncCollection() =>
+        protected SyncCollection() =>
             CancellationToken = CancellationToken.None;
 
         /// <summary>
@@ -36,7 +31,7 @@ namespace Azure
         /// The <see cref="CancellationToken"/> used for requests made while
         /// enumerating asynchronously.
         /// </param>
-        protected AsyncCollection(CancellationToken cancellationToken) =>
+        protected SyncCollection(CancellationToken cancellationToken) =>
             CancellationToken = cancellationToken;
 
         /// <summary>
@@ -54,29 +49,9 @@ namespace Azure
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
-        public abstract IAsyncEnumerable<Page<T>> ByPage(
+        public abstract IEnumerable<Page<T>> ByPage(
             string? continuationToken = default,
             int? pageSizeHint = default);
-
-        /// <summary>
-        /// Enumerate the values in the collection asynchronously.  This may
-        /// make mutliple service requests.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// The <see cref="CancellationToken"/> used for requests made while
-        /// enumerating asynchronously.
-        /// </param>
-        /// <returns>An async sequence of values.</returns>
-        public virtual async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-        {
-            await foreach (Page<T> page in ByPage().ConfigureAwait(false).WithCancellation(cancellationToken))
-            {
-                foreach (T value in page.Values)
-                {
-                    yield return new Response<T>(page.GetRawResponse(), value);
-                }
-            }
-        }
 
         /// <summary>
         /// Creates a string representation of an <see cref="AsyncCollection{T}"/>.
@@ -86,6 +61,25 @@ namespace Azure
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <summary>
+        /// Enumerate the values in the collection.  This may make multiple service requests.
+        /// </summary>
+        public virtual IEnumerator<T> GetEnumerator()
+        {
+            foreach (Page<T> page in ByPage())
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return value;
+                }
+            }
+        }
 
         /// <summary>
         /// Check if two <see cref="AsyncCollection{T}"/> instances are equal.

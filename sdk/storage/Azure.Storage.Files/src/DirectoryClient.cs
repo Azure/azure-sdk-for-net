@@ -902,10 +902,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<StorageFileItem>> GetFilesAndDirectories(
+        public virtual SyncCollection<StorageFileItem> GetFilesAndDirectories(
             GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, options, cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
@@ -933,7 +933,7 @@ namespace Azure.Storage.Files
         public virtual AsyncCollection<StorageFileItem> GetFilesAndDirectoriesAsync(
             GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, options, cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
@@ -1039,10 +1039,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<StorageHandle>> GetHandles(
+        public virtual SyncCollection<StorageHandle> GetHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
+            new GetDirectoryHandlesAsyncCollection(this, recursive).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns an async
@@ -1070,7 +1070,7 @@ namespace Azure.Storage.Files
         public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
+            new GetDirectoryHandlesAsyncCollection(this, recursive).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns a list of open

@@ -11,18 +11,15 @@ namespace Azure.Core
 {
     internal static class PageResponseEnumerator
     {
-        public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
+
+        public static FuncSyncCollection<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
-            string? nextLink = null;
-            do
-            {
-                Page<T> pageResponse = pageFunc(nextLink);
-                foreach (T setting in pageResponse.Values)
-                {
-                    yield return new Response<T>(pageResponse.GetRawResponse(), setting);
-                }
-                nextLink = pageResponse.ContinuationToken;
-            } while (nextLink != null);
+            return new FuncSyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
+        }
+
+        public static FuncSyncCollection<T> CreateEnumerable<T>(Func<string?, int?, Page<T>> pageFunc) where T : notnull
+        {
+            return new FuncSyncCollection<T>(pageFunc);
         }
 
         public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
@@ -49,6 +46,26 @@ namespace Azure.Core
                 do
                 {
                     Page<T> pageResponse = await _pageFunc(continuationToken, pageSizeHint).ConfigureAwait(false);
+                    yield return pageResponse;
+                    continuationToken = pageResponse.ContinuationToken;
+                } while (continuationToken != null);
+            }
+        }
+
+        internal class FuncSyncCollection<T> : SyncCollection<T> where T : notnull
+        {
+            private readonly Func<string?, int?, Page<T>> _pageFunc;
+
+            public FuncSyncCollection(Func<string?, int?, Page<T>> pageFunc)
+            {
+                _pageFunc = pageFunc;
+            }
+
+            public override IEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
+            {
+                do
+                {
+                    Page<T> pageResponse = _pageFunc(continuationToken, pageSizeHint);
                     yield return pageResponse;
                     continuationToken = pageResponse.ContinuationToken;
                 } while (continuationToken != null);

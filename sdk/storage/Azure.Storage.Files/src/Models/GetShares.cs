@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// Specifies options for listing shares with the 
+    /// Specifies options for listing shares with the
     /// <see cref="FileServiceClient.GetSharesAsync"/> operation.
     /// </summary>
     public struct GetSharesOptions : IEquatable<GetSharesOptions>
@@ -43,7 +43,7 @@ namespace Azure.Storage.Files.Models
         internal IEnumerable<ListSharesIncludeType> AsIncludeItems()
         {
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
-            // TODO: Remove this requirement by pushing it closer to header generation. 
+            // TODO: Remove this requirement by pushing it closer to header generation.
             var items = new List<ListSharesIncludeType>();
             if (IncludeMetadata) { items.Add(ListSharesIncludeType.Metadata); }
             if (IncludeSnapshots) { items.Add(ListSharesIncludeType.Snapshots); }
@@ -98,22 +98,20 @@ namespace Azure.Storage.Files.Models
             IncludeSnapshots == other.IncludeSnapshots;
     }
 
-    internal class GetSharesAsyncCollection : StorageAsyncCollection<ShareItem>
+    internal class GetSharesAsyncCollection : StorageCollectionEnumerator<ShareItem>
     {
         private readonly FileServiceClient _client;
         private readonly GetSharesOptions? _options;
 
         public GetSharesAsyncCollection(
             FileServiceClient client,
-            GetSharesOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetSharesOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<ShareItem>> GetNextPageAsync(
+        public override async ValueTask<Page<ShareItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,

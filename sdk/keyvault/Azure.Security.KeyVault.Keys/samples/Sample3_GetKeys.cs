@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Let's list the keys and print their types.
             // List operations don't return the keys with key material information.
             // So, for each returned key we call GetKey to get the key with its key material information.
-            IEnumerable<Response<KeyBase>> keys = client.GetKeys();
+            IEnumerable<KeyBase> keys = client.GetKeys();
             foreach (KeyBase key in keys)
             {
                 Key keyWithType = client.GetKey(key.Name);
@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // You need to check all the different versions Cloud RSA key had previously.
             // Lets print all the versions of this key.
-            IEnumerable<Response<KeyBase>> keysVersions = client.GetKeyVersions(rsaKeyName);
+            IEnumerable<KeyBase> keysVersions = client.GetKeyVersions(rsaKeyName);
             foreach (KeyBase key in keysVersions)
             {
                 Debug.WriteLine($"Key's version {key.Version} with name {key.Name}");
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Assert.IsTrue(WaitForDeletedKey(client, ecKeyName));
 
             // You can list all the deleted and non-purged keys, assuming Key Vault is soft-delete enabled.
-            IEnumerable<Response<DeletedKey>> keysDeleted = client.GetDeletedKeys();
+            IEnumerable<DeletedKey> keysDeleted = client.GetDeletedKeys();
             foreach (DeletedKey key in keysDeleted)
             {
                 Debug.WriteLine($"Deleted key's recovery Id {key.RecoveryId}");

@@ -230,10 +230,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<ContainerItem>> GetContainers(
+        public virtual SyncCollection<ContainerItem> GetContainers(
             GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options, cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetContainersAsync"/> operation returns an async
@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs
         public virtual AsyncCollection<ContainerItem> GetContainersAsync(
             GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options, cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetContainersInternal"/> operation returns a
