@@ -53,7 +53,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the Storage account name corresponding to the share client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
@@ -70,25 +70,12 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the name of the share.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
                 SetNameFieldsIfNull();
                 return _name;
-            }
-        }
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        private void SetNameFieldsIfNull()
-        {
-            if (_name == null || _accountName == null)
-            {
-                var builder = new FileUriBuilder(Uri);
-                _name = builder.ShareName;
-                _accountName = builder.AccountName;
             }
         }
 
@@ -267,6 +254,19 @@ namespace Azure.Storage.Files
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetRootDirectoryClient()
             => GetDirectoryClient("");
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>

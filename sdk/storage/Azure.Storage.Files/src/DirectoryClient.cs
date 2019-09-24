@@ -49,7 +49,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the Storage account name corresponding to the directory client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the share name corresponding to the directory client.
         /// </summary>
-        public string ShareName
+        public virtual string ShareName
         {
             get
             {
@@ -83,26 +83,12 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the name of the directory.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
                 SetNameFieldsIfNull();
                 return _name;
-            }
-        }
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        private void SetNameFieldsIfNull()
-        {
-            if (_name == null || _shareName == null || _accountName == null)
-            {
-                var builder = new FileUriBuilder(Uri);
-                _name = builder.TerminalDirectoryOrFileName;
-                _shareName = builder.ShareName;
-                _accountName = builder.AccountName;
             }
         }
 
@@ -274,6 +260,20 @@ namespace Azure.Storage.Files
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetSubdirectoryClient(string subdirectoryName)
             => new DirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _shareName == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.LastDirectoryOrFileName;
+                _shareName = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>

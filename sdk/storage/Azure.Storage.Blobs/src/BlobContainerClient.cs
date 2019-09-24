@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Gets the Storage account name corresponding to the container client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
@@ -82,25 +82,12 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Gets the name of the container.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
                 SetNameFieldsIfNull();
                 return _name;
-            }
-        }
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        private void SetNameFieldsIfNull()
-        {
-            if (_name == null || _accountName == null)
-            {
-                var builder = new BlobUriBuilder(Uri);
-                _name = builder.ContainerName;
-                _accountName = builder.AccountName;
             }
         }
 
@@ -252,6 +239,19 @@ namespace Azure.Storage.Blobs
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) => new BlobClient(Uri.AppendToPath(blobName), _pipeline);
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.ContainerName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>

@@ -70,7 +70,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the Storage account name corresponding to the queue client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
@@ -87,25 +87,12 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the name of the queue.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
                 SetNameFieldsIfNull();
                 return _name;
-            }
-        }
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        private void SetNameFieldsIfNull()
-        {
-            if (_name == null || _accountName == null)
-            {
-                var builder = new QueueUriBuilder(Uri);
-                _name = builder.QueueName;
-                _accountName = builder.AccountName;
             }
         }
 
@@ -272,6 +259,19 @@ namespace Azure.Storage.Queues
             _pipeline = pipeline;
         }
         #endregion ctors
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new QueueUriBuilder(Uri);
+                _name = builder.QueueName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>

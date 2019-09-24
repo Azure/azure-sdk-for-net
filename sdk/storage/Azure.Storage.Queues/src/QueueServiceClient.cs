@@ -46,7 +46,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the Storage account name corresponding to the service client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {

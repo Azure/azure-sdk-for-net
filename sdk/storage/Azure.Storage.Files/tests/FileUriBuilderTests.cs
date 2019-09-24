@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.Test
             Assert.IsNull(fileUriBuilder.Sas);
             Assert.AreEqual("restype=share", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
-            Assert.AreEqual(string.Empty, fileUriBuilder.TerminalDirectoryOrFileName);
+            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("share", fileUriBuilder.ShareName);
             Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("path", fileUriBuilder.TerminalDirectoryOrFileName);
+            Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
             Assert.AreEqual("", fileUriBuilder.Snapshot);
             Assert.IsNull(fileUriBuilder.Sas);
             Assert.AreEqual("restype=directory&comp=list", fileUriBuilder.Query);
@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.Test
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
             Assert.AreEqual("path/", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("path", fileUriBuilder.TerminalDirectoryOrFileName);
+            Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
         }
 
         [Test]

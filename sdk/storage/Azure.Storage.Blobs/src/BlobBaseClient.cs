@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the Storage account name corresponding to the blob client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the container name corresponding to the blob client.
         /// </summary>
-        public string ContainerName
+        public virtual string ContainerName
         {
             get
             {
@@ -98,26 +98,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the name of the blob.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
                 SetNameFieldsIfNull();
                 return _name;
-            }
-        }
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        private void SetNameFieldsIfNull()
-        {
-            if (_name == null || _containerName == null || _accountName == null)
-            {
-                var builder = new BlobUriBuilder(Uri);
-                _name = builder.BlobName;
-                _containerName = builder.ContainerName;
-                _accountName = builder.AccountName;
             }
         }
 
@@ -360,6 +346,20 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline,
                 new BlobClientOptions(customerProvidedKey: customerProvidedKey));
 
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _containerName == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.BlobName;
+                _containerName = builder.ContainerName;
+                _accountName = builder.AccountName;
+            }
         }
 
         ///// <summary>

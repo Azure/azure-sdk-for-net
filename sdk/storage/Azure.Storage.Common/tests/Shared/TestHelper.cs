@@ -107,7 +107,7 @@ namespace Azure.Storage.Test
             }
         }
 
-        public static void AssertCacheableProperty<T>(string expected, Func<T> property)
+        public static void AssertCacheableProperty<T>(T expected, Func<T> property)
         {
             T actual = property();
             Assert.AreEqual(expected, actual); // first call calculates and caches value

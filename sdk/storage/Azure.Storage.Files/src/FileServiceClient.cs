@@ -51,7 +51,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the Storage account name corresponding to the file service client.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
