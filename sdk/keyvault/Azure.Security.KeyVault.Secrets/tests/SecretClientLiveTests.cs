@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Test
             string secretName = Recording.GenerateId();
 
             Secret version1 = await Client.SetAsync(secretName, "value1");
-            RegisterForCleanup(version1.Properties);
+            RegisterForCleanup(version1.Name);
             Secret version2 = await Client.SetAsync(secretName, "value2");
             await Client.SetAsync(secretName, "value3");
 
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Test
                     createdUpdatedConstraint = Is.InRange(now.AddMinutes(-5), now.AddMinutes(5));
                 }
 
-                RegisterForCleanup(secret.Properties, delete: false);
+                RegisterForCleanup(secret.Name, delete: false);
 
                 Assert.IsNotEmpty(setResult.Version);
                 Assert.AreEqual("password", setResult.Properties.ContentType);
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Test
             {
                 DeletedSecret deleteResult = await Client.DeleteAsync(secretName);
 
-                AssertSecretsEqual(setResult.Properties, deleteResult.Properties);
+                AssertSecretPropertiesEqual(setResult.Properties, deleteResult.Properties);
             }
         }
 
@@ -119,13 +119,13 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "CrudBasicValue1");
 
-            RegisterForCleanup(secret.Properties);
+            RegisterForCleanup(secret.Name);
 
             secret.Properties.Enabled = false;
 
             SecretProperties updateResult = await Client.UpdatePropertiesAsync(secret.Properties);
 
-            AssertSecretsEqual(secret.Properties, updateResult);
+            AssertSecretPropertiesEqual(secret.Properties, updateResult);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
 
@@ -141,13 +141,13 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "CrudBasicValue1");
 
-            RegisterForCleanup(secret.Properties);
+            RegisterForCleanup(secret.Name);
 
             secret.Properties.Expires = secret.Properties.Created;
 
             SecretProperties updateResult = await Client.UpdatePropertiesAsync(secret.Properties);
 
-            AssertSecretsEqual(secret.Properties, updateResult);
+            AssertSecretPropertiesEqual(secret.Properties, updateResult);
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace Azure.Security.KeyVault.Test
             string secretName = Recording.GenerateId();
 
             Secret setSecret = await Client.SetAsync(secretName, "value");
-            RegisterForCleanup(setSecret.Properties);
+            RegisterForCleanup(setSecret.Name);
 
             Secret secret = await Client.GetAsync(secretName);
 
@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Test
             string secretName = Recording.GenerateId();
 
             Secret version1 = await Client.SetAsync(secretName, "value1");
-            RegisterForCleanup(version1.Properties);
+            RegisterForCleanup(version1.Name);
             Secret version2 = await Client.SetAsync(secretName, "value2");
             await Client.SetAsync(secretName, "value3");
 
@@ -193,7 +193,7 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "BackupRestore");
 
-            RegisterForCleanup(secret.Properties);
+            RegisterForCleanup(secret.Name);
 
             byte[] backup = await Client.BackupAsync(secretName);
 
@@ -214,7 +214,7 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "BackupRestore");
 
-            RegisterForCleanup(secret.Properties);
+            RegisterForCleanup(secret.Name);
 
             byte[] backup = await Client.BackupAsync(secretName);
 
@@ -229,7 +229,7 @@ namespace Azure.Security.KeyVault.Test
 
             SecretProperties restoreResult = await Client.RestoreAsync(backup);
 
-            AssertSecretsEqual(secret.Properties, restoreResult);
+            AssertSecretPropertiesEqual(secret.Properties, restoreResult);
         }
 
         [Test]
@@ -246,11 +246,11 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "value");
 
-            RegisterForCleanup(secret.Properties, delete: false);
+            RegisterForCleanup(secret.Name, delete: false);
 
             DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
-            AssertSecretsEqual(secret.Properties, deletedSecret.Properties);
+            AssertSecretPropertiesEqual(secret.Properties, deletedSecret.Properties);
             Assert.NotNull(deletedSecret.DeletedDate);
             Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
@@ -270,7 +270,7 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "value");
 
-            RegisterForCleanup(secret.Properties, delete: false);
+            RegisterForCleanup(secret.Name, delete: false);
 
             DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
@@ -282,8 +282,8 @@ namespace Azure.Security.KeyVault.Test
             Assert.NotNull(deletedSecret.RecoveryId);
             Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
-            AssertSecretsEqual(deletedSecret.Properties, polledSecret.Properties);
-            AssertSecretsEqual(secret.Properties, polledSecret.Properties);
+            AssertSecretPropertiesEqual(deletedSecret.Properties, polledSecret.Properties);
+            AssertSecretPropertiesEqual(secret.Properties, polledSecret.Properties);
         }
 
         [Test]
@@ -299,7 +299,7 @@ namespace Azure.Security.KeyVault.Test
 
             Secret secret = await Client.SetAsync(secretName, "value");
 
-            RegisterForCleanup(secret.Properties);
+            RegisterForCleanup(secret.Name);
 
             DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
@@ -311,8 +311,8 @@ namespace Azure.Security.KeyVault.Test
 
             Secret recoveredSecret = await Client.GetAsync(secretName);
 
-            AssertSecretsEqual(secret.Properties, deletedSecret.Properties);
-            AssertSecretsEqual(secret.Properties, recoverSecretResult);
+            AssertSecretPropertiesEqual(secret.Properties, deletedSecret.Properties);
+            AssertSecretPropertiesEqual(secret.Properties, recoverSecretResult);
             AssertSecretsEqual(secret, recoveredSecret);
         }
 
@@ -332,7 +332,7 @@ namespace Azure.Security.KeyVault.Test
             {
                 Secret secret = await Client.SetAsync(secretName + i, i.ToString());
                 createdSecrets.Add(secret);
-                RegisterForCleanup(secret.Properties);
+                RegisterForCleanup(secret.Name);
             }
 
             List<Response<SecretProperties>> allSecrets = await Client.GetSecretsAsync().ToEnumerableAsync();
@@ -340,7 +340,7 @@ namespace Azure.Security.KeyVault.Test
             foreach (Secret createdSecret in createdSecrets)
             {
                 SecretProperties returnedSecret = allSecrets.Single(s => s.Value.Name == createdSecret.Name);
-                AssertSecretsEqual(createdSecret.Properties, returnedSecret, compareId: false);
+                AssertSecretPropertiesEqual(createdSecret.Properties, returnedSecret, compareId: false);
             }
         }
 
@@ -356,14 +356,14 @@ namespace Azure.Security.KeyVault.Test
                 createdSecrets.Add(secret);
             }
 
-            RegisterForCleanup(createdSecrets.First().Properties);
+            RegisterForCleanup(createdSecrets.First().Name);
 
             List<Response<SecretProperties>> allSecrets = await Client.GetSecretVersionsAsync(secretName).ToEnumerableAsync();
 
             foreach (Secret createdSecret in createdSecrets)
             {
                 SecretProperties returnedSecret = allSecrets.Single(s => s.Value.Id == createdSecret.Id);
-                AssertSecretsEqual(createdSecret.Properties, returnedSecret);
+                AssertSecretPropertiesEqual(createdSecret.Properties, returnedSecret);
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.Security.KeyVault.Test
                 deletedSecrets.Add(secret);
                 await Client.DeleteAsync(secret.Name);
 
-                RegisterForCleanup(secret.Properties, delete: false);
+                RegisterForCleanup(secret.Name, delete: false);
             }
 
             foreach (Secret deletedSecret in deletedSecrets)
@@ -393,7 +393,7 @@ namespace Azure.Security.KeyVault.Test
             foreach (Secret deletedSecret in deletedSecrets)
             {
                 Secret returnedSecret = allSecrets.Single(s => s.Value.Name == deletedSecret.Name);
-                AssertSecretsEqual(deletedSecret.Properties, returnedSecret.Properties, compareId: false);
+                AssertSecretPropertiesEqual(deletedSecret.Properties, returnedSecret.Properties, compareId: false);
             }
         }
     }
