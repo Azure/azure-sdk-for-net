@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+
 namespace TrackOne.Amqp
 {
-    using System;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-
-    class AmqpClientConstants
+    internal class AmqpClientConstants
     {
         // Properties
         public static readonly AmqpSymbol AttachEpoch = AmqpConstants.Vendor + ":epoch";

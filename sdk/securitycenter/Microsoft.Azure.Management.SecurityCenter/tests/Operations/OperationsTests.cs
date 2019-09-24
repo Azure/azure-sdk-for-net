@@ -44,7 +44,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityOperations_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var operations = securityCenterClient.Operations.List();

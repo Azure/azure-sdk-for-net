@@ -23,9 +23,10 @@ namespace Azure.Core.Tests
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
             }, responseClassifier: new CustomResponseClassifier());
 
-            var request = pipeline.CreateRequest();
-            request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
-            var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+            Http.Request request = pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.UriBuilder.Uri = new Uri("https://contoso.a.io");
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
         }
@@ -33,7 +34,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsFalseIfNotExist()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
 
             Assert.False(message.TryGetProperty("someName", out _));
         }
@@ -41,7 +42,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsValueIfSet()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
             Assert.True(message.TryGetProperty("someName", out object value));
@@ -51,17 +52,18 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
-            Assert.False(message.TryGetProperty("SomeName", out object value));
+
+            Assert.False(message.TryGetProperty("SomeName", out _));
         }
 
         private class CustomResponseClassifier : ResponseClassifier
         {
-            public override bool IsRetriableResponse(Response response)
+            public override bool IsRetriableResponse(HttpPipelineMessage message)
             {
-                return response.Status == 500;
+                return message.Response.Status == 500;
             }
 
             public override bool IsRetriableException(Exception exception)
@@ -69,9 +71,9 @@ namespace Azure.Core.Tests
                 return false;
             }
 
-            public override bool IsErrorResponse(Response response)
+            public override bool IsErrorResponse(HttpPipelineMessage message)
             {
-                return IsRetriableResponse(response);
+                return IsRetriableResponse(message);
             }
         }
     }

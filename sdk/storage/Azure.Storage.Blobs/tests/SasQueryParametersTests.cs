@@ -23,14 +23,19 @@ namespace Azure.Storage.Blobs.Test
             var version = "2018-03-28";
             var service = "b";
             var resourceType = "c";
-            var protocol = SasProtocol.Https;
-            var startTime = DateTimeOffset.Now;
-            var expiryTime = startTime.AddDays(1);
+            SasProtocol protocol = SasProtocol.Https;
+            DateTimeOffset startTime = DateTimeOffset.Now;
+            DateTimeOffset expiryTime = startTime.AddDays(1);
             var ipRange = new IPRange();
             var identifier = "foo";
             var resource = "bar";
             var permissions = "rw";
             var signature = "a+b=";
+            var cacheControl = "no-store";
+            var contentDisposition = "inline";
+            var contentEncoding = "identity";
+            var contentLanguage = "en-US";
+            var contentType = "text/html";
 
             var sasQueryParameters = new SasQueryParameters(
                 version,
@@ -43,7 +48,12 @@ namespace Azure.Storage.Blobs.Test
                 identifier,
                 resource,
                 permissions,
-                signature
+                signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType
                 );
 
             Assert.AreEqual(signature, sasQueryParameters.Signature);

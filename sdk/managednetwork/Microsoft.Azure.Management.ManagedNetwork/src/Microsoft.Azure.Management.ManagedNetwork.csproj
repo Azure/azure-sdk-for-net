@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.ManagedNetwork</PackageId>
 		<Description>Network Controller is a fully managed networking solution that allows customers to programmatically view, control, change, and monitor your entire Azure network centrally and with ease.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ManagedNetwork</AssemblyName>
-		<Version>1.0.0-preview</Version>
+		<Version>1.0.1-preview</Version>
 		<PackageTags>Microsoft Azure MangedNetwork management;ManagedNetwork;ManagedNetwork management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[

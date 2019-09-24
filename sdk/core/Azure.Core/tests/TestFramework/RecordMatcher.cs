@@ -26,7 +26,8 @@ namespace Azure.Core.Testing
             "x-ms-date",
             "x-ms-client-request-id",
             "User-Agent",
-            "Request-Id"
+            "Request-Id",
+            "traceparent"
         };
 
         // Headers that don't indicate meaningful changes between updated recordings
@@ -57,7 +58,7 @@ namespace Azure.Core.Testing
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var header in request.Headers)
+            foreach (HttpHeader header in request.Headers)
             {
                 var gotHeader = request.Headers.TryGetValues(header.Name, out IEnumerable<string> values);
                 Debug.Assert(gotHeader);

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -50,11 +49,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         public SettingSelector(string key, string label = default)
         {
-            Keys = new List<string>();
-            Keys.Add(key ?? Any);
+            Keys = new List<string>
+            {
+                key ?? Any
+            };
 
             Labels = new List<string>();
-            if (label != null) Labels.Add(label);
+            if (label != null)
+                Labels.Add(label);
         }
 
         /// <summary>
@@ -63,11 +65,16 @@ namespace Azure.Data.AppConfiguration
         /// <param name="other">The instance to compare to.</param>
         public bool Equals(SettingSelector other)
         {
-            if (other == null) return false;
-            if (!Keys.SequenceEqual(other.Keys)) return false;
-            if (!Labels.SequenceEqual(other.Labels)) return false;
-            if (!Fields.Equals(other.Fields)) return false;
-            if (AsOf != other.AsOf) return false;
+            if (other == null)
+                return false;
+            if (!Keys.SequenceEqual(other.Keys))
+                return false;
+            if (!Labels.SequenceEqual(other.Labels))
+                return false;
+            if (!Fields.Equals(other.Fields))
+                return false;
+            if (AsOf != other.AsOf)
+                return false;
 
             return true;
         }
@@ -80,12 +87,16 @@ namespace Azure.Data.AppConfiguration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
+            if (obj == null)
+                return false;
             if (obj is SettingSelector other)
             {
                 return Equals(other);
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

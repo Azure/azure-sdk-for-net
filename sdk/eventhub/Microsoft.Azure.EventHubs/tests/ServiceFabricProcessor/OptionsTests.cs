@@ -159,7 +159,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void RuntimeInformationTest()
         {

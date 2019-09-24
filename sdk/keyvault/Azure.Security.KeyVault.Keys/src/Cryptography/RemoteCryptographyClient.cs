@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -10,48 +9,20 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    /// <summary>
-    /// 
-    /// </summary>
     internal class RemoteCryptographyClient : ICryptographyProvider
     {
-        private const string EncryptOperation = "encrypt";
-        private const string DecryptOperation = "decrypt";
-        private const string SignOperation = "sign";
-        private const string VerifyOperation = "verify";
-        private const string WrapOperation = "wrapKey";
-        private const string UnwrapOperation = "unwrapKey";
+        private readonly Uri _keyId;
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected RemoteCryptographyClient()
         {
-
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keyId"></param>
-        /// <param name="credential"></param>
-        public RemoteCryptographyClient(Uri keyId, TokenCredential credential)
-            : this(keyId, credential, null)
+        internal RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keyId"></param>
-        /// <param name="credential"></param>
-        /// <param name="options"></param>
-        public RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
-        {
-            KeyId = keyId ?? throw new ArgumentNullException(nameof(keyId));
-            if (credential is null) throw new ArgumentNullException(nameof(credential));
-
+            _keyId = keyId;
             options ??= new CryptographyClientOptions();
             string apiVersion = options.GetVersionString();
 
@@ -63,262 +34,288 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal KeyVaultPipeline Pipeline { get; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Uri KeyId { get; }
+        public bool SupportsOperation(KeyOperation operation) => true;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response<EncryptResult>> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
             };
 
-            return await SendRequestAsync(EncryptOperation, parameters, () => new EncryptResult() { Algorithm = algorithm }, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Encrypt");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new EncryptResult { Algorithm = algorithm }, cancellationToken, "/encrypt").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual Response<EncryptResult> Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
             };
 
-            return SendRequest(EncryptOperation, parameters, () => new EncryptResult() { Algorithm = algorithm }, cancellationToken);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Encrypt");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new EncryptResult { Algorithm = algorithm }, cancellationToken, "/encrypt");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="ciphertext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="authenticationTag"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response<DecryptResult>> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
                 AuthenticationTag = authenticationTag
             };
 
-            return await SendRequestAsync(DecryptOperation, parameters, () => new DecryptResult() { Algorithm = algorithm }, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Decrypt");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new DecryptResult { Algorithm = algorithm }, cancellationToken, "/decrypt").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="ciphertext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="authenticationTag"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual Response<DecryptResult> Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
                 AuthenticationTag = authenticationTag
             };
 
-            return SendRequest(DecryptOperation, parameters, () => new DecryptResult() { Algorithm = algorithm }, cancellationToken);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Decrypt");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new DecryptResult { Algorithm = algorithm }, cancellationToken, "/decrypt");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="key"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response<WrapResult>> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Key = key
             };
 
-            return await SendRequestAsync(WrapOperation, parameters, () => new WrapResult() { Algorithm = algorithm }, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.WrapKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new WrapResult { Algorithm = algorithm }, cancellationToken, "/wrapKey").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="key"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual Response<WrapResult> WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Key = key
             };
 
-            return SendRequest(WrapOperation, parameters, () => new WrapResult() { Algorithm = algorithm }, cancellationToken);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.WrapKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new WrapResult { Algorithm = algorithm }, cancellationToken, "/wrapKey");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="encryptedKey"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response<UnwrapResult>> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Key = encryptedKey
             };
 
-            return await SendRequestAsync(UnwrapOperation, parameters, () => new UnwrapResult() { Algorithm = algorithm }, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.UnwrapKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new UnwrapResult { Algorithm = algorithm }, cancellationToken, "/unwrapKey").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="encryptedKey"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual Response<UnwrapResult> UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Key = encryptedKey
             };
 
-            return SendRequest(UnwrapOperation, parameters, () => new UnwrapResult() { Algorithm = algorithm }, cancellationToken);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.UnwrapKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new UnwrapResult { Algorithm = algorithm }, cancellationToken, "/unwrapKey");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response<SignResult>> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Digest = digest
             };
 
-            return await SendRequestAsync(SignOperation, parameters, () => new SignResult() { Algorithm = algorithm }, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Sign");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new SignResult { Algorithm = algorithm }, cancellationToken, "/sign").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual Response<SignResult> Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Digest = digest
             };
 
-            return SendRequest(SignOperation, parameters, () => new SignResult() { Algorithm = algorithm }, cancellationToken);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Sign");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new SignResult { Algorithm = algorithm }, cancellationToken, "/sign");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="digest"></param>
-        /// <param name="signature"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response<VerifyResult>> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Digest = digest,
                 Signature = signature
             };
 
-            return await SendRequestAsync(VerifyOperation, parameters, () => new VerifyResult() { Algorithm = algorithm, KeyId = KeyId.ToString() }, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Verify");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken, "/verify").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="algorithm"></param>
-        /// <param name="digest"></param>
-        /// <param name="signature"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual Response<VerifyResult> Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm.GetName(),
+                Algorithm = algorithm.ToString(),
                 Digest = digest,
                 Signature = signature
             };
 
-            return SendRequest(VerifyOperation, parameters, () => new VerifyResult() { Algorithm = algorithm, KeyId = KeyId.ToString() }, cancellationToken);
-        }
-
-        private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(string operation, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken)
-            where TContent : IJsonSerializable
-            where TResult : IJsonDeserializable
-        {
-            using DiagnosticScope scope = Pipeline.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.{operation}");
-            scope.AddAttribute("key", KeyId);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Verify");
+            scope.AddAttribute("key", _keyId);
             scope.Start();
 
             try
             {
-                return await Pipeline.SendRequestAsync(RequestMethod.Post, content, resultFactory, cancellationToken, "/", operation).ConfigureAwait(false);
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken, "/verify");
             }
             catch (Exception e)
             {
@@ -327,17 +324,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<TResult> SendRequest<TContent, TResult>(string operation, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken)
-            where TContent : IJsonSerializable
-            where TResult : IJsonDeserializable
+        internal virtual async Task<Response<Key>> GetKeyAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Pipeline.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.{operation}");
-            scope.AddAttribute("key", KeyId);
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            scope.AddAttribute("key", _keyId);
             scope.Start();
 
             try
             {
-                return Pipeline.SendRequest(RequestMethod.Post, content, resultFactory, cancellationToken, "/", operation);
+                return await Pipeline.SendRequestAsync(RequestMethod.Get, () => new Key(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -345,6 +340,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw;
             }
         }
+
+        internal virtual Response<Key> GetKey(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Get, () => new Key(), cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        bool ICryptographyProvider.ShouldRemote => false;
 
         async Task<EncryptResult> ICryptographyProvider.EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
         {

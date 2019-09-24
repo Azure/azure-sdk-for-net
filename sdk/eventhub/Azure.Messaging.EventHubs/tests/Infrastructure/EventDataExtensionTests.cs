@@ -37,20 +37,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsDifferentDifferentOffset()
         {
-           var firstEvent = new EventData(
-                eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
-                partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
-                lastPartitionSequenceNumber: 123,
-                lastPartitionOffset: 456,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var firstEvent = new EventData(
+                 eventBody: new byte[] { 0x22, 0x44 },
+                 offset: 1,
+                 partitionKey: "hello",
+                 systemProperties: new Dictionary<string, object> { { "test", new object() } },
+                 lastPartitionSequenceNumber: 123,
+                 lastPartitionOffset: 456,
+                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
             var secondEvent = new EventData(
                 eventBody: new byte[] { 0x22, 0x44 },
                 offset: 111,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -66,20 +66,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsDifferentDifferentSequenceNumbers()
         {
-           var firstEvent = new EventData(
-                eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
-                partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
-                lastPartitionSequenceNumber: 1,
-                lastPartitionOffset: 456,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var firstEvent = new EventData(
+                 eventBody: new byte[] { 0x22, 0x44 },
+                 offset: 1,
+                 partitionKey: "hello",
+                 systemProperties: new Dictionary<string, object> { { "test", new object() } },
+                 lastPartitionSequenceNumber: 1,
+                 lastPartitionOffset: 456,
+                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
             var secondEvent = new EventData(
                 eventBody: new byte[] { 0x22, 0x44 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -95,20 +95,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsDifferentDifferentPartitionKey()
         {
-           var firstEvent = new EventData(
-                eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
-                partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
-                lastPartitionSequenceNumber: 123,
-                lastPartitionOffset: 456,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var firstEvent = new EventData(
+                 eventBody: new byte[] { 0x22, 0x44 },
+                 offset: 1,
+                 partitionKey: "hello",
+                 systemProperties: new Dictionary<string, object> { { "test", new object() } },
+                 lastPartitionSequenceNumber: 123,
+                 lastPartitionOffset: 456,
+                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
             var secondEvent = new EventData(
                 eventBody: new byte[] { 0x22, 0x44 },
                 offset: 1,
                 partitionKey: "goodbye",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -124,20 +124,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsDifferentDifferentLastSequenceNumbers()
         {
-           var firstEvent = new EventData(
-                eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
-                partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
-                lastPartitionSequenceNumber: 123,
-                lastPartitionOffset: 456,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var firstEvent = new EventData(
+                 eventBody: new byte[] { 0x22, 0x44 },
+                 offset: 1,
+                 partitionKey: "hello",
+                 systemProperties: new Dictionary<string, object> { { "test", new object() } },
+                 lastPartitionSequenceNumber: 123,
+                 lastPartitionOffset: 456,
+                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
             var secondEvent = new EventData(
                 eventBody: new byte[] { 0x22, 0x44 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 1,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -153,20 +153,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsDifferentDifferentLastOffset()
         {
-           var firstEvent = new EventData(
-                eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
-                partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
-                lastPartitionSequenceNumber: 123,
-                lastPartitionOffset: 1,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var firstEvent = new EventData(
+                 eventBody: new byte[] { 0x22, 0x44 },
+                 offset: 1,
+                 partitionKey: "hello",
+                 systemProperties: new Dictionary<string, object> { { "test", new object() } },
+                 lastPartitionSequenceNumber: 123,
+                 lastPartitionOffset: 1,
+                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
             var secondEvent = new EventData(
                 eventBody: new byte[] { 0x22, 0x44 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -182,20 +182,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsDifferentDifferentLastEnqueuedTime()
         {
-           var firstEvent = new EventData(
-                eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
-                partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
-                lastPartitionSequenceNumber: 123,
-                lastPartitionOffset: 456,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var firstEvent = new EventData(
+                 eventBody: new byte[] { 0x22, 0x44 },
+                 offset: 1,
+                 partitionKey: "hello",
+                 systemProperties: new Dictionary<string, object> { { "test", new object() } },
+                 lastPartitionSequenceNumber: 123,
+                 lastPartitionOffset: 456,
+                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
             var secondEvent = new EventData(
                 eventBody: new byte[] { 0x22, 0x44 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() } },
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2012-03-04T08:42:00Z"));
@@ -379,7 +379,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventBody: (byte[])body.Clone(),
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }},
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -388,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventBody: (byte[])body.Clone(),
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }},
+                systemProperties: new Dictionary<string, object> { { "test", new object() } },
                 lastPartitionSequenceNumber: 123,
                 lastPartitionOffset: 456,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
@@ -410,13 +410,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventBody: (byte[])body.Clone(),
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }});
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new EventData(
                 eventBody: (byte[])body.Clone(),
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }});
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
         }
@@ -433,7 +433,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventBody: new byte[] { 0x22, 0x44, 0x88 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }});
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             Assert.That(firstEvent.IsEquivalentTo(firstEvent), Is.True);
         }
@@ -461,7 +461,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventBody: new byte[] { 0x22, 0x44, 0x88 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }});
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             Assert.That(((EventData)null).IsEquivalentTo(firstEvent), Is.False);
         }
@@ -478,7 +478,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventBody: new byte[] { 0x22, 0x44, 0x88 },
                 offset: 1,
                 partitionKey: "hello",
-                systemProperties: new Dictionary<string, object> { {"test", new object() }});
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             Assert.That(firstEvent.IsEquivalentTo((EventData)null), Is.False);
         }

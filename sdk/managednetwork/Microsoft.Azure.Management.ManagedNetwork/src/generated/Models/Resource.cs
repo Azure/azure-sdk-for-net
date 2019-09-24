@@ -37,11 +37,14 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
+            Location = location;
             CustomInit();
         }
 
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
     }
 }

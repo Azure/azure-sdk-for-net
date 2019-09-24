@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// List of pricing configurations response
+    /// List of pricing configurations response.
     /// </summary>
     public partial class PricingList
     {

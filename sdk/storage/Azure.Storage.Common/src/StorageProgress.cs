@@ -23,7 +23,7 @@ namespace Azure.Storage.Common
         /// Creates a <see cref="StorageProgress"/> object.
         /// </summary>
         /// <param name="bytesTransferred">The progress value being reported.</param>
-        public StorageProgress(long bytesTransferred) => this.BytesTransferred = bytesTransferred;
+        public StorageProgress(long bytesTransferred) => BytesTransferred = bytesTransferred;
 
     }
 
@@ -42,13 +42,13 @@ namespace Azure.Storage.Common
     /// </summary>
     internal sealed class AggregatingProgressIncrementer : IProgress<long>
     {
-        long currentValue;
-        bool currentValueHasValue;
-        readonly IProgress<StorageProgress> innerHandler;
+        private long _currentValue;
+        private bool _currentValueHasValue;
+        private readonly IProgress<StorageProgress> _innerHandler;
 
-        public Stream CreateProgressIncrementingStream(Stream stream) => this.innerHandler != null && stream != null ? new ProgressIncrementingStream(stream, this) : stream;
+        public Stream CreateProgressIncrementingStream(Stream stream) => _innerHandler != null && stream != null ? new ProgressIncrementingStream(stream, this) : stream;
 
-        public AggregatingProgressIncrementer(IProgress<StorageProgress> innerHandler) => this.innerHandler = innerHandler;
+        public AggregatingProgressIncrementer(IProgress<StorageProgress> innerHandler) => _innerHandler = innerHandler;
 
         /// <summary>
         /// Increments the current value and reports it to the progress handler
@@ -56,16 +56,16 @@ namespace Azure.Storage.Common
         /// <param name="bytes"></param>
         public void Report(long bytes)
         {
-            Interlocked.Add(ref this.currentValue, bytes);
-            Volatile.Write(ref this.currentValueHasValue, true);
+            Interlocked.Add(ref _currentValue, bytes);
+            Volatile.Write(ref _currentValueHasValue, true);
 
-            if (this.innerHandler != null)
+            if (_innerHandler != null)
             {
-                var current = this.Current;
+                StorageProgress current = Current;
 
                 if (current != null)
                 {
-                    this.innerHandler.Report(current);
+                    _innerHandler.Report(current);
                 }
             }
         }
@@ -75,9 +75,9 @@ namespace Azure.Storage.Common
         /// </summary>
         public void Reset()
         {
-            var currentActual = Volatile.Read(ref this.currentValue);
+            var currentActual = Volatile.Read(ref _currentValue);
 
-            this.Report(-currentActual);
+            Report(-currentActual);
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace Azure.Storage.Common
             {
                 var result = default(StorageProgress);
 
-                if (this.currentValueHasValue)
+                if (_currentValueHasValue)
                 {
-                    var currentActual = Volatile.Read(ref this.currentValue);
+                    var currentActual = Volatile.Read(ref _currentValue);
 
                     result = new StorageProgress(currentActual);
                 }
@@ -111,84 +111,84 @@ namespace Azure.Storage.Common
     /// </summary>
     internal class ProgressIncrementingStream : Stream
     {
-        readonly Stream innerStream;
-        readonly AggregatingProgressIncrementer incrementer;
+        private readonly Stream _innerStream;
+        private readonly AggregatingProgressIncrementer _incrementer;
 
         public ProgressIncrementingStream(Stream stream, AggregatingProgressIncrementer incrementer)
         {
-            this.innerStream = stream ?? throw Errors.ArgumentNull(nameof(stream));
-            this.incrementer = incrementer ?? throw Errors.ArgumentNull(nameof(incrementer));
+            _innerStream = stream ?? throw Errors.ArgumentNull(nameof(stream));
+            _incrementer = incrementer ?? throw Errors.ArgumentNull(nameof(incrementer));
         }
 
-        public override bool CanRead => this.innerStream.CanRead;
+        public override bool CanRead => _innerStream.CanRead;
 
-        public override bool CanSeek => this.innerStream.CanSeek;
+        public override bool CanSeek => _innerStream.CanSeek;
 
-        public override bool CanTimeout => this.innerStream.CanTimeout;
+        public override bool CanTimeout => _innerStream.CanTimeout;
 
-        public override bool CanWrite => this.innerStream.CanWrite;
+        public override bool CanWrite => _innerStream.CanWrite;
 
-        protected override void Dispose(bool disposing) => this.innerStream.Dispose();
+        protected override void Dispose(bool disposing) => _innerStream.Dispose();
 
         public override async Task FlushAsync(CancellationToken cancellationToken)
         {
-            var oldPosition = this.innerStream.Position;
+            var oldPosition = _innerStream.Position;
 
-            await this.innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+            await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
 
-            var newPosition = this.innerStream.Position;
+            var newPosition = _innerStream.Position;
 
-            this.incrementer.Report(newPosition - oldPosition);
+            _incrementer.Report(newPosition - oldPosition);
         }
 
         public override void Flush()
         {
-            var oldPosition = this.innerStream.Position;
+            var oldPosition = _innerStream.Position;
 
-            this.innerStream.Flush();
+            _innerStream.Flush();
 
-            var newPosition = this.innerStream.Position;
+            var newPosition = _innerStream.Position;
 
-            this.incrementer.Report(newPosition - oldPosition);
+            _incrementer.Report(newPosition - oldPosition);
         }
 
-        public override long Length => this.innerStream.Length;
+        public override long Length => _innerStream.Length;
 
         public override long Position
         {
-            get => this.innerStream.Position;
+            get => _innerStream.Position;
 
             set
             {
-                var delta = value - this.innerStream.Position;
+                var delta = value - _innerStream.Position;
 
-                this.innerStream.Position = value;
+                _innerStream.Position = value;
 
-                this.incrementer.Report(delta);
+                _incrementer.Report(delta);
             }
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            var n = this.innerStream.Read(buffer, offset, count);
-            this.incrementer.Report(n);
+            var n = _innerStream.Read(buffer, offset, count);
+            _incrementer.Report(n);
             return n;
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            var n = await this.innerStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
-            this.incrementer.Report(n);
+            var n = await _innerStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+            _incrementer.Report(n);
             return n;
         }
 
         public override int ReadByte()
         {
-            var b = this.innerStream.ReadByte();
+            var b = _innerStream.ReadByte();
 
             if (b != -1) // -1 = end of stream sentinel
             {
-                this.incrementer.Report(1);
+                _incrementer.Report(1);
             }
 
             return b;
@@ -196,50 +196,50 @@ namespace Azure.Storage.Common
 
         public override int ReadTimeout
         {
-            get => this.innerStream.ReadTimeout;
+            get => _innerStream.ReadTimeout;
 
-            set => this.innerStream.ReadTimeout = value;
+            set => _innerStream.ReadTimeout = value;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            var oldPosition = this.innerStream.Position;
+            var oldPosition = _innerStream.Position;
 
-            var newPosition = this.innerStream.Seek(offset, origin);
+            var newPosition = _innerStream.Seek(offset, origin);
 
-            this.incrementer.Report(newPosition - oldPosition);
+            _incrementer.Report(newPosition - oldPosition);
 
             return newPosition;
         }
 
-        public override void SetLength(long value) => this.innerStream.SetLength(value);
+        public override void SetLength(long value) => _innerStream.SetLength(value);
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            this.innerStream.Write(buffer, offset, count);
+            _innerStream.Write(buffer, offset, count);
 
-            this.incrementer.Report(count);
+            _incrementer.Report(count);
         }
 
         public override async Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            await this.innerStream.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+            await _innerStream.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-            this.incrementer.Report(count);
+            _incrementer.Report(count);
         }
 
         public override void WriteByte(byte value)
         {
-            this.innerStream.WriteByte(value);
+            _innerStream.WriteByte(value);
 
-            this.incrementer.Report(1);
+            _incrementer.Report(1);
         }
 
         public override int WriteTimeout
         {
-            get => this.innerStream.WriteTimeout;
+            get => _innerStream.WriteTimeout;
 
-            set => this.innerStream.WriteTimeout = value;
+            set => _innerStream.WriteTimeout = value;
         }
     }
 }

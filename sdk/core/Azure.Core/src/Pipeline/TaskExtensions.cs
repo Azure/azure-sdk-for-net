@@ -19,5 +19,17 @@ namespace Azure.Core.Pipeline
             Debug.Assert(task.IsCompleted);
             task.GetAwaiter().GetResult();
         }
+
+        public static T EnsureCompleted<T>(this ValueTask<T> task)
+        {
+            Debug.Assert(task.IsCompleted);
+            return task.GetAwaiter().GetResult();
+        }
+
+        public static void EnsureCompleted(this ValueTask task)
+        {
+            Debug.Assert(task.IsCompleted);
+            task.GetAwaiter().GetResult();
+        }
     }
 }

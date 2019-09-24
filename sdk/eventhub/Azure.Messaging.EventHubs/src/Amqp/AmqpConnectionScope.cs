@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net;
@@ -32,11 +33,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
         private const string WebSocketsUriScheme = "wss";
 
-        /// <summary>The version of AMQP to use within the scope.</summary>
-        private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
-
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private bool _disposed = false;
+
+        /// <summary>
+        ///   The version of AMQP to use within the scope.
+        /// </summary>
+        ///
+        private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
 
         /// <summary>
         ///   The unique identifier of the scope.
@@ -98,9 +102,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                                    IWebProxy proxy,
                                    string identifier = default)
         {
-            Guard.ArgumentNotNull(nameof(serviceEndpoint), serviceEndpoint);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
             ValidateTransport(transport);
 
             ServiceEndpoint = serviceEndpoint;
@@ -134,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             stopWatch.Stop();
 
             return await OpenManagementLinkAsync(connection, timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
@@ -177,10 +181,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            TimeSpan timeout)
         {
             var hostName = serviceEndpoint.Host;
-            var amqpSettings = CreateAmpqSettings(AmqpVersion);
-            var connectionSetings = CreateAmqpConnectionSettings(hostName, scopeIdentifier);
+            AmqpSettings amqpSettings = CreateAmpqSettings(AmqpVersion);
+            AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(hostName, scopeIdentifier);
 
-            var transportSettings = transportType.IsWebSocketTransport()
+            TransportSettings transportSettings = transportType.IsWebSocketTransport()
                 ? CreateTransportSettingsForWebSockets(hostName, proxy)
                 : CreateTransportSettingsforTcp(hostName, serviceEndpoint.Port);
 
@@ -190,7 +194,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var stopWatch = Stopwatch.StartNew();
 
             var initiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
-            var transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
+            TransportBase transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
 
             var connection = new AmqpConnection(transport, amqpSettings, connectionSetings);
             await connection.OpenAsync(timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
@@ -229,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                       TimeSpan timeout,
                                                                                       CancellationToken cancellationToken)
         {
-            Guard.NotDisposed(nameof(AmqpConnectionScope), _disposed);
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
@@ -346,7 +350,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             return new WebSocketTransportSettings
             {
                 Uri = uriBuilder.Uri,
-                Proxy = (proxy != null) ? proxy : default
+                Proxy = proxy ?? (default)
             };
         }
 
@@ -369,7 +373,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 HostName = hostName
             };
 
-            foreach (var property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {
                 connectionSettings.AddProperty(property.Key, property.Value);
             }
@@ -388,7 +392,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             if ((transport != TransportType.AmqpTcp) && (transport != TransportType.AmqpWebSockets))
             {
-                throw new ArgumentException(nameof(transport), String.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport));
+                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport));
             }
         }
     }

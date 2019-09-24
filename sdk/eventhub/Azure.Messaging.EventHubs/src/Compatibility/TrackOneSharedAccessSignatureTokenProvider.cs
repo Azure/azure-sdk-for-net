@@ -4,8 +4,8 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -34,8 +34,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneSharedAccessTokenProvider(SharedAccessSignature sharedAccessSignature)
         {
-            Guard.ArgumentNotNull(nameof(sharedAccessSignature), sharedAccessSignature);
-            Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessSignature.SharedAccessKey), sharedAccessSignature.SharedAccessKey);
+            Argument.AssertNotNull(sharedAccessSignature, nameof(sharedAccessSignature));
+            Argument.AssertNotNullOrEmpty(sharedAccessSignature.SharedAccessKey, nameof(sharedAccessSignature.SharedAccessKey));
 
             SharedAccessSignature = sharedAccessSignature.Clone();
         }
@@ -53,8 +53,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public override Task<SecurityToken> GetTokenAsync(string resource,
                                                           TimeSpan tokenValidityDuration)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(resource), resource);
-            Guard.ArgumentNotNegative(nameof(tokenValidityDuration), tokenValidityDuration);
+            Argument.AssertNotNullOrEmpty(resource, nameof(resource));
+            Argument.AssertNotNegative(tokenValidityDuration, nameof(tokenValidityDuration));
 
             // The resource of a token is assigned at the Event Hub level.  The resource being requested may be a child
             // of the Event Hub, such as a partition.  Ensure that the resource being requested is the same Event Hub associated
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             if (resource.IndexOf(SharedAccessSignature.Resource, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, SharedAccessSignature.Resource), nameof(resource));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, SharedAccessSignature.Resource), nameof(resource));
             }
 
             SharedAccessSignature.ExtendExpiration(tokenValidityDuration);

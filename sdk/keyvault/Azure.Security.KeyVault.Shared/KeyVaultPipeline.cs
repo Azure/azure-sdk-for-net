@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core;
 using Azure.Core.Http;
@@ -35,6 +34,24 @@ namespace Azure.Security.KeyVault
 
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
+
+            return firstPage.Uri;
+        }
+
+        public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
+        {
+            var firstPage = new RequestUriBuilder
+            {
+                Uri = _vaultUri,
+            };
+
+            firstPage.AppendPath(path);
+            firstPage.AppendQuery("api-version", ApiVersion);
+
+            foreach ((string, string) tuple in queryParams)
+            {
+                firstPage.AppendQuery(tuple.Item1, tuple.Item2);
+            }
 
             return firstPage.Uri;
         }
@@ -199,12 +216,13 @@ namespace Azure.Security.KeyVault
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             switch (response.Status)
             {
                 case 200:
                 case 201:
+                case 202:
                 case 204:
                     return response;
                 default:
@@ -213,12 +231,13 @@ namespace Azure.Security.KeyVault
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            var response = _pipeline.SendRequest(request, cancellationToken);
+            Response response = _pipeline.SendRequest(request, cancellationToken);
 
             switch (response.Status)
             {
                 case 200:
                 case 201:
+                case 202:
                 case 204:
                     return response;
                 default:

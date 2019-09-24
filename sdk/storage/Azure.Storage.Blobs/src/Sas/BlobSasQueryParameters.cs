@@ -19,32 +19,32 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => this.keyObjectId;
+        public string KeyObjectId => _keyObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => this.keyTenantId;
+        public string KeyTenantId => _keyTenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStart => this.keyStart;
+        public DateTimeOffset KeyStart => _keyStart;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiry => this.keyExpiry;
+        public DateTimeOffset KeyExpiry => _keyExpiry;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => this.keyService;
+        public string KeyService => _keyService;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => this.keyVersion;
+        public string KeyVersion => _keyVersion;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -79,7 +79,12 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyStart = default,
             DateTimeOffset keyExpiry = default,
             string keyService = default,
-            string keyVersion = default)
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
             : base(
                 version,
                 services,
@@ -97,7 +102,12 @@ namespace Azure.Storage.Sas
                 keyStart,
                 keyExpiry,
                 keyService,
-                keyVersion)
+                keyVersion,
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType)
         {
         }
 
@@ -120,6 +130,6 @@ namespace Azure.Storage.Sas
         /// A URL encoded query string representing the SAS.
         /// </returns>
         public override string ToString() =>
-            this.Encode(includeBlobParameters: true);
+            Encode(includeBlobParameters: true);
     }
 }

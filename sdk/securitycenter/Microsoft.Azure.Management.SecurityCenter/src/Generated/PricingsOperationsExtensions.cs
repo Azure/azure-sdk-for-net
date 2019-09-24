@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Security
     public static partial class PricingsOperationsExtensions
     {
             /// <summary>
-            /// Security pricing configurations in the subscription
+            /// Lists Security Center pricing configurations in the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security pricing configurations in the subscription
+            /// Lists Security Center pricing configurations in the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security pricing configuration in the subscription
+            /// Gets a provided Security Center pricing configuration in the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security pricing configuration in the subscription
+            /// Gets a provided Security Center pricing configuration in the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +84,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security pricing configuration in the subscription
+            /// Updates a provided Security Center pricing configuration in the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,7 +94,11 @@ namespace Microsoft.Azure.Management.Security
             /// name of the pricing configuration
             /// </param>
             /// <param name='pricingTier'>
-            /// The pricing tier value. Possible values include: 'Free', 'Standard'
+            /// The pricing tier value. Azure Security Center is provided in two pricing
+            /// tiers: free and standard, with the standard tier available with a trial
+            /// period. The standard tier offers advanced security capabilities, while the
+            /// free tier offers basic security features. Possible values include: 'Free',
+            /// 'Standard'
             /// </param>
             public static Pricing Update(this IPricingsOperations operations, string pricingName, string pricingTier)
             {
@@ -101,7 +106,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security pricing configuration in the subscription
+            /// Updates a provided Security Center pricing configuration in the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,7 +116,11 @@ namespace Microsoft.Azure.Management.Security
             /// name of the pricing configuration
             /// </param>
             /// <param name='pricingTier'>
-            /// The pricing tier value. Possible values include: 'Free', 'Standard'
+            /// The pricing tier value. Azure Security Center is provided in two pricing
+            /// tiers: free and standard, with the standard tier available with a trial
+            /// period. The standard tier offers advanced security capabilities, while the
+            /// free tier offers basic security features. Possible values include: 'Free',
+            /// 'Standard'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

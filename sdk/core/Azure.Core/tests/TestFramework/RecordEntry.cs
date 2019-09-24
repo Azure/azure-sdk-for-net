@@ -81,7 +81,7 @@ namespace Azure.Core.Testing
                 {
                     var arrayBufferWriter = new ArrayBufferWriter<byte>();
                     using var writer = new Utf8JsonWriter(arrayBufferWriter);
-                    property.WriteValue(writer);
+                    property.WriteTo(writer);
                     writer.Flush();
                     return arrayBufferWriter.WrittenMemory.ToArray();
                 }
@@ -89,7 +89,7 @@ namespace Azure.Core.Testing
                 {
                     StringBuilder stringBuilder = new StringBuilder();
 
-                    foreach (var item in property.EnumerateArray())
+                    foreach (JsonElement item in property.EnumerateArray())
                     {
                         stringBuilder.Append(item.GetString());
                     }
@@ -170,7 +170,8 @@ namespace Azure.Core.Testing
                 try
                 {
                     using JsonDocument document = JsonDocument.Parse(requestBody);
-                    document.RootElement.WriteProperty(name.AsSpan(), jsonWriter);
+                    jsonWriter.WritePropertyName(name.AsSpan());
+                    document.RootElement.WriteTo(jsonWriter);
                     return;
                 }
                 catch (Exception)
@@ -230,7 +231,7 @@ namespace Azure.Core.Testing
 
         private void SerializeHeaders(Utf8JsonWriter jsonWriter, IDictionary<string, string[]> header)
         {
-            foreach (var requestHeader in header)
+            foreach (KeyValuePair<string, string[]> requestHeader in header)
             {
                 if (requestHeader.Value.Length == 1)
                 {

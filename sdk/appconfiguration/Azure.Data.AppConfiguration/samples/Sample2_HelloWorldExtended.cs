@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -45,11 +44,11 @@ namespace Azure.Data.AppConfiguration.Samples
             await client.AddAsync(productionInstances);
 
             // There is a need to increase the production instances from 1 to 5.
-            // The UpdateSync will help us with this.
+            // The SetAsync will help us with this.
             ConfigurationSetting instancesToUpdate = await client.GetAsync(productionInstances.Key, productionInstances.Label);
             instancesToUpdate.Value = "5";
 
-            await client.UpdateAsync(instancesToUpdate);
+            await client.SetAsync(instancesToUpdate);
 
             // We want to gather all the information available for the "production' environment.
             // By calling GetBatchSync with the proper filter for label "production", we will get
@@ -57,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var selector = new SettingSelector(null, "production");
 
             Debug.WriteLine("Settings for Production environmnet");
-            await foreach (var setting in client.GetSettingsAsync(selector))
+            await foreach (Response<ConfigurationSetting> setting in client.GetSettingsAsync(selector))
             {
                 Debug.WriteLine(setting);
             }
@@ -70,4 +69,3 @@ namespace Azure.Data.AppConfiguration.Samples
         }
     }
 }
-

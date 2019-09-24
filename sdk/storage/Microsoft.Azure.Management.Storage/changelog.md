@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 13.1.0
+
+- Support Create/Get/List/Delete File share
+- Support Get/Set File service properties 
+
 ### Changes in 13.0.0
 
 - Add back StorageManagementClient constructor that takes HttpClient as a parameter

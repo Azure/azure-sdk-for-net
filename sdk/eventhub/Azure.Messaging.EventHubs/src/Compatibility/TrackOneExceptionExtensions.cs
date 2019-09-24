@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Compatibility
 {
@@ -23,34 +23,26 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public static Errors.EventHubsException MapToTrackTwoException(this TrackOne.EventHubsException instance)
         {
-            Guard.ArgumentNotNull(nameof(instance), instance);
+            Argument.AssertNotNull(instance, nameof(instance));
 
-            switch (instance)
+            return instance switch
             {
-                case TrackOne.EventHubsCommunicationException ex:
-                    return new Errors.EventHubsCommunicationException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.EventHubsCommunicationException ex => new Errors.EventHubsCommunicationException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                case TrackOne.EventHubsTimeoutException ex:
-                    return new Errors.EventHubsTimeoutException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.EventHubsTimeoutException ex => new Errors.EventHubsTimeoutException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                case TrackOne.MessagingEntityNotFoundException ex:
-                    return new Errors.EventHubsResourceNotFoundException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.MessagingEntityNotFoundException ex => new Errors.EventHubsResourceNotFoundException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                case TrackOne.MessageSizeExceededException ex:
-                    return new Errors.MessageSizeExceededException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.MessageSizeExceededException ex => new Errors.MessageSizeExceededException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                case TrackOne.QuotaExceededException ex:
-                    return new Errors.QuotaExceededException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.QuotaExceededException ex => new Errors.QuotaExceededException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                case TrackOne.ReceiverDisconnectedException ex:
-                    return new Errors.ConsumerDisconnectedException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.ReceiverDisconnectedException ex => new Errors.ConsumerDisconnectedException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                case TrackOne.ServerBusyException ex:
-                    return new Errors.ServiceBusyException(ex.EventHubsNamespace, ex.RawMessage, ex);
+                TrackOne.ServerBusyException ex => new Errors.ServiceBusyException(ex.EventHubsNamespace, ex.RawMessage, ex),
 
-                default:
-                    return new Errors.EventHubsException(instance.IsTransient, instance.EventHubsNamespace, instance.RawMessage, instance);
-            }
+                _ => new Errors.EventHubsException(instance.IsTransient, instance.EventHubsNamespace, instance.RawMessage, instance),
+            };
         }
     }
 }
