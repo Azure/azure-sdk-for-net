@@ -69,10 +69,7 @@ namespace Azure.Storage.Blobs
         {
             get
             {
-                if (_accountName == null)
-                {
-                    _accountName = new BlobUriBuilder(Uri).AccountName;
-                }
+                SetNameFieldsIfNull();
                 return _accountName;
             }
         }
@@ -89,11 +86,21 @@ namespace Azure.Storage.Blobs
         {
             get
             {
-                if (_name == null)
-                {
-                    _name = new BlobUriBuilder(Uri).ContainerName;
-                }
+                SetNameFieldsIfNull();
                 return _name;
+            }
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.BlobName;
+                _accountName = builder.AccountName;
             }
         }
 
