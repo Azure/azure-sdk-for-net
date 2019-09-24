@@ -671,15 +671,21 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateGetHeadRequest(setting.Key, setting.Label);
+                using Request request = CreateHeadRequest(setting.Key, setting.Label);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
                     case 404:
-                        ConfigurationSetting other = await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Response<bool>(response, setting.ETag != other.ETag);
+                        string etag = default;
+                        if (response.Headers.TryGetValue(ETag, out etag))
+                        {
+                            etag = etag.Trim('\"');
+                        }
+
+                        return new Response<bool>(response, setting.ETag != new ETag(etag));
+
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 };
@@ -704,7 +710,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using (Request request = CreateGetHeadRequest(setting.Key, setting.Label))
+                using (Request request = CreateHeadRequest(setting.Key, setting.Label))
                 {
                     Response response = _pipeline.SendRequest(request, cancellationToken);
 
@@ -712,8 +718,14 @@ namespace Azure.Data.AppConfiguration
                     {
                         case 200:
                         case 404:
-                            ConfigurationSetting other = CreateResponse(response);
-                            return new Response<bool>(response, setting.ETag != other.ETag);
+                            string etag = default;
+                            if (response.Headers.TryGetValue(ETag, out etag))
+                            {
+                                etag = etag.Trim('\"');
+                            }
+
+                            return new Response<bool>(response, setting.ETag != new ETag(etag));
+
                         default:
                             throw response.CreateRequestFailedException();
                     }

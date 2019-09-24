@@ -35,49 +35,13 @@ namespace Azure.Data.AppConfiguration
 
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
-            ConfigurationSetting result;
-
-            if (response.ContentStream == null || response.ContentStream.Length == 0)
-            {
-                result = CreateSettingFromHeaders(response);
-            }
-            else
-            {
-                result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-            }
-
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return new Response<ConfigurationSetting>(response, result);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            ConfigurationSetting result;
-
-            if (response.ContentStream == null || response.ContentStream.Length == 0)
-            {
-                result = CreateSettingFromHeaders(response);
-            }
-            else
-            {
-                result = ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream);
-            }
-
-            return new Response<ConfigurationSetting>(response, result);
-        }
-
-        private static ConfigurationSetting CreateSettingFromHeaders(Response response)
-        {
-            // If there's no response content, get ETag from headers.
-            if (response.Headers.TryGetValue(ETag, out string etag))
-            {
-                etag = etag.Trim('\"');
-            }
-            else
-            {
-                etag = default;
-            }
-
-            return new ConfigurationSetting() { ETag = new ETag(etag) };
+            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
