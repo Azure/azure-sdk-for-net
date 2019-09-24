@@ -6697,25 +6697,25 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Convert an FileErrorCode to a string.
         /// </summary>
-        /// <param name="o">The FileErrorCode value.</param>
+        /// <param name="value">The FileErrorCode value.</param>
         /// <returns>String representation of the FileErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Files.Models.FileErrorCode o) => o._value;
+        public static implicit operator string(Azure.Storage.Files.Models.FileErrorCode value) => value._value;
 
         /// <summary>
         /// Check if two FileErrorCode instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode a, Azure.Storage.Files.Models.FileErrorCode b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => left.Equals(right);
 
         /// <summary>
         /// Check if two FileErrorCode instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Files.Models.FileErrorCode a, Azure.Storage.Files.Models.FileErrorCode b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => !left.Equals(right);
     }
 }
 #endregion enum strings FileErrorCode

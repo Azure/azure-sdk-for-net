@@ -2784,25 +2784,25 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Convert an GeoReplicationStatus to a string.
         /// </summary>
-        /// <param name="o">The GeoReplicationStatus value.</param>
+        /// <param name="value">The GeoReplicationStatus value.</param>
         /// <returns>String representation of the GeoReplicationStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus o) => o._value;
+        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus value) => value._value;
 
         /// <summary>
         /// Check if two GeoReplicationStatus instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
 
         /// <summary>
         /// Check if two GeoReplicationStatus instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => !left.Equals(right);
     }
 }
 #endregion enum strings GeoReplicationStatus
@@ -3477,25 +3477,25 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Convert an QueueErrorCode to a string.
         /// </summary>
-        /// <param name="o">The QueueErrorCode value.</param>
+        /// <param name="value">The QueueErrorCode value.</param>
         /// <returns>String representation of the QueueErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode o) => o._value;
+        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode value) => value._value;
 
         /// <summary>
         /// Check if two QueueErrorCode instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => left.Equals(right);
 
         /// <summary>
         /// Check if two QueueErrorCode instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => !left.Equals(right);
     }
 }
 #endregion enum strings QueueErrorCode
