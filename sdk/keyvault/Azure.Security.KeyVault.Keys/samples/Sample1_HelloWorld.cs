@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Let's Get the Cloud RSA Key from the Key Vault.
             Key cloudRsaKey = client.GetKey(rsaKeyName);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Properties.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
             // After one year, the Cloud RSA Key is still required, we need to update the expiry time of the key.
             // The update method can be used to update the expiry attribute of the key.

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
@@ -25,6 +26,26 @@ namespace Azure.Security.KeyVault.Keys
         {
             Properties = new KeyProperties(name);
         }
+
+        /// <summary>
+        /// Name of the key.
+        /// </summary>
+        public string Name => Properties.Name;
+
+        /// <summary>
+        /// Key identifier.
+        /// </summary>
+        public Uri Id => Properties.Id;
+
+        /// <summary>
+        /// Vault base URL.
+        /// </summary>
+        public Uri VaultUri => Properties.VaultUri;
+
+        /// <summary>
+        /// Version of the key.
+        /// </summary>
+        public string Version => Properties.Version;
 
         /// <summary>
         /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18

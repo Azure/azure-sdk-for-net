@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             foreach (KeyProperties key in keys)
             {
                 Key keyWithType = client.GetKey(key.Name);
-                Debug.WriteLine($"Key is returned with name {keyWithType.Properties.Name} and type {keyWithType.KeyMaterial.KeyType}");
+                Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyMaterial.KeyType}");
             }
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure

@@ -11,7 +11,6 @@
 - `Key` and `DeletedKey` no longer extend `KeyProperties`, but instead contain a `KeyProperties` property named `Properties`.
 - `KeyClient.UpdateKey` has been renamed to `KeyClient.UpdateKeyProperties`.
 
-
 ### Major changes
 
 - `KeyClient.UpdateKey` and `KeyClient.UpdateKeyAsync` now allow the `keyOperations` parameter to be null, resulting in no changes to the allowed key operations.

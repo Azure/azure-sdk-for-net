@@ -1053,13 +1053,13 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(keyImportOptions, nameof(keyImportOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
-            scope.AddAttribute("key", keyImportOptions.Properties.Name);
+            scope.AddAttribute("key", keyImportOptions.Name);
             scope.Start();
 
             try
             {
 
-                return _pipeline.SendRequest(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Properties.Name), cancellationToken, KeysPath, keyImportOptions.Properties.Name);
+                return _pipeline.SendRequest(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name);
             }
             catch (Exception e)
             {
@@ -1086,12 +1086,12 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(keyImportOptions, nameof(keyImportOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
-            scope.AddAttribute("key", keyImportOptions.Properties.Name);
+            scope.AddAttribute("key", keyImportOptions.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Properties.Name), cancellationToken, KeysPath, keyImportOptions.Properties.Name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -35,11 +35,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
             var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048);
 
             Key cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Properties.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
             // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created.
             // Again we are using the default Azure credential as above.
-            var cryptoClient = new CryptographyClient(cloudRsaKey.Properties.Id, new DefaultAzureCredential());
+            var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
 
             // Next we'll generate a symmetric key which we will wrap
             byte[] keyData = AesManaged.Create().Key;
