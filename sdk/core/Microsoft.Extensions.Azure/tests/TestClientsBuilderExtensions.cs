@@ -37,5 +37,10 @@ namespace Azure.Core.Extensions.Tests
             return builder.RegisterClientFactory<TestClientWithCredentials, TestClientOptions>((options, cred) => new TestClientWithCredentials(uri, cred, options));
         }
 
+        public static IAzureClientBuilder<TestClientMultipleOptionsParameters, TestClientOptionsMultipleParameters> AddTestClientOptionsMultipleParameters<TBuilder>(this TBuilder builder, string connectionString)
+            where TBuilder: IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<TestClientMultipleOptionsParameters, TestClientOptionsMultipleParameters>(options => new TestClientMultipleOptionsParameters(connectionString, options));
+        }
     }
 }

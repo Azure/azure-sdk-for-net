@@ -12750,25 +12750,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Convert an AccessTier to a string.
         /// </summary>
-        /// <param name="o">The AccessTier value.</param>
+        /// <param name="value">The AccessTier value.</param>
         /// <returns>String representation of the AccessTier value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTier o) => o._value;
+        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTier value) => value._value;
 
         /// <summary>
         /// Check if two AccessTier instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier a, Azure.Storage.Blobs.Models.AccessTier b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => left.Equals(right);
 
         /// <summary>
         /// Check if two AccessTier instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTier a, Azure.Storage.Blobs.Models.AccessTier b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => !left.Equals(right);
     }
 }
 #endregion enum strings AccessTier
@@ -12915,25 +12915,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Convert an ArchiveStatus to a string.
         /// </summary>
-        /// <param name="o">The ArchiveStatus value.</param>
+        /// <param name="value">The ArchiveStatus value.</param>
         /// <returns>String representation of the ArchiveStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.ArchiveStatus o) => o._value;
+        public static implicit operator string(Azure.Storage.Blobs.Models.ArchiveStatus value) => value._value;
 
         /// <summary>
         /// Check if two ArchiveStatus instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.ArchiveStatus a, Azure.Storage.Blobs.Models.ArchiveStatus b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Blobs.Models.ArchiveStatus left, Azure.Storage.Blobs.Models.ArchiveStatus right) => left.Equals(right);
 
         /// <summary>
         /// Check if two ArchiveStatus instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.ArchiveStatus a, Azure.Storage.Blobs.Models.ArchiveStatus b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.ArchiveStatus left, Azure.Storage.Blobs.Models.ArchiveStatus right) => !left.Equals(right);
     }
 }
 #endregion enum strings ArchiveStatus
@@ -13922,25 +13922,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Convert an BlobErrorCode to a string.
         /// </summary>
-        /// <param name="o">The BlobErrorCode value.</param>
+        /// <param name="value">The BlobErrorCode value.</param>
         /// <returns>String representation of the BlobErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode o) => o._value;
+        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode value) => value._value;
 
         /// <summary>
         /// Check if two BlobErrorCode instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => left.Equals(right);
 
         /// <summary>
         /// Check if two BlobErrorCode instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => !left.Equals(right);
     }
 }
 #endregion enum strings BlobErrorCode
@@ -18458,25 +18458,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Convert an RehydratePriority to a string.
         /// </summary>
-        /// <param name="o">The RehydratePriority value.</param>
+        /// <param name="value">The RehydratePriority value.</param>
         /// <returns>String representation of the RehydratePriority value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.RehydratePriority o) => o._value;
+        public static implicit operator string(Azure.Storage.Blobs.Models.RehydratePriority value) => value._value;
 
         /// <summary>
         /// Check if two RehydratePriority instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.RehydratePriority a, Azure.Storage.Blobs.Models.RehydratePriority b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Blobs.Models.RehydratePriority left, Azure.Storage.Blobs.Models.RehydratePriority right) => left.Equals(right);
 
         /// <summary>
         /// Check if two RehydratePriority instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.RehydratePriority a, Azure.Storage.Blobs.Models.RehydratePriority b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.RehydratePriority left, Azure.Storage.Blobs.Models.RehydratePriority right) => !left.Equals(right);
     }
 }
 #endregion enum strings RehydratePriority
