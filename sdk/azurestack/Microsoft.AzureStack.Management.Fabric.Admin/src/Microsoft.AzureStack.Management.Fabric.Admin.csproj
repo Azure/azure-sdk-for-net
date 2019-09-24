@@ -15,9 +15,9 @@
                 Breaking changes:
                 * The resources StorageSystem and StoragePool have been deprecated. They have been replaced with StorageSubSystem.
                 * Support Drive and Volume resources with API version 2019-05-01:
-                  1. The value of id, name, healthStatus and operationalStatus have been changed.
-                  2. We have supported new properties firmwareVersion, isIndicationEnabled, manufacturer, storagePool for Drive resources.
-                  3. The properties canPool and cannotPoolReason of Drive resources have been deprecated.
+                  1. The value of Id, Name, HealthStatus and OperationalStatus have been changed.
+                  2. We have supported new properties FirmwareVersion, IsIndicationEnabled, Manufacturer and StoragePool for Drive resources.
+                  3. The properties CanPool and CannotPoolReason of Drive resources have been deprecated.
                 Please note that the features are supported by Azure Stack 1910+.
             ]]>
         </PackageReleaseNotes>
