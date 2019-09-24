@@ -96,7 +96,7 @@ namespace Azure.Storage
             }
 
             perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);
-            perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build 
+            perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
             return HttpPipelineBuilder.Build(
                options,
                Array.Empty<HttpPipelinePolicy>(),
