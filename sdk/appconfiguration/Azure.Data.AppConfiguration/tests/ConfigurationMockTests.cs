@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -65,7 +67,6 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.UriBuilder.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
-
 
         [Test]
         public async Task GetWithLabel()
@@ -304,6 +305,131 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("Authorization", out var authHeader));
 
             Assert.True(Regex.IsMatch(authHeader, expectedSyntax));
+        }
+
+        [Test]
+        public async Task HasChangedNoValueNotFound()
+        {
+            var response = new MockResponse(404);
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(s_testSetting);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.UriBuilder.ToString());
+            Assert.IsFalse(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.IsFalse(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedNoValueNewValue()
+        {
+            var response = new MockResponse(200);
+
+            var unversionedSetting = s_testSetting.Clone();
+
+            string version = Guid.NewGuid().ToString();
+            var versionedSetting = s_testSetting.Clone();
+            versionedSetting.ETag = new ETag(version);
+
+            response.SetContent(SerializationHelpers.Serialize(versionedSetting, SerializeSetting));
+            response.AddHeader(new HttpHeader("ETag", versionedSetting.ETag.ToString()));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(unversionedSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.UriBuilder.ToString());
+            Assert.IsTrue(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.AreEqual(version, etag);
+            Assert.IsTrue(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedValuesMatch()
+        {
+            var response = new MockResponse(200);
+
+            string version = Guid.NewGuid().ToString();
+            var versionedSetting = s_testSetting.Clone();
+            versionedSetting.ETag = new ETag(version);
+
+            response.SetContent(SerializationHelpers.Serialize(versionedSetting, SerializeSetting));
+            response.AddHeader(new HttpHeader("ETag", versionedSetting.ETag.ToString()));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(versionedSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.UriBuilder.ToString());
+            Assert.IsTrue(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.AreEqual(version, etag);
+            Assert.IsFalse(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedValuesDontMatch()
+        {
+            var response = new MockResponse(200);
+
+            string version1 = Guid.NewGuid().ToString();
+            var version1Setting = s_testSetting.Clone();
+            version1Setting.ETag = new ETag(version1);
+
+            string version2 = Guid.NewGuid().ToString();
+            var version2Setting = s_testSetting.Clone();
+            version2Setting.ETag = new ETag(version2);
+
+            response.SetContent(SerializationHelpers.Serialize(version2Setting, SerializeSetting));
+            response.AddHeader(new HttpHeader("ETag", version2Setting.ETag.ToString()));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(version1Setting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.UriBuilder.ToString());
+            Assert.IsTrue(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.AreEqual(version2, etag);
+            Assert.IsTrue(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedValueNotFound()
+        {
+            var response = new MockResponse(404);
+
+            string version = Guid.NewGuid().ToString();
+            var versionedSetting = s_testSetting.Clone();
+            versionedSetting.ETag = new ETag(version);
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(versionedSetting);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.UriBuilder.ToString());
+            Assert.IsTrue(hasChanged);
         }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
