@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration
 
             using (var hmac = new HMACSHA256(_secret))
             {
-                Uri uri = message.Request.UriBuilder.Uri;
+                Uri uri = message.Request.UriBuilder.ToUri();
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 

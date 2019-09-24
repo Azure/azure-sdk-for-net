@@ -34,13 +34,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 Labels = new List<string>() { "my_label", "label,label" },
             };
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual(@"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label", builder.Uri.AbsoluteUri);
+            Assert.AreEqual(@"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label", builder.ToUri().AbsoluteUri);
 
         }
 
@@ -53,13 +52,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 Labels = new List<string>() { "*label*" },
             };
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual("http://localhost/?key=*key*&label=*label*", builder.Uri.AbsoluteUri);
+            Assert.AreEqual("http://localhost/?key=*key*&label=*label*", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -70,13 +68,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 Labels = new List<string>() { "" },
             };
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual("http://localhost/?key=*&label=%00", builder.Uri.AbsoluteUri);
+            Assert.AreEqual("http://localhost/?key=*&label=%00", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -85,13 +82,13 @@ namespace Azure.Data.AppConfiguration.Tests
             var key = "my-key";
             var selector = new SettingSelector(key);
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key={key}", builder.Uri.AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key={key}", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -100,13 +97,13 @@ namespace Azure.Data.AppConfiguration.Tests
             var label = "my-label";
             var selector = new SettingSelector(null, label);
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=*&label={label}", builder.Uri.AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key=*&label={label}", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -117,13 +114,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 Fields = SettingFields.Key | SettingFields.Value
             };
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=key&$select=key,%20value", builder.Uri.AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key=key&$select=key,%20value", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -134,13 +130,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 Fields = SettingFields.All
             };
 
-            var builder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var builder = new RequestUriBuilder();
+            builder.Assign(new Uri("http://localhost/"));
+
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=key", builder.Uri.AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key=key", builder.ToUri().AbsoluteUri);
         }
 
         [Test]

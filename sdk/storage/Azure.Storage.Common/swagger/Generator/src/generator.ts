@@ -350,7 +350,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
-        w.line(`${requestName}.UriBuilder.Uri = ${uri};`);
+        w.line(`${requestName}.UriBuilder.Assign(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;

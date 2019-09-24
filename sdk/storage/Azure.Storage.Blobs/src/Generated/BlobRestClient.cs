@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "service");
                 _request.UriBuilder.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -248,7 +248,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "service");
                 _request.UriBuilder.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -382,7 +382,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "service");
                 _request.UriBuilder.AppendQuery("comp", "stats");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -536,7 +536,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "list");
                 if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
                 if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
@@ -682,7 +682,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "service");
                 _request.UriBuilder.AppendQuery("comp", "userdelegationkey");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -813,7 +813,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "account");
                 _request.UriBuilder.AppendQuery("comp", "properties");
 
@@ -978,7 +978,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "batch");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -1141,7 +1141,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -1296,7 +1296,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -1487,7 +1487,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -1628,7 +1628,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 _request.UriBuilder.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1785,7 +1785,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 _request.UriBuilder.AppendQuery("comp", "acl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1965,7 +1965,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 _request.UriBuilder.AppendQuery("comp", "acl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2147,7 +2147,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2319,7 +2319,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2486,7 +2486,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2653,7 +2653,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2833,7 +2833,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 _request.UriBuilder.AppendQuery("restype", "container");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3006,7 +3006,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 _request.UriBuilder.AppendQuery("comp", "list");
                 if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
@@ -3169,7 +3169,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("restype", "container");
                 _request.UriBuilder.AppendQuery("comp", "list");
                 if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
@@ -3378,7 +3378,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -3837,7 +3837,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -4167,7 +4167,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -4341,7 +4341,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("action", "setAccessControl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -4523,7 +4523,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("action", "getAccessControl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (upn != null) {
@@ -4796,7 +4796,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (pathRenameMode != null) { _request.UriBuilder.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
 
@@ -4962,7 +4962,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "undelete");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -5140,7 +5140,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -5353,7 +5353,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -5548,7 +5548,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -5731,7 +5731,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -5909,7 +5909,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -6100,7 +6100,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -6279,7 +6279,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -6477,7 +6477,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "snapshot");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -6711,7 +6711,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
@@ -6943,7 +6943,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
@@ -7125,7 +7125,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "copy");
                 _request.UriBuilder.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -7266,7 +7266,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "tier");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -7494,7 +7494,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
@@ -7766,7 +7766,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "page");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -8009,7 +8009,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "page");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -8295,7 +8295,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "page");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -8521,7 +8521,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "pagelist");
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -8731,7 +8731,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "pagelist");
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -8947,7 +8947,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -9138,7 +9138,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -9321,7 +9321,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "incrementalcopy");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -9565,7 +9565,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
@@ -9825,7 +9825,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "appendblock");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -10112,7 +10112,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "appendblock");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -10415,7 +10415,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
@@ -10658,7 +10658,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "block");
                 _request.UriBuilder.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -10894,7 +10894,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "block");
                 _request.UriBuilder.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -11168,7 +11168,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "blocklist");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -11378,7 +11378,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("comp", "blocklist");
                 _request.UriBuilder.AppendQuery("blocklisttype", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(listType)));
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
@@ -11607,7 +11607,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("resource", "directory");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -11876,7 +11876,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (marker != null) { _request.UriBuilder.AppendQuery("continuation", System.Uri.EscapeDataString(marker)); }
                 if (pathRenameMode != null) { _request.UriBuilder.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
@@ -12082,7 +12082,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
 
                 #pragma warning disable CA1308 // Normalize strings to uppercase
                 _request.UriBuilder.AppendQuery("recursive", System.Uri.EscapeDataString(recursiveDirectoryDelete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
@@ -12276,7 +12276,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("action", "setAccessControl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -12458,7 +12458,7 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.Assign(resourceUri);
                 _request.UriBuilder.AppendQuery("action", "getAccessControl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (upn != null) {

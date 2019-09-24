@@ -122,7 +122,7 @@ namespace Azure.Storage.Common.Tests
         private MockRequest CreateMockRequest(Uri uri)
         {
             MockRequest mockRequest = new MockRequest();
-            mockRequest.UriBuilder.Uri = uri;
+            mockRequest.UriBuilder.Assign(uri);
             mockRequest.Method = RequestMethod.Get;
             return mockRequest;
         }

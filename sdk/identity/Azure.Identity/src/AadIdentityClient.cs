@@ -176,7 +176,7 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.UriBuilder.Assign(_options.AuthorityHost);
 
             request.UriBuilder.AppendPath(tenantId);
 
@@ -199,7 +199,7 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.UriBuilder.Assign(_options.AuthorityHost);
 
             request.UriBuilder.AppendPath(tenantId);
 

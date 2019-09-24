@@ -265,7 +265,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await service.AddAsync(s_testSetting);
             MockRequest request = mockTransport.SingleRequest;
 
-            StringAssert.Contains("api-version", request.UriBuilder.Uri.ToString());
+            StringAssert.Contains("api-version", request.UriBuilder.ToUri().ToString());
         }
 
         [Test]
@@ -284,7 +284,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await client.AddAsync(s_testSetting);
             MockRequest request = mockTransport.SingleRequest;
 
-            StringAssert.Contains("api-version=1.0", request.UriBuilder.Uri.ToString());
+            StringAssert.Contains("api-version=1.0", request.UriBuilder.ToUri().ToString());
         }
 
         [Test]

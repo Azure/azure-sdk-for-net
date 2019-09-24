@@ -105,25 +105,24 @@ namespace Azure.Core.Http
 
         public string PathAndQuery => _pathAndQuery.ToString();
 
-        public Uri Uri
+        public void Assign(Uri value)
         {
-            get
+            Scheme = value.Scheme;
+            Host = value.Host;
+            Port = value.Port;
+            Path = value.AbsolutePath;
+            Query = value.Query;
+            _uri = value;
+        }
+
+        public Uri ToUri()
+        {
+            if (_uri == null)
             {
-                if (_uri == null)
-                {
-                    _uri = new Uri(ToString());
-                }
-                return _uri;
+                _uri = new Uri(ToString());
             }
-            set
-            {
-                Scheme = value.Scheme;
-                Host = value.Host;
-                Port = value.Port;
-                Path = value.AbsolutePath;
-                Query = value.Query;
-                _uri = value;
-            }
+
+            return _uri;
         }
 
         public void AppendQuery(string name, string value)

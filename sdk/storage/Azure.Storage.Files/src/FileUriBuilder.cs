@@ -224,7 +224,7 @@ namespace Azure.Storage.Files
             {
                 if (_uri == null)
                 {
-                    _uri = BuildUri().Uri;
+                    _uri = BuildUri().ToUri();
                 }
                 return _uri;
             }

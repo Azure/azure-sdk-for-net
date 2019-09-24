@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
 
             using Request request = mockTransport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.UriBuilder.Assign(new Uri("http://example.com"));
             request.Headers.Add("User-Agent", "agent");
 
             Task<Response> requestTask = SendRequestAsync(mockTransport, request, s_enabledPolicy);
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests
 
                 using Request request = mockTransport.CreateRequest();
                 request.Method = RequestMethod.Get;
-                request.UriBuilder.Uri = new Uri("http://example.com");
+                request.UriBuilder.Assign(new Uri("http://example.com"));
 
                 Task<Response> requestTask = SendRequestAsync(mockTransport, request, s_enabledPolicy);
 
