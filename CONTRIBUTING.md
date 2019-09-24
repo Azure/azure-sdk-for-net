@@ -8,8 +8,9 @@
 # Prerequisites:
 
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+  - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3 preview 7** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
+- Install **.NET Core 3.0.100 SDK ** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 
 ## GENERAL THINGS TO KNOW:
