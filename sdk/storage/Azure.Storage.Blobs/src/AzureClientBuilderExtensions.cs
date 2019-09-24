@@ -3,8 +3,12 @@
 
 using System;
 using Azure.Core.Extensions;
+using Azure.Storage;
+using Azure.Storage.Blobs;
 
-namespace Azure.Storage.Blobs
+#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
+namespace Microsoft.Extensions.Azure
+#pragma warning restore AZC0001
 {
     /// <summary>
     /// Extension methods to add <see cref="BlobServiceClient"/> client to clients builder
