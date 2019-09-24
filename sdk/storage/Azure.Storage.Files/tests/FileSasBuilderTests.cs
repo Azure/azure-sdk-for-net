@@ -44,6 +44,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            AssertResponseHeaders(constants, sasQueryParameters);
         }
 
         [Test]
@@ -71,6 +72,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(Constants.Sas.Resource.Share, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            AssertResponseHeaders(constants, sasQueryParameters);
         }
 
         [Test]

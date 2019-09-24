@@ -19,32 +19,32 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => keyObjectId;
+        public string KeyObjectId => _keyObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => keyTenantId;
+        public string KeyTenantId => _keyTenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStart => keyStart;
+        public DateTimeOffset KeyStart => _keyStart;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiry => keyExpiry;
+        public DateTimeOffset KeyExpiry => _keyExpiry;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => keyService;
+        public string KeyService => _keyService;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => keyVersion;
+        public string KeyVersion => _keyVersion;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -79,7 +79,12 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyStart = default,
             DateTimeOffset keyExpiry = default,
             string keyService = default,
-            string keyVersion = default)
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
             : base(
                 version,
                 services,
@@ -97,7 +102,12 @@ namespace Azure.Storage.Sas
                 keyStart,
                 keyExpiry,
                 keyService,
-                keyVersion)
+                keyVersion,
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType)
         {
         }
 
