@@ -2344,6 +2344,12 @@ namespace Azure.Storage.Queues.Models
         public string Permission { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use QueuesModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
+
+        /// <summary>
         /// Serialize a AccessPolicy instance as XML.
         /// </summary>
         /// <param name="value">The AccessPolicy instance to serialize.</param>
@@ -2419,6 +2425,12 @@ namespace Azure.Storage.Queues.Models
         /// The maximum amount time that a browser should cache the preflight OPTIONS request.
         /// </summary>
         public int MaxAgeInSeconds { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of CorsRule instances.
+        /// You can use QueuesModelFactory.CorsRule instead.
+        /// </summary>
+        internal CorsRule() { }
 
         /// <summary>
         /// Serialize a CorsRule instance as XML.
@@ -2516,6 +2528,12 @@ namespace Azure.Storage.Queues.Models
         public string MessageText { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of DequeuedMessage instances.
+        /// You can use QueuesModelFactory.DequeuedMessage instead.
+        /// </summary>
+        internal DequeuedMessage() { }
+
+        /// <summary>
         /// Deserializes XML into a new DequeuedMessage instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -2604,6 +2622,12 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset TimeNextVisible { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of EnqueuedMessage instances.
+        /// You can use QueuesModelFactory.EnqueuedMessage instead.
+        /// </summary>
+        internal EnqueuedMessage() { }
+
+        /// <summary>
         /// Deserializes XML into a new EnqueuedMessage instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -2669,6 +2693,12 @@ namespace Azure.Storage.Queues.Models
         /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
         /// </summary>
         public System.DateTimeOffset LastSyncTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of GeoReplication instances.
+        /// You can use QueuesModelFactory.GeoReplication instead.
+        /// </summary>
+        internal GeoReplication() { }
 
         /// <summary>
         /// Deserializes XML into a new GeoReplication instance.
@@ -3113,6 +3143,12 @@ namespace Azure.Storage.Queues.Models
         /// The content of the Message.
         /// </summary>
         public string MessageText { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PeekedMessage instances.
+        /// You can use QueuesModelFactory.PeekedMessage instead.
+        /// </summary>
+        internal PeekedMessage() { }
 
         /// <summary>
         /// Deserializes XML into a new PeekedMessage instance.
@@ -3601,6 +3637,12 @@ namespace Azure.Storage.Queues.Models
         public string MessageText { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of QueueMessage instances.
+        /// You can use QueuesModelFactory.QueueMessage instead.
+        /// </summary>
+        internal QueueMessage() { }
+
+        /// <summary>
         /// Serialize a QueueMessage instance as XML.
         /// </summary>
         /// <param name="value">The QueueMessage instance to serialize.</param>
@@ -4005,6 +4047,12 @@ namespace Azure.Storage.Queues.Models
         public int? Days { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of RetentionPolicy instances.
+        /// You can use QueuesModelFactory.RetentionPolicy instead.
+        /// </summary>
+        internal RetentionPolicy() { }
+
+        /// <summary>
         /// Serialize a RetentionPolicy instance as XML.
         /// </summary>
         /// <param name="value">The RetentionPolicy instance to serialize.</param>
@@ -4149,6 +4197,12 @@ namespace Azure.Storage.Queues.Models
         public string Code { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of StorageError instances.
+        /// You can use QueuesModelFactory.StorageError instead.
+        /// </summary>
+        internal StorageError() { }
+
+        /// <summary>
         /// Deserializes XML into a new StorageError instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -4194,6 +4248,12 @@ namespace Azure.Storage.Queues.Models
         /// A UTC date/time value that represents when the message will be visible on the queue.
         /// </summary>
         public System.DateTimeOffset TimeNextVisible { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of UpdatedMessage instances.
+        /// You can use QueuesModelFactory.UpdatedMessage instead.
+        /// </summary>
+        internal UpdatedMessage() { }
     }
 
     /// <summary>
