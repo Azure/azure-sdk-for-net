@@ -33,7 +33,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var secret = new Secret(secretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             client.Set(secret);
@@ -45,8 +48,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // After one year, the bank account is still active, we need to update the expiry time of the secret.
             // The update method can be used to update the expiry attribute of the secret. It cannot be used to update
             // the value of the secret.
-            bankSecret.Expires = bankSecret.Expires.Value.AddYears(1);
-            SecretBase updatedSecret = client.Update(bankSecret);
+            bankSecret.Properties.Expires = bankSecret.Properties.Expires.Value.AddYears(1);
+            SecretProperties updatedSecret = client.UpdateProperties(bankSecret.Properties);
             Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.Expires}");
 
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
@@ -54,7 +57,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // change the value of the secret.
             var secretNewValue = new Secret(secretName, "bhjd4DDgsa")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             client.Set(secretNewValue);

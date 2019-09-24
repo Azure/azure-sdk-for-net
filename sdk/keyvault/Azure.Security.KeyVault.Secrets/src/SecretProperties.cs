@@ -11,21 +11,31 @@ namespace Azure.Security.KeyVault.Secrets
     /// <summary>
     /// SecretBase is the resource containing all the properties of the secret except its value.
     /// </summary>
-    public class SecretBase : IJsonDeserializable, IJsonSerializable
+    public class SecretProperties : IJsonDeserializable, IJsonSerializable
     {
+        private const string IdPropertyName = "id";
+        private const string ContentTypePropertyName = "contentType";
+        private const string KidPropertyName = "kid";
+        private const string ManagedPropertyName = "managed";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
+
+        private static readonly JsonEncodedText s_contentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+
         private ObjectId _identifier;
         private VaultAttributes _attributes;
 
-        internal SecretBase()
+        internal SecretProperties()
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the SecretBase class.
         /// </summary>
         /// <param name="name">The name of the secret.</param>
-        public SecretBase(string name)
+        public SecretProperties(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -40,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Vault base URL.
         /// </summary>
-        public Uri Vault => _identifier.Vault;
+        public Uri VaultUri => _identifier.Vault;
 
         /// <summary>
         /// Name of the secret.
@@ -110,51 +120,58 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
 
-        internal virtual void ReadProperties(JsonElement json)
+        internal void ReadProperties(JsonElement json)
         {
-            _identifier.ParseId("secrets", json.GetProperty("id").GetString());
-
-            if (json.TryGetProperty("contentType", out JsonElement contentType))
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
-                ContentType = contentType.GetString();
-            }
-
-            if (json.TryGetProperty("kid", out JsonElement kid))
-            {
-                KeyId = kid.GetString();
-            }
-
-            if (json.TryGetProperty("managed", out JsonElement managed))
-            {
-                Managed = managed.GetBoolean();
-            }
-
-            if (json.TryGetProperty("attributes", out JsonElement attributes))
-            {
-                _attributes.ReadProperties(attributes);
-            }
-
-            if (json.TryGetProperty("tags", out JsonElement tags))
-            {
-                Tags = new Dictionary<string, string>();
-
-                foreach (JsonProperty prop in tags.EnumerateObject())
-                {
-                    Tags[prop.Name] = prop.Value.GetString();
-                }
+                ReadProperty(prop);
             }
         }
 
-        internal virtual void WriteProperties(Utf8JsonWriter json)
+        internal void ReadProperty(JsonProperty prop)
+        {
+            switch (prop.Name)
+            {
+                case IdPropertyName:
+                    _identifier.ParseId("secrets", prop.Value.GetString());
+                    break;
+
+                case ContentTypePropertyName:
+                    ContentType = prop.Value.GetString();
+                    break;
+
+                case KidPropertyName:
+                    KeyId = prop.Value.GetString();
+                    break;
+
+                case ManagedPropertyName:
+                    Managed = prop.Value.GetBoolean();
+                    break;
+
+                case AttributesPropertyName:
+                    _attributes.ReadProperties(prop.Value);
+                    break;
+
+                case TagsPropertyName:
+                    Tags = new Dictionary<string, string>();
+                    foreach (JsonProperty tag in prop.Value.EnumerateObject())
+                    {
+                        Tags[tag.Name] = tag.Value.GetString();
+                    }
+                    break;
+            }
+        }
+
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (ContentType != null)
             {
-                json.WriteString("contentType", ContentType);
+                json.WriteString(s_contentTypePropertyNameBytes, ContentType);
             }
 
             if (_attributes.Enabled.HasValue || _attributes.NotBefore.HasValue || _attributes.Expires.HasValue)
             {
-                json.WriteStartObject("attributes");
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
                 _attributes.WriteProperties(json);
 
@@ -163,7 +180,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (Tags != null && Tags.Count > 0)
             {
-                json.WriteStartObject("tags");
+                json.WriteStartObject(s_tagsPropertyNameBytes);
 
                 foreach (KeyValuePair<string, string> kvp in Tags)
                 {

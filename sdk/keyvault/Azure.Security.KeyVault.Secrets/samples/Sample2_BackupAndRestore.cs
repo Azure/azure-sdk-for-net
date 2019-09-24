@@ -36,7 +36,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var secret = new Secret(secretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             Secret storedSecret = client.Set(secret);
@@ -55,9 +58,9 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.PurgeDeleted(secretName);
 
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
-            SecretBase restoreSecret = client.Restore(File.ReadAllBytes(backupPath));
+            SecretProperties restoreSecret = client.Restore(File.ReadAllBytes(backupPath));
 
-            AssertSecretsEqual((SecretBase)storedSecret, restoreSecret);
+            AssertSecretsEqual(storedSecret.Properties, restoreSecret);
         }
 
         private bool WaitForDeletedSecret(SecretClient client, string secretName)
@@ -78,7 +81,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             return false;
         }
 
-        private void AssertSecretsEqual(SecretBase exp, SecretBase act)
+        private void AssertSecretsEqual(SecretProperties exp, SecretProperties act)
         {
             Assert.AreEqual(exp.Name, act.Name);
             Assert.AreEqual(exp.Version, act.Version);
