@@ -7,6 +7,10 @@
 - `KeyType` enumeration values have been changed to match other languages, e.g. `KeyType.EllipticCurve` is now `KeyType.Ec`.
 - `KeyOperations` has been renamed `KeyOperation`.
 - Enumerations including `KeyCurveName`, `KeyOperation`, and `KeyType` are now structures that define well-known, supported static fields.
+- `KeyBase` has been renamed to `KeyProperties`.
+- `Key` and `DeletedKey` no longer extend `KeyProperties`, but instead contain a `KeyProperties` property named `Properties`.
+- `KeyClient.UpdateKey` has been renamed to `KeyClient.UpdateKeyProperties`.
+
 
 ### Major changes
 

@@ -8,6 +8,17 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyAttributes
     {
+        private const string EnabledPropertyName = "enabled";
+        private const string NotBeforePropertyName = "nbf";
+        private const string ExpiresPropertyName = "exp";
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+        private const string RecoveryLevelPropertyName = "recoveryLevel";
+
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
+        private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+
         /// <summary>
         /// Specifies whether the key is enabled and useable for cryptographic operations.
         /// </summary>
@@ -16,22 +27,22 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Identifies the time (in UTC) before which the key must not be used for cryptographic operations.
         /// </summary>
-        public System.DateTimeOffset? NotBefore { get; set; }
+        public DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
         /// Identifies the expiration time (in UTC) on or after which the key must not be used.
         /// </summary>
-        public System.DateTimeOffset? Expires { get; set; }
+        public DateTimeOffset? Expires { get; set; }
 
         /// <summary>
         /// Gets creation time in UTC.
         /// </summary>
-        public System.DateTimeOffset? Created { get; private set; }
+        public DateTimeOffset? Created { get; private set; }
 
         /// <summary>
         /// Gets last updated time in UTC.
         /// </summary>
-        public System.DateTimeOffset? Updated { get; private set; }
+        public DateTimeOffset? Updated { get; private set; }
 
         /// <summary>
         /// Gets reflects the deletion recovery level currently in effect for
@@ -44,15 +55,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public string RecoveryLevel { get; private set; }
 
-        private const string EnabledPropertyName = "enabled";
-        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
-        private const string NotBeforePropertyName = "nbf";
-        private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
-        private const string ExpiresPropertyName = "exp";
-        private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
-        private const string CreatedPropertyName = "created";
-        private const string UpdatedPropertyName = "updated";
-        private const string RecoveryLevelPropertyName = "recoveryLevel";
+        internal bool ShouldSerialzie => Enabled.HasValue && NotBefore.HasValue && Expires.HasValue;
 
         internal void ReadProperties(JsonElement json)
         {

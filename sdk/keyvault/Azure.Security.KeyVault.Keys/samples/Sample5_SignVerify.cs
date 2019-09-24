@@ -39,16 +39,16 @@ namespace Azure.Security.KeyVault.Keys.Samples
             var ecKey = new EcKeyCreateOptions(ecKeyName, hsm: false, curveName: KeyCurveName.P256K);
 
             Key cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Properties.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
             Key cloudEcKey = keyClient.CreateEcKey(ecKey);
-            Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyMaterial.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudEcKey.Properties.Name} and type {cloudEcKey.KeyMaterial.KeyType}");
 
             // Let's create the CryptographyClient which can perform cryptographic operations with the keys we just created.
             // Again we are using the default Azure credential as above.
-            var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+            var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Properties.Id, new DefaultAzureCredential());
 
-            var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
+            var ecCryptoClient = new CryptographyClient(cloudEcKey.Properties.Id, new DefaultAzureCredential());
 
             // Next we'll sign some arbitrary data and verify the signatures using the CryptographyClient with both the EC and RSA keys we created.
             byte[] data = Encoding.UTF8.GetBytes("This is some sample data which we will use to demonstrate sign and verify");

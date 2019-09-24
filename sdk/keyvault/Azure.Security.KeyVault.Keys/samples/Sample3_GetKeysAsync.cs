@@ -51,10 +51,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Let's list the keys and print their types.
             // List operations don't return the keys with key material information.
             // So, for each returned key we call GetKey to get the key with its key material information.
-            await foreach (KeyBase key in client.GetKeysAsync())
+            await foreach (KeyProperties key in client.GetKeysAsync())
             {
                 Key keyWithType = await client.GetKeyAsync(key.Name);
-                Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyMaterial.KeyType}");
+                Debug.WriteLine($"Key is returned with name {keyWithType.Properties.Name} and type {keyWithType.KeyMaterial.KeyType}");
             }
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // You need to check all the different versions Cloud RSA key had previously.
             // Lets print all the versions of this key.
-            await foreach (KeyBase key in client.GetKeyVersionsAsync(rsaKeyName))
+            await foreach (KeyProperties key in client.GetKeyVersionsAsync(rsaKeyName))
             {
                 Debug.WriteLine($"Key's version {key.Version} with name {key.Name}");
             }

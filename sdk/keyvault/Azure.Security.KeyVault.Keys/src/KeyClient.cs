@@ -275,19 +275,19 @@ namespace Azure.Security.KeyVault.Keys
         /// Vault. Note: The cryptographic material of a key itself cannot be changed.
         /// This operation requires the keys/update permission.
         /// </remarks>
-        /// <param name="key">The <see cref="KeyBase"/> object with updated properties.</param>
+        /// <param name="key">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null, or <see cref="KeyBase.Version"/> of <paramref name="key"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="key"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
+        public virtual Response<Key> UpdateKeyProperties(KeyProperties key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(key.Version, $"{nameof(key)}.{nameof(key.Version)}");
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKey");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKeyProperties");
             scope.AddAttribute("key", key.Name);
             scope.Start();
 
@@ -311,19 +311,19 @@ namespace Azure.Security.KeyVault.Keys
         /// Vault. Note: The cryptographic material of a key itself cannot be changed.
         /// This operation requires the keys/update permission.
         /// </remarks>
-        /// <param name="key">The <see cref="KeyBase"/> object with updated properties.</param>
+        /// <param name="key">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyBase.Version"/> of <paramref name="key"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="key"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> UpdateKeyPropertiesAsync(KeyProperties key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(key.Version, $"{nameof(key)}.{nameof(key.Version)}");
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKey");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKeyProperties");
             scope.AddAttribute("key", key.Name);
             scope.Start();
 
@@ -416,11 +416,11 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<KeyBase>> GetKeys(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<KeyProperties>> GetKeys(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyBase(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeys", cancellationToken));
         }
 
         /// <summary>
@@ -434,11 +434,11 @@ namespace Azure.Security.KeyVault.Keys
         /// permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncCollection<KeyBase> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollection<KeyProperties> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeys", cancellationToken));
         }
 
         /// <summary>
@@ -453,13 +453,13 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<KeyBase>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<KeyProperties>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyBase(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeyVersions", cancellationToken));
         }
 
         /// <summary>
@@ -474,13 +474,13 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual AsyncCollection<KeyBase> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncCollection<KeyProperties> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetKeyVersions", cancellationToken));
         }
 
         /// <summary>
@@ -1053,13 +1053,13 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(keyImportOptions, nameof(keyImportOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
-            scope.AddAttribute("key", keyImportOptions.Name);
+            scope.AddAttribute("key", keyImportOptions.Properties.Name);
             scope.Start();
 
             try
             {
 
-                return _pipeline.SendRequest(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name);
+                return _pipeline.SendRequest(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Properties.Name), cancellationToken, KeysPath, keyImportOptions.Properties.Name);
             }
             catch (Exception e)
             {
@@ -1086,12 +1086,12 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(keyImportOptions, nameof(keyImportOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
-            scope.AddAttribute("key", keyImportOptions.Name);
+            scope.AddAttribute("key", keyImportOptions.Properties.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Properties.Name), cancellationToken, KeysPath, keyImportOptions.Properties.Name).ConfigureAwait(false);
             }
             catch (Exception e)
             {

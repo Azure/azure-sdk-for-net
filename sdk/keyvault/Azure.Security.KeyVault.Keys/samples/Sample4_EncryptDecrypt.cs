@@ -35,11 +35,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
             var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048);
 
             Key cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Properties.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
             // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created.
             // Again we are using the default Azure credential as above.
-            var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+            var cryptoClient = new CryptographyClient(cloudRsaKey.Properties.Id, new DefaultAzureCredential());
 
             // Next we'll encrypt some arbitrary plain text with the key using the CryptographyClient. Note that RSA encryption
             // algorithms have no chaining so they can only encrypt a single block of plaintext securely. For RSAOAEP this can be
