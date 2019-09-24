@@ -40,6 +40,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
+        ///
         /// Example: "account.file.core.windows.net"
         /// </summary>
         public string Host
@@ -74,6 +75,7 @@ namespace Azure.Storage.Files
         /// Gets or sets the name of a file storage share.  The value defaults
         /// to <see cref="string.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
+        ///
         /// </summary>
         public string ShareName
         {

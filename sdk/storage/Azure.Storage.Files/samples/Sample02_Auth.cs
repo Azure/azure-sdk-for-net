@@ -14,6 +14,7 @@ namespace Azure.Storage.Files.Samples
 {
     /// <summary>
     /// Demonstrate various authorization and authentication mechanisms.
+    ///
     /// For more information, see
     /// https://docs.microsoft.com/en-us/azure/storage/common/storage-auth
     /// </summary>
@@ -21,6 +22,7 @@ namespace Azure.Storage.Files.Samples
     {
         /// <summary>
         /// Use a connection string to connect to a Storage account.
+        ///
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime using Shared Key authorization.
@@ -32,7 +34,9 @@ namespace Azure.Storage.Files.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;

@@ -39,6 +39,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
+        ///
         /// Example: "account.queue.core.windows.net"
         /// </summary>
         public string Host
