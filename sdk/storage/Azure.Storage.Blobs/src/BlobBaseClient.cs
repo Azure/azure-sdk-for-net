@@ -2878,7 +2878,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The properties and Content returned from downloading a blob
     /// </summary>
-    public partial class BlobDownloadInfo : IDisposable
+    public partial class BlobDownloadInfo
     {
         /// <summary>
         /// Internal flattened property representation
@@ -2920,15 +2920,6 @@ namespace Azure.Storage.Blobs.Models
         {
             _flattened = flattened;
             Properties = new BlobDownloadProperties() { _flattened = flattened };
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Dispose()
-        {
-            Content?.Dispose();
-            GC.SuppressFinalize(this);
         }
     }
 
