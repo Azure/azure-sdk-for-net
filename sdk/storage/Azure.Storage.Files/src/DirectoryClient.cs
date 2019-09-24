@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -54,10 +53,7 @@ namespace Azure.Storage.Files
         {
             get
             {
-                if (_accountName == null)
-                {
-                    _accountName = new FileUriBuilder(Uri).AccountName;
-                }
+                SetNameFieldsIfNull();
                 return _accountName;
             }
         }
@@ -74,10 +70,7 @@ namespace Azure.Storage.Files
         {
             get
             {
-                if (_shareName == null)
-                {
-                    _shareName = new FileUriBuilder(Uri).ShareName;
-                }
+                SetNameFieldsIfNull();
                 return _shareName;
             }
         }
@@ -94,11 +87,22 @@ namespace Azure.Storage.Files
         {
             get
             {
-                if (_name == null)
-                {
-                    _name = new FileUriBuilder(Uri).TerminalPiece;
-                }
+                SetNameFieldsIfNull();
                 return _name;
+            }
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _shareName == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.TerminalDirectoryOrFileName;
+                _shareName = builder.ShareName;
+                _accountName = builder.AccountName;
             }
         }
 

@@ -74,10 +74,7 @@ namespace Azure.Storage.Queues
         {
             get
             {
-                if (_accountName == null)
-                {
-                    _accountName = new QueueUriBuilder(Uri).AccountName;
-                }
+                SetNameFieldsIfNull();
                 return _accountName;
             }
         }
@@ -94,11 +91,21 @@ namespace Azure.Storage.Queues
         {
             get
             {
-                if (_name == null)
-                {
-                    _name = new QueueUriBuilder(Uri).QueueName;
-                }
+                SetNameFieldsIfNull();
                 return _name;
+            }
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new QueueUriBuilder(Uri);
+                _name = builder.QueueName;
+                _accountName = builder.AccountName;
             }
         }
 

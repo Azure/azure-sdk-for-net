@@ -121,10 +121,10 @@ namespace Azure.Storage.Files
         private SasQueryParameters _sas;
 
         /// <summary>
-        /// Get the terminal piece from the <see cref="DirectoryOrFilePath"/>, or null if
+        /// Get the terminal directory or file name from the <see cref="DirectoryOrFilePath"/>, or null if
         /// not present in the <see cref="Uri"/>.
         /// </summary>
-        internal string TerminalPiece =>
+        internal string TerminalDirectoryOrFileName =>
             DirectoryOrFilePath.TrimEnd('/').Split('/').LastOrDefault();
 
         /// <summary>

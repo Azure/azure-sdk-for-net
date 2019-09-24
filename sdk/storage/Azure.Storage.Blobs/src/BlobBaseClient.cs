@@ -68,10 +68,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             get
             {
-                if (_accountName == null)
-                {
-                    _accountName = new BlobUriBuilder(Uri).AccountName;
-                }
+                SetNameFieldsIfNull();
                 return _accountName;
             }
         }
@@ -88,10 +85,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             get
             {
-                if (_containerName == null)
-                {
-                    _containerName = new BlobUriBuilder(Uri).ContainerName;
-                }
+                SetNameFieldsIfNull();
                 return _containerName;
             }
         }
@@ -108,11 +102,22 @@ namespace Azure.Storage.Blobs.Specialized
         {
             get
             {
-                if (_name == null)
-                {
-                    _name = new BlobUriBuilder(Uri).BlobName;
-                }
+                SetNameFieldsIfNull();
                 return _name;
+            }
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _containerName == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.BlobName;
+                _containerName = builder.ContainerName;
+                _accountName = builder.AccountName;
             }
         }
 
@@ -2873,7 +2878,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The properties and Content returned from downloading a blob
     /// </summary>
-    public partial class BlobDownloadInfo
+    public partial class BlobDownloadInfo : IDisposable
     {
         /// <summary>
         /// Internal flattened property representation
@@ -2915,6 +2920,15 @@ namespace Azure.Storage.Blobs.Models
         {
             _flattened = flattened;
             Properties = new BlobDownloadProperties() { _flattened = flattened };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Dispose()
+        {
+            Content?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 
