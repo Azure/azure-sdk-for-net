@@ -15,9 +15,9 @@ namespace Azure
             Value = parsed;
         }
 
-        public Response GetRawResponse() => _rawResponse;
+        public virtual Response GetRawResponse() => _rawResponse;
 
-        public T Value { get; }
+        public virtual T Value { get; }
 
         public static implicit operator T(Response<T> response) => response.Value;
 
