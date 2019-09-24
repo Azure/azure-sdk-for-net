@@ -9,6 +9,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal interface ICryptographyProvider
     {
+        bool ShouldRemote { get; }
+
         bool SupportsOperation(KeyOperation operation);
 
         Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = null, byte[] authenticationData = null, CancellationToken cancellationToken = default);

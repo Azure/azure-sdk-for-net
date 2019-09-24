@@ -358,6 +358,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
+        bool ICryptographyProvider.ShouldRemote => false;
+
         async Task<EncryptResult> ICryptographyProvider.EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
         {
             return await EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);

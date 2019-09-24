@@ -80,10 +80,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
 
-        internal RSAEncryptionPadding GetEncryptionPadding()
+        internal RSAEncryptionPadding GetRsaEncryptionPadding() => _value switch
         {
-            // TODO
-            throw new NotImplementedException();
-        }
+            Rsa15Value => RSAEncryptionPadding.Pkcs1,
+            RsaOaepValue => RSAEncryptionPadding.OaepSHA1,
+            RsaOaep256Value => RSAEncryptionPadding.OaepSHA256,
+            _ => null,
+        };
     }
 }
