@@ -18,21 +18,21 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Representation of a storage system resource.
+    /// Application operation result description.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageSystem : Resource
+    public partial class ApplicationOperationResult : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the StorageSystem class.
+        /// Initializes a new instance of the ApplicationOperationResult class.
         /// </summary>
-        public StorageSystem()
+        public ApplicationOperationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageSystem class.
+        /// Initializes a new instance of the ApplicationOperationResult class.
         /// </summary>
         /// <param name="id">URI of the resource.</param>
         /// <param name="name">Name of the resource.</param>
@@ -40,11 +40,14 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <param name="location">The region where the resource is
         /// located.</param>
         /// <param name="tags">List of key-value pairs.</param>
-        /// <param name="totalCapacityGB">Total capacity of the system.</param>
-        public StorageSystem(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? totalCapacityGB = default(int?))
+        /// <param name="instances">List of operation result instances.</param>
+        /// <param name="provisioningState">Success or failure of
+        /// operation.</param>
+        public ApplicationOperationResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> instances = default(IList<string>), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
-            TotalCapacityGB = totalCapacityGB;
+            Instances = instances;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -54,10 +57,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets total capacity of the system.
+        /// Gets or sets list of operation result instances.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.totalCapacityGB")]
-        public int? TotalCapacityGB { get; set; }
+        [JsonProperty(PropertyName = "properties.instances")]
+        public IList<string> Instances { get; set; }
+
+        /// <summary>
+        /// Gets or sets success or failure of operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
     }
 }

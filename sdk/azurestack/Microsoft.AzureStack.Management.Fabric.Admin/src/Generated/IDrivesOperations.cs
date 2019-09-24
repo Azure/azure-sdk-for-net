@@ -20,12 +20,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// StoragePoolsOperations operations.
+    /// DrivesOperations operations.
     /// </summary>
-    public partial interface IStoragePoolsOperations
+    public partial interface IDrivesOperations
     {
         /// <summary>
-        /// Return the requested a storage pool.
+        /// Return the requested a storage drive.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -33,11 +33,14 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
+        /// <param name='scaleUnit'>
+        /// Name of the scale units.
+        /// </param>
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
         /// </param>
-        /// <param name='storagePool'>
-        /// Storage pool name.
+        /// <param name='drive'>
+        /// Name of the storage drive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,15 +57,18 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StoragePool>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, string storagePool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Drive>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string drive, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all storage pools for a location.
+        /// Returns a list of all storage drives at a location.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
         /// </param>
         /// <param name='location'>
         /// Location of the resource.
+        /// </param>
+        /// <param name='scaleUnit'>
+        /// Name of the scale units.
         /// </param>
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
@@ -85,9 +91,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<StoragePool>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, ODataQuery<StoragePool> odataQuery = default(ODataQuery<StoragePool>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Drive>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Drive> odataQuery = default(ODataQuery<Drive>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all storage pools for a location.
+        /// Returns a list of all storage drives at a location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -107,6 +113,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<StoragePool>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Drive>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
