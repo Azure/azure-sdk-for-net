@@ -451,6 +451,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnSitesConfigurationOperations VpnSitesConfiguration { get; }
 
         /// <summary>
+        /// Gets the IVpnServerConfigurationsOperations.
+        /// </summary>
+        IVpnServerConfigurationsOperations VpnServerConfigurations { get; }
+
+        /// <summary>
         /// Gets the IVirtualHubsOperations.
         /// </summary>
         IVirtualHubsOperations VirtualHubs { get; }
@@ -481,14 +486,14 @@ namespace Microsoft.Azure.Management.Network
         IVpnLinkConnectionsOperations VpnLinkConnections { get; }
 
         /// <summary>
-        /// Gets the IP2sVpnServerConfigurationsOperations.
-        /// </summary>
-        IP2sVpnServerConfigurationsOperations P2sVpnServerConfigurations { get; }
-
-        /// <summary>
         /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
         IP2sVpnGatewaysOperations P2sVpnGateways { get; }
+
+        /// <summary>
+        /// Gets the IVpnServerConfigurationsAssociatedWithVirtualWanOperations.
+        /// </summary>
+        IVpnServerConfigurationsAssociatedWithVirtualWanOperations VpnServerConfigurationsAssociatedWithVirtualWan { get; }
 
         /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.
@@ -531,6 +536,54 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<VirtualWanSecurityProviders>> SupportedSecurityProvidersWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Generates a unique VPN profile for P2S clients for VirtualWan and
+        /// associated VpnServerConfiguration combination in the specified
+        /// resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='virtualWANName'>
+        /// The name of the VirtualWAN whose associated VpnServerConfigurations
+        /// is needed.
+        /// </param>
+        /// <param name='vpnClientParams'>
+        /// Parameters supplied to the generate VirtualWan VPN profile
+        /// generation operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Generates a unique VPN profile for P2S clients for VirtualWan and
+        /// associated VpnServerConfiguration combination in the specified
+        /// resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='virtualWANName'>
+        /// The name of the VirtualWAN whose associated VpnServerConfigurations
+        /// is needed.
+        /// </param>
+        /// <param name='vpnClientParams'>
+        /// Parameters supplied to the generate VirtualWan VPN profile
+        /// generation operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VpnProfileResponse>> BeginGeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
