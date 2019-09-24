@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for a Cassandra database.
     /// </summary>
-    public partial class CassandraSource : CopySource
+    public partial class CassandraSource : TabularSource
     {
         /// <summary>
         /// Initializes a new instance of the CassandraSource class.
@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="query">Database query. Should be a SQL-92 query
         /// expression or Cassandra Query Language (CQL) command. Type: string
         /// (or Expression with resultType string).</param>
@@ -52,8 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// default value is 'ONE'. It is case-insensitive. Possible values
         /// include: 'ALL', 'EACH_QUORUM', 'QUORUM', 'LOCAL_QUORUM', 'ONE',
         /// 'TWO', 'THREE', 'LOCAL_ONE', 'SERIAL', 'LOCAL_SERIAL'</param>
-        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string consistencyLevel = default(string))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), string consistencyLevel = default(string))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
         {
             Query = query;
             ConsistencyLevel = consistencyLevel;

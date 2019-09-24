@@ -2,6 +2,7 @@
 
 ## Current version
 ###  Feature Additions
+- Added property queryTimeout to tabular sources
 
 ## Version 4.1.3
 ###  Feature Additions

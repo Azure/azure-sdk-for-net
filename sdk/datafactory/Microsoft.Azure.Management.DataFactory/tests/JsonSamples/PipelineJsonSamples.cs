@@ -4486,7 +4486,8 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
           ""source"": {
             ""type"": ""SqlMISource"",
-            ""sqlReaderQuery"": ""select * from my_table""
+            ""sqlReaderQuery"": ""select * from my_table"",
+            ""queryTimeout"": ""00:00:05""
           },
           ""sink"": {
             ""type"": ""SqlMISink"",
