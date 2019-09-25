@@ -10,6 +10,10 @@
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
+- Added support for Data Flow:
+        * Added data flow object model and CRUD APIs
+        * Added data flow debug session APIs
+        * Added support for execute data flow activity type
 - Added property queryTimeout to tabular sources
             ]]></PackageReleaseNotes>
   </PropertyGroup>

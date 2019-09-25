@@ -2,6 +2,10 @@
 
 ## Current version
 ###  Feature Additions
+- Added support for Data Flow:
+        * Added data flow object model and CRUD APIs
+        * Added data flow debug session APIs
+        * Added support for execute data flow activity type
 - Added property queryTimeout to tabular sources
 
 ## Version 4.1.3
