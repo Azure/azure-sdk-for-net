@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Document Database Collection sink.
+    /// A copy activity Azure CosmosDB (SQL API) Collection sink.
     /// </summary>
-    public partial class DocumentDbCollectionSink : CopySink
+    public partial class CosmosDbSqlApiSink : CopySink
     {
         /// <summary>
-        /// Initializes a new instance of the DocumentDbCollectionSink class.
+        /// Initializes a new instance of the CosmosDbSqlApiSink class.
         /// </summary>
-        public DocumentDbCollectionSink()
+        public CosmosDbSqlApiSink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DocumentDbCollectionSink class.
+        /// Initializes a new instance of the CosmosDbSqlApiSink class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -46,16 +46,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="nestingSeparator">Nested properties separator. Default
-        /// is . (dot). Type: string (or Expression with resultType
-        /// string).</param>
         /// <param name="writeBehavior">Describes how to write data to Azure
         /// Cosmos DB. Type: string (or Expression with resultType string).
         /// Allowed values: insert and upsert.</param>
-        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
+        public CosmosDbSqlApiSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object writeBehavior = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
-            NestingSeparator = nestingSeparator;
             WriteBehavior = writeBehavior;
             CustomInit();
         }
@@ -64,13 +60,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets nested properties separator. Default is . (dot). Type:
-        /// string (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "nestingSeparator")]
-        public object NestingSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets describes how to write data to Azure Cosmos DB. Type:
