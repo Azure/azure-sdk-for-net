@@ -43,6 +43,26 @@ namespace Azure.Storage.Files
         /// </summary>
         protected virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The Storage account name corresponding to the file service client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the file service client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new FileUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="FileServiceClient"/>

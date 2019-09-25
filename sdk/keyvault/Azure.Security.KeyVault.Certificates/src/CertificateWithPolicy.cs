@@ -10,12 +10,12 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificateWithPolicy : Certificate
     {
+        private const string PolicyPropertyName = "policy";
+
         /// <summary>
         /// The current policy for the certificate
         /// </summary>
         public CertificatePolicy Policy { get; private set; }
-
-        private const string PolicyPropertyName = "policy";
 
         internal override void ReadProperty(JsonProperty prop)
         {
@@ -25,6 +25,7 @@ namespace Azure.Security.KeyVault.Certificates
                     Policy = new CertificatePolicy();
                     ((IJsonDeserializable)Policy).ReadProperties(prop.Value);
                     break;
+
                 default:
                     base.ReadProperty(prop);
                     break;

@@ -117,10 +117,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -248,10 +248,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -382,10 +382,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "stats");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "stats");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -536,13 +536,13 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "list");
-                if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (include != null) { _request.UriBuilder.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Queues.QueueRestClient.Serialization.ToString(item))))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("comp", "list");
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (include != null) { _request.Uri.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Queues.QueueRestClient.Serialization.ToString(item))))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -686,8 +686,8 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -818,8 +818,8 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -940,9 +940,9 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1092,9 +1092,9 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1221,9 +1221,9 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "acl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("comp", "acl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1363,9 +1363,9 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "acl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("comp", "acl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1518,10 +1518,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                if (numberOfMessages != null) { _request.UriBuilder.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (visibilitytimeout != null) { _request.UriBuilder.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (visibilitytimeout != null) { _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1656,8 +1656,8 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1797,10 +1797,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
-                _request.UriBuilder.Uri = resourceUri;
-                if (visibilitytimeout != null) { _request.UriBuilder.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (messageTimeToLive != null) { _request.UriBuilder.AppendQuery("messagettl", System.Uri.EscapeDataString(messageTimeToLive.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                if (visibilitytimeout != null) { _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (messageTimeToLive != null) { _request.Uri.AppendQuery("messagettl", System.Uri.EscapeDataString(messageTimeToLive.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -1947,10 +1947,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("peekonly", "true");
-                if (numberOfMessages != null) { _request.UriBuilder.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("peekonly", "true");
+                if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -2116,10 +2116,10 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
-                _request.UriBuilder.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
+                _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -2276,9 +2276,9 @@ namespace Azure.Storage.Queues
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Assign(resourceUri);
+                _request.Uri.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2018-11-09");
@@ -2342,6 +2342,12 @@ namespace Azure.Storage.Queues.Models
         /// the permissions for the acl policy
         /// </summary>
         public string Permission { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use QueuesModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
 
         /// <summary>
         /// Serialize a AccessPolicy instance as XML.
@@ -2419,6 +2425,12 @@ namespace Azure.Storage.Queues.Models
         /// The maximum amount time that a browser should cache the preflight OPTIONS request.
         /// </summary>
         public int MaxAgeInSeconds { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of CorsRule instances.
+        /// You can use QueuesModelFactory.CorsRule instead.
+        /// </summary>
+        internal CorsRule() { }
 
         /// <summary>
         /// Serialize a CorsRule instance as XML.
@@ -2516,6 +2528,12 @@ namespace Azure.Storage.Queues.Models
         public string MessageText { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of DequeuedMessage instances.
+        /// You can use QueuesModelFactory.DequeuedMessage instead.
+        /// </summary>
+        internal DequeuedMessage() { }
+
+        /// <summary>
         /// Deserializes XML into a new DequeuedMessage instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -2604,6 +2622,12 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset TimeNextVisible { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of EnqueuedMessage instances.
+        /// You can use QueuesModelFactory.EnqueuedMessage instead.
+        /// </summary>
+        internal EnqueuedMessage() { }
+
+        /// <summary>
         /// Deserializes XML into a new EnqueuedMessage instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -2669,6 +2693,12 @@ namespace Azure.Storage.Queues.Models
         /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
         /// </summary>
         public System.DateTimeOffset LastSyncTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of GeoReplication instances.
+        /// You can use QueuesModelFactory.GeoReplication instead.
+        /// </summary>
+        internal GeoReplication() { }
 
         /// <summary>
         /// Deserializes XML into a new GeoReplication instance.
@@ -2784,25 +2814,25 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Convert an GeoReplicationStatus to a string.
         /// </summary>
-        /// <param name="o">The GeoReplicationStatus value.</param>
+        /// <param name="value">The GeoReplicationStatus value.</param>
         /// <returns>String representation of the GeoReplicationStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus o) => o._value;
+        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus value) => value._value;
 
         /// <summary>
         /// Check if two GeoReplicationStatus instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
 
         /// <summary>
         /// Check if two GeoReplicationStatus instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => !left.Equals(right);
     }
 }
 #endregion enum strings GeoReplicationStatus
@@ -3113,6 +3143,12 @@ namespace Azure.Storage.Queues.Models
         /// The content of the Message.
         /// </summary>
         public string MessageText { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PeekedMessage instances.
+        /// You can use QueuesModelFactory.PeekedMessage instead.
+        /// </summary>
+        internal PeekedMessage() { }
 
         /// <summary>
         /// Deserializes XML into a new PeekedMessage instance.
@@ -3477,25 +3513,25 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Convert an QueueErrorCode to a string.
         /// </summary>
-        /// <param name="o">The QueueErrorCode value.</param>
+        /// <param name="value">The QueueErrorCode value.</param>
         /// <returns>String representation of the QueueErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode o) => o._value;
+        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode value) => value._value;
 
         /// <summary>
         /// Check if two QueueErrorCode instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => left.Equals(right);
 
         /// <summary>
         /// Check if two QueueErrorCode instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => !left.Equals(right);
     }
 }
 #endregion enum strings QueueErrorCode
@@ -3599,6 +3635,12 @@ namespace Azure.Storage.Queues.Models
         /// The content of the message
         /// </summary>
         public string MessageText { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of QueueMessage instances.
+        /// You can use QueuesModelFactory.QueueMessage instead.
+        /// </summary>
+        internal QueueMessage() { }
 
         /// <summary>
         /// Serialize a QueueMessage instance as XML.
@@ -4005,6 +4047,12 @@ namespace Azure.Storage.Queues.Models
         public int? Days { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of RetentionPolicy instances.
+        /// You can use QueuesModelFactory.RetentionPolicy instead.
+        /// </summary>
+        internal RetentionPolicy() { }
+
+        /// <summary>
         /// Serialize a RetentionPolicy instance as XML.
         /// </summary>
         /// <param name="value">The RetentionPolicy instance to serialize.</param>
@@ -4149,6 +4197,12 @@ namespace Azure.Storage.Queues.Models
         public string Code { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of StorageError instances.
+        /// You can use QueuesModelFactory.StorageError instead.
+        /// </summary>
+        internal StorageError() { }
+
+        /// <summary>
         /// Deserializes XML into a new StorageError instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -4194,6 +4248,12 @@ namespace Azure.Storage.Queues.Models
         /// A UTC date/time value that represents when the message will be visible on the queue.
         /// </summary>
         public System.DateTimeOffset TimeNextVisible { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of UpdatedMessage instances.
+        /// You can use QueuesModelFactory.UpdatedMessage instead.
+        /// </summary>
+        internal UpdatedMessage() { }
     }
 
     /// <summary>

@@ -9,15 +9,22 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// Contains public properties of a certificate issuer
     /// </summary>
-    public class IssuerBase : IJsonDeserializable, IJsonSerializable
+    public class IssuerProperties : IJsonDeserializable, IJsonSerializable
     {
-        internal IssuerBase() { }
+        private const string IdPropertyName = "id";
+        private const string ProviderPropertyName = "provider";
+
+        private static readonly JsonEncodedText s_providerPropertyNameBytes = JsonEncodedText.Encode(ProviderPropertyName);
+
+        internal IssuerProperties()
+        {
+        }
 
         /// <summary>
         /// Creates a new Issuer with the specified name
         /// </summary>
         /// <param name="name">The name of the issuer</param>
-        protected IssuerBase(string name)
+        internal IssuerProperties(string name)
         {
             Name = name;
         }
@@ -37,9 +44,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public string Provider { get; set; }
 
-        private const string IdPropertyName = "id";
-        private const string ProviderPropertyName = "provider";
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -48,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual void ReadProperty(JsonProperty prop)
+        internal void ReadProperty(JsonProperty prop)
         {
             switch (prop.Name)
             {
@@ -56,20 +60,16 @@ namespace Azure.Security.KeyVault.Certificates
                     var id = prop.Value.GetString();
                     Id = new Uri(id);
                     break;
+
                 case ProviderPropertyName:
                     Provider = prop.Value.GetString();
                     break;
             }
         }
 
-        private static readonly JsonEncodedText s_providerPropertyNameBytes = JsonEncodedText.Encode(ProviderPropertyName);
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
-        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
-        {
-            WritePropertiesCore(json);
-        }
-
-        internal virtual void WritePropertiesCore(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (!string.IsNullOrEmpty(Provider))
             {

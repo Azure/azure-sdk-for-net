@@ -160,7 +160,7 @@ namespace Azure.Data.AppConfiguration
 
             request.Method = RequestMethod.Put;
 
-            BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.Uri, setting);
 
             request.Headers.Add(IfNoneMatch, "*");
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
@@ -270,7 +270,7 @@ namespace Azure.Data.AppConfiguration
             ReadOnlyMemory<byte> content = Serialize(setting);
 
             request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.Uri, setting);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
 
@@ -362,7 +362,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
 
             if (etag != default)
             {
@@ -483,7 +483,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
 
             if (acceptDateTime != default)
@@ -566,7 +566,7 @@ namespace Azure.Data.AppConfiguration
         {
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
+            BuildUriForGetBatch(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
@@ -647,7 +647,7 @@ namespace Azure.Data.AppConfiguration
         {
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForRevisions(request.UriBuilder, selector, pageLink);
+            BuildUriForRevisions(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
@@ -745,9 +745,183 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Head;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
+            return request;
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read only.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateSetReadOnlyRequest(key, label, etag);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read only.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateSetReadOnlyRequest(key, label, etag);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateSetReadOnlyRequest(string key, string label, ETag etag)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Put;
+            BuildUriForLocksRoute(request.Uri, key, label);
+
+            if (etag != default)
+            {
+                request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+            }
+
+            return request;
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> ClearReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateClearReadOnlyRequest(key, label, etag);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> ClearReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateClearReadOnlyRequest(key, label, etag);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateClearReadOnlyRequest(string key, string label, ETag etag)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Delete;
+            BuildUriForLocksRoute(request.Uri, key, label);
+
+            if (etag != default)
+            {
+                request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+            }
+
             return request;
         }
     }

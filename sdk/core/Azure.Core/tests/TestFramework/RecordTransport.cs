@@ -70,7 +70,7 @@ namespace Azure.Core.Testing
         {
             var entry = new RecordEntry
             {
-                RequestUri = request.UriBuilder.ToString(),
+                RequestUri = request.Uri.ToString(),
                 RequestMethod = request.Method,
                 RequestHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
                 ResponseHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),

@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task WrapUnwrapRoundTrip([Fields(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -131,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -195,7 +195,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
 
@@ -229,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
 
@@ -272,7 +272,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient client = GetCryptoClient(key.Id);
 
@@ -306,9 +306,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
-            CryptographyClient client = GetCryptoClient(key.Id);
+            CryptographyClient client = GetCryptoClient(key.Properties.Id);
 
             byte[] data = new byte[32];
             Recording.Random.NextBytes(data);

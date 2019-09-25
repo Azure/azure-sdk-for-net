@@ -54,7 +54,30 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageFileInfo instance for mocking.
         /// </summary>
-        public static StorageFileInfo StorageFileInfo(RawStorageFileInfo rawStorageFileInfo)
-            => new StorageFileInfo(rawStorageFileInfo);
+        public static StorageFileInfo StorageFileInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            bool isServerEncrypted,
+            string filePermissionKey,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId
+            )
+            => new StorageFileInfo(new RawStorageFileInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                FilePermissionKey = filePermissionKey,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId
+            });
     }
 }

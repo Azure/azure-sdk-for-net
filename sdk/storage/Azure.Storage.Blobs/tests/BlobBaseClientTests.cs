@@ -1229,6 +1229,10 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                var accountName = new BlobUriBuilder(container.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => blob.AccountName);
+                TestHelper.AssertCacheableProperty(containerName, () => blob.ContainerName);
+                TestHelper.AssertCacheableProperty(blobName, () => blob.Name);
             }
         }
 

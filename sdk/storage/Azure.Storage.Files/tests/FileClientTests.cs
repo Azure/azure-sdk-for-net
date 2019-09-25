@@ -52,18 +52,63 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        public void FilePathsParsing()
+        {
+            // nested directories
+            Uri uri1 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/dir2/file.txt");
+            var builder1 = new FileUriBuilder(uri1);
+            var fileClient1 = new FileClient(uri1);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient1.Name);
+            Assert.AreEqual("file.txt", builder1.LastDirectoryOrFileName);
+
+            // one directory
+            Uri uri2 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/file.txt");
+            var builder2 = new FileUriBuilder(uri2);
+            var fileClient2 = new FileClient(uri2);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient2.Name);
+            Assert.AreEqual("file.txt", builder2.LastDirectoryOrFileName);
+
+            // trailing slash
+            Uri uri3 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/file.txt/");
+            var builder3 = new FileUriBuilder(uri3);
+            var fileClient3 = new FileClient(uri3);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient3.Name);
+            Assert.AreEqual("file.txt", builder3.LastDirectoryOrFileName);
+
+            // no directories 
+            Uri uri4 = new Uri("http://dummyaccount.file.core.windows.net/share/file.txt");
+            var builder4 = new FileUriBuilder(uri4);
+            var fileClient4 = new FileClient(uri4);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Name);
+            Assert.AreEqual("file.txt", builder4.LastDirectoryOrFileName);
+
+            // no directories or files
+            Uri uri5 = new Uri("http://dummyaccount.file.core.windows.net/share");
+            var builder5 = new FileUriBuilder(uri5);
+            var fileClient5 = new FileClient(uri5);
+            TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Name);
+            Assert.AreEqual(string.Empty, builder5.LastDirectoryOrFileName);
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+                var name = GetNewFileName();
+                FileClient file = InstrumentClient(directory.GetFileClient(name));
 
                 // Act
                 Response<StorageFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
 
                 // Assert
                 AssertValidStorageFileInfo(response);
+                var accountName = new FileUriBuilder(file.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => file.AccountName);
+                var shareName = new FileUriBuilder(file.Uri).ShareName;
+                TestHelper.AssertCacheableProperty(shareName, () => file.ShareName);
+                TestHelper.AssertCacheableProperty(name, () => file.Name);
             }
         }
 
