@@ -61,7 +61,32 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageDirectoryProperties instance for mocking.
         /// </summary>
-        public static StorageDirectoryProperties StorageDirectoryProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
-            => new StorageDirectoryProperties(rawStorageDirectoryProperties);
+        public static StorageDirectoryProperties StorageDirectoryProperties(
+                IDictionary<string, string> metadata,
+                ETag eTag,
+                DateTimeOffset lastModified,
+                bool isServerEncrypted,
+                string fileAttributes,
+                DateTimeOffset fileCreationTime,
+                DateTimeOffset fileLastWriteTime,
+                DateTimeOffset fileChangeTime,
+                string filePermissionKey,
+                string fileId,
+                string fileParentId
+            )
+            => new StorageDirectoryProperties(new RawStorageDirectoryProperties()
+            {
+                Metadata = metadata,
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FilePermissionKey = filePermissionKey,
+                FileId = fileId,
+                FileParentId = fileParentId
+            });
     }
 }

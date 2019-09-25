@@ -130,7 +130,59 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageFileProperties instance for mocking.
         /// </summary>
-        public static StorageFileProperties StorageFileProperties(RawStorageFileProperties rawStorageFileProperties)
-            => new StorageFileProperties(rawStorageFileProperties);
+        public static StorageFileProperties StorageFileProperties(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            Header fileType,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            IEnumerable<string> contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            IEnumerable<string> contentLanguage,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            string copySource,
+            CopyStatus copyStatus,
+            bool isServerEncrypted,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string filePermissionKey,
+            string fileId,
+            string fileParentId
+            ) => new StorageFileProperties(new RawStorageFileProperties()
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                FileType = fileType,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletionTime = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsServerEncrypted = isServerEncrypted,
+                FileAttributes = fileAttributes,
+                FilePermissionKey = filePermissionKey,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId
+            });
     }
 }

@@ -47,7 +47,28 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageDirectoryInfo instance for mocking.
         /// </summary>
-        public static StorageDirectoryInfo StorageDirectoryInfo(RawStorageDirectoryInfo rawStorageDirectoryInfo)
-            => new StorageDirectoryInfo(rawStorageDirectoryInfo);
+        public static StorageDirectoryInfo StorageDirectoryInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            string filePermissionKey,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId
+            )
+            => new StorageDirectoryInfo(new RawStorageDirectoryInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                FilePermissionKey = filePermissionKey,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId
+            });
     }
 }
