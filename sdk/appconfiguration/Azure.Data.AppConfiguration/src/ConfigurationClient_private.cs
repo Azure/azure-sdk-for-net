@@ -19,6 +19,7 @@ namespace Azure.Data.AppConfiguration
         private const string AcceptDatetimeHeader = "Accept-Datetime";
         private const string KvRoute = "/kv/";
         private const string RevisionsRoute = "/revisions/";
+        private const string LocksRoute = "/locks/";
         private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
         private const string FieldsQueryFilter = "$select";
@@ -92,6 +93,18 @@ namespace Azure.Data.AppConfiguration
         {
             builder.Assign(_baseUri);
             builder.AppendPath(KvRoute);
+            builder.AppendPath(key);
+
+            if (label != null)
+            {
+                builder.AppendQuery(LabelQueryFilter, label);
+            }
+        }
+
+        private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
+        {
+            builder.Assign(_baseUri);
+            builder.AppendPath(LocksRoute);
             builder.AppendPath(key);
 
             if (label != null)

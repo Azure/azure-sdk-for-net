@@ -798,5 +798,80 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteAsync(setting0.Key, setting0.Label);
             }
         }
+
+        [Test]
+        public async Task SetReadOnlyOnSetting()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var locked = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsTrue(locked.Value.Locked);
+            }
+            finally
+            {
+                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.SetReadOnlyAsync(testSetting.Key);
+                });
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task ClearReadOnlyFromSetting()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var unlocked = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsFalse(unlocked.Value.Locked);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task ClearReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.SetReadOnlyAsync(testSetting.Key);
+                });
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
     }
 }

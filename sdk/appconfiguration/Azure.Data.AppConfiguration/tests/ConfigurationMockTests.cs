@@ -432,6 +432,152 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.IsTrue(hasChanged);
         }
 
+        [Test]
+        public async Task SetReadOnly()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = true
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public async Task SetReadOnlyWithLabel()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = true
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public void SetReadOnlyNotFound()
+        {
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.SetReadOnlyAsync(s_testSetting.Key);
+            });
+
+            Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        public async Task ClearReadOnly()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = false
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.ClearReadOnlyAsync(testSetting.Key);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public async Task ClearReadOnlyWithLabel()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = false
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public void ClearReadOnlyNotFound()
+        {
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.ClearReadOnlyAsync(s_testSetting.Key);
+            });
+
+            Assert.AreEqual(404, exception.Status);
+        }
+
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())
