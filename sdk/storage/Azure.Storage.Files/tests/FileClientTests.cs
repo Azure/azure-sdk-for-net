@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Tests.Shared;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
