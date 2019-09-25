@@ -17,6 +17,39 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
+        private const string KeyIdPropertyName = "kid";
+        private const string KeyTypePropertyName = "kty";
+        private const string KeyOpsPropertyName = "key_ops";
+        private const string CurveNamePropertyName = "crv";
+        private const string NPropertyName = "n";
+        private const string EPropertyName = "e";
+        private const string DPPropertyName = "dp";
+        private const string DQPropertyName = "dq";
+        private const string QIPropertyName = "qi";
+        private const string PPropertyName = "p";
+        private const string QPropertyName = "q";
+        private const string XPropertyName = "x";
+        private const string YPropertyName = "y";
+        private const string DPropertyName = "d";
+        private const string KPropertyName = "k";
+        private const string TPropertyName = "key_hsm";
+
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
+        private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private static readonly JsonEncodedText s_nPropertyNameBytes = JsonEncodedText.Encode(NPropertyName);
+        private static readonly JsonEncodedText s_ePropertyNameBytes = JsonEncodedText.Encode(EPropertyName);
+        private static readonly JsonEncodedText s_dPPropertyNameBytes = JsonEncodedText.Encode(DPPropertyName);
+        private static readonly JsonEncodedText s_dQPropertyNameBytes = JsonEncodedText.Encode(DQPropertyName);
+        private static readonly JsonEncodedText s_qIPropertyNameBytes = JsonEncodedText.Encode(QIPropertyName);
+        private static readonly JsonEncodedText s_pPropertyNameBytes = JsonEncodedText.Encode(PPropertyName);
+        private static readonly JsonEncodedText s_qPropertyNameBytes = JsonEncodedText.Encode(QPropertyName);
+        private static readonly JsonEncodedText s_xPropertyNameBytes = JsonEncodedText.Encode(XPropertyName);
+        private static readonly JsonEncodedText s_yPropertyNameBytes = JsonEncodedText.Encode(YPropertyName);
+        private static readonly JsonEncodedText s_dPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
+        private static readonly JsonEncodedText s_kPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
+        private static readonly JsonEncodedText s_tPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
+
         private static readonly KeyOperation[] s_aesKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
         private static readonly KeyOperation[] s_rSAPublicKeyOperation = { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey };
         private static readonly KeyOperation[] s_rSAPrivateKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.Sign, KeyOperation.Verify, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
@@ -290,38 +323,6 @@ namespace Azure.Security.KeyVault.Keys
 
             return rsa;
         }
-
-        private const string KeyIdPropertyName = "kid";
-        private const string KeyTypePropertyName = "kty";
-        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
-        private const string KeyOpsPropertyName = "key_ops";
-        private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "crv";
-        private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
-        private const string NPropertyName = "n";
-        private static readonly JsonEncodedText s_nPropertyNameBytes = JsonEncodedText.Encode(NPropertyName);
-        private const string EPropertyName = "e";
-        private static readonly JsonEncodedText s_ePropertyNameBytes = JsonEncodedText.Encode(EPropertyName);
-        private const string DPPropertyName = "dp";
-        private static readonly JsonEncodedText s_dPPropertyNameBytes = JsonEncodedText.Encode(DPPropertyName);
-        private const string DQPropertyName = "dq";
-        private static readonly JsonEncodedText s_dQPropertyNameBytes = JsonEncodedText.Encode(DQPropertyName);
-        private const string QIPropertyName = "qi";
-        private static readonly JsonEncodedText s_qIPropertyNameBytes = JsonEncodedText.Encode(QIPropertyName);
-        private const string PPropertyName = "p";
-        private static readonly JsonEncodedText s_pPropertyNameBytes = JsonEncodedText.Encode(PPropertyName);
-        private const string QPropertyName = "q";
-        private static readonly JsonEncodedText s_qPropertyNameBytes = JsonEncodedText.Encode(QPropertyName);
-        private const string XPropertyName = "x";
-        private static readonly JsonEncodedText s_xPropertyNameBytes = JsonEncodedText.Encode(XPropertyName);
-        private const string YPropertyName = "y";
-        private static readonly JsonEncodedText s_yPropertyNameBytes = JsonEncodedText.Encode(YPropertyName);
-        private const string DPropertyName = "d";
-        private static readonly JsonEncodedText s_dPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
-        private const string KPropertyName = "k";
-        private static readonly JsonEncodedText s_kPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
-        private const string TPropertyName = "key_hsm";
-        private static readonly JsonEncodedText s_tPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
 
         internal bool SupportsOperation(KeyOperation operation)
         {

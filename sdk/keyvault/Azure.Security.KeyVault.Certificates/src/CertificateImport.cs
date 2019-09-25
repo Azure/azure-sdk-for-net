@@ -13,6 +13,13 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificateImport : IJsonSerializable
     {
+        private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode("value");
+        private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode("policy");
+        private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode("pwd");
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode("attributes");
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode("tags");
+
         /// <summary>
         /// Creates a certificate import used to import a certificate into Azure Key Vault
         /// </summary>
@@ -59,13 +66,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// Tags to be applied to the imported certifiate
         /// </summary>
         public IDictionary<string, string> Tags { get; set; }
-
-        private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode("value");
-        private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode("policy");
-        private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode("pwd");
-        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode("attributes");
-        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
-        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode("tags");
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {

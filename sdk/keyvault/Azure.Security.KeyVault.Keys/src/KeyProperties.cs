@@ -10,17 +10,24 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// KeyBase is the resource containing all the properties of the key except <see cref="JsonWebKey"/> properties.
+    /// <see cref="KeyProperties"/> is the resource containing all the properties of the <see cref="Key"/> except <see cref="JsonWebKey"/> properties.
     /// </summary>
-    public class KeyBase : IJsonDeserializable, IJsonSerializable
+    public class KeyProperties : IJsonDeserializable
     {
-        internal KeyBase() { }
+        private const string KeyIdPropertyName = "kid";
+        private const string ManagedPropertyName = "managed";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
+
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+
+        internal KeyProperties() { }
 
         /// <summary>
         /// Initializes a new instance of the KeyBase class.
         /// </summary>
         /// <param name="name">The name of the key.</param>
-        public KeyBase(string name)
+        public KeyProperties(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -96,16 +103,11 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        private const string KeyIdPropertyName = "kid";
-        private const string ManagedPropertyName = "managed";
-        private const string AttributesPropertyName = "attributes";
-        private const string TagsPropertyName = "tags";
-
         /// <summary>
         /// Parses the key identifier into the vaultUri, name, and version of the key.
         /// </summary>
         /// <param name="id">The key vault object identifier.</param>
-        protected void ParseId(string id)
+        internal void ParseId(string id)
         {
             var idToParse = new Uri(id, UriKind.Absolute);
 
@@ -122,36 +124,49 @@ namespace Azure.Security.KeyVault.Keys
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
 
-        internal virtual void WriteProperties(Utf8JsonWriter json) { }
+        internal void ReadProperty(JsonProperty prop)
+        {
+            switch (prop.Name)
+            {
+                case KeyIdPropertyName:
+                    ParseId(prop.Value.GetString());
+                    break;
+                case ManagedPropertyName:
+                    Managed = prop.Value.GetBoolean();
+                    break;
+                case AttributesPropertyName:
+                    _attributes.ReadProperties(prop.Value);
+                    break;
+                case TagsPropertyName:
+                    Tags = new Dictionary<string, string>();
+                    foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
+                    {
+                        Tags[tagProp.Name] = tagProp.Value.GetString();
+                    }
+                    break;
+            }
+        }
 
-        internal virtual void ReadProperties(JsonElement json)
+        internal void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
-                switch (prop.Name)
-                {
-                    case KeyIdPropertyName:
-                        ParseId(prop.Value.GetString());
-                        break;
-                    case ManagedPropertyName:
-                        Managed = prop.Value.GetBoolean();
-                        break;
-                    case AttributesPropertyName:
-                        _attributes.ReadProperties(prop.Value);
-                        break;
-                    case TagsPropertyName:
-                        Tags = new Dictionary<string, string>();
-                        foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
-                        {
-                            Tags[tagProp.Name] = tagProp.Value.GetString();
-                        }
-                        break;
-                }
+                ReadProperty(prop);
+            }
+        }
+
+        internal void WriteAttributes(Utf8JsonWriter json)
+        {
+            if (_attributes.ShouldSerialize)
+            {
+                json.WriteStartObject(s_attributesPropertyNameBytes);
+
+                _attributes.WriteProperties(json);
+
+                json.WriteEndObject();
             }
         }
 
         void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
-
-        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }
