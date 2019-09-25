@@ -854,8 +854,10 @@ namespace Azure.Storage.Blobs
 
             // Upload the entire stream
             Task<Response<BlobContentInfo>> UploadStreamAsync()
-                =>
-                client.UploadInternal(
+            {
+                (content, metadata) = TransformContent(content, metadata);
+
+                return client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
@@ -865,6 +867,7 @@ namespace Azure.Storage.Blobs
                     progressHandler,
                     async,
                     cancellationToken);
+            }
 
             string GetNewBase64BlockId(long blockOrdinal)
             {
@@ -1036,9 +1039,12 @@ namespace Azure.Storage.Blobs
             {
                 using (var stream = file.OpenRead())
                 {
+                    Stream transformedStream; // cannot reassign to a "using" variable
+                    (transformedStream, metadata) = TransformContent(stream, metadata);
+
                     return
                         await client.UploadInternal(
-                            stream,
+                            transformedStream,
                             blobHttpHeaders,
                             metadata,
                             blobAccessConditions,
@@ -1098,5 +1104,16 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Upload
+
+        /// <summary>
+        /// Performs a transform on the data for uploads. It is a no-op by default.
+        /// </summary>
+        /// <param name="content">Content to transform.</param>
+        /// <param name="metadata">Content metadata to transform.</param>
+        /// <returns>Transformed content stream and metadata.</returns>
+        internal protected virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        {
+            return (content, metadata); // no-op
+        }
     }
 }
