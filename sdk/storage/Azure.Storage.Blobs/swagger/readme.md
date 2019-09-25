@@ -147,6 +147,16 @@ directive:
     }
 ```
 
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
+```
+
 ### /?restype=service&comp=stats
 ``` yaml
 directive:
@@ -928,7 +938,7 @@ directive:
 ```
 
 ### ContainerProperties
-``` yaml
+``` yaml 
 directive:
 - from: swagger-document
   where: $.definitions.ContainerProperties

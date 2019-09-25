@@ -391,13 +391,19 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         unsupported(() => def[`x-ms-client-flatten`], `${location}.properties['${name}']`);
         unsupported(() => def[`x-ms-mutability`], `${location}.properties['${name}']`);
 
+        let isNullable: boolean|undefined = def[`x-az-nullable-array`];
+        if (isNullable === undefined) {
+            isNullable = false;
+        }
+
         properties[name] = {
             name,
             clientName: optional(() => def[`x-ms-client-name`], name),
             description: def.description,
             readonly: true,
             xml: def.xml || { },
-            model: createType(project, name, def, `${location}.properties['${name}']`)
+            model: createType(project, name, def, `${location}.properties['${name}']`),
+            isNullable: isNullable
         };
     }
 
@@ -972,6 +978,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
                 clientName: response.bodyClientName,
                 required: true,
                 readonly: true,
+                
                 xml: { },
                 model: response.body
             };
