@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity source for Sybase databases.
+    /// Copy activity sources of tabular type.
     /// </summary>
-    public partial class SybaseSource : TabularSource
+    public partial class TabularSource : CopySource
     {
         /// <summary>
-        /// Initializes a new instance of the SybaseSource class.
+        /// Initializes a new instance of the TabularSource class.
         /// </summary>
-        public SybaseSource()
+        public TabularSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SybaseSource class.
+        /// Initializes a new instance of the TabularSource class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -44,12 +44,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        /// <param name="query">Database query. Type: string (or Expression
-        /// with resultType string).</param>
-        public SybaseSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public TabularSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
-            Query = query;
+            QueryTimeout = queryTimeout;
             CustomInit();
         }
 
@@ -59,11 +57,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets database query. Type: string (or Expression with
-        /// resultType string).
+        /// Gets or sets query timeout. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// </summary>
-        [JsonProperty(PropertyName = "query")]
-        public object Query { get; set; }
+        [JsonProperty(PropertyName = "queryTimeout")]
+        public object QueryTimeout { get; set; }
 
     }
 }

@@ -53,12 +53,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// application. This property's main purpose is to avoid hit the
         /// limitation of response size. Type: integer (or Expression with
         /// resultType integer).</param>
-        public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object))
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object), object queryTimeout = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Filter = filter;
             CursorMethods = cursorMethods;
             BatchSize = batchSize;
+            QueryTimeout = queryTimeout;
             CustomInit();
         }
 
@@ -92,6 +96,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "batchSize")]
         public object BatchSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets query timeout. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "queryTimeout")]
+        public object QueryTimeout { get; set; }
 
     }
 }
