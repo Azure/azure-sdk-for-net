@@ -70,17 +70,6 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(accountName, builder.AccountName);
         }
-
-        [Test]
-        public void BlobDownloadInfo_Dispose()
-        {
-            MockStream stream = new MockStream();
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Assert.IsFalse(stream.IsDisposed);
-            blobDownloadInfo.Dispose();
-            Assert.IsTrue(stream.IsDisposed);
-        }
-
         #region Sequential Download
 
         [Test]

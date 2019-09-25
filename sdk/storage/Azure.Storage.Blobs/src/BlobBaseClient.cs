@@ -2922,7 +2922,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Disposes the BlobDownloadInfo by calling Dispose on the underlying Content stream.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             Content?.Dispose();
             GC.SuppressFinalize(this);
