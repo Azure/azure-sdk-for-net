@@ -53,7 +53,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Disposes the StorageFileDownloadInfo by calling Dispose on the underlying Content stream.
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
             Content?.Dispose();
             GC.SuppressFinalize(this);
