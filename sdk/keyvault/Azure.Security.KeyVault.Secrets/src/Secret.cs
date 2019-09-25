@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// Secret is the resource consisting of name, value and its <see cref="Properties"/>.
+    /// <see cref="Secret"/> is the resource consisting of a value and its <see cref="Properties"/>.
     /// </summary>
     public class Secret : IJsonDeserializable, IJsonSerializable
     {

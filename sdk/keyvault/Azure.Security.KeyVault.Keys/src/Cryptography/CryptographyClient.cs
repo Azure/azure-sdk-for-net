@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyBase.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential)
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyBase.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
         /// <param name="options">Options to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>

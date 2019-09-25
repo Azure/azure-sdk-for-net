@@ -10,17 +10,51 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// A certificate issuer used to sign certificates managed by Azure Key Vault
     /// </summary>
-    public class Issuer : IssuerBase
+    public class Issuer : IJsonDeserializable, IJsonSerializable
     {
-        internal Issuer() { }
+        private const string CredentialsPropertyName = "credentials";
+        private const string OrgDetailsPropertyName = "org_details";
+        private const string AttributesPropertyName = "attributes";
+        private const string AccountIdPropertyName = "account_id";
+        private const string PasswordPropertyName = "pwd";
+        private const string OrganizationIdPropertyName = "id";
+        private const string AdminDetailsPropertyName = "admin_details";
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+        private const string EnabledPropertyName = "enabled";
+
+        private static readonly JsonEncodedText s_credentialsPropertyNameBytes = JsonEncodedText.Encode(CredentialsPropertyName);
+        private static readonly JsonEncodedText s_orgDetailsPropertyNameBytes = JsonEncodedText.Encode(OrgDetailsPropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_accountIdPropertyNameBytes = JsonEncodedText.Encode(AccountIdPropertyName);
+        private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode(PasswordPropertyName);
+        private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
+        private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
+
+        internal Issuer()
+        {
+            Properties = new IssuerProperties();
+        }
 
         /// <summary>
         /// Creates an issuer with the specified name
         /// </summary>
         /// <param name="name">The name of the issuer</param>
-        public Issuer(string name) : base(name)
+        public Issuer(string name)
         {
+            Properties = new IssuerProperties(name);
         }
+
+        /// <summary>
+        /// The unique identifier of the certificate issuer
+        /// </summary>
+        public Uri Id => Properties.Id;
+
+        /// <summary>
+        /// The name of the certificate issuer
+        /// </summary>
+        public string Name => Properties.Name;
 
         /// <summary>
         /// Well known issuer name for self signed certificates
@@ -67,31 +101,32 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public bool? Enabled { get; set; }
 
-        private const string CredentialsPropertyName = "credentials";
-        private const string OrgDetailsPropertyName = "org_details";
-        private const string AttributesPropertyName = "attributes";
+        /// <summary>
+        /// Gets or sets the attributes of the <see cref="Issuer"/>.
+        /// </summary>
+        public IssuerProperties Properties { get; }
 
-        internal override void ReadProperty(JsonProperty prop)
+        internal virtual void ReadProperty(JsonProperty prop)
         {
             switch (prop.Name)
             {
                 case CredentialsPropertyName:
                     ReadCredentialsProperties(prop.Value);
                     break;
+
                 case OrgDetailsPropertyName:
                     ReadOrgDetailsProperties(prop.Value);
                     break;
+
                 case AttributesPropertyName:
                     ReadAttributeProperties(prop.Value);
                     break;
+
                 default:
-                    base.ReadProperty(prop);
+                    Properties.ReadProperty(prop);
                     break;
             }
         }
-
-        private const string AccountIdPropertyName = "account_id";
-        private const string PasswordPropertyName = "pwd";
 
         private void ReadCredentialsProperties(JsonElement json)
         {
@@ -102,15 +137,13 @@ namespace Azure.Security.KeyVault.Certificates
                     case AccountIdPropertyName:
                         AccountId = prop.Value.GetString();
                         break;
+
                     case PasswordPropertyName:
                         Password = prop.Value.GetString();
                         break;
                 }
             }
         }
-
-        private const string OrganizationIdPropertyName = "id";
-        private const string AdminDetailsPropertyName = "admin_details";
 
         private void ReadOrgDetailsProperties(JsonElement json)
         {
@@ -121,6 +154,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case OrganizationIdPropertyName:
                         OrganizationId = prop.Value.GetString();
                         break;
+
                     case AdminDetailsPropertyName:
                         Administrators = new List<AdministratorDetails>();
                         foreach (JsonElement elem in prop.Value.EnumerateArray())
@@ -135,10 +169,6 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private const string CreatedPropertyName = "created";
-        private const string UpdatedPropertyName = "updated";
-        private const string EnabledPropertyName = "enabled";
-
         private void ReadAttributeProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -148,9 +178,11 @@ namespace Azure.Security.KeyVault.Certificates
                     case EnabledPropertyName:
                         Enabled = prop.Value.GetBoolean();
                         break;
+
                     case CreatedPropertyName:
                         Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
+
                     case UpdatedPropertyName:
                         Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
@@ -158,14 +190,9 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText s_credentialsPropertyNameBytes = JsonEncodedText.Encode(CredentialsPropertyName);
-        private static readonly JsonEncodedText s_orgDetailsPropertyNameBytes = JsonEncodedText.Encode(OrgDetailsPropertyName);
-        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
-        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
-
-        internal override void WritePropertiesCore(Utf8JsonWriter json)
+        internal virtual void WriteProperties(Utf8JsonWriter json)
         {
-            base.WritePropertiesCore(json);
+            Properties.WriteProperties(json);
 
             if (!string.IsNullOrEmpty(AccountId) || !string.IsNullOrEmpty(Password))
             {
@@ -195,9 +222,6 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText s_accountIdPropertyNameBytes = JsonEncodedText.Encode(AccountIdPropertyName);
-        private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode(PasswordPropertyName);
-
         private void WriteCredentialsProperties(Utf8JsonWriter json)
         {
             if (!string.IsNullOrEmpty(AccountId))
@@ -210,9 +234,6 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_passwordPropertyNameBytes, Password);
             }
         }
-
-        private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
-        private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
         private void WriteOrgDetailsProperties(Utf8JsonWriter json)
         {
@@ -237,6 +258,16 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndArray();
             }
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json)
+        {
+            foreach (JsonProperty prop in json.EnumerateObject())
+            {
+                ReadProperty(prop);
+            }
+        }
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 
 }

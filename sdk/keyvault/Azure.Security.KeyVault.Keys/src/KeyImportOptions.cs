@@ -9,8 +9,16 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// The key import parameters.
     /// </summary>
-    public class KeyImportOptions : Key
+    public class KeyImportOptions : Key, IJsonSerializable
     {
+        private const string KeyPropertyName = "key";
+        private const string TagsPropertyName = "tags";
+        private const string HsmPropertyName = "hsm";
+
+        private static readonly JsonEncodedText s_keyPropertyNameBytes = JsonEncodedText.Encode(KeyPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private static readonly JsonEncodedText s_hsmPropertyNameBytes = JsonEncodedText.Encode(HsmPropertyName);
+
         /// <summary>
         /// Whether it is a hardware key (HSM) or software key.
         /// </summary>
@@ -27,57 +35,25 @@ namespace Azure.Security.KeyVault.Keys
             KeyMaterial = keyMaterial;
         }
 
-        private const string AttributesPropertyName = "attributes";
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
-        private const string EnabledPropertyName = "enabled";
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
-        private const string NotBeforePropertyName = "nbf";
-        private static readonly JsonEncodedText NotBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
-        private const string ExpiresPropertyName = "exp";
-        private static readonly JsonEncodedText ExpiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
-        private const string KeyPropertyName = "key";
-        private static readonly JsonEncodedText KeyPropertyNameBytes = JsonEncodedText.Encode(KeyPropertyName);
-        private const string TagsPropertyName = "tags";
-        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
-        private const string HsmPropertyName = "hsm";
-        private static readonly JsonEncodedText HsmPropertyNameBytes = JsonEncodedText.Encode(HsmPropertyName);
-
-        internal override void WriteProperties(Utf8JsonWriter json)
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (KeyMaterial != null)
             {
-                json.WriteStartObject(KeyPropertyNameBytes);
+                json.WriteStartObject(s_keyPropertyNameBytes);
+
                 KeyMaterial.WriteProperties(json);
-                json.WriteEndObject();
-            }
-
-            if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
-            {
-                json.WriteStartObject(AttributesPropertyNameBytes);
-
-                if (Enabled.HasValue)
-                {
-                    json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
-                }
-
-                if (NotBefore.HasValue)
-                {
-                    json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
-                }
-
-                if (Expires.HasValue)
-                {
-                    json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeSeconds());
-                }
 
                 json.WriteEndObject();
             }
 
-            if (Tags != null && Tags.Count > 0)
-            {
-                json.WriteStartObject(TagsPropertyNameBytes);
+            Properties.WriteAttributes(json);
 
-                foreach (KeyValuePair<string, string> kvp in Tags)
+            IDictionary<string, string> tags = Properties.Tags;
+            if (tags != null && tags.Count > 0)
+            {
+                json.WriteStartObject(s_tagsPropertyNameBytes);
+
+                foreach (KeyValuePair<string, string> kvp in tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }
@@ -87,7 +63,7 @@ namespace Azure.Security.KeyVault.Keys
 
             if (Hsm.HasValue)
             {
-                json.WriteBoolean(HsmPropertyNameBytes, Hsm.Value);
+                json.WriteBoolean(s_hsmPropertyNameBytes, Hsm.Value);
             }
         }
     }
