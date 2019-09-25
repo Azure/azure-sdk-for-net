@@ -457,7 +457,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToUri());
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
             Assert.AreEqual(testSetting, setting);
         }
 
@@ -486,7 +486,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToUri());
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.AreEqual(testSetting, setting);
         }
 
@@ -530,7 +530,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToUri());
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
             Assert.AreEqual(testSetting, setting);
         }
 
@@ -559,7 +559,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToUri());
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.AreEqual(testSetting, setting);
         }
 
