@@ -105,7 +105,7 @@ namespace Azure.Core.Testing
 
         public override string ClientRequestId { get; set; }
 
-        public override string ToString() => $"{Method} {UriBuilder}";
+        public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()
         {

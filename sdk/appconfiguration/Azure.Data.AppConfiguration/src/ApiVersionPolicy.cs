@@ -18,7 +18,7 @@ namespace Azure.Data.AppConfiguration
 
         public override void OnSendingRequest(HttpPipelineMessage message)
         {
-            message.Request.UriBuilder.AppendQuery("api-version", _versionString);
+            message.Request.Uri.AppendQuery("api-version", _versionString);
         }
     }
 }

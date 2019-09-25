@@ -81,7 +81,7 @@ namespace Azure.Core.Tests
             {
                 Method = RequestMethod.Head
             };
-            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+            mockRequest.Uri.Assign(new Uri("http://localhost"));
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
 
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
             {
                 Method = RequestMethod.Put
             };
-            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+            mockRequest.Uri.Assign(new Uri("http://localhost"));
 
             RecordEntry[] entries = new[]
             {
@@ -149,7 +149,7 @@ namespace Azure.Core.Tests
             {
                 Method = RequestMethod.Head
             };
-            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+            mockRequest.Uri.Assign(new Uri("http://localhost"));
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
 
