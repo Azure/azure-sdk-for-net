@@ -72,6 +72,8 @@ namespace Azure.Storage.Queues.Test
                 IList<Response<QueueItem>> queues = await service.GetQueuesAsync().ToListAsync();
                 Assert.IsTrue(queues.Count >= 1);
             }
+            var accountName = new QueueUriBuilder(service.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
 
         [Test]

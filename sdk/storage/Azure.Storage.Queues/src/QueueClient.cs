@@ -62,6 +62,40 @@ namespace Azure.Storage.Queues
         /// </summary>
         public const int MessageMaxBytes = Constants.Queue.QueueMessageMaxBytes;
 
+        /// <summary>
+        /// The Storage account name corresponding to the queue client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the queue client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the queue.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the queue.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueClient"/>
@@ -225,6 +259,19 @@ namespace Azure.Storage.Queues
             _pipeline = pipeline;
         }
         #endregion ctors
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new QueueUriBuilder(Uri);
+                _name = builder.QueueName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>

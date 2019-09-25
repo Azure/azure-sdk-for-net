@@ -41,6 +41,57 @@ namespace Azure.Storage.Files
         /// </summary>
         protected virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The Storage account name corresponding to the directory client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the directory client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The share name corresponding to the directory client.
+        /// </summary>
+        private string _shareName;
+
+        /// <summary>
+        /// Gets the share name corresponding to the directory client.
+        /// </summary>
+        public virtual string ShareName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _shareName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the directory.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the directory.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectoryClient"/>
@@ -209,6 +260,20 @@ namespace Azure.Storage.Files
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetSubdirectoryClient(string subdirectoryName)
             => new DirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _shareName == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.LastDirectoryOrFileName;
+                _shareName = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>

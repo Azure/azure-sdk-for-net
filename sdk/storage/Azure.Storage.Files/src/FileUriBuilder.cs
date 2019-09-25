@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core.Http;
@@ -118,6 +119,13 @@ namespace Azure.Storage.Files
             set { ResetUri(); _sas = value; }
         }
         private SasQueryParameters _sas;
+
+        /// <summary>
+        /// Get the last directory or file name from the <see cref="DirectoryOrFilePath"/>, or null if
+        /// not present in the <see cref="Uri"/>.
+        /// </summary>
+        internal string LastDirectoryOrFileName =>
+            DirectoryOrFilePath.TrimEnd('/').Split('/').LastOrDefault();
 
         /// <summary>
         /// Gets or sets any query information included in the URI that's not
