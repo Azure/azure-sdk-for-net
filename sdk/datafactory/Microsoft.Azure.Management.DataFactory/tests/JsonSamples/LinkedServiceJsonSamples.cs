@@ -2262,5 +2262,45 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedService = @"
+{
+    name: ""AzureFileStorageLinkedService"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            host : ""fakehost"",
+            userId : ""fakeaccess"",
+            password : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleCloudStorageLinkedService = @"
+{
+    name: ""GoogleCloudStorageLinkedService"",
+    properties:
+    {
+        type: ""GoogleCloudStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
     }
 }

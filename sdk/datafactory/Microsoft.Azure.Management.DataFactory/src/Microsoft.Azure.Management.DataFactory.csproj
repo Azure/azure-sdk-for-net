@@ -10,18 +10,8 @@
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
-- Added RunDimension to Pipeline
-- Added Chaining Trigger
-- Added Dependency Status property in Pipeline and Trigger Run
-- Added outputColumns property to Office365Source
-- Added support for ORC dataset in ADF
-- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
-- Added property blockSizeInMB to Blobsink and BlobFSsink
-- Added support for custom setup without script properties for a SSIS integration runtime
-- Added support for instance pools in Databricks linked service
-- Added outputColumns property to Office365Source
-- Added support for ORC dataset in ADF
-- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

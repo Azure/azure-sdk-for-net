@@ -3,6 +3,11 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.1.4
+###  Feature Additions
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
+
 ## Version 4.1.3
 ###  Feature Additions
 - Added RunDimension to Pipeline
