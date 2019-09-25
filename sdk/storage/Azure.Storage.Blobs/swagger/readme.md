@@ -938,7 +938,7 @@ directive:
 ```
 
 ### ContainerProperties
-``` yaml 
+``` yaml
 directive:
 - from: swagger-document
   where: $.definitions.ContainerProperties

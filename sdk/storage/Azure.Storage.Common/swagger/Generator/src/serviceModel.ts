@@ -978,7 +978,6 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
                 clientName: response.bodyClientName,
                 required: true,
                 readonly: true,
-                
                 xml: { },
                 model: response.body
             };
