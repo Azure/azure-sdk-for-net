@@ -1,12 +1,11 @@
-﻿<!--<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">-->
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <!--<LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>-->
     <!--<LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>-->
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{205A62E4-93BC-414C-8344-2E7A46E1252A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Azure.CognitiveServices.InkRecognizer.WPF.Stroke</RootNamespace>
     <AssemblyName>Azure.CognitiveServices.InkRecognizer.WPF.Stroke</AssemblyName>
     <UseWPF>true</UseWPF>
@@ -40,6 +39,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Update="Azure.Core" Version="1.0.0-preview.8" />
@@ -104,19 +106,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\*.png" />
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Update="**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="StrokeStore.cs" />
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
