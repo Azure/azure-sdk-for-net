@@ -337,25 +337,6 @@ namespace Compute.Tests
             }
         }
 
-        private Disk CreateDataDisk(string diskName)
-        {
-            var disk = new Disk
-            {
-                Location = m_location,
-                DiskSizeGB = 10,
-            };
-            disk.Sku = new DiskSku()
-            {
-                Name = StorageAccountTypes.StandardLRS
-            };
-            disk.CreationData = new CreationData()
-            {
-                CreateOption = DiskCreateOption.Empty
-            };
-
-            return m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
-        }
-
         private DataDisk CreateModelDataDisk(Disk disk)
         {
             var modelDisk = new DataDisk
@@ -377,7 +358,7 @@ namespace Compute.Tests
 
             var diskName = TestPrefix + "dataDisk" + lun;
 
-            var disk = CreateDataDisk(diskName);
+            var disk = CreateDisk(diskName, rgName);
 
             var dd = new DataDisk
             {

@@ -77,8 +77,30 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS4V2, hasManagedDisks: true,
                    hasDiffDisks: true, osDiskStorageAccountType: StorageAccountTypes.StandardLRS);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
+        /// To record this test case, you need to run it in region which support DiskEncryptionSet resource for the Disks
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet")]
+        public void TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+            string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet", vmSize: VirtualMachineSizeTypes.StandardA1V2, hasManagedDisks: true,
+                   osDiskStorageAccountType: StorageAccountTypes.StandardLRS, diskEncryptionSetId: diskEncryptionSetId);
             }
             finally
             {
@@ -168,7 +190,7 @@ namespace Compute.Tests
 
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
-            bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false)
+            bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -198,7 +220,7 @@ namespace Compute.Tests
                     }
 
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
-                        dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName);
+                        dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, diskEncryptionSetId: diskEncryptionSetId);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
@@ -206,6 +228,20 @@ namespace Compute.Tests
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
+
+                    if (diskEncryptionSetId != null)
+                    {
+
+                        Assert.True(getVMWithInstanceViewResponse.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet != null, "OsDisk.ManagedDisk.DiskEncryptionSet is null");
+                        Assert.True(string.Equals(diskEncryptionSetId, getVMWithInstanceViewResponse.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
+                            "OsDisk.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
+
+                        Assert.Equal(1, getVMWithInstanceViewResponse.StorageProfile.DataDisks.Count);
+                        Assert.True(getVMWithInstanceViewResponse.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet != null, ".DataDisks.ManagedDisk.DiskEncryptionSet is null");
+                        Assert.True(string.Equals(diskEncryptionSetId, getVMWithInstanceViewResponse.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
+                            "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
+                    }
+                    
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
 
                     var getVMInstanceViewResponse = m_CrpClient.VirtualMachines.InstanceView(rgName, inputVM.Name);
