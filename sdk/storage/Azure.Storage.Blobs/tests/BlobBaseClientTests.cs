@@ -15,7 +15,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Common.Test;
-using Azure.Storage.Common.Tests.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -70,6 +69,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(accountName, builder.AccountName);
         }
+
         #region Sequential Download
 
         [Test]

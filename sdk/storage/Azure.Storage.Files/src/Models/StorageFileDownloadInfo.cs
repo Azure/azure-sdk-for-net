@@ -64,7 +64,6 @@ namespace Azure.Storage.Files.Models
     /// </summary>
     public static partial class FilesModelFactory
     {
-
         /// <summary>
         /// Creates a new StorageFileDownloadInfo instance for mocking.
         /// </summary>
