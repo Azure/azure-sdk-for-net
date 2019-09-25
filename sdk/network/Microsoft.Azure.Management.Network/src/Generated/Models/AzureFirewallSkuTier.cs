@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyFilterRuleActionType.
+    /// Defines values for AzureFirewallSkuTier.
     /// </summary>
-    public static class FirewallPolicyFilterRuleActionType
+    public static class AzureFirewallSkuTier
     {
-        public const string Allow = "Allow";
-        public const string Deny = "Deny";
+        public const string Standard = "Standard";
     }
 }

@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualHubs">List of VirtualHubs in the
         /// VirtualWAN.</param>
         /// <param name="vpnSites">List of VpnSites in the VirtualWAN.</param>
-        /// <param name="securityProviderName">The Security Provider
-        /// name.</param>
         /// <param name="allowBranchToBranchTraffic">True if branch to branch
         /// traffic is allowed.</param>
         /// <param name="allowVnetToVnetTraffic">True if Vnet to Vnet traffic
@@ -58,13 +56,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualWAN(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? disableVpnEncryption = default(bool?), IList<SubResource> virtualHubs = default(IList<SubResource>), IList<SubResource> vpnSites = default(IList<SubResource>), string securityProviderName = default(string), bool? allowBranchToBranchTraffic = default(bool?), bool? allowVnetToVnetTraffic = default(bool?), string office365LocalBreakoutCategory = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualWAN(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? disableVpnEncryption = default(bool?), IList<SubResource> virtualHubs = default(IList<SubResource>), IList<SubResource> vpnSites = default(IList<SubResource>), bool? allowBranchToBranchTraffic = default(bool?), bool? allowVnetToVnetTraffic = default(bool?), string office365LocalBreakoutCategory = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             DisableVpnEncryption = disableVpnEncryption;
             VirtualHubs = virtualHubs;
             VpnSites = vpnSites;
-            SecurityProviderName = securityProviderName;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
             AllowVnetToVnetTraffic = allowVnetToVnetTraffic;
             Office365LocalBreakoutCategory = office365LocalBreakoutCategory;
@@ -95,12 +92,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnSites")]
         public IList<SubResource> VpnSites { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the Security Provider name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.securityProviderName")]
-        public string SecurityProviderName { get; set; }
 
         /// <summary>
         /// Gets or sets true if branch to branch traffic is allowed.
