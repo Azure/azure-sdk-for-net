@@ -157,7 +157,7 @@ namespace Azure.Security.KeyVault.Keys
 
         internal void WriteAttributes(Utf8JsonWriter json)
         {
-            if (_attributes.ShouldSerialzie)
+            if (_attributes.ShouldSerialize)
             {
                 json.WriteStartObject(s_attributesPropertyNameBytes);
 

@@ -15,10 +15,6 @@ namespace Azure.Security.KeyVault.Keys
         private const string DeletedDatePropertyName = "deletedDate";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
 
-        private static readonly JsonEncodedText s_recoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
-        private static readonly JsonEncodedText s_deletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
-        private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
-
         internal DeletedKey()
         {
         }
@@ -61,26 +57,6 @@ namespace Azure.Security.KeyVault.Keys
                 default:
                     base.ReadProperty(prop);
                     break;
-            }
-        }
-
-        internal override void WriteProperties(Utf8JsonWriter json)
-        {
-            base.WriteProperties(json);
-
-            if (RecoveryId != null)
-            {
-                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId);
-            }
-
-            if (DeletedDate.HasValue)
-            {
-                json.WriteNumber(s_deletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
-            }
-
-            if (ScheduledPurgeDate.HasValue)
-            {
-                json.WriteNumber(s_scheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
             }
         }
     }

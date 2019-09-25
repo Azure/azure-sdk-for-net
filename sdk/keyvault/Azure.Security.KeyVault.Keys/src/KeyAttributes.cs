@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public string RecoveryLevel { get; private set; }
 
-        internal bool ShouldSerialzie => Enabled.HasValue && NotBefore.HasValue && Expires.HasValue;
+        internal bool ShouldSerialize => Enabled.HasValue && NotBefore.HasValue && Expires.HasValue;
 
         internal void ReadProperties(JsonElement json)
         {

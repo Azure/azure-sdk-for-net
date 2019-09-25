@@ -67,12 +67,9 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
-        {
-            WritePropertiesCore(json);
-        }
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
-        internal virtual void WritePropertiesCore(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (!string.IsNullOrEmpty(Provider))
             {

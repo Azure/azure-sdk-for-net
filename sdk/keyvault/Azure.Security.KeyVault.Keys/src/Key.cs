@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// <see cref="Key"/> is the resource consisting of a value and its <see cref="Properties"/>.
     /// </summary>
-    public class Key : IJsonDeserializable, IJsonSerializable
+    public class Key : IJsonDeserializable
     {
         private const string KeyPropertyName = "key";
 
@@ -73,10 +73,6 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal virtual void WriteProperties(Utf8JsonWriter json)
-        {
-        }
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -84,7 +80,5 @@ namespace Azure.Security.KeyVault.Keys
                 ReadProperty(prop);
             }
         }
-
-        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

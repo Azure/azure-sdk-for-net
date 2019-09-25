@@ -192,7 +192,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal virtual void WriteProperties(Utf8JsonWriter json)
         {
-            Properties.WritePropertiesCore(json);
+            Properties.WriteProperties(json);
 
             if (!string.IsNullOrEmpty(AccountId) || !string.IsNullOrEmpty(Password))
             {

@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// The key import parameters.
     /// </summary>
-    public class KeyImportOptions : Key
+    public class KeyImportOptions : Key, IJsonSerializable
     {
         private const string KeyPropertyName = "key";
         private const string TagsPropertyName = "tags";
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys
             KeyMaterial = keyMaterial;
         }
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (KeyMaterial != null)
             {
