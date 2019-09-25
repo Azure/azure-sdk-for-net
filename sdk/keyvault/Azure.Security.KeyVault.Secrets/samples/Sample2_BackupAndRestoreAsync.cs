@@ -37,7 +37,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var secret = new Secret(secretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             Secret storedSecret = await client.SetAsync(secret);
@@ -61,7 +64,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await client.PurgeDeletedAsync(secretName);
 
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
-            SecretBase restoreSecret = null;
+            SecretProperties restoreSecret = null;
             using (FileStream sourceStream = File.Open(backupPath, FileMode.Open))
             {
                 byte[] result = new byte[sourceStream.Length];
@@ -69,7 +72,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 restoreSecret = await client.RestoreAsync(result);
             }
 
-            AssertSecretsEqual((SecretBase)storedSecret, restoreSecret);
+            AssertSecretsEqual(storedSecret.Properties, restoreSecret);
         }
 
         private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)

@@ -60,7 +60,7 @@ namespace Azure.Storage.Common
 
             // If alternateHost was not null that means the message is being retried. Hence what is stored in the Host 
             // property of UriBuilder is actually the host from the last try.
-            var lastTriedHost = message.Request.UriBuilder.Host;
+            var lastTriedHost = message.Request.Uri.Host;
 
             // If necessary, set the flag to indicate that the resource has not yet been propagated to the secondary host.
             if (message.HasResponse
@@ -72,7 +72,7 @@ namespace Azure.Storage.Common
 
             // Toggle the host set in the request to use the alternate host for the upcoming attempt, and update the
             // the property for the AlternateHostKey to be the host used in the last try.
-            message.Request.UriBuilder.Host = alternateHost;
+            message.Request.Uri.Host = alternateHost;
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, lastTriedHost);
         }
     }

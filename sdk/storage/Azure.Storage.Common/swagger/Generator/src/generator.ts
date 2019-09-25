@@ -350,7 +350,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
-        w.line(`${requestName}.UriBuilder.Uri = ${uri};`);
+        w.line(`${requestName}.Uri.Assign(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;
@@ -358,7 +358,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     if (!query.skipUrlEncoding && !constant) {
                         value = `System.Uri.EscapeDataString(${value})`
                     }
-                    w.write(`${requestName}.UriBuilder.AppendQuery("${query.name}", ${value});`);
+                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value});`);
                 });
             }
         }
@@ -812,25 +812,25 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
             w.line(`/// <summary>`);
             w.line(`/// Convert an ${enumName} to a string.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="o">The ${enumName} value.</param>`);
+            w.line(`/// <param name="value">The ${enumName} value.</param>`);
             w.line(`/// <returns>String representation of the ${enumName} value.</returns>`);
-            w.line(`public static implicit operator string(${enumFullName} o) => o._value;`);
+            w.line(`public static implicit operator string(${enumFullName} value) => value._value;`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Check if two ${enumName} instances are equal.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="a">The first instance to compare.</param>`);
-            w.line(`/// <param name="b">The second instance to compare.</param>`);
+            w.line(`/// <param name="left">The first instance to compare.</param>`);
+            w.line(`/// <param name="right">The second instance to compare.</param>`);
             w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public static bool operator ==(${enumFullName} a, ${enumFullName} b) => a.Equals(b);`);
+            w.line(`public static bool operator ==(${enumFullName} left, ${enumFullName} right) => left.Equals(right);`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Check if two ${enumName} instances are not equal.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="a">The first instance to compare.</param>`);
-            w.line(`/// <param name="b">The second instance to compare.</param>`);
+            w.line(`/// <param name="left">The first instance to compare.</param>`);
+            w.line(`/// <param name="right">The second instance to compare.</param>`);
             w.line(`/// <returns>True if they're not equal, false otherwise.</returns>`);
-            w.line(`public static bool operator !=(${enumFullName} a, ${enumFullName} b) => !a.Equals(b);`);
+            w.line(`public static bool operator !=(${enumFullName} left, ${enumFullName} right) => !left.Equals(right);`);
         });
     });
     w.line(`#endregion ${regionName}`);

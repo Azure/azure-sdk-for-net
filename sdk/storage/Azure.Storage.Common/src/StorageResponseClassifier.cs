@@ -23,7 +23,7 @@ namespace Azure.Storage.Common
         /// <returns></returns>
         public override bool IsRetriableResponse(HttpPipelineMessage message)
         {
-            if (message.Request.UriBuilder.Host == SecondaryStorageUri.Host && message.Response.Status == Constants.HttpStatusCode.NotFound)
+            if (message.Request.Uri.Host == SecondaryStorageUri.Host && message.Response.Status == Constants.HttpStatusCode.NotFound)
             {
                 return true;
             }

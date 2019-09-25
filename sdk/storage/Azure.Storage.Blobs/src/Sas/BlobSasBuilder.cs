@@ -188,13 +188,18 @@ namespace Azure.Storage.Sas
                 identifier: Identifier,
                 resource: Resource,
                 permissions: Permissions,
-                signature: signature);
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 
         /// <summary>
         /// Use an account's <see cref="UserDelegationKey"/> to sign this
-        /// shared access signature values to produce the propery SAS query
+        /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
         /// <param name="userDelegationKey">
@@ -258,7 +263,12 @@ namespace Azure.Storage.Sas
                 keyExpiry: userDelegationKey.SignedExpiry,
                 keyService: userDelegationKey.SignedService,
                 keyVersion: userDelegationKey.SignedVersion,
-                signature: signature);
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 

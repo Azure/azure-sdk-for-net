@@ -7,7 +7,7 @@
     <PropertyGroup>
         <PackageId>Microsoft.AzureStack.Management.Backup.Admin</PackageId>
         <Description>Provides developers with libraries for the Backup admin under AzureStack to manage backups.</Description>
-        <VersionPrefix>0.3.1-preview</VersionPrefix>
+        <VersionPrefix>0.3.2-preview</VersionPrefix>
         <AssemblyName>Microsoft.AzureStack.Management.Backup.Admin</AssemblyName>
         <PackageTags>Microsoft Azure Stack;Backup;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>

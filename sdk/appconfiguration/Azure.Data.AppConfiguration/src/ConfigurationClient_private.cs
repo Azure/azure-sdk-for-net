@@ -5,13 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -27,6 +25,7 @@ namespace Azure.Data.AppConfiguration
         private const string FieldsQueryFilter = "$select";
         private const string IfMatchName = "If-Match";
         private const string IfNoneMatch = "If-None-Match";
+        private const string ETag = "ETag";
 
         private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
@@ -92,7 +91,7 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
-            builder.Uri = _baseUri;
+            builder.Assign(_baseUri);
             builder.AppendPath(KvRoute);
             builder.AppendPath(key);
 
@@ -104,7 +103,7 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
         {
-            builder.Uri = _baseUri;
+            builder.Assign(_baseUri);
             builder.AppendPath(LocksRoute);
             builder.AppendPath(key);
 
@@ -183,14 +182,14 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Uri = _baseUri;
+            builder.Assign(_baseUri);
             builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Uri = _baseUri;
+            builder.Assign(_baseUri);
             builder.AppendPath(RevisionsRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }

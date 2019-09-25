@@ -29,11 +29,11 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
-        public void UpdateArgumentValidation()
+        public void UpdatePropertiesArgumentValidation()
         {
-            SecretBase secret = new SecretBase("secret-name");
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(secret));
+            SecretProperties secret = new SecretProperties("secret-name");
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdatePropertiesAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdatePropertiesAsync(secret));
         }
 
         [Test]

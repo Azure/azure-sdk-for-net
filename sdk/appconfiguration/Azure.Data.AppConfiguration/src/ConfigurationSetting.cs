@@ -16,8 +16,9 @@ namespace Azure.Data.AppConfiguration
     {
         private IDictionary<string, string> _tags;
 
-        // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
-        internal ConfigurationSetting() { }
+        internal ConfigurationSetting()
+        {
+        }
 
         /// <summary>
         /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
@@ -58,7 +59,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
-        public ETag ETag { get; set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The last time a modifying operation was performed on the given configuration setting.

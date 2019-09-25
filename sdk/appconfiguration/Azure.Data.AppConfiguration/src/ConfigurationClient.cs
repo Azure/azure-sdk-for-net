@@ -160,7 +160,7 @@ namespace Azure.Data.AppConfiguration
 
             request.Method = RequestMethod.Put;
 
-            BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.Uri, setting);
 
             request.Headers.Add(IfNoneMatch, "*");
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
@@ -270,7 +270,7 @@ namespace Azure.Data.AppConfiguration
             ReadOnlyMemory<byte> content = Serialize(setting);
 
             request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.Uri, setting);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
 
@@ -362,7 +362,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
 
             if (etag != default)
             {
@@ -483,7 +483,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
 
             if (acceptDateTime != default)
@@ -566,7 +566,7 @@ namespace Azure.Data.AppConfiguration
         {
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
+            BuildUriForGetBatch(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
@@ -647,7 +647,7 @@ namespace Azure.Data.AppConfiguration
         {
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForRevisions(request.UriBuilder, selector, pageLink);
+            BuildUriForRevisions(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
@@ -655,6 +655,99 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
+            return request;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<bool>> HasChangedAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.HasChanged");
+            scope.AddAttribute("key", setting.Key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateHeadRequest(setting.Key, setting.Label);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                    case 404:
+                        string etag = default;
+                        if (response.Headers.TryGetValue(ETag, out etag))
+                        {
+                            etag = etag.Trim('\"');
+                        }
+
+                        return new Response<bool>(response, setting.ETag != new ETag(etag));
+
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<bool> HasChanged(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.HasChanged");
+            scope.AddAttribute(nameof(setting.Key), setting.Key);
+            scope.Start();
+
+            try
+            {
+                using (Request request = CreateHeadRequest(setting.Key, setting.Label))
+                {
+                    Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                    switch (response.Status)
+                    {
+                        case 200:
+                        case 404:
+                            string etag = default;
+                            if (response.Headers.TryGetValue(ETag, out etag))
+                            {
+                                etag = etag.Trim('\"');
+                            }
+
+                            return new Response<bool>(response, setting.ETag != new ETag(etag));
+
+                        default:
+                            throw response.CreateRequestFailedException();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateHeadRequest(string key, string label)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
+
+            Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Head;
+            BuildUriForKvRoute(request.Uri, key, label);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
             return request;
         }
 
@@ -735,7 +828,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Put;
-            BuildUriForLocksRoute(request.UriBuilder, key, label);
+            BuildUriForLocksRoute(request.Uri, key, label);
 
             if (etag != default)
             {
@@ -822,7 +915,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
-            BuildUriForLocksRoute(request.UriBuilder, key, label);
+            BuildUriForLocksRoute(request.Uri, key, label);
 
             if (etag != default)
             {

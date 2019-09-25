@@ -243,7 +243,7 @@ namespace Azure.Security.KeyVault
 
             private static string GetRequestAuthority(Request request)
             {
-                Uri uri = request.UriBuilder.Uri;
+                Uri uri = request.Uri.ToUri();
 
                 string authority = uri.Authority;
 
