@@ -26,9 +26,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyCurveName actual = name;
 
             Assert.AreEqual(name, actual.ToString());
-            Assert.AreEqual(expectedOidValue, actual._oid?.Value);
-            Assert.AreEqual(expectedKeySize, actual._keySize);
-            Assert.AreEqual(expectedKeyParameterSize, actual._keyParameterSize);
+            Assert.AreEqual(expectedOidValue, actual.Oid?.Value);
+            Assert.AreEqual(expectedKeySize, actual.KeySize);
+            Assert.AreEqual(expectedKeyParameterSize, actual.KeyParameterSize);
         }
 
         [TestCase("1.2.840.10045.3.1.7", "P-256")]
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FindsOidValue(string oidValue, string expectedName)
         {
             Oid oid = new Oid(oidValue);
-            ref readonly KeyCurveName actual = ref KeyCurveName.Find(oid, 0);
+            ref readonly KeyCurveName actual = ref KeyCurveName.FromOid(oid, 0);
 
             Assert.AreEqual(expectedName, actual.ToString());
         }
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FindsOidFriendName(string oidFriendlyName, int keySize, string expectedName)
         {
             Oid oid = new Oid(null, oidFriendlyName);
-            ref readonly KeyCurveName actual = ref KeyCurveName.Find(oid, keySize);
+            ref readonly KeyCurveName actual = ref KeyCurveName.FromOid(oid, keySize);
 
             Assert.AreEqual(expectedName, actual.ToString());
         }

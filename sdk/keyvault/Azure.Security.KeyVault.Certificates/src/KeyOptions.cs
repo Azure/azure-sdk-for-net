@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal virtual void WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteString(s_keyTypePropertyNameBytes, KeyType);
+            json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
 
             if (ReuseKey.HasValue)
             {

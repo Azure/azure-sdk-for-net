@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -18,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="value"></param>
         public KeyOperation(string value)
         {
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -54,18 +55,18 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Determines if two <see cref="KeyOperation"/> values are the same.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyOperation"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyOperation"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(KeyOperation a, KeyOperation b) => a.Equals(b);
+        /// <param name="left">The first <see cref="KeyOperation"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyOperation"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(KeyOperation left, KeyOperation right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two <see cref="KeyOperation"/> values are different.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyOperation"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyOperation"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
-        public static bool operator !=(KeyOperation a, KeyOperation b) => !a.Equals(b);
+        /// <param name="left">The first <see cref="KeyOperation"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyOperation"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(KeyOperation left, KeyOperation right) => !left.Equals(right);
 
         /// <summary>
         /// Converts a string to a <see cref="KeyOperation"/>.
@@ -73,19 +74,15 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="value">The string value to convert.</param>
         public static implicit operator KeyOperation(string value) => new KeyOperation(value);
 
-        /// <summary>
-        /// Converts a <see cref="KeyOperation"/> to a string.
-        /// </summary>
-        /// <param name="value">The <see cref="KeyOperation"/> to convert.</param>
-        public static implicit operator string(KeyOperation value) => value._value;
-
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyOperation other && Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(KeyOperation other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>

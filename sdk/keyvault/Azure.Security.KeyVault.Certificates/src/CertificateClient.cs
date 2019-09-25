@@ -1491,12 +1491,12 @@ namespace Azure.Security.KeyVault.Certificates
                 },
                 KeyUsage = new[]
                 {
-                    KeyUsage.CrlSign,
-                    KeyUsage.DataEncipherment,
-                    KeyUsage.DigitalSignature,
-                    KeyUsage.KeyEncipherment,
-                    KeyUsage.KeyAgreement,
-                    KeyUsage.KeyCertSign
+                    CertificateKeyUsage.CrlSign,
+                    CertificateKeyUsage.DataEncipherment,
+                    CertificateKeyUsage.DigitalSignature,
+                    CertificateKeyUsage.KeyEncipherment,
+                    CertificateKeyUsage.KeyAgreement,
+                    CertificateKeyUsage.KeyCertSign,
                 },
                 CertificateTransparency = false,
                 ContentType = CertificateContentType.Pkcs12

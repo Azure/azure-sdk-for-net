@@ -2,24 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// An action that will be executed.
     /// </summary>
-    public struct Action
+    public readonly struct Action : IEquatable<Action>
     {
-        private readonly string _value;
         internal const string AutoRenewValue = "AutoRenew";
         internal const string EmailContactsValue = "EmailContacts";
 
+        private readonly string _value;
+
         /// <summary>
-        /// Initializes a new instance of the Action struct with the specfied value.
+        /// Initializes a new instance of the <see cref="Action"/> structure.
         /// </summary>
-        public Action(string Action)
+        /// <param name="value"></param>
+        public Action(string value)
         {
-            _value = Action;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -32,32 +35,40 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public static readonly Action EmailContacts = new Action(EmailContactsValue);
 
-        public override bool Equals(object obj)
-        {
-            return obj is Action && Equals((CertificateKeyType)obj);
-        }
+        /// <summary>
+        /// Determines if two <see cref="Action"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="Action"/> to compare.</param>
+        /// <param name="right">The second <see cref="Action"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Action left, Action right) => left.Equals(right);
 
-        public bool Equals(Action other)
-        {
-            return string.CompareOrdinal(_value, other._value) == 0;
-        }
+        /// <summary>
+        /// Determines if two <see cref="Action"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="Action"/> to compare.</param>
+        /// <param name="right">The second <see cref="Action"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(Action left, Action right) => !left.Equals(right);
 
-        public override int GetHashCode()
-        {
-            return _value?.GetHashCode() ?? 0;
-        }
-
-        public override string ToString()
-        {
-            return _value;
-        }
-
-        public static bool operator ==(Action a, Action b) => a.Equals(b);
-
-        public static bool operator !=(Action a, Action b) => !a.Equals(b);
-
+        /// <summary>
+        /// Converts a string to a <see cref="Action"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
         public static implicit operator Action(string value) => new Action(value);
 
-        public static implicit operator string(Action o) => o._value;
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Action other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(Action other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -2,19 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys
 {
-
     /// <summary>
     /// Elliptic Curve Cryptography (ECC) curve names.
     /// </summary>
     public readonly struct KeyCurveName : IEquatable<KeyCurveName>
     {
-        internal readonly Oid _oid;
-        internal readonly int _keySize;
-        internal readonly int _keyParameterSize;
+        private const string P256Value = "P-256";
+        private const string P256KValue = "P-256K";
+        private const string P384Value = "P-384";
+        private const string P521Value = "P-521";
+
+        private const string P256OidValue = "1.2.840.10045.3.1.7";
+        private const string P256KOidValue = "1.3.132.0.10";
+        private const string P384OidValue = "1.3.132.0.34";
+        private const string P521OidValue = "1.3.132.0.35";
+
         private readonly string _value;
 
         /// <summary>
@@ -23,61 +30,50 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="value"></param>
         public KeyCurveName(string value)
         {
-            ref readonly KeyCurveName curveName = ref Find(value);
-
-            _value = curveName._value ?? value;
-            _oid = curveName._oid;
-            _keySize = curveName._keySize;
-            _keyParameterSize = curveName._keyParameterSize;
-        }
-
-        private KeyCurveName(string value, Oid oid, int keySize, int keyParameterSize)
-        {
-            _value = value;
-
-            _oid = oid;
-            _keySize = keySize;
-            _keyParameterSize = keyParameterSize;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
         /// The NIST P-256 elliptic curve, AKA SECG curve SECP256R1
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
-        public static readonly KeyCurveName P256 = new KeyCurveName("P-256", new Oid("1.2.840.10045.3.1.7"), 256, 32);
-        /// <summary>
-        /// The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
-        /// </summary>
-        public static readonly KeyCurveName P256K = new KeyCurveName("P-256K", new Oid("1.3.132.0.10"), 256, 32);
-        /// <summary>
-        /// The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
-        /// </summary>
-        public static readonly KeyCurveName P384 = new KeyCurveName("P-384", new Oid("1.3.132.0.34"), 384, 48);
+        public static readonly KeyCurveName P256 = new KeyCurveName(P256Value);
+
         /// <summary>
         /// The SECG SECP256K1 elliptic curve.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
-        public static readonly KeyCurveName P521 = new KeyCurveName("P-521", new Oid("1.3.132.0.35"), 521, 66);
+        public static readonly KeyCurveName P256K = new KeyCurveName(P256KValue);
+
+        /// <summary>
+        /// The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
+        /// </summary>
+        public static readonly KeyCurveName P384 = new KeyCurveName(P384Value);
+
+        /// <summary>
+        /// The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
+        /// </summary>
+        public static readonly KeyCurveName P521 = new KeyCurveName(P521Value);
 
         internal static readonly KeyCurveName s_default = default;
 
         /// <summary>
         /// Determines if two <see cref="KeyCurveName"/> values are the same.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyCurveName"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyCurveName"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(KeyCurveName a, KeyCurveName b) => a.Equals(b);
+        /// <param name="left">The first <see cref="KeyCurveName"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyCurveName"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(KeyCurveName left, KeyCurveName right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two <see cref="KeyCurveName"/> values are different.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyCurveName"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyCurveName"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
-        public static bool operator !=(KeyCurveName a, KeyCurveName b) => !a.Equals(b);
+        /// <param name="left">The first <see cref="KeyCurveName"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyCurveName"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(KeyCurveName left, KeyCurveName right) => !left.Equals(right);
 
         /// <summary>
         /// Converts a string to a <see cref="KeyCurveName"/>.
@@ -85,54 +81,40 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="value">The string value to convert.</param>
         public static implicit operator KeyCurveName(string value) => new KeyCurveName(value);
 
-        internal static ref readonly KeyCurveName Find(string name)
-        {
-            if (!string.IsNullOrEmpty(name))
-            {
-                if (string.Equals(P521._value, name, StringComparison.Ordinal))
-                {
-                    return ref P521;
-                }
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is KeyCurveName other && Equals(other);
 
-                if (string.Equals(P384._value, name, StringComparison.Ordinal))
-                {
-                    return ref P384;
-                }
+        /// <inheritdoc/>
+        public bool Equals(KeyCurveName other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
-                if (string.Equals(P256K._value, name, StringComparison.Ordinal))
-                {
-                    return ref P256K;
-                }
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
-                if (string.Equals(P256._value, name, StringComparison.Ordinal))
-                {
-                    return ref P256;
-                }
-            }
+        /// <inheritdoc/>
+        public override string ToString() => _value;
 
-            return ref s_default;
-        }
-
-        internal static ref readonly KeyCurveName Find(Oid oid, int keySize)
+        internal static ref readonly KeyCurveName FromOid(Oid oid, int keySize = 0)
         {
             if (!string.IsNullOrEmpty(oid?.Value))
             {
-                if (string.Equals(oid.Value, P521._oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P521OidValue, StringComparison.Ordinal))
                 {
                     return ref P521;
                 }
 
-                if (string.Equals(oid.Value, P384._oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P384OidValue, StringComparison.Ordinal))
                 {
                     return ref P384;
                 }
 
-                if (string.Equals(oid.Value, P256K._oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P256KOidValue, StringComparison.Ordinal))
                 {
                     return ref P256K;
                 }
 
-                if (string.Equals(oid.Value, P256._oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P256OidValue, StringComparison.Ordinal))
                 {
                     return ref P256;
                 }
@@ -165,22 +147,49 @@ namespace Azure.Security.KeyVault.Keys
             return ref s_default;
         }
 
-        /// <summary>
-        /// Converts a <see cref="KeyCurveName"/> to a string.
-        /// </summary>
-        /// <param name="value">The <see cref="KeyCurveName"/> to convert.</param>
-        public static implicit operator string(KeyCurveName value) => value._value;
+        internal bool IsSupported
+        {
+            get
+            {
+                switch (_value)
+                {
+                    case P256Value:
+                    case P256KValue:
+                    case P384Value:
+                    case P521Value:
+                        return true;
 
-        /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is KeyCurveName other && Equals(other);
+                    default:
+                        return false;
+                }
+            }
+        }
 
-        /// <inheritdoc/>
-        public bool Equals(KeyCurveName other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        internal int KeyParameterSize => _value switch
+        {
+            P256Value => 32,
+            P256KValue => 32,
+            P384Value => 48,
+            P521Value => 66,
+            _ => 0,
+        };
+        internal int KeySize => _value switch
+        {
+            P256Value => 256,
+            P256KValue => 256,
+            P384Value => 384,
+            P521Value => 521,
+            _ => 0,
+        };
 
-        /// <inheritdoc/>
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        internal Oid Oid => _value switch
+        {
+            P256Value => new Oid(P256OidValue),
+            P256KValue => new Oid(P256KOidValue),
+            P384Value => new Oid(P384OidValue),
+            P521Value => new Oid(P521OidValue),
+            _ => null,
+        };
 
-        /// <inheritdoc/>
-        public override string ToString() => _value;
     }
 }

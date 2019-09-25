@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The curve which back the EC key
         /// </summary>
-        public KeyCurveName? Curve { get; set; }
+        public CertificateKeyCurveName? Curve { get; set; }
 
         /// <summary>
         /// Creates EcKeyOptions for use with a <see cref="CertificatePolicy"/>
@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Curve.HasValue)
             {
-                json.WriteString(s_curvePropertyNameBytes, Curve);
+                json.WriteString(s_curvePropertyNameBytes, Curve.ToString());
             }
         }
     }

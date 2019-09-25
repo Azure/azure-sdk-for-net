@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -46,18 +45,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Determines if two <see cref="EncryptionAlgorithm"/> values are the same.
         /// </summary>
-        /// <param name="a">The first <see cref="EncryptionAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="EncryptionAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(EncryptionAlgorithm a, EncryptionAlgorithm b) => a.Equals(b);
+        /// <param name="left">The first <see cref="EncryptionAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="EncryptionAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(EncryptionAlgorithm left, EncryptionAlgorithm right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two <see cref="EncryptionAlgorithm"/> values are different.
         /// </summary>
-        /// <param name="a">The first <see cref="EncryptionAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="EncryptionAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
-        public static bool operator !=(EncryptionAlgorithm a, EncryptionAlgorithm b) => !a.Equals(b);
+        /// <param name="left">The first <see cref="EncryptionAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="EncryptionAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(EncryptionAlgorithm left, EncryptionAlgorithm right) => !left.Equals(right);
 
         /// <summary>
         /// Converts a string to a <see cref="EncryptionAlgorithm"/>.
@@ -70,7 +69,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public override bool Equals(object obj) => obj is EncryptionAlgorithm other && Equals(other);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(EncryptionAlgorithm other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         /// <inheritdoc/>
@@ -78,7 +76,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
 
         internal RSAEncryptionPadding GetRsaEncryptionPadding() => _value switch
