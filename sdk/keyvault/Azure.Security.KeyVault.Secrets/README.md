@@ -129,7 +129,7 @@ Console.WriteLine(secret.Value);
 `Update` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.Set` on a `Secret` with the same name.
 
 ```c#
-Secret secret = new Secret("secret-name", "secret-value");
+Secret secret = client.Set("secret-name", "secret-value");
 
 // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved
 secret.ContentType = "text/plain";
@@ -140,7 +140,7 @@ secret.Tags["foo"] = "updated tag";
 SecretBase updatedSecret = client.Update(secret);
 
 Console.WriteLine(updatedSecret.Name);
-Console.WriteLine(updatedSecret.Value);
+Console.WriteLine(updatedSecret.Vault);
 Console.WriteLine(updatedSecret.Version);
 Console.WriteLine(updatedSecret.ContentType);
 ```
@@ -255,7 +255,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://azure.github.io/azure-sdk-for-net/api/KeyVault/Azure.Security.KeyVault.Secrets.html
+[API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Secrets.html
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
