@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Core.Http;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.Models
 {
     /// <summary>

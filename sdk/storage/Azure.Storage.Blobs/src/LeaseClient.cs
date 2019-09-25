@@ -8,6 +8,8 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
@@ -135,9 +137,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or specify 
-        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
-        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">
@@ -180,9 +182,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or specify 
-        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
-        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">
@@ -225,9 +227,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or specify 
-        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
-        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">

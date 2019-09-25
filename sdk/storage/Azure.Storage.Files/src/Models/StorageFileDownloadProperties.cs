@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core.Http;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {

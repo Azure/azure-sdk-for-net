@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// These properties are represented as standard HTTP headers use standard
     /// names, as specified in the Header Field Definitions section 14 of the
     /// HTTP/1.1 protocol specification.
-    /// 
+    ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources" />.
     /// </summary>
     public struct BlobHttpHeaders : IEquatable<BlobHttpHeaders>
@@ -24,8 +24,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An MD5 hash of the blob content. This hash is used to verify the
         /// integrity of the blob during transport.  When this header is
-        /// specified, the storage service checks the hash that has arrived 
-        /// with the one that was sent. If the two hashes do not match, the 
+        /// specified, the storage service checks the hash that has arrived
+        /// with the one that was sent. If the two hashes do not match, the
         /// operation will fail with error code 400 (Bad Request).
         /// </summary>
         public byte[] ContentHash { get; set; }
@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Specifies which content encodings have been applied to the blob.
         /// This value is returned to the client when the Get Blob operation
-        /// is performed on the blob resource. The client can use this value 
+        /// is performed on the blob resource. The client can use this value
         /// when returned to decode the blob content.
         /// </summary>
         public string[] ContentEncoding { get; set; }

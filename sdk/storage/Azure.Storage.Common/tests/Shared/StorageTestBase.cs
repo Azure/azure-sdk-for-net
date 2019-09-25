@@ -308,8 +308,8 @@ namespace Azure.Storage.Test.Shared
             bool responseReceived = false;
             T response = default;
             // end time of 16 minutes from now to allow for propagation to secondary host
-            DateTimeOffset endTime = DateTimeOffset.Now.AddMinutes(16); 
-            while (!responseReceived && DateTimeOffset.Now < endTime) 
+            DateTimeOffset endTime = DateTimeOffset.Now.AddMinutes(16);
+            while (!responseReceived && DateTimeOffset.Now < endTime)
             {
                 response = await getResponse();
                 if (!hasResponse(response))

@@ -5,6 +5,8 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Queues.Specialized
 {
     /// <summary>

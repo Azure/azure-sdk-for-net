@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Specifies options for listing blobs with the 
+    /// Specifies options for listing blobs with the
     /// <see cref="BlobContainerClient.GetBlobsAsync"/> and
     /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
     /// operations.
@@ -63,7 +60,7 @@ namespace Azure.Storage.Blobs.Models
         internal IEnumerable<ListBlobsIncludeItem> AsIncludeItems()
         {
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
-            // TODO: Remove this requirement by pushing it closer to header generation. 
+            // TODO: Remove this requirement by pushing it closer to header generation.
             var items = new List<ListBlobsIncludeItem>();
             if (IncludeCopyOperationStatus) { items.Add(ListBlobsIncludeItem.Copy); }
             if (IncludeDeletedBlobs) { items.Add(ListBlobsIncludeItem.Deleted); }
@@ -125,143 +122,5 @@ namespace Azure.Storage.Blobs.Models
             IncludeSnapshots == other.IncludeSnapshots &&
             IncludeUncommittedBlobs == other.IncludeUncommittedBlobs &&
             Prefix == other.Prefix;
-    }
-
-    internal class GetBlobsAsyncCollection : StorageAsyncCollection<BlobItem>
-    {
-        private readonly BlobContainerClient _client;
-        private readonly GetBlobsOptions? _options;
-
-        public GetBlobsAsyncCollection(
-            BlobContainerClient client,
-            GetBlobsOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
-        {
-            _client = client;
-            _options = options;
-        }
-
-        protected override async Task<Page<BlobItem>> GetNextPageAsync(
-            string continuationToken,
-            int? pageSizeHint,
-            bool isAsync,
-            CancellationToken cancellationToken)
-        {
-            Task<Response<BlobsFlatSegment>> task = _client.GetBlobsInternal(
-                continuationToken,
-                _options,
-                pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<BlobsFlatSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
-            return new Page<BlobItem>(
-                response.Value.BlobItems.ToArray(),
-                response.Value.NextMarker,
-                response.GetRawResponse());
-        }
-    }
-
-    internal class GetBlobsByHierarchyAsyncCollection : StorageAsyncCollection<BlobHierarchyItem>
-    {
-        private readonly BlobContainerClient _client;
-        private readonly GetBlobsOptions? _options;
-        private readonly string _delimiter;
-
-        public GetBlobsByHierarchyAsyncCollection(
-            BlobContainerClient client,
-            string delimiter,
-            GetBlobsOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
-        {
-            _client = client;
-            _delimiter = delimiter;
-            _options = options;
-        }
-
-        protected override async Task<Page<BlobHierarchyItem>> GetNextPageAsync(
-            string continuationToken,
-            int? pageHintSize,
-            bool isAsync,
-            CancellationToken cancellationToken)
-        {
-            Task<Response<BlobsHierarchySegment>> task = _client.GetBlobsByHierarchyInternal(
-                continuationToken,
-                _delimiter,
-                _options,
-                pageHintSize,
-                isAsync,
-                cancellationToken);
-            Response<BlobsHierarchySegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
-
-            var items = new List<BlobHierarchyItem>();
-            items.AddRange(response.Value.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
-            items.AddRange(response.Value.BlobItems.Select(b => new BlobHierarchyItem(null, b)));
-            return new Page<BlobHierarchyItem>(
-                items.ToArray(),
-                response.Value.NextMarker,
-                response.GetRawResponse());
-        }
-    }
-
-    /// <summary>
-    /// Either a <see cref="Prefix"/> or <see cref="Blob"/> returned from
-    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>.
-    /// </summary>
-    public class BlobHierarchyItem
-    {
-        /// <summary>
-        /// Gets a prefix, relative to the delimiter used to get the blobs.
-        /// </summary>
-        public string Prefix { get; internal set; }
-
-        /// <summary>
-        /// Gets a blob.
-        /// </summary>
-        public BlobItem Blob { get; internal set; }
-
-        /// <summary>
-        /// Gets a value indicating if this item represents a <see cref="Prefix"/>.
-        /// </summary>
-        public bool IsPrefix => Prefix != null;
-
-        /// <summary>
-        /// Gets a value indicating if this item represents a <see cref="Blob"/>.
-        /// </summary>
-        public bool IsBlob => Blob != null;
-
-        /// <summary>
-        /// Initialies a new instance of the BlobHierarchyItem class.
-        /// </summary>
-        /// <param name="prefix">
-        /// A prefix, relative to the delimiter used to get the blobs.
-        /// </param>
-        /// <param name="blob">
-        /// A blob.
-        /// </param>
-        internal BlobHierarchyItem(string prefix, BlobItem blob)
-        {
-            Prefix = prefix;
-            Blob = blob;
-        }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobHierarchyItem instance for mocking.
-        /// </summary>
-        public static BlobHierarchyItem BlobHierarchyItem(
-            string prefix,
-            BlobItem blob) =>
-            new BlobHierarchyItem(prefix, blob);
     }
 }

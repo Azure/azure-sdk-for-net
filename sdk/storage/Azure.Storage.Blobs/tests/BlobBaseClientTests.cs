@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -1196,7 +1195,7 @@ namespace Azure.Storage.Blobs.Test
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
                 AppendBlobClient httpsBlob = InstrumentClient(new AppendBlobClient(
-                    GetHttpsUri(httpBlob.Uri), 
+                    GetHttpsUri(httpBlob.Uri),
                     httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 await httpsBlob.CreateAsync();

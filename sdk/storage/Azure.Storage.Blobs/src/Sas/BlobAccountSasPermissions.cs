@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Storage.Sas
 {
     /// <summary>
-    /// <see cref="BlobAccountSasPermissions"/> supports reading and writing 
+    /// <see cref="BlobAccountSasPermissions"/> supports reading and writing
     /// permissions string for a storage account's access policy.  Use
     /// <see cref="ToString"/> to generate a permissions string.
     /// </summary>

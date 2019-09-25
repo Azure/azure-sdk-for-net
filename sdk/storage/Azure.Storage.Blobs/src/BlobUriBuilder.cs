@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
-        /// 
+        ///
         /// Example: "account.blob.core.windows.net"
         /// </summary>
         public string Host

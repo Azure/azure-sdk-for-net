@@ -280,7 +280,7 @@ namespace Azure.Storage.Sas
         /// <param name="containerName">The name of the container.</param>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>The canonical resource name.</returns>
-        static string GetCanonicalName(string account, string containerName, string blobName)
+        private static string GetCanonicalName(string account, string containerName, string blobName)
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
@@ -295,7 +295,7 @@ namespace Azure.Storage.Sas
         /// </param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
             Convert.ToBase64String(
                 new HMACSHA256(
                     Convert.FromBase64String(userDelegationKeyValue))

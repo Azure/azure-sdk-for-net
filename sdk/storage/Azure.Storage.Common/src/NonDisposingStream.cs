@@ -5,13 +5,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Common
 {
-    internal static partial class StreamExtensions
-    {
-        public static Stream WithNoDispose(this Stream stream) => stream is NonDisposingStream ? stream : new NonDisposingStream(stream);
-    }
-
     internal class NonDisposingStream : Stream
     {
         private readonly Stream _innerStream;
@@ -47,5 +44,10 @@ namespace Azure.Storage.Common
         public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) => _innerStream.WriteAsync(buffer, offset, count, cancellationToken);
 
         protected override void Dispose(bool disposing) { /* swallow disposal */ }
+    }
+
+    internal static partial class StreamExtensions
+    {
+        public static Stream WithNoDispose(this Stream stream) => stream is NonDisposingStream ? stream : new NonDisposingStream(stream);
     }
 }

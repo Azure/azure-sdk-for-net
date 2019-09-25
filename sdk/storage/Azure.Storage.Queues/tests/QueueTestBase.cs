@@ -97,7 +97,7 @@ namespace Azure.Storage.Queues.Tests
         private QueueClient GetSecondaryReadQueueClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
             QueueClientOptions options = getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
-            
+
             return InstrumentClient(
                  new QueueClient(
                     new Uri(config.QueueServiceEndpoint).AppendToPath(GetNewQueueName()),
