@@ -4277,6 +4277,44 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_CosmosDbSqlApi_CosmosDbSqlApi = @"{
+    ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""CosmosDbSqlApiSource"",
+            ""query"": ""select * from c"",
+            ""pageSize"": 1000,
+            ""preferredRegions"": [ ""West US"", ""West US 2"" ],
+            ""includeSystemColumns"": false
+          },
+          ""sink"": {
+            ""type"": ""CosmosDbSqlApiSink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": 1000
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""sourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""sinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_Json_AzureBlob = @"{
   ""properties"": {
     ""activities"": [
