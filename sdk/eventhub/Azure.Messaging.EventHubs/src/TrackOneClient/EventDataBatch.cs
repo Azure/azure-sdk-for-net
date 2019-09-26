@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -83,7 +83,7 @@ namespace TrackOne
             AmqpMessageConverter.UpdateAmqpMessagePartitionKey(amqpMessage, PartitionKey);
             eventData.AmqpMessage = amqpMessage;
 
-            // Calculate overhead depending on the message size. 
+            // Calculate overhead depending on the message size.
             // Overhead is smaller for messages smaller than 256 bytes.
             long overhead = eventData.AmqpMessage.SerializedMessageSize < 256 ? 5 : 8;
 

@@ -187,4 +187,3 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.Infrastructure
         }
     }
 }
-

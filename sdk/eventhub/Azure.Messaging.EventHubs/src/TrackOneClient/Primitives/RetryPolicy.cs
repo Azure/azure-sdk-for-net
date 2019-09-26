@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Net.Sockets;
@@ -9,7 +9,7 @@ using TrackOne.Primitives;
 namespace TrackOne
 {
     /// <summary>
-    /// Represents an abstraction for retrying messaging operations. Users should not 
+    /// Represents an abstraction for retrying messaging operations. Users should not
     /// implement this class, and instead should use one of the provided implementations.
     /// </summary>
     internal abstract class RetryPolicy
