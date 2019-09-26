@@ -103,6 +103,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptograph
 		Azure.Storage.Queues.Cryptography\README.md = Azure.Storage.Queues.Cryptography\README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLake", "Azure.Storage.Files.DataLake\src\Azure.Storage.Files.DataLake.csproj", "{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.DataLake.Tests", "Azure.Storage.Files.DataLake\tests\Azure.Storage.Files.DataLake.Tests.csproj", "{EDBF4B6B-5D28-47AF-A9BE-B70568067407}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.DataLake.Samples.Tests", "Azure.Storage.Files.DataLake\samples\Azure.Storage.Files.DataLake.Samples.Tests.csproj", "{E53736D7-EAF8-417C-9ADA-7ED931916502}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -173,6 +179,18 @@ Global
 		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDBF4B6B-5D28-47AF-A9BE-B70568067407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDBF4B6B-5D28-47AF-A9BE-B70568067407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDBF4B6B-5D28-47AF-A9BE-B70568067407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDBF4B6B-5D28-47AF-A9BE-B70568067407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
