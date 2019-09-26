@@ -1066,3 +1066,12 @@ directive:
   transform: >
     $.format = "int64";
 ```
+
+### Merge the PageBlob AccessTier type
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PremiumPageBlobAccessTierOptional
+  transform: >
+    $["x-ms-enum"].name = "AccessTier";
+```

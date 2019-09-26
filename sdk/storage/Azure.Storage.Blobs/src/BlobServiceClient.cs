@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -44,6 +43,26 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </summary>
         protected virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the service client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the service client.
+        /// </summary>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new BlobUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         #region ctors
         /// <summary>

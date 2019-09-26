@@ -1,18 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// Specifies options for listing queues with the 
+    /// Specifies options for listing queues with the
     /// <see cref="QueueServiceClient.GetQueuesAsync"/> operation.
     /// </summary>
     public struct GetQueuesOptions : IEquatable<GetQueuesOptions>
@@ -82,43 +78,5 @@ namespace Azure.Storage.Queues.Models
         public bool Equals(GetQueuesOptions other) =>
             IncludeMetadata == other.IncludeMetadata &&
             Prefix == other.Prefix;
-    }
-
-    internal class GetQueuesAsyncCollection : StorageAsyncCollection<QueueItem>
-    {
-        private readonly QueueServiceClient _client;
-        private readonly GetQueuesOptions? _options;
-
-        public GetQueuesAsyncCollection(
-            QueueServiceClient client,
-            GetQueuesOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
-        {
-            _client = client;
-            _options = options;
-        }
-
-        protected override async Task<Page<QueueItem>> GetNextPageAsync(
-            string continuationToken,
-            int? pageSizeHint,
-            bool isAsync,
-            CancellationToken cancellationToken)
-        {
-            Task<Response<QueuesSegment>> task = _client.GetQueuesInternal(
-                continuationToken,
-                _options,
-                pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<QueuesSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
-
-            return new Page<QueueItem>(
-                response.Value.QueueItems.ToArray(),
-                response.Value.NextMarker,
-                response.GetRawResponse());
-        }
     }
 }

@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Http;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
@@ -30,13 +31,13 @@ namespace Azure.Storage.Files.Models
         public ETag ETag => _rawStorageDirectoryProperties.ETag;
 
         /// <summary>
-        /// Returns DateTimeOffest the directory was last modified. Operations on files within the directory 
+        /// Returns DateTimeOffest the directory was last modified. Operations on files within the directory
         /// do not affect the last modified time of the directory.
         /// </summary>
         public DateTimeOffset LastModified => _rawStorageDirectoryProperties.LastModified;
 
         /// <summary>
-        /// Set to true if the directory metadata is completely encrypted using the specified algorithm. 
+        /// Set to true if the directory metadata is completely encrypted using the specified algorithm.
         /// Otherwise, the value is set to false.
         /// </summary>
         public bool IsServerEncrypted => _rawStorageDirectoryProperties.IsServerEncrypted;

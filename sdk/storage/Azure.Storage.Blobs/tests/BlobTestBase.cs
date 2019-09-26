@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace Azure.Storage.Test.Shared
 
         protected string SecondaryStorageTenantSecondaryHost() =>
             new Uri(TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
-                
+
         public BlobTestBase(bool async) : this(async, null) { }
 
         public BlobTestBase(bool async, RecordedTestMode? mode = null)
@@ -57,7 +56,7 @@ namespace Azure.Storage.Test.Shared
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 }
             };
-            if(Mode != RecordedTestMode.Live)
+            if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
             }
@@ -81,8 +80,7 @@ namespace Azure.Storage.Test.Shared
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     GetOptions()));
-        
-             
+
         private BlobServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
             BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
@@ -148,7 +146,7 @@ namespace Azure.Storage.Test.Shared
 
         public BlobContainerClient GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
     => GetSecondaryReadBlobContainerClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
-        
+
         public BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey()
             => GetServiceClientFromSharedKeyConfig(TestConfigSecondary);
 
@@ -434,7 +432,7 @@ namespace Azure.Storage.Test.Shared
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
-        class DisposingContainer : IDisposable
+        private class DisposingContainer : IDisposable
         {
             public BlobContainerClient ContainerClient { get; }
 

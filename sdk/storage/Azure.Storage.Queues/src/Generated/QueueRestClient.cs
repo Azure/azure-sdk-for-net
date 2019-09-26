@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 // This file was automatically generated.  Do not edit.
 
-#pragma warning disable IDE0016 // Null check can be simplified 
+#pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
 #pragma warning disable IDE0018 // Object initialization can be simplified
 #pragma warning disable SA1402  // File may only contain a single type
@@ -3462,6 +3461,36 @@ namespace Azure.Storage.Queues.Models
         /// QueueNotFound
         /// </summary>
         public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound { get; } = @"QueueNotFound";
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
+
+        /// <summary>
+        /// FeatureVersionMismatch
+        /// </summary>
+        public static Azure.Storage.Queues.Models.QueueErrorCode FeatureVersionMismatch { get; } = @"FeatureVersionMismatch";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>

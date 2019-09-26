@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure;
 using Azure.Storage.Blobs.Models;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.Storage.Blobs
     /// <summary>
     /// BlobRestClient response extensions
     /// </summary>
-    static partial class BlobExtensions
+    internal static partial class BlobExtensions
     {
         /// <summary>
         /// Convert the internal BrokenLease response into a Lease.  The

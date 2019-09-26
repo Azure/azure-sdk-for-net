@@ -6,6 +6,7 @@ using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1248,17 +1249,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         Memory<byte> IKeyEncryptionKey.UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
-            UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken);
+            byte[] buffer = MemoryMarshal.TryGetArray(encryptedKey, out ArraySegment<byte> segment) ? segment.Array : encryptedKey.ToArray();
+            UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), buffer, cancellationToken);
 
-            return result.Key;
+            return new Memory<byte>(result.Key);
         }
 
         /// <inheritdoc/>
         async Task<Memory<byte>> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
-            UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken).ConfigureAwait(false);
+            byte[] buffer = MemoryMarshal.TryGetArray(encryptedKey, out ArraySegment<byte> segment) ? segment.Array : encryptedKey.ToArray();
+            UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), buffer, cancellationToken).ConfigureAwait(false);
 
-            return result.Key;
+            return new Memory<byte>(result.Key);
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
