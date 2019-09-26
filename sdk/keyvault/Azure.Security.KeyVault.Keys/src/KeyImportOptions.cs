@@ -48,11 +48,11 @@ namespace Azure.Security.KeyVault.Keys
 
             Properties.WriteAttributes(json);
 
-            if (Properties._tags.IsValueCreated && Properties._tags.Value.Count > 0)
+            if (Properties._tags != null && Properties._tags.Count > 0)
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (KeyValuePair<string, string> kvp in Properties._tags.Value)
+                foreach (KeyValuePair<string, string> kvp in Properties._tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

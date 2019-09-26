@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -27,7 +26,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 writer.WriteEndObject();
             }
 
-            Assert.AreEqual(@"{""credentials"":{""account_id"":""accountId""}}", json.Content);
+            Assert.AreEqual(@"{""credentials"":{""account_id"":""accountId""}}", json.ToString());
         }
 
         [Test]
@@ -55,7 +54,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 writer.WriteEndObject();
             }
 
-            Assert.AreEqual(@"{""credentials"":{""account_id"":""accountId""},""org_details"":{""admin_details"":[{""email"":""email@domain.tld""}]}}", json.Content);
+            Assert.AreEqual(@"{""credentials"":{""account_id"":""accountId""},""org_details"":{""admin_details"":[{""email"":""email@domain.tld""}]}}", json.ToString());
         }
     }
 }

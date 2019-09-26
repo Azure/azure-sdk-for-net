@@ -33,6 +33,8 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
+        private List<AdministratorDetails> _administrators;
+
         internal Issuer()
         {
             Properties = new IssuerProperties();
@@ -85,7 +87,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// A list of contacts who administrate the certificate issuer account
         /// </summary>
-        public IList<AdministratorDetails> Administrators => _administrators.Value;
+        public IList<AdministratorDetails> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
 
         /// <summary>
         /// The time the issuer was created in UTC
@@ -106,8 +108,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets or sets the attributes of the <see cref="Issuer"/>.
         /// </summary>
         public IssuerProperties Properties { get; }
-
-        internal Lazy<IList<AdministratorDetails>> _administrators = new Lazy<IList<AdministratorDetails>>(() => new List<AdministratorDetails>(), LazyThreadSafetyMode.PublicationOnly);
 
         internal virtual void ReadProperty(JsonProperty prop)
         {
@@ -205,7 +205,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (!string.IsNullOrEmpty(OrganizationId) || _administrators.IsValueCreated)
+            if (!string.IsNullOrEmpty(OrganizationId) || (_administrators != null && _administrators.Count > 0))
             {
                 json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
@@ -244,11 +244,11 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
-            if (_administrators.IsValueCreated && _administrators.Value.Count > 0)
+            if (_administrators != null && _administrators.Count > 0)
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach (AdministratorDetails admin in _administrators.Value)
+                foreach (AdministratorDetails admin in _administrators)
                 {
                     json.WriteStartObject();
 

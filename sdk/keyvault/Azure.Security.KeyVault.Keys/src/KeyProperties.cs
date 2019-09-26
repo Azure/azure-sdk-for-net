@@ -22,6 +22,8 @@ namespace Azure.Security.KeyVault.Keys
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
 
+        internal Dictionary<string, string> _tags;
+
         internal KeyProperties() { }
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// A dictionary of tags with specific metadata about the key.
         /// </summary>
-        public IDictionary<string, string> Tags => _tags.Value;
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
         /// Specifies whether the key is enabled and useable for cryptographic operations.
@@ -103,8 +105,6 @@ namespace Azure.Security.KeyVault.Keys
         /// 'Recoverable+ProtectedSubscription'
         /// </summary>
         public string RecoveryLevel => _attributes.RecoveryLevel;
-
-        internal Lazy<IDictionary<string, string>> _tags = new Lazy<IDictionary<string, string>>(() => new Dictionary<string, string>(), LazyThreadSafetyMode.PublicationOnly);
 
         /// <summary>
         /// Parses the key identifier into the vaultUri, name, and version of the key.

@@ -27,6 +27,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         private ObjectId _identifier;
         private VaultAttributes _attributes;
+        private Dictionary<string, string> _tags;
 
         internal SecretProperties()
         {
@@ -119,9 +120,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// A dictionary of tags with specific metadata about the secret.
         /// </summary>
-        public IDictionary<string, string> Tags => _tags.Value;
-
-        internal Lazy<IDictionary<string, string>> _tags = new Lazy<IDictionary<string, string>>(() => new Dictionary<string, string>(), LazyThreadSafetyMode.PublicationOnly);
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         internal void ReadProperties(JsonElement json)
         {
@@ -180,11 +179,11 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteEndObject();
             }
 
-            if (_tags.IsValueCreated && _tags.Value.Count > 0)
+            if (_tags != null && _tags.Count > 0)
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (KeyValuePair<string, string> kvp in _tags.Value)
+                foreach (KeyValuePair<string, string> kvp in _tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

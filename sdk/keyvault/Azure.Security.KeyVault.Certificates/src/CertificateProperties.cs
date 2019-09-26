@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string AttributesPropertyName = "attributes";
 
         private CertificateAttributes _attributes;
+        private Dictionary<string, string> _tags;
 
         /// <summary>
         /// The Id of the certificate.
@@ -46,7 +47,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The tags applied to the certificate.
         /// </summary>
-        public IDictionary<string, string> Tags => _tags.Value;
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
         /// Specifies if the certificate is currently enabled.
@@ -83,8 +84,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// 'Recoverable+ProtectedSubscription'
         /// </summary>
         public string RecoveryLevel => _attributes.RecoveryLevel;
-
-        internal Lazy<IDictionary<string, string>> _tags = new Lazy<IDictionary<string, string>>(() => new Dictionary<string, string>(), LazyThreadSafetyMode.PublicationOnly);
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
