@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -45,7 +46,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The tags applied to the certificate.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; }
+        public IDictionary<string, string> Tags => _tags.Value;
 
         /// <summary>
         /// Specifies if the certificate is currently enabled.
@@ -83,6 +84,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
+        internal Lazy<IDictionary<string, string>> _tags = new Lazy<IDictionary<string, string>>(() => new Dictionary<string, string>(), LazyThreadSafetyMode.PublicationOnly);
+
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -106,7 +109,6 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 case TagsPropertyName:
-                    Tags = new Dictionary<string, string>();
                     foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                     {
                         Tags[tagProp.Name] = tagProp.Value.GetString();
