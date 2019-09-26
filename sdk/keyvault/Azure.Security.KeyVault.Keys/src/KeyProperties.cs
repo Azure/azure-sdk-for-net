@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
@@ -20,6 +21,8 @@ namespace Azure.Security.KeyVault.Keys
         private const string TagsPropertyName = "tags";
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+
+        internal Dictionary<string, string> _tags;
 
         internal KeyProperties() { }
 
@@ -65,7 +68,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// A dictionary of tags with specific metadata about the key.
         /// </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
         /// Specifies whether the key is enabled and useable for cryptographic operations.
@@ -138,7 +141,6 @@ namespace Azure.Security.KeyVault.Keys
                     _attributes.ReadProperties(prop.Value);
                     break;
                 case TagsPropertyName:
-                    Tags = new Dictionary<string, string>();
                     foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                     {
                         Tags[tagProp.Name] = tagProp.Value.GetString();

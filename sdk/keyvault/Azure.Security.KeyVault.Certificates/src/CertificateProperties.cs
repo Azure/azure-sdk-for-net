@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -16,6 +17,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string AttributesPropertyName = "attributes";
 
         private CertificateAttributes _attributes;
+        private Dictionary<string, string> _tags;
 
         /// <summary>
         /// The Id of the certificate.
@@ -45,7 +47,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The tags applied to the certificate.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; }
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
         /// Specifies if the certificate is currently enabled.
@@ -106,7 +108,6 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 case TagsPropertyName:
-                    Tags = new Dictionary<string, string>();
                     foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                     {
                         Tags[tagProp.Name] = tagProp.Value.GetString();
