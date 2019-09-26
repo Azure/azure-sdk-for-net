@@ -2,7 +2,15 @@
 
 ## Current version
 ###  Feature Additions
+
+## Version 4.2.0
+###  Feature Additions
+* Added support for Data Flow:
+    - Added data flow object model and CRUD APIs
+    - Added data flow debug session APIs
+    - Added support for execute data flow activity type
 - Added property queryTimeout to tabular sources
+- Added support for Cosmos DB SQL API dataset and copy source/sink
 
 ## Version 4.1.3
 ###  Feature Additions
