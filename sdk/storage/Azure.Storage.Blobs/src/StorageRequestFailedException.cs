@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="error">The StorageError</param>
         static partial void CustomizeFromXml(XElement root, StorageError error)
         {
-            foreach (var element in root.Elements())
+            foreach (XElement element in root.Elements())
             {
                 switch (element.Name.LocalName)
                 {
@@ -45,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Message, null, this.Code, this.AdditionalInformation);
+            => new StorageRequestFailedException(response, Message, null, Code, AdditionalInformation);
     }
 
     /// <summary>
@@ -59,7 +60,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, null, null, this.ErrorCode);
+            => new StorageRequestFailedException(response, null, null, ErrorCode);
     }
 
     /// <summary>
@@ -73,6 +74,6 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Error.Message, null, this.Error.Code);
+            => new StorageRequestFailedException(response, Error.Message, null, Error.Code);
     }
 }

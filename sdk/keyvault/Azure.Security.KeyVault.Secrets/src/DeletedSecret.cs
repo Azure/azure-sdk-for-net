@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -10,11 +9,18 @@ namespace Azure.Security.KeyVault.Secrets
     /// <summary>
     /// Represents a KeyVault secret that has been deleted, allowing it to be recovered, if needed.
     /// </summary>
-    public class DeletedSecret : SecretBase
+    public class DeletedSecret : Secret
     {
+        private const string RecoveryIdPropertyName = "recoveryId";
+        private const string DeletedDatePropertyName = "deletedDate";
+        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
+
+        private static readonly JsonEncodedText s_recoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
+        private static readonly JsonEncodedText s_deletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
+        private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
+
         internal DeletedSecret()
         {
-
         }
 
         /// <summary>
@@ -32,43 +38,45 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
+        internal override void ReadProperty(JsonProperty prop)
+        {
+            switch (prop.Name)
+            {
+                case RecoveryIdPropertyName:
+                    RecoveryId = prop.Value.GetString();
+                    break;
+
+                case DeletedDatePropertyName:
+                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+
+                case ScheduledPurgeDatePropertyName:
+                    ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+
+                default:
+                    base.ReadProperty(prop);
+                    break;
+            }
+        }
+
         internal override void WriteProperties(Utf8JsonWriter json)
         {
             base.WriteProperties(json);
 
             if (RecoveryId != null)
             {
-                json.WriteString("recoveryId", RecoveryId);
+                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId);
             }
 
             if (DeletedDate.HasValue)
             {
-                json.WriteNumber("deletedDate", DeletedDate.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_deletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
             }
 
             if (ScheduledPurgeDate.HasValue)
             {
-                json.WriteNumber("scheduledPurgeDate", ScheduledPurgeDate.Value.ToUnixTimeSeconds());
-            }
-        }
-
-        internal override void ReadProperties(JsonElement json)
-        {
-            base.ReadProperties(json);
-
-            if (json.TryGetProperty("recoveryId", out JsonElement recoveryId))
-            {
-                RecoveryId = recoveryId.GetString();
-            }
-
-            if (json.TryGetProperty("deletedDate", out JsonElement deletedDate))
-            {
-                DeletedDate = DateTimeOffset.FromUnixTimeSeconds(deletedDate.GetInt64());
-            }
-
-            if (json.TryGetProperty("scheduledPurgeDate", out JsonElement scheduledPurgeDate))
-            {
-                ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(scheduledPurgeDate.GetInt64());
+                json.WriteNumber(s_scheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
             }
         }
     }

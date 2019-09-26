@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
 using System;
@@ -55,14 +54,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal string GetVersionString()
         {
-            switch (Version)
+            return Version switch
             {
-                case ServiceVersion.V7_0:
-                    return "7.0";
+                ServiceVersion.V7_0 => "7.0",
 
-                default:
-                    throw new NotSupportedException($"The service version {Version} is not supported.");
-            }
+                _ => throw new NotSupportedException($"The service version {Version} is not supported."),
+            };
         }
     }
 }

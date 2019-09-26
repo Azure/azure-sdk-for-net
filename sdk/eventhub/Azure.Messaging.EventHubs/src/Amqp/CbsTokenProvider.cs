@@ -4,8 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -25,14 +25,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The type to consider a token if not based on a shared access signature.</summary>
         private const string JsonWebTokenType = "jwt";
 
-        /// <summary>The type to consider a token generated from the associated <see cref="Credential" />.</summary>
-        private readonly string TokenType;
+        /// <summary>The type to consider a token generated from the associated <see cref="_credential" />.</summary>
+        private readonly string _tokenType;
 
         /// <summary>The credential used to generate access tokens.</summary>
-        private readonly EventHubTokenCredential Credential;
+        private readonly EventHubTokenCredential _credential;
 
         /// <summary>The cancellation token to consider when making requests.</summary>
-        private readonly CancellationToken CancellationToken;
+        private readonly CancellationToken _cancellationToken;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CbsTokenProvider"/> class.
@@ -44,12 +44,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         public CbsTokenProvider(EventHubTokenCredential credential,
                                 CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            Credential = credential;
-            CancellationToken = cancellationToken;
+            _credential = credential;
+            _cancellationToken = cancellationToken;
 
-            TokenType = (credential.IsSharedAccessSignatureCredential)
+            _tokenType = (credential.IsSharedAccessSignatureCredential)
                 ? SharedAccessSignatureTokenType
                 : JsonWebTokenType;
         }
@@ -62,15 +62,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="namespaceAddress">The address of the namespace to be authorized.</param>
         /// <param name="appliesTo">The resource to which the token should apply.</param>
         /// <param name="requiredClaims">The set of claims that are required for authorization.</param>
-        ///
+        /// 
         /// <returns>The token to use for authorization.</returns>
         ///
-        public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress,
-                                                  string appliesTo,
-                                                  string[] requiredClaims)
+        public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress, string appliesTo, string[] requiredClaims)
         {
-            var token = await Credential.GetTokenAsync(requiredClaims, CancellationToken);
-            return new CbsToken(token.Token, TokenType, token.ExpiresOn.UtcDateTime);
+            AccessToken token = await _credential.GetTokenAsync(new TokenRequest(requiredClaims), _cancellationToken);
+            return new CbsToken(token.Token, _tokenType, token.ExpiresOn.UtcDateTime);
         }
     }
 }

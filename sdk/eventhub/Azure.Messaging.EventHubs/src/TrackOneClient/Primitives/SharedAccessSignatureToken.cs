@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net;
+using TrackOne.Primitives;
+
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Net;
-    using TrackOne.Primitives;
-
     /// <summary>
     /// A SecurityToken that wraps a Shared Access Signature
     /// </summary>
@@ -21,12 +21,10 @@ namespace TrackOne
         internal const string SignedExpiry = "se";
         internal const int MaxKeyNameLength = 256;
         internal const int MaxKeyLength = 256;
-
-        const string SignedResourceFullFieldName = SharedAccessSignature + " " + SignedResource;
-        const string SasPairSeparator = "&";
-        const string SasKeyValueSeparator = "=";
-
-        static readonly Func<string, string> Decoder = WebUtility.UrlDecode;
+        private const string SignedResourceFullFieldName = SharedAccessSignature + " " + SignedResource;
+        private const string SasPairSeparator = "&";
+        private const string SasKeyValueSeparator = "=";
+        private static readonly Func<string, string> s_decoder = WebUtility.UrlDecode;
 
         /// <summary>
         /// Creates a new instance of the <see cref="SharedAccessSignatureToken"/> class.
@@ -64,7 +62,7 @@ namespace TrackOne
             }
         }
 
-        static IDictionary<string, string> ExtractFieldValues(string sharedAccessSignature)
+        private static IDictionary<string, string> ExtractFieldValues(string sharedAccessSignature)
         {
             string[] tokenLines = sharedAccessSignature.Split();
 
@@ -97,11 +95,10 @@ namespace TrackOne
             return parsedFields;
         }
 
-        static string GetAudienceFromToken(string token)
+        private static string GetAudienceFromToken(string token)
         {
-            string audience;
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
-            if (!decodedToken.TryGetValue(SignedResourceFullFieldName, out audience))
+            IDictionary<string, string> decodedToken = Decode(token, s_decoder, s_decoder, SasKeyValueSeparator, SasPairSeparator);
+            if (!decodedToken.TryGetValue(SignedResourceFullFieldName, out string audience))
             {
                 throw new FormatException(Resources.TokenMissingAudience);
             }
@@ -109,21 +106,20 @@ namespace TrackOne
             return audience;
         }
 
-        static DateTime GetExpirationDateTimeUtcFromToken(string token)
+        private static DateTime GetExpirationDateTimeUtcFromToken(string token)
         {
-            string expiresIn;
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
-            if (!decodedToken.TryGetValue(SignedExpiry, out expiresIn))
+            IDictionary<string, string> decodedToken = Decode(token, s_decoder, s_decoder, SasKeyValueSeparator, SasPairSeparator);
+            if (!decodedToken.TryGetValue(SignedExpiry, out string expiresIn))
             {
                 throw new FormatException(Resources.TokenMissingExpiresOn);
             }
 
-            var expiresOn = (SharedAccessSignatureTokenProvider.EpochTime + TimeSpan.FromSeconds(double.Parse(expiresIn, CultureInfo.InvariantCulture)));
+            DateTime expiresOn = (SharedAccessSignatureTokenProvider.EpochTime + TimeSpan.FromSeconds(double.Parse(expiresIn, CultureInfo.InvariantCulture)));
 
             return expiresOn;
         }
 
-        static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
+        private static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
             IEnumerable<string> valueEncodedPairs = encodedString.Split(new[] { pairSeparator }, StringSplitOptions.None);

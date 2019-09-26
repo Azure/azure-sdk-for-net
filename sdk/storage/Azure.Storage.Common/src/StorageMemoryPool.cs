@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -14,52 +13,52 @@ namespace Azure.Storage
     /// <summary>
     /// Private memory pool specific to Azure storage transfers, based on ArrayPool.
     /// </summary>
-    class StorageMemoryPool : MemoryPool<byte>
+    internal class StorageMemoryPool : MemoryPool<byte>
     {
-        ArrayPool<byte> arrayPool;
+        private ArrayPool<byte> _arrayPool;
 
         public StorageMemoryPool(int maxArrayLength, int maxArraysPerBucket)
         {
-            this.MaxBufferSize = maxArrayLength;
-            this.arrayPool = ArrayPool<byte>.Create(maxArrayLength, maxArraysPerBucket);
+            MaxBufferSize = maxArrayLength;
+            _arrayPool = ArrayPool<byte>.Create(maxArrayLength, maxArraysPerBucket);
         }
 
         public override int MaxBufferSize { get; }
 
         public override IMemoryOwner<byte> Rent(int minBufferSize = -1)
         {
-            lock (this.arrayPool)
+            lock (_arrayPool)
             {
                 return new StorageMemoryOwner(this, minBufferSize);
             }
         }
 
-        protected override void Dispose(bool disposing) => this.arrayPool = default;
+        protected override void Dispose(bool disposing) => _arrayPool = default;
 
-        class StorageMemoryOwner : IMemoryOwner<byte>
+        private class StorageMemoryOwner : IMemoryOwner<byte>
         {
             public StorageMemoryOwner(StorageMemoryPool pool, int minimumLength)
             {
-                this.arrayPool = pool.arrayPool;
-                this.Memory = this.arrayPool.Rent(minimumLength);
+                _arrayPool = pool._arrayPool;
+                Memory = _arrayPool.Rent(minimumLength);
             }
 
-            ArrayPool<byte> arrayPool;
+            private ArrayPool<byte> _arrayPool;
 
             public Memory<byte> Memory { get; private set; }
 
             #region IDisposable Support
-            private bool disposedValue = false; // To detect redundant calls
+            private bool _disposedValue = false; // To detect redundant calls
 
             public void Dispose()
             {
-                if (!this.disposedValue)
+                if (!_disposedValue)
                 {
-                    this.disposedValue = true;
+                    _disposedValue = true;
 
-                    this.arrayPool.Return(this.Memory.ToArray());
-                    this.arrayPool = null;
-                    this.Memory = null;
+                    _arrayPool.Return(Memory.ToArray());
+                    _arrayPool = null;
+                    Memory = null;
                 }
             }
             #endregion

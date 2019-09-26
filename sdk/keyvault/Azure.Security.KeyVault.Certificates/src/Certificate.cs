@@ -1,60 +1,97 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// An Azure Key Vault certificate
+    /// An Azure Key Vault certificate.
     /// </summary>
-    public class Certificate : CertificateBase
+    public class Certificate : IJsonDeserializable
     {
+        private const string KeyIdPropertyName = "kid";
+        private const string SecretIdPropertyName = "sid";
+        private const string ContentTypePropertyName = "contentType";
+        private const string CERPropertyName = "cer";
+
         /// <summary>
-        /// The id of the key vault Key backing the certifcate
+        /// The Id of the certificate.
+        /// </summary>
+        public Uri Id => Properties.Id;
+
+        /// <summary>
+        /// The name of the certificate.
+        /// </summary>
+        public string Name => Properties.Name;
+
+        /// <summary>
+        /// The Uri of the vault in which the certificate is stored.
+        /// </summary>
+        public Uri VaultUri => Properties.VaultUri;
+
+        /// <summary>
+        /// The version of the certificate.
+        /// </summary>
+        public string Version => Properties.Version;
+
+        /// <summary>
+        /// The Id of the Key Vault Key backing the certifcate.
         /// </summary>
         public string KeyId { get; private set; }
 
         /// <summary>
-        /// The id of the key vault Secret which contains the PEM of PFX formatted content of the certficate and it's private key
+        /// The Id of the Key Vault Secret which contains the PEM of PFX formatted content of the certficate and it's private key.
         /// </summary>
         public string SecretId { get; private set; }
 
         /// <summary>
-        /// The content type of the key vault Secret corresponding to the certificate
+        /// The content type of the key vault Secret corresponding to the certificate.
         /// </summary>
         public CertificateContentType ContentType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the attributes of the <see cref="Certificate"/>.
+        /// </summary>
+        public CertificateProperties Properties { get; } = new CertificateProperties();
 
         /// <summary>
         /// The CER formatted public X509 certificate
         /// </summary>
         public byte[] CER { get; private set; }
 
-        private const string KeyIdPropertyName = "kid";
-        private const string SecretIdPropertyName = "sid";
-        private const string ContentTypePropertyName = "contentType";
-        private const string CERPropertyName = "cer";
-
-        internal override void ReadProperty(JsonProperty prop)
+        internal virtual void ReadProperty(JsonProperty prop)
         {
-            switch(prop.Name)
+            switch (prop.Name)
             {
                 case KeyIdPropertyName:
                     KeyId = prop.Value.GetString();
                     break;
+
                 case SecretIdPropertyName:
                     SecretId = prop.Value.GetString();
                     break;
+
                 case ContentTypePropertyName:
                     ContentType = prop.Value.GetString();
                     break;
+
                 case CERPropertyName:
                     CER = Base64Url.Decode(prop.Value.GetString());
                     break;
+
                 default:
-                    base.ReadProperty(prop);
+                    Properties.ReadProperty(prop);
                     break;
+            }
+        }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json)
+        {
+            foreach (JsonProperty prop in json.EnumerateObject())
+            {
+                ReadProperty(prop);
             }
         }
     }

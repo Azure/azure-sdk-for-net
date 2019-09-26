@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -24,6 +25,8 @@ namespace Azure.Data.AppConfiguration.Tests
         private static readonly string s_credential = "b1d9b31";
         private static readonly string s_secret = "aabbccdd";
         private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
+        private static readonly string s_version = new ConfigurationClientOptions().GetVersionString();
+
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
             Label = "test_label",
@@ -61,10 +64,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key", request.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
-
 
         [Test]
         public async Task GetWithLabel()
@@ -80,7 +82,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
 
@@ -113,7 +115,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
@@ -134,7 +136,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
         }
@@ -153,7 +155,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key", request.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
         }
 
         [Test]
@@ -170,7 +172,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
         }
 
         [Test]
@@ -223,12 +225,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request1 = mockTransport.Requests[0];
             Assert.AreEqual(RequestMethod.Get, request1.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/?key=*&label=*", request1.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=*&label=*&api-version={s_version}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/?key=*&label=*&after=5", request2.UriBuilder.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=*&label=*&after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -252,6 +254,40 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task RequestHasApiVersionQuery()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.AddAsync(s_testSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            StringAssert.Contains("api-version", request.Uri.ToUri().ToString());
+        }
+
+        [Test]
+        public async Task RequestHasSpecificApiVersion()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            var options = new ConfigurationClientOptions(ConfigurationClientOptions.ServiceVersion.V1_0);
+            options.Diagnostics.ApplicationId = "test_application";
+            options.Transport = mockTransport;
+
+            ConfigurationClient client = CreateClient<ConfigurationClient>(s_connectionString, options);
+
+            ConfigurationSetting setting = await client.AddAsync(s_testSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            StringAssert.Contains("api-version=1.0", request.Uri.ToUri().ToString());
+        }
+
+        [Test]
         public async Task AuthorizationHeaderFormat()
         {
             var expectedSyntax = $"HMAC-SHA256 Credential={s_credential}&SignedHeaders=date;host;x-ms-content-sha256&Signature=(.+)";
@@ -269,6 +305,277 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("Authorization", out var authHeader));
 
             Assert.True(Regex.IsMatch(authHeader, expectedSyntax));
+        }
+
+        [Test]
+        public async Task HasChangedNoValueNotFound()
+        {
+            var response = new MockResponse(404);
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(s_testSetting);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.IsFalse(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.IsFalse(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedNoValueNewValue()
+        {
+            var response = new MockResponse(200);
+
+            var unversionedSetting = s_testSetting.Clone();
+
+            string version = Guid.NewGuid().ToString();
+            var versionedSetting = s_testSetting.Clone();
+            versionedSetting.ETag = new ETag(version);
+
+            response.SetContent(SerializationHelpers.Serialize(versionedSetting, SerializeSetting));
+            response.AddHeader(new HttpHeader("ETag", versionedSetting.ETag.ToString()));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(unversionedSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.IsTrue(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.AreEqual(version, etag);
+            Assert.IsTrue(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedValuesMatch()
+        {
+            var response = new MockResponse(200);
+
+            string version = Guid.NewGuid().ToString();
+            var versionedSetting = s_testSetting.Clone();
+            versionedSetting.ETag = new ETag(version);
+
+            response.SetContent(SerializationHelpers.Serialize(versionedSetting, SerializeSetting));
+            response.AddHeader(new HttpHeader("ETag", versionedSetting.ETag.ToString()));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(versionedSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.IsTrue(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.AreEqual(version, etag);
+            Assert.IsFalse(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedValuesDontMatch()
+        {
+            var response = new MockResponse(200);
+
+            string version1 = Guid.NewGuid().ToString();
+            var version1Setting = s_testSetting.Clone();
+            version1Setting.ETag = new ETag(version1);
+
+            string version2 = Guid.NewGuid().ToString();
+            var version2Setting = s_testSetting.Clone();
+            version2Setting.ETag = new ETag(version2);
+
+            response.SetContent(SerializationHelpers.Serialize(version2Setting, SerializeSetting));
+            response.AddHeader(new HttpHeader("ETag", version2Setting.ETag.ToString()));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(version1Setting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.IsTrue(response.Headers.TryGetValue("ETag", out string etag));
+            Assert.AreEqual(version2, etag);
+            Assert.IsTrue(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedValueNotFound()
+        {
+            var response = new MockResponse(404);
+
+            string version = Guid.NewGuid().ToString();
+            var versionedSetting = s_testSetting.Clone();
+            versionedSetting.ETag = new ETag(version);
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            bool hasChanged = await service.HasChangedAsync(versionedSetting);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Head, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.IsTrue(hasChanged);
+        }
+
+        [Test]
+        public async Task SetReadOnly()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = true
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public async Task SetReadOnlyWithLabel()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = true
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public void SetReadOnlyNotFound()
+        {
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.SetReadOnlyAsync(s_testSetting.Key);
+            });
+
+            Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        public async Task ClearReadOnly()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = false
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.ClearReadOnlyAsync(testSetting.Key);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public async Task ClearReadOnlyWithLabel()
+        {
+            var response = new MockResponse(200);
+            var testSetting = new ConfigurationSetting("test_key", "test_value")
+            {
+                Label = "test_label",
+                ContentType = "test_content_type",
+                Tags = new Dictionary<string, string>
+                {
+                    { "tag1", "value1" },
+                    { "tag2", "value2" }
+                },
+                Locked = false
+            };
+            response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual(testSetting, setting);
+        }
+
+        [Test]
+        public void ClearReadOnlyNotFound()
+        {
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.ClearReadOnlyAsync(s_testSetting.Key);
+            });
+
+            Assert.AreEqual(404, exception.Status);
         }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)

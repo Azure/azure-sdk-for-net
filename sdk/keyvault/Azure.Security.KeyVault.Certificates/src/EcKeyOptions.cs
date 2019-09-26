@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
@@ -12,7 +11,7 @@ namespace Azure.Security.KeyVault.Certificates
     public class EcKeyOptions : KeyOptions
     {
         private const string CurvePropertyName = "crv";
-        private static readonly JsonEncodedText CurvePropertyNameBytes = JsonEncodedText.Encode(CurvePropertyName);
+        private static readonly JsonEncodedText s_curvePropertyNameBytes = JsonEncodedText.Encode(CurvePropertyName);
 
         /// <summary>
         /// The curve which back the EC key
@@ -33,16 +32,18 @@ namespace Azure.Security.KeyVault.Certificates
         {
         }
 
-        internal override bool ReadProperty(JsonProperty prop)
+        internal override void ReadProperty(JsonProperty prop)
         {
-            if (!base.ReadProperty(prop) && string.CompareOrdinal(prop.Name, CurvePropertyName) == 0)
+            switch (prop.Name)
             {
-                Curve = prop.Value.GetString();
+                case CurvePropertyName:
+                    Curve = prop.Value.GetString();
+                    break;
 
-                return true;
+                default:
+                    base.ReadProperty(prop);
+                    break;
             }
-
-            return false;
         }
 
         internal override void WriteProperties(Utf8JsonWriter json)
@@ -51,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Curve.HasValue)
             {
-                json.WriteString(CurvePropertyNameBytes, Curve);
+                json.WriteString(s_curvePropertyNameBytes, Curve);
             }
         }
     }

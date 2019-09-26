@@ -71,7 +71,7 @@ namespace Azure.Identity.Tests
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
-            AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
+            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.AreEqual(token.Token, expectedToken);
         }
@@ -89,7 +89,7 @@ namespace Azure.Identity.Tests
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
-            AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
+            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.AreEqual(token.Token, expectedToken);
         }
@@ -109,7 +109,7 @@ namespace Azure.Identity.Tests
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), options));
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token));
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace Azure.Identity.Tests
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, VerifyDeviceCodeCallbackCancellationToken, options));
 
-            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token);
+            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
 
             try
             {
@@ -156,12 +156,12 @@ namespace Azure.Identity.Tests
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, ThrowingDeviceCodeCallback, options));
 
-            Assert.ThrowsAsync<MockException>(async () => await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token));
+            Assert.ThrowsAsync<MockException>(async () => await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
         }
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
         {
-            string requestUrl = mockRequest.UriBuilder.Uri.AbsoluteUri;
+            string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
             if (requestUrl.StartsWith("https://login.microsoftonline.com/common/discovery/instance"))
             {

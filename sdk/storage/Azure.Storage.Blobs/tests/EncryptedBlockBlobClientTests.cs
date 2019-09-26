@@ -1,20 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Azure.Core.Cryptography;
-using Azure.Core.Testing;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Specialized.Cryptography;
-using Azure.Storage.Blobs.Specialized.Cryptography.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -132,7 +126,7 @@ namespace Azure.Storage.Blobs.Test
         //        Assert.IsNotNull(response.Headers.RequestId);
         //    }
         //}
-        
+
         [TestCase(16)] // a single cipher block
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks

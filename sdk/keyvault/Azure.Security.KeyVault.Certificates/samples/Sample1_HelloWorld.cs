@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -23,7 +22,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            // Instantiate a certificate client that will be used to call the service. Notice that the client is using 
+            // Instantiate a certificate client that will be used to call the service. Notice that the client is using
             // default Azure credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -34,8 +33,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             CertificateOperation certOp = client.StartCreateCertificate(certName);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic 
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well 
+            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
             while (!certOp.HasCompleted)
@@ -48,13 +47,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Let's get the created certificate along with it's policy from the Key Vault.
             CertificateWithPolicy certificate = client.GetCertificateWithPolicy(certName);
 
-            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Expires}");
+            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
             Certificate updatedCert = client.UpdateCertificate(certName, certificate.Version, enabled: false);
 
-            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Enabled}'");
+            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 
             // We need to create a new version of the certificate that applications can use to replace the compromised certificate.
             // Creating a certificate with the same name and policy as the compromised certificate will create another version of the

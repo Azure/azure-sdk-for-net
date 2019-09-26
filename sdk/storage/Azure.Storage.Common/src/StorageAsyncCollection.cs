@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections;
@@ -64,7 +63,7 @@ namespace Azure.Storage
         /// True if the iteration can continue, false otherwise.
         /// </returns>
         protected virtual bool CanContinue(string continuationToken) =>
-            !String.IsNullOrEmpty(continuationToken);
+            !string.IsNullOrEmpty(continuationToken);
 
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time.  This may
@@ -87,15 +86,15 @@ namespace Azure.Storage
         {
             do
             {
-                var page = await this.GetNextPageAsync(
+                Page<T> page = await GetNextPageAsync(
                     continuationToken,
                     pageHintSize,
                     isAsync: true,
-                    cancellationToken: this.CancellationToken)
+                    cancellationToken: CancellationToken)
                     .ConfigureAwait(false);
                 continuationToken = page.ContinuationToken;
                 yield return page;
-            } while (this.CanContinue(continuationToken));
+            } while (CanContinue(continuationToken));
         }
 
         /// <summary>
@@ -113,24 +112,24 @@ namespace Azure.Storage
             // we'll still use the original CancellationToken if one wasn't passed.
             if (cancellationToken == default)
             {
-                cancellationToken = this.CancellationToken;
+                cancellationToken = CancellationToken;
             }
 
             string continuationToken = null;
             do
             {
-                var page = await this.GetNextPageAsync(
+                Page<T> page = await GetNextPageAsync(
                     continuationToken,
                     null,
                     isAsync: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 continuationToken = page.ContinuationToken;
-                foreach (var item in page.Values)
+                foreach (T item in page.Values)
                 {
                     yield return new Response<T>(page.GetRawResponse(), item);
                 }
-            } while (this.CanContinue(continuationToken));
+            } while (CanContinue(continuationToken));
         }
 
         /// <summary>
@@ -143,21 +142,21 @@ namespace Azure.Storage
             string continuationToken = null;
             do
             {
-                var page = this.GetNextPageAsync(
+                Page<T> page = GetNextPageAsync(
                     continuationToken,
                     null,
                     isAsync: false,
-                    cancellationToken: this.CancellationToken)
+                    cancellationToken: CancellationToken)
                     .EnsureCompleted();
                 continuationToken = page.ContinuationToken;
-                foreach (var item in page.Values)
+                foreach (T item in page.Values)
                 {
                     yield return new Response<T>(page.GetRawResponse(), item);
                 }
-            } while (this.CanContinue(continuationToken));
+            } while (CanContinue(continuationToken));
         }
 
-        IEnumerator<Response<T>> IEnumerable<Response<T>>.GetEnumerator() => this.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        IEnumerator<Response<T>> IEnumerable<Response<T>>.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>
     /// This exception is thrown if two or more <see cref="PartitionReceiver"/> instances connect
     /// to the same partition with different epoch values.

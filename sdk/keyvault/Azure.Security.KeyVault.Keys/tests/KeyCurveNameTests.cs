@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using NUnit.Framework;
 using System.Security.Cryptography;
@@ -27,9 +26,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyCurveName actual = name;
 
             Assert.AreEqual(name, actual.ToString());
-            Assert.AreEqual(expectedOidValue, actual.Oid?.Value);
-            Assert.AreEqual(expectedKeySize, actual.KeySize);
-            Assert.AreEqual(expectedKeyParameterSize, actual.KeyParameterSize);
+            Assert.AreEqual(expectedOidValue, actual._oid?.Value);
+            Assert.AreEqual(expectedKeySize, actual._keySize);
+            Assert.AreEqual(expectedKeyParameterSize, actual._keyParameterSize);
         }
 
         [TestCase("1.2.840.10045.3.1.7", "P-256")]

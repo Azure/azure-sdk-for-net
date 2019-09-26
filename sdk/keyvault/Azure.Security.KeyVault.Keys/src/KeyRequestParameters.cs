@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,20 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal class KeyRequestParameters : IJsonSerializable
     {
+        private const string KeyTypePropertyName = "kty";
+        private const string KeySizePropertyName = "key_size";
+        private const string KeyOpsPropertyName = "key_ops";
+        private const string CurveNamePropertyName = "crv";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
+
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
+        private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
+        private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+
         private KeyAttributes _attributes;
 
         public KeyType KeyType { get; set; }
@@ -22,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
 
-        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperation> operations)
+        internal KeyRequestParameters(KeyProperties key, IEnumerable<KeyOperation> operations)
         {
             if (key.Enabled.HasValue)
             {
@@ -77,7 +90,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(EcKeyCreateOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            if(ecKey.Curve.HasValue)
+            if (ecKey.Curve.HasValue)
             {
                 Curve = ecKey.Curve.Value;
             }
@@ -86,42 +99,29 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
-            if(rsaKey.KeySize.HasValue)
+            if (rsaKey.KeySize.HasValue)
             {
                 KeySize = rsaKey.KeySize.Value;
             }
         }
 
-        private const string KeyTypePropertyName = "kty";
-        private static readonly JsonEncodedText KeyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
-        private const string KeySizePropertyName = "key_size";
-        private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
-        private const string KeyOpsPropertyName = "key_ops";
-        private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "crv";
-        private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
-        private const string AttributesPropertyName = "attributes";
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
-        private const string TagsPropertyName = "tags";
-        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(KeyType != default)
+            if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyType);
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType);
             }
-            if(KeySize.HasValue)
+            if (KeySize.HasValue)
             {
-                json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
+                json.WriteNumber(s_keySizePropertyNameBytes, KeySize.Value);
             }
             if (Curve.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, Curve.Value);
+                json.WriteString(s_curveNamePropertyNameBytes, Curve.Value);
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
-                json.WriteStartObject(AttributesPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
                 _attributes.WriteProperties(json);
 
@@ -129,8 +129,8 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (KeyOperations != null)
             {
-                json.WriteStartArray(KeyOpsPropertyNameBytes);
-                foreach(var operation in KeyOperations)
+                json.WriteStartArray(s_keyOpsPropertyNameBytes);
+                foreach (KeyOperation operation in KeyOperations)
                 {
                     json.WriteStringValue(operation);
                 }
@@ -138,9 +138,9 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Tags != null && Tags.Count > 0)
             {
-                json.WriteStartObject(TagsPropertyNameBytes);
+                json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

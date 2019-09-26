@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -53,8 +52,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Let's list the keys and print their types.
             // List operations don't return the keys with key material information.
             // So, for each returned key we call GetKey to get the key with its key material information.
-            IEnumerable<Response<KeyBase>> keys = client.GetKeys();
-            foreach (KeyBase key in keys)
+            IEnumerable<Response<KeyProperties>> keys = client.GetKeys();
+            foreach (KeyProperties key in keys)
             {
                 Key keyWithType = client.GetKey(key.Name);
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyMaterial.KeyType}");
@@ -62,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
             // it has the required size.
-            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault 
+            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault
             // with the new specified size.
             var newRsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 4096)
             {
@@ -73,13 +72,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // You need to check all the different versions Cloud RSA key had previously.
             // Lets print all the versions of this key.
-            IEnumerable<Response<KeyBase>> keysVersions = client.GetKeyVersions(rsaKeyName);
-            foreach (KeyBase key in keysVersions)
+            IEnumerable<Response<KeyProperties>> keysVersions = client.GetKeyVersions(rsaKeyName);
+            foreach (KeyProperties key in keysVersions)
             {
                 Debug.WriteLine($"Key's version {key.Version} with name {key.Name}");
             }
 
-            // The Cloud RSA Key and the Cloud EC Key are no longer needed. 
+            // The Cloud RSA Key and the Cloud EC Key are no longer needed.
             // You need to delete them from the Key Vault.
             client.DeleteKey(rsaKeyName);
             client.DeleteKey(ecKeyName);

@@ -1,50 +1,49 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using TrackOne.Primitives;
+
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Net;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
-    using TrackOne.Primitives;
-
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
     internal class SharedAccessSignatureTokenProvider : TokenProvider
     {
-        internal static readonly TimeSpan DefaultTokenTimeout = TimeSpan.FromMinutes(60);
+        internal static readonly TimeSpan s_defaultTokenTimeout = TimeSpan.FromMinutes(60);
 
         /// <summary>
         /// Represents 00:00:00 UTC Thursday 1, January 1970.
         /// </summary>
         public static readonly DateTime EpochTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-
-        readonly byte[] encodedSharedAccessKey;
-        readonly string keyName;
-        readonly TimeSpan tokenTimeToLive;
-        readonly TokenScope tokenScope;
-        readonly string sharedAccessSignature;
-        internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
+        private readonly byte[] _encodedSharedAccessKey;
+        private readonly string _keyName;
+        private readonly TimeSpan _tokenTimeToLive;
+        private readonly TokenScope _tokenScope;
+        private readonly string _sharedAccessSignature;
+        internal static readonly Func<string, byte[]> s_messagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
 
         internal SharedAccessSignatureTokenProvider(string sharedAccessSignature)
         {
             SharedAccessSignatureToken.Validate(sharedAccessSignature);
-            this.sharedAccessSignature = sharedAccessSignature;
+            _sharedAccessSignature = sharedAccessSignature;
         }
 
         internal SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope = TokenScope.Entity)
-            : this(keyName, sharedAccessKey, MessagingTokenProviderKeyEncoder, DefaultTokenTimeout, tokenScope)
+            : this(keyName, sharedAccessKey, s_messagingTokenProviderKeyEncoder, s_defaultTokenTimeout, tokenScope)
         {
         }
 
         internal SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope = TokenScope.Entity)
-            : this(keyName, sharedAccessKey, MessagingTokenProviderKeyEncoder, tokenTimeToLive, tokenScope)
+            : this(keyName, sharedAccessKey, s_messagingTokenProviderKeyEncoder, tokenTimeToLive, tokenScope)
         {
         }
 
@@ -74,12 +73,12 @@ namespace TrackOne
                     Resources.ArgumentStringTooBig.FormatForUser(nameof(sharedAccessKey), SharedAccessSignatureToken.MaxKeyLength));
             }
 
-            this.keyName = keyName;
-            this.tokenTimeToLive = tokenTimeToLive;
-            this.encodedSharedAccessKey = customKeyEncoder != null ?
+            _keyName = keyName;
+            _tokenTimeToLive = tokenTimeToLive;
+            _encodedSharedAccessKey = customKeyEncoder != null ?
                 customKeyEncoder(sharedAccessKey) :
-                MessagingTokenProviderKeyEncoder(sharedAccessKey);
-            this.tokenScope = tokenScope;
+                s_messagingTokenProviderKeyEncoder(sharedAccessKey);
+            _tokenScope = tokenScope;
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace TrackOne
         {
             TimeoutHelper.ThrowIfNegativeArgument(timeout);
             appliesTo = NormalizeAppliesTo(appliesTo);
-            string tokenString = this.BuildSignature(appliesTo);
+            string tokenString = BuildSignature(appliesTo);
             var securityToken = new SharedAccessSignatureToken(tokenString);
             return Task.FromResult<SecurityToken>(securityToken);
         }
@@ -102,21 +101,21 @@ namespace TrackOne
         /// <returns></returns>
         protected virtual string BuildSignature(string targetUri)
         {
-            return string.IsNullOrWhiteSpace(this.sharedAccessSignature)
+            return string.IsNullOrWhiteSpace(_sharedAccessSignature)
                 ? SharedAccessSignatureBuilder.BuildSignature(
-                    this.keyName,
-                    this.encodedSharedAccessKey,
+                    _keyName,
+                    _encodedSharedAccessKey,
                     targetUri,
-                    this.tokenTimeToLive)
-                : this.sharedAccessSignature;
+                    _tokenTimeToLive)
+                : _sharedAccessSignature;
         }
 
-        string NormalizeAppliesTo(string appliesTo)
+        private string NormalizeAppliesTo(string appliesTo)
         {
-            return EventHubsUriHelper.NormalizeUri(appliesTo, "http", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
+            return EventHubsUriHelper.NormalizeUri(appliesTo, "http", true, stripPath: _tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
         }
 
-        static class SharedAccessSignatureBuilder
+        private static class SharedAccessSignatureBuilder
         {
             [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Uris are normalized to lowercase")]
             public static string BuildSignature(
@@ -148,7 +147,7 @@ namespace TrackOne
                     SharedAccessSignatureToken.SignedKeyName, WebUtility.UrlEncode(keyName));
             }
 
-            static string BuildExpiresOn(TimeSpan timeToLive)
+            private static string BuildExpiresOn(TimeSpan timeToLive)
             {
                 DateTime expiresOn = DateTime.UtcNow.Add(timeToLive);
                 TimeSpan secondsFromBaseTime = expiresOn.Subtract(EpochTime);
@@ -156,7 +155,7 @@ namespace TrackOne
                 return Convert.ToString(seconds, CultureInfo.InvariantCulture);
             }
 
-            static string Sign(string requestString, byte[] encodedSharedAccessKey)
+            private static string Sign(string requestString, byte[] encodedSharedAccessKey)
             {
                 using (var hmac = new HMACSHA256(encodedSharedAccessKey))
                 {

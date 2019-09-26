@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -33,11 +32,11 @@ namespace Azure.Storage
                 var keyAndValue = qp.Split(new[] { '=' }, 2);
                 if (keyAndValue.Length == 1)
                 {
-                    this.Add(WebUtility.UrlDecode(keyAndValue[0]), default); // The map's keys/values are url-decoded
+                    Add(WebUtility.UrlDecode(keyAndValue[0]), default); // The map's keys/values are url-decoded
                 }
                 else
                 {
-                    this.Add(WebUtility.UrlDecode(keyAndValue[0]), WebUtility.UrlDecode(keyAndValue[1])); // The map's keys/values are url-decoded
+                    Add(WebUtility.UrlDecode(keyAndValue[0]), WebUtility.UrlDecode(keyAndValue[1])); // The map's keys/values are url-decoded
                 }
             }
         }
@@ -46,7 +45,7 @@ namespace Azure.Storage
         public override string ToString()
         {
             var sb = new StringBuilder();
-            foreach (var kv in this)
+            foreach (KeyValuePair<string, string> kv in this)
             {
                 if (sb.Length > 0)
                 {

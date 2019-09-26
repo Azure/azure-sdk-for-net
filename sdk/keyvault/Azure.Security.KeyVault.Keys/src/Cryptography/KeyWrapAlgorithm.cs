@@ -1,18 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-
     /// <summary>
     /// Describes the key wrap algorithm
     /// </summary>
     public readonly struct KeyWrapAlgorithm : IEquatable<KeyWrapAlgorithm>
     {
+        internal const string RsaOaepValue = "RSA-OAEP";
+        internal const string Rsa15Value = "RSA1_5";
+        internal const string RsaOaep256Value = "RSA-OAEP-256";
+
         private readonly string _value;
 
         /// <summary>
@@ -24,24 +27,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal const string RSAOAEP = "RSA-OAEP";
-        internal const string RSA15 = "RSA-15";
-        internal const string RSAOAEP256 = "RSA-OAEP-256";
-
         /// <summary>
         /// RSA-OAEP
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep = new KeyWrapAlgorithm(RSAOAEP);
+        public static readonly KeyWrapAlgorithm RsaOaep = new KeyWrapAlgorithm(RsaOaepValue);
 
         /// <summary>
-        /// RSA-15
+        /// RSA1_5
         /// </summary>
-        public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(RSA15);
+        public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(Rsa15Value);
 
         /// <summary>
-        /// RSA-OAEP256
+        /// RSA-OAEP-256
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RSAOAEP256);
+        public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RsaOaep256Value);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
@@ -65,12 +64,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="value">The string value to convert.</param>
         public static implicit operator KeyWrapAlgorithm(string value) => new KeyWrapAlgorithm(value);
 
-        /// <summary>
-        /// Converts a <see cref="KeyWrapAlgorithm"/> to a string.
-        /// </summary>
-        /// <param name="value">The <see cref="KeyWrapAlgorithm"/> to convert.</param>
-        public static implicit operator string(KeyWrapAlgorithm value) => value._value;
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyWrapAlgorithm other && Equals(other);
@@ -86,5 +79,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
+
+        internal RSAEncryptionPadding GetRsaEncryptionPadding() => _value switch
+        {
+            Rsa15Value => RSAEncryptionPadding.Pkcs1,
+            RsaOaepValue => RSAEncryptionPadding.OaepSHA1,
+            RsaOaep256Value => RSAEncryptionPadding.OaepSHA256,
+            _ => null,
+        };
     }
 }

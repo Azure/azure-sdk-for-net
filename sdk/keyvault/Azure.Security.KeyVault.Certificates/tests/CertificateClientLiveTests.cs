@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -153,13 +156,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Certificate updated = await Client.UpdateCertificateAsync(certName, original.Version, tags: expTags);
 
-            Assert.IsNull(original.Tags);
+            Assert.IsEmpty(original.Properties.Tags);
 
-            CollectionAssert.AreEqual(expTags, updated.Tags);
+            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
 
             updated = await Client.UpdateCertificateAsync(certName, original.Version, enabled: false);
 
-            Assert.IsFalse(updated.Enabled);
+            Assert.IsFalse(updated.Properties.Enabled);
         }
 
         [Test]
@@ -181,7 +184,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            CertificateWithPolicy recovered = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.RecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 

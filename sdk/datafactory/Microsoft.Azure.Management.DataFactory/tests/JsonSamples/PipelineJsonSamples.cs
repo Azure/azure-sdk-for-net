@@ -4486,7 +4486,8 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
           ""source"": {
             ""type"": ""SqlMISource"",
-            ""sqlReaderQuery"": ""select * from my_table""
+            ""sqlReaderQuery"": ""select * from my_table"",
+            ""queryTimeout"": ""00:00:05""
           },
           ""sink"": {
             ""type"": ""SqlMISink"",
@@ -5228,6 +5229,41 @@ namespace DataFactory.Tests.JsonSamples
                 {
                     retry: 2,
                     timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteDataFlowActivityPipeline = @"
+{
+    name: ""My Execute Data Flow Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteDataFlow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    }
                 }
             }
         ]

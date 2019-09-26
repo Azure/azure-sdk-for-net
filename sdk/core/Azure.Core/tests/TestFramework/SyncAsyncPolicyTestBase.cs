@@ -20,14 +20,20 @@ namespace Azure.Core.Testing
 
         protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
+            HttpPipelineMessage message = pipeline.CreateMessage();
+            message.BufferResponse = bufferResponse;
+            message.Request = request;
+
             if (IsAsync)
             {
-                return await pipeline.SendRequestAsync(request, bufferResponse, cancellationToken);
+                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                return pipeline.SendRequest(request, bufferResponse, cancellationToken);
+                pipeline.Send(message, cancellationToken);
             }
+
+            return message.Response;
         }
 
         protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Request request, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
@@ -42,7 +48,7 @@ namespace Azure.Core.Testing
         {
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.Uri.Assign(new Uri("http://example.com"));
             return await SendRequestAsync(transport, request, policy, responseClassifier, bufferResponse);
         }
     }

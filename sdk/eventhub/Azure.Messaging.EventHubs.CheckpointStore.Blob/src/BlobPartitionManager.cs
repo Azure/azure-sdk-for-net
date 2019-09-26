@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
     public sealed class BlobPartitionManager : PartitionManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
-        private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
+        private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
         /// <summary>The client used to interact with the Azure Blob Storage service.</summary>
-        private readonly BlobContainerClient ContainerClient;
+        private readonly BlobContainerClient _containerClient;
 
         /// <summary>Logs activities performed by this partition manager.</summary>
-        private Action<string> Logger;
+        private readonly Action<string> _logger;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BlobPartitionManager"/> class.
@@ -41,25 +41,27 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         {
             // TODO: instead of manually checking the instance, make use of the Guard class once it's available.
 
-            ContainerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
-            Logger = logger;
+            _containerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
+            _logger = logger;
         }
 
         /// <summary>
         ///   Retrieves a complete ownership list from the storage blob service.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public override async Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubName,
+        public override async Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                       string eventHubName,
                                                                                        string consumerGroup)
         {
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
 
-            var prefix = $"{ eventHubName }/{ consumerGroup }/";
+            var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/";
             var options = new GetBlobsOptions
             {
                 IncludeMetadata = true,
@@ -68,7 +70,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
             BlobItem blob;
 
-            await foreach (var response in ContainerClient.GetBlobsAsync(options).ConfigureAwait(false))
+            await foreach (Response<BlobItem> response in _containerClient.GetBlobsAsync(options).ConfigureAwait(false))
             {
                 blob = response.Value;
 
@@ -80,17 +82,18 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                 long? offset = null;
                 long? sequenceNumber = null;
 
-                if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && Int64.TryParse(str, out var result))
+                if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, out var result))
                 {
                     offset = result;
                 }
 
-                if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && Int64.TryParse(str, out result))
+                if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
                 {
                     sequenceNumber = result;
                 }
 
                 ownershipList.Add(new InnerPartitionOwnership(
+                    fullyQualifiedNamespace,
                     eventHubName,
                     consumerGroup,
                     ownerIdentifier,
@@ -121,16 +124,16 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             Response<BlobContentInfo> contentInfoResponse;
             Response<BlobInfo> infoResponse;
 
-            foreach (var ownership in partitionOwnership)
+            foreach (PartitionOwnership ownership in partitionOwnership)
             {
                 metadata[BlobMetadataKey.OwnerIdentifier] = ownership.OwnerIdentifier;
-                metadata[BlobMetadataKey.Offset] = ownership.Offset?.ToString() ?? String.Empty;
-                metadata[BlobMetadataKey.SequenceNumber] = ownership.SequenceNumber?.ToString() ?? String.Empty;
+                metadata[BlobMetadataKey.Offset] = ownership.Offset?.ToString() ?? string.Empty;
+                metadata[BlobMetadataKey.SequenceNumber] = ownership.SequenceNumber?.ToString() ?? string.Empty;
 
                 var blobAccessConditions = new BlobAccessConditions();
 
-                var blobName = $"{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
-                var blobClient = ContainerClient.GetBlobClient(blobName);
+                var blobName = $"{ ownership.FullyQualifiedNamespace }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
+                BlobClient blobClient = _containerClient.GetBlobClient(blobName);
 
                 try
                 {
@@ -189,7 +192,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                     // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
                     // double quotes ('"ETAG_VALUE"' instead of 'ETAG_VALUE').
 
-                    var match = DoubleQuotesExpression.Match(ownership.ETag);
+                    Match match = s_doubleQuotesExpression.Match(ownership.ETag);
 
                     if (match.Success)
                     {
@@ -219,8 +222,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         ///
         public override async Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            var blobName = $"{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/{ checkpoint.PartitionId }";
-            var blobClient = ContainerClient.GetBlobClient(blobName);
+            var blobName = $"{ checkpoint.FullyQualifiedNamespace }/{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/{ checkpoint.PartitionId }";
+            BlobClient blobClient = _containerClient.GetBlobClient(blobName);
 
             BlobProperties currentBlob;
 
@@ -248,8 +251,10 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                     { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
                 };
 
-                var accessConditions = new BlobAccessConditions();
-                accessConditions.HttpAccessConditions = new HttpAccessConditions { IfMatch = currentBlob.ETag };
+                var accessConditions = new BlobAccessConditions
+                {
+                    HttpAccessConditions = new HttpAccessConditions { IfMatch = currentBlob.ETag }
+                };
 
                 try
                 {
@@ -257,7 +262,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                     Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' updated.");
                 }
-                catch(StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
+                catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
                     Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because eTag has changed.");
                 }
@@ -274,7 +279,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         ///
         /// <param name="message">The log message to send.</param>
         ///
-        private void Log(string message) => Logger?.Invoke(message);
+        private void Log(string message) => _logger?.Invoke(message);
 
         /// <summary>
         ///   A workaround so we can create <see cref="PartitionOwnership"/> instances.
@@ -287,6 +292,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             ///   Initializes a new instance of the <see cref="InnerPartitionOwnership"/> class.
             /// </summary>
             ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -296,14 +302,15 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
             /// <param name="eTag">The entity tag needed to update this ownership.</param>
             ///
-            public InnerPartitionOwnership(string eventHubName,
+            public InnerPartitionOwnership(string fullyQualifiedNamespace,
+                                           string eventHubName,
                                            string consumerGroup,
                                            string ownerIdentifier,
                                            string partitionId,
                                            long? offset = null,
                                            long? sequenceNumber = null,
                                            DateTimeOffset? lastModifiedTime = null,
-                                           string eTag = null) : base(eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
+                                           string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
             {
             }
         }

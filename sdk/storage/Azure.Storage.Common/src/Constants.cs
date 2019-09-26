@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 namespace Azure.Storage
 {
@@ -22,7 +21,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2018-11-09";
+        public const string DefaultSasVersion = "2019-02-02";
 
         public const int DefaultBufferSize = 4 * Constants.MB;
         public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
@@ -42,7 +41,7 @@ namespace Azure.Storage
         public const string SnapshotParameterName = "snapshot";
 
         /// <summary>
-        /// Storage Connection Strings 
+        /// Storage Connection Strings
         /// </summary>
         internal static class ConnectionStrings
         {
@@ -88,6 +87,7 @@ namespace Azure.Storage
             public const string XMsPrefix = "x-ms-";
             public const string ErrorCode = "x-ms-error-code";
             public const string RequestId = "x-ms-request-id";
+            public const string ClientRequestId = "x-ms-client-request-id";
             public const string Date = "x-ms-date";
             public const string SharedKey = "SharedKey";
             public const string Authorization = "Authorization";
@@ -111,6 +111,7 @@ namespace Azure.Storage
         {
             public const string Https = "https";
             public const string Http = "http";
+            public const int HttpsPort = 443;
 
             internal static class Append
             {
@@ -324,7 +325,7 @@ namespace Azure.Storage
             /// </summary>
             public const int QueueMessageMaxBytes = 64 * Constants.KB;
 
-            public const string messagesUri = "messages";
+            public const string MessagesUri = "messages";
 
             public const string ClearMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.ClearMessages";
@@ -393,6 +394,16 @@ namespace Azure.Storage
                 public const string KeyServiceUpper = "SKS";
                 public const string KeyVersion = "skv";
                 public const string KeyVersionUpper = "SKV";
+                public const string CacheControl = "rscc";
+                public const string CacheControlUpper = "RSCC";
+                public const string ContentDisposition = "rscd";
+                public const string ContentDispositionUpper = "RSCD";
+                public const string ContentEncoding = "rsce";
+                public const string ContentEncodingUpper = "RSCE";
+                public const string ContentLanguage = "rscl";
+                public const string ContentLanguageUpper = "RSCL";
+                public const string ContentType = "rsct";
+                public const string ContentTypeUpper = "RSCT";
             }
 
             internal static class Resource
@@ -426,6 +437,17 @@ namespace Azure.Storage
         {
             internal const string Code = "Code";
             internal const string Message = "Message";
+        }
+
+        internal static class GeoRedundantRead
+        {
+            internal const string AlternateHostKey  = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
+        }
+
+        internal static class HttpStatusCode
+        {
+            internal const int NotFound = 404;
         }
     }
 }

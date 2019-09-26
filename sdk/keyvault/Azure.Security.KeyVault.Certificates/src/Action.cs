@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 
@@ -11,7 +10,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public struct Action
     {
-        private string _value;
+        private readonly string _value;
         internal const string AutoRenewValue = "AutoRenew";
         internal const string EmailContactsValue = "EmailContacts";
 
@@ -35,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         public override bool Equals(object obj)
         {
-            return obj is Action && this.Equals((CertificateKeyType)obj);
+            return obj is Action && Equals((CertificateKeyType)obj);
         }
 
         public bool Equals(Action other)

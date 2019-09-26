@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -68,8 +68,8 @@ namespace Azure.Messaging.EventHubs
         internal EventDataBatch(TransportEventBatch transportBatch,
                                 SendOptions sendOptions)
         {
-            Guard.ArgumentNotNull(nameof(transportBatch), transportBatch);
-            Guard.ArgumentNotNull(nameof(sendOptions), sendOptions);
+            Argument.AssertNotNull(transportBatch, nameof(transportBatch));
+            Argument.AssertNotNull(sendOptions, nameof(sendOptions));
 
             InnerBatch = transportBatch;
             SendOptions = sendOptions;

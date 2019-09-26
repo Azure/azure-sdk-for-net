@@ -230,7 +230,9 @@ directive:
   transform: >
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["201"]["x-az-response-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["201"]["x-az-public"] = false;
     $.get.responses["200"]["x-az-response-name"] = "RawStorageDirectoryProperties";
+    $.get.responses["200"]["x-az-public"] = false;
 ```
 
 ### /{shareName}/{directory}?restype=directory&comp=metadata
@@ -240,6 +242,7 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=metadata"]
   transform: >
     $.put.responses["200"]["x-az-response-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["200"]["x-az-public"] = false;
     $.put.responses["200"].description = "Success, Directory created.";
     $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["200"].headers["Last-Modified"] = {
@@ -378,6 +381,7 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "RawStorageFileInfo";
+    $.put.responses["201"]["x-az-public"] = false;
     $.get.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
@@ -391,6 +395,7 @@ directive:
     $.get.responses["200"]["x-az-response-name"] = "FlattenedStorageFileProperties";
     $.get.responses["200"]["x-az-public"] = false;
     $.get.responses["200"]["x-az-response-schema-name"] = "Content";
+    $.get.responses["200"]["x-az-stream"] = true;
     $.get.responses["206"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
@@ -404,6 +409,7 @@ directive:
     $.get.responses["206"]["x-az-response-name"] = "FlattenedStorageFileProperties";
     $.get.responses["206"]["x-az-public"] = false;
     $.get.responses["206"]["x-az-response-schema-name"] = "Content";
+    $.get.responses["206"]["x-az-stream"] = true;
     $.head.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.head.responses["200"].headers["Content-Encoding"].type = "array";
     $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";
@@ -413,6 +419,7 @@ directive:
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.head.responses["200"]["x-az-response-name"] = "RawStorageFileProperties";
+    $.head.responses["200"]["x-az-public"] = false;
     $.head.responses.default = {
         "description": "Failure",
         "x-az-response-name": "FailureNoContent",

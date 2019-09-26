@@ -25,15 +25,8 @@ namespace Azure.Core.Pipeline
 
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            if (scopes == null)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(scopes, nameof(scopes));
 
             _credential = credential;
             _scopes = scopes.ToArray();
@@ -54,8 +47,8 @@ namespace Azure.Core.Pipeline
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {
                 AccessToken token = async ?
-                        await _credential.GetTokenAsync(_scopes, message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(_scopes, message.CancellationToken);
+                        await _credential.GetTokenAsync(new TokenRequest(_scopes), message.CancellationToken).ConfigureAwait(false) :
+                        _credential.GetToken(new TokenRequest(_scopes), message.CancellationToken);
 
                 _headerValue = "Bearer " + token.Token;
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);

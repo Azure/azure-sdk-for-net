@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+
 namespace TrackOne.Amqp
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-
-    class AmqpExceptionHelper
+    internal class AmqpExceptionHelper
     {
-        static readonly Dictionary<string, AmqpResponseStatusCode> conditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>()
+        private static readonly Dictionary<string, AmqpResponseStatusCode> conditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>()
         {
             { AmqpClientConstants.TimeoutError.Value, AmqpResponseStatusCode.RequestTimeout },
             { AmqpErrorCode.NotFound.Value, AmqpResponseStatusCode.NotFound },
@@ -45,7 +45,7 @@ namespace TrackOne.Amqp
             }
 
             // Most of the time we should have an error condition
-            foreach (var kvp in conditionToStatusMap)
+            foreach (KeyValuePair<string, AmqpResponseStatusCode> kvp in conditionToStatusMap)
             {
                 if (kvp.Value == statusCode)
                 {

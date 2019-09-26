@@ -1,4 +1,7 @@
-﻿using Azure.Core.Pipeline;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Pipeline;
 using Azure;
 using System;
 using System.Net.Http;
@@ -17,7 +20,7 @@ namespace Azure.Identity
 
             pipelineRequest.Method = RequestMethod.Parse(request.Method.Method);
 
-            pipelineRequest.UriBuilder.Uri = request.RequestUri;
+            pipelineRequest.Uri.Assign(request.RequestUri);
 
             pipelineRequest.Content = await request.Content.ToPipelineRequestContentAsync().ConfigureAwait(false);
 

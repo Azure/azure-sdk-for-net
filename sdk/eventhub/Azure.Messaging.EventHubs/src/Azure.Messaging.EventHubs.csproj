@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
@@ -29,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Azure.Messaging.EventHubs.Reference.props" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
@@ -45,6 +50,11 @@
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Argument.cs"/>
   </ItemGroup>
 
   <!-- Import the Azure.Core reference -->

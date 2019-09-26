@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using NUnit.Framework;
 using System;
@@ -671,7 +670,10 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             ConfigurationClient service = GetClient();
             string key = GenerateKeyId("keyFields-");
-            ConfigurationSetting setting = await service.AddAsync(key, "my_value", "my_label");
+            ConfigurationSetting setting = await service.AddAsync(new ConfigurationSetting(key, "my_value", "my_label")
+            {
+                ContentType = "content-type"
+            });
 
             try
             {
@@ -698,24 +700,178 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteAsync(setting.Key, setting.Label);
             }
         }
-    }
 
-    public static class ConfigurationSettingExtensions
-    {
-        public static ConfigurationSetting Clone(this ConfigurationSetting setting)
+        [Test]
+        public async Task HasChangedNoValueNotFound()
         {
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            foreach (string key in setting.Tags.Keys)
-            {
-                tags.Add(key, setting.Tags[key]);
-            }
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
 
-            return new ConfigurationSetting(setting.Key, setting.Value)
+            bool hasChanged = await service.HasChangedAsync(setting0);
+
+            Assert.IsFalse(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedNoValueNewValue()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
             {
-                Label = setting.Label,
-                ContentType = setting.ContentType,
-                Tags = tags
-            };
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting0);
+
+                Assert.IsTrue(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task HasChangedValuesMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting1);
+
+                Assert.IsFalse(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task HasChangedValuesDontMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+                setting0.Value = "test_value2";
+                ConfigurationSetting setting2 = await service.SetAsync(setting0);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting1);
+
+                Assert.IsTrue(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task HasChangedValueNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+                var response = await service.DeleteAsync(setting1.Key, setting1.Label);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting1);
+
+                Assert.IsTrue(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetReadOnlyOnSetting()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var locked = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsTrue(locked.Value.Locked);
+            }
+            finally
+            {
+                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.SetReadOnlyAsync(testSetting.Key);
+                });
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task ClearReadOnlyFromSetting()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var unlocked = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsFalse(unlocked.Value.Locked);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task ClearReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.SetReadOnlyAsync(testSetting.Key);
+                });
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
         }
     }
 }

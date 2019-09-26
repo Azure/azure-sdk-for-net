@@ -440,6 +440,7 @@ directive:
   transform: >
     $.get.responses["200"]["x-az-response-name"] = "FlattenedDownloadProperties";
     $.get.responses["200"]["x-az-public"] = false;
+    $.get.responses["200"]["x-az-stream"] = true;
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -448,6 +449,7 @@ directive:
     $.get.responses["200"]["x-az-response-schema-name"] = "Content";
     $.get.responses["206"]["x-az-response-name"] = "FlattenedDownloadProperties";
     $.get.responses["206"]["x-az-public"] = false;
+    $.get.responses["206"]["x-az-stream"] = true;
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -1053,4 +1055,14 @@ directive:
   where: $.parameters.LeaseDuration
   transform: >
     $.format = "int64";
+```
+
+
+### Merge the PageBlob AccessTier type
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PremiumPageBlobAccessTierOptional
+  transform: >
+    $["x-ms-enum"].name = "AccessTier";
 ```

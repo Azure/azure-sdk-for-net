@@ -28,22 +28,21 @@ namespace Storage.Tests
             Assert.NotNull(quota.Location);
             Assert.NotNull(quota.Name);
             Assert.NotNull(quota.Type);
-            //Assert.NotNull(quota.Tags);
         }
 
         [Fact]
         public void ListAllStorageQuotas() {
             RunTest((client) => {
                 var quotas = client.StorageQuotas.List(Location);
-                quotas.ForEach(ValidateQuota);
-                Common.WriteIEnumerableToFile<StorageQuota>(quotas, "ListAllStorageQuotas.txt");
+                quotas.Value.ForEach(ValidateQuota);
+                Common.WriteIEnumerableToFile<StorageQuota>(quotas.Value, "ListAllStorageQuotas.txt");
             });
         }
 
         [Fact]
         public void GetStorageQuota() {
             RunTest((client) => {
-                var quota = client.StorageQuotas.List(Location).First();
+                var quota = client.StorageQuotas.List(Location).Value.First();
                 var qName = ExtractName(quota.Name);
                 var result = client.StorageQuotas.Get(Location, qName);
                 AssertAreEqual(quota, result);
@@ -54,7 +53,7 @@ namespace Storage.Tests
         public void GetAllStorageQuotas() {
             RunTest((client) => {
                 var quotas = client.StorageQuotas.List(Location);
-                foreach(var quota in quotas)
+                foreach(var quota in quotas.Value)
                 {
                     var qName = ExtractName(quota.Name);
                     var result= client.StorageQuotas.Get(Location, qName);
@@ -68,11 +67,10 @@ namespace Storage.Tests
             RunTest((client) => {
                 var name = "TestCreateQuota";
                 IgnoreExceptions(() => client.StorageQuotas.Delete(Location, name));
-
                 var parameters = new StorageQuota()
                 {
-                    CapacityInGb = -100000000,
-                    NumberOfStorageAccounts = -1000000000
+                    CapacityInGb = 100000000,
+                    NumberOfStorageAccounts = 1000000000
                 };
                 var retrieved = client.StorageQuotas.CreateOrUpdate(Location, name, parameters);
 

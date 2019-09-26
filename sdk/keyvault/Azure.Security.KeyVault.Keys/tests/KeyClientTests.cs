@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientTests: ClientTestBase
+    public class KeyClientTests : ClientTestBase
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
@@ -29,14 +29,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void UpdateKeyArgumentValidation()
+        public void UpdateKeyPropertiesArgumentValidation()
         {
             var keyOperations = new List<KeyOperation>() { KeyOperation.Sign };
-            var key = new KeyBase("name");
+            var key = new KeyProperties("name");
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, keyOperations));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(null, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(null, keyOperations));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(key, null));
         }
 
         [Test]

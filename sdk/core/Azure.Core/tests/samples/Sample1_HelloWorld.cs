@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
@@ -22,7 +21,8 @@ namespace Azure.Core.Samples
             Http.Request request = pipeline.CreateRequest();
 
             var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/README.md");
-            request.SetRequestLine(RequestMethod.Get, uri);
+            request.Method = RequestMethod.Get;
+            request.Uri.Assign(uri);
             request.Headers.Add("Host", uri.Host);
 
             Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);

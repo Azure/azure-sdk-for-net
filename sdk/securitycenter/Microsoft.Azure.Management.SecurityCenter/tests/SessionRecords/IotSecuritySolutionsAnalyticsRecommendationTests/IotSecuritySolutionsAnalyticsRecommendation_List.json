@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/IotHub-CUS/analyticsModels/default/aggregatedRecommendations?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDc1NDIzZTktN2QzMy00MTY2LThiZGYtMzkyMGIwNGUzNzM1L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXAtQ1VTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvaW90U2VjdXJpdHlTb2x1dGlvbnMvSW90SHViLUNVUy9hbmFseXRpY3NNb2RlbHMvZGVmYXVsdC9hZ2dyZWdhdGVkUmVjb21tZW5kYXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7de41b6d-bc13-476f-a496-d2659e7e2897"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 15 Sep 2019 09:09:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "33782067-fa44-421a-8d28-500cf39e4f30"
+        ],
+        "x-ms-correlation-request-id": [
+          "33782067-fa44-421a-8d28-500cf39e4f30"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190915T090902Z:33782067-fa44-421a-8d28-500cf39e4f30"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "2533"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_OpenPorts\",\r\n      \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_OpenPorts\",\r\n      \"type\": \"Microsoft.Security/IoTSecurityAggregatedRecommendation\",\r\n      \"properties\": {\r\n        \"recommendationName\": \"IoT_OpenPorts\",\r\n        \"recommendationDisplayName\": \"Device has open ports\",\r\n        \"recommendationTypeId\": \"\",\r\n        \"detectedBy\": \"IoTSecurity\",\r\n        \"healthyDevices\": 0,\r\n        \"unhealthyDeviceCount\": 1,\r\n        \"remediationSteps\": \"Review open ports on the device and make sure they belong to legitimate and necessary processes for the device to function correctly.\",\r\n        \"reportedSeverity\": \"Medium\",\r\n        \"description\": \"Found a listening endpoint on the device.\",\r\n        \"logAnalyticsQuery\": \"SecurityRecommendation | where tolower(AssessedResourceId) == tolower('/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus') and tolower(RecommendationName) == tolower('IoT_OpenPorts')\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_PermissiveFirewallPolicy\",\r\n      \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_PermissiveFirewallPolicy\",\r\n      \"type\": \"Microsoft.Security/IoTSecurityAggregatedRecommendation\",\r\n      \"properties\": {\r\n        \"recommendationName\": \"IoT_PermissiveFirewallPolicy\",\r\n        \"recommendationDisplayName\": \"Permissive firewall policy in one of the chains\",\r\n        \"recommendationTypeId\": \"\",\r\n        \"detectedBy\": \"IoTSecurity\",\r\n        \"healthyDevices\": 0,\r\n        \"unhealthyDeviceCount\": 1,\r\n        \"remediationSteps\": \"Change firewall policy to drop and add specific rules to permit access to legitimate connections to/from the device.\",\r\n        \"reportedSeverity\": \"Medium\",\r\n        \"description\": \"Found an allowed firewall policy (INPUT/OUTPUT). The policy should deny all traffic by default and define rules to allow necessary communication to/from the device.\",\r\n        \"logAnalyticsQuery\": \"SecurityRecommendation | where tolower(AssessedResourceId) == tolower('/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus') and tolower(RecommendationName) == tolower('IoT_PermissiveFirewallPolicy')\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": { "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735" }
+}

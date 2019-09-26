@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Net;
@@ -32,21 +31,21 @@ namespace Azure.Storage.Queues
         /// </summary>
         public string Scheme
         {
-            get => this._scheme;
-            set { this.ResetUri(); this._scheme = value; }
+            get => _scheme;
+            set { ResetUri(); _scheme = value; }
         }
         private string _scheme;
 
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
-        /// 
+        ///
         /// Example: "account.queue.core.windows.net"
         /// </summary>
         public string Host
         {
-            get => this._host;
-            set { this.ResetUri(); this._host = value; }
+            get => _host;
+            set { ResetUri(); _host = value; }
         }
         private string _host;
 
@@ -55,8 +54,8 @@ namespace Azure.Storage.Queues
         /// </summary>
         public int Port
         {
-            get => this._port;
-            set { this.ResetUri(); this._port = value; }
+            get => _port;
+            set { ResetUri(); _port = value; }
         }
         private int _port;
 
@@ -66,20 +65,20 @@ namespace Azure.Storage.Queues
         /// </summary>
         public string AccountName
         {
-            get => this._accountName;
-            set { this.ResetUri(); this._accountName = value; }
+            get => _accountName;
+            set { ResetUri(); _accountName = value; }
         }
         private string _accountName;
 
         /// <summary>
         /// Gets or sets the name of a Azure Storage Queue.  The value defaults
-        /// to <see cref="String.Empty"/> if not present in the
+        /// to <see cref="string.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
         /// </summary>
         public string QueueName
         {
-            get => this._queueName;
-            set { this.ResetUri(); this._queueName = value; }
+            get => _queueName;
+            set { ResetUri(); _queueName = value; }
         }
         private string _queueName;
 
@@ -88,19 +87,19 @@ namespace Azure.Storage.Queues
         /// </summary>
         public bool Messages
         {
-            get => this._messages;
-            set { this.ResetUri(); this._messages = value; }
+            get => _messages;
+            set { ResetUri(); _messages = value; }
         }
         private bool _messages;
 
         /// <summary>
         /// Gets or sets the ID of a message in a queue.  The value defaults to
-        /// <see cref="String.Empty"/> if not present in the <see cref="System.Uri"/>.
+        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
         public string MessageId
         {
-            get => this._messageId;
-            set { this.ResetUri(); this._messageId = value; }
+            get => _messageId;
+            set { ResetUri(); _messageId = value; }
         }
         private string _messageId;
 
@@ -110,8 +109,8 @@ namespace Azure.Storage.Queues
         /// </summary>
         public SasQueryParameters Sas
         {
-            get => this._sas;
-            set { this.ResetUri(); this._sas = value; }
+            get => _sas;
+            set { ResetUri(); _sas = value; }
         }
         private SasQueryParameters _sas;
 
@@ -121,8 +120,8 @@ namespace Azure.Storage.Queues
         /// </summary>
         public string Query
         {
-            get => this._query;
-            set { this.ResetUri(); this._query = value; }
+            get => _query;
+            set { ResetUri(); _query = value; }
         }
         private string _query;
 
@@ -135,17 +134,17 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueUriBuilder(Uri uri)
         {
-            this.Scheme = uri.Scheme;
-            this.Host = uri.Host;
-            this.Port = uri.Port;
-            this.AccountName = "";
-            this.QueueName = "";
-            this.Messages = false;
-            this.MessageId = "";
-            this.Sas = null;
+            Scheme = uri.Scheme;
+            Host = uri.Host;
+            Port = uri.Port;
+            AccountName = "";
+            QueueName = "";
+            Messages = false;
+            MessageId = "";
+            Sas = null;
 
             // Find the account, queue, and message id (if any)
-            if (!String.IsNullOrEmpty(uri.AbsolutePath))
+            if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
                 // If path starts with a slash, remove it
                 var path =
@@ -162,12 +161,12 @@ namespace Azure.Storage.Queues
                     // Slash not found; path has account name & no queue name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path;
+                        AccountName = path;
                         startIndex = path.Length;
                     }
                     else
                     {
-                        this.AccountName = path.Substring(0, accountEndIndex);
+                        AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
                 }
@@ -178,33 +177,33 @@ namespace Azure.Storage.Queues
                 // Slash not found; path has queue name & no message id
                 if (queueEndIndex == -1)
                 {
-                    this.QueueName = path.Substring(startIndex);
+                    QueueName = path.Substring(startIndex);
                 }
                 else
                 {
                     // The queue name is the part between the slashes
-                    this.QueueName = path.Substring(startIndex, queueEndIndex - startIndex);
+                    QueueName = path.Substring(startIndex, queueEndIndex - startIndex);
 
                     // skip "messages"
-                    this.Messages = true;
+                    Messages = true;
                     startIndex = startIndex + (queueEndIndex - startIndex) + 1;
                     startIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture) + 1;
 
-                    if(startIndex != 0)
+                    if (startIndex != 0)
                     {
                         // set messageId
-                        this.MessageId = path.Substring(startIndex, path.Length - startIndex);
+                        MessageId = path.Substring(startIndex, path.Length - startIndex);
                     }
                 }
             }
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
             var paramsMap = new UriQueryParamsCollection(uri.Query);
-            if(paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                this.Sas = new SasQueryParameters(paramsMap);
+                Sas = new SasQueryParameters(paramsMap);
             }
-            this.Query = paramsMap.ToString();
+            Query = paramsMap.ToString();
         }
 
         /// <summary>
@@ -216,11 +215,11 @@ namespace Azure.Storage.Queues
         {
             get
             {
-                if (this._uri == null)
+                if (_uri == null)
                 {
-                    this._uri = this.BuildUri().Uri;
+                    _uri = BuildUri().ToUri();
                 }
-                return this._uri;
+                return _uri;
             }
         }
 
@@ -233,13 +232,13 @@ namespace Azure.Storage.Queues
         /// instance.
         /// </returns>
         public override string ToString() =>
-            this.BuildUri().ToString();
+            BuildUri().ToString();
 
         /// <summary>
         /// Reset our cached URI.
         /// </summary>
         private void ResetUri() =>
-            this._uri = null;
+            _uri = null;
 
         /// <summary>
         /// Construct a <see cref="RequestUriBuilder"/> representing the
@@ -251,28 +250,28 @@ namespace Azure.Storage.Queues
         {
             // Concatenate account, queue, & messageId (if they exist)
             var path = new StringBuilder("");
-            if (!String.IsNullOrWhiteSpace(this.AccountName))
+            if (!string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(this.AccountName);
+                path.Append("/").Append(AccountName);
             }
 
-            if(!String.IsNullOrWhiteSpace(this.QueueName))
+            if (!string.IsNullOrWhiteSpace(QueueName))
             {
-                path.Append("/").Append(this.QueueName);
-                if (this.Messages)
+                path.Append("/").Append(QueueName);
+                if (Messages)
                 {
                     path.Append("/messages");
-                    if (!String.IsNullOrWhiteSpace(this.MessageId))
+                    if (!string.IsNullOrWhiteSpace(MessageId))
                     {
-                        path.Append("/").Append(this.MessageId);
+                        path.Append("/").Append(MessageId);
                     }
                 }
             }
 
             // Concatenate query parameters
-            var query = new StringBuilder(this.Query);
-            var sas = this.Sas?.ToString();
-            if (!String.IsNullOrWhiteSpace(sas))
+            var query = new StringBuilder(Query);
+            var sas = Sas?.ToString();
+            if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0) { query.Append("&"); }
                 query.Append(sas);
@@ -281,9 +280,9 @@ namespace Azure.Storage.Queues
             // Use RequestUriBuilder, which has slightly nicer formatting
             return new RequestUriBuilder
             {
-                Scheme = this.Scheme,
-                Host = this.Host,
-                Port = this.Port,
+                Scheme = Scheme,
+                Host = Host,
+                Port = Port,
                 Path = path.ToString(),
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
@@ -291,6 +290,6 @@ namespace Azure.Storage.Queues
 
         // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
         private static bool IsHostIPEndPointStyle(string host)
-            => String.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out var _);
+            => string.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out IPAddress _);
     }
 }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -80,7 +79,7 @@ namespace Azure.Storage
             if (uploadAsSinglePartition(singleUploadThreshold))
             {
                 // When possible, upload as a single partition
-                var uploadTask = uploadStreamAsync();
+                Task<Response<T>> uploadTask = uploadStreamAsync();
                 return async ?
                     await uploadTask.ConfigureAwait(false) :
                     uploadTask.EnsureCompleted();
@@ -113,10 +112,10 @@ namespace Azure.Storage
                     ? MemoryPool<byte>.Shared
                     : new StorageMemoryPool(maximumBlockLength, maximumLoadedPartitionCount);
 
-                    using (var partitioner = getStreamPartitioner(memoryPool))
+                    using (StreamPartitioner partitioner = getStreamPartitioner(memoryPool))
                     {
                         await foreach (
-                            var partition
+                            StreamPartition partition
                             in partitioner.GetPartitionsAsync(
                                 maximumActivePartitionCount,
                                 maximumLoadedPartitionCount,
@@ -143,7 +142,7 @@ namespace Azure.Storage
                     }
 
                     // Complete the upload
-                    var commitTask = commitAsync(async, cancellationToken);
+                    Task<Response<T>> commitTask = commitAsync(async, cancellationToken);
                     return async ?
                         await commitTask.ConfigureAwait(false) :
                         commitTask.EnsureCompleted();

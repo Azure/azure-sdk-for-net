@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Security.Cryptography;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.Specialized.Cryptography.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
@@ -18,7 +16,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
     /// The <see cref="EncryptedBlockBlobClient"/> allows you to manipulate
     /// Azure Storage block blobs with client-side encryption. See
     /// <see cref="BlockBlobClient"/> for more details.
-    /// 
+    ///
     /// This class does support partial writes as a normal block blob client
     /// would. Due to the nature of this encryption algorithm, the entire blob
     /// must be reuploaded. Partial reads are still supported.
@@ -70,7 +68,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             string blobName,
             ClientSideEncryptionKey key,
             BlobClientOptions options = default)
-            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideBlobDecryptionPolicy(key)))
+            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(key)))
         { }
 
         ///// <summary>
@@ -120,7 +118,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             StorageSharedKeyCredential credential,
             ClientSideEncryptionKey key,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideBlobDecryptionPolicy(key)))
+            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(key)))
         { }
 
         /// <summary>
@@ -146,7 +144,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             TokenCredential credential,
             ClientSideEncryptionKey key,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideBlobDecryptionPolicy(key)))
+            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(key)))
         { }
 
         /// <summary>

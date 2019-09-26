@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Linq;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -15,6 +12,39 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificatePolicy : IJsonSerializable, IJsonDeserializable
     {
+        private const string KeyPropsPropertyName = "key_props";
+        private const string SecretPropsPropertyName = "secret_props";
+        private const string X509PropsPropertyName = "x509_props";
+        private const string LifetimeActionsPropertyName = "lifetime_actions";
+        private const string IssuerPropertyName = "issuer";
+        private const string AttributesPropertyName = "attributes";
+        private const string ContentTypePropertyName = "contentType";
+        private const string SubjectPropertyName = "subject";
+        private const string SansPropertyName = "sans";
+        private const string KeyUsagePropertyName = "key_usage";
+        private const string EkusPropertyName = "ekus";
+        private const string ValidityMonthsPropertyName = "validity_months";
+        private const string IssuerNamePropertyName = "name";
+        private const string CertificateTypePropertyName = "cty";
+        private const string CertificateTransparencyPropertyName = "cert_transparency";
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+
+        private static readonly JsonEncodedText s_lifetimeActionsPropertyNameBytes = JsonEncodedText.Encode(LifetimeActionsPropertyName);
+        private static readonly JsonEncodedText s_issuerPropertyNameBytes = JsonEncodedText.Encode(IssuerPropertyName);
+        private static readonly JsonEncodedText s_keyPropsPropertyNameBytes = JsonEncodedText.Encode(KeyPropsPropertyName);
+        private static readonly JsonEncodedText s_secretPropsPropertyNameBytes = JsonEncodedText.Encode(SecretPropsPropertyName);
+        private static readonly JsonEncodedText s_x509PropsPropertyNameBytes = JsonEncodedText.Encode(X509PropsPropertyName);
+        private static readonly JsonEncodedText s_contentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
+        private static readonly JsonEncodedText s_subjectPropertyNameBytes = JsonEncodedText.Encode(SubjectPropertyName);
+        private static readonly JsonEncodedText s_sansPropertyNameBytes = JsonEncodedText.Encode(SansPropertyName);
+        private static readonly JsonEncodedText s_keyUsagePropertyNameBytes = JsonEncodedText.Encode(KeyUsagePropertyName);
+        private static readonly JsonEncodedText s_ekusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
+        private static readonly JsonEncodedText s_validityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
+        private static readonly JsonEncodedText s_issuerNamePropertyNameBytes = JsonEncodedText.Encode(IssuerNamePropertyName);
+        private static readonly JsonEncodedText s_certificateTypePropertyNameBytes = JsonEncodedText.Encode(CertificateTypePropertyName);
+        private static readonly JsonEncodedText s_certificateTransparencyPropertyNameNameBytes = JsonEncodedText.Encode(CertificateTransparencyPropertyName);
+
         /// <summary>
         /// The properties of the key backing a certificate
         /// </summary>
@@ -80,15 +110,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; set; }
 
-        private const string KeyPropsPropertyName = "key_props";
-        private const string SecretPropsPropertyName = "secret_props";
-        private const string X509PropsPropertyName = "x509_props";
-        private const string LifetimeActionsPropertyName = "lifetime_actions";
-        private static readonly JsonEncodedText LifetimeActionsPropertyNameBytes = JsonEncodedText.Encode(LifetimeActionsPropertyName);
-        private const string IssuerPropertyName = "issuer";
-        private static readonly JsonEncodedText IssuerPropertyNameBytes = JsonEncodedText.Encode(IssuerPropertyName);
-        private const string AttributesPropertyName = "attributes";
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -98,21 +119,26 @@ namespace Azure.Security.KeyVault.Certificates
                     case KeyPropsPropertyName:
                         KeyOptions.FromJsonObject(prop.Value);
                         break;
+
                     case SecretPropsPropertyName:
                         ReadSecretProperties(prop.Value);
                         break;
+
                     case X509PropsPropertyName:
                         ReadX509CertificateProperties(prop.Value);
                         break;
+
                     case IssuerPropertyName:
                         ReadIssuerProperties(prop.Value);
                         break;
+
                     case AttributesPropertyName:
                         ReadAttributesProperties(prop.Value);
                         break;
+
                     case LifetimeActionsPropertyName:
                         LifetimeActions = new List<LifetimeAction>();
-                        foreach(JsonElement actionElem in prop.Value.EnumerateArray())
+                        foreach (JsonElement actionElem in prop.Value.EnumerateArray())
                         {
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
@@ -122,16 +148,12 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText KeyPropsPropertyNameBytes = JsonEncodedText.Encode(KeyPropsPropertyName);
-        private static readonly JsonEncodedText SecretPropsPropertyNameBytes = JsonEncodedText.Encode(SecretPropsPropertyName);
-        private static readonly JsonEncodedText X509PropsPropertyNameBytes = JsonEncodedText.Encode(X509PropsPropertyName);
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             // Key Props
             if (KeyOptions != null)
             {
-                json.WriteStartObject(KeyPropsPropertyNameBytes);
+                json.WriteStartObject(s_keyPropsPropertyNameBytes);
 
                 KeyOptions.WriteProperties(json);
 
@@ -141,7 +163,7 @@ namespace Azure.Security.KeyVault.Certificates
             // Secret Props
             if (ContentType.HasValue)
             {
-                json.WriteStartObject(SecretPropsPropertyNameBytes);
+                json.WriteStartObject(s_secretPropsPropertyNameBytes);
 
                 WriteSecretProperties(json);
 
@@ -151,7 +173,7 @@ namespace Azure.Security.KeyVault.Certificates
             // X509 Props
             if (Subject != null || SubjectAlternativeNames != null || KeyUsage != null || EnhancedKeyUsage != null || ValidityInMonths.HasValue)
             {
-                json.WriteStartObject(X509PropsPropertyNameBytes);
+                json.WriteStartObject(s_x509PropsPropertyNameBytes);
 
                 WriteX509CertificateProperties(json);
 
@@ -161,7 +183,7 @@ namespace Azure.Security.KeyVault.Certificates
             // Issuer Props
             if (IssuerName != null || CertificateType != null || CertificateTransparency.HasValue)
             {
-                json.WriteStartObject(IssuerPropertyNameBytes);
+                json.WriteStartObject(s_issuerPropertyNameBytes);
 
                 WriteIssuerProperties(json);
 
@@ -170,11 +192,11 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (LifetimeActions != null)
             {
-                json.WriteStartArray(LifetimeActionsPropertyNameBytes);
+                json.WriteStartArray(s_lifetimeActionsPropertyNameBytes);
 
-                foreach(var action in LifetimeActions)
+                foreach (LifetimeAction action in LifetimeActions)
                 {
-                    if(action != null)
+                    if (action != null)
                     {
                         json.WriteStartObject();
 
@@ -188,12 +210,9 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private const string ContentTypePropertyName = "contentType";
-        private static readonly JsonEncodedText ContentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
-
         private void ReadSecretProperties(JsonElement json)
         {
-            if(json.TryGetProperty(ContentTypePropertyName, out JsonElement contentTypeProp))
+            if (json.TryGetProperty(ContentTypePropertyName, out JsonElement contentTypeProp))
             {
                 ContentType = contentTypeProp.GetString();
             }
@@ -203,20 +222,9 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (ContentType != null)
             {
-                json.WriteString(ContentTypePropertyNameBytes, ContentType);
+                json.WriteString(s_contentTypePropertyNameBytes, ContentType);
             }
         }
-
-        private const string SubjectPropertyName = "subject";
-        private static readonly JsonEncodedText SubjectPropertyNameBytes = JsonEncodedText.Encode(SubjectPropertyName);
-        private const string SansPropertyName = "sans";
-        private static readonly JsonEncodedText SansPropertyNameBytes = JsonEncodedText.Encode(SansPropertyName);
-        private const string KeyUsagePropertyName = "key_usage";
-        private static readonly JsonEncodedText KeyUsagePropertyNameBytes = JsonEncodedText.Encode(KeyUsagePropertyName);
-        private const string EkusPropertyName = "ekus";
-        private static readonly JsonEncodedText EkusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
-        private const string ValidityMonthsPropertyName = "validity_months";
-        private static readonly JsonEncodedText ValidityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
 
         private void ReadX509CertificateProperties(JsonElement json)
         {
@@ -227,24 +235,28 @@ namespace Azure.Security.KeyVault.Certificates
                     case SubjectPropertyName:
                         Subject = prop.Value.GetString();
                         break;
+
                     case SansPropertyName:
                         SubjectAlternativeNames = new SubjectAlternativeNames();
                         ((IJsonDeserializable)SubjectAlternativeNames).ReadProperties(prop.Value);
                         break;
+
                     case KeyUsagePropertyName:
                         KeyUsage = new List<KeyUsage>();
-                        foreach (var usageElem in prop.Value.EnumerateArray())
+                        foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             KeyUsage.Add(usageElem.GetString());
                         }
                         break;
+
                     case EkusPropertyName:
                         EnhancedKeyUsage = new List<string>();
-                        foreach (var usageElem in prop.Value.EnumerateArray())
+                        foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             EnhancedKeyUsage.Add(usageElem.GetString());
                         }
                         break;
+
                     case ValidityMonthsPropertyName:
                         ValidityInMonths = prop.Value.GetInt32();
                         break;
@@ -256,12 +268,12 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (Subject != null)
             {
-                json.WriteString(SubjectPropertyNameBytes, Subject);
+                json.WriteString(s_subjectPropertyNameBytes, Subject);
             }
 
             if (SubjectAlternativeNames != null)
             {
-                json.WriteStartObject(SansPropertyNameBytes);
+                json.WriteStartObject(s_sansPropertyNameBytes);
 
                 ((IJsonSerializable)SubjectAlternativeNames).WriteProperties(json);
 
@@ -270,8 +282,8 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (KeyUsage != null)
             {
-                json.WriteStartArray(KeyUsagePropertyNameBytes);
-                foreach (var usage in KeyUsage)
+                json.WriteStartArray(s_keyUsagePropertyNameBytes);
+                foreach (KeyUsage usage in KeyUsage)
                 {
                     json.WriteStringValue(usage);
                 }
@@ -280,7 +292,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (EnhancedKeyUsage != null)
             {
-                json.WriteStartArray(EkusPropertyNameBytes);
+                json.WriteStartArray(s_ekusPropertyNameBytes);
                 foreach (var usage in EnhancedKeyUsage)
                 {
                     json.WriteStringValue(usage);
@@ -290,16 +302,9 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (ValidityInMonths.HasValue)
             {
-                json.WriteNumber(ValidityMonthsPropertyNameBytes, ValidityInMonths.Value);
+                json.WriteNumber(s_validityMonthsPropertyNameBytes, ValidityInMonths.Value);
             }
         }
-
-        private const string IssuerNamePropertyName = "name";
-        private static readonly JsonEncodedText IssuerNamePropertyNameBytes = JsonEncodedText.Encode(IssuerNamePropertyName);
-        private const string CertificateTypePropertyName = "cty";
-        private static readonly JsonEncodedText CertificateTypePropertyNameBytes = JsonEncodedText.Encode(CertificateTypePropertyName);
-        private const string CertificateTransparencyPropertyName = "cert_transparency";
-        private static readonly JsonEncodedText CertificateTransparencyPropertyNameNameBytes = JsonEncodedText.Encode(CertificateTransparencyPropertyName);
 
         private void ReadIssuerProperties(JsonElement json)
         {
@@ -310,9 +315,11 @@ namespace Azure.Security.KeyVault.Certificates
                     case IssuerNamePropertyName:
                         IssuerName = prop.Value.GetString();
                         break;
+
                     case CertificateTypePropertyName:
                         CertificateType = prop.Value.GetString();
                         break;
+
                     case CertificateTransparencyPropertyName:
                         CertificateTransparency = prop.Value.GetBoolean();
                         break;
@@ -324,22 +331,19 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (IssuerName != null)
             {
-                json.WriteString(IssuerNamePropertyNameBytes, IssuerName);
+                json.WriteString(s_issuerNamePropertyNameBytes, IssuerName);
             }
 
             if (CertificateType != null)
             {
-                json.WriteString(CertificateTypePropertyNameBytes, CertificateType);
+                json.WriteString(s_certificateTypePropertyNameBytes, CertificateType);
             }
 
-            if(CertificateTransparency.HasValue)
+            if (CertificateTransparency.HasValue)
             {
-                json.WriteBoolean(CertificateTransparencyPropertyNameNameBytes, CertificateTransparency.Value);
+                json.WriteBoolean(s_certificateTransparencyPropertyNameNameBytes, CertificateTransparency.Value);
             }
         }
-
-        private const string CreatedPropertyName = "created";
-        private const string UpdatedPropertyName = "updated";
 
         private void ReadAttributesProperties(JsonElement json)
         {
@@ -350,6 +354,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case CreatedPropertyName:
                         Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
+
                     case UpdatedPropertyName:
                         Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;

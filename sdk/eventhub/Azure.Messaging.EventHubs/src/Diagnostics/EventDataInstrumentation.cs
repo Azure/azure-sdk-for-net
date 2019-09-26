@@ -11,10 +11,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///   instances.
     /// </summary>
     ///
-    internal class EventDataInstrumentation
+    internal static class EventDataInstrumentation
     {
         /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static ClientDiagnostics ClientDiagnostics { get; } =  new ClientDiagnostics(true);
+        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics(true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 messageScope.AddAttribute("kind", "internal");
                 messageScope.Start();
 
-                var activity = Activity.Current;
+                Activity activity = Activity.Current;
                 if (activity != null)
                 {
                     eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
@@ -44,11 +44,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///    Extracts a diagnostic id from the given event.
+        ///   Extracts a diagnostic id from the given event.
         /// </summary>
         ///
         /// <param name="eventData">The event to instrument.</param>
-        /// <param name="id">The value of </param>
+        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
+        ///
         /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
         ///
         public static bool TryExtractDiagnosticId(EventData eventData, out string id)

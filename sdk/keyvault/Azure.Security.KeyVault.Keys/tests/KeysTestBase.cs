@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public Uri VaultUri { get; set; }
 
-        private readonly Queue<(KeyBase Key, bool Delete)> _keysToCleanup = new Queue<(KeyBase, bool)>();
+        private readonly Queue<(string Name, bool Delete)> _keysToCleanup = new Queue<(string, bool)>();
 
         protected KeysTestBase(bool isAsync) : base(isAsync)
         {
@@ -48,27 +48,27 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             try
             {
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
                 {
                     if (cleanupItem.Delete)
                     {
-                        await Client.DeleteKeyAsync(cleanupItem.Key.Name);
+                        await Client.DeleteKeyAsync(cleanupItem.Name);
                     }
                 }
 
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
                 {
-                    await WaitForDeletedKey(cleanupItem.Key.Name);
+                    await WaitForDeletedKey(cleanupItem.Name);
                 }
 
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
                 {
-                    await Client.PurgeDeletedKeyAsync(cleanupItem.Key.Name);
+                    await Client.PurgeDeletedKeyAsync(cleanupItem.Name);
                 }
 
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
                 {
-                    await WaitForPurgedKey(cleanupItem.Key.Name);
+                    await WaitForPurgedKey(cleanupItem.Name);
                 }
             }
             finally
@@ -77,15 +77,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected void RegisterForCleanup(KeyBase key, bool delete = true)
+        protected void RegisterForCleanup(string name, bool delete = true)
         {
-            _keysToCleanup.Enqueue((key, delete));
+            _keysToCleanup.Enqueue((name, delete));
         }
 
         protected void AssertKeysEqual(Key exp, Key act)
         {
             AssertKeyMaterialEqual(exp.KeyMaterial, act.KeyMaterial);
-            AssertKeysEqual((KeyBase)exp, (KeyBase)act);
+            AssertKeyPropertiesEqual(exp.Properties, act.Properties);
         }
 
         private void AssertKeyMaterialEqual(JsonWebKey exp, JsonWebKey act)
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.T, act.T);
         }
 
-        protected void AssertKeysEqual(KeyBase exp, KeyBase act)
+        protected void AssertKeyPropertiesEqual(KeyProperties exp, KeyProperties act)
         {
             Assert.AreEqual(exp.Managed, act.Managed);
             Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             if (exp?.Count != act?.Count)
                 return false;
 
-            foreach (var pair in exp)
+            foreach (KeyValuePair<string, string> pair in exp)
             {
                 if (!act.TryGetValue(pair.Key, out string value)) return false;
                 if (!string.Equals(value, pair.Value)) return false;

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Security.Cryptography;
@@ -11,11 +10,11 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Elliptic Curve Cryptography (ECC) curve names.
     /// </summary>
-    public struct KeyCurveName : IEquatable<KeyCurveName>
+    public readonly struct KeyCurveName : IEquatable<KeyCurveName>
     {
-        internal readonly Oid Oid;
-        internal readonly int KeySize;
-        internal readonly int KeyParameterSize;
+        internal readonly Oid _oid;
+        internal readonly int _keySize;
+        internal readonly int _keyParameterSize;
         private readonly string _value;
 
         /// <summary>
@@ -27,18 +26,18 @@ namespace Azure.Security.KeyVault.Keys
             ref readonly KeyCurveName curveName = ref Find(value);
 
             _value = curveName._value ?? value;
-            Oid = curveName.Oid;
-            KeySize = curveName.KeySize;
-            KeyParameterSize = curveName.KeyParameterSize;
+            _oid = curveName._oid;
+            _keySize = curveName._keySize;
+            _keyParameterSize = curveName._keyParameterSize;
         }
 
         private KeyCurveName(string value, Oid oid, int keySize, int keyParameterSize)
         {
             _value = value;
 
-            Oid = oid;
-            KeySize = keySize;
-            KeyParameterSize = keyParameterSize;
+            _oid = oid;
+            _keySize = keySize;
+            _keyParameterSize = keyParameterSize;
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public static readonly KeyCurveName P521 = new KeyCurveName("P-521", new Oid("1.3.132.0.35"), 521, 66);
 
-        private static readonly KeyCurveName Default = default;
+        internal static readonly KeyCurveName s_default = default;
 
         /// <summary>
         /// Determines if two <see cref="KeyCurveName"/> values are the same.
@@ -111,29 +110,29 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
 
-            return ref Default;
+            return ref s_default;
         }
 
         internal static ref readonly KeyCurveName Find(Oid oid, int keySize)
         {
             if (!string.IsNullOrEmpty(oid?.Value))
             {
-                if (string.Equals(oid.Value, P521.Oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P521._oid.Value, StringComparison.Ordinal))
                 {
                     return ref P521;
                 }
 
-                if (string.Equals(oid.Value, P384.Oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P384._oid.Value, StringComparison.Ordinal))
                 {
                     return ref P384;
                 }
 
-                if (string.Equals(oid.Value, P256K.Oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P256K._oid.Value, StringComparison.Ordinal))
                 {
                     return ref P256K;
                 }
 
-                if (string.Equals(oid.Value, P256.Oid.Value, StringComparison.Ordinal))
+                if (string.Equals(oid.Value, P256._oid.Value, StringComparison.Ordinal))
                 {
                     return ref P256;
                 }
@@ -163,7 +162,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
 
-            return ref Default;
+            return ref s_default;
         }
 
         /// <summary>

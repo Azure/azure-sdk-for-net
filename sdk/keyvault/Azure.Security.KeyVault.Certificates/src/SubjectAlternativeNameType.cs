@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -22,6 +21,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Subject Alternative Names which are unique principal names
         /// </summary>
-        Upn
+        Upn,
     }
 }

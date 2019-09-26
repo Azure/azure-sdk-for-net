@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateExceptionForResponseWithNoResponse()
         {
-            var exception = AmqpError.CreateExceptionForResponse(null, null);
+            Exception exception = AmqpError.CreateExceptionForResponse(null, null);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.StatusCode] = (int)statusCode;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf(exceptionType), "The exception should be the proper type");
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.StatusCode] = (int)AmqpResponseStatusCode.NotFound;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsResourceNotFoundException>(), "The exception should match");
@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.StatusCode] = (int)AmqpResponseStatusCode.NotFound;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsResourceNotFoundException>(), "The exception should match");
@@ -171,10 +171,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var response = AmqpMessage.Create();
             response.ApplicationProperties = new ApplicationProperties();
-            response.ApplicationProperties.Map[AmqpResponse.StatusCode] = Int32.MaxValue;
+            response.ApplicationProperties.Map[AmqpResponse.StatusCode] = int.MaxValue;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.ErrorCondition] = condition;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf(exceptionType), "The exception should be the proper type");
@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.ErrorCondition] = AmqpErrorCode.NotFound;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsResourceNotFoundException>(), "The exception should match");
@@ -250,7 +250,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.ErrorCondition] = AmqpErrorCode.NotFound;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsResourceNotFoundException>(), "The exception should match");
@@ -273,7 +273,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.ErrorCondition] = AmqpErrorCode.NotFound;
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsCommunicationException>(), "The exception should match");
@@ -296,7 +296,7 @@ namespace Azure.Messaging.EventHubs.Tests
             response.ApplicationProperties.Map[AmqpResponse.ErrorCondition] = new AmqpSymbol("Invalid");
             response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
 
-            var exception = AmqpError.CreateExceptionForResponse(response, resourceName);
+            Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
@@ -311,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateExceptionForErrorWithNoResponse()
         {
-            var exception = AmqpError.CreateExceptionForError(null, null);
+            Exception exception = AmqpError.CreateExceptionForError(null, null);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
@@ -338,7 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Description = description
             };
 
-            var exception = AmqpError.CreateExceptionForError(error, resourceName);
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf(exceptionType), "The exception should be the proper type");
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Description = description
             };
 
-            var exception = AmqpError.CreateExceptionForError(error, resourceName);
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsResourceNotFoundException>(), "The exception should match");
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Description = description
             };
 
-            var exception = AmqpError.CreateExceptionForError(error, resourceName);
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsResourceNotFoundException>(), "The exception should match");
@@ -415,7 +415,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Description = description
             };
 
-            var exception = AmqpError.CreateExceptionForError(error, resourceName);
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsCommunicationException>(), "The exception should match");
@@ -439,7 +439,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Description = description
             };
 
-            var exception = AmqpError.CreateExceptionForError(error, resourceName);
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
@@ -465,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static Regex GetNotFoundExpression() =>
             (Regex)
                 typeof(AmqpError)
-                    .GetField("NotFoundExpression", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetProperty("NotFoundExpression", BindingFlags.Static | BindingFlags.NonPublic)
                     .GetValue(null);
     }
 }

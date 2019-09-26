@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>
     /// RetryPolicy implementation where the delay between retries will grow in a staggered exponential manner.
     /// RetryPolicy can be set on the client using <see cref="EventHubClient"/>.
@@ -12,10 +12,10 @@ namespace TrackOne
     /// </summary>
     internal sealed class RetryExponential : RetryPolicy
     {
-        internal readonly TimeSpan minimumBackoff;
-        internal readonly TimeSpan maximumBackoff;
-        internal readonly int maximumRetryCount;
-        internal readonly double retryFactor;
+        internal readonly TimeSpan _minimumBackoff;
+        internal readonly TimeSpan _maximumBackoff;
+        internal readonly int _maximumRetryCount;
+        internal readonly double _retryFactor;
 
         /// <summary>
         /// Returns a new RetryExponential retry policy object.
@@ -28,10 +28,10 @@ namespace TrackOne
             TimeoutHelper.ThrowIfNegativeArgument(minimumBackoff, nameof(minimumBackoff));
             TimeoutHelper.ThrowIfNegativeArgument(maximumBackoff, nameof(maximumBackoff));
 
-            this.minimumBackoff = minimumBackoff;
-            this.maximumBackoff = maximumBackoff;
-            this.maximumRetryCount = maximumRetryCount;
-            this.retryFactor = this.ComputeRetryFactor();
+            _minimumBackoff = minimumBackoff;
+            _maximumBackoff = maximumBackoff;
+            _maximumRetryCount = maximumRetryCount;
+            _retryFactor = ComputeRetryFactor();
         }
 
         /// <summary></summary>
@@ -42,7 +42,7 @@ namespace TrackOne
         /// <returns></returns>
         protected override TimeSpan? OnGetNextRetryInterval(Exception lastException, TimeSpan remainingTime, int baseWaitTimeSecs, int retryCount)
         {
-            if (retryCount >= this.maximumRetryCount)
+            if (retryCount >= _maximumRetryCount)
             {
                 return null;
             }
@@ -52,11 +52,11 @@ namespace TrackOne
                 return null;
             }
 
-            double nextRetryInterval = Math.Pow(this.retryFactor, (double)retryCount);
+            double nextRetryInterval = Math.Pow(_retryFactor, (double)retryCount);
             long nextRetryIntervalSeconds = (long)nextRetryInterval;
             long nextRetryIntervalMilliseconds = (long)((nextRetryInterval - (double)nextRetryIntervalSeconds) * 1000);
 
-            TimeSpan retryAfter = this.minimumBackoff.Add(TimeSpan.FromMilliseconds(nextRetryIntervalSeconds * 1000 + nextRetryIntervalMilliseconds));
+            TimeSpan retryAfter = _minimumBackoff.Add(TimeSpan.FromMilliseconds(nextRetryIntervalSeconds * 1000 + nextRetryIntervalMilliseconds));
             retryAfter = retryAfter.Add(TimeSpan.FromSeconds(baseWaitTimeSecs));
 
             return retryAfter;
@@ -64,20 +64,20 @@ namespace TrackOne
 
         private double ComputeRetryFactor()
         {
-            double deltaBackoff = this.maximumBackoff.Subtract(this.minimumBackoff).TotalSeconds;
-            if (deltaBackoff <= 0 || this.maximumRetryCount <= 0)
+            double deltaBackoff = _maximumBackoff.Subtract(_minimumBackoff).TotalSeconds;
+            if (deltaBackoff <= 0 || _maximumRetryCount <= 0)
             {
                 return 0;
             }
 
-            return (Math.Log(deltaBackoff) / Math.Log(this.maximumRetryCount));
+            return (Math.Log(deltaBackoff) / Math.Log(_maximumRetryCount));
         }
 
         /// <summary>Creates a new copy of this instance.</summary>
         /// <returns>The created new copy of this instance.</returns>
         public override RetryPolicy Clone()
         {
-            return new RetryExponential(this.minimumBackoff, this.maximumBackoff, this.maximumRetryCount);
+            return new RetryExponential(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -33,7 +32,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public virtual Uri Uri => this._uri;
+        public virtual Uri Uri => _uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -45,7 +44,58 @@ namespace Azure.Storage.Files
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => this._pipeline;
+        protected virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the file client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the file client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The share name corresponding to the file client.
+        /// </summary>
+        private string _shareName;
+
+        /// <summary>
+        /// Gets the share name corresponding to the file client.
+        /// </summary>
+        public virtual string ShareName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _shareName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the file.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the file.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         //const string fileType = "file";
 
@@ -115,8 +165,8 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            this._uri = builder.Uri;
-            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+            _uri = builder.Uri;
+            _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
@@ -177,8 +227,8 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileClient(Uri fileUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
-            this._uri = fileUri;
-            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+            _uri = fileUri;
+            _pipeline = (options ?? new FileClientOptions()).Build(authentication);
         }
 
         /// <summary>
@@ -193,8 +243,8 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileClient(Uri fileUri, HttpPipeline pipeline)
         {
-            this._uri = fileUri;
-            this._pipeline = pipeline;
+            _uri = fileUri;
+            _pipeline = pipeline;
         }
         #endregion ctors
 
@@ -216,8 +266,22 @@ namespace Azure.Storage.Files
         /// </returns>
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
-            var builder = new FileUriBuilder(this.Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.Uri, this.Pipeline);
+            var builder = new FileUriBuilder(Uri) { Snapshot = shareSnapshot };
+            return new FileClient(builder.Uri, Pipeline);
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _shareName == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.LastDirectoryOrFileName;
+                _shareName = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
         }
 
         #region Create
@@ -264,7 +328,7 @@ namespace Azure.Storage.Files
             FileSmbProperties? smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateInternal(
+            CreateInternal(
                 maxSize,
                 httpHeaders,
                 metadata,
@@ -317,7 +381,7 @@ namespace Azure.Storage.Files
             FileSmbProperties? smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateInternal(
+            await CreateInternal(
                 maxSize,
                 httpHeaders,
                 metadata,
@@ -375,28 +439,28 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(maxSize)}: {maxSize}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    var smbProps = smbProperties ?? new FileSmbProperties();
+                    FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
-                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    if (filePermission == null && smbProps.FilePermissionKey == null)
                     {
                         filePermission = Constants.File.FilePermissionInherit;
                     }
 
-                    var response = await FileRestClient.File.CreateAsync(
-                        this.Pipeline,
-                        this.Uri,
+                    Response<RawStorageFileInfo> response = await FileRestClient.File.CreateAsync(
+                        Pipeline,
+                        Uri,
                         fileContentLength: maxSize,
                         fileContentType: httpHeaders?.ContentType,
                         fileContentEncoding: httpHeaders?.ContentEncoding,
@@ -420,12 +484,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -459,7 +523,7 @@ namespace Azure.Storage.Files
             Uri sourceUri,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            this.StartCopyInternal(
+            StartCopyInternal(
                 sourceUri,
                 metadata,
                 false, // async
@@ -493,7 +557,7 @@ namespace Azure.Storage.Files
             Uri sourceUri,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            await this.StartCopyInternal(
+            await StartCopyInternal(
                 sourceUri,
                 metadata,
                 true, // async
@@ -532,18 +596,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
                     return await FileRestClient.File.StartCopyAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         copySource: sourceUri,
                         metadata: metadata,
                         async: async,
@@ -552,12 +616,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -588,7 +652,7 @@ namespace Azure.Storage.Files
         public virtual Response AbortCopy(
             string copyId,
             CancellationToken cancellationToken = default) =>
-            this.AbortCopyInternal(
+            AbortCopyInternal(
                 copyId,
                 false, // async
                 cancellationToken)
@@ -616,7 +680,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response> AbortCopyAsync(
             string copyId,
             CancellationToken cancellationToken = default) =>
-            await this.AbortCopyInternal(
+            await AbortCopyInternal(
                 copyId,
                 true, // async
                 cancellationToken)
@@ -649,18 +713,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}");
                 try
                 {
                     return await FileRestClient.File.AbortCopyAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         copyId: copyId,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -668,12 +732,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -714,7 +778,7 @@ namespace Azure.Storage.Files
             HttpRange range = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
-            this.DownloadInternal(
+            DownloadInternal(
                 range,
                 rangeGetContentHash,
                 false, // async
@@ -755,7 +819,7 @@ namespace Azure.Storage.Files
             HttpRange range = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
-            await this.DownloadInternal(
+            await DownloadInternal(
                 range,
                 rangeGetContentHash,
                 true, // async
@@ -801,17 +865,17 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(rangeGetContentHash)}: {rangeGetContentHash}");
                 try
                 {
                     // Start downloading the file
-                    var response = await this.StartDownloadAsync(
+                    (Response<FlattenedStorageFileProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
                         rangeGetContentHash,
                         async: async,
@@ -822,25 +886,25 @@ namespace Azure.Storage.Files
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
-                        response.GetRawResponse(),
+                        stream,
                         startOffset =>
-                            this.StartDownloadAsync(
+                            StartDownloadAsync(
                                 range,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,
                                 cancellationToken)
                                 .EnsureCompleted()
-                                .GetRawResponse(),
+                                .Item2,
                         async startOffset =>
-                            (await this.StartDownloadAsync(
+                            (await StartDownloadAsync(
                                 range,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                                .GetRawResponse(),
+                                .Item2,
                         // TODO: For now we're using the default ResponseClassifier
                         // on FileConnectionOptions so we'll do the same here
                         new ResponseClassifier(),
@@ -854,12 +918,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -896,7 +960,7 @@ namespace Azure.Storage.Files
         /// downloaded file.  <see cref="FlattenedStorageFileProperties.Content"/> contains
         /// the file's data.
         /// </returns>
-        private async Task<Response<FlattenedStorageFileProperties>> StartDownloadAsync(
+        private async Task<(Response<FlattenedStorageFileProperties>, Stream)> StartDownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
@@ -908,19 +972,18 @@ namespace Azure.Storage.Files
                 range.Count.HasValue ?
                     range.Count.Value - startOffset :
                     (long?)null);
-            this.Pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
-            var response =
+            Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
+            (Response<FlattenedStorageFileProperties> response, Stream stream) =
                 await FileRestClient.File.DownloadAsync(
-                    this.Pipeline,
-                    this.Uri,
+                    Pipeline,
+                    Uri,
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
-                    bufferResponse: false,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-            this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
-            return response;
+            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+            return (response, stream);
         }
         #endregion Download
 
@@ -943,7 +1006,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response Delete(
             CancellationToken cancellationToken = default) =>
-            this.DeleteInternal(
+            DeleteInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -966,7 +1029,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             CancellationToken cancellationToken = default) =>
-            await this.DeleteInternal(
+            await DeleteInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -994,28 +1057,28 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.File.DeleteAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1048,7 +1111,7 @@ namespace Azure.Storage.Files
         public virtual Response<StorageFileProperties> GetProperties(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesInternal(
+            GetPropertiesInternal(
                 shareSnapshot,
                 false, // async
                 cancellationToken)
@@ -1080,7 +1143,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<StorageFileProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesInternal(
+            await GetPropertiesInternal(
                 shareSnapshot,
                 true, // async
                 cancellationToken)
@@ -1117,18 +1180,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
-                    var response = await FileRestClient.File.GetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                    Response<RawStorageFileProperties> response = await FileRestClient.File.GetPropertiesAsync(
+                        Pipeline,
+                        Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -1140,12 +1203,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1188,10 +1251,10 @@ namespace Azure.Storage.Files
         public virtual Response<StorageFileInfo> SetHttpHeaders(
             long? newSize = default,
             FileHttpHeaders? httpHeaders = default,
-            FileSmbProperties?  smbProperties = default,
+            FileSmbProperties? smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
-            this.SetHttpHeadersInternal(
+            SetHttpHeadersInternal(
                 newSize,
                 httpHeaders,
                 smbProperties,
@@ -1239,7 +1302,7 @@ namespace Azure.Storage.Files
             FileSmbProperties? smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetHttpHeadersInternal(
+            await SetHttpHeadersInternal(
                 newSize,
                 httpHeaders,
                 smbProperties,
@@ -1292,27 +1355,27 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(newSize)}: {newSize}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    var smbProps = smbProperties ?? new FileSmbProperties();
+                    FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
-                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    if (filePermission == null && smbProps.FilePermissionKey == null)
                     {
                         filePermission = Constants.File.Preserve;
                     }
 
-                    var response = await FileRestClient.File.SetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                    Response<RawStorageFileInfo> response = await FileRestClient.File.SetPropertiesAsync(
+                        Pipeline,
+                        Uri,
                         fileContentLength: newSize,
                         fileContentType: httpHeaders?.ContentType,
                         fileContentEncoding: httpHeaders?.ContentEncoding,
@@ -1321,7 +1384,7 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
-                        filePermission:  filePermission,
+                        filePermission: filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
@@ -1336,12 +1399,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1372,7 +1435,7 @@ namespace Azure.Storage.Files
         public virtual Response<StorageFileInfo> SetMetadata(
             Metadata metadata,
             CancellationToken cancellationToken = default) =>
-            this.SetMetadataInternal(
+            SetMetadataInternal(
                 metadata,
                 false, // async
                 cancellationToken)
@@ -1402,7 +1465,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<StorageFileInfo>> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default) =>
-            await this.SetMetadataInternal(
+            await SetMetadataInternal(
                 metadata,
                 true, // async
                 cancellationToken)
@@ -1437,16 +1500,16 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    var response = await FileRestClient.File.SetMetadataAsync(
-                        this.Pipeline,
-                        this.Uri,
+                    Response<RawStorageFileInfo> response = await FileRestClient.File.SetMetadataAsync(
+                        Pipeline,
+                        Uri,
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -1458,12 +1521,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1516,7 +1579,7 @@ namespace Azure.Storage.Files
             byte[] transactionalContentHash = null,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadRangeInternal(
+            UploadRangeInternal(
                 writeType,
                 range,
                 content,
@@ -1572,7 +1635,7 @@ namespace Azure.Storage.Files
             byte[] transactionalContentHash = null,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadRangeInternal(
+            await UploadRangeInternal(
                 writeType,
                 range,
                 content,
@@ -1635,12 +1698,12 @@ namespace Azure.Storage.Files
         {
             // TODO We should probably raise an exception if Stream is non-empty and writeType is Clear.
 
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(writeType)}: {writeType}");
                 try
                 {
@@ -1654,10 +1717,10 @@ namespace Azure.Storage.Files
                         operation:
                             () =>
                             {
-                                this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                                Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                                 return FileRestClient.File.UploadRangeAsync(
-                                    this.Pipeline,
-                                    this.Uri,
+                                    Pipeline,
+                                    Uri,
                                     optionalbody: content,
                                     contentLength: content.Length,
                                     range: range.ToString(),
@@ -1671,12 +1734,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1684,12 +1747,12 @@ namespace Azure.Storage.Files
 
         #region UploadRangeFromUrl
         /// <summary>
-        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file.
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1724,12 +1787,12 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file.
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1764,12 +1827,12 @@ namespace Azure.Storage.Files
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file.
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1869,11 +1932,12 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<StorageFileUploadInfo> Upload(
             Stream content,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadInternal(
+            UploadInternal(
                 content,
                 progressHandler,
                 Constants.File.MaxFileUpdateRange,
@@ -1906,11 +1970,12 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StorageFileUploadInfo>> UploadAsync(
             Stream content,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadInternal(
+            await UploadInternal(
                 content,
                 progressHandler,
                 Constants.File.MaxFileUpdateRange,
@@ -1964,7 +2029,7 @@ namespace Azure.Storage.Files
                 var length = content.Length;
                 if (length <= singleRangeThreshold)
                 {
-                    return await this.UploadRangeInternal(
+                    return await UploadRangeInternal(
                         FileRangeWriteType.Update,
                         new HttpRange(0, length),
                         content,
@@ -1987,12 +2052,12 @@ namespace Azure.Storage.Files
                 pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
                     MemoryPool<byte>.Shared :
                     new StorageMemoryPool(singleRangeThreshold, 1);
-                for (;;)
+                for (; ; )
                 {
                     // Get the next chunk of content
                     var parentPosition = content.Position;
-                    var buffer = pool.Rent(singleRangeThreshold);
-                    if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out var segment))
+                    IMemoryOwner<byte> buffer = pool.Rent(singleRangeThreshold);
+                    if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out ArraySegment<byte> segment))
                     {
                         throw Errors.UnableAccessArray();
                     }
@@ -2010,7 +2075,7 @@ namespace Azure.Storage.Files
                         count,
                         () => buffer.Dispose(),
                         cancellationToken);
-                    response = await this.UploadRangeInternal(
+                    response = await UploadRangeInternal(
                         FileRangeWriteType.Update,
                         new HttpRange(partition.ParentPosition, partition.Length),
                         partition,
@@ -2061,7 +2126,7 @@ namespace Azure.Storage.Files
             HttpRange range,
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            this.GetRangeListInternal(
+            GetRangeListInternal(
                 range,
                 shareSnapshot,
                 false, // async
@@ -2095,7 +2160,7 @@ namespace Azure.Storage.Files
             HttpRange range,
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetRangeListInternal(
+            await GetRangeListInternal(
                 range,
                 shareSnapshot,
                 true, // async
@@ -2134,18 +2199,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
                     return await FileRestClient.File.GetRangeListAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         sharesnapshot: shareSnapshot,
                         range: range.ToString(),
                         async: async,
@@ -2154,12 +2219,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -2255,19 +2320,19 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(maxResults)}: {maxResults}");
                 try
                 {
                     return await FileRestClient.File.ListHandlesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         marker: marker,
                         maxresults: maxResults,
                         async: async,
@@ -2276,12 +2341,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -2329,7 +2394,7 @@ namespace Azure.Storage.Files
             string handleId = Constants.CloseAllHandles,
             string marker = default,
             CancellationToken cancellationToken = default) =>
-            this.ForceCloseHandlesInternal(
+            ForceCloseHandlesInternal(
                 handleId,
                 marker,
                 false, // async,
@@ -2377,7 +2442,7 @@ namespace Azure.Storage.Files
             string handleId = Constants.CloseAllHandles,
             string marker = default,
             CancellationToken cancellationToken = default) =>
-            await this.ForceCloseHandlesInternal(
+            await ForceCloseHandlesInternal(
                 handleId,
                 marker,
                 true, // async,
@@ -2430,19 +2495,19 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(handleId)}: {handleId}\n" +
                     $"{nameof(marker)}: {marker}");
                 try
                 {
                     return await FileRestClient.File.ForceCloseHandlesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         marker: marker,
                         handleId: handleId,
                         async: async,
@@ -2451,12 +2516,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                    Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }

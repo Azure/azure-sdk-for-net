@@ -224,14 +224,14 @@ namespace Azure.Core.Tests
         }
 
         private Task<Stream> CreateAsync(
-            Func<long, Response> responseFactory,
-            Func<long, ValueTask<Response>> asyncResponseFactory,
+            Func<long, Stream> streamFactory,
+            Func<long, ValueTask<Stream>> asyncStreamFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
             return IsAsync ?
-                RetriableStream.CreateAsync(responseFactory, asyncResponseFactory, responseClassifier, maxRetries) :
-                Task.FromResult(RetriableStream.Create(responseFactory, asyncResponseFactory, responseClassifier, maxRetries));
+                RetriableStream.CreateAsync(streamFactory, asyncStreamFactory, responseClassifier, maxRetries) :
+                Task.FromResult(RetriableStream.Create(streamFactory, asyncStreamFactory, responseClassifier, maxRetries));
         }
 
         private Task<int> ReadAsync(Stream stream, byte[] buffer, int offset, int length)
@@ -239,24 +239,27 @@ namespace Azure.Core.Tests
             return IsAsync ? stream.ReadAsync(buffer, offset, length) : Task.FromResult(stream.Read(buffer, offset, length));
         }
 
-        private static Response SendTestRequest(HttpPipeline pipeline, long offset)
+        private static Stream SendTestRequest(HttpPipeline pipeline, long offset)
         {
             using Request request = CreateRequest(pipeline, offset);
 
-            return pipeline.SendRequest(request, CancellationToken.None);
+            Response response = pipeline.SendRequest(request, CancellationToken.None);
+            return response.ContentStream;
         }
 
-        private static ValueTask<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
+        private static async ValueTask<Stream> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
             using Request request = CreateRequest(pipeline, offset);
 
-            return pipeline.SendRequestAsync(request, CancellationToken.None);
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+            return response.ContentStream;
         }
 
         private static Request CreateRequest(HttpPipeline pipeline, long offset)
         {
             Request request = pipeline.CreateRequest();
-            request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
+            request.Method = RequestMethod.Get;
+            request.Uri.Assign(new Uri("https://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;
         }

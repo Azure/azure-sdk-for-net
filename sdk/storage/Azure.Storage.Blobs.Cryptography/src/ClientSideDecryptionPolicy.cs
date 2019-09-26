@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
     /// Adjusts the download range requested, if any, to ensure enough info is present to decrypt, as well as
     /// pipes the returned content stream through a decryption stream.
     /// </summary>
-    public class ClientSideBlobDecryptionPolicy : HttpPipelinePolicy
+    public class ClientSideDecryptionPolicy : HttpPipelinePolicy
     {
         /// <summary>
         /// The key resolver used to select the correct key for decrypting existing blobs.
@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// </summary>
         /// <param name="key">The decryption key. Should not be set if <paramref name="keyResolver"/> is set.</param>
         /// <param name="keyResolver">Key resolver for getting the decryption key. Should not be set if <paramref name="key"/> is set.</param>
-        public ClientSideBlobDecryptionPolicy(IKeyEncryptionKey key = default, IKeyEncryptionKeyResolver keyResolver = default)
+        public ClientSideDecryptionPolicy(IKeyEncryptionKey key = default, IKeyEncryptionKeyResolver keyResolver = default)
         {
             this.KeyWrapper = key;
             this.KeyResolver = keyResolver;
@@ -56,7 +56,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// </summary>
         /// <param name="message">The <see cref="HttpPipelineMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
-        /// <returns></returns>
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range);

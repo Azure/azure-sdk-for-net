@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -22,18 +21,18 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The number of bytes present in the response body.
         /// </summary>
-        public long ContentLength => this._flattened.ContentLength;
+        public long ContentLength => _flattened.ContentLength;
 
         /// <summary>
         /// Content
         /// </summary>
-        public Stream Content => this._flattened.Content;
+        public Stream Content => _flattened.Content;
 
         /// <summary>
         /// If the file has an MD5 hash and this operation is to read the full content, this response header is returned so that the client can check for message content integrity.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash => this._flattened.ContentHash;
+        public byte[] ContentHash => _flattened.ContentHash;
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
@@ -47,8 +46,8 @@ namespace Azure.Storage.Files.Models
         /// <param name="flattened">The FlattenedStorageFileProperties returned with the request</param>
         internal StorageFileDownloadInfo(FlattenedStorageFileProperties flattened)
         {
-            this._flattened = flattened;
-            this.Properties = new StorageFileDownloadProperties(flattened);
+            _flattened = flattened;
+            Properties = new StorageFileDownloadProperties(flattened);
         }
     }
 }

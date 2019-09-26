@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -152,49 +151,54 @@ namespace Azure.Storage.Sas
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            this.EnsureState();
+            EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(this.StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(this.ExpiryTime);
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
-                this.Permissions,
+                Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, this.ContainerName ?? String.Empty, this.BlobName ?? String.Empty),
-                this.Identifier,
-                this.IPRange.ToString(),
-                this.Protocol.ToString(),
-                this.Version,
-                this.Resource,
-                this.Snapshot,
-                this.CacheControl,
-                this.ContentDisposition,
-                this.ContentEncoding,
-                this.ContentLanguage,
-                this.ContentType);
+                GetCanonicalName(sharedKeyCredential.AccountName, ContainerName ?? String.Empty, BlobName ?? String.Empty),
+                Identifier,
+                IPRange.ToString(),
+                Protocol.ToString(),
+                Version,
+                Resource,
+                Snapshot,
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
 
             var p = new BlobSasQueryParameters(
-                version: this.Version,
+                version: Version,
                 services: null,
                 resourceTypes: null,
-                protocol: this.Protocol,
-                startTime: this.StartTime,
-                expiryTime: this.ExpiryTime,
-                ipRange: this.IPRange,
-                identifier: this.Identifier,
-                resource: this.Resource,
-                permissions: this.Permissions,
-                signature: signature);
+                protocol: Protocol,
+                startTime: StartTime,
+                expiryTime: ExpiryTime,
+                ipRange: IPRange,
+                identifier: Identifier,
+                resource: Resource,
+                permissions: Permissions,
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 
         /// <summary>
         /// Use an account's <see cref="UserDelegationKey"/> to sign this
-        /// shared access signature values to produce the propery SAS query
+        /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
         /// <param name="userDelegationKey">
@@ -209,56 +213,61 @@ namespace Azure.Storage.Sas
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
 
-            this.EnsureState();
+            EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(this.StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(this.ExpiryTime);
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
             var signedStart = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedStart);
             var signedExpiry = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedExpiry);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
-                this.Permissions,
+                Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(accountName, this.ContainerName ?? String.Empty, this.BlobName ?? String.Empty),
+                GetCanonicalName(accountName, ContainerName ?? String.Empty, BlobName ?? String.Empty),
                 userDelegationKey.SignedOid,
                 userDelegationKey.SignedTid,
                 signedStart,
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
-                this.IPRange.ToString(),
-                this.Protocol.ToString(),
-                this.Version,
-                this.Resource,
-                this.Snapshot,
-                this.CacheControl,
-                this.ContentDisposition,
-                this.ContentEncoding,
-                this.ContentLanguage,
-                this.ContentType);
+                IPRange.ToString(),
+                Protocol.ToString(),
+                Version,
+                Resource,
+                Snapshot,
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
 
             var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
             var p = new BlobSasQueryParameters(
-                version: this.Version,
+                version: Version,
                 services: null,
                 resourceTypes: null,
-                protocol: this.Protocol,
-                startTime: this.StartTime,
-                expiryTime: this.ExpiryTime,
-                ipRange: this.IPRange,
+                protocol: Protocol,
+                startTime: StartTime,
+                expiryTime: ExpiryTime,
+                ipRange: IPRange,
                 identifier: null,
-                resource: this.Resource,
-                permissions: this.Permissions,
+                resource: Resource,
+                permissions: Permissions,
                 keyOid: userDelegationKey.SignedOid,
                 keyTid: userDelegationKey.SignedTid,
                 keyStart: userDelegationKey.SignedStart,
                 keyExpiry: userDelegationKey.SignedExpiry,
                 keyService: userDelegationKey.SignedService,
                 keyVersion: userDelegationKey.SignedVersion,
-                signature: signature);
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 
@@ -271,7 +280,7 @@ namespace Azure.Storage.Sas
         /// <param name="containerName">The name of the container.</param>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>The canonical resource name.</returns>
-        static string GetCanonicalName(string account, string containerName, string blobName)
+        private static string GetCanonicalName(string account, string containerName, string blobName)
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
@@ -286,7 +295,7 @@ namespace Azure.Storage.Sas
         /// </param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
             Convert.ToBase64String(
                 new HMACSHA256(
                     Convert.FromBase64String(userDelegationKeyValue))
@@ -299,35 +308,35 @@ namespace Azure.Storage.Sas
         private void EnsureState()
         {
             // Container
-            if (String.IsNullOrEmpty(this.BlobName))
+            if (String.IsNullOrEmpty(BlobName))
             {
                 // Make sure the permission characters are in the correct order
-                this.Permissions = ContainerSasPermissions.Parse(this.Permissions).ToString();
-                this.Resource = Constants.Sas.Resource.Container;
+                Permissions = ContainerSasPermissions.Parse(Permissions).ToString();
+                Resource = Constants.Sas.Resource.Container;
             }
 
             // Blob or Snapshot
             else
             {
                 // Blob
-                if (String.IsNullOrEmpty(this.Snapshot))
+                if (String.IsNullOrEmpty(Snapshot))
                 {
                     // Make sure the permission characters are in the correct order
-                    this.Permissions = BlobSasPermissions.Parse(this.Permissions).ToString();
-                    this.Resource = Constants.Sas.Resource.Blob;
+                    Permissions = BlobSasPermissions.Parse(Permissions).ToString();
+                    Resource = Constants.Sas.Resource.Blob;
                 }
                 // Snapshot
                 else
                 {
                     // Make sure the permission characters are in the correct order
-                    this.Permissions = SnapshotSasPermissions.Parse(this.Permissions).ToString();
-                    this.Resource = Constants.Sas.Resource.BlobSnapshot;
+                    Permissions = SnapshotSasPermissions.Parse(Permissions).ToString();
+                    Resource = Constants.Sas.Resource.BlobSnapshot;
                 }
 
             }
-            if (String.IsNullOrEmpty(this.Version))
+            if (String.IsNullOrEmpty(Version))
             {
-                this.Version = SasQueryParameters.DefaultSasVersion;
+                Version = SasQueryParameters.DefaultSasVersion;
             }
         }
 
@@ -346,7 +355,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is BlobSasBuilder other && this.Equals(other);
+            => obj is BlobSasBuilder other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the BlobSasBuilder.
@@ -354,20 +363,20 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the BlobSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            this.BlobName.GetHashCode() ^
-            this.CacheControl.GetHashCode() ^
-            this.ContainerName.GetHashCode() ^
-            this.ContentDisposition.GetHashCode() ^
-            this.ContentEncoding.GetHashCode() ^
-            this.ContentLanguage.GetHashCode() ^
-            this.ContentType.GetHashCode() ^
-            this.ExpiryTime.GetHashCode() ^
-            this.Identifier.GetHashCode() ^
-            this.IPRange.GetHashCode() ^
-            this.Permissions.GetHashCode() ^
-            this.Protocol.GetHashCode() ^
-            this.StartTime.GetHashCode() ^
-            this.Version.GetHashCode();
+            BlobName.GetHashCode() ^
+            CacheControl.GetHashCode() ^
+            ContainerName.GetHashCode() ^
+            ContentDisposition.GetHashCode() ^
+            ContentEncoding.GetHashCode() ^
+            ContentLanguage.GetHashCode() ^
+            ContentType.GetHashCode() ^
+            ExpiryTime.GetHashCode() ^
+            Identifier.GetHashCode() ^
+            IPRange.GetHashCode() ^
+            Permissions.GetHashCode() ^
+            Protocol.GetHashCode() ^
+            StartTime.GetHashCode() ^
+            Version.GetHashCode();
 
         /// <summary>
         /// Check if two BlobSasBuilder instances are equal.
@@ -393,19 +402,19 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobSasBuilder other) =>
-            this.BlobName == other.BlobName &&
-            this.CacheControl == other.CacheControl &&
-            this.ContainerName == other.ContainerName &&
-            this.ContentDisposition == other.ContentDisposition &&
-            this.ContentEncoding == other.ContentEncoding &&
-            this.ContentLanguage == other.ContentEncoding &&
-            this.ContentType == other.ContentType &&
-            this.ExpiryTime == other.ExpiryTime &&
-            this.Identifier == other.Identifier &&
-            this.IPRange == other.IPRange &&
-            this.Permissions == other.Permissions &&
-            this.Protocol == other.Protocol &&
-            this.StartTime == other.StartTime &&
-            this.Version == other.Version;
+            BlobName == other.BlobName &&
+            CacheControl == other.CacheControl &&
+            ContainerName == other.ContainerName &&
+            ContentDisposition == other.ContentDisposition &&
+            ContentEncoding == other.ContentEncoding &&
+            ContentLanguage == other.ContentEncoding &&
+            ContentType == other.ContentType &&
+            ExpiryTime == other.ExpiryTime &&
+            Identifier == other.Identifier &&
+            IPRange == other.IPRange &&
+            Permissions == other.Permissions &&
+            Protocol == other.Protocol &&
+            StartTime == other.StartTime &&
+            Version == other.Version;
     }
 }

@@ -200,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorSetsTheRetryPolicy()
         {
-            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy retryPolicy = Mock.Of<EventHubRetryPolicy>();
             var transportConsumer = new ObservableTransportConsumerMock();
             var consumer = new EventHubConsumer(transportConsumer, "dummy", "consumerGroup", "0", EventPosition.Latest, new EventHubConsumerOptions(), retryPolicy);
 
@@ -224,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Mode = RetryMode.Fixed
             };
 
-            var customRetry = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy customRetry = Mock.Of<EventHubRetryPolicy>();
             var consumerOptions = new EventHubConsumerOptions { RetryOptions = retryOptions };
             var consumer = new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", "consumerGroup", "0", EventPosition.Latest, consumerOptions, new BasicRetryPolicy(retryOptions));
 
@@ -249,12 +249,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SettingTheRetryPolicyUpdatesTheTransportConsumer()
         {
-            var customRetry = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy customRetry = Mock.Of<EventHubRetryPolicy>();
             var transportConsumer = new ObservableTransportConsumerMock();
             var consumerOptions = new EventHubConsumerOptions();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", "consumerGroup", "0", EventPosition.Latest, consumerOptions, Mock.Of<EventHubRetryPolicy>());
-
-            consumer.RetryPolicy = customRetry;
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", "consumerGroup", "0", EventPosition.Latest, consumerOptions, Mock.Of<EventHubRetryPolicy>())
+            {
+                RetryPolicy = customRetry
+            };
             Assert.That(transportConsumer.UpdateRetryPolicyCalledWith, Is.SameAs(customRetry), "The custom retry policy should have been set.");
         }
 
@@ -313,7 +314,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await consumer.ReceiveAsync(expectedMessageCount, null, cancellation.Token);
 
-            (var actualMessageCount, var actualWaitTime) = transportConsumer.ReceiveCalledWith;
+            (var actualMessageCount, TimeSpan? actualWaitTime) = transportConsumer.ReceiveCalledWith;
 
             Assert.That(actualMessageCount, Is.EqualTo(expectedMessageCount), "The message counts should match.");
             Assert.That(actualWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The wait time should match.");
@@ -361,12 +362,12 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportConsumer = new ObservableTransportConsumerMock();
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
-            var enumerable = consumer.SubscribeToEvents();
+            IAsyncEnumerable<EventData> enumerable = consumer.SubscribeToEvents();
 
             Assert.That(enumerable, Is.Not.Null, "An enumerable should have been returned.");
             Assert.That(enumerable, Is.InstanceOf<IAsyncEnumerable<EventData>>(), "The enumerable should be of the correct type.");
 
-            await using (var enumerator = enumerable.GetAsyncEnumerator())
+            await using (IAsyncEnumerator<EventData> enumerator = enumerable.GetAsyncEnumerator())
             {
                 Assert.That(enumerator, Is.Not.Null, "The enumerable should be able to produce an enumerator.");
                 Assert.That(enumerator, Is.InstanceOf<IAsyncEnumerator<EventData>>(), "The enumerator should be of the correct type.");
@@ -383,12 +384,12 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportConsumer = new ObservableTransportConsumerMock();
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
-            var enumerable = consumer.SubscribeToEvents(TimeSpan.FromSeconds(15));
+            IAsyncEnumerable<EventData> enumerable = consumer.SubscribeToEvents(TimeSpan.FromSeconds(15));
 
             Assert.That(enumerable, Is.Not.Null, "An enumerable should have been returned.");
             Assert.That(enumerable, Is.InstanceOf<IAsyncEnumerable<EventData>>(), "The enumerable should be of the correct type.");
 
-            await using (var enumerator = enumerable.GetAsyncEnumerator())
+            await using (IAsyncEnumerator<EventData> enumerator = enumerable.GetAsyncEnumerator())
             {
                 Assert.That(enumerator, Is.Not.Null, "The enumerable should be able to produce an enumerator.");
                 Assert.That(enumerator, Is.InstanceOf<IAsyncEnumerator<EventData>>(), "The enumerator should be of the correct type.");
@@ -414,7 +415,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var transportConsumer = new PublishingTransportConsumerMock(events, true);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
-            var channels = GetActiveChannels(consumer);
+            ConcurrentDictionary<Guid, Channel<EventData>> channels = GetActiveChannels(consumer);
 
             // Create the subscriptions in the background, wrapping each request in its own task.  The
             // goal is to ensure that channel creation can handle concurrent requests.
@@ -464,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(publishing, Is.False, "Background publishing should not start without a subscription.");
 
-            await using (var enumerator = consumer.SubscribeToEvents(TimeSpan.FromMilliseconds(5)).GetAsyncEnumerator())
+            await using (IAsyncEnumerator<EventData> enumerator = consumer.SubscribeToEvents(TimeSpan.FromMilliseconds(5)).GetAsyncEnumerator())
             {
                 await enumerator.MoveNextAsync();
                 publishing = GetIsPublishingActiveFlag(consumer);
@@ -499,12 +500,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(publishing, Is.False, "Background publishing should not start without a subscription.");
 
-            await using (var firstEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
+            await using (IAsyncEnumerator<EventData> firstEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
             {
                 await firstEnumerator.MoveNextAsync();
 
-                await using (var secondEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
-                await using (var thirdEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
+                await using (IAsyncEnumerator<EventData> secondEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
+                await using (IAsyncEnumerator<EventData> thirdEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
                 {
                     await Task.WhenAll(secondEnumerator.MoveNextAsync().AsTask(), thirdEnumerator.MoveNextAsync().AsTask());
 
@@ -546,7 +547,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
                     if (eventData == null)
                     {
@@ -584,7 +585,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+            await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
                 receivedEvents.Add(eventData);
 
@@ -637,7 +638,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstSubscriberTask = Task.Run(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
                     firstSubcriberReceiving = true;
                     StartPublishingIfReady();
@@ -659,7 +660,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var secondSubscriberTask = Task.Run(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
                     secondSubscriberReceiving = true;
                     StartPublishingIfReady();
@@ -705,7 +706,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+            await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
                 receivedEvents.Add(eventData);
 
@@ -755,7 +756,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstSubscriberTask = Task.Run(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
                     firstSubcriberReceiving = true;
                     StartPublishingIfReady();
@@ -777,7 +778,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var secondSubscriberTask = Task.Run(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
                     secondSubscriberReceiving = true;
                     StartPublishingIfReady();
@@ -822,12 +823,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var transportConsumer = new PublishingTransportConsumerMock(events, true);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
-            var activeChannels = GetActiveChannels(consumer);
+            ConcurrentDictionary<Guid, Channel<EventData>> activeChannels = GetActiveChannels(consumer);
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+            await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
                 ++receivedEvents;
 
@@ -862,7 +863,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var waitTime = TimeSpan.FromMilliseconds(5);
             var transportConsumer = new PublishingTransportConsumerMock(events);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
-            var activeChannels = GetActiveChannels(consumer);
+            ConcurrentDictionary<Guid, Channel<EventData>> activeChannels = GetActiveChannels(consumer);
             var firstCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
             var secondCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
             var firstIterations = 0;
@@ -882,7 +883,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstSubscriberTask = Task.Run(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
                     firstSubcriberReceiving = true;
                     StartPublishingIfReady();
@@ -900,7 +901,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var secondSubscriberTask = Task.Run(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
                     secondSubscriberReceiving = true;
                     StartPublishingIfReady();
@@ -939,7 +940,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
-            var publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
+            TimeSpan publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
             var transportConsumer = new PublishingTransportConsumerMock(events, true, () => publishDelay);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var receivedEvents = new List<EventData>();
@@ -947,7 +948,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(100));
 
-            await foreach (var eventData in consumer.SubscribeToEvents(maxWaitTime, cancellation.Token))
+            await foreach (EventData eventData in consumer.SubscribeToEvents(maxWaitTime, cancellation.Token))
             {
                 receivedEvents.Add(eventData);
                 consecutiveEmptyCount = (eventData == null) ? consecutiveEmptyCount + 1 : 0;
@@ -985,7 +986,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
                     ++receivedEvents;
                     break;
@@ -1015,7 +1016,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
                     ++receivedEvents;
                     break;
@@ -1044,7 +1045,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Func<Task> invoke = async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
                     ++receivedEvents;
                     break;
@@ -1090,7 +1091,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Func<Task> invoke = async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
                     ++receivedEvents;
                     break;
@@ -1134,7 +1135,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Func<Task> invoke = async () =>
             {
-                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
                     ++receivedEvents;
                     break;
@@ -1159,7 +1160,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private ConcurrentDictionary<Guid, Channel<EventData>> GetActiveChannels(EventHubConsumer consumer) =>
             (ConcurrentDictionary<Guid, Channel<EventData>>)
                 typeof(EventHubConsumer)
-                    .GetField("ActiveChannels", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("_activeChannels", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(consumer);
 
         /// <summary>
@@ -1304,7 +1305,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
             {
-                var results = ReceiveCallback(maximumMessageCount, maximumWaitTime);
+                IEnumerable<EventData> results = ReceiveCallback(maximumMessageCount, maximumWaitTime);
                 return Task.FromResult(results);
             }
 

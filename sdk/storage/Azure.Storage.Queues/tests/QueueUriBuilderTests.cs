@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Storage.Queues.Tests;
@@ -25,7 +24,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -50,7 +49,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -75,7 +74,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -100,7 +99,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -125,7 +124,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -150,7 +149,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -187,7 +186,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -212,7 +211,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -237,7 +236,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -262,7 +261,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -287,7 +286,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -312,7 +311,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);
@@ -337,7 +336,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
-            var newUri = queueUriBuilder.Uri;
+            Uri newUri = queueUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", queueUriBuilder.Scheme);

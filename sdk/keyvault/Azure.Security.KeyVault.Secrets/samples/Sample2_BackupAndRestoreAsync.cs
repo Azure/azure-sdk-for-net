@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to backup and restore secrets in the key vault using the 
+    /// Sample demonstrates how to backup and restore secrets in the key vault using the
     /// asynchronous methods of the SecretClient.
     /// </summary>
     [LiveOnly]
@@ -38,7 +37,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var secret = new Secret(secretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             Secret storedSecret = await client.SetAsync(secret);
@@ -51,7 +53,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 sourceStream.Seek(0, SeekOrigin.End);
                 await sourceStream.WriteAsync(byteSecret, 0, byteSecret.Length);
             }
-            
+
             // The storage account secret is no longer in use, so you delete it.
             await client.DeleteAsync(secretName);
 
@@ -62,7 +64,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await client.PurgeDeletedAsync(secretName);
 
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
-            SecretBase restoreSecret = null;
+            SecretProperties restoreSecret = null;
             using (FileStream sourceStream = File.Open(backupPath, FileMode.Open))
             {
                 byte[] result = new byte[sourceStream.Length];
@@ -70,7 +72,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 restoreSecret = await client.RestoreAsync(result);
             }
 
-            AssertSecretsEqual((SecretBase)storedSecret, restoreSecret);
+            AssertSecretsEqual(storedSecret.Properties, restoreSecret);
         }
 
         private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
