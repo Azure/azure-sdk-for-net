@@ -94,6 +94,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal ICryptographyProvider RemoteClient => _remoteProvider;
 
         /// <summary>
+        /// The <see cref="Key.Id"/> of the key used to perform cryptographic operations for the client.
+        /// </summary>
+        public Uri KeyId => _keyId;
+
+        /// <summary>
         /// Encrypts the specified plain text.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
