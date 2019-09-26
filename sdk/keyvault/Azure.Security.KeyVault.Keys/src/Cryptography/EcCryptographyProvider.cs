@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public bool ShouldRemote => _jwk.KeyId != null;
+        public bool ShouldRemote => _jwk.Id != null;
 
         public bool SupportsOperation(KeyOperation operation)
         {
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             // A private key is required to sign. Send to the server.
-            if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
+            if (_jwk.Id != null && !_jwk.HasPrivateKey)
             {
                 // TODO: Log that we need a private key.
                 return null;
@@ -80,7 +80,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return new SignResult
             {
                 Algorithm = algorithm,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
                 Signature = signature,
             };
         }
@@ -125,7 +125,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 IsValid = isValid,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 

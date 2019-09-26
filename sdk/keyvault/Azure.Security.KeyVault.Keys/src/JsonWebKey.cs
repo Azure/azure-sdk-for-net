@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The identifier of the key.
         /// </summary>
-        public string KeyId { get; set; }
+        public Uri Id { get; set; }
 
         /// <summary>
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
@@ -347,7 +347,8 @@ namespace Azure.Security.KeyVault.Keys
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        KeyId = prop.Value.GetString();
+                        string id = prop.Value.GetString();
+                        Id = new Uri(id);
                         break;
                     case KeyTypePropertyName:
                         KeyType = prop.Value.GetString();

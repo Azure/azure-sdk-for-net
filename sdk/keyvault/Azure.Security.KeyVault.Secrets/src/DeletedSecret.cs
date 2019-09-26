@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// The identifier of the deleted secret. This is used to recover the secret.
         /// </summary>
-        public string RecoveryId { get; private set; }
+        public Uri RecoveryId { get; private set; }
 
         /// <summary>
         /// The time when the secret was deleted, in UTC.
@@ -43,7 +43,8 @@ namespace Azure.Security.KeyVault.Secrets
             switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
-                    RecoveryId = prop.Value.GetString();
+                    string recoveryId = prop.Value.GetString();
+                    RecoveryId = new Uri(recoveryId);
                     break;
 
                 case DeletedDatePropertyName:
@@ -66,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (RecoveryId != null)
             {
-                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId);
+                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId.ToString());
             }
 
             if (DeletedDate.HasValue)

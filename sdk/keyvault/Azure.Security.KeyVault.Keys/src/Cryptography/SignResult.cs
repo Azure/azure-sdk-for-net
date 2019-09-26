@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -16,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
-        public string KeyId { get; internal set; }
+        public Uri KeyId { get; internal set; }
 
         /// <summary>
         /// The signature
@@ -35,7 +36,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        KeyId = prop.Value.GetString();
+                        string keyId = prop.Value.GetString();
+                        KeyId = new Uri(keyId);
                         break;
                     case SignaturePropertyName:
                         Signature = Base64Url.Decode(prop.Value.GetString());

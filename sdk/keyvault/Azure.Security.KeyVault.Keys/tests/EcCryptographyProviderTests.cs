@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
-            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { KeyId = "test" };
+            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { Id = new Uri("http://localhost/") };
             EcCryptographyProvider client = new EcCryptographyProvider(jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult result = await client.SignAsync(algorithm, digest, default);
 
             Assert.AreEqual(algorithm, result.Algorithm);
-            Assert.AreEqual("test", result.KeyId);
+            Assert.AreEqual("http://localhost/", result.KeyId?.ToString());
             Assert.AreEqual(64, result.Signature.Length);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             JsonWebKey jwk = new JsonWebKey(ecdsa)
             {
-                KeyId = "test",
+                Id = new Uri("http://localhost"),
             };
 
             EcCryptographyProvider client = new EcCryptographyProvider(jwk);
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
-            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { KeyId = "test" };
+            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { Id = new Uri("http://localhost/") };
             EcCryptographyProvider client = new EcCryptographyProvider(jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
@@ -149,7 +149,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature, default);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual("test", verifyResult.KeyId);
+            Assert.AreEqual("http://localhost/", verifyResult.KeyId?.ToString());
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -234,7 +234,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 {
                     JsonWebKey jwk = new JsonWebKey(ecdsa, true)
                     {
-                        KeyId = $"key-{oid}",
+                        Id = new Uri($"http://localhost/key/{oid}"),
                     };
 
                     foreach (SignatureAlgorithm algorithm in algorithms)
