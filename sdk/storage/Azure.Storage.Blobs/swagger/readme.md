@@ -1048,7 +1048,10 @@ directive:
 - from: swagger-document
   where: $.parameters.BlobPublicAccess
   transform: $.required = true;
-```
+- from: swagger-document
+  where: $.definitions.ContainerProperties
+  transform: $.required.push("PublicAccess");
+  ```
 
 ### Make lease duration a long
 Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
