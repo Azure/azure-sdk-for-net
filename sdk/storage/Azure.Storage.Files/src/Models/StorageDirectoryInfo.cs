@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Http;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.Storage.Files.Models
         public ETag ETag => _rawStorageDirectoryInfo.ETag;
 
         /// <summary>
-        /// Returns the date and time the directory was last modified. Any operation that modifies the directory or 
+        /// Returns the date and time the directory was last modified. Any operation that modifies the directory or
         /// its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
         /// </summary>
         public DateTimeOffset LastModified => _rawStorageDirectoryInfo.LastModified;

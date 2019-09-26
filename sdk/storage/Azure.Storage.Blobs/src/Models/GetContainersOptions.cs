@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Specifies options for listing containers with the 
+    /// Specifies options for listing containers with the
     /// <see cref="BlobServiceClient.GetContainersAsync"/> operation.
     /// </summary>
     public struct GetContainersOptions : IEquatable<GetContainersOptions>
@@ -81,42 +80,5 @@ namespace Azure.Storage.Blobs.Models
         public bool Equals(GetContainersOptions other) =>
             IncludeMetadata == other.IncludeMetadata &&
             Prefix == other.Prefix;
-    }
-
-    internal class GetContainersAsyncCollection : StorageAsyncCollection<ContainerItem>
-    {
-        private readonly BlobServiceClient _client;
-        private readonly GetContainersOptions? _options;
-
-        public GetContainersAsyncCollection(
-            BlobServiceClient client,
-            GetContainersOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
-        {
-            _client = client;
-            _options = options;
-        }
-
-        protected override async Task<Page<ContainerItem>> GetNextPageAsync(
-            string continuationToken,
-            int? pageHintSize,
-            bool isAsync,
-            CancellationToken cancellationToken)
-        {
-            Task<Response<ContainersSegment>> task = _client.GetContainersInternal(
-                continuationToken,
-                _options,
-                pageHintSize,
-                isAsync,
-                cancellationToken);
-            Response<ContainersSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
-            return new Page<ContainerItem>(
-                response.Value.ContainerItems.ToArray(),
-                response.Value.NextMarker,
-                response.GetRawResponse());
-        }
     }
 }

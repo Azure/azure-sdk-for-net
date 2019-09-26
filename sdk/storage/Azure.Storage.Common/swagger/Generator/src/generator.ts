@@ -27,7 +27,7 @@ export async function generate(model: IServiceModel): Promise<void> {
     w.line(`// This file was automatically generated.  Do not edit.`);
     w.line();
 
-    w.line(`#pragma warning disable IDE0016 // Null check can be simplified `);
+    w.line(`#pragma warning disable IDE0016 // Null check can be simplified`);
     w.line(`#pragma warning disable IDE0017 // Variable declaration can be inlined`);
     w.line(`#pragma warning disable IDE0018 // Object initialization can be simplified`);
     w.line(`#pragma warning disable SA1402  // File may only contain a single type`);
