@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -124,7 +123,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                HttpPipelineEventSource.Singleton.RequestRetrying(message.Request, attempt);
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request, attempt);
             }
         }
 

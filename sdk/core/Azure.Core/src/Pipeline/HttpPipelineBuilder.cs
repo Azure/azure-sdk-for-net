@@ -51,7 +51,7 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
-                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled));
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.ContentLoggingSizeLimit));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
