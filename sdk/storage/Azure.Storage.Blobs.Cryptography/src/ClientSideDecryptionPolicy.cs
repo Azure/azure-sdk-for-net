@@ -10,7 +10,6 @@ using System.Xml.Serialization;
 using Azure.Core.Cryptography;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.Specialized.Cryptography.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
@@ -41,12 +40,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// resolver if specified to get the key. 2. If resolver is not specified but a key is specified, match the key id on
         /// the key and use it.
         /// </summary>
-        /// <param name="key">An object containing either a <see cref="IKeyEncryptionKey"/> or <see cref="IKeyEncryptionKeyResolver"/>.</param>
-        public ClientSideBlobDecryptionPolicy(
-            ClientSideEncryptionKey key)
+        /// <param name="key">The decryption key. Should not be set if <paramref name="keyResolver"/> is set.</param>
+        /// <param name="keyResolver">Key resolver for getting the decryption key. Should not be set if <paramref name="key"/> is set.</param>
+        public ClientSideBlobDecryptionPolicy(IKeyEncryptionKey key = default, IKeyEncryptionKeyResolver keyResolver = default)
         {
-            this.KeyWrapper = key.Key;
-            this.KeyResolver = key.KeyResolver;
+            this.KeyWrapper = key;
+            this.KeyResolver = keyResolver;
         }
 
         #region Process
@@ -117,8 +116,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <summary>
         /// Gets whether to ignore padding options for decryption.
         /// </summary>
-        /// <param name="headers"></param>
-        /// <returns></returns>
+        /// <param name="headers">Response headers for the download.</param>
+        /// <returns>True if we should ignore padding.</returns>
         /// <remarks>
         /// If the last cipher block of the blob was returned, we need the padding. Otherwise, we can ignore it.
         /// </remarks>
