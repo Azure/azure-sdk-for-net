@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var mockTransport = new MockTransport(new MockResponse(200));
 
-            var activity = new Activity("Azure.RequestId");
+            var activity = new Activity("Azure.CustomDiagnosticHeaders");
 
             activity.Start();
             activity.AddTag("X-MS-CLIENT-REQUEST-ID", "CustomRequestId");
@@ -37,7 +37,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var mockTransport = new MockTransport(new MockResponse(200));
 
-            var activity = new Activity("Azure.RequestId");
+            var activity = new Activity("Azure.CustomDiagnosticHeaders");
 
             activity.Start();
             activity.AddTag("x-ms-correlation-request-id", "CorrelationRequestId");
@@ -55,7 +55,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var mockTransport = new MockTransport(new MockResponse(200));
 
-            var activity = new Activity("Azure.RequestId");
+            var activity = new Activity("Azure.CustomDiagnosticHeaders");
 
             activity.Start();
             activity.AddTag("correlation-context", "CorrelationContextValue");
@@ -73,10 +73,10 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var mockTransport = new MockTransport(new MockResponse(200));
 
-            var activity = new Activity("Azure.RequestId");
+            var activity = new Activity("Azure.CustomDiagnosticHeaders");
 
             activity.Start();
-            activity.AddTag("X-MS-RANDOM-ID", "CustomRequestId");
+            activity.AddTag("X-MS-RANDOM-ID", "RandomValue");
 
             await SendGetRequest(mockTransport, new CustomHeadersPolicy());
 
