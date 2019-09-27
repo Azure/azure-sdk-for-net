@@ -507,7 +507,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const model = response.model;
 
         // Deserialize
-        w.line(`// Create the result`);
+        if (!response.struct) w.line(`// Create the result`);
         if (response.body) {
             const responseType = response.body;
             if (responseType.type === `string`) {
@@ -581,7 +581,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
             }
-        } else {
+        } else if (!response.struct) {
             w.line(`${types.getName(model)} ${valueName} = new ${types.getName(model)}();`);
         }
         w.line();
@@ -590,6 +590,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         if (headers.length > 0) {
             w.line(`// Get response headers`);
             w.line(`string ${headerName};`);
+            if (response.struct) {
+                for (const header of headers) {
+                    w.line(`${types.getDeclarationType(header.model, true, false, true)} ${naming.parameter(header.clientName)} = default;`);
+                }
+            }
             for (const header of headers) {
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
                     const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
@@ -604,7 +609,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 } else {
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
-                        w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
+                        if (response.struct) {
+                            w.write(`${naming.parameter(header.clientName)} = `);
+                        } else {
+                            w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
+                        }
                         if (isPrimitiveType(header.model) && header.model.collectionFormat === `csv`) {
                             if (!header.model.itemType || header.model.itemType.type !== `string`) {
                                 throw `collectionFormat csv is only supported for strings, at the moment`;
@@ -616,6 +625,18 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`;`);
                     });
                 }
+            }
+            if (response.struct) {
+                w.line();
+                w.line(`// Create the result`);
+                const Separator = IndentWriter.createFenceposter();
+                w.write(`${types.getName(model)} ${valueName} = new ${types.getName(model)}(`);
+                for (const header of headers) {
+                    if (Separator()) { w.write(`, `); }
+                    w.write(`${naming.parameter(header.clientName)}`);
+                }
+                w.write(`);`);
+                w.line();
             }
             w.line();
         }
@@ -855,11 +876,11 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
-                if (!type.struct){
-                if (property.readonly || property.model.type === `array`) {
-                    w.write(`internal `);
-                }
-                w.write(`set; `);
+                if (!type.struct) {
+                    if (property.readonly || property.model.type === `array`) {
+                        w.write(`internal `);
+                    }
+                    w.write(`set; `);
                 }
                 w.write(`}`);
                 w.line();
@@ -918,7 +939,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// Prevent direct instantiation of ${naming.type(type.name)} instances.`);
                 w.line(`/// You can use ${factoryName}.${naming.type(type.name)} instead.`);
                 w.line(`/// </summary>`);
-                if(type.struct) {
+                if (type.struct) {
                     const properties = <IProperty[]>Object.values(type.properties);
                     w.write(`internal ${naming.type(type.name)}(`);
                     w.scope(() => {
@@ -992,15 +1013,28 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     }
                     w.write(`)`);
                 });
-                w.scope('{', '}', () => {
-                    w.line(`return new ${typeName}()`);
-
-                    w.scope('{', '};', () => {
+                const separator = IndentWriter.createFenceposter();
+                if (type.struct) {
+                    w.scope('{', '}', () => {
+                        w.write(`return new ${typeName}(`);
                         for (const property of props) {
-                            w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)},`);
+                            if (separator()) { w.write(`, `); }
+                            w.write(`${naming.parameter(property.clientName)}`);
+                            if (!property.required) { w.write(` = default`); }
                         }
+                        w.write(`);`);
                     });
-                });
+                } else {
+                    w.scope('{', '}', () => {
+                        w.line(`return new ${typeName}()`);
+
+                        w.scope('{', '};', () => {
+                            for (const property of props) {
+                                w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)},`);
+                            }
+                        });
+                    });
+                }
             });
         }
     });

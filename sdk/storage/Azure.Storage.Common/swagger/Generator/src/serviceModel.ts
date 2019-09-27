@@ -446,8 +446,8 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         deserialize: false,
         disableWarnings: swagger[`x-az-disable-warnings`],
         public: isPublic,
-        struct: isStruct,
-        extendedHeaders: []
+        extendedHeaders: [],
+        struct: isStruct
     };
 }
 
@@ -622,8 +622,8 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         headers,
         exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
         public: isPublic,
-        struct: isStruct,
-        returnStream: <boolean>optional(() => swagger[`x-az-stream`])
+        returnStream: <boolean>optional(() => swagger[`x-az-stream`]),
+        struct: isStruct
     };
 }
 
@@ -956,11 +956,11 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             name: response.clientName || defaultName,
             namespace: `${info.namespace}.Models`,
             public: response.public,
-            struct: response.struct,
             properties: { },
             serialize: false,
             deserialize: false,
-            extendedHeaders: ignoredHeaders
+            extendedHeaders: ignoredHeaders,
+            struct: response.struct
         };
         registerCustomType(project, model);
 
