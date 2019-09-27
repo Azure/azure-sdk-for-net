@@ -657,9 +657,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken)
                                 .ConfigureAwait(false))
                             .Item2,
-                        // TODO: For now we're using the default ResponseClassifier
-                        // on BlobConnectionOptions so we'll do the same here
-                        new ResponseClassifier(),
+                        Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation

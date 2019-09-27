@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
     /// The properties and content returned from downloading a file
     /// </summary>
-    public partial class StorageFileDownloadInfo
+    public partial class StorageFileDownloadInfo : IDisposable
     {
         /// <summary>
         /// Internal flattened property representation
@@ -48,6 +50,88 @@ namespace Azure.Storage.Files.Models
         {
             _flattened = flattened;
             Properties = new StorageFileDownloadProperties(flattened);
+        }
+
+        /// <summary>
+        /// Disposes the StorageFileDownloadInfo by calling Dispose on the underlying Content stream.
+        /// </summary>
+        public void Dispose()
+        {
+            Content?.Dispose();
+            GC.SuppressFinalize(this);
+        }
+    }
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileDownloadInfo instance for mocking.
+        /// </summary>
+        public static StorageFileDownloadInfo StorageFileDownloadInfo(
+            System.DateTimeOffset lastModified = default,
+            System.Collections.Generic.IEnumerable<string> contentLanguage = default,
+            string acceptRanges = default,
+            System.DateTimeOffset copyCompletionTime = default,
+            string copyStatusDescription = default,
+            string contentDisposition = default,
+            string copyProgress = default,
+            System.Uri copySource = default,
+            Azure.Storage.Files.Models.CopyStatus copyStatus = default,
+            byte[] fileContentHash = default,
+            bool isServerEncrypted = default,
+            string cacheControl = default,
+            string fileAttributes = default,
+            System.Collections.Generic.IEnumerable<string> contentEncoding = default,
+            System.DateTimeOffset fileCreationTime = default,
+            byte[] contentHash = default,
+            System.DateTimeOffset fileLastWriteTime = default,
+            Azure.Core.Http.ETag eTag = default,
+            System.DateTimeOffset fileChangeTime = default,
+            string contentRange = default,
+            string filePermissionKey = default,
+            string contentType = default,
+            string fileId = default,
+            long contentLength = default,
+            string fileParentId = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default,
+            System.IO.Stream content = default,
+            string copyId = default)
+        {
+            return new StorageFileDownloadInfo(
+                new FlattenedStorageFileProperties()
+                {
+                    LastModified = lastModified,
+                    ContentLanguage = contentLanguage,
+                    AcceptRanges = acceptRanges,
+                    CopyCompletionTime = copyCompletionTime,
+                    CopyStatusDescription = copyStatusDescription,
+                    ContentDisposition = contentDisposition,
+                    CopyProgress = copyProgress,
+                    CopySource = copySource,
+                    CopyStatus = copyStatus,
+                    FileContentHash = fileContentHash,
+                    IsServerEncrypted = isServerEncrypted,
+                    CacheControl = cacheControl,
+                    FileAttributes = fileAttributes,
+                    ContentEncoding = contentEncoding,
+                    FileCreationTime = fileCreationTime,
+                    ContentHash = contentHash,
+                    FileLastWriteTime = fileLastWriteTime,
+                    ETag = eTag,
+                    FileChangeTime = fileChangeTime,
+                    ContentRange = contentRange,
+                    FilePermissionKey = filePermissionKey,
+                    ContentType = contentType,
+                    FileId = fileId,
+                    ContentLength = contentLength,
+                    FileParentId = fileParentId,
+                    Metadata = metadata,
+                    Content = content,
+                    CopyId = copyId,
+                }
+            );
         }
     }
 }
