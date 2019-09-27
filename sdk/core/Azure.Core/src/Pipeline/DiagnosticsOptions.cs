@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
         /// </summary>
-        public int ContentLoggingSizeLimit { get; set; } = 4 * 1024;
+        public int LoggingContentSizeLimit { get; set; } = 4 * 1024;
 
         public IList<string> LoggingAllowedHeaders { get; }
 

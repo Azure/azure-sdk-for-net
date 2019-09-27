@@ -254,37 +254,37 @@ namespace Azure.Core.Pipeline
 
             public async ValueTask LogAsync(string requestId, bool isError, Stream? stream, Encoding? textEncoding, bool async)
             {
-                Kind kind = isError ? Kind.ErrorResponse : Kind.Response;
+                EventType eventType = ResponseOrError(isError);
 
-                if (stream == null || !IsEnabled(kind))
+                if (stream == null || !IsEnabled(eventType))
                 {
                     return;
                 }
 
                 var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
-                Log(requestId, kind, bytes, textEncoding);
+                Log(requestId, eventType, bytes, textEncoding);
 
             }
 
             public async ValueTask LogAsync(string requestId, HttpPipelineRequestContent? content, Encoding? textEncoding, bool async)
             {
-                Kind kind = Kind.Request;
+                EventType eventType = EventType.Request;
 
-                if (content == null || !IsEnabled(kind))
+                if (content == null || !IsEnabled(eventType))
                 {
                     return;
                 }
 
                 var bytes = await FormatAsync(content, async).ConfigureAwait(false).EnsureCompleted(async);
 
-                Log(requestId, kind, bytes, textEncoding);
+                Log(requestId, eventType, bytes, textEncoding);
             }
 
             public void Log(string requestId, bool isError, byte[] buffer, int offset, int length, Encoding? textEncoding, int? block = null)
             {
-                Kind kind = isError ? Kind.ErrorResponse : Kind.Response;
+                EventType eventType = ResponseOrError(isError);
 
-                if (buffer == null || !IsEnabled(kind))
+                if (buffer == null || !IsEnabled(eventType))
                 {
                     return;
                 }
@@ -302,19 +302,19 @@ namespace Azure.Core.Pipeline
                     Array.Copy(buffer, offset, bytes, 0, logLength);
                 }
 
-                Log(requestId, kind, bytes, textEncoding, block);
+                Log(requestId, eventType, bytes, textEncoding, block);
             }
 
             public bool IsEnabled(bool isError)
             {
-                return IsEnabled(isError ? Kind.ErrorResponse : Kind.Response);
+                return IsEnabled(ResponseOrError(isError));
             }
 
-            private bool IsEnabled(Kind errorResponse)
+            private bool IsEnabled(EventType errorResponse)
             {
                 return _eventSource != null &&
                        (_eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All) ||
-                       (errorResponse == Kind.ErrorResponse && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All)));
+                       (errorResponse == EventType.ErrorResponse && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All)));
             }
 
             private async ValueTask<byte[]> FormatAsync(HttpPipelineRequestContent requestContent, bool async)
@@ -351,7 +351,7 @@ namespace Azure.Core.Pipeline
                 return memoryStream.ToArray();
             }
 
-            private void Log(string requestId, Kind kind, byte[] bytes, Encoding? textEncoding, int? block = null)
+            private void Log(string requestId, EventType eventType, byte[] bytes, Encoding? textEncoding, int? block = null)
             {
                 string? stringValue = textEncoding?.GetString(bytes);
 
@@ -359,46 +359,51 @@ namespace Azure.Core.Pipeline
                 Debug.Assert(_eventSource != null);
                 AzureCoreEventSource azureCoreEventSource = _eventSource!;
 
-                switch (kind)
+                switch (eventType)
                 {
-                    case Kind.Request when stringValue != null:
+                    case EventType.Request when stringValue != null:
                         azureCoreEventSource.RequestContentText(requestId, stringValue);
                         break;
-                    case Kind.Request:
+                    case EventType.Request:
                         azureCoreEventSource.RequestContent(requestId, bytes);
                         break;
 
                     // Response
-                    case Kind.Response when block != null && stringValue != null:
+                    case EventType.Response when block != null && stringValue != null:
                         azureCoreEventSource.ResponseContentTextBlock(requestId, block.Value, stringValue);
                         break;
-                    case Kind.Response when block != null:
+                    case EventType.Response when block != null:
                         azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes);
                         break;
-                    case Kind.Response when stringValue != null:
+                    case EventType.Response when stringValue != null:
                         azureCoreEventSource.ResponseContentText(requestId, stringValue);
                         break;
-                    case Kind.Response:
+                    case EventType.Response:
                         azureCoreEventSource.ResponseContent(requestId, bytes);
                         break;
 
                     // ResponseError
-                    case Kind.ErrorResponse when block != null && stringValue != null:
+                    case EventType.ErrorResponse when block != null && stringValue != null:
                         azureCoreEventSource.ErrorResponseContentTextBlock(requestId, block.Value, stringValue);
                         break;
-                    case Kind.ErrorResponse when block != null:
+                    case EventType.ErrorResponse when block != null:
                         azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes);
                         break;
-                    case Kind.ErrorResponse when stringValue != null:
+                    case EventType.ErrorResponse when stringValue != null:
                         azureCoreEventSource.ErrorResponseContentText(requestId, stringValue);
                         break;
-                    case Kind.ErrorResponse:
+                    case EventType.ErrorResponse:
                         azureCoreEventSource.ErrorResponseContent(requestId, bytes);
                         break;
                 }
             }
 
-            public enum Kind
+            private static EventType ResponseOrError(bool isError)
+            {
+                return isError ? EventType.ErrorResponse : EventType.Response;
+            }
+
+            private enum EventType
             {
                 Request,
                 Response,
@@ -425,7 +430,6 @@ namespace Azure.Core.Pipeline
 
                 public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
                 {
-                    DecrementLength(ref count);
                     return count > 0 ? base.WriteAsync(buffer, offset, count, cancellationToken) : Task.CompletedTask;
                 }
 
