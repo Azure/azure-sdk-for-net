@@ -22,7 +22,6 @@ namespace Azure.Core.Pipeline
         }
 
         private const long DelayWarningThreshold = 3000; // 3000ms
-        private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
         private readonly bool _logContent;
@@ -79,7 +78,7 @@ namespace Azure.Core.Pipeline
             ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding? responseTextEncoding);
 
             bool wrapResponseContent = message.Response.ContentStream != null &&
-                                       message.Response.ContentStream?.CanSeek == false &&
+                                       message.Response.ContentStream.CanSeek == false &&
                                        logWrapper.IsEnabled(isError);
 
             if (isError)
@@ -100,7 +99,7 @@ namespace Azure.Core.Pipeline
                 await logWrapper.LogAsync(message.Response.ClientRequestId, isError, message.Response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
             }
 
-            var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
+            var elapsedMilliseconds = (after - before) * 1000 / Stopwatch.Frequency;
             if (elapsedMilliseconds > DelayWarningThreshold)
             {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
