@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Test
             FileServiceClient serviceUri = GetServiceClient_AccountSas();
             var blobUriBuilder = new FileUriBuilder(serviceUri.Uri);
 
-            Uri blobUri = blobUriBuilder.Uri;
+            Uri blobUri = blobUriBuilder.ToUri();
 
             var expectedUri = WebUtility.UrlDecode(serviceUri.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -125,7 +125,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.Uri;
+            Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
