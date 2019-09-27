@@ -854,7 +854,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
 
 function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType) {
     const service = model.service;
-    const regionName = `class ${naming.type(type.name)}`;
+    const regionName = type.struct ? `struct ${naming.type(type.name)}` : `class ${naming.type(type.name)}`;
     w.line(`#region ${regionName}`);
     w.line(`namespace ${naming.namespace(type.namespace)}`);
     w.scope('{', '}', () => {
@@ -862,7 +862,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
         w.line(`/// ${type.description || type.name}`);
         w.line(`/// </summary>`);
         if (type.disableWarnings) { w.line(`#pragma warning disable ${type.disableWarnings}`); }
-        if (type.struct) { w.line(`${type.public ? 'public' : 'internal'} partial struct ${naming.type(type.name)}`); }
+        if (type.struct) { w.line(`${type.public ? 'public' : 'internal'} readonly partial struct ${naming.type(type.name)}: System.IEquatable<${naming.type(type.name)}>`); }
         else { w.line(`${type.public ? 'public' : 'internal'} partial class ${naming.type(type.name)}`); }
         if (type.disableWarnings) { w.line(`#pragma warning restore ${type.disableWarnings}`); }
         const separator = IndentWriter.createFenceposter();
@@ -957,6 +957,41 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                                 w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);
                             }
                         });
+                    });
+                    w.line();
+                    w.line(`/// <summary>`)
+                    w.line(`/// Check if two ${naming.type(type.name)} instances are equal.`);
+                    w.line(`/// </summary>`);
+                    w.line(`/// <param name="other">The instance to compare to.</param>`);
+                    w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+                    w.line(`public bool Equals(${naming.type(type.name)} other)`);
+                    w.scope('{', '}', () => {
+                        for (const property of properties) {
+                            w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}))`);
+                            w.line(`    return false;`);
+                        }
+                        w.line();
+                        w.line(`return true;`);
+                    });
+                    w.line();
+                    w.line(`/// <summary>`);
+                    w.line(`/// Check if two ${naming.type(type.name)} instances are equal.`);
+                    w.line(`/// </summary>`);
+                    w.line(`/// <param name="obj">The instance to compare to.</param>`);
+                    w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+                    w.line(`public override bool Equals(object obj) => obj is ${naming.type(type.name)} && Equals((${naming.type(type.name)})obj);`);
+                    w.line();
+                    w.line(`/// <summary>`)
+                    w.line(`/// Get a hash code for the AccountInfo.`);
+                    w.line(`/// </summary>`);
+                    w.write(`public override int GetHashCode()`);
+                    w.scope('{', '}', () => {
+                        w.line(`var hashCode = new Azure.Core.HashCodeBuilder();`);
+                        for (const property of properties) {
+                            w.line(`hashCode.Add(${naming.property(property.clientName)});`);
+                        }
+                        w.line();
+                        w.line(`return hashCode.ToHashCode();`);
                     });
                 }
                 else { w.line(`internal ${naming.type(type.name)}() { }`); }

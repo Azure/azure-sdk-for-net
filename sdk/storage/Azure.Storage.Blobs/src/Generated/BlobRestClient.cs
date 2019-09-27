@@ -12785,13 +12785,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion enum strings AccessTier
 
-#region class AccountInfo
+#region struct AccountInfo
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// AccountInfo
     /// </summary>
-    public partial struct AccountInfo
+    public readonly partial struct AccountInfo: System.IEquatable<AccountInfo>
     {
         /// <summary>
         /// Identifies the sku name of the account
@@ -12813,6 +12813,39 @@ namespace Azure.Storage.Blobs.Models
                 SkuName = skuName;
                 AccountKind = accountKind;
             }
+
+        /// <summary>
+        /// Check if two AccountInfo instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(AccountInfo other)
+        {
+            if (!SkuName.Equals(other.SkuName))
+                return false;
+            if (!AccountKind.Equals(other.AccountKind))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two AccountInfo instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public override bool Equals(object obj) => obj is AccountInfo && Equals((AccountInfo)obj);
+
+        /// <summary>
+        /// Get a hash code for the AccountInfo.
+        /// </summary>
+        public override int GetHashCode(){
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(SkuName);
+            hashCode.Add(AccountKind);
+
+            return hashCode.ToHashCode();
+        }
     }
 
     /// <summary>
@@ -12831,7 +12864,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class AccountInfo
+#endregion struct AccountInfo
 
 #region enum AccountKind
 namespace Azure.Storage.Blobs.Models
