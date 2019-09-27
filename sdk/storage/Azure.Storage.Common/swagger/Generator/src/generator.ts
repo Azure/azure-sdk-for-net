@@ -841,7 +841,8 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
         w.line(`/// ${type.description || type.name}`);
         w.line(`/// </summary>`);
         if (type.disableWarnings) { w.line(`#pragma warning disable ${type.disableWarnings}`); }
-        w.line(`${type.public ? 'public' : 'internal'} partial class ${naming.type(type.name)}`);
+        if (type.struct) { w.line(`${type.public ? 'public' : 'internal'} partial struct ${naming.type(type.name)}`); }
+        else { w.line(`${type.public ? 'public' : 'internal'} partial class ${naming.type(type.name)}`); }
         if (type.disableWarnings) { w.line(`#pragma warning restore ${type.disableWarnings}`); }
         const separator = IndentWriter.createFenceposter();
         w.scope('{', '}', () => {
@@ -854,10 +855,14 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
+                if (!type.struct){
                 if (property.readonly || property.model.type === `array`) {
                     w.write(`internal `);
                 }
-                w.line(`set; }`);
+                w.write(`set; `);
+                }
+                w.write(`}`);
+                w.line();
                 if (property.model.type === `byte`) {
                     w.line(`#pragma warning restore CA1819 // Properties should not return arrays`);
                 }
@@ -913,7 +918,27 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// Prevent direct instantiation of ${naming.type(type.name)} instances.`);
                 w.line(`/// You can use ${factoryName}.${naming.type(type.name)} instead.`);
                 w.line(`/// </summary>`);
-                w.line(`internal ${naming.type(type.name)}() { }`);
+                if(type.struct) {
+                    const properties = <IProperty[]>Object.values(type.properties);
+                    w.write(`internal ${naming.type(type.name)}(`);
+                    w.scope(() => {
+                        const separator = IndentWriter.createFenceposter();
+                        // Sort `= default` parameters last
+                        properties.sort((a: IProperty, b: IProperty) => a.required ? -1 : b.required ? 1 : 0);
+                        for (const property of properties) {
+                            if (separator()) { w.line(`,`); }
+                            w.write(`${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.parameter(property.clientName)}`);
+                            if (!property.required) { w.write(` = default`); }
+                        }
+                        w.write(`)`);
+                        w.scope('{', '}', () => {
+                            for (const property of properties) {
+                                w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);
+                            }
+                        });
+                    });
+                }
+                else { w.line(`internal ${naming.type(type.name)}() { }`); }
             }
 
             // Create serializers if necessary

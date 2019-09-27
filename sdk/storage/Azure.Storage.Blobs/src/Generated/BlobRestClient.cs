@@ -12788,23 +12788,28 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// AccountInfo
     /// </summary>
-    public partial class AccountInfo
+    public partial struct AccountInfo
     {
         /// <summary>
         /// Identifies the sku name of the account
         /// </summary>
-        public Azure.Storage.Blobs.Models.SkuName SkuName { get; internal set; }
+        public Azure.Storage.Blobs.Models.SkuName SkuName { get; }
 
         /// <summary>
         /// Identifies the account kind
         /// </summary>
-        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
+        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; }
 
         /// <summary>
         /// Prevent direct instantiation of AccountInfo instances.
         /// You can use BlobsModelFactory.AccountInfo instead.
         /// </summary>
-        internal AccountInfo() { }
+        internal AccountInfo(
+            Azure.Storage.Blobs.Models.SkuName skuName,
+            Azure.Storage.Blobs.Models.AccountKind accountKind){
+                SkuName = skuName;
+                AccountKind = accountKind;
+            }
     }
 
     /// <summary>

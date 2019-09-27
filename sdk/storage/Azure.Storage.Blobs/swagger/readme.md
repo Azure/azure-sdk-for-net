@@ -222,6 +222,7 @@ directive:
   transform: >
     $.get.description = "Returns the sku name and account kind";
     $.get.responses["200"]["x-az-response-name"] = "AccountInfo";
+    $.get.responses["200"]["x-az-struct"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >

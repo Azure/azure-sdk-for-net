@@ -428,6 +428,11 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         isPublic = true;
     }
 
+    let isStruct: boolean|undefined = swagger[`x-az-struct`];
+    if (isStruct === undefined) {
+        isStruct = false;
+    }
+
     const info = <IServiceInfo>required(() => project.cache.info);
     return {
         type: `object`,
@@ -441,6 +446,7 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         deserialize: false,
         disableWarnings: swagger[`x-az-disable-warnings`],
         public: isPublic,
+        struct: isStruct,
         extendedHeaders: []
     };
 }
@@ -602,6 +608,11 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         isPublic = true;
     }
 
+    let isStruct: boolean|undefined = swagger[`x-az-struct`];
+    if (isStruct === undefined) {
+        isStruct = false;
+    }
+
     return {
         code,
         description: swagger.description,
@@ -611,6 +622,7 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         headers,
         exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
         public: isPublic,
+        struct: isStruct,
         returnStream: <boolean>optional(() => swagger[`x-az-stream`])
     };
 }
@@ -944,6 +956,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             name: response.clientName || defaultName,
             namespace: `${info.namespace}.Models`,
             public: response.public,
+            struct: response.struct,
             properties: { },
             serialize: false,
             deserialize: false,
@@ -996,7 +1009,8 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             body: a.body || b.body,
             bodyClientName: a.bodyClientName || b.bodyClientName,
             headers: { ...b.headers, ...a.headers },
-            public: a.public && b.public
+            public: a.public && b.public,
+            struct: a.struct && b.struct
         };
     }
 }
