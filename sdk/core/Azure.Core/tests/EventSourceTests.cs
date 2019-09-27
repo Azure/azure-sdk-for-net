@@ -414,7 +414,8 @@ namespace Azure.Core.Tests
             Response response = await SendRequest(
                 isSeekable: true,
                 isError: false,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
+                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml")),
+                maxLength: 5
             );
 
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
@@ -422,7 +423,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
             Assert.AreEqual(response.ClientRequestId, contentEvent.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
+            Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
         }
 
         [Test]

@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public bool IsLoggingContentEnabled { get; set; }
 
-        public int ContentLoggingSizeLimit { get; set; } = 4 * 1024;
+        public int LoggingContentSizeLimit { get; set; } = 4 * 1024;
 
         public string? ApplicationId { get; set; }
 
