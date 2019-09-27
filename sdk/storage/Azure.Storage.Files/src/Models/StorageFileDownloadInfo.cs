@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
@@ -133,4 +135,3 @@ namespace Azure.Storage.Files.Models
         }
     }
 }
-

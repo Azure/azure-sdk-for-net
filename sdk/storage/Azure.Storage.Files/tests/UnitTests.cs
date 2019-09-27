@@ -1,4 +1,7 @@
-﻿using Azure.Storage.Common.Tests.Shared;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Storage.Common.Tests.Shared;
 using Azure.Storage.Files.Models;
 using NUnit.Framework;
 
