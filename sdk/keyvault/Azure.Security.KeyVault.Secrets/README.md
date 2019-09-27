@@ -9,7 +9,6 @@ Secret client library allows you to securely store and control the access to tok
 
 ### Install the package
 Install the Azure Key Vault client library for .NET with [NuGet][nuget]:
-aa
 
 ```PowerShell
 Install-Package Azure.Security.KeyVault.Secrets -IncludePrerelease
@@ -111,7 +110,7 @@ The following section provides several code snippets using the [above created](#
 Secret secret = client.Set("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
-Console.WriteLine(secret.Value);
+Console.WriteLine(secret.Vaule);
 Console.WriteLine(secret.Version);
 Console.WriteLine(secret.Enabled);
 ```
