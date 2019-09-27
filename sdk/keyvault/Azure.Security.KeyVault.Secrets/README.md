@@ -110,7 +110,7 @@ The following section provides several code snippets using the [above created](#
 Secret secret = client.Set("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
-Console.WriteLine(secret.Vaule);
+Console.WriteLine(secret.Value);
 Console.WriteLine(secret.Version);
 Console.WriteLine(secret.Enabled);
 ```
@@ -140,7 +140,7 @@ secret.Tags["foo"] = "updated tag";
 SecretBase updatedSecret = client.Update(secret);
 
 Console.WriteLine(updatedSecret.Name);
-Console.WriteLine(updatedSecret.Vault);
+Console.WriteLine(updatedSecret.Value);
 Console.WriteLine(updatedSecret.Version);
 Console.WriteLine(updatedSecret.ContentType);
 ```
