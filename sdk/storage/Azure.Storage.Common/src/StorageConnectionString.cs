@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,8 @@ using System.Linq;
 
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;
 using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionary<string, string>, System.Collections.Generic.IDictionary<string, string>>;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Common
 {

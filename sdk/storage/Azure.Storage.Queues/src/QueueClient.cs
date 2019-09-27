@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -61,6 +60,40 @@ namespace Azure.Storage.Queues
         /// QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
         /// </summary>
         public const int MessageMaxBytes = Constants.Queue.QueueMessageMaxBytes;
+
+        /// <summary>
+        /// The Storage account name corresponding to the queue client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the queue client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the queue.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the queue.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -225,6 +258,19 @@ namespace Azure.Storage.Queues
             _pipeline = pipeline;
         }
         #endregion ctors
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new QueueUriBuilder(Uri);
+                _name = builder.QueueName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>
@@ -987,9 +1033,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
         /// </returns>
-        public virtual Response<IEnumerable<DequeuedMessage>> DequeueMessages(
+        public virtual Response<DequeuedMessage[]> DequeueMessages(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
@@ -1015,9 +1061,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
         /// </returns>
-        public virtual async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesAsync(
+        public virtual async Task<Response<DequeuedMessage[]>> DequeueMessagesAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
@@ -1046,9 +1092,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
         /// </returns>
-        private async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesInternal(
+        private async Task<Response<DequeuedMessage[]>> DequeueMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
             bool async,
@@ -1064,7 +1110,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    return await QueueRestClient.Messages.DequeueAsync(
+                    var dequeuedMessage = await QueueRestClient.Messages.DequeueAsync(
                         Pipeline,
                         MessagesUri,
                         numberOfMessages: maxMessages,
@@ -1073,6 +1119,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.DequeueMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    return new Response<DequeuedMessage[]>(dequeuedMessage.GetRawResponse(), dequeuedMessage.Value.ToArray());
                 }
                 catch (Exception ex)
                 {
@@ -1100,9 +1147,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
-        public virtual Response<IEnumerable<PeekedMessage>> PeekMessages(
+        public virtual Response<PeekedMessage[]> PeekMessages(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
@@ -1123,9 +1170,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
-        public virtual async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesAsync(
+        public virtual async Task<Response<PeekedMessage[]>> PeekMessagesAsync(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
@@ -1149,9 +1196,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
-        private async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesInternal(
+        private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
             bool async,
             CancellationToken cancellationToken)
@@ -1165,7 +1212,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
-                    return await QueueRestClient.Messages.PeekAsync(
+                    var peekedMessages = await QueueRestClient.Messages.PeekAsync(
                         Pipeline,
                         MessagesUri,
                         numberOfMessages: maxMessages,
@@ -1173,6 +1220,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    return new Response<PeekedMessage[]>(peekedMessages.GetRawResponse(), peekedMessages.Value.ToArray());
                 }
                 catch (Exception ex)
                 {

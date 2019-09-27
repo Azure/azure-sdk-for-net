@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Net;
@@ -40,7 +39,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
-        /// 
+        ///
         /// Example: "account.queue.core.windows.net"
         /// </summary>
         public string Host

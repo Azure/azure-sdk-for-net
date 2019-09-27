@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Net;
+using Azure.Core.Testing;
 using Azure.Storage.Files.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
@@ -76,6 +76,7 @@ namespace Azure.Storage.Files.Test
             Assert.IsNull(fileUriBuilder.Sas);
             Assert.AreEqual("restype=share", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
+            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
         }
 
         [Test]
@@ -95,10 +96,24 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("share", fileUriBuilder.ShareName);
             Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
             Assert.AreEqual("", fileUriBuilder.Snapshot);
             Assert.IsNull(fileUriBuilder.Sas);
             Assert.AreEqual("restype=directory&comp=list", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void FileUriBuilder_PathTrailingSlash()
+        {
+            // Arrange
+            var uriString = "https://account.file.core.windows.net/share/path/?restype=directory&comp=list";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
+            Assert.AreEqual("path/", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
         }
 
         [Test]

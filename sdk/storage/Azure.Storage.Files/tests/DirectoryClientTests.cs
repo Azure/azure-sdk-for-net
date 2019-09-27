@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -47,18 +46,57 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        public void DirectoryPathsParsing()
+        {
+            // nested directories
+            Uri uri1 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/dir2");
+            var builder1 = new FileUriBuilder(uri1);
+            var directoryClient1 = new DirectoryClient(uri1);
+            TestHelper.AssertCacheableProperty("dir2", () => directoryClient1.Name);
+            Assert.AreEqual("dir2", builder1.LastDirectoryOrFileName);
+
+            // one directory
+            Uri uri2 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1");
+            var builder2 = new FileUriBuilder(uri2);
+            var directoryClient2 = new DirectoryClient(uri2);
+            TestHelper.AssertCacheableProperty("dir1", () => directoryClient2.Name);
+            Assert.AreEqual("dir1", builder2.LastDirectoryOrFileName);
+
+            // directory with trailing slash
+            Uri uri3 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/");
+            var builder3 = new FileUriBuilder(uri3);
+            var directoryClient3 = new DirectoryClient(uri3);
+            TestHelper.AssertCacheableProperty("dir1", () => directoryClient3.Name);
+            Assert.AreEqual("dir1", builder3.LastDirectoryOrFileName);
+
+            // no directory
+            Uri uri4 = new Uri("http://dummyaccount.file.core.windows.net/share");
+            var builder4 = new FileUriBuilder(uri4);
+            var directoryClient4 = new DirectoryClient(uri4);
+            TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Name);
+            Assert.AreEqual(string.Empty, builder4.LastDirectoryOrFileName);
+
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             using (GetNewShare(out ShareClient share))
             {
                 // Arrange
-                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                var name = GetNewDirectoryName();
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
 
                 // Act
                 Response<StorageDirectoryInfo> response = await directory.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                var accountName = new FileUriBuilder(directory.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
+                var shareName = new FileUriBuilder(directory.Uri).ShareName;
+                TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
+                TestHelper.AssertCacheableProperty(name, () => directory.Name);
             }
         }
 

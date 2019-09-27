@@ -4277,6 +4277,44 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_CosmosDbSqlApi_CosmosDbSqlApi = @"{
+    ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""CosmosDbSqlApiSource"",
+            ""query"": ""select * from c"",
+            ""pageSize"": 1000,
+            ""preferredRegions"": [ ""West US"", ""West US 2"" ],
+            ""includeSystemColumns"": false
+          },
+          ""sink"": {
+            ""type"": ""CosmosDbSqlApiSink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": 1000
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""sourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""sinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_Json_AzureBlob = @"{
   ""properties"": {
     ""activities"": [
@@ -5229,6 +5267,41 @@ namespace DataFactory.Tests.JsonSamples
                 {
                     retry: 2,
                     timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteDataFlowActivityPipeline = @"
+{
+    name: ""My Execute Data Flow Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteDataFlow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    }
                 }
             }
         ]

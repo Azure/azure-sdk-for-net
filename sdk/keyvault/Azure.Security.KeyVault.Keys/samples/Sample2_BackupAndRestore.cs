@@ -58,9 +58,9 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 client.PurgeDeletedKey(rsaKeyName);
 
                 // After sometime, the key is required again. We can use the backup value to restore it in the Key Vault.
-                KeyBase restoredKey = client.RestoreKey(memoryStream.ToArray());
+                Key restoredKey = client.RestoreKey(memoryStream.ToArray());
 
-                AssertKeysEqual((KeyBase)storedKey, restoredKey);
+                AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             return false;
         }
 
-        private void AssertKeysEqual(KeyBase exp, KeyBase act)
+        private void AssertKeysEqual(KeyProperties exp, KeyProperties act)
         {
             Assert.AreEqual(exp.Name, act.Name);
             Assert.AreEqual(exp.Version, act.Version);

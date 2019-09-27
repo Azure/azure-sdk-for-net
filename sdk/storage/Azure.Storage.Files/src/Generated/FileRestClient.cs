@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 // This file was automatically generated.  Do not edit.
 
-#pragma warning disable IDE0016 // Null check can be simplified 
+#pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
 #pragma warning disable IDE0018 // Object initialization can be simplified
 #pragma warning disable SA1402  // File may only contain a single type
@@ -1190,7 +1189,7 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1199,7 +1198,7 @@ namespace Azure.Storage.Files
             public static async System.Threading.Tasks.ValueTask<Azure.Response<string>> GetPermissionAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                string filePermissionKey = default,
+                string filePermissionKey,
                 int? timeout = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.GetPermission",
@@ -1248,19 +1247,23 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.GetPermissionAsync Message.</returns>
             internal static Azure.Core.Pipeline.HttpPipelineMessage GetPermissionAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                string filePermissionKey = default,
+                string filePermissionKey,
                 int? timeout = default)
             {
                 // Validation
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (filePermissionKey == null)
+                {
+                    throw new System.ArgumentNullException(nameof(filePermissionKey));
                 }
 
                 // Create the request
@@ -1275,8 +1278,8 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
+                _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey);
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
                 return _message;
             }
@@ -5998,6 +6001,12 @@ namespace Azure.Storage.Files.Models
         public string Permission { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use FilesModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
+
+        /// <summary>
         /// Serialize a AccessPolicy instance as XML.
         /// </summary>
         /// <param name="value">The AccessPolicy instance to serialize.</param>
@@ -6163,6 +6172,12 @@ namespace Azure.Storage.Files.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of CorsRule instances.
+        /// You can use FilesModelFactory.CorsRule instead.
+        /// </summary>
+        internal CorsRule() { }
+
+        /// <summary>
         /// Serialize a CorsRule instance as XML.
         /// </summary>
         /// <param name="value">The CorsRule instance to serialize.</param>
@@ -6271,6 +6286,12 @@ namespace Azure.Storage.Files.Models
         public string Name { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of DirectoryItem instances.
+        /// You can use FilesModelFactory.DirectoryItem instead.
+        /// </summary>
+        internal DirectoryItem() { }
+
+        /// <summary>
         /// Deserializes XML into a new DirectoryItem instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -6301,6 +6322,12 @@ namespace Azure.Storage.Files.Models
         /// x-ms-error-code
         /// </summary>
         public string ErrorCode { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FailureNoContent instances.
+        /// You can use FilesModelFactory.FailureNoContent instead.
+        /// </summary>
+        internal FailureNoContent() { }
     }
 }
 #endregion class FailureNoContent
@@ -6334,6 +6361,12 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileUploadRangeFromURLResult instances.
+        /// You can use FilesModelFactory.FileUploadRangeFromURLResult instead.
+        /// </summary>
+        internal FileUploadRangeFromURLResult() { }
     }
 }
 #endregion class FileUploadRangeFromURLResult
@@ -6646,6 +6679,36 @@ namespace Azure.Storage.Files.Models
         /// ContainerQuotaDowngradeNotAllowed
         /// </summary>
         public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed { get; } = @"ContainerQuotaDowngradeNotAllowed";
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
+
+        /// <summary>
+        /// FeatureVersionMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode FeatureVersionMismatch { get; } = @"FeatureVersionMismatch";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>
@@ -6790,6 +6853,12 @@ namespace Azure.Storage.Files.Models
         /// Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties.
         /// </summary>
         public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileProperty instances.
+        /// You can use FilesModelFactory.FileProperty instead.
+        /// </summary>
+        internal FileProperty() { }
 
         /// <summary>
         /// Deserializes XML into a new FileProperty instance.
@@ -7464,6 +7533,12 @@ namespace Azure.Storage.Files.Models
         /// Key of the permission set for the directory/file.
         /// </summary>
         public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PermissionInfo instances.
+        /// You can use FilesModelFactory.PermissionInfo instead.
+        /// </summary>
+        internal PermissionInfo() { }
     }
 
     /// <summary>
@@ -7503,6 +7578,12 @@ namespace Azure.Storage.Files.Models
         /// End of the range.
         /// </summary>
         public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of Range instances.
+        /// You can use FilesModelFactory.Range instead.
+        /// </summary>
+        internal Range() { }
 
         /// <summary>
         /// Deserializes XML into a new Range instance.
@@ -7596,6 +7677,12 @@ namespace Azure.Storage.Files.Models
         /// The parent fileId of the directory.
         /// </summary>
         public string FileParentId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of RawStorageDirectoryInfo instances.
+        /// You can use FilesModelFactory.RawStorageDirectoryInfo instead.
+        /// </summary>
+        internal RawStorageDirectoryInfo() { }
     }
 }
 #endregion class RawStorageDirectoryInfo
@@ -7731,6 +7818,12 @@ namespace Azure.Storage.Files.Models
         /// The parent fileId of the file.
         /// </summary>
         public string FileParentId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of RawStorageFileInfo instances.
+        /// You can use FilesModelFactory.RawStorageFileInfo instead.
+        /// </summary>
+        internal RawStorageFileInfo() { }
     }
 }
 #endregion class RawStorageFileInfo
@@ -7902,6 +7995,12 @@ namespace Azure.Storage.Files.Models
         public int? Days { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of RetentionPolicy instances.
+        /// You can use FilesModelFactory.RetentionPolicy instead.
+        /// </summary>
+        internal RetentionPolicy() { }
+
+        /// <summary>
         /// Serialize a RetentionPolicy instance as XML.
         /// </summary>
         /// <param name="value">The RetentionPolicy instance to serialize.</param>
@@ -7968,6 +8067,12 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareInfo instances.
+        /// You can use FilesModelFactory.ShareInfo instead.
+        /// </summary>
+        internal ShareInfo() { }
     }
 
     /// <summary>
@@ -8124,6 +8229,12 @@ namespace Azure.Storage.Files.Models
         public int? Quota { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of ShareItemProperties instances.
+        /// You can use FilesModelFactory.ShareItemProperties instead.
+        /// </summary>
+        internal ShareItemProperties() { }
+
+        /// <summary>
         /// Deserializes XML into a new ShareItemProperties instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -8264,6 +8375,12 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. A share snapshot cannot be modified, so the last modified time of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the last modified time of the share snapshot differs from that of the base share. If no metadata was specified with the request, the last modified time of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareSnapshotInfo instances.
+        /// You can use FilesModelFactory.ShareSnapshotInfo instead.
+        /// </summary>
+        internal ShareSnapshotInfo() { }
     }
 
     /// <summary>
@@ -8302,6 +8419,12 @@ namespace Azure.Storage.Files.Models
         /// The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.
         /// </summary>
         public int ShareUsageBytes { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareStatistics instances.
+        /// You can use FilesModelFactory.ShareStatistics instead.
+        /// </summary>
+        internal ShareStatistics() { }
 
         /// <summary>
         /// Deserializes XML into a new ShareStatistics instance.
@@ -8547,6 +8670,12 @@ namespace Azure.Storage.Files.Models
         /// Contains count of number of handles closed.
         /// </summary>
         public int NumberOfHandlesClosed { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageClosedHandlesSegment instances.
+        /// You can use FilesModelFactory.StorageClosedHandlesSegment instead.
+        /// </summary>
+        internal StorageClosedHandlesSegment() { }
     }
 
     /// <summary>
@@ -8588,6 +8717,12 @@ namespace Azure.Storage.Files.Models
         /// Code
         /// </summary>
         public string Code { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageError instances.
+        /// You can use FilesModelFactory.StorageError instead.
+        /// </summary>
+        internal StorageError() { }
 
         /// <summary>
         /// Deserializes XML into a new StorageError instance.
@@ -8645,6 +8780,12 @@ namespace Azure.Storage.Files.Models
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
         public Azure.Storage.Files.Models.CopyStatus CopyStatus { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageFileCopyInfo instances.
+        /// You can use FilesModelFactory.StorageFileCopyInfo instead.
+        /// </summary>
+        internal StorageFileCopyInfo() { }
     }
 
     /// <summary>
@@ -8765,6 +8906,12 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageFileUploadInfo instances.
+        /// You can use FilesModelFactory.StorageFileUploadInfo instead.
+        /// </summary>
+        internal StorageFileUploadInfo() { }
     }
 
     /// <summary>
@@ -8840,6 +8987,12 @@ namespace Azure.Storage.Files.Models
         /// Time handle was last connected to (UTC)
         /// </summary>
         public System.DateTimeOffset? LastReconnectTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageHandle instances.
+        /// You can use FilesModelFactory.StorageHandle instead.
+        /// </summary>
+        internal StorageHandle() { }
 
         /// <summary>
         /// Deserializes XML into a new StorageHandle instance.

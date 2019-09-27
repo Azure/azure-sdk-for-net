@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 // This file was automatically generated.  Do not edit.
 
-#pragma warning disable IDE0016 // Null check can be simplified 
+#pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
 #pragma warning disable IDE0018 // Object initialization can be simplified
 #pragma warning disable SA1402  // File may only contain a single type
@@ -7328,6 +7327,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLength">The length of the request.</param>
             /// <param name="blobContentLength">This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="tier">Optional. Indicates the tier to be set on the page blob.</param>
             /// <param name="blobContentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentLanguage">Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -7355,6 +7355,7 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 long blobContentLength,
                 int? timeout = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 string blobContentType = default,
                 System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
                 System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
@@ -7387,6 +7388,7 @@ namespace Azure.Storage.Blobs
                         contentLength,
                         blobContentLength,
                         timeout,
+                        tier,
                         blobContentType,
                         blobContentEncoding,
                         blobContentLanguage,
@@ -7440,6 +7442,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLength">The length of the request.</param>
             /// <param name="blobContentLength">This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="tier">Optional. Indicates the tier to be set on the page blob.</param>
             /// <param name="blobContentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentLanguage">Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -7464,6 +7467,7 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 long blobContentLength,
                 int? timeout = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 string blobContentType = default,
                 System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
                 System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
@@ -7502,6 +7506,7 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
                 if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
@@ -8365,6 +8370,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
+                        {
+                            _value.EncryptionKeySha256 = _header;
                         }
 
                         // Create the response
@@ -12572,6 +12581,12 @@ namespace Azure.Storage.Blobs.Models
         public string Permission { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use BlobsModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
+
+        /// <summary>
         /// Serialize a AccessPolicy instance as XML.
         /// </summary>
         /// <param name="value">The AccessPolicy instance to serialize.</param>
@@ -12784,6 +12799,12 @@ namespace Azure.Storage.Blobs.Models
         /// Identifies the account kind
         /// </summary>
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AccountInfo instances.
+        /// You can use BlobsModelFactory.AccountInfo instead.
+        /// </summary>
+        internal AccountInfo() { }
     }
 
     /// <summary>
@@ -12963,6 +12984,12 @@ namespace Azure.Storage.Blobs.Models
         /// The POSIX access control list for the file or directory.  Included in the response only if the action is "getAccessControl" and Hierarchical Namespace is enabled for the account.
         /// </summary>
         public string XMSAcl { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobGetAccessControlResult instances.
+        /// You can use BlobsModelFactory.BlobGetAccessControlResult instead.
+        /// </summary>
+        internal BlobGetAccessControlResult() { }
     }
 
     /// <summary>
@@ -13017,6 +13044,12 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the resource in bytes.
         /// </summary>
         public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobRenameResult instances.
+        /// You can use BlobsModelFactory.BlobRenameResult instead.
+        /// </summary>
+        internal BlobRenameResult() { }
     }
 
     /// <summary>
@@ -13060,6 +13093,12 @@ namespace Azure.Storage.Blobs.Models
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobSetAccessControlResult instances.
+        /// You can use BlobsModelFactory.BlobSetAccessControlResult instead.
+        /// </summary>
+        internal BlobSetAccessControlResult() { }
     }
 
     /// <summary>
@@ -13135,6 +13174,12 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the block. This header is only returned when the block was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobAppendInfo instances.
+        /// You can use BlobsModelFactory.BlobAppendInfo instead.
+        /// </summary>
+        internal BlobAppendInfo() { }
     }
 
     /// <summary>
@@ -13205,6 +13250,12 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobContentInfo instances.
+        /// You can use BlobsModelFactory.BlobContentInfo instead.
+        /// </summary>
+        internal BlobContentInfo() { }
     }
 
     /// <summary>
@@ -13262,6 +13313,12 @@ namespace Azure.Storage.Blobs.Models
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobCopyInfo instances.
+        /// You can use BlobsModelFactory.BlobCopyInfo instead.
+        /// </summary>
+        internal BlobCopyInfo() { }
     }
 
     /// <summary>
@@ -13823,6 +13880,31 @@ namespace Azure.Storage.Blobs.Models
         /// BlobNotArchived
         /// </summary>
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived { get; } = @"BlobNotArchived";
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>
@@ -13914,6 +13996,12 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobInfo instances.
+        /// You can use BlobsModelFactory.BlobInfo instead.
+        /// </summary>
+        internal BlobInfo() { }
     }
 
     /// <summary>
@@ -14224,6 +14312,12 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Core.Http.ETag? ETag { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of BlobItemProperties instances.
+        /// You can use BlobsModelFactory.BlobItemProperties instead.
+        /// </summary>
+        internal BlobItemProperties() { }
+
+        /// <summary>
         /// Deserializes XML into a new BlobItemProperties instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -14487,6 +14581,12 @@ namespace Azure.Storage.Blobs.Models
         /// Name
         /// </summary>
         public string Name { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobPrefix instances.
+        /// You can use BlobsModelFactory.BlobPrefix instead.
+        /// </summary>
+        internal BlobPrefix() { }
 
         /// <summary>
         /// Deserializes XML into a new BlobPrefix instance.
@@ -15050,6 +15150,12 @@ namespace Azure.Storage.Blobs.Models
         /// True if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. For a snapshot request, this header is set to true when metadata was provided in the request and encrypted with a customer-provided key.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobSnapshotInfo instances.
+        /// You can use BlobsModelFactory.BlobSnapshotInfo instead.
+        /// </summary>
+        internal BlobSnapshotInfo() { }
     }
 
     /// <summary>
@@ -15385,6 +15491,12 @@ namespace Azure.Storage.Blobs.Models
         public int Size { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of Block instances.
+        /// You can use BlobsModelFactory.Block instead.
+        /// </summary>
+        internal Block() { }
+
+        /// <summary>
         /// Deserializes XML into a new Block instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -15450,6 +15562,12 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the block. This header is only returned when the block was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlockInfo instances.
+        /// You can use BlobsModelFactory.BlockInfo instead.
+        /// </summary>
+        internal BlockInfo() { }
     }
 
     /// <summary>
@@ -15728,6 +15846,12 @@ namespace Azure.Storage.Blobs.Models
         /// Approximate time remaining in the lease period, in seconds.
         /// </summary>
         public int LeaseTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BrokenLease instances.
+        /// You can use BlobsModelFactory.BrokenLease instead.
+        /// </summary>
+        internal BrokenLease() { }
     }
 }
 #endregion class BrokenLease
@@ -15749,6 +15873,12 @@ namespace Azure.Storage.Blobs.Models
         /// End
         /// </summary>
         public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ClearRange instances.
+        /// You can use BlobsModelFactory.ClearRange instead.
+        /// </summary>
+        internal ClearRange() { }
 
         /// <summary>
         /// Deserializes XML into a new ClearRange instance.
@@ -15802,6 +15932,12 @@ namespace Azure.Storage.Blobs.Models
         /// x-ms-error-code
         /// </summary>
         public string ErrorCode { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ConditionNotMetError instances.
+        /// You can use BlobsModelFactory.ConditionNotMetError instead.
+        /// </summary>
+        internal ConditionNotMetError() { }
     }
 }
 #endregion class ConditionNotMetError
@@ -15886,6 +16022,12 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ContainerInfo instances.
+        /// You can use BlobsModelFactory.ContainerInfo instead.
+        /// </summary>
+        internal ContainerInfo() { }
     }
 
     /// <summary>
@@ -16053,6 +16195,12 @@ namespace Azure.Storage.Blobs.Models
         /// ETag
         /// </summary>
         public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ContainerProperties instances.
+        /// You can use BlobsModelFactory.ContainerProperties instead.
+        /// </summary>
+        internal ContainerProperties() { }
 
         /// <summary>
         /// Deserializes XML into a new ContainerProperties instance.
@@ -16343,6 +16491,12 @@ namespace Azure.Storage.Blobs.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of CorsRule instances.
+        /// You can use BlobsModelFactory.CorsRule instead.
+        /// </summary>
+        internal CorsRule() { }
+
+        /// <summary>
         /// Serialize a CorsRule instance as XML.
         /// </summary>
         /// <param name="value">The CorsRule instance to serialize.</param>
@@ -16523,6 +16677,12 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the resource in bytes.
         /// </summary>
         public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DirectoryCreateResult instances.
+        /// You can use BlobsModelFactory.DirectoryCreateResult instead.
+        /// </summary>
+        internal DirectoryCreateResult() { }
     }
 
     /// <summary>
@@ -16561,6 +16721,12 @@ namespace Azure.Storage.Blobs.Models
         /// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the rename operation to continue renaming the directory.
         /// </summary>
         public string Marker { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DirectoryDeleteResult instances.
+        /// You can use BlobsModelFactory.DirectoryDeleteResult instead.
+        /// </summary>
+        internal DirectoryDeleteResult() { }
     }
 
     /// <summary>
@@ -16620,6 +16786,12 @@ namespace Azure.Storage.Blobs.Models
         /// The POSIX access control list for the file or directory.  Included in the response only if the action is "getAccessControl" and Hierarchical Namespace is enabled for the account.
         /// </summary>
         public string XMSAcl { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DirectoryGetAccessControlResult instances.
+        /// You can use BlobsModelFactory.DirectoryGetAccessControlResult instead.
+        /// </summary>
+        internal DirectoryGetAccessControlResult() { }
     }
 
     /// <summary>
@@ -16679,6 +16851,12 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the resource in bytes.
         /// </summary>
         public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DirectoryRenameResult instances.
+        /// You can use BlobsModelFactory.DirectoryRenameResult instead.
+        /// </summary>
+        internal DirectoryRenameResult() { }
     }
 
     /// <summary>
@@ -16724,6 +16902,12 @@ namespace Azure.Storage.Blobs.Models
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DirectorySetAccessControlResult instances.
+        /// You can use BlobsModelFactory.DirectorySetAccessControlResult instead.
+        /// </summary>
+        internal DirectorySetAccessControlResult() { }
     }
 
     /// <summary>
@@ -17017,6 +17201,12 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastSyncTime { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of GeoReplication instances.
+        /// You can use BlobsModelFactory.GeoReplication instead.
+        /// </summary>
+        internal GeoReplication() { }
+
+        /// <summary>
         /// Deserializes XML into a new GeoReplication instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -17178,6 +17368,12 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset Expiry { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of KeyInfo instances.
+        /// You can use BlobsModelFactory.KeyInfo instead.
+        /// </summary>
+        internal KeyInfo() { }
+
+        /// <summary>
         /// Serialize a KeyInfo instance as XML.
         /// </summary>
         /// <param name="value">The KeyInfo instance to serialize.</param>
@@ -17225,6 +17421,12 @@ namespace Azure.Storage.Blobs.Models
         /// Uniquely identifies a container's or blob's lease
         /// </summary>
         public string LeaseId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of Lease instances.
+        /// You can use BlobsModelFactory.Lease instead.
+        /// </summary>
+        internal Lease() { }
     }
 
     /// <summary>
@@ -17791,6 +17993,12 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PageBlobInfo instances.
+        /// You can use BlobsModelFactory.PageBlobInfo instead.
+        /// </summary>
+        internal PageBlobInfo() { }
     }
 
     /// <summary>
@@ -17858,6 +18066,12 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the pages. This header is only returned when the pages were encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PageInfo instances.
+        /// You can use BlobsModelFactory.PageInfo instead.
+        /// </summary>
+        internal PageInfo() { }
     }
 
     /// <summary>
@@ -17992,6 +18206,12 @@ namespace Azure.Storage.Blobs.Models
         /// End
         /// </summary>
         public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PageRange instances.
+        /// You can use BlobsModelFactory.PageRange instead.
+        /// </summary>
+        internal PageRange() { }
 
         /// <summary>
         /// Deserializes XML into a new PageRange instance.
@@ -18314,6 +18534,12 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of RetentionPolicy instances.
+        /// You can use BlobsModelFactory.RetentionPolicy instead.
+        /// </summary>
+        internal RetentionPolicy() { }
+
+        /// <summary>
         /// Serialize a RetentionPolicy instance as XML.
         /// </summary>
         /// <param name="value">The RetentionPolicy instance to serialize.</param>
@@ -18437,6 +18663,12 @@ namespace Azure.Storage.Blobs.Models
         /// Body
         /// </summary>
         public System.IO.Stream Body { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ServiceSubmitBatchResult instances.
+        /// You can use BlobsModelFactory.ServiceSubmitBatchResult instead.
+        /// </summary>
+        internal ServiceSubmitBatchResult() { }
     }
 
     /// <summary>
@@ -18483,6 +18715,12 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of SetHttpHeadersOperation instances.
+        /// You can use BlobsModelFactory.SetHttpHeadersOperation instead.
+        /// </summary>
+        internal SetHttpHeadersOperation() { }
     }
 }
 #endregion class SetHttpHeadersOperation
@@ -18514,6 +18752,12 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the metadata. This header is only returned when the metadata was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of SetMetadataOperation instances.
+        /// You can use BlobsModelFactory.SetMetadataOperation instead.
+        /// </summary>
+        internal SetMetadataOperation() { }
     }
 }
 #endregion class SetMetadataOperation
@@ -18689,6 +18933,12 @@ namespace Azure.Storage.Blobs.Models
         public string ErrorDocument404Path { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of StaticWebsite instances.
+        /// You can use BlobsModelFactory.StaticWebsite instead.
+        /// </summary>
+        internal StaticWebsite() { }
+
+        /// <summary>
         /// Serialize a StaticWebsite instance as XML.
         /// </summary>
         /// <param name="value">The StaticWebsite instance to serialize.</param>
@@ -18768,6 +19018,12 @@ namespace Azure.Storage.Blobs.Models
         public string Code { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of StorageError instances.
+        /// You can use BlobsModelFactory.StorageError instead.
+        /// </summary>
+        internal StorageError() { }
+
+        /// <summary>
         /// Deserializes XML into a new StorageError instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -18838,6 +19094,12 @@ namespace Azure.Storage.Blobs.Models
         /// The key as a base64 string
         /// </summary>
         public string Value { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of UserDelegationKey instances.
+        /// You can use BlobsModelFactory.UserDelegationKey instead.
+        /// </summary>
+        internal UserDelegationKey() { }
 
         /// <summary>
         /// Deserializes XML into a new UserDelegationKey instance.
@@ -18911,6 +19173,12 @@ namespace Azure.Storage.Blobs.Models
         /// The service error message.
         /// </summary>
         public string Message { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of Error instances.
+        /// You can use BlobsModelFactory.Error instead.
+        /// </summary>
+        internal Error() { }
 
         /// <summary>
         /// Deserializes XML into a new Error instance.

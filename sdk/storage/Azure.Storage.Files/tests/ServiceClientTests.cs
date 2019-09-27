@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -53,6 +52,8 @@ namespace Azure.Storage.Files.Test
 
             // Assert
             Assert.IsNotNull(properties);
+            var accountName = new FileUriBuilder(service.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
 
         [Test]
@@ -189,5 +190,7 @@ namespace Azure.Storage.Files.Test
             Assert.ThrowsAsync<StorageRequestFailedException>(
                 async () => await share.GetPropertiesAsync());
         }
+
+
     }
 }
