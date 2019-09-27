@@ -1,8 +1,22 @@
 # GA SDK Releases
 
-Every minor version release targets the same (GA) REST API version as that of the corresponding major version release. The REST API version targeted by the major version releases are listed when appropriate.
+Every minor version release targets the same (GA) REST API version as that of the corresponding major version release. The REST API version targeted by the major version releases are listed where appropriate.
 
 Features and improvements in a GA SDK are considered generally available.
+
+# 10.0.1
+
+# Breaking Changes
+
+None
+
+# Improvements
+
+None
+
+# Bug fixes
+
+- Fixed missing Intellisense and reference documentation. This was caused by missing XML doc files in the NuGet packages. [PR 6298](https://github.com/Azure/azure-sdk-for-net/pull/7786).
 
 <a name="10.0.0"></a>
 

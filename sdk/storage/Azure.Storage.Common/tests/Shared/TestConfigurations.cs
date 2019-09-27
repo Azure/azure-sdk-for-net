@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace Azure.Storage.Test
     public class TestConfigurations
     {
         /// <summary>
-        /// Gets or sets a mapping of tenant names to definitions.  The 
+        /// Gets or sets a mapping of tenant names to definitions.  The
         /// Target*TenantName properties define the keys to use with this
         /// dictionary.  You should only access the tenants via the GetTenant
         /// method that will Assert.Inconclusive if the desired tenant wasn't
@@ -100,7 +99,7 @@ namespace Azure.Storage.Test
             GetTenant("TargetOAuthTenant", s_configurations.Value.TargetOAuthTenantName);
 
         /// <summary>
-        /// When loading our test configuration, we'll check the 
+        /// When loading our test configuration, we'll check the
         /// AZ_STORAGE_CONFIG_PATH first.
         /// </summary>
         private const string DefaultTestConfigPathEnvironmentVariable = @"AZ_STORAGE_CONFIG_PATH";
@@ -204,7 +203,7 @@ namespace Azure.Storage.Test
         /// <summary>
         /// Add a static TestEventListener which will redirect SDK logging
         /// to Console.Out for easy debugging.
-        /// 
+        ///
         /// This is only here to run before any of our tests make requests.
         /// </summary>
 #pragma warning disable IDE0052 // Remove unread private members

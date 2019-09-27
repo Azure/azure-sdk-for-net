@@ -36,6 +36,7 @@ namespace Azure.Core.Pipeline
 
         public IList<string> LoggingAllowedQueryParameters { get; }
 
+
         public string? ApplicationId { get; set; }
 
         public static string? DefaultApplicationId { get; set; }

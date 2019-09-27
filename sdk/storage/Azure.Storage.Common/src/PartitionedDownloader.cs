@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -51,7 +50,7 @@ namespace Azure.Storage
         /// </param>
         /// <param name="writePartitionAsync">
         /// Returns a Task that writes the content stream into the destination stream (given the
-        /// download response return by <paramref name="downloadPartitionAsync"/> and 
+        /// download response return by <paramref name="downloadPartitionAsync"/> and
         /// <paramref name="destinationStream"/>).
         /// </param>
         /// <param name="singleDownloadThreshold">
@@ -189,7 +188,7 @@ namespace Azure.Storage
         /// </param>
         /// <param name="writePartitionAsync">
         /// Returns a Task that writes the content stream into the destination stream (given the
-        /// download response return by <paramref name="downloadPartitionAsync"/> and 
+        /// download response return by <paramref name="downloadPartitionAsync"/> and
         /// <paramref name="destinationStream"/>).
         /// </param>
         /// <param name="maximumActivePartitionCount">
@@ -230,7 +229,7 @@ namespace Azure.Storage
             // - Not necessarily as performant as an in-memory seekable stream, but memory streams probably aren't in the
             //   size range where parallel download is really going to be useful anyway.
             //
-            // We will still download in parallel, but limit ourselves to a maximum number of responses retained in memory, 
+            // We will still download in parallel, but limit ourselves to a maximum number of responses retained in memory,
             // and only await the head of the queue.
 
             var activeTaskQueue = new Queue<Task<Response<P>>>();

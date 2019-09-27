@@ -12,6 +12,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string AttributesPropertyName = "attributes";
         private const string EnabledPropertyName = "enabled";
         private const string TagsPropertyName = "tags";
+
         private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode(PolicyPropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);

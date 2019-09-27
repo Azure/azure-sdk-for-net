@@ -146,6 +146,16 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
 
         /// <summary>
+        /// Gets the IDataFlowsOperations.
+        /// </summary>
+        public virtual IDataFlowsOperations DataFlows { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataFlowDebugSessionOperations.
+        /// </summary>
+        public virtual IDataFlowDebugSessionOperations DataFlowDebugSession { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -400,6 +410,8 @@ namespace Microsoft.Azure.Management.DataFactory
             Triggers = new TriggersOperations(this);
             TriggerRuns = new TriggerRunsOperations(this);
             RerunTriggers = new RerunTriggersOperations(this);
+            DataFlows = new DataFlowsOperations(this);
+            DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";
@@ -447,6 +459,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Activity>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Trigger>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataFlow>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataFlow>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));

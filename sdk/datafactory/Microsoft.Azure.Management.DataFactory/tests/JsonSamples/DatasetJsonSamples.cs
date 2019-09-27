@@ -254,6 +254,24 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string CosmosDbSqlApiCollection = @"
+{ 
+    name: ""CosmosDbSqlApiCollection"", 
+    properties: { 
+        type: ""CosmosDbSqlApiCollection"", 
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties: { 
+            collectionName: ""fake collection""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string FileShare = @"
 {
     name: ""FileTableWithUseBinaryTransfer"",

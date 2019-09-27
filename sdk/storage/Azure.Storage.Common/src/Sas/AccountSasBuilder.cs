@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -16,8 +15,8 @@ namespace Azure.Storage.Sas
     public struct AccountSasBuilder : IEquatable<AccountSasBuilder>
     {
         /// <summary>
-        /// The storage service version to use to authenticate requests made 
-        /// with this shared access signature, and the service version to use 
+        /// The storage service version to use to authenticate requests made
+        /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
         public string Version { get; set; }
@@ -41,7 +40,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
-        /// This field must be omitted if it has been specified in an 
+        /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
         public DateTimeOffset ExpiryTime { get; set; }
@@ -56,10 +55,10 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
-        /// accept requests. If the IP address from which the request 
-        /// originates does not match the IP address or address range 
+        /// accept requests. If the IP address from which the request
+        /// originates does not match the IP address or address range
         /// specified on the SAS token, the request is not authenticated.
-        /// When specifying a range of IP addresses, note that the range is 
+        /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
         public IPRange IPRange { get; set; }
@@ -81,7 +80,7 @@ namespace Azure.Storage.Sas
         public string ResourceTypes { get; set; }
 
         /// <summary>
-        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this 
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>

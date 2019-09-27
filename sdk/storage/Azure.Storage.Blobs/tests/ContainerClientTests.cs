@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -68,7 +67,8 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            var containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
             {
@@ -77,6 +77,10 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+                var accountName = new BlobUriBuilder(service.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => container.AccountName);
+                TestHelper.AssertCacheableProperty(containerName, () => container.Name);
             }
             finally
             {
@@ -1574,7 +1578,7 @@ namespace Azure.Storage.Blobs.Test
             var properties = await this.EnsurePropagatedAsync(
                 async () => await containerClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
-            
+
             Assert.IsNotNull(properties);
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 

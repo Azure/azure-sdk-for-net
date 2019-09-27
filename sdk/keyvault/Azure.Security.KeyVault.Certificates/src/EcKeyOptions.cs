@@ -32,16 +32,18 @@ namespace Azure.Security.KeyVault.Certificates
         {
         }
 
-        internal override bool ReadProperty(JsonProperty prop)
+        internal override void ReadProperty(JsonProperty prop)
         {
-            if (!base.ReadProperty(prop) && string.CompareOrdinal(prop.Name, CurvePropertyName) == 0)
+            switch (prop.Name)
             {
-                Curve = prop.Value.GetString();
+                case CurvePropertyName:
+                    Curve = prop.Value.GetString();
+                    break;
 
-                return true;
+                default:
+                    base.ReadProperty(prop);
+                    break;
             }
-
-            return false;
         }
 
         internal override void WriteProperties(Utf8JsonWriter json)

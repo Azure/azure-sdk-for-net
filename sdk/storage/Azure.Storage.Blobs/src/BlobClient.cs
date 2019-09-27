@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -24,7 +23,7 @@ namespace Azure.Storage.Blobs
     /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
-	public class BlobClient : BlobBaseClient
+    public class BlobClient : BlobBaseClient
     {
         #region ctors
         /// <summary>
@@ -838,7 +837,7 @@ namespace Azure.Storage.Blobs
 
             string GetNewBase64BlockId(long blockOrdinal)
             {
-                // Create and record a new block ID, storing the order information 
+                // Create and record a new block ID, storing the order information
                 // (nominally the block's start position in the original stream)
 
                 var newBlockName = Interlocked.Increment(ref blockName);
@@ -980,7 +979,7 @@ namespace Azure.Storage.Blobs
 
             string GetNewBase64BlockId(long blockOrdinal)
             {
-                // Create and record a new block ID, storing the order information 
+                // Create and record a new block ID, storing the order information
                 // (nominally the block's start position in the original stream)
 
                 var newBlockName = Interlocked.Increment(ref blockName);

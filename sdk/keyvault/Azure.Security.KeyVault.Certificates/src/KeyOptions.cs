@@ -11,10 +11,11 @@ namespace Azure.Security.KeyVault.Certificates
     public abstract class KeyOptions : IJsonSerializable, IJsonDeserializable
     {
         private const string KeyTypePropertyName = "kty";
-        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private const string ReuseKeyPropertyName = "reuse_key";
-        private static readonly JsonEncodedText s_reuseKeyPropertyNameBytes = JsonEncodedText.Encode(ReuseKeyPropertyName);
         private const string ExportablePropertyName = "exportable";
+
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_reuseKeyPropertyNameBytes = JsonEncodedText.Encode(ReuseKeyPropertyName);
         private static readonly JsonEncodedText s_exportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
 
         /// <summary>
@@ -54,24 +55,22 @@ namespace Azure.Security.KeyVault.Certificates
             WriteProperties(json);
         }
 
-        internal virtual bool ReadProperty(JsonProperty prop)
+        internal virtual void ReadProperty(JsonProperty prop)
         {
             switch (prop.Name)
             {
                 case KeyTypePropertyName:
                     KeyType = prop.Value.GetString();
                     break;
+
                 case ReuseKeyPropertyName:
                     ReuseKey = prop.Value.GetBoolean();
                     break;
+
                 case ExportablePropertyName:
                     Exportable = prop.Value.GetBoolean();
                     break;
-                default:
-                    return false;
             }
-
-            return true;
         }
 
         internal virtual void WriteProperties(Utf8JsonWriter json)

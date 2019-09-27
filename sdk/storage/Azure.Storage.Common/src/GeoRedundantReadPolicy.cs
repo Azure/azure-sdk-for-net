@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Core.Pipeline;
@@ -8,7 +7,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Storage.Common
 {
     /// <summary>
-    /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage 
+    /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage
     /// accounts configured with RA-GRS to retry GET or HEAD requests against the secondary storage Uri.
     /// </summary>
     internal class GeoRedundantReadPolicy : SynchronousHttpPipelinePolicy
@@ -58,7 +57,7 @@ namespace Azure.Storage.Common
                 return;
             }
 
-            // If alternateHost was not null that means the message is being retried. Hence what is stored in the Host 
+            // If alternateHost was not null that means the message is being retried. Hence what is stored in the Host
             // property of UriBuilder is actually the host from the last try.
             var lastTriedHost = message.Request.Uri.Host;
 

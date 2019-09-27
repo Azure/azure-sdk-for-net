@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
@@ -26,6 +27,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         private ObjectId _identifier;
         private VaultAttributes _attributes;
+        private Dictionary<string, string> _tags;
 
         internal SecretProperties()
         {
@@ -118,7 +120,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// A dictionary of tags with specific metadata about the secret.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         internal void ReadProperties(JsonElement json)
         {
@@ -153,7 +155,6 @@ namespace Azure.Security.KeyVault.Secrets
                     break;
 
                 case TagsPropertyName:
-                    Tags = new Dictionary<string, string>();
                     foreach (JsonProperty tag in prop.Value.EnumerateObject())
                     {
                         Tags[tag.Name] = tag.Value.GetString();
@@ -178,11 +179,11 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteEndObject();
             }
 
-            if (Tags != null && Tags.Count > 0)
+            if (_tags != null && _tags.Count > 0)
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (KeyValuePair<string, string> kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in _tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }
