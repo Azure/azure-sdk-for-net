@@ -374,7 +374,7 @@ namespace Azure.Core.Pipeline
                 return isError ? EventType.ErrorResponse : EventType.Response;
             }
 
-            public enum EventType
+            private enum EventType
             {
                 Request,
                 Response,
