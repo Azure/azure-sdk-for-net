@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'UltraSSD_LRS'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed image disk.</param>
-        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSet diskEncryptionSet = default(DiskEncryptionSet))
+        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters))
             : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
         {
             Lun = lun;

@@ -866,7 +866,7 @@ namespace Compute.Tests
                         {
                             StorageAccountType = osDiskStorageAccountType,
                             DiskEncryptionSet = diskEncryptionSetId == null ? null :
-                                new DiskEncryptionSet()
+                                new DiskEncryptionSetParameters()
                                 {
                                     Id = diskEncryptionSetId
                                 }
@@ -885,7 +885,7 @@ namespace Compute.Tests
                             {
                                 StorageAccountType = dataDiskStorageAccountType,
                                 DiskEncryptionSet = diskEncryptionSetId == null ? null :
-                                    new DiskEncryptionSet()
+                                    new DiskEncryptionSetParameters()
                                     {
                                         Id = diskEncryptionSetId
                                     }

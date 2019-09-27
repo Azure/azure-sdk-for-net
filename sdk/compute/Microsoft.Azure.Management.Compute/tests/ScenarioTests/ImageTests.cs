@@ -121,7 +121,7 @@ namespace Compute.Tests
                         OsDisk = new ImageOSDisk()
                         {
                             BlobUri = createdVM.StorageProfile.OsDisk.Vhd.Uri,
-                            DiskEncryptionSet = diskEncryptionSetId == null ? null : new DiskEncryptionSet()
+                            DiskEncryptionSet = diskEncryptionSetId == null ? null : new DiskEncryptionSetParameters()
                             {
                                 Id = diskEncryptionSetId
                             },
@@ -133,7 +133,7 @@ namespace Compute.Tests
                                 new ImageDataDisk()
                                 {
                                     BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd.Uri,
-                                    DiskEncryptionSet = diskEncryptionSetId == null ? null: new DiskEncryptionSet()
+                                    DiskEncryptionSet = diskEncryptionSetId == null ? null: new DiskEncryptionSetParameters()
                                     {
                                         Id = diskEncryptionSetId
                                     },

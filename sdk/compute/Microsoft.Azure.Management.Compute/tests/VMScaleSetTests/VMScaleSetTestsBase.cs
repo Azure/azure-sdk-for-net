@@ -149,7 +149,7 @@ namespace Compute.Tests
                             ManagedDisk = diskEncryptionSetId == null ? null: new VirtualMachineScaleSetManagedDiskParameters()
                             {
                                 StorageAccountType = StorageAccountTypes.StandardLRS,
-                                DiskEncryptionSet = new DiskEncryptionSet()
+                                DiskEncryptionSet = new DiskEncryptionSetParameters()
                                     {
                                         Id = diskEncryptionSetId
                                     }
@@ -165,7 +165,7 @@ namespace Compute.Tests
                                 ManagedDisk = diskEncryptionSetId == null ? null: new VirtualMachineScaleSetManagedDiskParameters()
                                 {
                                     StorageAccountType = StorageAccountTypes.StandardLRS,
-                                    DiskEncryptionSet = new DiskEncryptionSet()
+                                    DiskEncryptionSet = new DiskEncryptionSetParameters()
                                         {
                                             Id = diskEncryptionSetId
                                         }

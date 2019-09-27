@@ -19,21 +19,23 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// disk. Please refer https://aka.ms/mdssewithcmkoverview for more
     /// details.
     /// </summary>
-    public partial class DiskEncryptionSet : SubResource
+    public partial class DiskEncryptionSetParameters : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the DiskEncryptionSet class.
+        /// Initializes a new instance of the DiskEncryptionSetParameters
+        /// class.
         /// </summary>
-        public DiskEncryptionSet()
+        public DiskEncryptionSetParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DiskEncryptionSet class.
+        /// Initializes a new instance of the DiskEncryptionSetParameters
+        /// class.
         /// </summary>
         /// <param name="id">Resource Id</param>
-        public DiskEncryptionSet(string id = default(string))
+        public DiskEncryptionSetParameters(string id = default(string))
             : base(id)
         {
             CustomInit();

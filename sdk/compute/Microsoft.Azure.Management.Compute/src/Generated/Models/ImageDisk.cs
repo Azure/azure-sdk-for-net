@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'UltraSSD_LRS'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed image disk.</param>
-        public ImageDisk(SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSet diskEncryptionSet = default(DiskEncryptionSet))
+        public ImageDisk(SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters))
         {
             Snapshot = snapshot;
             ManagedDisk = managedDisk;
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// resource id for the managed image disk.
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionSet")]
-        public DiskEncryptionSet DiskEncryptionSet { get; set; }
+        public DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
 
     }
 }
