@@ -516,7 +516,7 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("DataFlowDebugSession_Create", (example, client, responseCode) =>
             {
-                CreateDataFlowDebugSessionResponse response = client.DataFlowDebugSession.Create(RGN(example), FN(example), request: GetTypedParameter<CreateDataFlowDebugSessionRequest>(example, client, "request"));
+                CreateDataFlowDebugSessionResponse response = client.DataFlowDebugSession.BeginCreate(RGN(example), FN(example), request: GetTypedParameter<CreateDataFlowDebugSessionRequest>(example, client, "request"));
             });
         }
 
@@ -545,7 +545,7 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("DataFlowDebugSession_ExecuteCommand", (example, client, responseCode) =>
             {
-                DataFlowDebugCommandResponse response = client.DataFlowDebugSession.ExecuteCommand(RGN(example), FN(example), request: GetTypedParameter<DataFlowDebugCommandRequest>(example, client, "request"));
+                DataFlowDebugCommandResponse response = client.DataFlowDebugSession.BeginExecuteCommand(RGN(example), FN(example), request: GetTypedParameter<DataFlowDebugCommandRequest>(example, client, "request"));
             });
         }
 
