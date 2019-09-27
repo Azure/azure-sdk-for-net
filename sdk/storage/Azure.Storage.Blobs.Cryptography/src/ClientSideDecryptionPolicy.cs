@@ -17,7 +17,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
     /// <summary>
     /// An <see cref="HttpPipelinePolicy"/> for appropriately downloading a blob using client-side encryption.
     /// Adjusts the download range requested, if any, to ensure enough info is present to decrypt, as well as
-    /// pipes the returned content stream through a decryption stream.
+    /// pipes the returned content stream through a decryption stream. Should only be in pipelines for instances
+    /// of <see cref="EncryptedBlobClient"/>
     /// </summary>
     public class ClientSideDecryptionPolicy : HttpPipelinePolicy
     {
@@ -27,9 +28,9 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         private IKeyEncryptionKeyResolver KeyResolver { get; }
 
         /// <summary>
-        /// The wrapper is used to wrap/unwrap the content key during encryption.
+        /// An already locally existing IKeyEncryptionKey, for key-fetching optimizations.
         /// </summary>
-        private IKeyEncryptionKey KeyWrapper { get; }
+        private IKeyEncryptionKey LocalKey { get; }
 
         /// <summary>
         /// Initializes a new instance of the {@link BlobEncryptionPolicy} class with the specified key and resolver.
@@ -40,11 +41,17 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// resolver if specified to get the key. 2. If resolver is not specified but a key is specified, match the key id on
         /// the key and use it.
         /// </summary>
-        /// <param name="key">The decryption key. Should not be set if <paramref name="keyResolver"/> is set.</param>
-        /// <param name="keyResolver">Key resolver for getting the decryption key. Should not be set if <paramref name="key"/> is set.</param>
-        public ClientSideDecryptionPolicy(IKeyEncryptionKey key = default, IKeyEncryptionKeyResolver keyResolver = default)
+        /// <param name="keyResolver">
+        /// Key resolver for finding the appropriate <see cref="IKeyEncryptionKey"/> to unwrap the blob's content
+        /// encryption key.
+        /// </param>
+        /// <param name="key">
+        /// The <see cref="IKeyEncryptionKey"/> used by this pipeline's client to wrap encryption keys on uploads, if present.
+        /// Used to skip a key fetch with <paramref name="keyResolver"/> if unnecessary.
+        /// </param>
+        public ClientSideDecryptionPolicy(IKeyEncryptionKeyResolver keyResolver = default, IKeyEncryptionKey key = default)
         {
-            this.KeyWrapper = key;
+            this.LocalKey = key;
             this.KeyResolver = keyResolver;
         }
 
@@ -58,18 +65,17 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range);
-            var encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
+            EncryptedBlobRange encryptedRange = default;
+            if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
+            {
+                encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
+                message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
+            }
 
             ProcessNext(message, pipeline);
 
             if (message.Response.ContentStream != null)
             {
-                if (!message.Response.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange))
-                {
-                    throw new ArgumentException($"HTTP response with body content did not specify {Constants.HeaderNames.ContentLength}");
-                }
-
                 message.Response.ContentStream = DecryptBlob(
                     message.Response.ContentStream,
                     ExtractMetadata(message.Request.Headers),
@@ -106,7 +112,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         private void AssertKeyAccessPresent()
         {
-            if (this.KeyWrapper == default && this.KeyResolver == default)
+            if (this.LocalKey == default && this.KeyResolver == default)
             {
                 throw new InvalidOperationException("Key and KeyResolver cannot both be null");
             }
@@ -129,7 +135,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             }
 
             // parse header value (e.g. "bytes <start>-<end>/<blobSize>")
-            // end is the inclusive last byte; header "bytes 0-7/8" is the entire 8-byte blob
+            // end is the inclusive last byte; e.g. header "bytes 0-7/8" is the entire 8-byte blob
             var tokens = contentRange.Split(new char[] { ' ', '-', '/' }); // ["bytes", "<start>", "<end>", "<blobSize>"]
 
             // did we request the last block?
@@ -163,7 +169,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 read = IV.Length;
             }
 
-            CryptoStream plaintext = WrapStream(ciphertext, GetKeyEncryptionKey(encryptionData).ToArray(), encryptionData, IV, noPadding);
+            CryptoStream plaintext = WrapStream(ciphertext, GetContentEncryptionKey(encryptionData).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -193,7 +199,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 read = IV.Length;
             }
 
-            CryptoStream plaintext = WrapStream(ciphertext, (await GetKeyEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, noPadding);
+            CryptoStream plaintext = WrapStream(ciphertext, (await GetContentEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -232,17 +238,15 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             _ = metadata ?? throw new InvalidOperationException();
 
             EncryptionData encryptionData;
-            if (metadata.TryGetValue(EncryptionConstants.ENCRYPTION_DATA_KEY, out string encryptedDataString))
-            {
-                using (var reader = new StringReader(encryptedDataString))
-                {
-                    var serializer = new XmlSerializer(typeof(EncryptionData));
-                    encryptionData = (EncryptionData)serializer.Deserialize(reader);
-                }
-            }
-            else
+            if (!metadata.TryGetValue(EncryptionConstants.ENCRYPTION_DATA_KEY, out string encryptedDataString))
             {
                 throw new InvalidOperationException("Encryption data does not exist.");
+            }
+
+            using (var reader = new StringReader(encryptedDataString))
+            {
+                var serializer = new XmlSerializer(typeof(EncryptionData));
+                encryptionData = (EncryptionData)serializer.Deserialize(reader);
             }
 
             _ = encryptionData.ContentEncryptionIV ?? throw new NullReferenceException();
@@ -260,7 +264,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             return encryptionData;
         }
 
-        #region GetKeyEncryptionKey
+        #region GetContentEncryptionKey
 
         /// <summary>
         /// Returns the key encryption key for blob. First tries to get key encryption key from KeyResolver, then
@@ -268,31 +272,20 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// </summary>
         /// <param name="encryptionData">The encryption data.</param>
         /// <returns>Encryption key as a byte array.</returns>
-        private Memory<byte> GetKeyEncryptionKey(EncryptionData encryptionData)
+        private Memory<byte> GetContentEncryptionKey(EncryptionData encryptionData)
         {
-            /*
-             * 1. Invoke the key resolver if specified to get the key. If the resolver is specified but does not have a
-             * mapping for the key id, an error should be thrown. This is important for key rotation scenario.
-             * 2. If resolver is not specified but a key is specified, match the key id on the key and and use it.
-             */
-
             IKeyEncryptionKey key;
 
-            if (this.KeyResolver != null)
+            // If we already have a local key and it is the correct one, use that.
+            if (encryptionData.WrappedContentKey.KeyId == this.LocalKey?.KeyId.ToString())
             {
-                key = this.KeyResolver.Resolve(encryptionData.WrappedContentKey.KeyId);
+                key = this.LocalKey;
             }
+            // Otherwise, use the resolver.
             else
             {
-                if (/*encryptionData.WrappedContentKey.KeyId == this.KeyWrapper.KeyId*/ true) //TODO fix once KeyId is in the interface
-                {
-                    key = this.KeyWrapper;
-                }
-                else
-                {
-                    throw new ArgumentException("Key mismatch. The key id stored on " +
-                        "the service does not match the specified key.");
-                }
+                key = this.KeyResolver?.Resolve(encryptionData.WrappedContentKey.KeyId) ?? throw new ArgumentException(
+                    "Key mismatch. The resolver could not match the key specified by the service.");
             }
 
             return key.UnwrapKey(
@@ -306,31 +299,22 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// </summary>
         /// <param name="encryptionData">The encryption data.</param>
         /// <returns>Encryption key as a byte array.</returns>
-        private async Task<Memory<byte>> GetKeyEncryptionKeyAsync(EncryptionData encryptionData)
+        private async Task<Memory<byte>> GetContentEncryptionKeyAsync(EncryptionData encryptionData)
         {
-            /*
-             * 1. Invoke the key resolver if specified to get the key. If the resolver is specified but does not have a
-             * mapping for the key id, an error should be thrown. This is important for key rotation scenario.
-             * 2. If resolver is not specified but a key is specified, match the key id on the key and and use it.
-             */
-
             IKeyEncryptionKey key;
 
-            if (this.KeyResolver != null)
+            // If we already have a local key and it is the correct one, use that.
+            if (encryptionData.WrappedContentKey.KeyId == this.LocalKey?.KeyId.ToString())
             {
-                key = await this.KeyResolver.ResolveAsync(encryptionData.WrappedContentKey.KeyId).ConfigureAwait(false);
+                key = this.LocalKey;
             }
+            // Otherwise, use the resolver.
             else
             {
-                if (/*encryptionData.WrappedContentKey.KeyId == this.KeyWrapper.KeyId*/ true) //TODO fix once KeyId is in the interface
-                {
-                    key = this.KeyWrapper;
-                }
-                else
-                {
-                    throw new ArgumentException("Key mismatch. The key id stored on " +
-                        "the service does not match the specified key.");
-                }
+                key = await (this.KeyResolver?.ResolveAsync(encryptionData.WrappedContentKey.KeyId) ??
+                    throw new ArgumentException(
+                        "Key mismatch. The resolver could not match the key specified by the service.")
+                    ).ConfigureAwait(false);
             }
 
             return await key.UnwrapKeyAsync(

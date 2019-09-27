@@ -13,34 +13,33 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Specialized.Cryptography
 {
     /// <summary>
-    /// The <see cref="EncryptedBlockBlobClient"/> allows you to manipulate
+    /// The <see cref="EncryptedBlobClient"/> allows you to manipulate
     /// Azure Storage block blobs with client-side encryption. See
-    /// <see cref="BlockBlobClient"/> for more details.
-    ///
-    /// This class does support partial writes as a normal block blob client
-    /// would. Due to the nature of this encryption algorithm, the entire blob
-    /// must be reuploaded. Partial reads are still supported.
+    /// <see cref="BlobClient"/> for more details.
     /// </summary>
-    public class EncryptedBlockBlobClient : BlobClient
+    public class EncryptedBlobClient : BlobClient
     {
+        /// <summary>
+        /// Resolver used to find the correct key wrapper to unwrap the content encryption key for decryption.
+        /// </summary>
         private IKeyEncryptionKeyResolver KeyResolver { get; }
 
         /// <summary>
-        /// The wrapper is used to wrap/unwrap the content key during encryption.
+        /// The wrapper used to wrap the content encryption key.
         /// </summary>
         private IKeyEncryptionKey KeyWrapper { get; }
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the <see cref="EncryptedBlockBlobClient"/>
+        /// Initializes a new instance of the <see cref="EncryptedBlobClient"/>
         /// class for mocking.
         /// </summary>
-        protected EncryptedBlockBlobClient()
+        protected EncryptedBlobClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EncryptedBlockBlobClient"/>
+        /// Initializes a new instance of the <see cref="EncryptedBlobClient"/>
         /// class.
         /// </summary>
         /// <param name="connectionString">
@@ -56,19 +55,27 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="blobName">
         /// The name of this encrypted block blob.
         /// </param>
-        /// <param name="key"></param>
+        /// <param name="keyEncryptionKey">
+        /// Required for uploads. Provider to wrap the one-time content encryption key via the envelope technique.
+        /// </param>
+        /// <param name="keyResolver">
+        /// Required for downloads. Provider to get the correct <see cref="IKeyEncryptionKey"/> for a given download.
+        /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
+        /// the envelope technique.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public EncryptedBlockBlobClient(
+        public EncryptedBlobClient(
             string connectionString,
             string containerName,
             string blobName,
-            ClientSideEncryptionKey key,
+            IKeyEncryptionKey keyEncryptionKey = default,
+            IKeyEncryptionKeyResolver keyResolver = default,
             BlobClientOptions options = default)
-            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(key)))
+            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyEncryptionKey)))
         { }
 
         ///// <summary>
@@ -107,18 +114,26 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="credential">
         /// The shared key credential used to sign requests.
         /// </param>
-        /// <param name="key"></param>
+        /// <param name="keyEncryptionKey">
+        /// Required for uploads. Provider to wrap the one-time content encryption key via the envelope technique.
+        /// </param>
+        /// <param name="keyResolver">
+        /// Required for downloads. Provider to get the correct <see cref="IKeyEncryptionKey"/> for a given download.
+        /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
+        /// the envelope technique.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public EncryptedBlockBlobClient(
+        public EncryptedBlobClient(
             Uri blobUri,
             StorageSharedKeyCredential credential,
-            ClientSideEncryptionKey key,
+            IKeyEncryptionKey keyEncryptionKey = default,
+            IKeyEncryptionKeyResolver keyResolver = default,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(key)))
+            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyEncryptionKey)))
         { }
 
         /// <summary>
@@ -133,18 +148,26 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
-        /// <param name="key"></param>
+        /// <param name="keyEncryptionKey">
+        /// Required for uploads. Provider to wrap the one-time content encryption key via the envelope technique.
+        /// </param>
+        /// <param name="keyResolver">
+        /// Required for downloads. Provider to get the correct <see cref="IKeyEncryptionKey"/> for a given download.
+        /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
+        /// the envelope technique.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public EncryptedBlockBlobClient(
+        public EncryptedBlobClient(
             Uri blobUri,
             TokenCredential credential,
-            ClientSideEncryptionKey key,
+            IKeyEncryptionKey keyEncryptionKey = default,
+            IKeyEncryptionKeyResolver keyResolver = default,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(key)))
+            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyEncryptionKey)))
         { }
 
         /// <summary>
@@ -159,10 +182,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal EncryptedBlockBlobClient(Uri blobUri, HttpPipeline pipeline)
+        internal EncryptedBlobClient(Uri blobUri, HttpPipeline pipeline)
             : base(blobUri, pipeline)
         {
-            //TODO make new pipeline form this one
+            //TODO make new pipeline for this one
         }
 
         private static BlobClientOptions FluentAddPolicy(
@@ -187,12 +210,18 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <returns>Transformed content stream.</returns>
         internal protected override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
-            var (encryptionStream, encryptionData) = EncryptStream(content, null); // TODO add key
-            //TODO add encryption data to metadata
+            var (encryptionStream, encryptionData) = EncryptStream(content);
+
+            using (var stream = new MemoryStream())
+            {
+                new System.Xml.Serialization.XmlSerializer(typeof(EncryptionData)).Serialize(stream, encryptionData);
+                metadata.Add(EncryptionConstants.ENCRYPTION_DATA_KEY, new StreamReader(stream).ReadToEnd());
+            }
+
             return (encryptionStream, metadata);
         }
 
-        private (Stream, EncryptionData) EncryptStream(Stream plaintext, byte[] keyEncryptionKey)
+        private (Stream, EncryptionData) EncryptStream(Stream plaintext)
         {
             var generatedKey = CreateKey(EncryptionConstants.ENCRYPTION_KEY_SIZE);
 
@@ -215,8 +244,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     WrappedContentKey = new WrappedKey()
                     {
                         Algorithm = null, // TODO
-                        EncryptedKey = this.KeyWrapper.WrapKey(null /*algorithm*/, keyEncryptionKey).ToArray(), // TODO what algorithm?
-                        KeyId = null // TODO need interface update from identity
+                        EncryptedKey = this.KeyWrapper.WrapKey(null /*algorithm*/, generatedKey).ToArray(), // TODO what algorithm?
+                        KeyId = this.KeyWrapper.KeyId.ToString()
                     }
                 };
 

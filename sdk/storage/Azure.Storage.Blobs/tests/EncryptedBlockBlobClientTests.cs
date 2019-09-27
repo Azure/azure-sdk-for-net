@@ -28,10 +28,10 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         /// <param name="blob">The blob client created.</param>
         /// <returns>The IDisposable to delete the container when finished.</returns>
-        private IDisposable GetEncryptedBlockBlobClient(out EncryptedBlockBlobClient blob, byte[] key)
+        private IDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, byte[] key)
         {
             var disposable = this.GetNewContainer(out var container);
-            blob = new EncryptedBlockBlobClient(
+            blob = new EncryptedBlobClient(
                     new Uri(container.Uri, this.GetNewBlobName()), this.GetNewSharedKeyCredentials(),
                     new ClientSideEncryptionKey(new IKeyEncryptionKey()));
 

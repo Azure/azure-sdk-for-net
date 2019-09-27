@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
 {
@@ -16,7 +15,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         public const string AES = "AES";
 
-        public const string AGENT_METADATA_VALUE = ".NETTrack2" + ServiceConfiguration.BlobConfiguration.VERSION;
+        public const string AGENT_METADATA_VALUE = ".NETTrack22019-02-02"; // TODO determine proper value
 
         public const string ENCRYPTION_DATA_KEY = "encryptiondata";
 
