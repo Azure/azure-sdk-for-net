@@ -88,17 +88,19 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// </summary>
         /// <param name="hostName">Name of the processor host. MUST BE UNIQUE. Strongly recommend including a Guid to ensure uniqueness.</param>
         /// <param name="eventHubPath">The name of the EventHub.</param>
-        /// <param name="consumerGroupName">The name of the consumer group within the Event Hub.</param>
+        /// <param name="consumerGroupName">The name of the consumer group within the Event Hub.</param>        
         /// <param name="eventHubConnectionString">Connection string for the Event Hub to receive from.</param>
         /// <param name="checkpointManager">Object implementing ICheckpointManager which handles partition checkpointing.</param>
         /// <param name="leaseManager">Object implementing ILeaseManager which handles leases for partitions.</param>
+        /// <param name="consumerGroupNameInStorageCaseSensitive">Flag for setting case sensitivity og storage for lease manager.</param>
         public EventProcessorHost(
              string hostName,
              string eventHubPath,
              string consumerGroupName,
              string eventHubConnectionString,
              ICheckpointManager checkpointManager,
-             ILeaseManager leaseManager)
+             ILeaseManager leaseManager,
+             bool consumerGroupNameInStorageCaseSensitive = true)
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(hostName), hostName);
             Guard.ArgumentNotNullOrWhiteSpace(nameof(consumerGroupName), consumerGroupName);
@@ -138,6 +140,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             this.OperationTimeout = csb.OperationTimeout;
             this.EndpointAddress = csb.Endpoint;
             this.PartitionManager = new PartitionManager(this);
+            this.ConsumerGroupNameInStorageCaseSensitive = consumerGroupNameInStorageCaseSensitive;
             ProcessorEventSource.Log.EventProcessorHostCreated(this.HostName, this.EventHubPath);
         }
 
@@ -336,6 +339,11 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// Gets the consumer group name.
         /// </summary>
         public string ConsumerGroupName { get; }
+
+        /// <summary>
+        /// Get the case insenitivite settings of the storage for storing 
+        /// </summary>
+        public bool ConsumerGroupNameInStorageCaseSensitive { get; }
 
         /// <summary>
         /// Gets the event endpoint URI.

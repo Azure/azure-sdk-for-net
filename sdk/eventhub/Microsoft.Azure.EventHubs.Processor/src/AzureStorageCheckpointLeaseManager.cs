@@ -96,7 +96,19 @@ namespace Microsoft.Azure.EventHubs.Processor
             };
 
             this.eventHubContainer = storageClient.GetContainerReference(this.leaseContainerName);
-            this.consumerGroupDirectory = this.eventHubContainer.GetDirectoryReference(this.storageBlobPrefix + this.host.ConsumerGroupName);
+            this.consumerGroupDirectory = GetConsumerGroupDirectory(this.host.ConsumerGroupNameInStorageCaseSensitive, this.storageBlobPrefix, this.host.ConsumerGroupName);
+        }
+
+        private CloudBlobDirectory GetConsumerGroupDirectory(bool consumerGroupNameInStorageCaseSensitive, string storageBlobPrefix, string consumerGroupName)
+        {
+            if (consumerGroupNameInStorageCaseSensitive)
+            {
+                return this.eventHubContainer.GetDirectoryReference(storageBlobPrefix + consumerGroupName);
+            }
+            else
+            {
+                return this.eventHubContainer.GetDirectoryReference(storageBlobPrefix + consumerGroupName.ToLower());
+            }
         }
 
         //
@@ -139,7 +151,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         public async Task UpdateCheckpointAsync(Lease lease, Checkpoint checkpoint)
         {
-            AzureBlobLease newLease = new AzureBlobLease((AzureBlobLease) lease)
+            AzureBlobLease newLease = new AzureBlobLease((AzureBlobLease)lease)
             {
                 Offset = checkpoint.Offset,
                 SequenceNumber = checkpoint.SequenceNumber
