@@ -435,6 +435,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             MockTransport mockTransport = CreateMockTransport(response);
 
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, s_allowedHeaders, s_allowedQueryParameters) });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
@@ -538,7 +539,7 @@ namespace Azure.Core.Tests
             setupRequest?.Invoke(mockResponse);
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, s_allowedHeaders, s_allowedQueryParameters) });
 
             using (Request request = pipeline.CreateRequest())
             {
