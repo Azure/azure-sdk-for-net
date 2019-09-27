@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Azure.Core.Cryptography
         /// <param name="keyId">The key idenitifier of the key encryption key to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The key encryption key corresponding to the specified keyId</returns>
-        IKeyEncryptionKey Resolve(string keyId, CancellationToken cancellationToken = default);
+        IKeyEncryptionKey Resolve(Uri keyId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves the key encryption key corresponding to the specified keyId
@@ -25,6 +26,6 @@ namespace Azure.Core.Cryptography
         /// <param name="keyId">The key idenitifier of the key encryption key to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The key encryption key corresponding to the specified keyId</returns>
-        Task<IKeyEncryptionKey> ResolveAsync(string keyId, CancellationToken cancellationToken = default);
+        Task<IKeyEncryptionKey> ResolveAsync(Uri keyId, CancellationToken cancellationToken = default);
     }
 }
