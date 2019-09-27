@@ -11,10 +11,10 @@
     <PackageReleaseNotes>
   <![CDATA[
 * Added support for Data Flow:
-    - Added data flow object model and CRUD APIs
-    - Added data flow debug session APIs
-    - Added support for execute data flow activity type
-    - Added support for data flow properties in managed integration runtime
+  - Added data flow object model and CRUD APIs
+  - Added data flow debug session APIs
+  - Added support for execute data flow activity type
+  - Added support for data flow properties in managed integration runtime
 - Added property queryTimeout to tabular sources
 - Added support for Cosmos DB SQL API dataset and copy source/sink
             ]]></PackageReleaseNotes>
