@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
@@ -11,6 +12,8 @@ namespace Azure.Core.Pipeline
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             ApplicationId = DefaultApplicationId;
+            LoggingAllowedHeaders = new List<string>();
+            LoggingAllowedQueryParameters = new List<string>();
         }
 
         public bool IsLoggingEnabled { get; set; } = true;
@@ -24,7 +27,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public bool IsLoggingContentEnabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
+        /// </summary>
         public int ContentLoggingSizeLimit { get; set; } = 4 * 1024;
+
+        public IList<string> LoggingAllowedHeaders { get; }
+
+        public IList<string> LoggingAllowedQueryParameters { get; }
 
         public string? ApplicationId { get; set; }
 
