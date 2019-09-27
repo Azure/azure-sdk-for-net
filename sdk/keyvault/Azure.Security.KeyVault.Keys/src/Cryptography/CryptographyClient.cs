@@ -97,7 +97,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="Key.Id"/> of the key used to perform cryptographic operations for the client.
         /// </summary>
-        public Uri KeyId => _keyId;
+        public string KeyId => _keyId.ToString();
 
         /// <summary>
         /// Encrypts the specified plain text.
