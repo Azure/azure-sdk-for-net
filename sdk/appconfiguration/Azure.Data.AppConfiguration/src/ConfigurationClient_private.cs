@@ -23,8 +23,8 @@ namespace Azure.Data.AppConfiguration
         private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
         private const string FieldsQueryFilter = "$select";
-        private const string IfMatchName = "If-Match";
-        private const string IfNoneMatch = "If-None-Match";
+        private const string IfMatchHeader = "If-Match";
+        private const string IfNoneMatchHeader = "If-None-Match";
         private const string ETag = "ETag";
 
         private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
@@ -43,6 +43,11 @@ namespace Azure.Data.AppConfiguration
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
             return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
+        }
+
+        private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
+        {
+            return new Response<ConfigurationSetting>(response);
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -200,6 +205,7 @@ namespace Azure.Data.AppConfiguration
             ConfigurationServiceSerializer.Serialize(setting, writer);
             return writer.WrittenMemory;
         }
+
         #region nobody wants to see these
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.
