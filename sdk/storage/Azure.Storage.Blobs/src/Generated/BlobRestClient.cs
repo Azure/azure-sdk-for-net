@@ -18980,7 +18980,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The service error response object.
     /// </summary>
-    public partial class Error
+    internal partial class Error
     {
         /// <summary>
         /// The service error code.
@@ -19023,26 +19023,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Error value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new Error instance for mocking.
-        /// </summary>
-        public static Error Error(
-            string code = default,
-            string message = default)
-        {
-            return new Error()
-            {
-                Code = code,
-                Message = message,
-            };
-        }
     }
 }
 #endregion class Error

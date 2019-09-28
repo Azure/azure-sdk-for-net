@@ -989,7 +989,7 @@ directive:
     $["x-az-disable-warnings"] = "CA1724";
 ```
 
-### Hide StorageError
+### Hide Error models
 ``` yaml
 directive:
 - from: swagger-document
@@ -999,6 +999,10 @@ directive:
     $.properties.Code = { "type": "string" };
 - from: swagger-document
   where: $.definitions.DataLakeStorageError
+  transform: >
+    $["x-az-public"] = false;
+- from: swagger-document
+  where: $.definitions.DataLakeStorageError.properties["error"]
   transform: >
     $["x-az-public"] = false;
 ```
