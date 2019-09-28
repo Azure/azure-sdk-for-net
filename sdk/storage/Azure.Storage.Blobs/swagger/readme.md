@@ -684,6 +684,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
 ```
@@ -696,6 +697,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"] = {
         "x-ms-client-name": "IsServerEncrypted",
@@ -703,6 +705,11 @@ directive:
         "x-az-demote-header": true,
         "description": "The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise."
     };
+    $.put.responses["201"].headers["x-ms-encryption-key-sha256"] = {
+          "x-ms-client-name": "EncryptionKeySha256",
+          "type": "string",
+          "description": "The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key."
+              };
 ```
 
 ### /{containerName}/{blob}?comp=page&update&fromUrl
@@ -714,6 +721,7 @@ directive:
     $.put.operationId = "PageBlob_UploadPagesFromUri";
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["304"] = {

@@ -967,7 +967,11 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`public bool Equals(${naming.type(type.name)} other)`);
                     w.scope('{', '}', () => {
                         for (const property of properties) {
-                            w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}))`);
+                            if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
+                                w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}, System.StringComparison.InvariantCulture))`);
+                            } else {
+                                w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}))`);
+                            }
                             w.line(`    return false;`);
                         }
                         w.line();
