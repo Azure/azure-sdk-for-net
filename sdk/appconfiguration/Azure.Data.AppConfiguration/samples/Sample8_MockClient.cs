@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Azure.Core.Http;
 using Moq;
 using NUnit.Framework;
 
@@ -15,15 +16,19 @@ namespace Azure.Data.AppConfiguration.Samples
         {
             // Create a mock response
             var mockResponse = new Mock<Response>();
+
             // Create a client mock
             var mock = new Mock<ConfigurationClient>();
+
             // Setup client method
-            mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
+            // TODO: why does this not work?
+            mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<HttpRequestOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(new Response<ConfigurationSetting>(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
 
             // Use the client mock
             ConfigurationClient client = mock.Object;
-            ConfigurationSetting setting = client.Get("Key");
+            Response<ConfigurationSetting> response = client.Get("Key");
+            ConfigurationSetting setting = response;
             Assert.AreEqual("Value", setting.Value);
         }
     }

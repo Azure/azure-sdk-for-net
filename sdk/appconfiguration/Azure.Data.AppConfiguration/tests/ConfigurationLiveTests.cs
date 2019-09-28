@@ -161,7 +161,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label);
 
             // Test
-            await service.DeleteAsync(setting.Key, setting.Label, setting.ETag, CancellationToken.None);
+            await service.DeleteAsync(setting.Key, setting.Label, CancellationToken.None);
             //Try to get the non-existing setting
             RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -501,7 +501,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSetting);
 
                 // Test
-                ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue);
+                ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions:default);
                 Assert.AreEqual(testSetting, responseSetting);
             }
             finally
