@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
@@ -100,6 +102,109 @@ namespace Azure.Data.AppConfiguration.Tests
             });
 
             Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        public async Task GetIfChangedModified()
+        {
+            var requestSetting = s_testSetting.Clone();
+            requestSetting.ETag = new ETag("v1");
+
+            var responseSetting = s_testSetting.Clone();
+            responseSetting.ETag = new ETag("v2");
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(SerializationHelpers.Serialize(responseSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(mockResponse);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            Response<ConfigurationSetting> response = await service.GetAsync(requestSetting, onlyIfChanged: true);
+
+            // TODO: Should this be response.Status?
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            ConfigurationSetting setting = new ConfigurationSetting();
+            Assert.DoesNotThrow(() => { setting = response; });
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("\"v1\"", ifNoneMatch);
+            Assert.AreEqual(responseSetting, setting);
+        }
+
+        [Test]
+        public async Task GetIfChangedUnmodified()
+        {
+            var requestSetting = s_testSetting.Clone();
+            requestSetting.ETag = new ETag("v1");
+
+            var mockTransport = new MockTransport(new MockResponse(304));
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            Response<ConfigurationSetting> response = await service.GetAsync(requestSetting, onlyIfChanged: true);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("\"v1\"", ifNoneMatch);
+            Assert.AreEqual(304, response.GetRawResponse().Status);
+            Assert.Throws<ResourceModifiedException>(() => { ConfigurationSetting setting = response.Value; });
+        }
+
+        [Test]
+        public async Task GetWithAcceptDateTime()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(mockResponse);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            Response<ConfigurationSetting> response = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, DateTimeOffset.MaxValue);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime));
+            Assert.AreEqual(DateTimeOffset.MaxValue.UtcDateTime.ToString("R", CultureInfo.InvariantCulture), acceptDateTime);
+            Assert.False(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.False(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
+        }
+
+        [Test]
+        public async Task GetWithIfMatch()
+        {
+            var testSetting = s_testSetting.Clone();
+            testSetting.ETag = new ETag("v1");
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(mockResponse);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var requestOptions = new HttpRequestOptions { IfMatch = new ETag("v1") };
+
+            ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label, default, requestOptions);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.AreEqual(testSetting, setting);
+            Assert.False(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime));
+            Assert.False(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
         }
 
         [Test]
