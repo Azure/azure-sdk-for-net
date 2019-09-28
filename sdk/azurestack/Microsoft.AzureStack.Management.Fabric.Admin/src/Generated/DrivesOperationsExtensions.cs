@@ -18,12 +18,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for StoragePoolsOperations.
+    /// Extension methods for DrivesOperations.
     /// </summary>
-    public static partial class StoragePoolsOperationsExtensions
+    public static partial class DrivesOperationsExtensions
     {
             /// <summary>
-            /// Return the requested a storage pool.
+            /// Return the requested a storage drive.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,19 +34,22 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
             /// </param>
-            /// <param name='storagePool'>
-            /// Storage pool name.
+            /// <param name='drive'>
+            /// Name of the storage drive.
             /// </param>
-            public static StoragePool Get(this IStoragePoolsOperations operations, string resourceGroupName, string location, string storageSubSystem, string storagePool)
+            public static Drive Get(this IDrivesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string drive)
             {
-                return operations.GetAsync(resourceGroupName, location, storageSubSystem, storagePool).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, location, scaleUnit, storageSubSystem, drive).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Return the requested a storage pool.
+            /// Return the requested a storage drive.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,25 +60,28 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
             /// </param>
-            /// <param name='storagePool'>
-            /// Storage pool name.
+            /// <param name='drive'>
+            /// Name of the storage drive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StoragePool> GetAsync(this IStoragePoolsOperations operations, string resourceGroupName, string location, string storageSubSystem, string storagePool, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Drive> GetAsync(this IDrivesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string drive, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, location, storageSubSystem, storagePool, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, storageSubSystem, drive, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns a list of all storage pools for a location.
+            /// Returns a list of all storage drives at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,6 +91,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// </param>
             /// <param name='location'>
             /// Location of the resource.
+            /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
             /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
@@ -92,13 +101,13 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<StoragePool> List(this IStoragePoolsOperations operations, string resourceGroupName, string location, string storageSubSystem, ODataQuery<StoragePool> odataQuery = default(ODataQuery<StoragePool>))
+            public static IPage<Drive> List(this IDrivesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Drive> odataQuery = default(ODataQuery<Drive>))
             {
-                return operations.ListAsync(resourceGroupName, location, storageSubSystem, odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, location, scaleUnit, storageSubSystem, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of all storage pools for a location.
+            /// Returns a list of all storage drives at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -109,6 +118,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
             /// </param>
@@ -118,16 +130,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StoragePool>> ListAsync(this IStoragePoolsOperations operations, string resourceGroupName, string location, string storageSubSystem, ODataQuery<StoragePool> odataQuery = default(ODataQuery<StoragePool>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Drive>> ListAsync(this IDrivesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Drive> odataQuery = default(ODataQuery<Drive>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, location, storageSubSystem, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, storageSubSystem, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns a list of all storage pools for a location.
+            /// Returns a list of all storage drives at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,13 +147,13 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<StoragePool> ListNext(this IStoragePoolsOperations operations, string nextPageLink)
+            public static IPage<Drive> ListNext(this IDrivesOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of all storage pools for a location.
+            /// Returns a list of all storage drives at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,7 +164,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StoragePool>> ListNextAsync(this IStoragePoolsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Drive>> ListNextAsync(this IDrivesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

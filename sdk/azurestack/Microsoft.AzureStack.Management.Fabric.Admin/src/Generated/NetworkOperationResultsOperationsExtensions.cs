@@ -18,12 +18,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for StorageSystemsOperations.
+    /// Extension methods for NetworkOperationResultsOperations.
     /// </summary>
-    public static partial class StorageSystemsOperationsExtensions
+    public static partial class NetworkOperationResultsOperationsExtensions
     {
             /// <summary>
-            /// Return the requested storage subsystem.
+            /// Returns the status of a network operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,16 +34,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
-            /// <param name='storageSubSystem'>
-            /// Name of the storage system.
+            /// <param name='operation'>
+            /// Operation identifier.
             /// </param>
-            public static StorageSystem Get(this IStorageSystemsOperations operations, string resourceGroupName, string location, string storageSubSystem)
+            public static NetworkOperationResult Get(this INetworkOperationResultsOperations operations, string resourceGroupName, string location, string operation)
             {
-                return operations.GetAsync(resourceGroupName, location, storageSubSystem).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, location, operation).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Return the requested storage subsystem.
+            /// Returns the status of a network operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -54,22 +54,22 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
-            /// <param name='storageSubSystem'>
-            /// Name of the storage system.
+            /// <param name='operation'>
+            /// Operation identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageSystem> GetAsync(this IStorageSystemsOperations operations, string resourceGroupName, string location, string storageSubSystem, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkOperationResult> GetAsync(this INetworkOperationResultsOperations operations, string resourceGroupName, string location, string operation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, location, storageSubSystem, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, location, operation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns a list of all storage subsystems for a location.
+            /// Returns a list of all network operation results at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,13 +83,13 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<StorageSystem> List(this IStorageSystemsOperations operations, string resourceGroupName, string location, ODataQuery<StorageSystem> odataQuery = default(ODataQuery<StorageSystem>))
+            public static IPage<NetworkOperationResult> List(this INetworkOperationResultsOperations operations, string resourceGroupName, string location, ODataQuery<NetworkOperationResult> odataQuery = default(ODataQuery<NetworkOperationResult>))
             {
                 return operations.ListAsync(resourceGroupName, location, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of all storage subsystems for a location.
+            /// Returns a list of all network operation results at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,7 +106,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageSystem>> ListAsync(this IStorageSystemsOperations operations, string resourceGroupName, string location, ODataQuery<StorageSystem> odataQuery = default(ODataQuery<StorageSystem>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NetworkOperationResult>> ListAsync(this INetworkOperationResultsOperations operations, string resourceGroupName, string location, ODataQuery<NetworkOperationResult> odataQuery = default(ODataQuery<NetworkOperationResult>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, location, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -115,7 +115,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Returns a list of all storage subsystems for a location.
+            /// Returns a list of all network operation results at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -123,13 +123,13 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<StorageSystem> ListNext(this IStorageSystemsOperations operations, string nextPageLink)
+            public static IPage<NetworkOperationResult> ListNext(this INetworkOperationResultsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of all storage subsystems for a location.
+            /// Returns a list of all network operation results at a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -140,7 +140,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageSystem>> ListNextAsync(this IStorageSystemsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NetworkOperationResult>> ListNextAsync(this INetworkOperationResultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

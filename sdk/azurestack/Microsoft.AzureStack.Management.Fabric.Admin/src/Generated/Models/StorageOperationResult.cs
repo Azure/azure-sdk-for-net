@@ -18,21 +18,21 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Representation of a storage pool resource.
+    /// Storage operation result description.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StoragePool : Resource
+    public partial class StorageOperationResult : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the StoragePool class.
+        /// Initializes a new instance of the StorageOperationResult class.
         /// </summary>
-        public StoragePool()
+        public StorageOperationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StoragePool class.
+        /// Initializes a new instance of the StorageOperationResult class.
         /// </summary>
         /// <param name="id">URI of the resource.</param>
         /// <param name="name">Name of the resource.</param>
@@ -40,12 +40,14 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <param name="location">The region where the resource is
         /// located.</param>
         /// <param name="tags">List of key-value pairs.</param>
-        /// <param name="sizeGB">Amount of space in the storage pool in
-        /// GB.</param>
-        public StoragePool(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? sizeGB = default(int?))
+        /// <param name="instances">List of operation result instances.</param>
+        /// <param name="provisioningState">Success or failure of
+        /// operation.</param>
+        public StorageOperationResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> instances = default(IList<string>), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
-            SizeGB = sizeGB;
+            Instances = instances;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -55,10 +57,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets amount of space in the storage pool in GB.
+        /// Gets or sets list of operation result instances.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sizeGB")]
-        public int? SizeGB { get; set; }
+        [JsonProperty(PropertyName = "properties.instances")]
+        public IList<string> Instances { get; set; }
+
+        /// <summary>
+        /// Gets or sets success or failure of operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
     }
 }
