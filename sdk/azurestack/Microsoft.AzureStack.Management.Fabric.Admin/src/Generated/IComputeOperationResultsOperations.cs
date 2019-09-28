@@ -20,12 +20,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// StorageSystemsOperations operations.
+    /// ComputeOperationResultsOperations operations.
     /// </summary>
-    public partial interface IStorageSystemsOperations
+    public partial interface IComputeOperationResultsOperations
     {
         /// <summary>
-        /// Return the requested storage subsystem.
+        /// Returns the status of a compute operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -33,8 +33,8 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
-        /// <param name='storageSubSystem'>
-        /// Name of the storage system.
+        /// <param name='operation'>
+        /// Operation identifier.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,9 +51,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageSystem>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ComputeOperationResult>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string operation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all storage subsystems for a location.
+        /// Returns a list of all compute operation results at a location.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -79,9 +79,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<StorageSystem>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, ODataQuery<StorageSystem> odataQuery = default(ODataQuery<StorageSystem>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ComputeOperationResult>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, ODataQuery<ComputeOperationResult> odataQuery = default(ODataQuery<ComputeOperationResult>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all storage subsystems for a location.
+        /// Returns a list of all compute operation results at a location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -101,6 +101,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<StorageSystem>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ComputeOperationResult>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -23,7 +23,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     public static partial class ScaleUnitsOperationsExtensions
     {
             /// <summary>
-            /// Add a new scale unit.
+            /// Scales out a scale unit.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,7 +46,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Add a new scale unit.
+            /// Scales out a scale unit.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -69,6 +69,55 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             public static async Task ScaleOutAsync(this IScaleUnitsOperations operations, string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList nodeList, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ScaleOutWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, nodeList, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Add a new scale unit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the resource.
+            /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
+            /// <param name='creationData'>
+            /// A list of input data that allows for creating the new scale unit.
+            /// </param>
+            public static void CreateFromJson(this IScaleUnitsOperations operations, string resourceGroupName, string location, string scaleUnit, CreateFromJsonScaleUnitParametersList creationData)
+            {
+                operations.CreateFromJsonAsync(resourceGroupName, location, scaleUnit, creationData).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add a new scale unit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the resource.
+            /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
+            /// <param name='creationData'>
+            /// A list of input data that allows for creating the new scale unit.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CreateFromJsonAsync(this IScaleUnitsOperations operations, string resourceGroupName, string location, string scaleUnit, CreateFromJsonScaleUnitParametersList creationData, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CreateFromJsonWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, creationData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -164,7 +213,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Add a new scale unit.
+            /// Scales out a scale unit.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,7 +236,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Add a new scale unit.
+            /// Scales out a scale unit.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,6 +259,55 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             public static async Task BeginScaleOutAsync(this IScaleUnitsOperations operations, string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList nodeList, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginScaleOutWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, nodeList, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Add a new scale unit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the resource.
+            /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
+            /// <param name='creationData'>
+            /// A list of input data that allows for creating the new scale unit.
+            /// </param>
+            public static void BeginCreateFromJson(this IScaleUnitsOperations operations, string resourceGroupName, string location, string scaleUnit, CreateFromJsonScaleUnitParametersList creationData)
+            {
+                operations.BeginCreateFromJsonAsync(resourceGroupName, location, scaleUnit, creationData).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add a new scale unit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the resource.
+            /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
+            /// <param name='creationData'>
+            /// A list of input data that allows for creating the new scale unit.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginCreateFromJsonAsync(this IScaleUnitsOperations operations, string resourceGroupName, string location, string scaleUnit, CreateFromJsonScaleUnitParametersList creationData, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginCreateFromJsonWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, creationData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
