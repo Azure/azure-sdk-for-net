@@ -243,6 +243,98 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Creates a data flow debug session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='request'>
+            /// Data flow debug session definition
+            /// </param>
+            public static CreateDataFlowDebugSessionResponse BeginCreate(this IDataFlowDebugSessionOperations operations, string resourceGroupName, string factoryName, CreateDataFlowDebugSessionRequest request)
+            {
+                return operations.BeginCreateAsync(resourceGroupName, factoryName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a data flow debug session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='request'>
+            /// Data flow debug session definition
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CreateDataFlowDebugSessionResponse> BeginCreateAsync(this IDataFlowDebugSessionOperations operations, string resourceGroupName, string factoryName, CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, factoryName, request, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Execute a data flow debug command.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='request'>
+            /// Data flow debug command definition.
+            /// </param>
+            public static DataFlowDebugCommandResponse BeginExecuteCommand(this IDataFlowDebugSessionOperations operations, string resourceGroupName, string factoryName, DataFlowDebugCommandRequest request)
+            {
+                return operations.BeginExecuteCommandAsync(resourceGroupName, factoryName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute a data flow debug command.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='request'>
+            /// Data flow debug command definition.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataFlowDebugCommandResponse> BeginExecuteCommandAsync(this IDataFlowDebugSessionOperations operations, string resourceGroupName, string factoryName, DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginExecuteCommandWithHttpMessagesAsync(resourceGroupName, factoryName, request, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Query all active data flow debug sessions.
             /// </summary>
             /// <param name='operations'>
