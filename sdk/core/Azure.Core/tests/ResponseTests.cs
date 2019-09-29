@@ -30,14 +30,14 @@ namespace Azure.Core.Tests
         [Test]
         public void ValueThrowsIfUnspecified()
         {
-            var response = new Response<TestPayload>(response: null);
+            var response = new Response<TestPayload>(response: null, new ResourceModifiedException());
             Assert.Throws<ResourceModifiedException>(() => { TestPayload value = response.Value; });
         }
 
         [Test]
         public void ValueThrowsFromCastIfUnspecified()
         {
-            var response = new Response<TestPayload>(response: null);
+            var response = new Response<TestPayload>(response: null, new ResourceModifiedException());
             Assert.Throws<ResourceModifiedException>(() => { TestPayload value = response; });
         }
 

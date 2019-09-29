@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
         {
-            return new Response<ConfigurationSetting>(response);
+            return new Response<ConfigurationSetting>(response, new ResourceModifiedException());
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)

@@ -2,13 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Azure.Core
+namespace Azure
 {
     public class ResourceModifiedException : Exception
     {
-        // TODO implement
+        public int Status { get; }
+
+        public ResourceModifiedException()
+            : this(304, "Resource was modified.", null)
+        {
+        }
+
+        public ResourceModifiedException(int status, string message, Exception? innerException)
+            : base(message, innerException)
+        {
+            Status = status;
+        }
     }
 }

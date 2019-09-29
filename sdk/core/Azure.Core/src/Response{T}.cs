@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure
 {
@@ -12,16 +11,16 @@ namespace Azure
         private readonly Response _rawResponse;
         private readonly Lazy<T> _value;
 
-        public Response(Response response)
-        {
-            _rawResponse = response;
-            _value = new Lazy<T>(() => throw new ResourceModifiedException());
-        }
-
         public Response(Response response, T parsed)
         {
             _rawResponse = response;
             _value = new Lazy<T>(() => parsed);
+        }
+
+        public Response(Response response, Exception exception)
+        {
+            _rawResponse = response;
+            _value = new Lazy<T>(() => throw exception);
         }
 
         public virtual Response GetRawResponse() => _rawResponse;

@@ -156,7 +156,8 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
             Assert.AreEqual(304, response.GetRawResponse().Status);
-            Assert.Throws<ResourceModifiedException>(() => { ConfigurationSetting setting = response.Value; });
+            ResourceModifiedException exception = Assert.Throws<ResourceModifiedException>(() => { ConfigurationSetting setting = response.Value; });
+            Assert.AreEqual(304, exception.Status);
         }
 
         [Test]
@@ -239,10 +240,11 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 ConfigurationSetting setting = await service.AddAsync(s_testSetting);
             });
+            Assert.AreEqual(412, exception.Status);
         }
 
         [Test]
@@ -272,10 +274,11 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 ConfigurationSetting setting = await service.SetAsync(s_testSetting);
             });
+            Assert.AreEqual(409, exception.Status);
         }
 
         [Test]
@@ -320,10 +323,11 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(requestSetting, onlyIfUnchanged: true);
             });
+            Assert.AreEqual(412, exception.Status);
 
             MockRequest request = mockTransport.SingleRequest;
 
@@ -420,10 +424,11 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(new MockResponse(409));
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 Response response = await service.DeleteAsync(s_testSetting);
             });
+            Assert.AreEqual(409, exception.Status);
         }
 
         [Test]
@@ -467,10 +472,11 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 Response response = await service.DeleteAsync(requestSetting, onlyIfUnchanged: true);
             });
+            Assert.AreEqual(412, exception.Status);
 
             MockRequest request = mockTransport.SingleRequest;
 
