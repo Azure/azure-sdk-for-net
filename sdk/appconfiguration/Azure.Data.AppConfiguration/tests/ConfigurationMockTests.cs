@@ -169,7 +169,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Response<ConfigurationSetting> response = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, DateTimeOffset.MaxValue);
+            Response<ConfigurationSetting> response = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
 
             MockRequest request = mockTransport.SingleRequest;
 

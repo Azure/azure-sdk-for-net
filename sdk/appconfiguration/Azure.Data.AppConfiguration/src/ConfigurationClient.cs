@@ -541,7 +541,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute("key", key);
@@ -574,7 +574,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute(nameof(key), key);
@@ -934,11 +934,8 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always set to read only.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
@@ -946,7 +943,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateSetReadOnlyRequest(key, label, etag);
+                using Request request = CreateSetReadOnlyRequest(key, label);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -969,11 +966,8 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always set to read only.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
@@ -981,7 +975,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateSetReadOnlyRequest(key, label, etag);
+                using Request request = CreateSetReadOnlyRequest(key, label);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -999,7 +993,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateSetReadOnlyRequest(string key, string label, ETag etag)
+        private Request CreateSetReadOnlyRequest(string key, string label)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
@@ -1007,11 +1001,6 @@ namespace Azure.Data.AppConfiguration
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Put;
             BuildUriForLocksRoute(request.Uri, key, label);
-
-            if (etag != default)
-            {
-                request.Headers.Add(IfMatchHeader, $"\"{etag.ToString()}\"");
-            }
 
             return request;
         }
@@ -1021,11 +1010,8 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> ClearReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> ClearReadOnlyAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
             scope.AddAttribute("key", key);
@@ -1033,7 +1019,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateClearReadOnlyRequest(key, label, etag);
+                using Request request = CreateClearReadOnlyRequest(key, label);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -1056,11 +1042,8 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> ClearReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> ClearReadOnly(string key, string label = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
             scope.AddAttribute("key", key);
@@ -1068,7 +1051,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateClearReadOnlyRequest(key, label, etag);
+                using Request request = CreateClearReadOnlyRequest(key, label);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -1086,7 +1069,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateClearReadOnlyRequest(string key, string label, ETag etag)
+        private Request CreateClearReadOnlyRequest(string key, string label)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
@@ -1094,11 +1077,6 @@ namespace Azure.Data.AppConfiguration
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
             BuildUriForLocksRoute(request.Uri, key, label);
-
-            if (etag != default)
-            {
-                request.Headers.Add(IfMatchHeader, $"\"{etag.ToString()}\"");
-            }
 
             return request;
         }
