@@ -3,6 +3,11 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.2.1
+###  Feature Additions
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
+
 ## Version 4.2.0
 ###  Feature Additions
 * Added support for Data Flow:
