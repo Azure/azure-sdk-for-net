@@ -40,12 +40,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             byte[] ciphertext = Encrypt(plaintext, padding);
 
-            return new EncryptResult
+            EncryptResult result = null;
+
+            if (ciphertext != null)
             {
-                Algorithm = algorithm,
-                Ciphertext = ciphertext,
-                KeyId = _jwk.KeyId,
-            };
+                result = new EncryptResult
+                {
+                    Algorithm = algorithm,
+                    Ciphertext = ciphertext,
+                    KeyId = _jwk.KeyId,
+                };
+            }
+
+            return result;
         }
 
         public Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
@@ -61,12 +68,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             byte[] plaintext = Decrypt(ciphertext, padding);
 
-            return new DecryptResult
+            DecryptResult result = null;
+
+            if (plaintext != null)
             {
-                Algorithm = algorithm,
-                KeyId = _jwk.KeyId,
-                Plaintext = plaintext,
-            };
+                result = new DecryptResult
+                {
+                    Algorithm = algorithm,
+                    KeyId = _jwk.KeyId,
+                    Plaintext = plaintext,
+                };
+            }
+
+            return result;
         }
 
         public Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
@@ -160,12 +174,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             byte[] encryptedKey = Encrypt(key, padding);
 
-            return new WrapResult
+            WrapResult result = null;
+
+            if (encryptedKey != null)
             {
-                Algorithm = algorithm,
-                EncryptedKey = encryptedKey,
-                KeyId = _jwk.KeyId,
-            };
+                result = new WrapResult
+                {
+                    Algorithm = algorithm,
+                    EncryptedKey = encryptedKey,
+                    KeyId = _jwk.KeyId,
+                };
+            }
+
+            return result;
         }
 
         public Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
@@ -181,12 +202,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             byte[] key = Decrypt(encryptedKey, padding);
 
-            return new UnwrapResult
+            UnwrapResult result = null;
+
+            if (key != null)
             {
-                Algorithm = algorithm,
-                Key = key,
-                KeyId = _jwk.KeyId,
-            };
+                result = new UnwrapResult
+                {
+                    Algorithm = algorithm,
+                    Key = key,
+                    KeyId = _jwk.KeyId,
+                };
+            }
+
+            return result;
         }
 
         public Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
@@ -197,13 +225,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            // A private key is required to encrypt. Send to the server.
-            if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
-            {
-                // TODO: Log that we need a private key.
-                return null;
-            }
-
             if (padding is null)
             {
                 // TODO: Log that we don't support the given algorithm.
@@ -216,6 +237,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)
         {
+            // A private key is required to decrypt. Send to the server.
+            if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
+            {
+                // TODO: Log that we need a private key.
+                return null;
+            }
+
             if (padding is null)
             {
                 // TODO: Log that we don't support the given algorithm.

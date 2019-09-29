@@ -131,8 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (_jwk.K != null)
             {
-                return _jwk.K.Length >> 3;
-                ;
+                return _jwk.K.Length << 3;
             }
 
             return 0;

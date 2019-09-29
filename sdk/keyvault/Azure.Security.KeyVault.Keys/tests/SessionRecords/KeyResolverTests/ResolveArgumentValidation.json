@@ -1,0 +1,7 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://dotnettestvault.vault.azure.net/",
+    "RandomSeed": "1872231009"
+  }
+}
