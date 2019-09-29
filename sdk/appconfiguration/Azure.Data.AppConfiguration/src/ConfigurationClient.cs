@@ -107,6 +107,8 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                    case 412:
+                        throw await response.CreateRequestFailedExceptionAsync("Setting was already present.").ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -139,6 +141,8 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 201:
                         return CreateResponse(response);
+                    case 412:
+                        throw response.CreateRequestFailedException("Setting was already present.");
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -358,7 +362,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="onlyIfUnchanged"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> DeleteAsync(ConfigurationSetting setting, bool onlyIfUnchanged = true, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");

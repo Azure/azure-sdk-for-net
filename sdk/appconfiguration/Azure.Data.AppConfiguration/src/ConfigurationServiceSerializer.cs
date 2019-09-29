@@ -29,6 +29,10 @@ namespace Azure.Data.AppConfiguration
                 }
                 json.WriteEndObject();
             }
+            if (setting.ETag != default)
+            {
+                json.WriteString("etag", setting.ETag.ToString());
+            }
             json.WriteEndObject();
             json.Flush();
         }
