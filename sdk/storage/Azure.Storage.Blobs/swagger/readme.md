@@ -765,6 +765,15 @@ directive:
     };
 ```
 
+### Define PageRange as struct
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.PageRange
+  transform: >
+     $["x-az-struct"] = true;
+```
+
 ### /{containerName}/{blob}?comp=properties&Resize
 ``` yaml
 directive:

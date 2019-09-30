@@ -986,7 +986,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`public override bool Equals(object obj) => obj is ${naming.type(type.name)} && Equals((${naming.type(type.name)})obj);`);
                     w.line();
                     w.line(`/// <summary>`)
-                    w.line(`/// Get a hash code for the AccountInfo.`);
+                    w.line(`/// Get a hash code for the ${naming.type(type.name)}.`);
                     w.line(`/// </summary>`);
                     w.write(`public override int GetHashCode()`);
                     w.scope('{', '}', () => {
@@ -1194,7 +1194,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
         // Create the model
         const valueName = '_value';
         const skipInit = (<IProperty[]>Object.values(type.properties)).some(p => isObjectType(p.model) || (isPrimitiveType(p.model) && (!!p.model.itemType || p.model.type === `dictionary`)));
-        w.line(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(${skipInit ? 'true' : ''});`);
+        if (!type.struct) { w.line(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(${skipInit ? 'true' : ''});`); }
 
         // Deserialize each of its properties
         for (const property of properties) {
@@ -1284,7 +1284,8 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                 }
             } else {
                 // Assign the value
-                const assignment = `${valueName}.${naming.property(property.clientName)} = ${parse(target, property.model)};`;
+                const assignment = type.struct ? `${types.getDeclarationType(property.model, true, false, true)} ${naming.parameter(property.clientName)} = ${parse(target, property.model)};`
+                    : `${valueName}.${naming.property(property.clientName)} = ${parse(target, property.model)};`;
                 if (property.required) {
                     // If a property is required, the XML element will always be there so we can just use it
                     w.line(assignment);
@@ -1299,6 +1300,16 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     w.scope('{', '}', () => w.line(assignment));
                 }
             }
+        }
+        if (type.struct) {
+            const Separator = IndentWriter.createFenceposter();
+            w.write(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(`);
+            for (const property of properties) {
+                if (Separator()) { w.write(`, `); }
+                w.write(`${naming.parameter(property.clientName)}`);
+            }
+            w.write(`);`);
+            w.line();
         }
         w.line(`Customize${fromName}(${rootName}, ${valueName});`);
         w.line(`return ${valueName};`);

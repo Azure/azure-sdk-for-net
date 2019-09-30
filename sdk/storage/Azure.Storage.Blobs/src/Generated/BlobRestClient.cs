@@ -18179,7 +18179,7 @@ namespace Azure.Storage.Blobs.Models
         public override bool Equals(object obj) => obj is PageInfo && Equals((PageInfo)obj);
 
         /// <summary>
-        /// Get a hash code for the AccountInfo.
+        /// Get a hash code for the PageInfo.
         /// </summary>
         public override int GetHashCode(){
             var hashCode = new Azure.Core.HashCodeBuilder();
@@ -18301,29 +18301,67 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class PageList
 
-#region class PageRange
+#region struct PageRange
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// PageRange
     /// </summary>
-    public partial class PageRange
+    public readonly partial struct PageRange: System.IEquatable<PageRange>
     {
         /// <summary>
         /// Start
         /// </summary>
-        public long Start { get; internal set; }
+        public long Start { get; }
 
         /// <summary>
         /// End
         /// </summary>
-        public long End { get; internal set; }
+        public long End { get; }
 
         /// <summary>
         /// Prevent direct instantiation of PageRange instances.
         /// You can use BlobsModelFactory.PageRange instead.
         /// </summary>
-        internal PageRange() { }
+        internal PageRange(
+            long start,
+            long end){
+                Start = start;
+                End = end;
+            }
+
+        /// <summary>
+        /// Check if two PageRange instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(PageRange other)
+        {
+            if (!Start.Equals(other.Start))
+                return false;
+            if (!End.Equals(other.End))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two PageRange instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public override bool Equals(object obj) => obj is PageRange && Equals((PageRange)obj);
+
+        /// <summary>
+        /// Get a hash code for the PageRange.
+        /// </summary>
+        public override int GetHashCode(){
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(Start);
+            hashCode.Add(End);
+
+            return hashCode.ToHashCode();
+        }
 
         /// <summary>
         /// Deserializes XML into a new PageRange instance.
@@ -18333,9 +18371,9 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.PageRange FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Blobs.Models.PageRange _value = new Azure.Storage.Blobs.Models.PageRange();
-            _value.Start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.End = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            long start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            long end = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            Azure.Storage.Blobs.Models.PageRange _value = new Azure.Storage.Blobs.Models.PageRange(start, end);
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -18355,15 +18393,11 @@ namespace Azure.Storage.Blobs.Models
             long start,
             long end)
         {
-            return new PageRange()
-            {
-                Start = start,
-                End = end,
-            };
+            return new PageRange(start, end);
         }
     }
 }
-#endregion class PageRange
+#endregion struct PageRange
 
 #region class PageRangesInfo
 namespace Azure.Storage.Blobs.Models
