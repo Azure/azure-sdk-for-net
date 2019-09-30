@@ -1339,6 +1339,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to What If.
+            /// </param>
+            public static WhatIfOperationResult WhatIfAtSubscriptionScope(this IDeploymentsOperations operations, string deploymentName, DeploymentWhatIf parameters)
+            {
+                return operations.WhatIfAtSubscriptionScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to What If.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> WhatIfAtSubscriptionScopeAsync(this IDeploymentsOperations operations, string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.WhatIfAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Exports the template used for specified deployment.
             /// </summary>
             /// <param name='operations'>
@@ -1707,6 +1749,56 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static WhatIfOperationResult WhatIf(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentWhatIf parameters)
+            {
+                return operations.WhatIfAsync(resourceGroupName, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> WhatIfAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.WhatIfWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Exports the template used for specified deployment.
             /// </summary>
             /// <param name='operations'>
@@ -1783,6 +1875,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<DeploymentExtended>> ListByResourceGroupAsync(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Calculate the hash of the given template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='template'>
+            /// The template provided to calculate hash.
+            /// </param>
+            public static TemplateHashResult CalculateTemplateHash(this IDeploymentsOperations operations, object template)
+            {
+                return operations.CalculateTemplateHashAsync(template).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Calculate the hash of the given template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='template'>
+            /// The template provided to calculate hash.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TemplateHashResult> CalculateTemplateHashAsync(this IDeploymentsOperations operations, object template, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CalculateTemplateHashWithHttpMessagesAsync(template, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2217,6 +2343,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to What If.
+            /// </param>
+            public static WhatIfOperationResult BeginWhatIfAtSubscriptionScope(this IDeploymentsOperations operations, string deploymentName, DeploymentWhatIf parameters)
+            {
+                return operations.BeginWhatIfAtSubscriptionScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to What If.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> BeginWhatIfAtSubscriptionScopeAsync(this IDeploymentsOperations operations, string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginWhatIfAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a deployment from the deployment history.
             /// </summary>
             /// <remarks>
@@ -2330,6 +2498,56 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<DeploymentExtended> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static WhatIfOperationResult BeginWhatIf(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentWhatIf parameters)
+            {
+                return operations.BeginWhatIfAsync(resourceGroupName, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> BeginWhatIfAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginWhatIfWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
