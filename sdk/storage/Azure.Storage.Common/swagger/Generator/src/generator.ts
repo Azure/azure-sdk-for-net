@@ -944,12 +944,9 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.write(`internal ${naming.type(type.name)}(`);
                     w.scope(() => {
                         const separator = IndentWriter.createFenceposter();
-                        // Sort `= default` parameters last
-                        properties.sort((a: IProperty, b: IProperty) => a.required ? -1 : b.required ? 1 : 0);
                         for (const property of properties) {
                             if (separator()) { w.line(`,`); }
                             w.write(`${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.parameter(property.clientName)}`);
-                            if (!property.required) { w.write(` = default`); }
                         }
                         w.write(`)`);
                         w.scope('{', '}', () => {
