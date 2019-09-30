@@ -351,7 +351,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 if (ReferenceEquals(x, y)) return true;
                 if (x is null || y is null) return false;
 
-                if (!string.Equals(x.KeyId, y.KeyId)) return false;
+                if (!string.Equals(x.Id, y.Id)) return false;
                 if (x.KeyType != y.KeyType) return false;
                 if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
 

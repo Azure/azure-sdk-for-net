@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _jwk = jwk ?? throw new ArgumentNullException(nameof(jwk));
         }
 
-        public bool ShouldRemote => _jwk.KeyId != null;
+        public bool ShouldRemote => _jwk.Id != null;
 
         public bool SupportsOperation(KeyOperation operation)
         {
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 Ciphertext = ciphertext,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return new DecryptResult
             {
                 Algorithm = algorithm,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
                 Plaintext = plaintext,
             };
         }
@@ -80,7 +80,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(digest, nameof(digest));
 
             // A private key is required to sign. Send to the server.
-            if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
+            if (_jwk.Id != null && !_jwk.HasPrivateKey)
             {
                 // TODO: Log that we need a private key.
                 return null;
@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return new SignResult
             {
                 Algorithm = algorithm,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
                 Signature = signature,
             };
         }
@@ -143,7 +143,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 IsValid = isValid,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 
@@ -164,7 +164,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 EncryptedKey = encryptedKey,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 Key = key,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 
@@ -198,7 +198,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
             // A private key is required to encrypt. Send to the server.
-            if (_jwk.KeyId != null && !_jwk.HasPrivateKey)
+            if (_jwk.Id != null && !_jwk.HasPrivateKey)
             {
                 // TODO: Log that we need a private key.
                 return null;
