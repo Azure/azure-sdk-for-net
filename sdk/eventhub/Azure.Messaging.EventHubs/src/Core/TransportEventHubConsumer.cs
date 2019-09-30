@@ -19,6 +19,16 @@ namespace Azure.Messaging.EventHubs.Core
     internal abstract class TransportEventHubConsumer
     {
         /// <summary>
+        ///   Indicates whether or not this consumer has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public virtual bool Closed { get; }
+
+        /// <summary>
         ///   A set of information about the enqueued state of a partition, as observed by the consumer as
         ///   events are received from the Event Hubs service.
         /// </summary>
@@ -39,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Updates the active retry policy for the client.
+        ///   Updates the active retry policy for the consumer.
         /// </summary>
         ///
         /// <param name="newRetryPolicy">The retry policy to set as active.</param>

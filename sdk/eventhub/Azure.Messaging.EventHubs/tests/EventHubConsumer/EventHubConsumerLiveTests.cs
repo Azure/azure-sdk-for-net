@@ -1868,33 +1868,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Expected behavior currently under discussion")]
-        public async Task ConsumerCanReceiveWhenClientIsClosed()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                {
-                    var partition = (await client.GetPartitionIdsAsync()).First();
-
-                    await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
-                    {
-                        client.Close();
-
-                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
         public async Task ConsumerCannotReceiveEventsSentToAnotherPartition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))

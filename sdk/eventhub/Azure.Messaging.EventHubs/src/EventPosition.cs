@@ -183,6 +183,4 @@ namespace Azure.Messaging.EventHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
     }
-
-    //TODO: Implement the AMQP-specific methods from track 1 to a new abstraction. (They were not brought forward)
 }
