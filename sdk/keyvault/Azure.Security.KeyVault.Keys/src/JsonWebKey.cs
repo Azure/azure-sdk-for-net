@@ -57,9 +57,9 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly KeyOperation[] s_eCPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
 
         /// <summary>
-        /// The identifier of the key.
+        /// The identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
-        public Uri Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
@@ -347,8 +347,7 @@ namespace Azure.Security.KeyVault.Keys
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        string id = prop.Value.GetString();
-                        Id = new Uri(id);
+                        Id = prop.Value.GetString();
                         break;
                     case KeyTypePropertyName:
                         KeyType = prop.Value.GetString();

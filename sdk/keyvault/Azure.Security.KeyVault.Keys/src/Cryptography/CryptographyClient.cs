@@ -77,12 +77,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (string.IsNullOrEmpty(keyMaterial.Id.ToString()))
+            if (string.IsNullOrEmpty(keyMaterial.Id))
             {
                 throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
             }
 
-            _keyId = new Uri(keyMaterial.Id.ToString());
+            _keyId = new Uri(keyMaterial.Id);
             options ??= new CryptographyClientOptions();
 
             RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(_keyId, credential, options);

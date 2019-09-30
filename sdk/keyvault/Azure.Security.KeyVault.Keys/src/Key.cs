@@ -64,7 +64,9 @@ namespace Azure.Security.KeyVault.Keys
                 case KeyPropertyName:
                     KeyMaterial = new JsonWebKey();
                     KeyMaterial.ReadProperties(prop.Value);
-                    Properties.ParseId(KeyMaterial.Id);
+
+                    Uri id = new Uri(KeyMaterial.Id);
+                    Properties.ParseId(id);
                     break;
 
                 default:

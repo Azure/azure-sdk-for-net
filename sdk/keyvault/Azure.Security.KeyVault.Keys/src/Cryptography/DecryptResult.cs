@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to decrypt
         /// </summary>
-        public Uri KeyId { get; internal set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The decrypted data
@@ -36,8 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        string keyId = prop.Value.GetString();
-                        KeyId = new Uri(keyId);
+                        KeyId = prop.Value.GetString();
                         break;
                     case PlaintextPropertyName:
                         Plaintext = Base64Url.Decode(prop.Value.GetString());

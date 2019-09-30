@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to encrypt. This must be stored alongside the <see cref="Ciphertext"/> as the same key must be used to decrypt it.
         /// </summary>
-        public Uri KeyId { get; internal set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The ciphertext that is the result of the encryption
@@ -57,8 +57,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        string keyId = prop.Value.GetString();
-                        KeyId = new Uri(keyId);
+                        KeyId = prop.Value.GetString();
                         break;
                     case CiphertextPropertyName:
                         Ciphertext = Base64Url.Decode(prop.Value.GetString());

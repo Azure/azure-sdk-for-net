@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 
@@ -25,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                Id = new Uri("http://localhost"),
+                Id = "test",
                 KeyType = new KeyType("invalid"),
             };
 
@@ -36,13 +34,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
 #if !NET461
             ECDsa ecdsa = ECDsa.Create();
-            yield return new object[] { new JsonWebKey(ecdsa, false) { Id = new Uri("http://localhost/ecdsaPublic") }, typeof(EcCryptographyProvider) };
-            yield return new object[] { new JsonWebKey(ecdsa, true) { Id = new Uri("http://localhost/ecdsaPrivate") }, typeof(EcCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(ecdsa, false) { Id = "ecdsaPublic" }, typeof(EcCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(ecdsa, true) { Id = "ecdsaPrivate" }, typeof(EcCryptographyProvider) };
 #endif
 
             RSA rsa = RSA.Create();
-            yield return new object[] { new JsonWebKey(rsa, false) { Id = new Uri("http://localhost/rsaPublic") }, typeof(RsaCryptographyProvider) };
-            yield return new object[] { new JsonWebKey(rsa, true) { Id = new Uri("http://localhost/rsaPrivate") }, typeof(RsaCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(rsa, false) { Id = "rsaPublic" }, typeof(RsaCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(rsa, true) { Id = "rsaPrivate" }, typeof(RsaCryptographyProvider) };
         }
     }
 }

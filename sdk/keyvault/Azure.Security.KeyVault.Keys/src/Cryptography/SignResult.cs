@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
-        public Uri KeyId { get; internal set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The signature
@@ -36,8 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        string keyId = prop.Value.GetString();
-                        KeyId = new Uri(keyId);
+                        KeyId = prop.Value.GetString();
                         break;
                     case SignaturePropertyName:
                         Signature = Base64Url.Decode(prop.Value.GetString());
