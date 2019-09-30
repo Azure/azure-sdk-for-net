@@ -947,7 +947,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                             if (separator()) { w.line(`,`); }
                             w.write(`${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.parameter(property.clientName)}`);
                         }
-                        w.write(`)`);
+                        w.line(`)`);
                         w.scope('{', '}', () => {
                             for (const property of properties) {
                                 w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);

@@ -12830,7 +12830,8 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal AccountInfo(
             Azure.Storage.Blobs.Models.SkuName skuName,
-            Azure.Storage.Blobs.Models.AccountKind accountKind){
+            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            {
                 SkuName = skuName;
                 AccountKind = accountKind;
             }
@@ -17958,7 +17959,8 @@ namespace Azure.Storage.Blobs.Models
             byte[] contentHash,
             byte[] xMSContentCrc64,
             long blobSequenceNumber,
-            string encryptionKeySha256){
+            string encryptionKeySha256)
+            {
                 ETag = eTag;
                 LastModified = lastModified;
                 ContentHash = contentHash;
@@ -18160,7 +18162,8 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal PageRange(
             long start,
-            long end){
+            long end)
+            {
                 Start = start;
                 End = end;
             }
