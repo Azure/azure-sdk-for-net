@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.Uri.Assign(new Uri("http://example.com"));
+            request.Uri.Reset(new Uri("http://example.com"));
 
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.Uri.Assign(new Uri("http://example.com"));
+            request.Uri.Reset(new Uri("http://example.com"));
 
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 

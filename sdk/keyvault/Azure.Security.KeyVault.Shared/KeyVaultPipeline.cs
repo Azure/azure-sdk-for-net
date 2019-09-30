@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault
         public Uri CreateFirstPageUri(string path)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Assign(_vaultUri);
+            firstPage.Reset(_vaultUri);
 
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault
         public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Assign(_vaultUri);
+            firstPage.Reset(_vaultUri);
 
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.Uri.Assign(uri);
+            request.Uri.Reset(uri);
 
             return request;
         }
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.Uri.Assign(_vaultUri);
+            request.Uri.Reset(_vaultUri);
 
             foreach (var p in path)
             {
