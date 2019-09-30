@@ -106,12 +106,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _ => null,
         };
 
-        internal int GetKeySize() => _value switch
+        internal int GetKeySizeInBits() => _value switch
         {
             A128KWValue => 128,
             A192KWValue => 192,
             A256KWValue => 256,
             _ => 0,
         };
+
+        internal int GetKeySizeInBytes() => GetKeySizeInBits() >> 3;
     }
 }

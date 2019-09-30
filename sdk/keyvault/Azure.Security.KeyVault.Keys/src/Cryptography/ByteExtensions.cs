@@ -68,31 +68,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             if (self.Length > other.Length - offset)
                 throw new ArgumentException("self and other lengths do not match");
 
-            if (inPlace)
+            byte[] result = (inPlace) ? self : new byte[self.Length];
+
+            for (var i = 0; i < self.Length; i++)
             {
-                for (var i = 0; i < self.Length; i++)
-                {
-                    self[i] = (byte)(self[i] ^ other[offset + i]);
-                }
-
-                return self;
+                result[i] = (byte)(self[i] ^ other[offset + i]);
             }
-            else
-            {
-                var result = new byte[self.Length];
 
-                for (var i = 0; i < self.Length; i++)
-                {
-                    result[i] = (byte)(self[i] ^ other[offset + i]);
-                }
-
-                return result;
-            }
+            return result;
         }
 
         internal static byte[] Take(this byte[] self, int count)
         {
-            return ByteExtensions.Take(self, 0, count);
+            return Take(self, 0, count);
         }
 
         internal static byte[] Take(this byte[] self, int offset, int count)

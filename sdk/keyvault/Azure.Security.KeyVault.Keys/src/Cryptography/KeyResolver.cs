@@ -28,7 +28,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         protected KeyResolver()
         {
-
         }
 
         /// <summary>

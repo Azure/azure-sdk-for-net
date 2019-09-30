@@ -8,16 +8,16 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class SecretKey : Key
     {
+        private const string IdPropertyName = "id";
+        private const string ValuePropertyName = "value";
+        private const string ContentTypePropertyName = "contentType";
+
         public SecretKey()
         {
             KeyMaterial = new JsonWebKey();
             KeyMaterial.KeyType = KeyType.Oct;
             KeyMaterial.KeyOps = new[] { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
         }
-
-        private const string IdPropertyName = "id";
-        private const string ValuePropertyName = "value";
-        private const string ContentTypePropertyName = "contentType";
 
         public string ContentType { get; private set; }
 

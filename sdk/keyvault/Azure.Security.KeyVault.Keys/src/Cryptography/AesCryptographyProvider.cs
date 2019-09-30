@@ -61,21 +61,22 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
 
-            int algorithmKeySize = algorithm.GetKeySize();
-            if (algorithmKeySize == 0)
+            int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
+            if (algorithmKeySizeBytes == 0)
             {
                 // TODO: Log that we don't support the algorithm locally.
                 return null;
             }
 
-            int keySize = GetKeySize();
-            if (keySize != algorithmKeySize)
+            int keySizeBytes = GetKeySizeInBytes();
+            if (keySizeBytes < algorithmKeySizeBytes)
             {
-                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySize} does not match underlying key size {keySize}");
+                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySizeBytes} is greater than the underlying key size {keySizeBytes}");
             }
 
-            using Aes aes = _jwk.ToAes();
-            using ICryptoTransform decryptor = AesKw.CreateDecryptor(_jwk.K);
+            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? _jwk.K : _jwk.K.Take(algorithmKeySizeBytes);
+
+            using ICryptoTransform decryptor = AesKw.CreateDecryptor(sizedKey);
 
             byte[] key = decryptor.TransformFinalBlock(encryptedKey, 0, encryptedKey.Length);
             return new UnwrapResult
@@ -96,21 +97,22 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            int algorithmKeySize = algorithm.GetKeySize();
-            if (algorithmKeySize == 0)
+            int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
+            if (algorithmKeySizeBytes == 0)
             {
                 // TODO: Log that we don't support the algorithm locally.
                 return null;
             }
 
-            int keySize = GetKeySize();
-            if (keySize != algorithmKeySize)
+            int keySizeBytes = GetKeySizeInBytes();
+            if (keySizeBytes < algorithmKeySizeBytes)
             {
-                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySize} does not match underlying key size {keySize}");
+                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySizeBytes} is greater than the underlying key size {keySizeBytes}");
             }
 
-            using Aes aes = _jwk.ToAes();
-            using ICryptoTransform encryptor = AesKw.CreateEncryptor(_jwk.K);
+            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? _jwk.K : _jwk.K.Take(algorithmKeySizeBytes);
+
+            using ICryptoTransform encryptor = AesKw.CreateEncryptor(sizedKey);
 
             byte[] encryptedKey = encryptor.TransformFinalBlock(key, 0, key.Length);
             return new WrapResult
@@ -127,14 +129,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return Task.FromResult(result);
         }
 
-        private int GetKeySize()
+        private int GetKeySizeInBits()
+        {
+            return GetKeySizeInBytes() << 3;
+        }
+
+        private int GetKeySizeInBytes()
         {
             if (_jwk.K != null)
             {
-                return _jwk.K.Length << 3;
+                return _jwk.K.Length;
             }
 
             return 0;
+
         }
 
         #region Unsupported operations
