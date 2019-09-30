@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -166,7 +165,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -268,7 +267,7 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.Uri, Pipeline);
+            return new FileClient(builder.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -906,9 +905,7 @@ namespace Azure.Storage.Files
                                 cancellationToken)
                                 .ConfigureAwait(false))
                                 .Item2,
-                        // TODO: For now we're using the default ResponseClassifier
-                        // on FileConnectionOptions so we'll do the same here
-                        new ResponseClassifier(),
+                        Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo

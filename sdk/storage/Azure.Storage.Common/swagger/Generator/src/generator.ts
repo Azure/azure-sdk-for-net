@@ -27,7 +27,7 @@ export async function generate(model: IServiceModel): Promise<void> {
     w.line(`// This file was automatically generated.  Do not edit.`);
     w.line();
 
-    w.line(`#pragma warning disable IDE0016 // Null check can be simplified `);
+    w.line(`#pragma warning disable IDE0016 // Null check can be simplified`);
     w.line(`#pragma warning disable IDE0017 // Variable declaration can be inlined`);
     w.line(`#pragma warning disable IDE0018 // Object initialization can be simplified`);
     w.line(`#pragma warning disable SA1402  // File may only contain a single type`);
@@ -345,7 +345,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
-        w.line(`${requestName}.Uri.Assign(${uri});`);
+        w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;

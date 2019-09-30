@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -130,7 +129,7 @@ namespace Azure.Storage.Files
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -232,7 +231,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.Uri, Pipeline);
+            return new ShareClient(p.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -1433,12 +1432,12 @@ namespace Azure.Storage.Files
 
         #region CreatePermission
         /// <summary>
-        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
-        /// can be used for the files/directories in the share. 
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
-        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
-        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
         /// </param>
         /// <param name="cancellationToken">
@@ -1458,12 +1457,12 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
-        /// can be used for the files/directories in the share. 
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
-        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
-        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
         /// </param>
         /// <param name="cancellationToken">

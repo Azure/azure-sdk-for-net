@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Text;
@@ -576,6 +577,38 @@ namespace Azure.Data.AppConfiguration.Tests
             });
 
             Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        public async Task CustomHeadersAreAdded()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var activity = new Activity("Azure.CustomDiagnosticHeaders");
+
+            activity.Start();
+            activity.AddTag("x-ms-client-request-id", "CustomRequestId");
+            activity.AddTag("x-ms-correlation-request-id", "CorrelationRequestId");
+            activity.AddTag("correlation-context", "CorrelationContextValue1,CorrelationContextValue2");
+            activity.AddTag("x-ms-random-id", "RandomValue");
+
+            ConfigurationSetting setting = await service.SetAsync(s_testSetting);
+            activity.Stop();
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string clientRequestId));
+            Assert.AreEqual(clientRequestId, "CustomRequestId");
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-correlation-request-id", out string correlationRequestId));
+            Assert.AreEqual(correlationRequestId, "CorrelationRequestId");
+            Assert.IsTrue(request.Headers.TryGetValue("correlation-context", out string correlationContext));
+            Assert.AreEqual(correlationContext, "CorrelationContextValue1,CorrelationContextValue2");
+            Assert.IsFalse(request.Headers.TryGetValue("x-ms-random-id", out string randomId));
         }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)

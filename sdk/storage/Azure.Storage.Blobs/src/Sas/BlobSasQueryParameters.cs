@@ -1,6 +1,5 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 
@@ -11,7 +10,7 @@ namespace Azure.Storage.Sas
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  You can construct a new instance using
     /// <see cref="BlobSasBuilder"/>.
-    /// 
+    ///
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
@@ -59,7 +58,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
         /// type.
-        /// 
+        ///
         /// Expects decoded values.
         /// </summary>
         internal BlobSasQueryParameters(

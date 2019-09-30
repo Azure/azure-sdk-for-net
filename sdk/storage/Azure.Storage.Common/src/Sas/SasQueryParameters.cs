@@ -1,6 +1,5 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace Azure.Storage.Sas
     /// parameters.  It includes components used by all Azure Storage resources
     /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
-    /// 
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public partial class SasQueryParameters
@@ -96,7 +94,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared
-        /// access signature. 
+        /// access signature.
         /// </summary>
         public string Services => _services ?? string.Empty;
 
@@ -153,13 +151,13 @@ namespace Azure.Storage.Sas
         public string Permissions => _permissions ?? string.Empty;
 
         /// <summary>
-        /// Gets the Cache-Control response header, which allows for 
+        /// Gets the Cache-Control response header, which allows for
         /// specifying the client-side caching to be used for blob and file downloads.
         /// </summary>
         public string CacheControl => _cacheControl ?? string.Empty;
 
         /// <summary>
-        /// Gets the Content-Disposition response header, which allows for 
+        /// Gets the Content-Disposition response header, which allows for
         /// specifying the way that the blob or file content can be displayed in the browser.
         /// </summary>
         public string ContentDisposition => _contentDisposition ?? string.Empty;
@@ -171,13 +169,13 @@ namespace Azure.Storage.Sas
         public string ContentEncoding => _contentEncoding ?? string.Empty;
 
         /// <summary>
-        /// Gets the Content-Language response header, which allows for specifying the 
+        /// Gets the Content-Language response header, which allows for specifying the
         /// language of the downloaded blob or file content.
         /// </summary>
         public string ContentLanguage => _contentLanguage ?? string.Empty;
 
         /// <summary>
-        /// Gets the Content-Type response header, which allows for specifying the 
+        /// Gets the Content-Type response header, which allows for specifying the
         /// type of the downloaded blob or file content.
         /// </summary>
         public string ContentType => _contentType ?? string.Empty;
@@ -220,7 +218,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type.
-        /// 
+        ///
         /// Expects decoded values.
         /// </summary>
         internal SasQueryParameters(

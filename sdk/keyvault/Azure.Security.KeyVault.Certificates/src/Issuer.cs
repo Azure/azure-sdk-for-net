@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -31,6 +32,8 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_passwordPropertyNameBytes = JsonEncodedText.Encode(PasswordPropertyName);
         private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
+
+        private List<AdministratorDetails> _administrators;
 
         internal Issuer()
         {
@@ -84,7 +87,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// A list of contacts who administrate the certificate issuer account
         /// </summary>
-        public IList<AdministratorDetails> Administrators { get; set; }
+        public IList<AdministratorDetails> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
 
         /// <summary>
         /// The time the issuer was created in UTC
@@ -156,7 +159,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case AdminDetailsPropertyName:
-                        Administrators = new List<AdministratorDetails>();
                         foreach (JsonElement elem in prop.Value.EnumerateArray())
                         {
                             var admin = new AdministratorDetails();
@@ -203,7 +205,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (!string.IsNullOrEmpty(OrganizationId) || Administrators != null)
+            if (!string.IsNullOrEmpty(OrganizationId) || (_administrators != null && _administrators.Count > 0))
             {
                 json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
@@ -242,11 +244,11 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
-            if (Administrators != null)
+            if (_administrators != null && _administrators.Count > 0)
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach (AdministratorDetails admin in Administrators)
+                foreach (AdministratorDetails admin in _administrators)
                 {
                     json.WriteStartObject();
 
@@ -269,5 +271,4 @@ namespace Azure.Security.KeyVault.Certificates
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
-
 }

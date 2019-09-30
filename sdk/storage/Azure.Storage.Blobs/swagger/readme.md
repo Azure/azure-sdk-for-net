@@ -989,7 +989,7 @@ directive:
     $["x-az-disable-warnings"] = "CA1724";
 ```
 
-### Hide StorageError
+### Hide Error models
 ``` yaml
 directive:
 - from: swagger-document
@@ -999,6 +999,10 @@ directive:
     $.properties.Code = { "type": "string" };
 - from: swagger-document
   where: $.definitions.DataLakeStorageError
+  transform: >
+    $["x-az-public"] = false;
+- from: swagger-document
+  where: $.definitions.DataLakeStorageError.properties["error"]
   transform: >
     $["x-az-public"] = false;
 ```
@@ -1055,4 +1059,87 @@ directive:
   where: $.parameters.LeaseDuration
   transform: >
     $.format = "int64";
+```
+
+### Merge the PageBlob AccessTier type
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PremiumPageBlobAccessTierOptional
+  transform: >
+    $["x-ms-enum"].name = "AccessTier";
+```
+
+### Hide Result models relating to data lake
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&directory"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&blob"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&directory"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&blob"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?FileRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?resource=directory&Create"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryDelete"]
+  transform: >
+    $.delete.responses["200"]["x-az-public"] = false;
+```
+
+### Remove XMS prefix from ContentCrc64 property in Info models
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block&fromURL"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=blocklist"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&clear"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
 ```

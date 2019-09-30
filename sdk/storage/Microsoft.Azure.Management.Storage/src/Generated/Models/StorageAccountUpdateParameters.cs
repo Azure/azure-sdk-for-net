@@ -63,11 +63,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
         /// <param name="networkRuleSet">Network rule set</param>
+        /// <param name="largeFileSharesState">Allow large file shares if sets
+        /// to Enabled. It cannot be disabled once it is enabled. Possible
+        /// values include: 'Disabled', 'Enabled'</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string kind = default(string))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
@@ -78,6 +81,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             NetworkRuleSet = networkRuleSet;
+            LargeFileSharesState = largeFileSharesState;
             Kind = kind;
             CustomInit();
         }
@@ -154,6 +158,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAcls")]
         public NetworkRuleSet NetworkRuleSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow large file shares if sets to Enabled. It cannot
+        /// be disabled once it is enabled. Possible values include:
+        /// 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.largeFileSharesState")]
+        public string LargeFileSharesState { get; set; }
 
         /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.

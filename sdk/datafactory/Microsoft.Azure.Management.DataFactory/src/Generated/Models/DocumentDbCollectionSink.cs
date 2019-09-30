@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// is . (dot). Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="writeBehavior">Describes how to write data to Azure
-        /// Cosmos DB. Allowed values: insert and upsert.</param>
+        /// Cosmos DB. Type: string (or Expression with resultType string).
+        /// Allowed values: insert and upsert.</param>
         public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
@@ -72,8 +73,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object NestingSeparator { get; set; }
 
         /// <summary>
-        /// Gets or sets describes how to write data to Azure Cosmos DB.
-        /// Allowed values: insert and upsert.
+        /// Gets or sets describes how to write data to Azure Cosmos DB. Type:
+        /// string (or Expression with resultType string). Allowed values:
+        /// insert and upsert.
         /// </summary>
         [JsonProperty(PropertyName = "writeBehavior")]
         public object WriteBehavior { get; set; }
