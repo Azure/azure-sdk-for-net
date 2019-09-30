@@ -301,7 +301,7 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.Uri.Assign(s_imdsEndpoint);
+                request.Uri.Reset(s_imdsEndpoint);
 
                 request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
@@ -333,7 +333,7 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.Uri.Assign(s_imdsEndpoint);
+                request.Uri.Reset(s_imdsEndpoint);
 
                 request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
@@ -367,7 +367,7 @@ namespace Azure.Identity
 
             request.Headers.Add("Metadata", "true");
 
-            request.Uri.Assign(s_endpoint);
+            request.Uri.Reset(s_endpoint);
 
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
@@ -392,7 +392,7 @@ namespace Azure.Identity
 
             request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
-            request.Uri.Assign(s_endpoint);
+            request.Uri.Reset(s_endpoint);
 
             request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
 
@@ -417,7 +417,7 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.Uri.Assign(s_endpoint);
+            request.Uri.Reset(s_endpoint);
 
             request.Headers.Add("Metadata", "true");
 

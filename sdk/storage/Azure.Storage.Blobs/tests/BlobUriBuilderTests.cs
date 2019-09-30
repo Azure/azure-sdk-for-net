@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_AccountSas();
             var blobUriBuilder = new BlobUriBuilder(service.Uri);
 
-            Uri blobUri = blobUriBuilder.Uri;
+            Uri blobUri = blobUriBuilder.ToUri();
 
             var expectedUri = WebUtility.UrlDecode(service.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -111,7 +111,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -135,7 +135,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -220,7 +220,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -270,7 +270,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
@@ -320,7 +320,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
-            Uri newUri = blobUriBuilder.Uri;
+            Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
