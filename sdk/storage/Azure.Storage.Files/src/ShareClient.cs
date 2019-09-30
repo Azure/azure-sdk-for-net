@@ -129,7 +129,7 @@ namespace Azure.Storage.Files
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -231,7 +231,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.Uri, Pipeline);
+            return new ShareClient(p.ToUri(), Pipeline);
         }
 
         /// <summary>
