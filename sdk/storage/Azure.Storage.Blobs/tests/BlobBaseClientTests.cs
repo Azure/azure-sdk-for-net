@@ -2104,13 +2104,13 @@ namespace Azure.Storage.Blobs.Test
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
-                var breakPeriod = 5;
+                TimeSpan breakPeriod = TimeSpan.FromSeconds(5);
 
                 LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
-                Response<Lease> response = await lease.BreakAsync(breakPeriodInSeconds: breakPeriod);
+                Response<Lease> response = await lease.BreakAsync(breakPeriod: breakPeriod);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);

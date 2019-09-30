@@ -1050,13 +1050,17 @@ directive:
   transform: $.required = true;
 ```
 
-### Make lease duration a long
-Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+### Make lease duration/break period a long
+Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
 type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+- from: swagger-document
+  where: $.parameters.LeaseBreakPeriod
   transform: >
     $.format = "int64";
 ```
