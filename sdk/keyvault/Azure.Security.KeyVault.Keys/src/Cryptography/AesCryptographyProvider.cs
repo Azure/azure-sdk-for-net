@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             using Aes aes = _jwk.ToAes();
-            using ICryptoTransform decryptor = aes.CreateDecryptor();
+            using ICryptoTransform decryptor = AesKw.CreateDecryptor(_jwk.K);
 
             byte[] key = decryptor.TransformFinalBlock(encryptedKey, 0, encryptedKey.Length);
             return new UnwrapResult
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             using Aes aes = _jwk.ToAes();
-            using ICryptoTransform encryptor = aes.CreateEncryptor();
+            using ICryptoTransform encryptor = AesKw.CreateEncryptor(_jwk.K);
 
             byte[] encryptedKey = encryptor.TransformFinalBlock(key, 0, key.Length);
             return new WrapResult
