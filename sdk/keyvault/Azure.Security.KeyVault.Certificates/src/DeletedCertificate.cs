@@ -15,10 +15,12 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
         private const string DeletedDatePropertyName = "deletedDate";
 
+        private string _recoveryId;
+
         /// <summary>
         /// Id identifying the deleted certificate
         /// </summary>
-        public Uri RecoveryId { get; private set; }
+        public Uri RecoveryId => new Uri(_recoveryId);
 
         /// <summary>
         /// The time the certificate was deleted in UTC
@@ -35,8 +37,7 @@ namespace Azure.Security.KeyVault.Certificates
             switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
-                    var recoveryId = prop.Value.GetString();
-                    RecoveryId = new Uri(recoveryId);
+                    _recoveryId = prop.Value.GetString();
                     break;
 
                 case DeletedDatePropertyName:
