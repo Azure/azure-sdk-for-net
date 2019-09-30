@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = RequestMethod.Get;
-            request.Uri.Assign(uri);
+            request.Uri.Reset(uri);
 
             request.Uri.AppendQuery("api-version", _apiVersion);
 
