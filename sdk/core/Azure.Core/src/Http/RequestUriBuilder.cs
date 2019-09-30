@@ -105,7 +105,7 @@ namespace Azure.Core.Http
 
         public string PathAndQuery => _pathAndQuery.ToString();
 
-        public void Assign(Uri value)
+        public void Reset(Uri value)
         {
             Scheme = value.Scheme;
             Host = value.Host;

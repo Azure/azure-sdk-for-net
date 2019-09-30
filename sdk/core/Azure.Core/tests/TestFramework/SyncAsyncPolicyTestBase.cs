@@ -48,7 +48,7 @@ namespace Azure.Core.Testing
         {
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.Uri.Assign(new Uri("http://example.com"));
+            request.Uri.Reset(new Uri("http://example.com"));
             return await SendRequestAsync(transport, request, policy, responseClassifier, bufferResponse);
         }
     }
