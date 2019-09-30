@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Text;
-using Azure.Core.Http;
 
 namespace Azure.Core.Diagnostics
 {
@@ -33,48 +30,8 @@ namespace Azure.Core.Diagnostics
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [NonEvent]
-        public void Request(Request request)
-        {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
-            {
-                Request(request.ClientRequestId, request.Method.ToString().ToUpperInvariant(), request.Uri.ToString(), FormatHeaders(request.Headers));
-            }
-        }
-
-        [NonEvent]
-        public void Response(Response response)
-        {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
-            {
-                Response(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
-            }
-        }
-
-        [NonEvent]
-        public void ErrorResponse(Response response)
-        {
-            if (IsEnabled(EventLevel.Warning, EventKeywords.None))
-            {
-                ErrorResponse(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
-            }
-        }
-
-        [NonEvent]
-        public void ResponseDelay(Response response, long delayMilliseconds)
-        {
-            ResponseDelayCore(response.ClientRequestId, delayMilliseconds);
-        }
-
-        [NonEvent]
-        public void RequestRetrying(Request request, int retryNumber)
-        {
-            RequestRetrying(request.ClientRequestId, retryNumber);
-        }
-
-        // TODO (pri 2): there are more attribute properties we might want to set
         [Event(RequestEvent, Level = EventLevel.Informational)]
-        private void Request(string requestId, string method, string uri, string headers)
+        public void Request(string requestId, string method, string uri, string headers)
         {
             WriteEvent(RequestEvent, requestId, method, uri, headers);
         }
@@ -92,7 +49,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ResponseEvent, Level = EventLevel.Informational)]
-        private void Response(string requestId, int status, string headers)
+        public void Response(string requestId, int status, string headers)
         {
             WriteEvent(ResponseEvent, requestId, status, headers);
         }
@@ -152,28 +109,15 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(RequestDelayEvent, Level = EventLevel.Warning)]
-        private void ResponseDelayCore(string requestId, long delayMilliseconds)
+        public void ResponseDelay(string requestId, long delayMilliseconds)
         {
-            if (IsEnabled(EventLevel.Warning, EventKeywords.None))
-            {
-                WriteEvent(RequestDelayEvent, requestId, delayMilliseconds);
-            }
+            WriteEvent(RequestDelayEvent, requestId, delayMilliseconds);
         }
 
         [Event(RequestRetryingEvent, Level = EventLevel.Informational)]
-        private void RequestRetrying(string requestId, int retryNumber)
+        public void RequestRetrying(string requestId, int retryNumber)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber);
-        }
-
-        private static string FormatHeaders(IEnumerable<HttpHeader> headers)
-        {
-            var stringBuilder = new StringBuilder();
-            foreach (HttpHeader header in headers)
-            {
-                stringBuilder.AppendLine(header.ToString());
-            }
-            return stringBuilder.ToString();
         }
     }
 }
