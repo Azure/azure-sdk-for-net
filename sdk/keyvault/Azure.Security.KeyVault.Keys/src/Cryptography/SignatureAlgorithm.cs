@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="SignatureAlgorithm"/> structure.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The string value of the instance.</param>
         public SignatureAlgorithm(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

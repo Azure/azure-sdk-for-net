@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="Action"/> structure.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The string value of the instance.</param>
         public Action(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

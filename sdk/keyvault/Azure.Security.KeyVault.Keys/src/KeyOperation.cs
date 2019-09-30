@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyOperation"/> structure.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The string value of the instance.</param>
         public KeyOperation(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateKeyUsage"/> structure.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The string value of the instance.</param>
         public CertificateKeyUsage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
