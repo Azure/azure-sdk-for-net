@@ -17,11 +17,11 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
-        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeader, string[] allowedQueryParameters)
+        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters)
         {
             _logContent = logContent;
             _maxLength = maxLength;
-            _allowedHeader = allowedHeader;
+            _allowedHeaderNames = new HashSet<string>(allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
             _allowedQueryParameters = allowedQueryParameters;
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
         private readonly bool _logContent;
         private readonly int _maxLength;
 
-        private readonly string[] _allowedHeader;
+        private readonly HashSet<string> _allowedHeaderNames;
         private readonly string[] _allowedQueryParameters;
 
         public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -132,7 +132,7 @@ namespace Azure.Core.Pipeline
             var stringBuilder = new StringBuilder();
             foreach (HttpHeader header in headers)
             {
-                if (_allowedHeader.Contains(header.Name))
+                if (_allowedHeaderNames.Contains(header.Name))
                 {
                     stringBuilder.AppendLine(header.ToString());
                 }

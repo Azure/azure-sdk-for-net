@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline
             if (diagnostics.IsLoggingEnabled)
             {
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggingContentSizeLimit,
-                    diagnostics.LoggingAllowedHeaders.ToArray(), diagnostics.LoggingAllowedQueryParameters.ToArray()));
+                    diagnostics.LoggingAllowedHeaderNames.ToArray(), diagnostics.LoggingAllowedQueryParameters.ToArray()));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
