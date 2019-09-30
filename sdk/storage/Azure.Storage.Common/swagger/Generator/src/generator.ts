@@ -592,7 +592,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line(`string ${headerName};`);
             if (response.struct) {
                 for (const header of headers) {
-                    w.line(`${types.getDeclarationType(header.model, true, false, true)} ${naming.parameter(header.clientName)} = default;`);
+                    w.line(`${types.getDeclarationType(header.model, true, false, true)} _${naming.parameter(header.clientName)} = default;`);
                 }
             }
             for (const header of headers) {
@@ -610,7 +610,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
                         if (response.struct) {
-                            w.write(`${naming.parameter(header.clientName)} = `);
+                            w.write(`_${naming.parameter(header.clientName)} = `);
                         } else {
                             w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
                         }
@@ -628,12 +628,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             }
             if (response.struct) {
                 w.line();
-                w.line(`// Create the result`);
                 const Separator = IndentWriter.createFenceposter();
                 w.write(`${types.getName(model)} ${valueName} = new ${types.getName(model)}(`);
                 for (const header of headers) {
                     if (Separator()) { w.write(`, `); }
-                    w.write(`${naming.parameter(header.clientName)}`);
+                    w.write(`_${naming.parameter(header.clientName)}`);
                 }
                 w.write(`);`);
                 w.line();
@@ -965,11 +964,15 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.scope('{', '}', () => {
                         for (const property of properties) {
                             if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
-                                w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}, System.StringComparison.InvariantCulture))`);
+                                w.line(`if (!System.StringComparer.Ordinal.Equals(${naming.property(property.clientName)}, other.${naming.property(property.clientName)}))`);
+                            } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
+                                w.line(`if (!Equals(${naming.property(property.clientName)}, other.${naming.property(property.clientName)}))`);
                             } else {
                                 w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}))`);
                             }
-                            w.line(`    return false;`);
+                            w.scope('{', '}', () => {
+                            w.line(`return false;`);
+                            });
                         }
                         w.line();
                         w.line(`return true;`);
@@ -985,11 +988,18 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`/// <summary>`)
                     w.line(`/// Get a hash code for the ${naming.type(type.name)}.`);
                     w.line(`/// </summary>`);
-                    w.write(`public override int GetHashCode()`);
+                    w.line(`public override int GetHashCode()`);
                     w.scope('{', '}', () => {
                         w.line(`var hashCode = new Azure.Core.HashCodeBuilder();`);
                         for (const property of properties) {
-                            w.line(`hashCode.Add(${naming.property(property.clientName)});`);
+                            if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
+                                w.line(`if (EncryptionKeySha256 != null)`)
+                                w.scope('{', '}', () => {
+                                w.line(`hashCode.Add(${naming.property(property.clientName)}, System.StringComparer.Ordinal);`);
+                                });
+                            } else {
+                                w.line(`hashCode.Add(${naming.property(property.clientName)});`);
+                            }
                         }
                         w.line();
                         w.line(`return hashCode.ToHashCode();`);
