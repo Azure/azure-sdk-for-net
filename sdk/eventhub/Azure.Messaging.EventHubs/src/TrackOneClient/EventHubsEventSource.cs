@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics.Tracing;
@@ -8,9 +8,7 @@ namespace TrackOne
 {
     /// <summary>
     /// EventSource for Microsoft-Azure-EventHubs traces.
-    /// 
     /// When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
-    /// 
     /// Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     /// map to an EventSource Guid based on the Name (Microsoft-Azure-EventHubs).
     /// </summary>

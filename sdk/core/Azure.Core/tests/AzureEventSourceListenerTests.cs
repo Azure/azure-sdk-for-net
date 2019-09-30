@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
                     invocations.Add((args, s));
                 }, EventLevel.Verbose);
 
-            HttpPipelineEventSource.Singleton.Request(new MockRequest());
+            AzureCoreEventSource.Singleton.Request(new MockRequest());
 
             Assert.AreEqual(1, invocations.Count);
             var singleInvocation = invocations.Single();

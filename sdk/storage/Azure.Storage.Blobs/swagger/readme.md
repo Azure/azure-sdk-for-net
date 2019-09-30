@@ -1007,7 +1007,7 @@ directive:
     $["x-az-disable-warnings"] = "CA1724";
 ```
 
-### Hide StorageError
+### Hide Error models
 ``` yaml
 directive:
 - from: swagger-document
@@ -1017,6 +1017,10 @@ directive:
     $.properties.Code = { "type": "string" };
 - from: swagger-document
   where: $.definitions.DataLakeStorageError
+  transform: >
+    $["x-az-public"] = false;
+- from: swagger-document
+  where: $.definitions.DataLakeStorageError.properties["error"]
   transform: >
     $["x-az-public"] = false;
 ```
@@ -1075,7 +1079,6 @@ directive:
     $.format = "int64";
 ```
 
-
 ### Merge the PageBlob AccessTier type
 ``` yaml
 directive:
@@ -1083,4 +1086,41 @@ directive:
   where: $.parameters.PremiumPageBlobAccessTierOptional
   transform: >
     $["x-ms-enum"].name = "AccessTier";
+```
+
+### Hide Result models relating to data lake
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&directory"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&blob"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&directory"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&blob"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?FileRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?resource=directory&Create"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryDelete"]
+  transform: >
+    $.delete.responses["200"]["x-az-public"] = false;
 ```

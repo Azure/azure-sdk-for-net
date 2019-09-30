@@ -13015,7 +13015,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob GetAccessControlResult
     /// </summary>
-    public partial class BlobGetAccessControlResult
+    internal partial class BlobGetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -13053,34 +13053,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal BlobGetAccessControlResult() { }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobGetAccessControlResult instance for mocking.
-        /// </summary>
-        public static BlobGetAccessControlResult BlobGetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string xMSOwner,
-            string xMSGroup,
-            string xMSPermissions,
-            string xMSAcl)
-        {
-            return new BlobGetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                XMSOwner = xMSOwner,
-                XMSGroup = xMSGroup,
-                XMSPermissions = xMSPermissions,
-                XMSAcl = xMSAcl,
-            };
-        }
-    }
 }
 #endregion class BlobGetAccessControlResult
 
@@ -13090,7 +13062,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob RenameResult
     /// </summary>
-    public partial class BlobRenameResult
+    internal partial class BlobRenameResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -13113,28 +13085,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal BlobRenameResult() { }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobRenameResult instance for mocking.
-        /// </summary>
-        public static BlobRenameResult BlobRenameResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            long contentLength)
-        {
-            return new BlobRenameResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentLength = contentLength,
-            };
-        }
-    }
 }
 #endregion class BlobRenameResult
 
@@ -13144,7 +13094,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob SetAccessControlResult
     /// </summary>
-    public partial class BlobSetAccessControlResult
+    internal partial class BlobSetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -13161,26 +13111,6 @@ namespace Azure.Storage.Blobs.Models
         /// You can use BlobsModelFactory.BlobSetAccessControlResult instead.
         /// </summary>
         internal BlobSetAccessControlResult() { }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobSetAccessControlResult instance for mocking.
-        /// </summary>
-        public static BlobSetAccessControlResult BlobSetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            return new BlobSetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-            };
-        }
     }
 }
 #endregion class BlobSetAccessControlResult
@@ -16723,7 +16653,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory CreateResult
     /// </summary>
-    public partial class DirectoryCreateResult
+    internal partial class DirectoryCreateResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -16746,28 +16676,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal DirectoryCreateResult() { }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new DirectoryCreateResult instance for mocking.
-        /// </summary>
-        public static DirectoryCreateResult DirectoryCreateResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            long contentLength)
-        {
-            return new DirectoryCreateResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentLength = contentLength,
-            };
-        }
-    }
 }
 #endregion class DirectoryCreateResult
 
@@ -16777,7 +16685,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory DeleteResult
     /// </summary>
-    public partial class DirectoryDeleteResult
+    internal partial class DirectoryDeleteResult
     {
         /// <summary>
         /// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the rename operation to continue renaming the directory.
@@ -16790,24 +16698,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal DirectoryDeleteResult() { }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new DirectoryDeleteResult instance for mocking.
-        /// </summary>
-        public static DirectoryDeleteResult DirectoryDeleteResult(
-            string marker)
-        {
-            return new DirectoryDeleteResult()
-            {
-                Marker = marker,
-            };
-        }
-    }
 }
 #endregion class DirectoryDeleteResult
 
@@ -16817,7 +16707,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory GetAccessControlResult
     /// </summary>
-    public partial class DirectoryGetAccessControlResult
+    internal partial class DirectoryGetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -16855,34 +16745,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal DirectoryGetAccessControlResult() { }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new DirectoryGetAccessControlResult instance for mocking.
-        /// </summary>
-        public static DirectoryGetAccessControlResult DirectoryGetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string xMSOwner,
-            string xMSGroup,
-            string xMSPermissions,
-            string xMSAcl)
-        {
-            return new DirectoryGetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                XMSOwner = xMSOwner,
-                XMSGroup = xMSGroup,
-                XMSPermissions = xMSPermissions,
-                XMSAcl = xMSAcl,
-            };
-        }
-    }
 }
 #endregion class DirectoryGetAccessControlResult
 
@@ -16892,7 +16754,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory RenameResult
     /// </summary>
-    public partial class DirectoryRenameResult
+    internal partial class DirectoryRenameResult
     {
         /// <summary>
         /// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the rename operation to continue renaming the directory.
@@ -16920,30 +16782,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal DirectoryRenameResult() { }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new DirectoryRenameResult instance for mocking.
-        /// </summary>
-        public static DirectoryRenameResult DirectoryRenameResult(
-            string marker,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            long contentLength)
-        {
-            return new DirectoryRenameResult()
-            {
-                Marker = marker,
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentLength = contentLength,
-            };
-        }
-    }
 }
 #endregion class DirectoryRenameResult
 
@@ -16953,7 +16791,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory SetAccessControlResult
     /// </summary>
-    public partial class DirectorySetAccessControlResult
+    internal partial class DirectorySetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -16970,26 +16808,6 @@ namespace Azure.Storage.Blobs.Models
         /// You can use BlobsModelFactory.DirectorySetAccessControlResult instead.
         /// </summary>
         internal DirectorySetAccessControlResult() { }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new DirectorySetAccessControlResult instance for mocking.
-        /// </summary>
-        public static DirectorySetAccessControlResult DirectorySetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            return new DirectorySetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-            };
-        }
     }
 }
 #endregion class DirectorySetAccessControlResult
@@ -19308,7 +19126,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The service error response object.
     /// </summary>
-    public partial class Error
+    internal partial class Error
     {
         /// <summary>
         /// The service error code.
@@ -19351,26 +19169,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Error value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new Error instance for mocking.
-        /// </summary>
-        public static Error Error(
-            string code = default,
-            string message = default)
-        {
-            return new Error()
-            {
-                Code = code,
-                Message = message,
-            };
-        }
     }
 }
 #endregion class Error

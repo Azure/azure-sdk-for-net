@@ -507,6 +507,24 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CosmosDbLinkedServiceWithoutConnectionString = @"
+{
+    name: ""LinkedService-CosmosDb"",
+    properties:
+    {
+        type: ""CosmosDb"",
+        typeProperties: {
+            accountEndpoint: ""https://fakecosmosdb.documents.azure.com:443/"",
+            database: ""testdb"",
+            accountKey: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string CosmosDbLinkedServiceWithAccountKeyInAKV = @"
 {
     name: ""LinkedService-CosmosDb-with-AccountKey-in-AKV"",
@@ -2259,6 +2277,45 @@ namespace DataFactory.Tests.JsonSamples
             },
             ""database"": ""MyDatabase"",
             ""tenant"": ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedService = @"
+{
+    name: ""AzureFileStorageLinkedService"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            host : ""fakehost"",
+            userId : ""fakeaccess"",
+            password : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleCloudStorageLinkedService = @"
+{
+    name: ""GoogleCloudStorageLinkedService"",
+    properties:
+    {
+        type: ""GoogleCloudStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
         }
     }
 }";
