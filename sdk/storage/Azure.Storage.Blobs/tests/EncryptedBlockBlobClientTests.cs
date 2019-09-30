@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Azure.Core.Cryptography;
 using Azure.Storage.Blobs.Specialized.Cryptography;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -28,27 +29,15 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         /// <param name="blob">The blob client created.</param>
         /// <returns>The IDisposable to delete the container when finished.</returns>
-        private IDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, byte[] key)
+        private IDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, MockKeyEncryptionKey mock)
         {
             var disposable = this.GetNewContainer(out var container);
             blob = new EncryptedBlobClient(
                     new Uri(container.Uri, this.GetNewBlobName()), this.GetNewSharedKeyCredentials(),
-                    new ClientSideEncryptionKey(new IKeyEncryptionKey()));
+                    keyEncryptionKey: mock,
+                    keyResolver: mock);
 
             return disposable;
-        }
-
-        /// <summary>
-        /// Generates a new key to use for encryption.
-        /// IMPORTANT: this does not generate a secure key. We are generating a throwaway key for testing purposes, so
-        /// we generate it quickly but insecurely.
-        /// </summary>
-        /// <returns>A byte buffer with the generated key.</returns>
-        private byte[] GetRandomKey()
-        {
-            var buf = new byte[EncryptionConstants.ENCRYPTION_KEY_SIZE];
-            new Random().NextBytes(buf);
-            return buf;
         }
 
         // TODO this is a copy/paste. fix that.
@@ -134,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
         public void Upload(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
-            var key = GetRandomKey();
+            var key = new MockKeyEncryptionKey();
             using (this.GetEncryptedBlockBlobClient(out var blob, key))
             {
                 // upload with encryption
@@ -146,8 +135,11 @@ namespace Azure.Storage.Blobs.Test
                 normalBlob.Content.Read(encryptedData);
 
                 // encrypt original data manually for comparison
-                byte[] expectedEncryptedData = LocalManualEncryption(data, key,
-                    GetAndValidateEncryptionData(normalBlob.Properties.Metadata).ContentEncryptionIV);
+                var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
+                byte[] expectedEncryptedData = LocalManualEncryption(
+                    data,
+                    key.UnwrapKey(null, key.UnwrapKey(null, encryptionMetadata.WrappedContentKey.EncryptedKey)).ToArray(),
+                    encryptionMetadata.ContentEncryptionIV);
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
@@ -161,20 +153,24 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadAsync(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
-            var key = GetRandomKey();
+            var key = new MockKeyEncryptionKey();
             using (this.GetEncryptedBlockBlobClient(out var blob, key))
             {
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download without decrypting
-                var blobInfo = (await new BlobClient(blob.Uri, this.GetNewSharedKeyCredentials()).DownloadAsync()).Value;
-                var encryptedData = new byte[blobInfo.ContentLength];
-                await blobInfo.Content.ReadAsync(encryptedData);
+                var normalBlob = (await new BlobClient(blob.Uri, this.GetNewSharedKeyCredentials()).DownloadAsync()).Value;
+                var encryptedData = new byte[normalBlob.ContentLength];
+                await normalBlob.Content.ReadAsync(encryptedData);
 
                 // encrypt original data manually for comparison
-                byte[] expectedEncryptedData = LocalManualEncryption(data, key,
-                    GetAndValidateEncryptionData(blobInfo.Properties.Metadata).ContentEncryptionIV);
+                var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
+                byte[] expectedEncryptedData = LocalManualEncryption(
+                    data,
+                    (await key.UnwrapKeyAsync(null, key.UnwrapKey(null, encryptionMetadata.WrappedContentKey.EncryptedKey))
+                        .ConfigureAwait(false)).ToArray(),
+                    encryptionMetadata.ContentEncryptionIV);
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);

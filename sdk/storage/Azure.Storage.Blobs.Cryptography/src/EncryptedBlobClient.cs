@@ -75,8 +75,11 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKey keyEncryptionKey = default,
             IKeyEncryptionKeyResolver keyResolver = default,
             BlobClientOptions options = default)
-            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyEncryptionKey)))
-        { }
+            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+        {
+            this.KeyWrapper = keyEncryptionKey;
+            this.KeyResolver = keyResolver;
+        }
 
         ///// <summary>
         ///// Initializes a new instance of the <see cref="BlockBlobClient"/>
