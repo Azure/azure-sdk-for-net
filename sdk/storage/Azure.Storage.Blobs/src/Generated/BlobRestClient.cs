@@ -7822,7 +7822,7 @@ namespace Azure.Storage.Blobs
                         Azure.Core.Http.ETag _eTag = default;
                         System.DateTimeOffset _lastModified = default;
                         byte[] _contentHash = default;
-                        byte[] _xMSContentCrc64 = default;
+                        byte[] _contentCrc64 = default;
                         long _blobSequenceNumber = default;
                         string _encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
@@ -7839,7 +7839,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _xMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _contentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
@@ -7850,7 +7850,7 @@ namespace Azure.Storage.Blobs
                             _encryptionKeySha256 = _header;
                         }
 
-                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(_eTag, _lastModified, _contentHash, _xMSContentCrc64, _blobSequenceNumber, _encryptionKeySha256);
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(_eTag, _lastModified, _contentHash, _contentCrc64, _blobSequenceNumber, _encryptionKeySha256);
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
@@ -8066,7 +8066,7 @@ namespace Azure.Storage.Blobs
                         Azure.Core.Http.ETag _eTag = default;
                         System.DateTimeOffset _lastModified = default;
                         byte[] _contentHash = default;
-                        byte[] _xMSContentCrc64 = default;
+                        byte[] _contentCrc64 = default;
                         long _blobSequenceNumber = default;
                         string _encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
@@ -8083,7 +8083,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _xMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _contentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
@@ -8094,7 +8094,7 @@ namespace Azure.Storage.Blobs
                             _encryptionKeySha256 = _header;
                         }
 
-                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(_eTag, _lastModified, _contentHash, _xMSContentCrc64, _blobSequenceNumber, _encryptionKeySha256);
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(_eTag, _lastModified, _contentHash, _contentCrc64, _blobSequenceNumber, _encryptionKeySha256);
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
@@ -8370,7 +8370,7 @@ namespace Azure.Storage.Blobs
                         Azure.Core.Http.ETag _eTag = default;
                         System.DateTimeOffset _lastModified = default;
                         byte[] _contentHash = default;
-                        byte[] _xMSContentCrc64 = default;
+                        byte[] _contentCrc64 = default;
                         long _blobSequenceNumber = default;
                         string _encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
@@ -8387,7 +8387,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _xMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _contentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
@@ -8398,7 +8398,7 @@ namespace Azure.Storage.Blobs
                             _encryptionKeySha256 = _header;
                         }
 
-                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(_eTag, _lastModified, _contentHash, _xMSContentCrc64, _blobSequenceNumber, _encryptionKeySha256);
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(_eTag, _lastModified, _contentHash, _contentCrc64, _blobSequenceNumber, _encryptionKeySha256);
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
@@ -17936,7 +17936,7 @@ namespace Azure.Storage.Blobs.Models
         /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers.
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] XMSContentCrc64 { get; }
+        public byte[] ContentCrc64 { get; }
         #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
@@ -17957,14 +17957,14 @@ namespace Azure.Storage.Blobs.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
-            byte[] xMSContentCrc64,
+            byte[] contentCrc64,
             long blobSequenceNumber,
             string encryptionKeySha256)
             {
                 ETag = eTag;
                 LastModified = lastModified;
                 ContentHash = contentHash;
-                XMSContentCrc64 = xMSContentCrc64;
+                ContentCrc64 = contentCrc64;
                 BlobSequenceNumber = blobSequenceNumber;
                 EncryptionKeySha256 = encryptionKeySha256;
             }
@@ -17988,7 +17988,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 return false;
             }
-            if (!Equals(XMSContentCrc64, other.XMSContentCrc64))
+            if (!Equals(ContentCrc64, other.ContentCrc64))
             {
                 return false;
             }
@@ -18020,7 +18020,7 @@ namespace Azure.Storage.Blobs.Models
             hashCode.Add(ETag);
             hashCode.Add(LastModified);
             hashCode.Add(ContentHash);
-            hashCode.Add(XMSContentCrc64);
+            hashCode.Add(ContentCrc64);
             hashCode.Add(BlobSequenceNumber);
             if (EncryptionKeySha256 != null)
             {
@@ -18047,7 +18047,7 @@ namespace Azure.Storage.Blobs.Models
             long blobSequenceNumber,
             string encryptionKeySha256)
         {
-            return new PageInfo(eTag, lastModified, contentHash, xMSContentCrc64, blobSequenceNumber, encryptionKeySha256);
+            return new PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
         }
     }
 }
