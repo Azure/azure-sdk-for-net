@@ -16,6 +16,9 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ContentTypePropertyName = "contentType";
         private const string CERPropertyName = "cer";
 
+        private string _keyId;
+        private string _secretId;
+
         /// <summary>
         /// The Id of the certificate.
         /// </summary>
@@ -39,12 +42,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The Id of the Key Vault Key backing the certifcate.
         /// </summary>
-        public string KeyId { get; private set; }
+        public Uri KeyId => new Uri(_keyId);
 
         /// <summary>
         /// The Id of the Key Vault Secret which contains the PEM of PFX formatted content of the certficate and it's private key.
         /// </summary>
-        public string SecretId { get; private set; }
+        public Uri SecretId => new Uri(_secretId);
 
         /// <summary>
         /// The content type of the key vault Secret corresponding to the certificate.
@@ -66,11 +69,11 @@ namespace Azure.Security.KeyVault.Certificates
             switch (prop.Name)
             {
                 case KeyIdPropertyName:
-                    KeyId = prop.Value.GetString();
+                    _keyId = prop.Value.GetString();
                     break;
 
                 case SecretIdPropertyName:
-                    SecretId = prop.Value.GetString();
+                    _secretId = prop.Value.GetString();
                     break;
 
                 case ContentTypePropertyName:

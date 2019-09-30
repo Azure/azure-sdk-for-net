@@ -19,6 +19,8 @@ namespace Azure.Security.KeyVault.Secrets
         private static readonly JsonEncodedText s_deletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
         private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
 
+        private string _recoveryId;
+
         internal DeletedSecret()
         {
         }
@@ -26,7 +28,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// The identifier of the deleted secret. This is used to recover the secret.
         /// </summary>
-        public string RecoveryId { get; private set; }
+        public Uri RecoveryId => new Uri(_recoveryId);
 
         /// <summary>
         /// The time when the secret was deleted, in UTC.
@@ -43,7 +45,7 @@ namespace Azure.Security.KeyVault.Secrets
             switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
-                    RecoveryId = prop.Value.GetString();
+                    _recoveryId = prop.Value.GetString();
                     break;
 
                 case DeletedDatePropertyName:
@@ -66,7 +68,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (RecoveryId != null)
             {
-                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId);
+                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId.ToString());
             }
 
             if (DeletedDate.HasValue)
