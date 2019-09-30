@@ -583,7 +583,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var receivedEvents = new List<EventData>();
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(60));
 
             await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
@@ -634,7 +634,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(75));
 
             var firstSubscriberTask = Task.Run(async () =>
             {
@@ -704,7 +704,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
             );
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(60));
 
             await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
@@ -752,7 +752,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(75));
 
             var firstSubscriberTask = Task.Run(async () =>
             {
