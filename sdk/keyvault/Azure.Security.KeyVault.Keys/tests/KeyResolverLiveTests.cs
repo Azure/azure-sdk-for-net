@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var uriBuilder = new RequestUriBuilder();
 
-            uriBuilder.Assign(VaultUri);
+            uriBuilder.Reset(VaultUri);
 
             uriBuilder.AppendPath($"/keys/");
 
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var uriBuilder = new RequestUriBuilder();
 
-            uriBuilder.Assign(VaultUri);
+            uriBuilder.Reset(VaultUri);
 
             uriBuilder.AppendPath($"/secrets/");
 
