@@ -127,8 +127,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     LastEnqueuedEventInformation.UpdateMetrics(
                         TrackOneReceiver.RuntimeInfo.LastSequenceNumber,
                         ((parsedOffset >= 0) ? parsedOffset : default(long?)),
-                        TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc,
-                        TrackOneReceiver.RuntimeInfo.RetrievalTime);
+                        ((TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc)),
+                        ((TrackOneReceiver.RuntimeInfo.RetrievalTime == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.RetrievalTime)));
                 }
 
                 return events;
