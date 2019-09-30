@@ -24,6 +24,12 @@
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
+
+**Code Generation :** Generated code is found within the generated folder in each service. Code generation can be done using one of the methods listed below. 
+- Run `generate.ps1` found within the particular service directory. e.g. `sdk\compute\Microsoft.Azure.Management.Compute\src\generate.ps1` To use this you must have appropriate powershell modules installed. You can find instructions for installing those modules [here](https://github.com/Azure/adx-documentation-pr/blob/master/engineering/adx_netsdk_process.md#sdk-generation-from-updated-spec)
+- Run `generate.cmd` found within the tools directory in the repo root. Use the appropriate parameters e.g. `./tools/generate.cmd cognitiveservices/data-plane/Face` for client library or `./tools/generate.cmd storage/resource-manager` for management library.
+- Use autorest directly with appriopriate parameters e.g. `autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/Kusto/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Git\Clients\azure-sdk-for-net\sdk`
+
 # Management Libraries
 
 ## TO BUILD:

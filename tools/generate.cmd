@@ -60,7 +60,7 @@ call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=
 @echo off
 
 :: metadata
-mkdir %~dp0\..\src\SDKs\_metadata >nul 2>&1
-call powershell %~dp0\generateMetadata.ps1 %specsRepoUser% %specsRepoBranch% %version% %configFile% > %~dp0\..\src\SDKs\_metadata\%rp:/=_%.txt
+mkdir %~dp0\..\sdk\_metadata >nul 2>&1
+call powershell %~dp0\generateMetadata.ps1 %specsRepoUser% %specsRepoBranch% %version% %configFile% > %~dp0\..\sdk\_metadata\%rp:/=_%.txt
 
 endlocal

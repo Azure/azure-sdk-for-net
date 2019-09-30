@@ -21,15 +21,15 @@ When the build tools are installed, AutoRest code generation commandlets are als
 If a powershell script does not exist under the RP directory, create one using the script generation utility script [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/tools/HelperUtilities/psScripts/Create-AutoRestCodeGenerationScript.ps1)
 An example usage is as below
 ```
-tools\HelperUtilities\psScripts\Create-AutoRestCodeGenerationScript.ps1 -ResourceProvider compute/resource-manager -ScriptPath "src\SDKs\Compute\Management.Compute\"
+tools\HelperUtilities\psScripts\Create-AutoRestCodeGenerationScript.ps1 -ResourceProvider compute/resource-manager -ScriptPath "sdk\Compute\Management.Compute\"
 ```
 The generation script can also be manually created using an example [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/Compute/Management.Compute/generate.ps1).
 
-Please make sure that the `--output-folder` setting is set in the configuration file for the RP. This path should be relative to `src\SDKs`. For example, the `--output-folder` in configuration file for Compute is to 
+Please make sure that the `--output-folder` setting is set in the configuration file for the RP. This path should be relative to `sdk`. For example, the `--output-folder` in configuration file for Compute is to 
 ```
 $(csharp-sdks-folder)/Compute/Management.Compute/Generated
 ```
-The code generation script defaults `csharp-sdks-folder` to `src\SDKs`. If for some reason this is incorrectly set, one can explicitly set the final location where code is generated using `SdkGenerationDirectory` parameter. This is discouraged though. When using the `SdkGenerationDirectory` parameter the `generate.ps1` code would look like
+The code generation script defaults `csharp-sdks-folder` to `sdk`. If for some reason this is incorrectly set, one can explicitly set the final location where code is generated using `SdkGenerationDirectory` parameter. This is discouraged though. When using the `SdkGenerationDirectory` parameter the `generate.ps1` code would look like
 ```
 Start-AutoRestCodeGeneration -ResourceProvider "compute/resource-manager" -AutoRestVersion "latest" SdkGenerationDirectory "$PSScriptRoot"
 ```
@@ -55,7 +55,7 @@ RP is the resource provider's directory under SDKs, eg.: Compute
 To generate the `SdkInfo*.cs` file, please run the `generate.ps1` script
 
 ## Code generation artifacts
-If code is generated using `generate.ps1`, information related to the code generation gets logged in a `.txt` file under `src\SDKs\_metadata` eg.: [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/_metadata/compute_resource-manager.txt)
+If code is generated using `generate.ps1`, information related to the code generation gets logged in a `.txt` file under `sdk\_metadata` eg.: [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/_metadata/compute_resource-manager.txt)
 
 Please check the branch and fork of the REST spec for which the code was generated, this must always be `Azure` and `master` respectively for a PR to be valid. Code generated using specifications not checked in the Azure master branch will not be merged.
 

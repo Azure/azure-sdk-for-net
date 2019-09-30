@@ -7,7 +7,7 @@
 <#
 
 .SYNOPSIS
-    Powershell script that generates the C# code for your sdk usin the config file provided
+    Powershell script that generates the C# code for your sdk using the config file provided
 
 .DESCRIPTION
     This script:
@@ -67,7 +67,7 @@ $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
 $currPath = split-path $SCRIPT:MyInvocation.MyCommand.Path -parent
 $modulePath = "$currPath\SdkBuildTools\psModules\CodeGenerationModules\generateDotNetSdkCode.psm1"
-$logFile = "$currPath\..\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_")).txt"
+$logFile = "$currPath\..\sdk\_metadata\$($ResourceProvider.Replace("/","_")).txt"
 
 function NotifyError {
     param (
@@ -84,7 +84,7 @@ function NotifyError {
 }
 
 if([string]::IsNullOrWhiteSpace($SdkDirectory)) {
-    $SdkDirectory = "$currPath\..\src\SDKs\"
+    $SdkDirectory = "$currPath\..\sdk\"
 }
 
 if ($SpecsRepoName.EndsWith("-pr")) {
