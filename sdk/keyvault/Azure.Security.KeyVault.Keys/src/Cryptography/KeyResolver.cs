@@ -120,15 +120,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <inheritdoc/>
-        IKeyEncryptionKey IKeyEncryptionKeyResolver.Resolve(Uri keyId, CancellationToken cancellationToken)
+        IKeyEncryptionKey IKeyEncryptionKeyResolver.Resolve(string keyId, CancellationToken cancellationToken)
         {
-            return ((KeyResolver)this).Resolve(keyId, cancellationToken);
+            return ((KeyResolver)this).Resolve(new Uri(keyId), cancellationToken);
         }
 
         /// <inheritdoc/>
-        async Task<IKeyEncryptionKey> IKeyEncryptionKeyResolver.ResolveAsync(Uri keyId, CancellationToken cancellationToken)
+        async Task<IKeyEncryptionKey> IKeyEncryptionKeyResolver.ResolveAsync(string keyId, CancellationToken cancellationToken)
         {
-            return await ((KeyResolver)this).ResolveAsync(keyId, cancellationToken).ConfigureAwait(false);
+            return await ((KeyResolver)this).ResolveAsync(new Uri(keyId), cancellationToken).ConfigureAwait(false);
         }
 
         private Key GetKey(Uri keyId, CancellationToken cancellationToken)

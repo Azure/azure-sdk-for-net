@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             RegisterForCleanup(keyName);
 
-            IKeyEncryptionKey kek = await ((IKeyEncryptionKeyResolver)Resolver).ResolveAsync(key.Id);
+            IKeyEncryptionKey kek = await ((IKeyEncryptionKeyResolver)Resolver).ResolveAsync(key.Id.ToString());
 
             Assert.IsNotNull(kek);
         }
