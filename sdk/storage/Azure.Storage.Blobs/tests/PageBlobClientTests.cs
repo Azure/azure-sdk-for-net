@@ -1865,6 +1865,60 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("", builder.Snapshot);
         }
 
+        [Test]
+        public async Task CreateIfNotExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+
+                // Act
+                Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync(Constants.KB);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+                // Act
+                Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync(Constants.KB);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var invalidPageSize = 511;
+                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.CreateIfNotExistsAsync(invalidPageSize),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                        Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
+                            e.Message.Split('\n')[0]);
+                    });
+            }
+        }
+
         private PageBlobAccessConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
