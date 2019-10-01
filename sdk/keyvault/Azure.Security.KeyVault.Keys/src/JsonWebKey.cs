@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
-        public string CurveName { get; set; }
+        public KeyCurveName CurveName { get; set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
@@ -359,7 +359,7 @@ namespace Azure.Security.KeyVault.Keys
                         }
                         break;
                     case CurveNamePropertyName:
-                        CurveName = prop.Value.GetString();
+                        CurveName = prop.Value.GetString() ?? string.Empty;
                         break;
                     case NPropertyName:
                         N = Base64Url.Decode(prop.Value.GetString());
@@ -416,9 +416,9 @@ namespace Azure.Security.KeyVault.Keys
                 }
                 json.WriteEndArray();
             }
-            if (!string.IsNullOrEmpty(CurveName))
+            if (CurveName != default)
             {
-                json.WriteString(s_curveNamePropertyNameBytes, CurveName);
+                json.WriteString(s_curveNamePropertyNameBytes, CurveName.ToString());
             }
             if (N != null)
             {
@@ -565,7 +565,7 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private ECDsa Convert(bool includePrivateParameters, bool throwIfNotSupported)
         {
-            if (CurveName is null)
+            if (CurveName == default)
             {
                 if (throwIfNotSupported)
                 {
@@ -575,14 +575,14 @@ namespace Azure.Security.KeyVault.Keys
                 return null;
             }
 
-            KeyCurveName curveName = new KeyCurveName(CurveName);
+            KeyCurveName curveName = CurveName;
 
             int requiredParameterSize = curveName.KeyParameterSize;
             if (requiredParameterSize <= 0)
             {
                 if (throwIfNotSupported)
                 {
-                    throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+                    throw new InvalidOperationException($"invalid curve name: {CurveName.ToString()}");
                 }
 
                 return null;

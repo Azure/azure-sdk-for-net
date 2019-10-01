@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(jwk, nameof(jwk));
 
             // Only set the JWK if we support the algorithm locally.
-            _curve = new KeyCurveName(jwk.CurveName);
+            _curve = jwk.CurveName;
             if (_curve.IsSupported)
             {
                 // TODO: Log that we don't support the algorithm locally.

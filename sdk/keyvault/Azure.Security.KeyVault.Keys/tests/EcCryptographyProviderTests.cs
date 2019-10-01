@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                CurveName = KeyCurveName.P256.ToString(),
+                CurveName = KeyCurveName.P256,
                 KeyOps = new[] { KeyOperation.Sign, KeyOperation.Verify },
             };
 

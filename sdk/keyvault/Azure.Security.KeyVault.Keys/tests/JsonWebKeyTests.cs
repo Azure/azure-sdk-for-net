@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
-            Assert.AreEqual(friendlyName, jwk.CurveName);
+            Assert.AreEqual(friendlyName, jwk.CurveName.ToString());
 
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
             Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
@@ -274,7 +274,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return result;
             }
 
-            yield return new object[] { null, x, y, "nullCurveName", false };
+            yield return new object[] { string.Empty, x, y, "emptyCurveName", false };
             yield return new object[] { "invalid", x, y, "invalidCurveName", true };
 
             yield return new object[] { curveName, null, y, "nullX", false };
