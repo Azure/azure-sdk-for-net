@@ -10,9 +10,9 @@ namespace Azure.Storage.Blobs.Models
     internal class GetContainersAsyncCollection : StorageCollectionEnumerator<ContainerItem>
     {
         private readonly BlobServiceClient _client;
-        private readonly GetContainersOptions? _options;
+        private readonly GetBlobContainersOptions? _options;
 
-        public GetContainersAsyncCollection(
+        public GetBlobContainersAsyncCollection(
             BlobServiceClient client,
             GetContainersOptions? options)
         {
@@ -26,13 +26,13 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            Task<Response<ContainersSegment>> task = _client.GetContainersInternal(
+            Task<Response<BlobContainersSegment>> task = _client.GetBlobContainersInternal(
                 continuationToken,
                 _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            Response<ContainersSegment> response = isAsync ?
+            Response<BlobContainersSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
             return new Page<ContainerItem>(

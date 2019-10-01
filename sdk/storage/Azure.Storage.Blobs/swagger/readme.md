@@ -185,20 +185,21 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.ContainersSegment) {
-        $.ContainersSegment = $.ListContainersSegmentResponse;
+    if (!$.BlobContainersSegment) {
+        $.BlobContainersSegment = $.ListContainersSegmentResponse;
         delete $.ListContainersSegmentResponse;
-        $.ContainersSegment["x-az-public"] = false;
-        $.ContainersSegment.required.push("NextMarker");
+        $.BlobContainersSegment["x-az-public"] = false;
+        $.BlobContainersSegment.required.push("NextMarker");
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/?comp=list"]
   transform: >
     const def = $.get.responses["200"].schema;
-    if (def && def["$ref"] && !def["$ref"].endsWith("ContainersSegment")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/ContainersSegment");
+    if (def && def["$ref"] && !def["$ref"].endsWith("BlobContainersSegment")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobContainersSegment");
         $.get.responses["200"].schema = { "$ref": path };
     }
+    $.get.operationId = "Service_ListBlobContainersSegment";
 ```
 
 ### /{containerName}?restype=container
@@ -259,10 +260,10 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"]
   transform: >
     $.get.responses["200"].headers["x-ms-blob-public-access"]["x-ms-enum"].modelAsString = false;
-    $.get.responses["200"]["x-az-response-name"] = "ContainerAccessPolicy";
+    $.get.responses["200"]["x-az-response-name"] = "BlobContainerAccessPolicy";
     $.get.responses["200"]["x-az-response-schema-name"] = "SignedIdentifiers";
     $.put.responses["200"].description = "Success";
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 - from: swagger-document
   where: $.parameters.ContainerAcl
   transform: $["x-ms-client-name"] = "permissions"
@@ -988,6 +989,7 @@ directive:
   where: $.parameters.ListContainersInclude
   transform: >
     $["x-az-public"] = false;
+    $["x-ms-enum"].name = "ListBlobContainersIncludeType"
 ```
 
 ### Logging

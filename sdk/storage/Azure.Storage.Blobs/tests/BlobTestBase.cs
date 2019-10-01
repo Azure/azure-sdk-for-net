@@ -252,7 +252,7 @@ namespace Azure.Storage.Test.Shared
                 ResourceTypes = new AccountSasResourceTypes { Container = true, Object = true }.ToString(),
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
+                Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
@@ -263,7 +263,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
+                Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
@@ -274,7 +274,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
+                Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 

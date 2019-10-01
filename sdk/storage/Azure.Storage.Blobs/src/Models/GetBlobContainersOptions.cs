@@ -11,9 +11,12 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Specifies options for listing containers with the
-    /// <see cref="BlobServiceClient.GetContainersAsync"/> operation.
+    /// <see cref="BlobServiceClient.GetBlobContainersAsync"/> operation.
     /// </summary>
-    public struct GetContainersOptions : IEquatable<GetContainersOptions>
+
+    // this can also be an enum just for parity with getblobsoptions
+
+    public struct GetBlobContainersOptions : IEquatable<GetBlobContainersOptions>
     {
         /// <summary>
         /// Gets or sets a string that filters the results to return only
@@ -31,10 +34,10 @@ namespace Azure.Storage.Blobs.Models
         /// Convert the details into a ListContainersIncludeType value.
         /// </summary>
         /// <returns>A ListContainersIncludeType value.</returns>
-        internal ListContainersIncludeType? AsIncludeType()
+        internal ListBlobContainersIncludeType? AsIncludeType()
             => IncludeMetadata ?
-                ListContainersIncludeType.Metadata :
-                (ListContainersIncludeType?)null;
+                ListBlobContainersIncludeType.Metadata :
+                (ListBlobContainersIncludeType?)null;
 
         /// <summary>
         /// Check if two GetContainersOptions instances are equal.
@@ -43,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetContainersOptions other && Equals(other);
+            obj is GetBlobContainersOptions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the GetContainersOptions.
@@ -60,7 +63,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(GetContainersOptions left, GetContainersOptions right) =>
+        public static bool operator ==(GetBlobContainersOptions left, GetBlobContainersOptions right) =>
             left.Equals(right);
 
         /// <summary>
@@ -69,7 +72,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(GetContainersOptions left, GetContainersOptions right) =>
+        public static bool operator !=(GetBlobContainersOptions left, GetBlobContainersOptions right) =>
             !(left == right);
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(GetContainersOptions other) =>
+        public bool Equals(GetBlobContainersOptions other) =>
             IncludeMetadata == other.IncludeMetadata &&
             Prefix == other.Prefix;
     }

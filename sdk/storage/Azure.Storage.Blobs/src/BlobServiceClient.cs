@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs
 
         #region GetContainers
         /// <summary>
-        /// The <see cref="GetContainers"/> operation returns an async
+        /// The <see cref="GetBlobContainers"/> operation returns an async
         /// sequence of containers in the storage account.  Enumerating the
         /// containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
@@ -255,7 +255,7 @@ namespace Azure.Storage.Blobs
             new GetContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetContainersAsync"/> operation returns an async
+        /// The <see cref="GetBlobContainersAsync"/> operation returns an async
         /// sequence of containers in the storage account.  Enumerating the
         /// containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
@@ -284,12 +284,12 @@ namespace Azure.Storage.Blobs
             new GetContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetContainersInternal"/> operation returns a
+        /// The <see cref="GetBlobContainersInternal"/> operation returns a
         /// single segment of containers in the storage account, starting
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
-        /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetContainersAsync"/>
+        /// and the <see cref="BlobContainersSegment.NextMarker"/> if it's not
+        /// empty to make subsequent calls to <see cref="GetBlobContainersAsync"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
         ///
@@ -298,7 +298,7 @@ namespace Azure.Storage.Blobs
         /// <param name="continuationToken">
         /// An optional string value that identifies the segment of the list
         /// of containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ContainersSegment.NextMarker"/>
+        /// operation returns a non-empty <see cref="BlobContainersSegment.NextMarker"/>
         /// if the listing operation did not return all containers remaining
         /// to be listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="continuationToken"/> parameter
@@ -327,9 +327,9 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<ContainersSegment>> GetContainersInternal(
+        internal async Task<Response<BlobContainersSegment>> GetBlobContainersInternal(
             string continuationToken,
-            GetContainersOptions? options,
+            GetBlobContainersOptions? options,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -344,7 +344,7 @@ namespace Azure.Storage.Blobs
                     $"{nameof(options)}: {options}");
                 try
                 {
-                    return await BlobRestClient.Service.ListContainersSegmentAsync(
+                    return await BlobRestClient.Service.ListBlobContainersSegmentAsync(
                         Pipeline,
                         Uri,
                         marker: continuationToken,
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Blobs
         /// The name of the container to delete.
         /// </param>
         /// <param name="accessConditions">
-        /// Optional <see cref="ContainerAccessConditions"/> to add
+        /// Optional <see cref="BlobContainerAccessConditions"/> to add
         /// conditions on the deletion of this container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1085,7 +1085,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
             string containerName,
-            ContainerAccessConditions? accessConditions = default,
+            BlobContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlobContainerClient(containerName)
                 .Delete(
@@ -1103,7 +1103,7 @@ namespace Azure.Storage.Blobs
         /// The name of the container to delete.
         /// </param>
         /// <param name="accessConditions">
-        /// Optional <see cref="ContainerAccessConditions"/> to add
+        /// Optional <see cref="BlobContainerAccessConditions"/> to add
         /// conditions on the deletion of this container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1120,7 +1120,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
             string containerName,
-            ContainerAccessConditions? accessConditions = default,
+            BlobContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await
                 GetBlobContainerClient(containerName)

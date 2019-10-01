@@ -52,7 +52,7 @@ namespace Azure.Storage.Sas
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
         /// stored access policy.  The <see cref="BlobSasPermissions"/>,
-        /// <see cref="ContainerSasPermissions"/>, and
+        /// <see cref="BlobContainerSasPermissions"/>, and
         /// <see cref="SnapshotSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.Storage.Sas
             if (String.IsNullOrEmpty(BlobName))
             {
                 // Make sure the permission characters are in the correct order
-                Permissions = ContainerSasPermissions.Parse(Permissions).ToString();
+                Permissions = BlobContainerSasPermissions.Parse(Permissions).ToString();
                 Resource = Constants.Sas.Resource.Container;
             }
 
