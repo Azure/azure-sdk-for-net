@@ -148,7 +148,7 @@ namespace Azure.Identity
             {
                 AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return new Response<AccessToken>(response, result);
+                return Response.FromValue(response, result);
             }
 
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -162,7 +162,7 @@ namespace Azure.Identity
             {
                 AccessToken result = Deserialize(response.ContentStream);
 
-                return new Response<AccessToken>(response, result);
+                return Response.FromValue(response, result);
             }
 
             throw response.CreateRequestFailedException();
@@ -176,11 +176,11 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.Uri.Reset(_options.AuthorityHost);
 
-            request.UriBuilder.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token");
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 
@@ -199,13 +199,13 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.Uri.Reset(_options.AuthorityHost);
 
-            request.UriBuilder.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token");
 
-            string clientAssertion = CreateClientAssertionJWT(clientId, request.UriBuilder.ToString(), clientCertficate);
+            string clientAssertion = CreateClientAssertionJWT(clientId, request.Uri.ToString(), clientCertficate);
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_assertion_type={Uri.EscapeDataString(ClientAssertionType)}&client_assertion={Uri.EscapeDataString(clientAssertion)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 

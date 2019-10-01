@@ -7,10 +7,10 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal class KeyBackup : IJsonDeserializable, IJsonSerializable
     {
-        public byte[] Value { get; set; }
-
         private const string ValuePropertyName = "value";
         private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
+
+        public byte[] Value { get; set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {

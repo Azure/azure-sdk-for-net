@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -54,10 +53,10 @@ namespace Azure.Storage.Common.Test
             if (TrackedRequestMethods.Contains(message.Request.Method))
             {
                 CurrentInvocationNumber++;
-                HostsSetInRequests.Add(message.Request.UriBuilder.Host);
+                HostsSetInRequests.Add(message.Request.Uri.Host);
                 if (CurrentInvocationNumber <= NumberOfReadFailuresToSimulate)
                 {
-                    message.Response = new MockResponse(Simulate404 && message.Request.UriBuilder.Host == SecondaryUri.Host ? 404 : 429);
+                    message.Response = new MockResponse(Simulate404 && message.Request.Uri.Host == SecondaryUri.Host ? 404 : 429);
                     return true;
                 }
             }

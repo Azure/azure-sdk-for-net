@@ -22,18 +22,16 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(Uris))]
         public void RoundtripWithUri(Uri uri)
         {
-            var uriBuilder = new RequestUriBuilder
-            {
-                Uri = uri
-            };
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(uri);
 
             Assert.AreEqual(uri.Scheme, uriBuilder.Scheme);
             Assert.AreEqual(uri.Host, uriBuilder.Host);
             Assert.AreEqual(uri.Port, uriBuilder.Port);
             Assert.AreEqual(uri.AbsolutePath, uriBuilder.Path);
             Assert.AreEqual(uri.Query, uriBuilder.Query);
-            Assert.AreEqual(uri, uriBuilder.Uri);
-            Assert.AreSame(uri, uriBuilder.Uri);
+            Assert.AreEqual(uri, uriBuilder.ToUri());
+            Assert.AreSame(uri, uriBuilder.ToUri());
         }
 
         [TestCase("", "http://localhost/")]
@@ -50,7 +48,7 @@ namespace Azure.Core.Tests
                 Path = path
             };
 
-            Assert.AreEqual(expected, uriBuilder.Uri.ToString());
+            Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
         }
 
         [TestCase("", "http://localhost/")]
@@ -67,7 +65,7 @@ namespace Azure.Core.Tests
                 Query = query
             };
 
-            Assert.AreEqual(expected, uriBuilder.Uri.ToString());
+            Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
         }
 
         [TestCase(null)]
@@ -82,11 +80,11 @@ namespace Azure.Core.Tests
                 Query = "a"
             };
 
-            Assert.AreEqual("http://localhost/?a", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/?a", uriBuilder.ToUri().ToString());
 
             uriBuilder.Query = query;
 
-            Assert.AreEqual("http://localhost/", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/", uriBuilder.ToUri().ToString());
         }
 
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
@@ -104,7 +102,7 @@ namespace Azure.Core.Tests
                 Path = path
             };
 
-            Assert.AreEqual("http://localhost/" + expectedPath, uriBuilder.Uri.OriginalString);
+            Assert.AreEqual("http://localhost/" + expectedPath, uriBuilder.ToUri().OriginalString);
         }
 
         [Test]
@@ -118,7 +116,7 @@ namespace Azure.Core.Tests
                 Query = "\u1234"
             };
 
-            Assert.AreEqual("http://localhost/?\u1234", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/?\u1234", uriBuilder.ToUri().ToString());
         }
 
         [Test]
@@ -132,7 +130,7 @@ namespace Azure.Core.Tests
             };
             uriBuilder.AppendQuery("a", null);
 
-            Assert.AreEqual("http://localhost/?a=", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/?a=", uriBuilder.ToUri().ToString());
         }
 
         [TestCase(null, "http://localhost/?a=b&c=d")]
@@ -152,7 +150,7 @@ namespace Azure.Core.Tests
             uriBuilder.AppendQuery("a", "b");
             uriBuilder.AppendQuery("c", "d");
 
-            Assert.AreEqual(expectedResult, uriBuilder.Uri.ToString());
+            Assert.AreEqual(expectedResult, uriBuilder.ToUri().ToString());
         }
 
         [TestCase(null, "", "http://localhost/")]
@@ -172,46 +170,63 @@ namespace Azure.Core.Tests
             };
             uriBuilder.AppendPath(append);
 
-            Assert.AreEqual(expectedResult, uriBuilder.Uri.OriginalString);
+            Assert.AreEqual(expectedResult, uriBuilder.ToUri().OriginalString);
         }
 
         [Test]
         public void AppendingQueryResetsUri()
         {
-            var uriBuilder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("a", "b");
 
-            Assert.AreEqual("http://localhost/?a=b", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/?a=b", uriBuilder.ToUri().ToString());
         }
 
         [Test]
         public void AppendingPathResetsUri()
         {
-            var uriBuilder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendPath("a");
 
-            Assert.AreEqual("http://localhost/a", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/a", uriBuilder.ToUri().ToString());
         }
 
         [Test]
         public void AppendingPathAfterQueryAndSettingTheUriWorks()
         {
-            var uriBuilder = new RequestUriBuilder
-            {
-                Uri = new Uri("http://localhost/")
-            };
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("query", "value");
             uriBuilder.AppendPath("a");
             uriBuilder.AppendPath("b");
             uriBuilder.AppendQuery("c", "d");
 
-            Assert.AreEqual("http://localhost/ab?query=value&c=d", uriBuilder.Uri.ToString());
+            Assert.AreEqual("http://localhost/ab?query=value&c=d", uriBuilder.ToUri().ToString());
+        }
+
+        [TestCase("?a", "?a")]
+        [TestCase("?a=b", "?a=b")]
+        [TestCase("?a=b&", "?a=b&")]
+        [TestCase("?a=b&d", "?a=b&")]
+        [TestCase("?a=b&d=1&", "?a=b&")]
+        [TestCase("?a=b&d=1&a1", "?a=b&a1")]
+        [TestCase("?a=b&d=1&a1=", "?a=b&a1=")]
+        [TestCase("?a=b&d=1&a1=&", "?a=b&a1=&")]
+        [TestCase("?d&d&d&", "?")]
+        [TestCase("?a&a&a&a", "?a&a&a&a")]
+        public void QueryIsSanitized(string input, string expected)
+        {
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/" + input));
+
+            Assert.AreEqual("http://localhost/" + expected, uriBuilder.ToString(new[]
+            {
+                "A",
+                "a1",
+                "a-2"
+            }));
         }
     }
 }

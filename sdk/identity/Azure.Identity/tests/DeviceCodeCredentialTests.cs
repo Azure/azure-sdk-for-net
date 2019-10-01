@@ -161,7 +161,7 @@ namespace Azure.Identity.Tests
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
         {
-            string requestUrl = mockRequest.UriBuilder.Uri.AbsoluteUri;
+            string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
             if (requestUrl.StartsWith("https://login.microsoftonline.com/common/discovery/instance"))
             {

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -37,6 +36,26 @@ namespace Azure.Storage.Queues
         /// Gets the HttpPipeline used to send REST requests.
         /// </summary>
         protected internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the service client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the service client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new QueueUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -600,7 +619,7 @@ namespace Azure.Storage.Queues
         {
             QueueClient queue = GetQueueClient(queueName);
             Response response = queue.Create(metadata, cancellationToken);
-            return new Response<QueueClient>(response, queue);
+            return Response.FromValue(response, queue);
         }
 
         /// <summary>
@@ -628,7 +647,7 @@ namespace Azure.Storage.Queues
         {
             QueueClient queue = GetQueueClient(queueName);
             Response response = await queue.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
-            return new Response<QueueClient>(response, queue);
+            return Response.FromValue(response, queue);
         }
         #endregion CreateQueue
 

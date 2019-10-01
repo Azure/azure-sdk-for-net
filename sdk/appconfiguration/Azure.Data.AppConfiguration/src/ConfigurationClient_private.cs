@@ -5,13 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -21,11 +19,13 @@ namespace Azure.Data.AppConfiguration
         private const string AcceptDatetimeHeader = "Accept-Datetime";
         private const string KvRoute = "/kv/";
         private const string RevisionsRoute = "/revisions/";
+        private const string LocksRoute = "/locks/";
         private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
         private const string FieldsQueryFilter = "$select";
         private const string IfMatchName = "If-Match";
         private const string IfNoneMatch = "If-None-Match";
+        private const string ETag = "ETag";
 
         private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
@@ -37,12 +37,12 @@ namespace Azure.Data.AppConfiguration
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-            return new Response<ConfigurationSetting>(response, result);
+            return Response.FromValue(response, result);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
+            return Response.FromValue(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -91,8 +91,20 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
-            builder.Uri = _baseUri;
+            builder.Reset(_baseUri);
             builder.AppendPath(KvRoute);
+            builder.AppendPath(key);
+
+            if (label != null)
+            {
+                builder.AppendQuery(LabelQueryFilter, label);
+            }
+        }
+
+        private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
+        {
+            builder.Reset(_baseUri);
+            builder.AppendPath(LocksRoute);
             builder.AppendPath(key);
 
             if (label != null)
@@ -170,14 +182,14 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Uri = _baseUri;
+            builder.Reset(_baseUri);
             builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Uri = _baseUri;
+            builder.Reset(_baseUri);
             builder.AppendPath(RevisionsRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }

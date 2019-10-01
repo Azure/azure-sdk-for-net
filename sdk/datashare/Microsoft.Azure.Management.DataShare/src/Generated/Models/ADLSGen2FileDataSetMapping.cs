@@ -48,13 +48,16 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="dataSetId">Gets the id of source dataset.</param>
         /// <param name="dataSetMappingStatus">Gets the status of the dataset
         /// mapping. Possible values include: 'Ok', 'Broken'</param>
-        public ADLSGen2FileDataSetMapping(string filePath, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetMappingStatus = default(string))
+        /// <param name="outputType">Type of output file. Possible values
+        /// include: 'Csv', 'Parquet'</param>
+        public ADLSGen2FileDataSetMapping(string filePath, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetMappingStatus = default(string), string outputType = default(string))
             : base(id, name, type)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
             FilePath = filePath;
             FileSystem = fileSystem;
+            OutputType = outputType;
             ResourceGroup = resourceGroup;
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
@@ -90,6 +93,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.fileSystem")]
         public string FileSystem { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of output file. Possible values include: 'Csv',
+        /// 'Parquet'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outputType")]
+        public string OutputType { get; set; }
 
         /// <summary>
         /// Gets or sets resource group of storage account.

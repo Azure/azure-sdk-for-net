@@ -1,6 +1,5 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace Azure.Storage.Sas
     /// parameters.  It includes components used by all Azure Storage resources
     /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
-    /// 
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public partial class SasQueryParameters
@@ -40,61 +38,76 @@ namespace Azure.Storage.Sas
         // All members are immutable or values so copies of this struct are thread safe.
 
         // sv
-        private readonly string version;
+        private readonly string _version;
 
         // ss
-        private readonly string services;
+        private readonly string _services;
 
         // srt
-        private readonly string resourceTypes;
+        private readonly string _resourceTypes;
 
         // spr
-        private readonly SasProtocol protocol;
+        private readonly SasProtocol _protocol;
 
         // st
-        private readonly DateTimeOffset startTime;
+        private readonly DateTimeOffset _startTime;
 
         // se
-        private readonly DateTimeOffset expiryTime;
+        private readonly DateTimeOffset _expiryTime;
 
         // sip
-        private readonly IPRange ipRange;
+        private readonly IPRange _ipRange;
 
         // si
-        private readonly string identifier;
+        private readonly string _identifier;
 
         // sr
-        private readonly string resource;
+        private readonly string _resource;
 
         // sp
-        private readonly string permissions;
+        private readonly string _permissions;
 
         // sig
-        private readonly string signature;
+        private readonly string _signature;
+
+        // rscc
+        private readonly string _cacheControl;
+
+        // rscd
+        private readonly string _contentDisposition;
+
+        // rsce
+        private readonly string _contentEncoding;
+
+        // rscl
+        private readonly string _contentLanguage;
+
+        // rsct
+        private readonly string _contentType;
 
         /// <summary>
         /// Gets the storage service version to use to authenticate requests
         /// made with this shared access signature, and the service version to
         /// use when handling requests made with this shared access signature.
         /// </summary>
-        public string Version => version ?? DefaultSasVersion;
+        public string Version => _version ?? DefaultSasVersion;
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared
-        /// access signature. 
+        /// access signature.
         /// </summary>
-        public string Services => services ?? string.Empty;
+        public string Services => _services ?? string.Empty;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public string ResourceTypes => resourceTypes ?? string.Empty;
+        public string ResourceTypes => _resourceTypes ?? string.Empty;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
         /// the shared access signature.
         /// </summary>
-        public SasProtocol Protocol => protocol;
+        public SasProtocol Protocol => _protocol;
 
         /// <summary>
         /// Gets the optional time at which the shared access signature becomes
@@ -102,32 +115,32 @@ namespace Azure.Storage.Sas
         /// time when the storage service receives the request.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset StartTime => startTime;
+        public DateTimeOffset StartTime => _startTime;
 
         /// <summary>
         /// Gets the time at which the shared access signature becomes invalid.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset ExpiryTime => expiryTime;
+        public DateTimeOffset ExpiryTime => _expiryTime;
 
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
         /// to accept requests.  When specifying a range, note that the range
         /// is inclusive.
         /// </summary>
-        public IPRange IPRange => ipRange;
+        public IPRange IPRange => _ipRange;
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
         /// correlates to an access policy specified for the container, queue,
         /// or share.
         /// </summary>
-        public string Identifier => identifier ?? string.Empty;
+        public string Identifier => _identifier ?? string.Empty;
 
         /// <summary>
         /// Gets the resources are accessible via the shared access signature.
         /// </summary>
-        public string Resource => resource ?? string.Empty;
+        public string Resource => _resource ?? string.Empty;
 
         /// <summary>
         /// Gets the permissions associated with the shared access signature.
@@ -135,7 +148,37 @@ namespace Azure.Storage.Sas
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public string Permissions => permissions ?? string.Empty;
+        public string Permissions => _permissions ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Cache-Control response header, which allows for
+        /// specifying the client-side caching to be used for blob and file downloads.
+        /// </summary>
+        public string CacheControl => _cacheControl ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Content-Disposition response header, which allows for
+        /// specifying the way that the blob or file content can be displayed in the browser.
+        /// </summary>
+        public string ContentDisposition => _contentDisposition ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Content-Encoding response header, which allows for specifying
+        /// the type of encoding used for blob and file downloads.
+        /// </summary>
+        public string ContentEncoding => _contentEncoding ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Content-Language response header, which allows for specifying the
+        /// language of the downloaded blob or file content.
+        /// </summary>
+        public string ContentLanguage => _contentLanguage ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Content-Type response header, which allows for specifying the
+        /// type of the downloaded blob or file content.
+        /// </summary>
+        public string ContentType => _contentType ?? string.Empty;
 
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
@@ -143,26 +186,26 @@ namespace Azure.Storage.Sas
         /// The signature is an HMAC computed over the string-to-sign and key
         /// using the SHA256 algorithm, and then encoded using Base64 encoding.
         /// </summary>
-        public string Signature => signature ?? string.Empty;
+        public string Signature => _signature ?? string.Empty;
 
         #region Blob Only Parameters
         // skoid
-        internal readonly string keyObjectId;
+        internal readonly string _keyObjectId;
 
         // sktid
-        internal readonly string keyTenantId;
+        internal readonly string _keyTenantId;
 
         // skt
-        internal readonly DateTimeOffset keyStart;
+        internal readonly DateTimeOffset _keyStart;
 
         // ske
-        internal readonly DateTimeOffset keyExpiry;
+        internal readonly DateTimeOffset _keyExpiry;
 
         // sks
-        internal readonly string keyService;
+        internal readonly string _keyService;
 
         // skv
-        internal readonly string keyVersion;
+        internal readonly string _keyVersion;
         #endregion Blob Only Parameters
 
         /// <summary>
@@ -175,7 +218,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type.
-        /// 
+        ///
         /// Expects decoded values.
         /// </summary>
         internal SasQueryParameters(
@@ -195,26 +238,36 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyStart = default,
             DateTimeOffset keyExpiry = default,
             string keyService = default,
-            string keyVersion = default)
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
         {
             // Assume URL-decoded
-            this.version = version ?? DefaultSasVersion;
-            this.services = services ?? string.Empty;
-            this.resourceTypes = resourceTypes ?? string.Empty;
-            this.protocol = protocol;
-            this.startTime = startTime;
-            this.expiryTime = expiryTime;
-            this.ipRange = ipRange;
-            this.identifier = identifier ?? string.Empty;
-            this.resource = resource ?? string.Empty;
-            this.permissions = permissions ?? string.Empty;
-            this.signature = signature ?? string.Empty;  // Should never be null
-            keyObjectId = keyOid;
-            keyTenantId = keyTid;
-            this.keyStart = keyStart;
-            this.keyExpiry = keyExpiry;
-            this.keyService = keyService;
-            this.keyVersion = keyVersion;
+            _version = version ?? DefaultSasVersion;
+            _services = services ?? string.Empty;
+            _resourceTypes = resourceTypes ?? string.Empty;
+            _protocol = protocol;
+            _startTime = startTime;
+            _expiryTime = expiryTime;
+            _ipRange = ipRange;
+            _identifier = identifier ?? string.Empty;
+            _resource = resource ?? string.Empty;
+            _permissions = permissions ?? string.Empty;
+            _signature = signature ?? string.Empty;  // Should never be null
+            _keyObjectId = keyOid;
+            _keyTenantId = keyTid;
+            _keyStart = keyStart;
+            _keyExpiry = keyExpiry;
+            _keyService = keyService;
+            _keyVersion = keyVersion;
+            _cacheControl = cacheControl;
+            _contentDisposition = contentDisposition;
+            _contentEncoding = contentEncoding;
+            _contentLanguage = contentLanguage;
+            _contentType = contentType;
         }
 
         /// <summary>
@@ -241,62 +294,77 @@ namespace Azure.Storage.Sas
                 switch (kv.Key.ToUpperInvariant())
                 {
                     case Constants.Sas.Parameters.VersionUpper:
-                        version = kv.Value;
+                        _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        services = kv.Value;
+                        _services = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
-                        resourceTypes = kv.Value;
+                        _resourceTypes = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
-                        protocol = SasProtocol.Parse(kv.Value);
+                        _protocol = SasProtocol.Parse(kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
-                        startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                        _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.ExpiryTimeUpper:
-                        expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.IPRangeUpper:
-                        ipRange = IPRange.Parse(kv.Value);
+                        _ipRange = IPRange.Parse(kv.Value);
                         break;
                     case Constants.Sas.Parameters.IdentifierUpper:
-                        identifier = kv.Value;
+                        _identifier = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ResourceUpper:
-                        resource = kv.Value;
+                        _resource = kv.Value;
                         break;
                     case Constants.Sas.Parameters.PermissionsUpper:
-                        permissions = kv.Value;
+                        _permissions = kv.Value;
                         break;
                     case Constants.Sas.Parameters.SignatureUpper:
-                        signature = kv.Value;
+                        _signature = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.CacheControlUpper:
+                        _cacheControl = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.ContentDispositionUpper:
+                        _contentDisposition = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.ContentEncodingUpper:
+                        _contentEncoding = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.ContentLanguageUpper:
+                        _contentLanguage = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.ContentTypeUpper:
+                        _contentType = kv.Value;
                         break;
 
                     // Optionally include Blob parameters
                     case Constants.Sas.Parameters.KeyOidUpper:
-                        if (includeBlobParameters) { keyObjectId = kv.Value; }
+                        if (includeBlobParameters) { _keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyTidUpper:
-                        if (includeBlobParameters) { keyTenantId = kv.Value; }
+                        if (includeBlobParameters) { _keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyStartUpper:
-                        if (includeBlobParameters) { keyStart = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
+                        if (includeBlobParameters) { _keyStart = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyExpiryUpper:
-                        if (includeBlobParameters) { keyExpiry = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
+                        if (includeBlobParameters) { _keyExpiry = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyServiceUpper:
-                        if (includeBlobParameters) { keyService = kv.Value; }
+                        if (includeBlobParameters) { _keyService = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyVersionUpper:
-                        if (includeBlobParameters) { keyVersion = kv.Value; }
+                        if (includeBlobParameters) { _keyVersion = kv.Value; }
                         else { isSasKey = false; }
                         break;
 
@@ -396,36 +464,61 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Permissions, Permissions);
             }
 
+            if (!string.IsNullOrWhiteSpace(CacheControl))
+            {
+                AddToBuilder(Constants.Sas.Parameters.CacheControl, CacheControl);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentDisposition))
+            {
+                AddToBuilder(Constants.Sas.Parameters.ContentDisposition, ContentDisposition);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentEncoding))
+            {
+                AddToBuilder(Constants.Sas.Parameters.ContentEncoding, ContentEncoding);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentLanguage))
+            {
+                AddToBuilder(Constants.Sas.Parameters.ContentLanguage, ContentLanguage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentType))
+            {
+                AddToBuilder(Constants.Sas.Parameters.ContentType, ContentType);
+            }
+
             if (includeBlobParameters)
             {
-                if (!string.IsNullOrWhiteSpace(keyObjectId))
+                if (!string.IsNullOrWhiteSpace(_keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyOid, keyObjectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyOid, _keyObjectId);
                 }
 
-                if (!string.IsNullOrWhiteSpace(keyTenantId))
+                if (!string.IsNullOrWhiteSpace(_keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTid, keyTenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTid, _keyTenantId);
                 }
 
-                if (keyStart != DateTimeOffset.MinValue)
+                if (_keyStart != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(keyStart.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_keyStart.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (keyExpiry != DateTimeOffset.MinValue)
+                if (_keyExpiry != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(keyExpiry.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_keyExpiry.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (!string.IsNullOrWhiteSpace(keyService))
+                if (!string.IsNullOrWhiteSpace(_keyService))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyService, keyService);
+                    AddToBuilder(Constants.Sas.Parameters.KeyService, _keyService);
                 }
 
-                if (!string.IsNullOrWhiteSpace(keyVersion))
+                if (!string.IsNullOrWhiteSpace(_keyVersion))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, keyVersion);
+                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, _keyVersion);
                 }
             }
 

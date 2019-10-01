@@ -11,12 +11,13 @@ import {
     IParameters, IParameter,
     IResponses, IResponse,
     IHeaders, IHeader,
-    IOperationGroup, IOperation } from './models';
+    IOperationGroup, IOperation
+} from './models';
 import IndentWriter from './writer';
 import * as naming from './naming';
 import * as types from './types';
 
-export async function generate(model: IServiceModel) : Promise<void> {
+export async function generate(model: IServiceModel): Promise<void> {
     const w = new IndentWriter();
 
     model.info.license.header.split(/\n/g).forEach(
@@ -26,7 +27,7 @@ export async function generate(model: IServiceModel) : Promise<void> {
     w.line(`// This file was automatically generated.  Do not edit.`);
     w.line();
 
-    w.line(`#pragma warning disable IDE0016 // Null check can be simplified `);
+    w.line(`#pragma warning disable IDE0016 // Null check can be simplified`);
     w.line(`#pragma warning disable IDE0017 // Variable declaration can be inlined`);
     w.line(`#pragma warning disable IDE0018 // Object initialization can be simplified`);
     w.line(`#pragma warning disable SA1402  // File may only contain a single type`);
@@ -136,7 +137,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const valueName = "_value";
     const pairName = `_headerPair`;
     let responseName = "_response";
-    const resultName = "_result";
     const scopeName = "_scope";
     const operationName = "operationName";
     const result = operation.response.model;
@@ -147,12 +147,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
 
     returnTypeArguments.push(returnType);
 
-    if (result.returnStream)
-    {
+    if (result.returnStream) {
         returnTypeArguments.push("System.IO.Stream");
     }
 
-    const sendMethodReturnType = returnTypeArguments.length == 1? returnTypeArguments[0] : `(${returnTypeArguments.join(", ")})`;
+    const sendMethodReturnType = returnTypeArguments.length == 1 ? returnTypeArguments[0] : `(${returnTypeArguments.join(", ")})`;
 
     w.line(`#region ${regionName}`);
 
@@ -163,8 +162,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
     for (const arg of operation.request.arguments) {
         const desc = arg.description || arg.model.description;
-        if (desc)
-        {
+        if (desc) {
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
         }
     }
@@ -174,7 +172,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
-    w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);        
+    w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -183,10 +181,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             if (!arg.required) { w.write(` = default`); }
         }
         if (sync) {
-            if (separateParams()) {  w.line(`,`); }
+            if (separateParams()) { w.line(`,`); }
             w.write(`bool async = true`);
         }
-        if (separateParams()) {  w.line(`,`); }
+        if (separateParams()) { w.line(`,`); }
         w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
         w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
@@ -197,8 +195,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.line(`try`);
         w.scope('{', '}', () => {
             for (const arg of operation.request.arguments) {
-                if (arg.trace)
-                {
+                if (arg.trace) {
                     w.line(`${scopeName}.AddAttribute("${naming.parameter(arg.name)}", ${naming.parameter(arg.clientName)});`);
                 }
             }
@@ -213,7 +210,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.write(`))`);
             });
             w.scope('{', '}', () => {
-                if (result.returnStream){
+                if (result.returnStream) {
                     w.line(`// Avoid buffering if stream is going to be returned to the caller`);
                     w.line(`${messageName}.BufferResponse = false;`);
                 }
@@ -239,12 +236,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
 
                 const createResponse = `${methodName}_CreateResponse(${responseName})`;
-                if (result.returnStream)
-                {
+                if (result.returnStream) {
                     w.line(`return (${createResponse}, ${messageName}.ExtractResponseContent());`);
                 }
-                else
-                {
+                else {
                     w.line(`return ${createResponse};`);
                 }
             });
@@ -260,9 +255,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         });
     });
     w.line();
-    
+
     // #endregion Top level method
-    
+
     // #region Create Request
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} request.`);
@@ -270,8 +265,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
     for (const arg of operation.request.arguments) {
         const desc = arg.description || arg.model.description;
-        if (desc)
-        {
+        if (desc) {
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
         }
     }
@@ -331,7 +325,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             }
             if (indent) { w.write(`}`); }
             w.line();
-        };        
+        };
 
         if (operation.request.arguments.length > 0) {
             w.line(`// Validation`);
@@ -350,7 +344,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
-        w.line(`${requestName}.UriBuilder.Uri = ${uri};`);
+        w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;
@@ -358,7 +352,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     if (!query.skipUrlEncoding && !constant) {
                         value = `System.Uri.EscapeDataString(${value})`
                     }
-                    w.write(`${requestName}.UriBuilder.AppendQuery("${query.name}", ${value});`);
+                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value});`);
                 });
             }
         }
@@ -366,7 +360,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line(`// TODO: Ignoring request path vars: ${operation.request.paths.map(p => p.name).join(', ')}`)
         }
         w.line();
-        
+
         if (operation.request.headers.length > 0) {
             w.line(`// Add request headers`);
             for (const header of operation.request.headers) {
@@ -423,14 +417,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     } else {
                         let itemName =
                             isObjectType(bodyType.itemType) || isEnumType(bodyType.itemType) ? bodyType.itemType.name :
-                            isPrimitiveType(bodyType.itemType) ? bodyType.itemType.type :
-                            "unexpected type";
+                                isPrimitiveType(bodyType.itemType) ? bodyType.itemType.type :
+                                    "unexpected type";
                         w.line(`// TODO: Serialize array of ${itemName}`);
                     }
                 } else {
                     w.line(`System.Xml.Linq.XElement ${bodyName} = null;`);
                 }
-                
+
                 w.line(`string ${textName} = ${bodyName}.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
@@ -472,18 +466,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     } else {
                         processResponse(response);
 
-                        w.line(`// Create the response`)
-                        w.write(`${returnType} ${resultName} =`);
-                        w.scope(() => {
-                            w.write(`new ${returnType}(`);
-                            w.scope(() => {
-                                w.line(`${responseName},`);
-                                w.line(`${valueName});`);
-                            });
-                        });
-                        w.line();
-                        
-                        w.line(`return ${resultName};`);
+                        w.line(`// Create the response`);
+                        w.line(`return Response.FromValue(${responseName}, ${valueName});`);
                     }
                 });
             }
@@ -506,7 +490,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             }
         });
     });
-    
+
     function processResponse(response: IResponse) {
         if (!response.model) { throw `Cannot deserialize without a response model (in ${name})`; }
         const model = response.model;
@@ -551,7 +535,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                                     w.line(`${target},`);
                                     w.write(`${types.getName(itemType)}.FromXml));`);
                                 });
-                            });    
+                            });
                         });
                     } else if (model.type === `object`) {
                         w.line(`${types.getName(model)} ${valueName} = new ${types.getName(model)}();`);
@@ -561,7 +545,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                             responseType.itemType &&
                             isObjectType(responseType.itemType) &&
                             responseType.itemType.deserialize) {
-    
+
                             // Get the target
                             const itemType = responseType.itemType;
                             const { xname, wrapped } = getXmlShape(itemType.name, responseType.xml);
@@ -576,7 +560,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                                         w.line(`${target},`);
                                         w.write(`${types.getName(itemType)}.FromXml));`);
                                     });
-                                });    
+                                });
                             });
                         }
                     } else {
@@ -619,7 +603,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                             w.write(`${types.convertFromString(headerName, header.model, service)}`);
                         }
                         w.line(`;`);
-                    });    
+                    });
                 }
             }
             w.line();
@@ -652,8 +636,8 @@ function generateModels(w: IndentWriter, model: IServiceModel): void {
     const types = <[string, IModelType][]>Object.entries(model.models);
     types.sort((a, b) =>
         a[0] < b[0] ? -1 :
-        a[0] > b[0] ? 1 :
-        0);
+            a[0] > b[0] ? 1 :
+                0);
     for (const [name, def] of types) {
         if (fencepost()) { w.line(); }
         if (isEnumType(def) && !def.modelAsString) { generateEnum(w, model, def); }
@@ -674,9 +658,9 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
         w.line(`/// ${type.description || type.name + ' values'}`);
         w.line(`/// </summary>`)
         const notReallyPlural = naming.type(type.name).endsWith('Status');
-        if (notReallyPlural) {  w.line(`#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names`); }
+        if (notReallyPlural) { w.line(`#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names`); }
         w.line(`${type.public ? 'public' : 'internal'} enum ${naming.type(type.name)}`);
-        if (notReallyPlural) {  w.line(`#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names`); }
+        if (notReallyPlural) { w.line(`#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names`); }
         const separator = IndentWriter.createFenceposter();
         w.scope(`{`, `}`, () => {
             for (const value of type.values) {
@@ -812,25 +796,25 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
             w.line(`/// <summary>`);
             w.line(`/// Convert an ${enumName} to a string.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="o">The ${enumName} value.</param>`);
+            w.line(`/// <param name="value">The ${enumName} value.</param>`);
             w.line(`/// <returns>String representation of the ${enumName} value.</returns>`);
-            w.line(`public static implicit operator string(${enumFullName} o) => o._value;`);
+            w.line(`public static implicit operator string(${enumFullName} value) => value._value;`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Check if two ${enumName} instances are equal.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="a">The first instance to compare.</param>`);
-            w.line(`/// <param name="b">The second instance to compare.</param>`);
+            w.line(`/// <param name="left">The first instance to compare.</param>`);
+            w.line(`/// <param name="right">The second instance to compare.</param>`);
             w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public static bool operator ==(${enumFullName} a, ${enumFullName} b) => a.Equals(b);`);
+            w.line(`public static bool operator ==(${enumFullName} left, ${enumFullName} right) => left.Equals(right);`);
             w.line(``);
             w.line(`/// <summary>`);
             w.line(`/// Check if two ${enumName} instances are not equal.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="a">The first instance to compare.</param>`);
-            w.line(`/// <param name="b">The second instance to compare.</param>`);
+            w.line(`/// <param name="left">The first instance to compare.</param>`);
+            w.line(`/// <param name="right">The second instance to compare.</param>`);
             w.line(`/// <returns>True if they're not equal, false otherwise.</returns>`);
-            w.line(`public static bool operator !=(${enumFullName} a, ${enumFullName} b) => !a.Equals(b);`);
+            w.line(`public static bool operator !=(${enumFullName} left, ${enumFullName} right) => !left.Equals(right);`);
         });
     });
     w.line(`#endregion ${regionName}`);
@@ -859,7 +843,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
-                if (property.readonly || property.model.type === `array`) {
+                if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
                     w.write(`internal `);
                 }
                 w.line(`set; }`);
@@ -869,7 +853,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
-            const nested = (<IProperty[]>Object.values(type.properties)).filter(p => isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`)));
+            const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
                 if (separator()) { w.line(); }
@@ -911,25 +895,33 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                         w.popScope(`}`);
                     }
                 });
+            } else {
+                const factoryName = naming.type(model.info.modelFactoryName);
+                w.line();
+                w.line(`/// <summary>`)
+                w.line(`/// Prevent direct instantiation of ${naming.type(type.name)} instances.`);
+                w.line(`/// You can use ${factoryName}.${naming.type(type.name)} instead.`);
+                w.line(`/// </summary>`);
+                w.line(`internal ${naming.type(type.name)}() { }`);
             }
 
             // Create serializers if necessary
             for (const serializationType of model.info.consumes) {
                 const format =
                     (serializationType === 'application/xml') ? 'Xml' :
-                    (serializationType === 'application/json') ? 'Json' :
-                    serializationType;
-                
+                        (serializationType === 'application/json') ? 'Json' :
+                            serializationType;
+
                 // TODO: JSON, ...
                 if (format !== `Xml`) {
                     throw `Currently unsupported serialization format (in ${types.getName(type)})`;
                 }
-                
+
                 if (type.serialize) {
                     if (separator()) { w.line(); }
                     generateSerialize(w, service, type, format);
                 }
-                
+
                 if (type.deserialize) {
                     if (separator()) { w.line(); }
                     generateDeserialize(w, service, type, format);
@@ -1049,7 +1041,7 @@ function generateSerialize(w: IndentWriter, service: IService, type: IObjectType
                         w.line();
                         w.line(`#pragma warning restore CA1308 // Normalize strings to uppercase`);
                     }
-                    
+
                 });
             }
             if (wrapped) {
@@ -1080,8 +1072,8 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
         const properties = <IProperty[]>Object.values(type.properties);
         const childName = '_child';
         if (properties.some(p =>
-            /* required */ (!p.required && (!isPrimitiveType(p.model) || !p.model.itemType || !p.xml || !!p.xml.wrapped)) &&
-            /* not attr */ (!p.xml || (p.xml.attribute !== true)) || 
+            /* required */(!p.required && (!isPrimitiveType(p.model) || !p.model.itemType || !p.xml || !!p.xml.wrapped)) &&
+            /* not attr */ (!p.xml || (p.xml.attribute !== true)) ||
             /* dictionary */ p.model.type === `dictionary`)) {
             w.line(`System.Xml.Linq.XElement ${childName};`);
         }
@@ -1107,14 +1099,14 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
             let { xname } = getXmlShape(
                 isArray && !wrapped ? (<IObjectType>(<IPrimitiveType>property.model).itemType).name : property.name,
                 property.xml && property.xml.name ? property.xml : (isObjectType(modelType) ? modelType.xml : undefined));
-            
+
             let element = rootName;
             let accessor =
                 wrapped && isArray ? 'Element' :
-                isAttribute && isArray ? 'Attributes' :
-                isAttribute ? 'Attribute' :
-                isArray ? 'Elements' :
-                'Element';
+                    isAttribute && isArray ? 'Attributes' :
+                        isAttribute ? 'Attribute' :
+                            isArray ? 'Elements' :
+                                'Element';
             element = `${element}.${accessor}(${xname})`;
 
             // Decide if we have to put it in the _child/_attribute temporaries or can use it directly
@@ -1129,7 +1121,13 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     // Change fromName if it ever stops being universal to the format
                     return `${types.getName(model)}.${fromName}(${text})`;
                 } else {
-                    return types.convertFromString(`${text}.Value`, model, service);
+                    if (isEnumType(model) && model.skipValue) { 
+                        // If skipValue is set on the enum, that means that the service would return a null for that value.
+                        // Hence, we add the null conditional for this case. 
+                        return types.convertFromString(`${text}?.Value`, model, service);
+                    } else {
+                        return types.convertFromString(`${text}.Value`, model, service);
+                    }
                 }
             };
 
@@ -1147,7 +1145,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     w.line(`foreach (System.Xml.Linq.XElement ${pairName} in ${target}.Elements())`);
                     w.scope(`{`, `}`, () => {
                         w.line(`${valueName}.${naming.property(property.clientName)}[${pairName}.Name.LocalName] = ${pairName}.Value;`);
-                    });    
+                    });
                 });
             } else if (isArray) {
                 // Get the array item type
@@ -1155,7 +1153,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                 if (isPrimitiveType(itemType) && itemType.itemType) {
                     throw `Nested arrays aren't supported!`
                 }
-                
+
                 // Use LINQ extension methods to map over all the children in a single expression
                 const mapAndAssign = (target: string) => {
                     w.write(`${valueName}.${naming.property(property.clientName)} = `);
@@ -1218,7 +1216,7 @@ function getXmlShape(defaultName: string, xml?: IXmlSettings) {
     // Create the XML element name
     let xname = `System.Xml.Linq.XName.Get("${name}", "${ns}")`;
 
-    return { xname, isAttribute, wrapped  };
+    return { xname, isAttribute, wrapped };
 }
 
 // Get the XML settings for IObjectType, IProperty, etc.
@@ -1227,5 +1225,5 @@ function getXmlName(defaultName: string, xml?: IXmlSettings) {
     let ns = (xml ? xml.namespace : undefined) || '';
     let name = (xml ? xml.name : undefined) || defaultName;
 
-    return { name, ns};
+    return { name, ns };
 }

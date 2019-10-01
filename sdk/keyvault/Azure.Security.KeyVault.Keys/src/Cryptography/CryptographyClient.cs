@@ -6,6 +6,7 @@ using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly Uri _keyId;
         private readonly KeyVaultPipeline _pipeline;
-        private readonly RemoteCryptographyClient _remoteClient;
-        private ICryptographyProvider _client;
+        private readonly RemoteCryptographyClient _remoteProvider;
+        private ICryptographyProvider _provider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class for mocking.
@@ -32,7 +33,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyBase.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential)
@@ -43,9 +44,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyBase.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
-        /// <param name="options">Options to configure the management of the request sent to Key Vault.</param>
+        /// <param name="options">Options to configure the management of the requests sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CryptographyClientOptions.Version"/> is not supported.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options) : this(keyId, credential, options, false)
@@ -63,35 +64,70 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(_keyId, credential, options);
 
             _pipeline = remoteClient.Pipeline;
-            _remoteClient = remoteClient;
+            _remoteProvider = remoteClient;
 
             if (forceRemote)
             {
-                _client = remoteClient;
+                _provider = remoteClient;
             }
         }
-
         internal CryptographyClient(JsonWebKey keyMaterial, TokenCredential credential, CryptographyClientOptions options)
         {
             Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (string.IsNullOrEmpty(keyMaterial.KeyId))
+            if (string.IsNullOrEmpty(keyMaterial.Id))
             {
-                throw new ArgumentException($"{nameof(keyMaterial.KeyId)} is required", nameof(keyMaterial));
+                throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
             }
 
-            _keyId = new Uri(keyMaterial.KeyId);
+            _keyId = new Uri(keyMaterial.Id);
             options ??= new CryptographyClientOptions();
 
             RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(_keyId, credential, options);
 
             _pipeline = remoteClient.Pipeline;
-            _remoteClient = remoteClient;
-            _client = LocalCryptographyProviderFactory.Create(keyMaterial);
+            _remoteProvider = remoteClient;
+            _provider = LocalCryptographyProviderFactory.Create(keyMaterial);
         }
 
-        internal ICryptographyProvider RemoteClient => _remoteClient;
+        internal CryptographyClient(JsonWebKey keyMaterial, KeyVaultPipeline pipeline)
+        {
+            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+
+            if (keyMaterial.Id == null)
+            {
+                throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
+            }
+
+            _keyId = new Uri(keyMaterial.Id);
+
+            RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(pipeline);
+
+            _pipeline = pipeline;
+            _remoteProvider = remoteClient;
+            _provider = LocalCryptographyProviderFactory.Create(keyMaterial);
+        }
+
+        internal CryptographyClient(Uri keyId, KeyVaultPipeline pipeline)
+        {
+            Argument.AssertNotNull(keyId, nameof(keyId));
+
+            _keyId = keyId;
+
+            RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(pipeline);
+
+            _pipeline = pipeline;
+            _remoteProvider = remoteClient;
+            _provider = remoteClient;
+        }
+
+        internal ICryptographyProvider RemoteClient => _remoteProvider;
+
+        /// <summary>
+        /// The <see cref="Key.Id"/> of the key used to perform cryptographic operations for the client.
+        /// </summary>
+        public string KeyId => _keyId.ToString();
 
         /// <summary>
         /// Encrypts the specified plain text.
@@ -122,20 +158,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 EncryptResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Encrypt))
+                if (_provider.SupportsOperation(KeyOperation.Encrypt))
                 {
-                    result = await _client.EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -176,20 +219,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 EncryptResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Encrypt))
+                if (_provider.SupportsOperation(KeyOperation.Encrypt))
                 {
-                    result = _client.Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
+                    try
+                    {
+                        result = _provider.Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
+                    result = _remoteProvider.Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
                 }
 
                 return result;
@@ -233,20 +283,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 DecryptResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Decrypt))
+                if (_provider.SupportsOperation(KeyOperation.Decrypt))
                 {
-                    result = await _client.DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -290,20 +347,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 DecryptResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Decrypt))
+                if (_provider.SupportsOperation(KeyOperation.Decrypt))
                 {
-                    result = _client.Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
+                    try
+                    {
+                        result = _provider.Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
+                    result = _remoteProvider.Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
                 }
 
                 return result;
@@ -336,20 +400,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 WrapResult result = null;
-                if (_client.SupportsOperation(KeyOperation.WrapKey))
+                if (_provider.SupportsOperation(KeyOperation.WrapKey))
                 {
-                    result = await _client.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -382,20 +453,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 WrapResult result = null;
-                if (_client.SupportsOperation(KeyOperation.WrapKey))
+                if (_provider.SupportsOperation(KeyOperation.WrapKey))
                 {
-                    result =  _client.WrapKey(algorithm, key, cancellationToken);
+                    try
+                    {
+                        result = _provider.WrapKey(algorithm, key, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result =  _remoteClient.WrapKey(algorithm, key, cancellationToken);
+                    result = _remoteProvider.WrapKey(algorithm, key, cancellationToken);
                 }
 
                 return result;
@@ -428,20 +506,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 UnwrapResult result = null;
-                if (_client.SupportsOperation(KeyOperation.UnwrapKey))
+                if (_provider.SupportsOperation(KeyOperation.UnwrapKey))
                 {
-                    result = await _client.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -474,20 +559,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 UnwrapResult result = null;
-                if (_client.SupportsOperation(KeyOperation.UnwrapKey))
+                if (_provider.SupportsOperation(KeyOperation.UnwrapKey))
                 {
-                    result = _client.UnwrapKey(algorithm, encryptedKey, cancellationToken);
+                    try
+                    {
+                        result = _provider.UnwrapKey(algorithm, encryptedKey, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.UnwrapKey(algorithm, encryptedKey, cancellationToken);
+                    result = _remoteProvider.UnwrapKey(algorithm, encryptedKey, cancellationToken);
                 }
 
                 return result;
@@ -520,20 +612,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 SignResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Sign))
+                if (_provider.SupportsOperation(KeyOperation.Sign))
                 {
-                    result = await _client.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -566,20 +665,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 SignResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Sign))
+                if (_provider.SupportsOperation(KeyOperation.Sign))
                 {
-                    result = _client.Sign(algorithm, digest, cancellationToken);
+                    try
+                    {
+                        result = _provider.Sign(algorithm, digest, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Sign(algorithm, digest, cancellationToken);
+                    result = _remoteProvider.Sign(algorithm, digest, cancellationToken);
                 }
 
                 return result;
@@ -612,20 +718,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 VerifyResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Verify))
+                if (_provider.SupportsOperation(KeyOperation.Verify))
                 {
-                    result = await _client.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -658,20 +771,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 VerifyResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Verify))
+                if (_provider.SupportsOperation(KeyOperation.Verify))
                 {
-                    result = _client.Verify(algorithm, digest, signature, cancellationToken);
+                    try
+                    {
+                        result = _provider.Verify(algorithm, digest, signature, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Verify(algorithm, digest, signature, cancellationToken);
+                    result = _remoteProvider.Verify(algorithm, digest, signature, cancellationToken);
                 }
 
                 return result;
@@ -708,20 +828,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 SignResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Sign))
+                if (_provider.SupportsOperation(KeyOperation.Sign))
                 {
-                    result = await _client.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -758,20 +885,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 SignResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Sign))
+                if (_provider.SupportsOperation(KeyOperation.Sign))
                 {
-                    result = _client.Sign(algorithm, digest, cancellationToken);
+                    try
+                    {
+                        result = _provider.Sign(algorithm, digest, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Sign(algorithm, digest, cancellationToken);
+                    result = _remoteProvider.Sign(algorithm, digest, cancellationToken);
                 }
 
                 return result;
@@ -809,20 +943,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 SignResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Sign))
+                if (_provider.SupportsOperation(KeyOperation.Sign))
                 {
-                    result = await _client.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -860,20 +1001,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 SignResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Sign))
+                if (_provider.SupportsOperation(KeyOperation.Sign))
                 {
-                    result = _client.Sign(algorithm, digest, cancellationToken);
+                    try
+                    {
+                        result = _provider.Sign(algorithm, digest, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Sign(algorithm, digest, cancellationToken);
+                    result = _remoteProvider.Sign(algorithm, digest, cancellationToken);
                 }
 
                 return result;
@@ -911,20 +1059,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 VerifyResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Verify))
+                if (_provider.SupportsOperation(KeyOperation.Verify))
                 {
-                    result = await _client.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -962,20 +1117,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 VerifyResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Verify))
+                if (_provider.SupportsOperation(KeyOperation.Verify))
                 {
-                    result = _client.Verify(algorithm, digest, signature, cancellationToken);
+                    try
+                    {
+                        result = _provider.Verify(algorithm, digest, signature, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Verify(algorithm, digest, signature, cancellationToken);
+                    result = _remoteProvider.Verify(algorithm, digest, signature, cancellationToken);
                 }
 
                 return result;
@@ -1013,20 +1175,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     await InitializeAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 VerifyResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Verify))
+                if (_provider.SupportsOperation(KeyOperation.Verify))
                 {
-                    result = await _client.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = await _remoteClient.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -1064,20 +1233,27 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 byte[] digest = CreateDigest(algorithm, data);
 
-                if (_client is null)
+                if (_provider is null)
                 {
                     Initialize(cancellationToken);
                 }
 
                 VerifyResult result = null;
-                if (_client.SupportsOperation(KeyOperation.Verify))
+                if (_provider.SupportsOperation(KeyOperation.Verify))
                 {
-                    result = _client.Verify(algorithm, digest, signature, cancellationToken);
+                    try
+                    {
+                        result = _provider.Verify(algorithm, digest, signature, cancellationToken);
+                    }
+                    catch (CryptographicException) when (_provider.ShouldRemote)
+                    {
+                        // TODO: Log that a cryptographic exception occured and we'll try remotely.
+                    }
                 }
 
                 if (result is null)
                 {
-                    result = _remoteClient.Verify(algorithm, digest, signature, cancellationToken);
+                    result = _remoteProvider.Verify(algorithm, digest, signature, cancellationToken);
                 }
 
                 return result;
@@ -1108,17 +1284,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         Memory<byte> IKeyEncryptionKey.UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
-            UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken);
+            byte[] buffer = MemoryMarshal.TryGetArray(encryptedKey, out ArraySegment<byte> segment) ? segment.Array : encryptedKey.ToArray();
+            UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), buffer, cancellationToken);
 
-            return result.Key;
+            return new Memory<byte>(result.Key);
         }
 
         /// <inheritdoc/>
         async Task<Memory<byte>> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
-            UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey.ToArray(), cancellationToken).ConfigureAwait(false);
+            byte[] buffer = MemoryMarshal.TryGetArray(encryptedKey, out ArraySegment<byte> segment) ? segment.Array : encryptedKey.ToArray();
+            UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), buffer, cancellationToken).ConfigureAwait(false);
 
-            return result.Key;
+            return new Memory<byte>(result.Key);
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
@@ -1133,9 +1311,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return hashAlgo.ComputeHash(data);
         }
 
-        private async ValueTask InitializeAsync(CancellationToken cancellationToken)
+        private async Task InitializeAsync(CancellationToken cancellationToken)
         {
-            if (_client != null)
+            if (_provider != null)
             {
                 return;
             }
@@ -1146,14 +1324,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                Response<Key> key = await _remoteClient.GetKeyAsync(cancellationToken).ConfigureAwait(false);
-                _client = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
+                Response<Key> key = await _remoteProvider.GetKeyAsync(cancellationToken).ConfigureAwait(false);
+                _provider = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 scope.AddAttribute("status", e.Status);
 
-                _client = _remoteClient;
+                _provider = _remoteProvider;
             }
             catch (Exception e)
             {
@@ -1164,7 +1342,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private void Initialize(CancellationToken cancellationToken)
         {
-            if (_client != null)
+            if (_provider != null)
             {
                 return;
             }
@@ -1175,14 +1353,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                Response<Key> key = _remoteClient.GetKey(cancellationToken);
-                _client = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
+                Response<Key> key = _remoteProvider.GetKey(cancellationToken);
+                _provider = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
+                ;
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 scope.AddAttribute("status", e.Status);
 
-                _client = _remoteClient;
+                _provider = _remoteProvider;
             }
             catch (Exception e)
             {

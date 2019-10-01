@@ -203,7 +203,7 @@ namespace Azure.Core.Pipeline
                 {
                     // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                     // and so the retry logic fails.
-                    currentRequest = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
+                    currentRequest = new HttpRequestMessage(_requestMessage.Method, Uri.ToUri());
                     CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
                 }
                 else
@@ -211,7 +211,7 @@ namespace Azure.Core.Pipeline
                     currentRequest = _requestMessage;
                 }
 
-                currentRequest.RequestUri = UriBuilder.Uri;
+                currentRequest.RequestUri = Uri.ToUri();
 
 
                 if (Content != null)

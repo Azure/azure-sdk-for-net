@@ -5,6 +5,9 @@
     <AssemblyTitle>Microsoft Azure Search Service Library</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
+
+    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" />

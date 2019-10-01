@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -22,11 +21,11 @@ namespace Azure.Storage.Blobs.Test
 {
     public class PageBlobClientTests : BlobTestBase
     {
-        const string CacheControl = "control";
-        const string ContentDisposition = "disposition";
-        const string ContentEncoding = "encoding";
-        const string ContentLanguage = "language";
-        const string ContentType = "type";
+        private const string CacheControl = "control";
+        private const string ContentDisposition = "disposition";
+        private const string ContentEncoding = "encoding";
+        private const string ContentLanguage = "language";
+        private const string ContentType = "type";
 
         public PageBlobClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
@@ -139,8 +138,8 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(blobName));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
                 blob = InstrumentClient(new PageBlobClient(
-                    blob.Uri, 
-                    blob.Pipeline, 
+                    blob.Uri,
+                    blob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
 
@@ -153,7 +152,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
-        /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and 
+        /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and
         /// UpdateSequenceNumber AccessConditions tests
         /// </summary>
         public IEnumerable<AccessConditionParameters> Reduced_AccessConditions_Data
@@ -360,8 +359,8 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient httpBlob = InstrumentClient(container.GetPageBlobClient(blobName));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
                 httpBlob = InstrumentClient(new PageBlobClient(
-                    httpBlob.Uri, 
-                    httpBlob.Pipeline, 
+                    httpBlob.Uri,
+                    httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
                 PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
@@ -581,8 +580,8 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
                 blob = InstrumentClient(new PageBlobClient(
-                    GetHttpsUri(blob.Uri), 
-                    blob.Pipeline, 
+                    GetHttpsUri(blob.Uri),
+                    blob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 await blob.CreateAsync(4 * Constants.KB);
                 var data = GetRandomBuffer(4 * Constants.KB);
@@ -609,8 +608,8 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient httpBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
                 httpBlob = InstrumentClient(new PageBlobClient(
-                    httpBlob.Uri, 
-                    httpBlob.Pipeline, 
+                    httpBlob.Uri,
+                    httpBlob.Pipeline,
                     new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
                 PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));

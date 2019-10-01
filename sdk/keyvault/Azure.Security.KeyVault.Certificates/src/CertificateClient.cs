@@ -276,8 +276,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="name">The name of the <see cref="Certificate"/> to update</param>
         /// <param name="version">The version of the <see cref="Certificate"/> to update, if unspecified the latest version will be updated</param>
-        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateBase.Enabled"/> remains unchanged</param>
-        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateBase.Tags"/> remains unchanged</param>
+        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateProperties.Enabled"/> remains unchanged</param>
+        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateProperties.Tags"/> remains unchanged</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated <see cref="Certificate"/></returns>
         public virtual Response<Certificate> UpdateCertificate(string name, string version = default, bool enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
@@ -308,8 +308,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="name">The name of the <see cref="Certificate"/> to update</param>
         /// <param name="version">The version of the <see cref="Certificate"/> to update, if unspecified the latest version will be updated</param>
-        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateBase.Enabled"/> remains unchanged</param>
-        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateBase.Tags"/> remains unchanged</param>
+        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateProperties.Enabled"/> remains unchanged</param>
+        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateProperties.Tags"/> remains unchanged</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated <see cref="Certificate"/></returns>
         public virtual async Task<Response<Certificate>> UpdateCertificateAsync(string name, string version = default, bool enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
@@ -561,7 +561,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup");
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return Response.FromValue(backup.GetRawResponse(), backup.Value.Value);
             }
             catch (Exception e)
             {
@@ -589,7 +589,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup").ConfigureAwait(false);
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return Response.FromValue(backup.GetRawResponse(), backup.Value.Value);
             }
             catch (Exception e)
             {
@@ -708,11 +708,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata</returns>
-        public virtual SyncCollection<CertificateBase> GetCertificates(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<CertificateProperties>> GetCertificates(bool? includePending = default, CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = includePending.HasValue ? _pipeline.CreateFirstPageUri(CertificatesPath, new ValueTuple<string, string>("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) : _pipeline.CreateFirstPageUri(CertificatesPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateBase(), "Azure.Security.KeyVault.Keys.KeyClient.GetCertificates", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetCertificates", cancellationToken));
         }
 
         /// <summary>
@@ -721,11 +721,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata</returns>
-        public virtual AsyncCollection<CertificateBase> GetCertificatesAsync(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<CertificateProperties>> GetCertificatesAsync(bool? includePending = default, CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = includePending.HasValue ? _pipeline.CreateFirstPageUri(CertificatesPath, new ValueTuple<string, string>("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) : _pipeline.CreateFirstPageUri(CertificatesPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateBase(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificates", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificates", cancellationToken));
         }
 
         /// <summary>
@@ -735,13 +735,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the certificate to retrieve the versions of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of the certificate's versions</returns>
-        public virtual SyncCollection<CertificateBase> GetCertificateVersions(string name, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<CertificateProperties>> GetCertificateVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateBase(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificateVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificateVersions", cancellationToken));
         }
 
         /// <summary>
@@ -757,7 +757,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateBase(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificateVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificateVersions", cancellationToken));
         }
 
         /// <summary>
@@ -1103,11 +1103,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers metadata</returns>
-        public virtual SyncCollection<IssuerBase> GetIssuers(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<IssuerProperties>> GetIssuers(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerBase(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetIssuers", cancellationToken));
         }
 
         /// <summary>
@@ -1115,11 +1115,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers metadata</returns>
-        public virtual AsyncCollection<IssuerBase> GetIssuersAsync(CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<IssuerProperties>> GetIssuersAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerBase(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetIssuers", cancellationToken));
         }
 
         //
@@ -1313,7 +1313,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Put, new ContactList(contacts), () => new ContactList(), cancellationToken, ContactsPath);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1339,7 +1339,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Put, new ContactList(contacts), () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1362,7 +1362,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Get, () => new ContactList(), cancellationToken, ContactsPath);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1385,7 +1385,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1408,7 +1408,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1431,7 +1431,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1491,12 +1491,12 @@ namespace Azure.Security.KeyVault.Certificates
                 },
                 KeyUsage = new[]
                 {
-                    KeyUsage.CrlSign,
-                    KeyUsage.DataEncipherment,
-                    KeyUsage.DigitalSignature,
-                    KeyUsage.KeyEncipherment,
-                    KeyUsage.KeyAgreement,
-                    KeyUsage.KeyCertSign
+                    CertificateKeyUsage.CrlSign,
+                    CertificateKeyUsage.DataEncipherment,
+                    CertificateKeyUsage.DigitalSignature,
+                    CertificateKeyUsage.KeyEncipherment,
+                    CertificateKeyUsage.KeyAgreement,
+                    CertificateKeyUsage.KeyCertSign,
                 },
                 CertificateTransparency = false,
                 ContentType = CertificateContentType.Pkcs12

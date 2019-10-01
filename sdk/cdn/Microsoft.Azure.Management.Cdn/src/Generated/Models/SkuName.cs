@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string CustomVerizon = "Custom_Verizon";
         public const string StandardAkamai = "Standard_Akamai";
         public const string StandardChinaCdn = "Standard_ChinaCdn";
-        public const string PremiumChinaCdn = "Premium_ChinaCdn";
         public const string StandardMicrosoft = "Standard_Microsoft";
+        public const string PremiumChinaCdn = "Premium_ChinaCdn";
     }
 }

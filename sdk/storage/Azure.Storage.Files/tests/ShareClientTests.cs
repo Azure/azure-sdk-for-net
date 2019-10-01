@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Linq;
@@ -64,6 +63,10 @@ namespace Azure.Storage.Files.Test
             builder = new FileUriBuilder(share.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
+            var accountName = new FileUriBuilder(share.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => share.AccountName);
+            TestHelper.AssertCacheableProperty(string.Empty, () => share.GetRootDirectoryClient().Name); // make sure shareName is not used when using directory client Name property
+            TestHelper.AssertCacheableProperty(shareName, () => share.Name);
         }
 
         [Test]

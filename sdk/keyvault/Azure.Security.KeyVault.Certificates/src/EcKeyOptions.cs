@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The curve which back the EC key
         /// </summary>
-        public KeyCurveName? Curve { get; set; }
+        public CertificateKeyCurveName? Curve { get; set; }
 
         /// <summary>
         /// Creates EcKeyOptions for use with a <see cref="CertificatePolicy"/>
@@ -32,16 +32,18 @@ namespace Azure.Security.KeyVault.Certificates
         {
         }
 
-        internal override bool ReadProperty(JsonProperty prop)
+        internal override void ReadProperty(JsonProperty prop)
         {
-            if (!base.ReadProperty(prop) && string.CompareOrdinal(prop.Name, CurvePropertyName) == 0)
+            switch (prop.Name)
             {
-                Curve = prop.Value.GetString();
+                case CurvePropertyName:
+                    Curve = prop.Value.GetString();
+                    break;
 
-                return true;
+                default:
+                    base.ReadProperty(prop);
+                    break;
             }
-
-            return false;
         }
 
         internal override void WriteProperties(Utf8JsonWriter json)
@@ -50,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Curve.HasValue)
             {
-                json.WriteString(s_curvePropertyNameBytes, Curve);
+                json.WriteString(s_curvePropertyNameBytes, Curve.ToString());
             }
         }
     }

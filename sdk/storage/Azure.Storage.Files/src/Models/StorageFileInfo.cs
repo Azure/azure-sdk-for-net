@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Http;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
@@ -54,7 +55,30 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageFileInfo instance for mocking.
         /// </summary>
-        public static StorageFileInfo StorageFileInfo(RawStorageFileInfo rawStorageFileInfo)
-            => new StorageFileInfo(rawStorageFileInfo);
+        public static StorageFileInfo StorageFileInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            bool isServerEncrypted,
+            string filePermissionKey,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId
+            )
+            => new StorageFileInfo(new RawStorageFileInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                FilePermissionKey = filePermissionKey,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId
+            });
     }
 }

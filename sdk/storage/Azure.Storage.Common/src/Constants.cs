@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 namespace Azure.Storage
 {
@@ -42,7 +41,7 @@ namespace Azure.Storage
         public const string SnapshotParameterName = "snapshot";
 
         /// <summary>
-        /// Storage Connection Strings 
+        /// Storage Connection Strings
         /// </summary>
         internal static class ConnectionStrings
         {
@@ -394,6 +393,16 @@ namespace Azure.Storage
                 public const string KeyServiceUpper = "SKS";
                 public const string KeyVersion = "skv";
                 public const string KeyVersionUpper = "SKV";
+                public const string CacheControl = "rscc";
+                public const string CacheControlUpper = "RSCC";
+                public const string ContentDisposition = "rscd";
+                public const string ContentDispositionUpper = "RSCD";
+                public const string ContentEncoding = "rsce";
+                public const string ContentEncodingUpper = "RSCE";
+                public const string ContentLanguage = "rscl";
+                public const string ContentLanguageUpper = "RSCL";
+                public const string ContentType = "rsct";
+                public const string ContentTypeUpper = "RSCT";
             }
 
             internal static class Resource

@@ -34,7 +34,7 @@ namespace Azure.Core.Tests
 
                     var transport = new HttpClientTransport();
                     Request request = transport.CreateRequest();
-                    request.UriBuilder.Uri = new Uri(url);
+                    request.Uri.Reset(new Uri(url));
                     Response response = await ExecuteRequest(request, transport);
                     Assert.True(response.Headers.TryGetValue("Via", out var via));
                     Assert.AreEqual("Test-Proxy", via);
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
             {
                 var transport = new HttpClientTransport();
                 Request request = transport.CreateRequest();
-                request.UriBuilder.Uri = testServer.Address;
+                request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
                 Assert.True(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens));
                 Assert.AreEqual(2, tokens.Count());
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests
             {
                 var transport = new HttpClientTransport();
                 Request request = transport.CreateRequest();
-                request.UriBuilder.Uri = testServer.Address;
+                request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
                 Assert.True(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens));
                 Assert.AreEqual(1, tokens.Count());
@@ -100,7 +100,7 @@ namespace Azure.Core.Tests
             {
                 var transport = new HttpClientTransport();
                 Request request = transport.CreateRequest();
-                request.UriBuilder.Uri = testServer.Address;
+                request.Uri.Reset(testServer.Address);
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
                 Assert.AreEqual("An error occurred while sending the request.", exception.Message);
             }
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
             {
                 var transport = new HttpClientTransport();
                 Request request = transport.CreateRequest();
-                request.UriBuilder.Uri = testServer.Address;
+                request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
 
                 tcs.SetResult(null);

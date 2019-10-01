@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -42,6 +41,26 @@ namespace Azure.Storage.Files
         /// send every request.
         /// </summary>
         protected virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the file service client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the file service client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new FileUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -590,7 +609,7 @@ namespace Azure.Storage.Files
         {
             ShareClient share = GetShareClient(shareName);
             Response<ShareInfo> response = share.Create(metadata, quotaInBytes, cancellationToken);
-            return new Response<ShareClient>(response.GetRawResponse(), share);
+            return Response.FromValue(response.GetRawResponse(), share);
         }
 
         /// <summary>
@@ -630,7 +649,7 @@ namespace Azure.Storage.Files
         {
             ShareClient share = GetShareClient(shareName);
             Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
-            return new Response<ShareClient>(response.GetRawResponse(), share);
+            return Response.FromValue(response.GetRawResponse(), share);
         }
         #endregion CreateShare
 

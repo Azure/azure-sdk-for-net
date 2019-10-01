@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ using Azure.Core.Testing;
 namespace Azure.Storage.Test.Shared
 {
     /// <summary>
-    /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id 
+    /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
     /// headers that are echoed back from a request match.
     /// </summary>
     public class RecordedClientRequestIdPolicy : SynchronousHttpPipelinePolicy
@@ -47,10 +46,10 @@ namespace Azure.Storage.Test.Shared
                 // the same prefix and use the range to differentiate each message
                 message.Request.ClientRequestId = _parallelRangePrefix + range;
             }
-            else if(_parallelRangePrefix != null &&
-                message.Request.UriBuilder.Query.Contains("blockid="))
+            else if (_parallelRangePrefix != null &&
+                message.Request.Uri.Query.Contains("blockid="))
             {
-                var queryParameters = message.Request.UriBuilder.Query.Split('&');
+                var queryParameters = message.Request.Uri.Query.Split('&');
                 var blockIdParameter = queryParameters.Where(s => s.Contains("blockid=")).First();
                 var blockIdValue = blockIdParameter.Split('=')[1];
 

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -57,6 +56,40 @@ namespace Azure.Storage.Blobs
         /// </summary>
         protected internal virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The Storage account name corresponding to the container client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the container client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the container.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the container.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
+
         #region ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
@@ -108,7 +141,7 @@ namespace Azure.Storage.Blobs
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { ContainerName = containerName };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
         }
@@ -205,6 +238,19 @@ namespace Azure.Storage.Blobs
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) => new BlobClient(Uri.AppendToPath(blobName), _pipeline);
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.ContainerName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>
@@ -628,24 +674,22 @@ namespace Azure.Storage.Blobs
 
                     // Turn the flattened properties into a ContainerItem
                     var uri = new BlobUriBuilder(Uri);
-                    return new Response<ContainerItem>(
-                        response.GetRawResponse(),
-                        new ContainerItem(false)
+                    return Response.FromValue(response.GetRawResponse(), new ContainerItem(false)
+                    {
+                        Name = uri.ContainerName,
+                        Metadata = response.Value.Metadata,
+                        Properties = new ContainerProperties()
                         {
-                            Name = uri.ContainerName,
-                            Metadata = response.Value.Metadata,
-                            Properties = new ContainerProperties()
-                            {
-                                LastModified = response.Value.LastModified,
-                                ETag = response.Value.ETag,
-                                LeaseStatus = response.Value.LeaseStatus,
-                                LeaseState = response.Value.LeaseState,
-                                LeaseDuration = response.Value.LeaseDuration,
-                                PublicAccess = response.Value.BlobPublicAccess,
-                                HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
-                                HasLegalHold = response.Value.HasLegalHold
-                            }
-                        });
+                            LastModified = response.Value.LastModified,
+                            ETag = response.Value.ETag,
+                            LeaseStatus = response.Value.LeaseStatus,
+                            LeaseState = response.Value.LeaseState,
+                            LeaseDuration = response.Value.LeaseDuration,
+                            PublicAccess = response.Value.BlobPublicAccess,
+                            HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
+                            HasLegalHold = response.Value.HasLegalHold
+                        }
+                    });
                 }
                 catch (Exception ex)
                 {

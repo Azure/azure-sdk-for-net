@@ -3,6 +3,21 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.2.1
+###  Feature Additions
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
+
+## Version 4.2.0
+###  Feature Additions
+* Added support for Data Flow:
+    - Added data flow object model and CRUD APIs
+    - Added data flow debug session APIs
+    - Added support for execute data flow activity type
+    - Added support for data flow properties in managed integration runtime
+- Added property queryTimeout to tabular sources
+- Added support for Cosmos DB SQL API dataset and copy source/sink
+
 ## Version 4.1.3
 ###  Feature Additions
 - Added RunDimension to Pipeline

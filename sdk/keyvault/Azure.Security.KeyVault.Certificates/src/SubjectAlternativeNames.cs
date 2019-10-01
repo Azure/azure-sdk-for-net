@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,10 +17,11 @@ namespace Azure.Security.KeyVault.Certificates
         private JsonEncodedText _nameType;
 
         private const string DnsPropertyName = "dns_names";
-        private static readonly JsonEncodedText s_dnsPropertyNameBytes = JsonEncodedText.Encode(DnsPropertyName);
         private const string EmailsPropertyName = "emails";
-        private static readonly JsonEncodedText s_emailsPropertyNameBytes = JsonEncodedText.Encode(EmailsPropertyName);
         private const string UpnsPropertyName = "upns";
+
+        private static readonly JsonEncodedText s_dnsPropertyNameBytes = JsonEncodedText.Encode(DnsPropertyName);
+        private static readonly JsonEncodedText s_emailsPropertyNameBytes = JsonEncodedText.Encode(EmailsPropertyName);
         private static readonly JsonEncodedText s_upnsPropertyNameBytes = JsonEncodedText.Encode(UpnsPropertyName);
 
         internal SubjectAlternativeNames()
@@ -134,12 +133,15 @@ namespace Azure.Security.KeyVault.Certificates
                     case DnsPropertyName:
                         _nameType = s_dnsPropertyNameBytes;
                         break;
+
                     case EmailsPropertyName:
                         _nameType = s_emailsPropertyNameBytes;
                         break;
+
                     case UpnsPropertyName:
                         _nameType = s_upnsPropertyNameBytes;
                         break;
+
                     default:
                         continue;
                 }

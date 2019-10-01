@@ -156,13 +156,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Certificate updated = await Client.UpdateCertificateAsync(certName, original.Version, tags: expTags);
 
-            Assert.IsNull(original.Tags);
+            Assert.IsEmpty(original.Properties.Tags);
 
-            CollectionAssert.AreEqual(expTags, updated.Tags);
+            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
 
             updated = await Client.UpdateCertificateAsync(certName, original.Version, enabled: false);
 
-            Assert.IsFalse(updated.Enabled);
+            Assert.IsFalse(updated.Properties.Enabled);
         }
 
         [Test]

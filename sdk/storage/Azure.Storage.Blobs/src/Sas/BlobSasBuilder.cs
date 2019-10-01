@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -188,13 +187,18 @@ namespace Azure.Storage.Sas
                 identifier: Identifier,
                 resource: Resource,
                 permissions: Permissions,
-                signature: signature);
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 
         /// <summary>
         /// Use an account's <see cref="UserDelegationKey"/> to sign this
-        /// shared access signature values to produce the propery SAS query
+        /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
         /// <param name="userDelegationKey">
@@ -258,7 +262,12 @@ namespace Azure.Storage.Sas
                 keyExpiry: userDelegationKey.SignedExpiry,
                 keyService: userDelegationKey.SignedService,
                 keyVersion: userDelegationKey.SignedVersion,
-                signature: signature);
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 
@@ -271,7 +280,7 @@ namespace Azure.Storage.Sas
         /// <param name="containerName">The name of the container.</param>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>The canonical resource name.</returns>
-        static string GetCanonicalName(string account, string containerName, string blobName)
+        private static string GetCanonicalName(string account, string containerName, string blobName)
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
@@ -286,7 +295,7 @@ namespace Azure.Storage.Sas
         /// </param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
             Convert.ToBase64String(
                 new HMACSHA256(
                     Convert.FromBase64String(userDelegationKeyValue))

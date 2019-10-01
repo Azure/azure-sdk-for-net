@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure Table source.
     /// </summary>
-    public partial class AzureTableSource : CopySource
+    public partial class AzureTableSource : TabularSource
     {
         /// <summary>
         /// Initializes a new instance of the AzureTableSource class.
@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="azureTableSourceQuery">Azure Table source query. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="azureTableSourceIgnoreTableNotFound">Azure Table
         /// source ignore table not found. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public AzureTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object azureTableSourceQuery = default(object), object azureTableSourceIgnoreTableNotFound = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public AzureTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object azureTableSourceQuery = default(object), object azureTableSourceIgnoreTableNotFound = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
         {
             AzureTableSourceQuery = azureTableSourceQuery;
             AzureTableSourceIgnoreTableNotFound = azureTableSourceIgnoreTableNotFound;

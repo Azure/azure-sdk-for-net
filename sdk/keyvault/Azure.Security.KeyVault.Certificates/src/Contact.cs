@@ -10,6 +10,14 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class Contact : IJsonDeserializable, IJsonSerializable
     {
+        private const string NamePropertyName = "name";
+        private const string EmailPropertyName = "email";
+        private const string PhonePropertyName = "phone";
+
+        private static readonly JsonEncodedText s_namePropertyNameBytes = JsonEncodedText.Encode(NamePropertyName);
+        private static readonly JsonEncodedText s_emailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
+        private static readonly JsonEncodedText s_phonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
+
         /// <summary>
         /// Email address of the contact
         /// </summary>
@@ -24,10 +32,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public string Phone { get; set; }
 
-        private const string NamePropertyName = "name";
-        private const string EmailPropertyName = "email";
-        private const string PhonePropertyName = "phone";
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -37,19 +41,17 @@ namespace Azure.Security.KeyVault.Certificates
                     case NamePropertyName:
                         Name = prop.Value.GetString();
                         break;
+
                     case EmailPropertyName:
                         Email = prop.Value.GetString();
                         break;
+
                     case PhonePropertyName:
                         Phone = prop.Value.GetString();
                         break;
                 }
             }
         }
-
-        private static readonly JsonEncodedText s_namePropertyNameBytes = JsonEncodedText.Encode(NamePropertyName);
-        private static readonly JsonEncodedText s_emailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
-        private static readonly JsonEncodedText s_phonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
