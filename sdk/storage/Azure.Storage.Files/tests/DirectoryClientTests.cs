@@ -442,7 +442,7 @@ namespace Azure.Storage.Files.Test
                 var files = new List<StorageFileItem>();
 
                 // Act
-                await foreach (Page<StorageFileItem> page in directory.GetFilesAndDirectoriesAsync().ByPage())
+                await foreach (Page<StorageFileItem> page in directory.GetFilesAndDirectoriesAsync().AsPages())
                 {
                     directories.AddRange(page.Values.Where(item => item.IsDirectory));
                     files.AddRange(page.Values.Where(item => !item.IsDirectory));
@@ -484,7 +484,7 @@ namespace Azure.Storage.Files.Test
             {
                 // Act
                 var handles = (await directory.GetHandlesAsync(recursive: true)
-                    .ByPage(pageSizeHint: 5)
+                    .AsPages(pageSizeHint: 5)
                     .ToListAsync())
                     .SelectMany(p => p.Values)
                     .ToList();

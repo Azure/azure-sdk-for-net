@@ -83,7 +83,7 @@ namespace Azure.Storage.Queues.Test
             {
                 var marker = default(string);
                 var queues = new List<QueueItem>();
-                await foreach (Page<QueueItem> page in service.GetQueuesAsync().ByPage(marker))
+                await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
                 {
                     queues.AddRange(page.Values);
                 }
@@ -104,7 +104,7 @@ namespace Azure.Storage.Queues.Test
             {
                 Page<QueueItem> page = await
                     service.GetQueuesAsync()
-                    .ByPage(pageSizeHint: 1)
+                    .AsPages(pageSizeHint: 1)
                     .FirstAsync();
                 Assert.AreEqual(1, page.Values.Count);
             }
@@ -151,7 +151,7 @@ namespace Azure.Storage.Queues.Test
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetQueuesAsync().ByPage(continuationToken: "garbage").FirstAsync(),
+                service.GetQueuesAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 

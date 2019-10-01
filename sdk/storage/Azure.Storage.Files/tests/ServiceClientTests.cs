@@ -132,7 +132,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewShare(out ShareClient share, service: service))
             {
                 var shares = new List<ShareItem>();
-                await foreach (Page<ShareItem> page in service.GetSharesAsync().ByPage())
+                await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
                 {
                     shares.AddRange(page.Values);
                 }

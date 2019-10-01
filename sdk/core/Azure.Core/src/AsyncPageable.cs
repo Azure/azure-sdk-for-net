@@ -54,7 +54,7 @@ namespace Azure
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
-        public abstract IAsyncEnumerable<Page<T>> ByPage(
+        public abstract IAsyncEnumerable<Page<T>> AsPages(
             string? continuationToken = default,
             int? pageSizeHint = default);
 
@@ -69,7 +69,7 @@ namespace Azure
         /// <returns>An async sequence of values.</returns>
         public virtual async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            await foreach (Page<T> page in ByPage().ConfigureAwait(false).WithCancellation(cancellationToken))
+            await foreach (Page<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
             {
                 foreach (T value in page.Values)
                 {

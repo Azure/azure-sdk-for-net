@@ -1169,7 +1169,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var blobs = new List<BlobItem>();
-                await foreach (Page<BlobItem> page in container.GetBlobsAsync().ByPage())
+                await foreach (Page<BlobItem> page in container.GetBlobsAsync().AsPages())
                 {
                     blobs.AddRange(page.Values);
                 }
@@ -1193,7 +1193,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                Page<BlobItem> page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
+                Page<BlobItem> page = await container.GetBlobsAsync().AsPages(pageSizeHint: 2).FirstAsync();
 
                 // Assert
                 Assert.AreEqual(2, page.Values.Count);
@@ -1354,7 +1354,7 @@ namespace Azure.Storage.Blobs.Test
                 var prefixes = new List<string>();
                 var delimiter = "/";
 
-                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter).ByPage())
+                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter).AsPages())
                 {
                     blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
                     prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
@@ -1397,7 +1397,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Page<BlobHierarchyItem> page = await container.GetBlobsByHierarchyAsync(delimiter: delimiter)
-                    .ByPage(pageSizeHint: 2)
+                    .AsPages(pageSizeHint: 2)
                     .FirstAsync();
 
                 // Assert

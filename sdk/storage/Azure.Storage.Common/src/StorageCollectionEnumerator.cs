@@ -161,7 +161,7 @@ namespace Azure.Storage
             /// <returns>
             /// An async sequence of <see cref="Page{T}"/>s.
             /// </returns>
-            public override async IAsyncEnumerable<Page<T>> ByPage(
+            public override async IAsyncEnumerable<Page<T>> AsPages(
                 string continuationToken = default,
                 int? pageHintSize = default)
             {

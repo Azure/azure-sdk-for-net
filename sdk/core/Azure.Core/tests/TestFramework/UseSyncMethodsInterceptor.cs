@@ -120,7 +120,7 @@ namespace Azure.Core.Testing
             }
 
 #pragma warning disable 1998
-            public override async IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default, int? pageSizeHint = default)
+            public override async IAsyncEnumerable<Page<T>> AsPages(string continuationToken = default, int? pageSizeHint = default)
 #pragma warning restore 1998
             {
                 foreach (Page<T> page in _enumerable.ByPage())

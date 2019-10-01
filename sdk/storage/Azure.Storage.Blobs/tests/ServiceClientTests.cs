@@ -139,7 +139,7 @@ namespace Azure.Storage.Blobs.Test
                 var marker = default(string);
                 var containers = new List<ContainerItem>();
 
-                await foreach (Page<ContainerItem> page in service.GetContainersAsync().ByPage(marker))
+                await foreach (Page<ContainerItem> page in service.GetContainersAsync().AsPages(marker))
                 {
                     containers.AddRange(page.Values);
                 }
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 Page<ContainerItem> page = await
                     service.GetContainersAsync()
-                    .ByPage(pageSizeHint: 1)
+                    .AsPages(pageSizeHint: 1)
                     .FirstAsync();
 
                 // Assert
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetContainersAsync().ByPage(continuationToken: "garbage").FirstAsync(),
+                service.GetContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 

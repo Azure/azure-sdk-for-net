@@ -41,7 +41,7 @@ namespace Azure.Core
                 _pageFunc = pageFunc;
             }
 
-            public override async IAsyncEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
+            public override async IAsyncEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
                 do
                 {
