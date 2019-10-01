@@ -542,7 +542,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io?api-version=5&secret=123"));
+                request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Headers.Add("Secret-Custom-Header", "Value");
