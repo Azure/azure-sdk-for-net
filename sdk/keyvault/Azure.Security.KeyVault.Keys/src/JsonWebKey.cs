@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
-        public string CurveName { get; set; }
+        public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
@@ -405,20 +405,20 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != default)
             {
-                json.WriteString(s_keyTypePropertyNameBytes, KeyType);
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
             }
             if (KeyOps != null)
             {
                 json.WriteStartArray(s_keyOpsPropertyNameBytes);
                 foreach (KeyOperation operation in KeyOps)
                 {
-                    json.WriteStringValue(operation);
+                    json.WriteStringValue(operation.ToString());
                 }
                 json.WriteEndArray();
             }
-            if (!string.IsNullOrEmpty(CurveName))
+            if (CurveName.HasValue)
             {
-                json.WriteString(s_curveNamePropertyNameBytes, CurveName);
+                json.WriteString(s_curveNamePropertyNameBytes, CurveName.Value.ToString());
             }
             if (N != null)
             {
@@ -556,7 +556,7 @@ namespace Azure.Security.KeyVault.Keys
             KeyOps = new List<KeyOperation>(includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
-            CurveName = KeyCurveName.Find(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
+            CurveName = KeyCurveName.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
             D = ecParameters.D;
             X = ecParameters.Q.X;
             Y = ecParameters.Q.Y;
@@ -565,14 +565,24 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private ECDsa Convert(bool includePrivateParameters, bool throwIfNotSupported)
         {
-            ref readonly KeyCurveName curveName = ref KeyCurveName.Find(CurveName);
+            if (!CurveName.HasValue)
+            {
+                if (throwIfNotSupported)
+                {
+                    throw new InvalidOperationException("missing required curve name");
+                }
 
-            int requiredParameterSize = curveName._keyParameterSize;
+                return null;
+            }
+
+            KeyCurveName curveName = CurveName.Value;
+
+            int requiredParameterSize = curveName.KeyParameterSize;
             if (requiredParameterSize <= 0)
             {
                 if (throwIfNotSupported)
                 {
-                    throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+                    throw new InvalidOperationException($"invalid curve name: {CurveName.ToString()}");
                 }
 
                 return null;
@@ -580,7 +590,7 @@ namespace Azure.Security.KeyVault.Keys
 
             ECParameters ecParameters = new ECParameters
             {
-                Curve = ECCurve.CreateFromOid(curveName._oid),
+                Curve = ECCurve.CreateFromOid(curveName.Oid),
                 Q = new ECPoint
                 {
                     X = ForceBufferLength(nameof(X), X, requiredParameterSize),

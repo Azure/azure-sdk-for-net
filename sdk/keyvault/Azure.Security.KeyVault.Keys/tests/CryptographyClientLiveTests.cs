@@ -525,7 +525,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
 #else
                     KeyCurveName curveName = algorithm.GetEcKeyCurveName();
-                    ECCurve curve = ECCurve.CreateFromOid(curveName._oid);
+                    ECCurve curve = ECCurve.CreateFromOid(curveName.Oid);
 
                     using (ECDsa ecdsa = ECDsa.Create())
                     {
@@ -536,7 +536,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         }
                         catch (NotSupportedException)
                         {
-                            Assert.Inconclusive("This platform does not support OID {0}", curveName._oid);
+                            Assert.Inconclusive("This platform does not support OID {0}", curveName.Oid);
                         }
                     }
 #endif

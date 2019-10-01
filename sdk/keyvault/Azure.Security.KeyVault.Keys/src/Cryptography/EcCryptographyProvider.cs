@@ -19,11 +19,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(jwk, nameof(jwk));
 
             // Only set the JWK if we support the algorithm locally.
-            _curve = KeyCurveName.Find(jwk.CurveName);
-            if (_curve != default)
+            if (jwk.CurveName.HasValue)
             {
-                // TODO: Log that we don't support the algorithm locally.
-                _jwk = jwk;
+                _curve = jwk.CurveName.Value;
+                if (_curve.IsSupported)
+                {
+                    // TODO: Log that we don't support the algorithm locally.
+                    _jwk = jwk;
+                }
             }
         }
 
@@ -60,9 +63,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
-            if (_curve._keySize != algorithmCurve._keySize)
+            if (_curve.KeySize != algorithmCurve.KeySize)
             {
-                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
+                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
             }
 
             if (_curve != algorithmCurve)
@@ -104,9 +107,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
-            if (_curve._keySize != algorithmCurve._keySize)
+            if (_curve.KeySize != algorithmCurve.KeySize)
             {
-                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
+                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
             }
 
             if (_curve != algorithmCurve)
