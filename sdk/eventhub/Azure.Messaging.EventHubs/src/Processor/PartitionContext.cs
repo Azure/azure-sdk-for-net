@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Processor
             );
 
             using DiagnosticScope scope =
-                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+                EventDataDiagnostics.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
             scope.Start();
 
             try

@@ -12,7 +12,13 @@ namespace Azure.Core.Pipeline
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             ApplicationId = DefaultApplicationId;
-            LoggingAllowedHeaderNames = new List<string>();
+            LoggingAllowedHeaderNames = new List<string>()
+            {
+                "Date",
+                "x-ms-client-request-id",
+                "traceparent",
+                "x-ms-request-id"
+            };
             LoggingAllowedQueryParameters = new List<string>();
         }
 
@@ -32,10 +38,9 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public int LoggingContentSizeLimit { get; set; } = 4 * 1024;
 
-        public IList<string> LoggingAllowedHeaderNames { get; }
+        internal IList<string> LoggingAllowedHeaderNames { get; }
 
-        public IList<string> LoggingAllowedQueryParameters { get; }
-
+        internal IList<string> LoggingAllowedQueryParameters { get; }
 
         public string? ApplicationId { get; set; }
 

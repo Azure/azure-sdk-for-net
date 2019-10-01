@@ -86,12 +86,12 @@ namespace Azure.Messaging.EventHubs
         ///
         public bool TryAdd(EventData eventData)
         {
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
+            bool instrumented = EventDataDiagnostics.InstrumentEvent(eventData);
             bool added = InnerBatch.TryAdd(eventData);
 
             if (!added && instrumented)
             {
-                EventDataInstrumentation.ResetEvent(eventData);
+                EventDataDiagnostics.ResetEvent(eventData);
             }
 
             return added;

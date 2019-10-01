@@ -233,14 +233,14 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
 
-                    using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+                    using DiagnosticScope diagnosticScope = EventDataDiagnostics.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                     diagnosticScope.AddAttribute("kind", "server");
 
                     if (diagnosticScope.IsEnabled)
                     {
                         foreach (var eventData in receivedEvents)
                         {
-                            if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                            if (EventDataDiagnostics.TryExtractDiagnosticId(eventData, out string diagnosticId))
                             {
                                 diagnosticScope.AddLink(diagnosticId);
                             }

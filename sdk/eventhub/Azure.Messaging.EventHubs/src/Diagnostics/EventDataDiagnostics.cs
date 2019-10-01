@@ -2,19 +2,39 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Linq;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
+
+    public class A
+    {
+        private byte[] A;
+        private byte[] B;
+
+
+    }
     /// <summary>
     ///   Enables diagnostics instrumentation to be applied to <see cref="EventData" />
     ///   instances.
     /// </summary>
     ///
-    internal static class EventDataInstrumentation
-    {
+    public static class EventDataDiagnostics
+    {bool Compare(byte[] a, byte[] b)
+        {
+            if (!Equals(a, b) && (a == null || b == null || !a.SequenceEqual(b)))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics(true);
+        internal static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics(true);
+
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
@@ -24,8 +44,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <returns><c>true</c> if the event was instrumented in response to this request; otherwise, <c>false</c>.</returns>
         ///
-        public static bool InstrumentEvent(EventData eventData)
+        internal static bool InstrumentEvent(EventData eventData)
         {
+
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
                 using DiagnosticScope messageScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
@@ -52,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
         ///
-        public static bool TryExtractDiagnosticId(EventData eventData, out string id)
+        internal static bool TryExtractDiagnosticId(EventData eventData, out string id)
         {
             id = null;
 
@@ -71,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventData">The event to reset.</param>
         ///
-        public static void ResetEvent(EventData eventData) =>
+        internal static void ResetEvent(EventData eventData) =>
             eventData.Properties.Remove(DiagnosticProperty.DiagnosticIdAttribute);
     }
 }

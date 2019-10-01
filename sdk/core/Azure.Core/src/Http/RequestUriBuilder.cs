@@ -220,12 +220,14 @@ namespace Azure.Core.Http
             {
                 int endOfParameterValue = query.IndexOf('&', queryIndex);
                 int endOfParameterName = query.IndexOf('=', queryIndex);
+                bool noValue = false;
 
                 // Check if we have parameter without value
-                if (endOfParameterValue != -1 &&
-                    (endOfParameterName == -1 || endOfParameterName > endOfParameterValue))
+                if ((endOfParameterValue == -1 && endOfParameterName == -1) ||
+                    (endOfParameterValue != -1 && (endOfParameterName == -1 || endOfParameterName > endOfParameterValue)))
                 {
                     endOfParameterName = endOfParameterValue;
+                    noValue = true;
                 }
 
                 if (endOfParameterName == -1)
@@ -256,10 +258,27 @@ namespace Azure.Core.Http
                 }
 
                 int valueLength = endOfParameterValue - queryIndex;
+                int nameLength = endOfParameterName - queryIndex;
 
                 if (isAllowed)
                 {
                     stringBuilder.Append(query, queryIndex, valueLength);
+                }
+                else
+                {
+                    if (noValue)
+                    {
+                        stringBuilder.Append(query, queryIndex, valueLength);
+                    }
+                    else
+                    {
+                        stringBuilder.Append(query, queryIndex, nameLength);
+                        stringBuilder.Append("=*");
+                        if (query[endOfParameterValue - 1] == '&')
+                        {
+                            stringBuilder.Append("&");
+                        }
+                    }
                 }
 
                 queryIndex += valueLength;

@@ -387,7 +387,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
+            DiagnosticScope scope = EventDataDiagnostics.ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
@@ -407,7 +407,7 @@ namespace Azure.Messaging.EventHubs
         {
             foreach (EventData eventData in events)
             {
-                EventDataInstrumentation.InstrumentEvent(eventData);
+                EventDataDiagnostics.InstrumentEvent(eventData);
             }
         }
 

@@ -209,13 +209,15 @@ namespace Azure.Core.Tests
         [TestCase("?a", "?a")]
         [TestCase("?a=b", "?a=b")]
         [TestCase("?a=b&", "?a=b&")]
-        [TestCase("?a=b&d", "?a=b&")]
-        [TestCase("?a=b&d=1&", "?a=b&")]
-        [TestCase("?a=b&d=1&a1", "?a=b&a1")]
-        [TestCase("?a=b&d=1&a1=", "?a=b&a1=")]
-        [TestCase("?a=b&d=1&a1=&", "?a=b&a1=&")]
-        [TestCase("?d&d&d&", "?")]
+        [TestCase("?a=b&d", "?a=b&d")]
+        [TestCase("?a=b&d=1&", "?a=b&d=*&")]
+        [TestCase("?a=b&d=1&a1", "?a=b&d=*&a1")]
+        [TestCase("?a=b&d=1&a1=", "?a=b&d=*&a1=")]
+        [TestCase("?a=b&d=11&a1=&", "?a=b&d=*&a1=&")]
+        [TestCase("?d&d&d&", "?d&d&d&")]
         [TestCase("?a&a&a&a", "?a&a&a&a")]
+        [TestCase("?&&&&&&&", "?&&&&&&&")]
+        [TestCase("?d", "?d")]
         public void QueryIsSanitized(string input, string expected)
         {
             var uriBuilder = new RequestUriBuilder();
