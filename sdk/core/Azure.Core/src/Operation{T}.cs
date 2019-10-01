@@ -102,7 +102,7 @@ namespace Azure
                 await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
                 if (HasCompleted)
                 {
-                    return _response.WithValue(Value);
+                    return Response.FromValue(_response, Value);
                 }
                 await Task.Delay(PollingInterval, cancellationToken).ConfigureAwait(false);
             }

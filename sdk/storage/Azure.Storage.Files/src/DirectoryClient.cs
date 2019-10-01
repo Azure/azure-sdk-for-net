@@ -421,7 +421,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return response.GetRawResponse().WithValue(new StorageDirectoryInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -652,7 +652,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return response.GetRawResponse().WithValue(new StorageDirectoryProperties(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryProperties(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -800,7 +800,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return response.GetRawResponse().WithValue(new StorageDirectoryInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -919,7 +919,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return response.GetRawResponse().WithValue(new StorageDirectoryInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1448,7 +1448,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return response.GetRawResponse().WithValue(subdir);
+            return Response.FromValue(response.GetRawResponse(), subdir);
         }
 
         /// <summary>
@@ -1494,7 +1494,7 @@ namespace Azure.Storage.Files
                     filePermission,
                     cancellationToken)
                 .ConfigureAwait(false);
-            return response.GetRawResponse().WithValue(subdir);
+            return Response.FromValue(response.GetRawResponse(), subdir);
         }
         #endregion CreateSubdirectory
 
@@ -1603,7 +1603,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return response.GetRawResponse().WithValue(file);
+            return Response.FromValue(response.GetRawResponse(), file);
         }
 
         /// <summary>
@@ -1660,7 +1660,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken).ConfigureAwait(false);
-            return response.GetRawResponse().WithValue(file);
+            return Response.FromValue(response.GetRawResponse(), file);
         }
         #endregion CreateFile
 

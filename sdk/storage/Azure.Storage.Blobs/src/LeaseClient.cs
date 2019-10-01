@@ -619,7 +619,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 operationName: Constants.Blob.Lease.ReleaseOperationName,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
-                        return response.GetRawResponse().WithValue(new ReleasedObjectInfo(response.Value));
+                        return Response.FromValue(response.GetRawResponse(), new ReleasedObjectInfo(response.Value));
                     }
                     else
                     {
@@ -640,7 +640,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 operationName: Constants.Blob.Lease.ReleaseOperationName,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
-                        return response.GetRawResponse().WithValue(new ReleasedObjectInfo(response.Value));
+                        return Response.FromValue(response.GetRawResponse(), new ReleasedObjectInfo(response.Value));
                     }
                 }
                 catch (Exception ex)

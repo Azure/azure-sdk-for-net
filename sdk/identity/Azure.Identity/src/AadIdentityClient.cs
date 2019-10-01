@@ -148,7 +148,7 @@ namespace Azure.Identity
             {
                 AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return response.WithValue(result);
+                return Response.FromValue(response, result);
             }
 
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -162,7 +162,7 @@ namespace Azure.Identity
             {
                 AccessToken result = Deserialize(response.ContentStream);
 
-                return response.WithValue(result);
+                return Response.FromValue(response, result);
             }
 
             throw response.CreateRequestFailedException();

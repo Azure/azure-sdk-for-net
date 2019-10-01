@@ -73,7 +73,7 @@ namespace Azure
             {
                 foreach (T value in page.Values)
                 {
-                    yield return page.GetRawResponse().WithValue(value);
+                    yield return Response.FromValue(page.GetRawResponse(), value);
                 }
             }
         }

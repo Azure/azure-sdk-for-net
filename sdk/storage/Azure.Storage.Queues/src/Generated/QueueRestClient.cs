@@ -277,7 +277,7 @@ namespace Azure.Storage.Queues
                         Azure.Storage.Queues.Models.QueueServiceProperties _value = Azure.Storage.Queues.Models.QueueServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -406,7 +406,7 @@ namespace Azure.Storage.Queues
                         Azure.Storage.Queues.Models.QueueServiceStatistics _value = Azure.Storage.Queues.Models.QueueServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -558,7 +558,7 @@ namespace Azure.Storage.Queues
                         Azure.Storage.Queues.Models.QueuesSegment _value = Azure.Storage.Queues.Models.QueuesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -967,7 +967,7 @@ namespace Azure.Storage.Queues
                         }
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1233,7 +1233,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.SignedIdentifier.FromXml));
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1526,7 +1526,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.DequeuedMessage.FromXml));
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1807,7 +1807,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.EnqueuedMessage.FromXml));
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1945,7 +1945,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.PeekedMessage.FromXml));
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2122,7 +2122,7 @@ namespace Azure.Storage.Queues
                         }
 
                         // Create the response
-                        return response.WithValue(_value);
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {

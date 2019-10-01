@@ -662,7 +662,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
-                    return response.GetRawResponse().WithValue(new BlobDownloadInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new BlobDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -2348,7 +2348,7 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return response.GetRawResponse().WithValue(new BlobInfo
+                    return Response.FromValue(response.GetRawResponse(), new BlobInfo
                     {
                         LastModified = response.Value.LastModified,
                         ETag = response.Value.ETag,
@@ -2503,7 +2503,7 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return response.GetRawResponse().WithValue(new BlobInfo
+                    return Response.FromValue(response.GetRawResponse(), new BlobInfo
                     {
                         LastModified = response.Value.LastModified,
                         ETag = response.Value.ETag
