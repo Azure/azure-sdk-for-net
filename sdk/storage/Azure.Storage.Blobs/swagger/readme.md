@@ -553,6 +553,24 @@ directive:
     $.items = { "type": "string" };
 ```
 
+### RehydratePriority
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.RehydratePriority
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+```
+
+### ArchiveStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ArchiveStatus
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+```
+
 ### /{containerName}/{blob}?comp=metadata
 ``` yaml
 directive:

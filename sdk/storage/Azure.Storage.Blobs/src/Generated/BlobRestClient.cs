@@ -6563,7 +6563,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
-                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority); }
+                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfMatch != null) { _request.Headers.SetValue("x-ms-source-if-match", sourceIfMatch.Value.ToString()); }
@@ -7102,7 +7102,7 @@ namespace Azure.Storage.Blobs
                 // Add request headers
                 _request.Headers.SetValue("x-ms-access-tier", tier);
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority); }
+                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
@@ -12575,97 +12575,57 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion enum AccountKind
 
-#region enum strings ArchiveStatus
+#region enum ArchiveStatus
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// ArchiveStatus values
     /// </summary>
-    public partial struct ArchiveStatus : System.IEquatable<ArchiveStatus>
+    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
+    public enum ArchiveStatus
+    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
         /// <summary>
         /// rehydrate-pending-to-hot
         /// </summary>
-        public static Azure.Storage.Blobs.Models.ArchiveStatus RehydratePendingToHot { get; } = @"rehydrate-pending-to-hot";
+        RehydratePendingToHot,
 
         /// <summary>
         /// rehydrate-pending-to-cool
         /// </summary>
-        public static Azure.Storage.Blobs.Models.ArchiveStatus RehydratePendingToCool { get; } = @"rehydrate-pending-to-cool";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The ArchiveStatus value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new ArchiveStatus instance.
-        /// </summary>
-        /// <param name="value">The ArchiveStatus value.</param>
-        private ArchiveStatus(string value) { _value = value; }
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.ArchiveStatus other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.ArchiveStatus other && Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the ArchiveStatus.
-        /// </summary>
-        /// <returns>Hash code for the ArchiveStatus.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
-
-        /// <summary>
-        /// Convert the ArchiveStatus to a string.
-        /// </summary>
-        /// <returns>String representation of the ArchiveStatus.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a ArchiveStatus.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The ArchiveStatus value.</returns>
-        public static implicit operator ArchiveStatus(string value) => new Azure.Storage.Blobs.Models.ArchiveStatus(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an ArchiveStatus to a string.
-        /// </summary>
-        /// <param name="value">The ArchiveStatus value.</param>
-        /// <returns>String representation of the ArchiveStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.ArchiveStatus value) => value._value;
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.ArchiveStatus left, Azure.Storage.Blobs.Models.ArchiveStatus right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.ArchiveStatus left, Azure.Storage.Blobs.Models.ArchiveStatus right) => !left.Equals(right);
+        RehydratePendingToCool
     }
 }
-#endregion enum strings ArchiveStatus
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.ArchiveStatus value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToHot => "rehydrate-pending-to-hot",
+                    Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToCool => "rehydrate-pending-to-cool",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ArchiveStatus value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.ArchiveStatus ParseArchiveStatus(string value)
+            {
+                return value switch
+                {
+                    "rehydrate-pending-to-hot" => Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToHot,
+                    "rehydrate-pending-to-cool" => Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToCool,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ArchiveStatus value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ArchiveStatus
 
 #region class BlobGetAccessControlResult
 namespace Azure.Storage.Blobs.Models
@@ -14115,7 +14075,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("ArchiveStatus", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
-                _value.ArchiveStatus = _child.Value;
+                _value.ArchiveStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseArchiveStatus(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("CustomerProvidedKeySha256", ""));
             if (_child != null)
@@ -17956,97 +17916,26 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum PublicAccessType
 
-#region enum strings RehydratePriority
+#region enum RehydratePriority
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Optional: Indicates the priority with which to rehydrate an archived blob.
     /// </summary>
-    public partial struct RehydratePriority : System.IEquatable<RehydratePriority>
+    public enum RehydratePriority
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
         /// <summary>
         /// High
         /// </summary>
-        public static Azure.Storage.Blobs.Models.RehydratePriority High { get; } = @"High";
+        High,
 
         /// <summary>
         /// Standard
         /// </summary>
-        public static Azure.Storage.Blobs.Models.RehydratePriority Standard { get; } = @"Standard";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The RehydratePriority value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new RehydratePriority instance.
-        /// </summary>
-        /// <param name="value">The RehydratePriority value.</param>
-        private RehydratePriority(string value) { _value = value; }
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.RehydratePriority other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.RehydratePriority other && Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the RehydratePriority.
-        /// </summary>
-        /// <returns>Hash code for the RehydratePriority.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
-
-        /// <summary>
-        /// Convert the RehydratePriority to a string.
-        /// </summary>
-        /// <returns>String representation of the RehydratePriority.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a RehydratePriority.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The RehydratePriority value.</returns>
-        public static implicit operator RehydratePriority(string value) => new Azure.Storage.Blobs.Models.RehydratePriority(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an RehydratePriority to a string.
-        /// </summary>
-        /// <param name="value">The RehydratePriority value.</param>
-        /// <returns>String representation of the RehydratePriority value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.RehydratePriority value) => value._value;
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.RehydratePriority left, Azure.Storage.Blobs.Models.RehydratePriority right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.RehydratePriority left, Azure.Storage.Blobs.Models.RehydratePriority right) => !left.Equals(right);
+        Standard
     }
 }
-#endregion enum strings RehydratePriority
+#endregion enum RehydratePriority
 
 #region class RetentionPolicy
 namespace Azure.Storage.Blobs.Models
