@@ -757,25 +757,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        //[Test]
-        //public async Task StartCopyFromUriAsync_RehydratePriorityFail()
-        //{
-        //    using (GetNewContainer(out BlobContainerClient container))
-        //    {
-        //        // Arrange
-        //        BlobBaseClient srcBlob = await GetNewBlobClient(container);
-        //        BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-
-        //        // Act
-        //        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-        //            destBlob.StartCopyFromUriAsync(
-        //                srcBlob.Uri,
-        //                accessTier: AccessTier.Archive,
-        //                rehydratePriority: "None"),
-        //            e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
-        //    }
-        //}
-
         [Test]
         public async Task StartCopyFromUriAsync_AccessTierFail()
         {
@@ -2396,22 +2377,6 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
             }
         }
-
-        //[Test]
-        //public async Task SetTierAsync_RehydrateFail()
-        //{
-        //    using (GetNewContainer(out BlobContainerClient container))
-        //    {
-
-        //        // arrange
-        //        BlobBaseClient blob = await GetNewBlobClient(container);
-        //        await blob.SetTierAsync(AccessTier.Archive);
-
-        //        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-        //            blob.SetTierAsync(accessTier: AccessTier.Cool, rehydratePriority: "None"),
-        //            e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
-        //    }
-        //}
 
         //[Test]
         //public async Task SetTierAsync_Batch()
