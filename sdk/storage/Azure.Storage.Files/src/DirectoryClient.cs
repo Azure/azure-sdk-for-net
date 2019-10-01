@@ -151,7 +151,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = directoryPath
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 

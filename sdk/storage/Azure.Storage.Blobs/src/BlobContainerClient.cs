@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { ContainerName = containerName };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
         }

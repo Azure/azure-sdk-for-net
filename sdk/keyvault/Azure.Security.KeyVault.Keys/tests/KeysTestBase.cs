@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private void AssertKeyMaterialEqual(JsonWebKey exp, JsonWebKey act)
         {
-            Assert.AreEqual(exp.KeyId, act.KeyId);
+            Assert.AreEqual(exp.Id, act.Id);
             Assert.AreEqual(exp.KeyType, act.KeyType);
             Assert.IsTrue(AreEqual(exp.KeyOps, act.KeyOps));
             Assert.AreEqual(exp.CurveName, act.CurveName);

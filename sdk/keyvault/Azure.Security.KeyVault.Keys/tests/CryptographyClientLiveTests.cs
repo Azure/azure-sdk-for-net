@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([Fields(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -209,14 +209,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -243,14 +243,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -286,14 +286,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -320,14 +320,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -549,7 +549,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Key key = await Client.ImportKeyAsync(keyName, keyMaterial);
 
-            keyMaterial.KeyId = key.KeyMaterial.KeyId;
+            keyMaterial.Id = key.KeyMaterial.Id;
             key.KeyMaterial = keyMaterial;
 
             return key;

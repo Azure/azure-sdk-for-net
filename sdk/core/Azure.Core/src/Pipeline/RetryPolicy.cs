@@ -123,7 +123,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request, attempt);
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt);
             }
         }
 

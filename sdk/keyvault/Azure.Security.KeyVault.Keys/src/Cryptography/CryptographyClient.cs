@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
-        /// <param name="options">Options to configure the management of the request sent to Key Vault.</param>
+        /// <param name="options">Options to configure the management of the requests sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CryptographyClientOptions.Version"/> is not supported.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options) : this(keyId, credential, options, false)
@@ -71,18 +71,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 _provider = remoteClient;
             }
         }
-
         internal CryptographyClient(JsonWebKey keyMaterial, TokenCredential credential, CryptographyClientOptions options)
         {
             Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (string.IsNullOrEmpty(keyMaterial.KeyId))
+            if (string.IsNullOrEmpty(keyMaterial.Id))
             {
-                throw new ArgumentException($"{nameof(keyMaterial.KeyId)} is required", nameof(keyMaterial));
+                throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
             }
 
-            _keyId = new Uri(keyMaterial.KeyId);
+            _keyId = new Uri(keyMaterial.Id);
             options ??= new CryptographyClientOptions();
 
             RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(_keyId, credential, options);
@@ -92,12 +91,43 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _provider = LocalCryptographyProviderFactory.Create(keyMaterial);
         }
 
+        internal CryptographyClient(JsonWebKey keyMaterial, KeyVaultPipeline pipeline)
+        {
+            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+
+            if (keyMaterial.Id == null)
+            {
+                throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
+            }
+
+            _keyId = new Uri(keyMaterial.Id);
+
+            RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(pipeline);
+
+            _pipeline = pipeline;
+            _remoteProvider = remoteClient;
+            _provider = LocalCryptographyProviderFactory.Create(keyMaterial);
+        }
+
+        internal CryptographyClient(Uri keyId, KeyVaultPipeline pipeline)
+        {
+            Argument.AssertNotNull(keyId, nameof(keyId));
+
+            _keyId = keyId;
+
+            RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(pipeline);
+
+            _pipeline = pipeline;
+            _remoteProvider = remoteClient;
+            _provider = remoteClient;
+        }
+
         internal ICryptographyProvider RemoteClient => _remoteProvider;
 
         /// <summary>
         /// The <see cref="Key.Id"/> of the key used to perform cryptographic operations for the client.
         /// </summary>
-        public Uri KeyId => _keyId;
+        public string KeyId => _keyId.ToString();
 
         /// <summary>
         /// Encrypts the specified plain text.
@@ -1325,6 +1355,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Response<Key> key = _remoteProvider.GetKey(cancellationToken);
                 _provider = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
+                ;
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {

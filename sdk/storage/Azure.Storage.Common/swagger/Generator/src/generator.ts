@@ -345,7 +345,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
-        w.line(`${requestName}.Uri.Assign(${uri});`);
+        w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;
@@ -1132,7 +1132,13 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     // Change fromName if it ever stops being universal to the format
                     return `${types.getName(model)}.${fromName}(${text})`;
                 } else {
-                    return types.convertFromString(`${text}.Value`, model, service);
+                    if (isEnumType(model) && model.skipValue) { 
+                        // If skipValue is set on the enum, that means that the service would return a null for that value.
+                        // Hence, we add the null conditional for this case. 
+                        return types.convertFromString(`${text}?.Value`, model, service);
+                    } else {
+                        return types.convertFromString(`${text}.Value`, model, service);
+                    }
                 }
             };
 

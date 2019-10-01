@@ -1048,7 +1048,10 @@ directive:
 - from: swagger-document
   where: $.parameters.BlobPublicAccess
   transform: $.required = true;
-```
+- from: swagger-document
+  where: $.definitions.ContainerProperties
+  transform: $.required.push("PublicAccess");
+  ```
 
 ### Make lease duration a long
 Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
@@ -1105,4 +1108,41 @@ directive:
   where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryDelete"]
   transform: >
     $.delete.responses["200"]["x-az-public"] = false;
+```
+
+### Remove XMS prefix from ContentCrc64 property in Info models
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block&fromURL"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=blocklist"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&clear"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
 ```

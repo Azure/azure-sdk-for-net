@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         public void RoundtripWithUri(Uri uri)
         {
             var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Assign(uri);
+            uriBuilder.Reset(uri);
 
             Assert.AreEqual(uri.Scheme, uriBuilder.Scheme);
             Assert.AreEqual(uri.Host, uriBuilder.Host);
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests
         public void AppendingQueryResetsUri()
         {
             var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Assign(new Uri("http://localhost/"));
+            uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("a", "b");
 
             Assert.AreEqual("http://localhost/?a=b", uriBuilder.ToUri().ToString());
@@ -187,7 +187,7 @@ namespace Azure.Core.Tests
         public void AppendingPathResetsUri()
         {
             var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Assign(new Uri("http://localhost/"));
+            uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendPath("a");
 
             Assert.AreEqual("http://localhost/a", uriBuilder.ToUri().ToString());
@@ -197,13 +197,36 @@ namespace Azure.Core.Tests
         public void AppendingPathAfterQueryAndSettingTheUriWorks()
         {
             var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Assign(new Uri("http://localhost/"));
+            uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("query", "value");
             uriBuilder.AppendPath("a");
             uriBuilder.AppendPath("b");
             uriBuilder.AppendQuery("c", "d");
 
             Assert.AreEqual("http://localhost/ab?query=value&c=d", uriBuilder.ToUri().ToString());
+        }
+
+        [TestCase("?a", "?a")]
+        [TestCase("?a=b", "?a=b")]
+        [TestCase("?a=b&", "?a=b&")]
+        [TestCase("?a=b&d", "?a=b&")]
+        [TestCase("?a=b&d=1&", "?a=b&")]
+        [TestCase("?a=b&d=1&a1", "?a=b&a1")]
+        [TestCase("?a=b&d=1&a1=", "?a=b&a1=")]
+        [TestCase("?a=b&d=1&a1=&", "?a=b&a1=&")]
+        [TestCase("?d&d&d&", "?")]
+        [TestCase("?a&a&a&a", "?a&a&a&a")]
+        public void QueryIsSanitized(string input, string expected)
+        {
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/" + input));
+
+            Assert.AreEqual("http://localhost/" + expected, uriBuilder.ToString(new[]
+            {
+                "A",
+                "a1",
+                "a-2"
+            }));
         }
     }
 }
