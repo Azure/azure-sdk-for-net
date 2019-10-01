@@ -12,31 +12,31 @@ namespace Azure.Core
     internal static class PageResponseEnumerator
     {
 
-        public static FuncSyncCollection<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
+        public static FuncPageable<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
-            return new FuncSyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
+            return new FuncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
         }
 
-        public static FuncSyncCollection<T> CreateEnumerable<T>(Func<string?, int?, Page<T>> pageFunc) where T : notnull
+        public static FuncPageable<T> CreateEnumerable<T>(Func<string?, int?, Page<T>> pageFunc) where T : notnull
         {
-            return new FuncSyncCollection<T>(pageFunc);
+            return new FuncPageable<T>(pageFunc);
         }
 
-        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
+        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
         {
-            return new FuncAsyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
+            return new FuncAsyncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
         }
 
-        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
+        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
         {
-            return new FuncAsyncCollection<T>(pageFunc);
+            return new FuncAsyncPageable<T>(pageFunc);
         }
 
-        internal class FuncAsyncCollection<T> : AsyncCollection<T> where T : notnull
+        internal class FuncAsyncPageable<T> : AsyncPageable<T> where T : notnull
         {
             private readonly Func<string?, int?, Task<Page<T>>> _pageFunc;
 
-            public FuncAsyncCollection(Func<string?, int?, Task<Page<T>>> pageFunc)
+            public FuncAsyncPageable(Func<string?, int?, Task<Page<T>>> pageFunc)
             {
                 _pageFunc = pageFunc;
             }
@@ -52,11 +52,11 @@ namespace Azure.Core
             }
         }
 
-        internal class FuncSyncCollection<T> : SyncCollection<T> where T : notnull
+        internal class FuncPageable<T> : Pageable<T> where T : notnull
         {
             private readonly Func<string?, int?, Page<T>> _pageFunc;
 
-            public FuncSyncCollection(Func<string?, int?, Page<T>> pageFunc)
+            public FuncPageable(Func<string?, int?, Page<T>> pageFunc)
             {
                 _pageFunc = pageFunc;
             }

@@ -708,7 +708,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata</returns>
-        public virtual SyncCollection<CertificateProperties> GetCertificates(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CertificateProperties> GetCertificates(bool? includePending = default, CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = includePending.HasValue ? _pipeline.CreateFirstPageUri(CertificatesPath, new ValueTuple<string, string>("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) : _pipeline.CreateFirstPageUri(CertificatesPath);
 
@@ -721,7 +721,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata</returns>
-        public virtual AsyncCollection<CertificateProperties> GetCertificatesAsync(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CertificateProperties> GetCertificatesAsync(bool? includePending = default, CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = includePending.HasValue ? _pipeline.CreateFirstPageUri(CertificatesPath, new ValueTuple<string, string>("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) : _pipeline.CreateFirstPageUri(CertificatesPath);
 
@@ -751,7 +751,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the certificate to retrieve the versions of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of the certificate's versions</returns>
-        public virtual AsyncCollection<CertificateProperties> GetCertificateVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CertificateProperties> GetCertificateVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -765,7 +765,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates</returns>
-        public virtual SyncCollection<DeletedCertificate> GetDeletedCertificates(CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedCertificate> GetDeletedCertificates(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedCertificatesPath);
 
@@ -777,7 +777,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates</returns>
-        public virtual AsyncCollection<DeletedCertificate> GetDeletedCertificatesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedCertificate> GetDeletedCertificatesAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedCertificatesPath);
 
@@ -1103,7 +1103,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers metadata</returns>
-        public virtual SyncCollection<IssuerProperties> GetIssuers(CancellationToken cancellationToken = default)
+        public virtual Pageable<IssuerProperties> GetIssuers(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
@@ -1115,7 +1115,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers metadata</returns>
-        public virtual AsyncCollection<IssuerProperties> GetIssuersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IssuerProperties> GetIssuersAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 

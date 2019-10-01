@@ -15,30 +15,30 @@ namespace Azure.Storage
             bool isAsync,
             CancellationToken cancellationToken);
 
-        public SyncCollection<T> ToSyncCollection(CancellationToken cancellationToken)
+        public Pageable<T> ToSyncCollection(CancellationToken cancellationToken)
         {
-            return new StorageSyncCollection(this, cancellationToken);
+            return new StoragePageable(this, cancellationToken);
         }
 
-        public AsyncCollection<T> ToAsyncCollection(CancellationToken cancellationToken)
+        public AsyncPageable<T> ToAsyncCollection(CancellationToken cancellationToken)
         {
-            return new StorageAsyncCollection(this, cancellationToken);
+            return new StorageAsyncPageable(this, cancellationToken);
         }
 
         /// <summary>
         /// Abstract the Storage pattern for async iteration
         /// </summary>
-        private class StorageSyncCollection : SyncCollection<T>
+        private class StoragePageable : Pageable<T>
         {
             private StorageCollectionEnumerator<T> _enumerator;
 
             // for mocking
-            protected StorageSyncCollection()
+            protected StoragePageable()
                 : base()
             {
             }
 
-            public StorageSyncCollection(StorageCollectionEnumerator<T> enumerator, CancellationToken cancellationToken)
+            public StoragePageable(StorageCollectionEnumerator<T> enumerator, CancellationToken cancellationToken)
                 : base(cancellationToken)
             {
                 _enumerator = enumerator;
@@ -117,17 +117,17 @@ namespace Azure.Storage
         /// <summary>
         /// Abstract the Storage pattern for async iteration
         /// </summary>
-        private class StorageAsyncCollection : AsyncCollection<T>
+        private class StorageAsyncPageable : AsyncPageable<T>
         {
             private StorageCollectionEnumerator<T> _enumerator;
 
             // for mocking
-            protected StorageAsyncCollection()
+            protected StorageAsyncPageable()
                 : base()
             {
             }
 
-            public StorageAsyncCollection(StorageCollectionEnumerator<T> enumerator, CancellationToken cancellationToken)
+            public StorageAsyncPageable(StorageCollectionEnumerator<T> enumerator, CancellationToken cancellationToken)
                 : base(cancellationToken)
             {
                 _enumerator = enumerator;

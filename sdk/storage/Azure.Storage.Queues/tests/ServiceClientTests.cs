@@ -119,7 +119,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = (await service.CreateQueueAsync(queueName)).Value; // Ensure at least one queue
             try
             {
-                AsyncCollection<QueueItem> queues = service.GetQueuesAsync(new GetQueuesOptions { Prefix = prefix });
+                AsyncPageable<QueueItem> queues = service.GetQueuesAsync(new GetQueuesOptions { Prefix = prefix });
                 IList<QueueItem> items = await queues.ToListAsync();
 
                 Assert.AreNotEqual(0, items.Count());

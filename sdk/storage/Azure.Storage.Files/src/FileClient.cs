@@ -2237,7 +2237,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual SyncCollection<StorageHandle> GetHandles(
+        public virtual Pageable<StorageHandle> GetHandles(
             CancellationToken cancellationToken = default) =>
             new GetFileHandlesAsyncCollection(this).ToSyncCollection(cancellationToken);
 
@@ -2254,14 +2254,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{StorageHandle}"/> describing the
+        /// A <see cref="AsyncPageable{T}"/> describing the
         /// handles on the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
+        public virtual AsyncPageable<StorageHandle> GetHandlesAsync(
             CancellationToken cancellationToken = default) =>
             new GetFileHandlesAsyncCollection(this).ToAsyncCollection(cancellationToken);
 

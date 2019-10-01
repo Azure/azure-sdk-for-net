@@ -235,7 +235,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// The queues in the storage account.
         /// </returns>
-        public virtual SyncCollection<QueueItem> GetQueues(
+        public virtual Pageable<QueueItem> GetQueues(
             GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
             new GetQueuesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
@@ -261,7 +261,7 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment.
         /// </remarks>
-        public virtual AsyncCollection<QueueItem> GetQueuesAsync(
+        public virtual AsyncPageable<QueueItem> GetQueuesAsync(
             GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
             new GetQueuesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);

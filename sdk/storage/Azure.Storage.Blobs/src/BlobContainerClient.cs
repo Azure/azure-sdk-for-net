@@ -1201,7 +1201,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual SyncCollection<BlobItem> GetBlobs(
+        public virtual Pageable<BlobItem> GetBlobs(
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(this, options).ToSyncCollection(cancellationToken);
@@ -1223,14 +1223,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="AsyncCollection{BlobItem}"/> describing the
+        /// An <see cref="AsyncPageable{T}"/> describing the
         /// blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<BlobItem> GetBlobsAsync(
+        public virtual AsyncPageable<BlobItem> GetBlobsAsync(
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
@@ -1364,7 +1364,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual SyncCollection<BlobHierarchyItem> GetBlobsByHierarchy(
+        public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
             string delimiter = default,
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
@@ -1406,14 +1406,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="AsyncCollection{BlobHierarchyItem}"/> describing the
+        /// An <see cref="AsyncPageable{T}"/> describing the
         /// blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<BlobHierarchyItem> GetBlobsByHierarchyAsync(
+        public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
             string delimiter = default,
             GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>

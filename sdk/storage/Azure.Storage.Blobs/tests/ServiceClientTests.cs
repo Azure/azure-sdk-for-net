@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service, containerName: containerName))
             {
                 // Act
-                AsyncCollection<ContainerItem> containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
+                AsyncPageable<ContainerItem> containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
                 IList<ContainerItem> items = await containers.ToListAsync();
                 // Assert
                 Assert.AreNotEqual(0, items.Count());

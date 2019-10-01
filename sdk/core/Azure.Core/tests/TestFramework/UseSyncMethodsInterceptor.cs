@@ -73,7 +73,7 @@ namespace Azure.Core.Testing
             }
 
             Type returnType = methodInfo.ReturnType;
-            bool returnsSyncCollection = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(SyncCollection<>);
+            bool returnsSyncCollection = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Pageable<>);
 
             try
             {
@@ -83,7 +83,7 @@ namespace Azure.Core.Testing
                 if (returnsSyncCollection)
                 {
                     Type[] modelType = returnType.GenericTypeArguments;
-                    Type wrapperType = typeof(SyncCollectionWrapper<>).MakeGenericType(modelType);
+                    Type wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(modelType);
 
                     invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
                 }
@@ -110,11 +110,11 @@ namespace Azure.Core.Testing
             return invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
         }
 
-        private class SyncCollectionWrapper<T> : AsyncCollection<T>
+        private class SyncPageableWrapper<T> : AsyncPageable<T>
         {
-            private readonly SyncCollection<T> _enumerable;
+            private readonly Pageable<T> _enumerable;
 
-            public SyncCollectionWrapper(SyncCollection<T> enumerable)
+            public SyncPageableWrapper(Pageable<T> enumerable)
             {
                 _enumerable = enumerable;
             }

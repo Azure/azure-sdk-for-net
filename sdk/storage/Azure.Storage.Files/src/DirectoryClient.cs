@@ -958,7 +958,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual SyncCollection<StorageFileItem> GetFilesAndDirectories(
+        public virtual Pageable<StorageFileItem> GetFilesAndDirectories(
             GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
             new GetFilesAndDirectoriesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
@@ -979,14 +979,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{StorageFileItem}"/> describing the
+        /// A <see cref="AsyncPageable{T}"/> describing the
         /// items in the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<StorageFileItem> GetFilesAndDirectoriesAsync(
+        public virtual AsyncPageable<StorageFileItem> GetFilesAndDirectoriesAsync(
             GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
             new GetFilesAndDirectoriesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
@@ -1095,7 +1095,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual SyncCollection<StorageHandle> GetHandles(
+        public virtual Pageable<StorageHandle> GetHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             new GetDirectoryHandlesAsyncCollection(this, recursive).ToSyncCollection(cancellationToken);
@@ -1116,14 +1116,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{StorageHandle}"/> describing the
+        /// A <see cref="AsyncPageable{T}"/> describing the
         /// handles on the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
+        public virtual AsyncPageable<StorageHandle> GetHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             new GetDirectoryHandlesAsyncCollection(this, recursive).ToAsyncCollection(cancellationToken);
