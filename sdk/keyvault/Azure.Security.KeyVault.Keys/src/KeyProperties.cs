@@ -42,22 +42,22 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Name of the key.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// Key identifier.
         /// </summary>
-        public Uri Id { get; private set; }
+        public Uri Id { get; internal set; }
 
         /// <summary>
         /// Vault base URL.
         /// </summary>
-        public Uri VaultUri { get; private set; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
         /// Version of the key.
         /// </summary>
-        public string Version { get; private set; }
+        public string Version { get; internal set; }
 
         /// <summary>
         /// Set to true if the key's lifetime is managed by key vault. If this

@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Keys
                 Modulus = TrimBuffer(N),
             };
 
-            if (includePrivateParameters)
+            if (includePrivateParameters && HasPrivateKey)
             {
                 int byteLength = rsaParameters.Modulus.Length;
                 rsaParameters.D = ForceBufferLength(nameof(D), D, byteLength);
@@ -588,7 +588,7 @@ namespace Azure.Security.KeyVault.Keys
                 },
             };
 
-            if (includePrivateParameters)
+            if (includePrivateParameters && HasPrivateKey)
             {
                 ecParameters.D = ForceBufferLength(nameof(D), D, requiredParameterSize);
             }
