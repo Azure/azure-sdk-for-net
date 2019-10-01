@@ -7,6 +7,9 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
+    /// <summary>
+    /// These tests are related to our generated struct behavior.
+    /// </summary>
     public class PageInfoTest
     {
         [Test]
