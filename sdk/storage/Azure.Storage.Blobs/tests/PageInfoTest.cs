@@ -63,6 +63,62 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
+        public void EqualsReturnsTrueIfCompareContentHashByValues()
+        {
+            var hash1 = new byte[] { 1, 2, 3 };
+            var hash2 = new byte[] { 1, 2, 3 };
+
+            var info1 = new PageInfo(
+                new Core.Http.ETag("A"),
+                new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
+                hash1,
+                hash1,
+                1,
+                "key1");
+
+            var info2 = new PageInfo(
+                new Core.Http.ETag("A"),
+                new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
+                hash2,
+                hash1,
+                1,
+                "key1");
+
+            Assert.True(info1.Equals(info2));
+            Assert.True(info2.Equals(info1));
+
+            Assert.AreNotEqual(info1.GetHashCode(), info2.GetHashCode());
+        }
+
+        [Test]
+        public void EqualsReturnsTrueIfCompareContentCrc64ByValues()
+        {
+            var hash1 = new byte[] { 1, 2, 3 };
+            var hash2 = new byte[] { 1, 2, 3 };
+
+            var info1 = new PageInfo(
+                new Core.Http.ETag("A"),
+                new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
+                hash1,
+                hash1,
+                1,
+                "key1");
+
+            var info2 = new PageInfo(
+                new Core.Http.ETag("A"),
+                new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
+                hash1,
+                hash2,
+                1,
+                "key1");
+
+            Assert.True(info1.Equals(info2));
+            Assert.True(info2.Equals(info1));
+
+            Assert.AreNotEqual(info1.GetHashCode(), info2.GetHashCode());
+        }
+
+        [Test]
         public void EqualsReturnsFalseIfCompareContentHashWithNull()
         {
             var hash = new byte[] { 1, 2, 3 };
@@ -91,7 +147,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void EqualsReturnsFalseIfCompareXMSContentCrc64WithNull()
+        public void EqualsReturnsFalseIfCompareContentCrc64WithNull()
         {
             var hash = new byte[] { 1, 2, 3 };
 
@@ -144,35 +200,6 @@ namespace Azure.Storage.Blobs.Tests
             Assert.True(!info2.Equals(info1));
 
             Assert.AreNotEqual(info1.GetHashCode(), info2.GetHashCode());
-        }
-
-        [Test]
-        public void EqualsReturnsFalseIfCompareByteArrayByValues()
-        {
-            var hash1 = new byte[] { 1, 2, 3 };
-            var hash2 = new byte[] { 1, 2, 3 };
-
-            var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
-                new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
-                hash1,
-                hash1,
-                1,
-                "key1");
-
-            var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
-                new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
-                hash2,
-                hash1,
-                1,
-                "key1");
-
-            Assert.True(!info1.Equals(info2));
-            Assert.True(!info2.Equals(info1));
-
-            Assert.AreNotEqual(info1.GetHashCode(), info2.GetHashCode());
-
         }
     }
 }

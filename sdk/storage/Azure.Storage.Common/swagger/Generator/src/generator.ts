@@ -963,12 +963,14 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`public bool Equals(${naming.type(type.name)} other)`);
                     w.scope('{', '}', () => {
                         for (const property of properties) {
+                            const a = naming.property(property.clientName);
+                            const b = `other.${naming.property(property.clientName)}`;
                             if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
-                                w.line(`if (!System.StringComparer.Ordinal.Equals(${naming.property(property.clientName)}, other.${naming.property(property.clientName)}))`);
+                                w.line(`if (!System.StringComparer.Ordinal.Equals(${a}, ${b}))`);
                             } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
-                                w.line(`if (!Equals(${naming.property(property.clientName)}, other.${naming.property(property.clientName)}))`);
+                                w.line(`if (!Equals(${a}, ${b}) && (${a} == null || ${b} == null || !System.Linq.Enumerable.SequenceEqual(${a}, ${b})))`);
                             } else {
-                                w.line(`if (!${naming.property(property.clientName)}.Equals(other.${naming.property(property.clientName)}))`);
+                                w.line(`if (!${a}.Equals(${b}))`);
                             }
                             w.scope('{', '}', () => {
                             w.line(`return false;`);
