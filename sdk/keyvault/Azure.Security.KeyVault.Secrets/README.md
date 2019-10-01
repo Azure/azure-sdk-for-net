@@ -255,7 +255,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://azure.github.io/azure-sdk-for-net/api/KeyVault/Azure.Security.KeyVault.Secrets.html
+[API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Secrets.html
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
