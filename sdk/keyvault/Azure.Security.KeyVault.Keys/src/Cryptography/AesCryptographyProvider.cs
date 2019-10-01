@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _jwk = jwk;
         }
 
-        public bool ShouldRemote => _jwk.KeyId != null;
+        public bool ShouldRemote => _jwk.Id != null;
 
         public bool SupportsOperation(KeyOperation operation)
         {
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 Key = key,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 EncryptedKey = encryptedKey,
-                KeyId = _jwk.KeyId,
+                KeyId = _jwk.Id,
             };
         }
 

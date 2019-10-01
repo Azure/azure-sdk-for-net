@@ -26,8 +26,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             switch (prop.Name)
             {
                 case IdPropertyName:
-                    KeyMaterial.KeyId = prop.Value.GetString();
-                    Properties.Id = new Uri(KeyMaterial.KeyId);
+                    KeyMaterial.Id = prop.Value.GetString();
+                    Properties.Id = new Uri(KeyMaterial.Id);
                     KeyVaultIdentifier kvid = KeyVaultIdentifier.Parse(Properties.Id);
                     Properties.Name = kvid.Name;
                     Properties.VaultUri = kvid.VaultUri;
