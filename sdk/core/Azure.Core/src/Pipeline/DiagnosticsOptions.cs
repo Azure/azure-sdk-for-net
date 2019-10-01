@@ -38,9 +38,9 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public int LoggingContentSizeLimit { get; set; } = 4 * 1024;
 
-        internal IList<string> LoggingAllowedHeaderNames { get; }
+        public IList<string> LoggingAllowedHeaderNames { get; }
 
-        internal IList<string> LoggingAllowedQueryParameters { get; }
+        public IList<string> LoggingAllowedQueryParameters { get; }
 
         public string? ApplicationId { get; set; }
 
