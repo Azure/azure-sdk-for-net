@@ -28,6 +28,7 @@ namespace Reservations.Tests.ScenarioTests
             string reservationId = idTuple.Item2;
 
             TestGetReservation(reservationOrderId, reservationId);
+            TestGetAvailableScopes(reservationOrderId, reservationId);
             TestUpdateReservationToShared(reservationOrderId, reservationId);
             TestUpdateReservationToSingle(reservationOrderId, reservationId);
             TestUpdateRenewalOn(reservationOrderId, reservationId);
@@ -38,7 +39,6 @@ namespace Reservations.Tests.ScenarioTests
             TestListReservations(reservationOrderId);
             TestListReservationRevisions(reservationOrderId, reservationId);
         }
-
 
         private void TestSplitAndMerge(string reservationOrderId)
         {
@@ -128,6 +128,19 @@ namespace Reservations.Tests.ScenarioTests
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservation = reservationsClient.Reservation.Get(reservationId, reservationOrderId);
                 ValidateReservation(reservation);
+            }
+        }
+
+        private void TestGetAvailableScopes(string reservationOrderId, string reservationId)
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var scope = new ScopeProperties($"/subscriptions/{Common.SubscriptionId}");
+                var body = new SubscriptionScopeProperties(scope);
+                var res = reservationsClient.Reservation.AvailableScopes(reservationOrderId, reservationId, body);
             }
         }
 

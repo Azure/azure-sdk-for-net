@@ -45,9 +45,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
         /// <param name="provisioningState">Current state of the
         /// reservation.</param>
+        /// <param name="billingPlan">Possible values include: 'Upfront',
+        /// 'Monthly'</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.Capacity/reservations"</param>
-        public ReservationOrderResponse(int? etag = default(int?), string id = default(string), string name = default(string), string displayName = default(string), System.DateTime? requestDateTime = default(System.DateTime?), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), int? originalQuantity = default(int?), string term = default(string), string provisioningState = default(string), IList<ReservationResponse> reservationsProperty = default(IList<ReservationResponse>), string type = default(string))
+        public ReservationOrderResponse(int? etag = default(int?), string id = default(string), string name = default(string), string displayName = default(string), System.DateTime? requestDateTime = default(System.DateTime?), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), int? originalQuantity = default(int?), string term = default(string), string provisioningState = default(string), string billingPlan = default(string), ReservationOrderBillingPlanInformation planInformation = default(ReservationOrderBillingPlanInformation), IList<ReservationResponse> reservationsProperty = default(IList<ReservationResponse>), string type = default(string))
         {
             Etag = etag;
             Id = id;
@@ -59,6 +61,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
             OriginalQuantity = originalQuantity;
             Term = term;
             ProvisioningState = provisioningState;
+            BillingPlan = billingPlan;
+            PlanInformation = planInformation;
             ReservationsProperty = reservationsProperty;
             Type = type;
             CustomInit();
@@ -129,6 +133,17 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Upfront', 'Monthly'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingPlan")]
+        public string BillingPlan { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.planInformation")]
+        public ReservationOrderBillingPlanInformation PlanInformation { get; set; }
 
         /// <summary>
         /// </summary>

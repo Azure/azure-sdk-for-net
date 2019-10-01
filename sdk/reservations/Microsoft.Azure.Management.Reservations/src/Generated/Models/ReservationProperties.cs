@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// expire.</param>
         /// <param name="skuDescription">Description of the SKU in
         /// english.</param>
+        /// <param name="billingPlan">Possible values include: 'Upfront',
+        /// 'Monthly'</param>
         /// <param name="renewSource">Reservation Id of the reservation from
         /// which this reservation is renewed. Format of the resource Id is
         /// /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}.</param>
@@ -57,7 +59,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// which is purchased because of renew. Format of the resource Id is
         /// /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}.</param>
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
-        public ReservationProperties(string reservedResourceType = default(string), string instanceFlexibility = default(string), string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), string skuDescription = default(string), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties), string billingScopeId = default(string), bool? renew = default(bool?), string renewSource = default(string), string renewDestination = default(string), RenewPropertiesResponse renewProperties = default(RenewPropertiesResponse), string term = default(string))
+        public ReservationProperties(string reservedResourceType = default(string), string instanceFlexibility = default(string), string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), string skuDescription = default(string), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), string billingPlan = default(string), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties), string billingScopeId = default(string), bool? renew = default(bool?), string renewSource = default(string), string renewDestination = default(string), RenewPropertiesResponse renewProperties = default(RenewPropertiesResponse), string term = default(string))
         {
             ReservedResourceType = reservedResourceType;
             InstanceFlexibility = instanceFlexibility;
@@ -71,6 +73,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
             ExpiryDate = expiryDate;
             SkuDescription = skuDescription;
             ExtendedStatusInfo = extendedStatusInfo;
+            BillingPlan = billingPlan;
             SplitProperties = splitProperties;
             MergeProperties = mergeProperties;
             BillingScopeId = billingScopeId;
@@ -160,6 +163,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "extendedStatusInfo")]
         public ExtendedStatusInfo ExtendedStatusInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Upfront', 'Monthly'
+        /// </summary>
+        [JsonProperty(PropertyName = "billingPlan")]
+        public string BillingPlan { get; set; }
 
         /// <summary>
         /// </summary>

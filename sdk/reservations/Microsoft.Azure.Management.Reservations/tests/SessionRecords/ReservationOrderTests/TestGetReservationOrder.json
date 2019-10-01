@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/7440222d-d419-4fe5-b05b-371b02a0bb9b?api-version=2019-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNzQ0MDIyMmQtZDQxOS00ZmU1LWIwNWItMzcxYjAyYTBiYjliP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/1d8785bf-0817-4bf5-b7aa-5b2684bc98ee?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMWQ4Nzg1YmYtMDgxNy00YmY1LWI3YWEtNWIyNjg0YmM5OGVlP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f47c6299-f775-4f20-9b6a-b38ca9d79f8e"
+          "e5760c04-b598-4295-a580-57dfa31fb93f"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 29 Aug 2019 19:19:21 GMT"
+          "Tue, 01 Oct 2019 23:07:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,22 +39,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "westus:4e5a73bf-99b2-4d23-bcbb-97b095cb8db5"
+          "westus:89811042-58cd-4285-8d81-117c31c22378"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "04ac9961-aad8-43f3-8f95-862cdc3eb91c"
+          "2ba0fd92-646e-4674-bd22-1ede587b0628"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190829T191921Z:04ac9961-aad8-43f3-8f95-862cdc3eb91c"
+          "WESTUS:20191001T230736Z:2ba0fd92-646e-4674-bd22-1ede587b0628"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "624"
+          "635"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/7440222d-d419-4fe5-b05b-371b02a0bb9b\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"7440222d-d419-4fe5-b05b-371b02a0bb9b\",\r\n  \"etag\": 9,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-08-29T19:15:17.8934833Z\",\r\n    \"createdDateTime\": \"2019-08-29T19:19:13.0944347Z\",\r\n    \"expiryDate\": \"2020-08-29\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/7440222d-d419-4fe5-b05b-371b02a0bb9b/reservations/c75b7923-903d-4c0b-b4d7-77be57edbb4f\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3,\r\n    \"billingPlan\": \"Upfront\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/1d8785bf-0817-4bf5-b7aa-5b2684bc98ee\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"1d8785bf-0817-4bf5-b7aa-5b2684bc98ee\",\r\n  \"etag\": 9,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseBillingPlanReservation\",\r\n    \"requestDateTime\": \"2019-10-01T23:03:32.3548104Z\",\r\n    \"createdDateTime\": \"2019-10-01T23:07:01.1498056Z\",\r\n    \"expiryDate\": \"2020-10-01\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/1d8785bf-0817-4bf5-b7aa-5b2684bc98ee/reservations/a2ced41e-b44d-46d8-9397-67e818b57a69\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3,\r\n    \"billingPlan\": \"Monthly\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
