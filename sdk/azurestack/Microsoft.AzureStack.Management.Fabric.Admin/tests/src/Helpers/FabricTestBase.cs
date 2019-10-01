@@ -40,26 +40,6 @@ namespace Fabric.Tests
             });
         }
 
-        protected void OverStorageSystems(FabricAdminClient client, Action<string, string> act) {
-            OverFabricLocations(client, (fabricLocationName) => {
-                var storageSystems = client.StorageSystems.List(ResourceGroupName, fabricLocationName);
-                Common.MapOverIPage(storageSystems, client.StorageSystems.ListNext, (storageSystem) => {
-                    var storageSystemName = ExtractName(storageSystem.Name);
-                    act(fabricLocationName, storageSystemName);
-                });
-            });
-        }
-
-        protected void OverStoragePools(FabricAdminClient client, Action<string, string, string> act) {
-            OverStorageSystems(client, (fabricLocationName, storageSystemName) => {
-                var storageSystems = client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName);
-                Common.MapOverIPage(storageSystems, client.StoragePools.ListNext, (storagePool) => {
-                    var storagePoolName = ExtractName(storagePool.Name);
-                    act(fabricLocationName, storageSystemName, storagePoolName);
-                });
-            });
-        }
-
         protected void OverScaleUnits(FabricAdminClient client, Action<string, string> act) {
             OverFabricLocations(client, (fabricLocationName) => {
                 var scaleUnits = client.ScaleUnits.List(ResourceGroupName, fabricLocationName);
@@ -88,14 +68,6 @@ namespace Fabric.Tests
             return ExtractName(client.LogicalNetworks.List(ResourceGroupName, fabricLocationName).GetFirst().Name);
         }
 
-        public string GetStorageSystem(FabricAdminClient client, string fabricLocationName) {
-            return ExtractName(client.StorageSystems.List(ResourceGroupName, fabricLocationName).GetFirst().Name);
-        }
-
-        public string GetStoragePool(FabricAdminClient client, string fabricLocationName, string storageSystemName) {
-            return ExtractName(client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName).GetFirst().Name);
-        }
-
         public string GetScaleUnit(FabricAdminClient client, string fabricLocationName) {
             return ExtractName(client.ScaleUnits.List(ResourceGroupName, fabricLocationName).GetFirst().Name);
         }
@@ -122,9 +94,6 @@ namespace Fabric.Tests
             Assert.NotNull(client.ScaleUnits);
             Assert.NotNull(client.ScaleUnitNodes);
             Assert.NotNull(client.SlbMuxInstances);
-
-            Assert.NotNull(client.StoragePools);
-            Assert.NotNull(client.StorageSystems);
             Assert.NotNull(client.StorageSubSystems);
             Assert.NotNull(client.Volumes);
 

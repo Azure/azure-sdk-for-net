@@ -230,20 +230,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Uri"/> representing the
-        /// <see cref="BlobUriBuilder"/>'s fields.   The <see cref="Uri.Query"/>
-        /// property contains the SAS, snapshot, and additional query parameters.
+        /// Returns the <see cref="System.Uri"/> constructed from the
+        /// <see cref="BlobUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
+        /// property contains the SAS and additional query parameters.
         /// </summary>
-        public Uri Uri
+        public Uri ToUri()
         {
-            get
+            if (_uri == null)
             {
-                if (_uri == null)
-                {
-                    _uri = BuildUri().ToUri();
-                }
-                return _uri;
+                _uri = BuildUri().ToUri();
             }
+            return _uri;
         }
 
         /// <summary>

@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 13.2.0
+
+- Support set LargeFileSharesState as Enabled on Create or Update Storage account
+- Support list Storage Account with NextPageLink
+
 ### Changes in 13.1.0
 
 - Support Create/Get/List/Delete File share

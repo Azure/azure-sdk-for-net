@@ -1,5 +1,8 @@
 Breaking Changes
 ================
+Next Release
+--------------------------
+- Removing Uri property from FileUriBuilder and replacing with a ToUri method that returns the Uri.
 
 12.0.0-preview.1 (2019-07)
 --------------------------
