@@ -16109,7 +16109,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// PublicAccess
         /// </summary>
-        public Azure.Storage.Blobs.Models.PublicAccessType? PublicAccess { get; internal set; }
+        public Azure.Storage.Blobs.Models.PublicAccessType PublicAccess { get; internal set; }
 
         /// <summary>
         /// HasImmutabilityPolicy
@@ -16158,11 +16158,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.LeaseDuration = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseDurationType(_child.Value);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("PublicAccess", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.PublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(_child.Value);
-            }
+            _value.PublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(element.Element(System.Xml.Linq.XName.Get("PublicAccess", ""))?.Value);
             _child = element.Element(System.Xml.Linq.XName.Get("HasImmutabilityPolicy", ""));
             if (_child != null)
             {
@@ -16191,22 +16187,22 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static ContainerProperties ContainerProperties(
             System.DateTimeOffset lastModified,
+            Azure.Storage.Blobs.Models.PublicAccessType publicAccess,
             Azure.Core.Http.ETag eTag,
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
-            Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
             bool? hasImmutabilityPolicy = default,
             bool? hasLegalHold = default)
         {
             return new ContainerProperties()
             {
                 LastModified = lastModified,
+                PublicAccess = publicAccess,
                 ETag = eTag,
                 LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
-                PublicAccess = publicAccess,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
                 HasLegalHold = hasLegalHold,
             };

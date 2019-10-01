@@ -1132,7 +1132,13 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     // Change fromName if it ever stops being universal to the format
                     return `${types.getName(model)}.${fromName}(${text})`;
                 } else {
-                    return types.convertFromString(`${text}.Value`, model, service);
+                    if (isEnumType(model) && model.skipValue) { 
+                        // If skipValue is set on the enum, that means that the service would return a null for that value.
+                        // Hence, we add the null conditional for this case. 
+                        return types.convertFromString(`${text}?.Value`, model, service);
+                    } else {
+                        return types.convertFromString(`${text}.Value`, model, service);
+                    }
                 }
             };
 
