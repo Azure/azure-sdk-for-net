@@ -228,7 +228,7 @@ namespace Azure.Core.Tests
                 "A",
                 "a1",
                 "a-2"
-            }));
+            }, "*"));
         }
     }
 }

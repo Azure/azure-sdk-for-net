@@ -511,11 +511,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=*", e.GetProperty<string>("uri"));
+            Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Custom-Header:*{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -523,7 +523,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Response-Header:*{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
         }
 
         [Test]

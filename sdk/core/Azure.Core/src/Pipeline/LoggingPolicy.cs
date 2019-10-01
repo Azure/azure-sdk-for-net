@@ -30,6 +30,7 @@ namespace Azure.Core.Pipeline
         private const long DelayWarningThreshold = 3000; // 3000ms
 
         private const string LogAllValue = "*";
+        private const string RedactedPlaceholder = "REDACTED";
 
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
@@ -127,7 +128,7 @@ namespace Azure.Core.Pipeline
 
         private string FormatUri(RequestUriBuilder requestUri)
         {
-            return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters);
+            return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters, RedactedPlaceholder);
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -148,7 +149,7 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    stringBuilder.AppendLine("*");
+                    stringBuilder.AppendLine(RedactedPlaceholder);
                 }
             }
             return stringBuilder.ToString();
