@@ -968,12 +968,12 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                             if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
                                 w.line(`if (!System.StringComparer.Ordinal.Equals(${a}, ${b}))`);
                             } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
-                                w.line(`if (!Equals(${a}, ${b}))`);
+                                w.line(`if (!System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(${a}, ${b}))`);
                             } else {
                                 w.line(`if (!${a}.Equals(${b}))`);
                             }
                             w.scope('{', '}', () => {
-                            w.line(`return false;`);
+                                w.line(`return false;`);
                             });
                         }
                         w.line();
@@ -997,8 +997,10 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                             if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
                                 w.line(`if (EncryptionKeySha256 != null)`)
                                 w.scope('{', '}', () => {
-                                w.line(`hashCode.Add(${naming.property(property.clientName)}, System.StringComparer.Ordinal);`);
+                                    w.line(`hashCode.Add(${naming.property(property.clientName)}, System.StringComparer.Ordinal);`);
                                 });
+                            } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
+                                w.line(`hashCode.Add(System.Collections.StructuralComparisons.StructuralEqualityComparer.GetHashCode(${naming.property(property.clientName)}));`);
                             } else {
                                 w.line(`hashCode.Add(${naming.property(property.clientName)});`);
                             }

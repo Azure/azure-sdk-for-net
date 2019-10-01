@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void EqualsReturnsFalseIfCompareContentHashByValues()
+        public void EqualsReturnsTrueIfCompareContentHashByValues()
         {
             var hash1 = new byte[] { 1, 2, 3 };
             var hash2 = new byte[] { 1, 2, 3 };
@@ -84,14 +84,14 @@ namespace Azure.Storage.Blobs.Tests
                 1,
                 "key1");
 
-            Assert.True(!info1.Equals(info2));
-            Assert.True(!info2.Equals(info1));
+            Assert.True(info1.Equals(info2));
+            Assert.True(info2.Equals(info1));
 
-            Assert.AreNotEqual(info1.GetHashCode(), info2.GetHashCode());
+            Assert.AreEqual(info1.GetHashCode(), info2.GetHashCode());
         }
 
         [Test]
-        public void EqualsReturnsFalseIfCompareContentCrc64ByValues()
+        public void EqualsReturnsTrueIfCompareContentCrc64ByValues()
         {
             var hash1 = new byte[] { 1, 2, 3 };
             var hash2 = new byte[] { 1, 2, 3 };
@@ -112,10 +112,10 @@ namespace Azure.Storage.Blobs.Tests
                 1,
                 "key1");
 
-            Assert.True(!info1.Equals(info2));
-            Assert.True(!info2.Equals(info1));
+            Assert.True(info1.Equals(info2));
+            Assert.True(info2.Equals(info1));
 
-            Assert.AreNotEqual(info1.GetHashCode(), info2.GetHashCode());
+            Assert.AreEqual(info1.GetHashCode(), info2.GetHashCode());
         }
 
         [Test]

@@ -17984,11 +17984,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 return false;
             }
-            if (!Equals(ContentHash, other.ContentHash))
+            if (!System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(ContentHash, other.ContentHash))
             {
                 return false;
             }
-            if (!Equals(ContentCrc64, other.ContentCrc64))
+            if (!System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(ContentCrc64, other.ContentCrc64))
             {
                 return false;
             }
@@ -18019,8 +18019,8 @@ namespace Azure.Storage.Blobs.Models
             var hashCode = new Azure.Core.HashCodeBuilder();
             hashCode.Add(ETag);
             hashCode.Add(LastModified);
-            hashCode.Add(ContentHash);
-            hashCode.Add(ContentCrc64);
+            hashCode.Add(System.Collections.StructuralComparisons.StructuralEqualityComparer.GetHashCode(ContentHash));
+            hashCode.Add(System.Collections.StructuralComparisons.StructuralEqualityComparer.GetHashCode(ContentCrc64));
             hashCode.Add(BlobSequenceNumber);
             if (EncryptionKeySha256 != null)
             {
