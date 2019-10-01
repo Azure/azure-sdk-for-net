@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
-            Assert.AreEqual(friendlyName, jwk.CurveName);
+            Assert.AreEqual(friendlyName, jwk.CurveName?.ToString());
 
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
             Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
@@ -159,10 +159,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = new JsonWebKey
             {
                 KeyType = KeyType.Ec,
-                CurveName = curveName,
                 X = x,
                 Y = y,
             };
+
+            if (curveName is { })
+            {
+                jwk.CurveName = curveName;
+            }
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
             if (nullOnError)
@@ -351,7 +355,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 if (ReferenceEquals(x, y)) return true;
                 if (x is null || y is null) return false;
 
-                if (!string.Equals(x.KeyId, y.KeyId)) return false;
+                if (!string.Equals(x.Id, y.Id)) return false;
                 if (x.KeyType != y.KeyType) return false;
                 if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
 

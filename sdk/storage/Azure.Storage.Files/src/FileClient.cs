@@ -165,7 +165,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -267,7 +267,7 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.Uri, Pipeline);
+            return new FileClient(builder.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -478,9 +478,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageFileInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -905,16 +903,12 @@ namespace Azure.Storage.Files
                                 cancellationToken)
                                 .ConfigureAwait(false))
                                 .Item2,
-                        // TODO: For now we're using the default ResponseClassifier
-                        // on FileConnectionOptions so we'll do the same here
-                        new ResponseClassifier(),
+                        Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
                     // to make the Content easier to find
-                    return new Response<StorageFileDownloadInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileDownloadInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageFileDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1197,9 +1191,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileProperties>(
-                        response.GetRawResponse(),
-                        new StorageFileProperties(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageFileProperties(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1393,9 +1385,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageFileInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1515,9 +1505,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageFileInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1883,15 +1871,13 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileUploadInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileUploadInfo
-                        {
-                            ETag = response.Value.ETag,
-                            LastModified = response.Value.LastModified,
-                            ContentHash = response.Value.XMSContentCrc64,
-                            IsServerEncrypted = response.Value.IsServerEncrypted
-                        });
+                    return Response.FromValue(response.GetRawResponse(), new StorageFileUploadInfo
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified,
+                        ContentHash = response.Value.XMSContentCrc64,
+                        IsServerEncrypted = response.Value.IsServerEncrypted
+                    });
                 }
                 catch (Exception ex)
                 {

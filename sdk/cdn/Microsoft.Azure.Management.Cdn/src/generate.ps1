@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "cnd/resource-manager" -AutoRestVersion "latest"

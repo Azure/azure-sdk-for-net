@@ -826,7 +826,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 Response<KeyBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup");
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return Response.FromValue(backup.GetRawResponse(), backup.Value.Value);
             }
             catch (Exception e)
             {
@@ -870,7 +870,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 Response<KeyBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup").ConfigureAwait(false);
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return Response.FromValue(backup.GetRawResponse(), backup.Value.Value);
             }
             catch (Exception e)
             {

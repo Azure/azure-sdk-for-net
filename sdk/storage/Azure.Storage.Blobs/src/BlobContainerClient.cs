@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { ContainerName = containerName };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
         }
@@ -674,24 +674,22 @@ namespace Azure.Storage.Blobs
 
                     // Turn the flattened properties into a ContainerItem
                     var uri = new BlobUriBuilder(Uri);
-                    return new Response<ContainerItem>(
-                        response.GetRawResponse(),
-                        new ContainerItem(false)
+                    return Response.FromValue(response.GetRawResponse(), new ContainerItem(false)
+                    {
+                        Name = uri.ContainerName,
+                        Metadata = response.Value.Metadata,
+                        Properties = new ContainerProperties()
                         {
-                            Name = uri.ContainerName,
-                            Metadata = response.Value.Metadata,
-                            Properties = new ContainerProperties()
-                            {
-                                LastModified = response.Value.LastModified,
-                                ETag = response.Value.ETag,
-                                LeaseStatus = response.Value.LeaseStatus,
-                                LeaseState = response.Value.LeaseState,
-                                LeaseDuration = response.Value.LeaseDuration,
-                                PublicAccess = response.Value.BlobPublicAccess,
-                                HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
-                                HasLegalHold = response.Value.HasLegalHold
-                            }
-                        });
+                            LastModified = response.Value.LastModified,
+                            ETag = response.Value.ETag,
+                            LeaseStatus = response.Value.LeaseStatus,
+                            LeaseState = response.Value.LeaseState,
+                            LeaseDuration = response.Value.LeaseDuration,
+                            PublicAccess = response.Value.BlobPublicAccess,
+                            HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
+                            HasLegalHold = response.Value.HasLegalHold
+                        }
+                    });
                 }
                 catch (Exception ex)
                 {

@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The allowed usages for the key of the certificate
         /// </summary>
-        public IList<KeyUsage> KeyUsage { get; set; }
+        public IList<CertificateKeyUsage> KeyUsage { get; set; }
 
         /// <summary>
         /// The allowed enhanced key usages (EKUs) of the certificate
@@ -222,7 +222,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (ContentType != null)
             {
-                json.WriteString(s_contentTypePropertyNameBytes, ContentType);
+                json.WriteString(s_contentTypePropertyNameBytes, ContentType.ToString());
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case KeyUsagePropertyName:
-                        KeyUsage = new List<KeyUsage>();
+                        KeyUsage = new List<CertificateKeyUsage>();
                         foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             KeyUsage.Add(usageElem.GetString());
@@ -283,9 +283,9 @@ namespace Azure.Security.KeyVault.Certificates
             if (KeyUsage != null)
             {
                 json.WriteStartArray(s_keyUsagePropertyNameBytes);
-                foreach (KeyUsage usage in KeyUsage)
+                foreach (CertificateKeyUsage usage in KeyUsage)
                 {
-                    json.WriteStringValue(usage);
+                    json.WriteStringValue(usage.ToString());
                 }
                 json.WriteEndArray();
             }

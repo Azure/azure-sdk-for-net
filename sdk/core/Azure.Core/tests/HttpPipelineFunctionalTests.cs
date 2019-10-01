@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 100; i++)
             {
                 using Request request = httpPipeline.CreateRequest();
-                request.Uri.Assign(testServer.Address);
+                request.Uri.Reset(testServer.Address);
 
                 using Response response = await httpPipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -61,7 +61,7 @@ namespace Azure.Core.Tests
                 Stream extractedStream;
                 using (HttpPipelineMessage message = httpPipeline.CreateMessage())
                 {
-                    message.Request.Uri.Assign(testServer.Address);
+                    message.Request.Uri.Reset(testServer.Address);
                     message.BufferResponse = false;
 
                     await httpPipeline.SendAsync(message, CancellationToken.None);

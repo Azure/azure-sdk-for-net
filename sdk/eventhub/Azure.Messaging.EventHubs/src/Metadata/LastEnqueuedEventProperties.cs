@@ -45,7 +45,6 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <summary>
         ///   The date and time, in UTC, that the information about the last enqueued event was received.
         /// </summary>
-        /// 
         public DateTimeOffset? InformationReceived { get; private set; }
 
         /// <summary>

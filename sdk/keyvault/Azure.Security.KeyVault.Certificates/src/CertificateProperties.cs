@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -16,6 +17,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string AttributesPropertyName = "attributes";
 
         private CertificateAttributes _attributes;
+        private Dictionary<string, string> _tags;
 
         /// <summary>
         /// The Id of the certificate.
@@ -45,7 +47,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The tags applied to the certificate.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; }
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
         /// Specifies if the certificate is currently enabled.
@@ -98,7 +100,7 @@ namespace Azure.Security.KeyVault.Certificates
                 case IdPropertyName:
                     var id = prop.Value.GetString();
                     Id = new Uri(id);
-                    ParseId(id);
+                    ParseId(Id);
                     break;
 
                 case X509ThumprintPropertyName:
@@ -106,7 +108,6 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 case TagsPropertyName:
-                    Tags = new Dictionary<string, string>();
                     foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                     {
                         Tags[tagProp.Name] = tagProp.Value.GetString();
@@ -119,16 +120,14 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private void ParseId(string id)
+        private void ParseId(Uri idToParse)
         {
-            var idToParse = new Uri(id, UriKind.Absolute);
-
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, idToParse.Segments.Length));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", idToParse, idToParse.Segments.Length));
 
             if (!string.Equals(idToParse.Segments[1], "certificates" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", id, idToParse.Segments[1]));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", idToParse, idToParse.Segments[1]));
 
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');

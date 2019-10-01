@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Base64Url.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeBasedAuthenticationPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IJsonSerializable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KeyVaultIdentifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultPipeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultPage.cs" />
   </ItemGroup>

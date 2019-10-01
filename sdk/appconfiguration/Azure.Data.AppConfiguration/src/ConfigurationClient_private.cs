@@ -37,12 +37,12 @@ namespace Azure.Data.AppConfiguration
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-            return new Response<ConfigurationSetting>(response, result);
+            return Response.FromValue(response, result);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
+            return Response.FromValue(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -91,7 +91,7 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
-            builder.Assign(_baseUri);
+            builder.Reset(_baseUri);
             builder.AppendPath(KvRoute);
             builder.AppendPath(key);
 
@@ -103,7 +103,7 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
         {
-            builder.Assign(_baseUri);
+            builder.Reset(_baseUri);
             builder.AppendPath(LocksRoute);
             builder.AppendPath(key);
 
@@ -182,14 +182,14 @@ namespace Azure.Data.AppConfiguration
 
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Assign(_baseUri);
+            builder.Reset(_baseUri);
             builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Assign(_baseUri);
+            builder.Reset(_baseUri);
             builder.AppendPath(RevisionsRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }

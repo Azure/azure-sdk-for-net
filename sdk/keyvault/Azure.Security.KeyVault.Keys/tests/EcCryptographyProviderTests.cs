@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
-            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { KeyId = "test" };
+            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { Id = "test" };
             EcCryptographyProvider client = new EcCryptographyProvider(jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             JsonWebKey jwk = new JsonWebKey(ecdsa)
             {
-                KeyId = "test",
+                Id = "test",
             };
 
             EcCryptographyProvider client = new EcCryptographyProvider(jwk);
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
-            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { KeyId = "test" };
+            JsonWebKey jwk = new JsonWebKey(ecdsa, true) { Id = "test" };
             EcCryptographyProvider client = new EcCryptographyProvider(jwk);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
@@ -234,7 +234,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 {
                     JsonWebKey jwk = new JsonWebKey(ecdsa, true)
                     {
-                        KeyId = $"key-{oid}",
+                        Id = "test",
                     };
 
                     foreach (SignatureAlgorithm algorithm in algorithms)

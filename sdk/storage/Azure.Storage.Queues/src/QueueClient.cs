@@ -150,7 +150,7 @@ namespace Azure.Storage.Queues
                 {
                     QueueName = queueName
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
@@ -1000,9 +1000,7 @@ namespace Azure.Storage.Queues
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
                     // sequence only ever has one value so we'll unwrap it
-                    return new Response<EnqueuedMessage>(
-                        messages.GetRawResponse(),
-                        messages.Value.FirstOrDefault());
+                    return Response.FromValue(messages.GetRawResponse(), messages.Value.FirstOrDefault());
                 }
                 catch (Exception ex)
                 {
@@ -1119,7 +1117,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.DequeueMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return new Response<DequeuedMessage[]>(dequeuedMessage.GetRawResponse(), dequeuedMessage.Value.ToArray());
+                    return Response.FromValue(dequeuedMessage.GetRawResponse(), dequeuedMessage.Value.ToArray());
                 }
                 catch (Exception ex)
                 {
@@ -1220,7 +1218,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return new Response<PeekedMessage[]>(peekedMessages.GetRawResponse(), peekedMessages.Value.ToArray());
+                    return Response.FromValue(peekedMessages.GetRawResponse(), peekedMessages.Value.ToArray());
                 }
                 catch (Exception ex)
                 {

@@ -168,7 +168,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
             _customerProvidedKey = options?.CustomerProvidedKey;
         }
@@ -309,7 +309,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.Uri, Pipeline);
+            return new BlobBaseClient(builder.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -657,14 +657,12 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken)
                                 .ConfigureAwait(false))
                             .Item2,
-                        // TODO: For now we're using the default ResponseClassifier
-                        // on BlobConnectionOptions so we'll do the same here
-                        new ResponseClassifier(),
+                        Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
-                    return new Response<BlobDownloadInfo>(response.GetRawResponse(), new BlobDownloadInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new BlobDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -2350,14 +2348,12 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return new Response<BlobInfo>(
-                        response.GetRawResponse(),
-                        new BlobInfo
-                        {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag,
-                            BlobSequenceNumber = response.Value.BlobSequenceNumber
-                        });
+                    return Response.FromValue(response.GetRawResponse(), new BlobInfo
+                    {
+                        LastModified = response.Value.LastModified,
+                        ETag = response.Value.ETag,
+                        BlobSequenceNumber = response.Value.BlobSequenceNumber
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -2507,13 +2503,11 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return new Response<BlobInfo>(
-                        response.GetRawResponse(),
-                        new BlobInfo
-                        {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag
-                        });
+                    return Response.FromValue(response.GetRawResponse(), new BlobInfo
+                    {
+                        LastModified = response.Value.LastModified,
+                        ETag = response.Value.ETag
+                    });
                 }
                 catch (Exception ex)
                 {

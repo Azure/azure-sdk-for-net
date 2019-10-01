@@ -57,9 +57,9 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly KeyOperation[] s_eCPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
 
         /// <summary>
-        /// The identifier of the key.
+        /// The identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
-        public string KeyId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
-        public string CurveName { get; set; }
+        public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Keys
                 Modulus = TrimBuffer(N),
             };
 
-            if (includePrivateParameters)
+            if (includePrivateParameters && HasPrivateKey)
             {
                 int byteLength = rsaParameters.Modulus.Length;
                 rsaParameters.D = ForceBufferLength(nameof(D), D, byteLength);
@@ -347,7 +347,7 @@ namespace Azure.Security.KeyVault.Keys
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        KeyId = prop.Value.GetString();
+                        Id = prop.Value.GetString();
                         break;
                     case KeyTypePropertyName:
                         KeyType = prop.Value.GetString();
@@ -405,20 +405,20 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != default)
             {
-                json.WriteString(s_keyTypePropertyNameBytes, KeyType);
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
             }
             if (KeyOps != null)
             {
                 json.WriteStartArray(s_keyOpsPropertyNameBytes);
                 foreach (KeyOperation operation in KeyOps)
                 {
-                    json.WriteStringValue(operation);
+                    json.WriteStringValue(operation.ToString());
                 }
                 json.WriteEndArray();
             }
-            if (!string.IsNullOrEmpty(CurveName))
+            if (CurveName.HasValue)
             {
-                json.WriteString(s_curveNamePropertyNameBytes, CurveName);
+                json.WriteString(s_curveNamePropertyNameBytes, CurveName.Value.ToString());
             }
             if (N != null)
             {
@@ -556,7 +556,7 @@ namespace Azure.Security.KeyVault.Keys
             KeyOps = new List<KeyOperation>(includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
-            CurveName = KeyCurveName.Find(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
+            CurveName = KeyCurveName.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
             D = ecParameters.D;
             X = ecParameters.Q.X;
             Y = ecParameters.Q.Y;
@@ -565,14 +565,24 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private ECDsa Convert(bool includePrivateParameters, bool throwIfNotSupported)
         {
-            ref readonly KeyCurveName curveName = ref KeyCurveName.Find(CurveName);
+            if (!CurveName.HasValue)
+            {
+                if (throwIfNotSupported)
+                {
+                    throw new InvalidOperationException("missing required curve name");
+                }
 
-            int requiredParameterSize = curveName._keyParameterSize;
+                return null;
+            }
+
+            KeyCurveName curveName = CurveName.Value;
+
+            int requiredParameterSize = curveName.KeyParameterSize;
             if (requiredParameterSize <= 0)
             {
                 if (throwIfNotSupported)
                 {
-                    throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+                    throw new InvalidOperationException($"invalid curve name: {CurveName.ToString()}");
                 }
 
                 return null;
@@ -580,7 +590,7 @@ namespace Azure.Security.KeyVault.Keys
 
             ECParameters ecParameters = new ECParameters
             {
-                Curve = ECCurve.CreateFromOid(curveName._oid),
+                Curve = ECCurve.CreateFromOid(curveName.Oid),
                 Q = new ECPoint
                 {
                     X = ForceBufferLength(nameof(X), X, requiredParameterSize),
@@ -588,7 +598,7 @@ namespace Azure.Security.KeyVault.Keys
                 },
             };
 
-            if (includePrivateParameters)
+            if (includePrivateParameters && HasPrivateKey)
             {
                 ecParameters.D = ForceBufferLength(nameof(D), D, requiredParameterSize);
             }

@@ -51,9 +51,12 @@ namespace Azure.Data.AppConfiguration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    new ApiVersionPolicy(options.GetVersionString()),
-                    new AuthenticationPolicy(credential, secret),
-                    new SyncTokenPolicy());
+                    new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
+                    new HttpPipelinePolicy[] {
+                        new ApiVersionPolicy(options.GetVersionString()),
+                        new AuthenticationPolicy(credential, secret),
+                        new SyncTokenPolicy() },
+                    new ResponseClassifier());
         }
 
         /// <summary>
@@ -684,7 +687,7 @@ namespace Azure.Data.AppConfiguration
                             etag = etag.Trim('\"');
                         }
 
-                        return new Response<bool>(response, setting.ETag != new ETag(etag));
+                        return Response.FromValue(response, setting.ETag != new ETag(etag));
 
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -724,7 +727,7 @@ namespace Azure.Data.AppConfiguration
                                 etag = etag.Trim('\"');
                             }
 
-                            return new Response<bool>(response, setting.ETag != new ETag(etag));
+                            return Response.FromValue(response, setting.ETag != new ETag(etag));
 
                         default:
                             throw response.CreateRequestFailedException();
