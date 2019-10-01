@@ -324,7 +324,7 @@ namespace Azure.Storage.Common
                 throw Errors.ArgumentNull(nameof(connectionString));
             }
 
-            if (ParseImpl(connectionString, out StorageConnectionString ret, err => { throw Errors.InvalidFormat(err); }))
+            if (ParseCore(connectionString, out StorageConnectionString ret, err => { throw Errors.InvalidFormat(err); }))
             {
                 return ret;
             }
@@ -349,7 +349,7 @@ namespace Azure.Storage.Common
 
             try
             {
-                return ParseImpl(connectionString, out account, err => { });
+                return ParseCore(connectionString, out account, err => { });
             }
             catch (Exception)
             {
@@ -532,7 +532,7 @@ namespace Azure.Storage.Common
         /// <param name="accountInformation">The <see cref="StorageConnectionString"/> to return.</param>
         /// <param name="error">A callback for reporting errors.</param>
         /// <returns>If true, the parse was successful. Otherwise, false.</returns>
-        internal static bool ParseImpl(string connectionString, out StorageConnectionString accountInformation, Action<string> error)
+        internal static bool ParseCore(string connectionString, out StorageConnectionString accountInformation, Action<string> error)
         {
             IDictionary<string, string> settings = ParseStringIntoSettings(connectionString, error);
 
