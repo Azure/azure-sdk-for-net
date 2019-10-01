@@ -2674,9 +2674,9 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion CreateSnapshot
 
-        #region SetTier
+        #region SetAccessTier
         /// <summary>
-        /// The <see cref="SetTier"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTier"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2712,12 +2712,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response SetTier(
+        public virtual Response SetAccessTier(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            SetTierInternal(
+            SetAccessTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2726,7 +2726,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetTierAsync"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTierAsync"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2762,12 +2762,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> SetTierAsync(
+        public virtual async Task<Response> SetAccessTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            await SetTierInternal(
+            await SetAccessTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2776,7 +2776,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetTierInternal"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTierInternal"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2815,7 +2815,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> SetTierInternal(
+        private async Task<Response> SetAccessTierInternal(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions,
             RehydratePriority? rehydratePriority,
@@ -2832,14 +2832,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.SetTierAsync(
+                    return await BlobRestClient.Blob.SetAccessTierAsync(
                         Pipeline,
                         Uri,
                         tier: accessTier,
                         rehydratePriority: rehydratePriority,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetAccessTier",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2854,7 +2854,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion SetTier
+        #endregion SetAccessTier
     }
 
     /// <summary>

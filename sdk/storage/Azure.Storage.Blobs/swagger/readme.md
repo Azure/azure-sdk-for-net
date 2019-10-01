@@ -1143,3 +1143,12 @@ directive:
   transform: >
     $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
 ```
+
+### Rename SetTier to SetAccessTier
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=tier"]
+  transform: >
+    $.put.operationId = "Blob_SetAccessTier";
+```
