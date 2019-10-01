@@ -6795,7 +6795,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Files.Models.CorsRule> Cors { get; internal set; }
+        public System.Collections.Generic.IList<Azure.Storage.Files.Models.CorsRule> Cors { get; set; }
 
         /// <summary>
         /// Creates a new FileServiceProperties instance
@@ -6815,7 +6815,6 @@ namespace Azure.Storage.Files.Models
             {
                 HourMetrics = new Azure.Storage.Files.Models.Metrics();
                 MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
-                Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
             }
         }
 

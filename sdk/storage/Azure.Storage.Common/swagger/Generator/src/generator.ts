@@ -843,7 +843,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
-                if (property.readonly || property.model.type === `array`) {
+                if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
                     w.write(`internal `);
                 }
                 w.line(`set; }`);
@@ -853,7 +853,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
-            const nested = (<IProperty[]>Object.values(type.properties)).filter(p => isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`)));
+            const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
                 if (separator()) { w.line(); }

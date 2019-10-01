@@ -3721,7 +3721,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Queues.Models.CorsRule> Cors { get; internal set; }
+        public System.Collections.Generic.IList<Azure.Storage.Queues.Models.CorsRule> Cors { get; set; }
 
         /// <summary>
         /// Creates a new QueueServiceProperties instance
@@ -3742,7 +3742,6 @@ namespace Azure.Storage.Queues.Models
                 Logging = new Azure.Storage.Queues.Models.Logging();
                 HourMetrics = new Azure.Storage.Queues.Models.Metrics();
                 MinuteMetrics = new Azure.Storage.Queues.Models.Metrics();
-                Cors = new System.Collections.Generic.List<Azure.Storage.Queues.Models.CorsRule>();
             }
         }
 

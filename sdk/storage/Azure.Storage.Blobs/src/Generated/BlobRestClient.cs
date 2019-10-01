@@ -14546,7 +14546,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.CorsRule> Cors { get; internal set; }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.CorsRule> Cors { get; set; }
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions
@@ -14582,7 +14582,6 @@ namespace Azure.Storage.Blobs.Models
                 Logging = new Azure.Storage.Blobs.Models.Logging();
                 HourMetrics = new Azure.Storage.Blobs.Models.Metrics();
                 MinuteMetrics = new Azure.Storage.Blobs.Models.Metrics();
-                Cors = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.CorsRule>();
                 DeleteRetentionPolicy = new Azure.Storage.Blobs.Models.RetentionPolicy();
                 StaticWebsite = new Azure.Storage.Blobs.Models.StaticWebsite();
             }
