@@ -15,6 +15,8 @@ namespace Azure.Security.KeyVault.Keys
         private const string DeletedDatePropertyName = "deletedDate";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
 
+        private string _recoveryId;
+
         internal DeletedKey()
         {
         }
@@ -26,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The identifier of the deleted key. This is used to recover the key.
         /// </summary>
-        public string RecoveryId { get; private set; }
+        public Uri RecoveryId => new Uri(_recoveryId);
 
         /// <summary>
         /// The time when the key was deleted, in UTC.
@@ -43,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys
             switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
-                    RecoveryId = prop.Value.GetString();
+                    _recoveryId = prop.Value.GetString();
                     break;
 
                 case DeletedDatePropertyName:

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -23,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void ConstructorArgumentValidation()
         {
             Assert.Throws<ArgumentNullException>(() => new CryptographyClient(null, new DefaultAzureCredential()));
-            Assert.Throws<ArgumentNullException>(() => new CryptographyClient(new Uri("http://localhost"), null));
+            Assert.Throws<ArgumentNullException>(() => new CryptographyClient(new Uri("http://localhost"), (TokenCredential)null));
         }
 
         [Test]

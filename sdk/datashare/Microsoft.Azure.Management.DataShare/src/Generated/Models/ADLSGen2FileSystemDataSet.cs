@@ -43,7 +43,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
         /// <param name="type">Type of the azure resource</param>
-        /// <param name="dataSetId">Unique DataSet id.</param>
+        /// <param name="dataSetId">Unique id for identifying a data set
+        /// resource</param>
         public ADLSGen2FileSystemDataSet(string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string))
             : base(id, name, type)
         {
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets unique DataSet id.
+        /// Gets unique id for identifying a data set resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetId")]
         public string DataSetId { get; private set; }

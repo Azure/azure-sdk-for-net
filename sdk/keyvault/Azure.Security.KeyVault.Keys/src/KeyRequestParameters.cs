@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != default)
             {
-                json.WriteString(s_keyTypePropertyNameBytes, KeyType);
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
             }
             if (KeySize.HasValue)
             {
@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Curve.HasValue)
             {
-                json.WriteString(s_curveNamePropertyNameBytes, Curve.Value);
+                json.WriteString(s_curveNamePropertyNameBytes, Curve.Value.ToString());
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteStartArray(s_keyOpsPropertyNameBytes);
                 foreach (KeyOperation operation in KeyOperations)
                 {
-                    json.WriteStringValue(operation);
+                    json.WriteStringValue(operation.ToString());
                 }
                 json.WriteEndArray();
             }

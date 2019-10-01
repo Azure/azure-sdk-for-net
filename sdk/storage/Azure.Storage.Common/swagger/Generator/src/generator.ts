@@ -137,7 +137,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const valueName = "_value";
     const pairName = `_headerPair`;
     let responseName = "_response";
-    const resultName = "_result";
     const scopeName = "_scope";
     const operationName = "operationName";
     const result = operation.response.model;
@@ -467,18 +466,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     } else {
                         processResponse(response);
 
-                        w.line(`// Create the response`)
-                        w.write(`${returnType} ${resultName} =`);
-                        w.scope(() => {
-                            w.write(`new ${returnType}(`);
-                            w.scope(() => {
-                                w.line(`${responseName},`);
-                                w.line(`${valueName});`);
-                            });
-                        });
-                        w.line();
-
-                        w.line(`return ${resultName};`);
+                        w.line(`// Create the response`);
+                        w.line(`return Response.FromValue(${responseName}, ${valueName});`);
                     }
                 });
             }
@@ -876,7 +865,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
                 if (!type.struct) {
-                    if (property.readonly || property.model.type === `array`) {
+                    if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
                         w.write(`internal `);
                     }
                     w.write(`set; `);
@@ -889,7 +878,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
-            const nested = (<IProperty[]>Object.values(type.properties)).filter(p => isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`)));
+            const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
                 if (separator()) { w.line(); }
@@ -1244,7 +1233,13 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     // Change fromName if it ever stops being universal to the format
                     return `${types.getName(model)}.${fromName}(${text})`;
                 } else {
-                    return types.convertFromString(`${text}.Value`, model, service);
+                    if (isEnumType(model) && model.skipValue) { 
+                        // If skipValue is set on the enum, that means that the service would return a null for that value.
+                        // Hence, we add the null conditional for this case. 
+                        return types.convertFromString(`${text}?.Value`, model, service);
+                    } else {
+                        return types.convertFromString(`${text}.Value`, model, service);
+                    }
                 }
             };
 

@@ -277,12 +277,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobServiceProperties _value = Azure.Storage.Blobs.Models.BlobServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -411,12 +406,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobServiceStatistics _value = Azure.Storage.Blobs.Models.BlobServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -568,12 +558,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.ContainersSegment _value = Azure.Storage.Blobs.Models.ContainersSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -718,12 +703,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.UserDelegationKey _value = Azure.Storage.Blobs.Models.UserDelegationKey.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -852,12 +832,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo(skuName, accountKind);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1020,12 +995,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1188,12 +1158,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1369,12 +1334,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1677,12 +1637,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1837,12 +1792,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2024,12 +1974,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2197,12 +2142,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2364,12 +2304,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2535,12 +2470,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2702,12 +2632,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2883,12 +2808,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3041,12 +2961,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobsFlatSegment _value = Azure.Storage.Blobs.Models.BlobsFlatSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3205,12 +3120,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobsHierarchySegment _value = Azure.Storage.Blobs.Models.BlobsHierarchySegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3542,12 +3452,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 206:
                     {
@@ -3675,12 +3580,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -4009,12 +3909,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -4390,12 +4285,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4589,12 +4479,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4859,12 +4744,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5205,12 +5085,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5415,12 +5290,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5599,12 +5469,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5777,12 +5642,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5959,12 +5819,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -6151,12 +6006,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -6329,12 +6179,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -6539,12 +6384,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -6776,12 +6616,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -7008,12 +6843,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -7585,12 +7415,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -7853,12 +7678,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -8097,12 +7917,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -8401,12 +8216,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -8606,12 +8416,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -8817,12 +8622,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -9032,12 +8832,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -9221,12 +9016,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -9406,12 +9196,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -9680,12 +9465,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -9937,12 +9717,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -10228,12 +10003,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -10534,12 +10304,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -10745,12 +10510,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -10984,12 +10744,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 304:
                     {
@@ -11292,12 +11047,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -11463,12 +11213,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -11696,12 +11441,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -11976,12 +11716,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -12160,12 +11895,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -12357,12 +12087,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -12556,12 +12281,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -14893,7 +14613,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.CorsRule> Cors { get; internal set; }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.CorsRule> Cors { get; set; }
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions
@@ -14929,7 +14649,6 @@ namespace Azure.Storage.Blobs.Models
                 Logging = new Azure.Storage.Blobs.Models.Logging();
                 HourMetrics = new Azure.Storage.Blobs.Models.Metrics();
                 MinuteMetrics = new Azure.Storage.Blobs.Models.Metrics();
-                Cors = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.CorsRule>();
                 DeleteRetentionPolicy = new Azure.Storage.Blobs.Models.RetentionPolicy();
                 StaticWebsite = new Azure.Storage.Blobs.Models.StaticWebsite();
             }
@@ -16176,7 +15895,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// PublicAccess
         /// </summary>
-        public Azure.Storage.Blobs.Models.PublicAccessType? PublicAccess { get; internal set; }
+        public Azure.Storage.Blobs.Models.PublicAccessType PublicAccess { get; internal set; }
 
         /// <summary>
         /// HasImmutabilityPolicy
@@ -16225,11 +15944,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.LeaseDuration = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseDurationType(_child.Value);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("PublicAccess", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.PublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(_child.Value);
-            }
+            _value.PublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(element.Element(System.Xml.Linq.XName.Get("PublicAccess", ""))?.Value);
             _child = element.Element(System.Xml.Linq.XName.Get("HasImmutabilityPolicy", ""));
             if (_child != null)
             {
@@ -16258,22 +15973,22 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static ContainerProperties ContainerProperties(
             System.DateTimeOffset lastModified,
+            Azure.Storage.Blobs.Models.PublicAccessType publicAccess,
             Azure.Core.Http.ETag eTag,
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
-            Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
             bool? hasImmutabilityPolicy = default,
             bool? hasLegalHold = default)
         {
             return new ContainerProperties()
             {
                 LastModified = lastModified,
+                PublicAccess = publicAccess,
                 ETag = eTag,
                 LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
-                PublicAccess = publicAccess,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
                 HasLegalHold = hasLegalHold,
             };

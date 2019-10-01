@@ -147,6 +147,16 @@ directive:
     }
 ```
 
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
+```
+
 ### /?restype=service&comp=stats
 ``` yaml
 directive:
@@ -1066,7 +1076,10 @@ directive:
 - from: swagger-document
   where: $.parameters.BlobPublicAccess
   transform: $.required = true;
-```
+- from: swagger-document
+  where: $.definitions.ContainerProperties
+  transform: $.required.push("PublicAccess");
+  ```
 
 ### Make lease duration a long
 Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 

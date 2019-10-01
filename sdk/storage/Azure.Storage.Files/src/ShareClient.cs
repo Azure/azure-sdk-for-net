@@ -1413,9 +1413,7 @@ namespace Azure.Storage.Files
                     var permission = permissionProperty.GetString();
 
                     // Return the Permission string
-                    return new Response<string>(
-                        jsonResponse.GetRawResponse(),
-                        permission);
+                    return Response.FromValue(jsonResponse.GetRawResponse(), permission);
                 }
                 catch (Exception ex)
                 {
@@ -1576,7 +1574,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+            return Response.FromValue(response.GetRawResponse(), directory);
         }
 
         /// <summary>
@@ -1623,7 +1621,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+            return Response.FromValue(response.GetRawResponse(), directory);
         }
         #endregion CreateDirectory
 

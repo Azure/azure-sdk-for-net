@@ -152,7 +152,8 @@ export interface IProperty {
     required?: boolean,
     readonly: boolean,
     xml?: IXmlSettings,
-    model: IModelType
+    model: IModelType,
+    isNullable?: boolean
 }
 
 export interface IXmlSettings {

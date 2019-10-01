@@ -15,7 +15,7 @@ namespace Azure.Core.Cryptography
         /// <summary>
         /// The Id of the key used to perform cryptographic operations for the client.
         /// </summary>
-        Uri KeyId { get; }
+        string KeyId { get; }
 
         /// <summary>
         /// Encrypts the specified key using the specified algorithm
