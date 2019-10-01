@@ -35,7 +35,7 @@ namespace Azure.Data.AppConfiguration.Tests
             };
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -53,7 +53,7 @@ namespace Azure.Data.AppConfiguration.Tests
             };
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -69,7 +69,7 @@ namespace Azure.Data.AppConfiguration.Tests
             };
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -84,7 +84,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -99,7 +99,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -115,7 +115,7 @@ namespace Azure.Data.AppConfiguration.Tests
             };
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -131,7 +131,7 @@ namespace Azure.Data.AppConfiguration.Tests
             };
 
             var builder = new RequestUriBuilder();
-            builder.Assign(new Uri("http://localhost/"));
+            builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 

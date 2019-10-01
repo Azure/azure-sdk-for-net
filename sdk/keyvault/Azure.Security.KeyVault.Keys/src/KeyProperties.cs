@@ -42,22 +42,22 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Name of the key.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// Key identifier.
         /// </summary>
-        public Uri Id { get; private set; }
+        public Uri Id { get; internal set; }
 
         /// <summary>
         /// Vault base URL.
         /// </summary>
-        public Uri VaultUri { get; private set; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
         /// Version of the key.
         /// </summary>
-        public string Version { get; private set; }
+        public string Version { get; internal set; }
 
         /// <summary>
         /// Set to true if the key's lifetime is managed by key vault. If this
@@ -109,17 +109,15 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Parses the key identifier into the vaultUri, name, and version of the key.
         /// </summary>
-        /// <param name="id">The key vault object identifier.</param>
-        internal void ParseId(string id)
+        /// <param name="idToParse">The key vault object identifier.</param>
+        internal void ParseId(Uri idToParse)
         {
-            var idToParse = new Uri(id, UriKind.Absolute);
-
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, idToParse.Segments.Length));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", idToParse, idToParse.Segments.Length));
 
             if (!string.Equals(idToParse.Segments[1], "keys" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'keys/', found '{1}'", id, idToParse.Segments[1]));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'keys/', found '{1}'", idToParse, idToParse.Segments[1]));
 
             Id = idToParse;
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
@@ -132,7 +130,9 @@ namespace Azure.Security.KeyVault.Keys
             switch (prop.Name)
             {
                 case KeyIdPropertyName:
-                    ParseId(prop.Value.GetString());
+                    string id = prop.Value.GetString();
+                    Id = new Uri(id);
+                    ParseId(Id);
                     break;
                 case ManagedPropertyName:
                     Managed = prop.Value.GetBoolean();

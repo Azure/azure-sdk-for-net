@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io/api-version=5"));
+                request.Uri.Reset(new Uri("https://contoso.a.io/api-version=5"));
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
@@ -203,7 +203,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
 
@@ -226,7 +226,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
 
                 await SendRequestAsync(pipeline, request);
@@ -249,7 +249,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
 
                 await SendRequestAsync(pipeline, request);
@@ -441,7 +441,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
@@ -497,7 +497,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io?api-version=5&secret=123"));
+                request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Headers.Add("Secret-Custom-Header", "Value");
@@ -591,7 +591,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
-                request.Uri.Assign(new Uri("https://contoso.a.io"));
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
 
                 Response response = await SendRequestAsync(pipeline, request);
 
