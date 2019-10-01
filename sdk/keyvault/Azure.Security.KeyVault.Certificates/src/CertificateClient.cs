@@ -1484,11 +1484,9 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 IssuerName = "Self",
                 Subject = "CN=default",
-                KeyOptions = new RsaKeyOptions(false)
-                {
-                    Exportable = true,
-                    ReuseKey = false
-                },
+                KeyType = CertificateKeyType.Rsa,
+                Exportable = true,
+                ReuseKey = false,
                 KeyUsage = new[]
                 {
                     CertificateKeyUsage.CrlSign,

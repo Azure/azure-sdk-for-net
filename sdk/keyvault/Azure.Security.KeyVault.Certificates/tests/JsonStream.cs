@@ -10,7 +10,20 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public class JsonStream : IDisposable
     {
-        private readonly MemoryStream _buffer = new MemoryStream();
+        private readonly MemoryStream _buffer;
+
+        public JsonStream()
+        {
+            _buffer = new MemoryStream();
+        }
+
+        public JsonStream(string content)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(content);
+            _buffer = new MemoryStream(buffer);
+        }
+
+        public Stream AsStream() => _buffer;
 
         public Utf8JsonWriter CreateWriter(JsonWriterOptions options = default) => new Utf8JsonWriter(_buffer, options);
 
