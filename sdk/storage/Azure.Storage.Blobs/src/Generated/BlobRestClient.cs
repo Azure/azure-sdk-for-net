@@ -17984,11 +17984,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 return false;
             }
-            if (!Equals(ContentHash, other.ContentHash) && (ContentHash == null || other.ContentHash == null || !System.Linq.Enumerable.SequenceEqual(ContentHash, other.ContentHash)))
+            if (!Equals(ContentHash, other.ContentHash))
             {
                 return false;
             }
-            if (!Equals(ContentCrc64, other.ContentCrc64) && (ContentCrc64 == null || other.ContentCrc64 == null || !System.Linq.Enumerable.SequenceEqual(ContentCrc64, other.ContentCrc64)))
+            if (!Equals(ContentCrc64, other.ContentCrc64))
             {
                 return false;
             }

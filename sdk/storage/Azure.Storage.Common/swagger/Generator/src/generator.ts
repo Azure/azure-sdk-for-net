@@ -968,7 +968,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                             if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
                                 w.line(`if (!System.StringComparer.Ordinal.Equals(${a}, ${b}))`);
                             } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
-                                w.line(`if (!Equals(${a}, ${b}) && (${a} == null || ${b} == null || !System.Linq.Enumerable.SequenceEqual(${a}, ${b})))`);
+                                w.line(`if (!Equals(${a}, ${b}))`);
                             } else {
                                 w.line(`if (!${a}.Equals(${b}))`);
                             }
