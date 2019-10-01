@@ -123,6 +123,4 @@ namespace Azure.Storage.Blobs.Models
             IncludeUncommittedBlobs == other.IncludeUncommittedBlobs &&
             Prefix == other.Prefix;
     }
-    internal class GetBlobsByHierarchyAsyncCollection : StorageAsyncCollection<BlobHierarchyItem>
-            GetBlobsOptions? options,
 }

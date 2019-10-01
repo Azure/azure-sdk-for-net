@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Files.Models
 {
-    internal class GetDirectoryHandlesAsyncCollection : StorageAsyncCollection<StorageHandle>
+    internal class GetDirectoryHandlesAsyncCollection : StorageCollectionEnumerator<StorageHandle>
     {
         private readonly DirectoryClient _client;
         private readonly bool? _recursive;

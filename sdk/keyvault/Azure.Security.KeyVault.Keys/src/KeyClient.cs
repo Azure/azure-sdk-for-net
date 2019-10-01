@@ -416,7 +416,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<KeyProperties>> GetKeys(CancellationToken cancellationToken = default)
+        public virtual SyncCollection<KeyProperties> GetKeys(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
@@ -453,7 +453,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<KeyProperties>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
+        public virtual SyncCollection<KeyProperties> GetKeyVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

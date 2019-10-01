@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +11,7 @@ namespace Azure.Storage
     {
         public abstract ValueTask<Page<T>> GetNextPageAsync(
             string continuationToken,
-            int? pageHintSize,
+            int? pageSizeHint,
             bool isAsync,
             CancellationToken cancellationToken);
 
@@ -234,7 +232,7 @@ namespace Azure.Storage
                     continuationToken = page.ContinuationToken;
                     foreach (T item in page.Values)
                     {
-                        yield return new Response<T>(page.GetRawResponse(), item);
+                        yield return Response.FromValue(page.GetRawResponse(), item);
                     }
                 } while (CanContinue(continuationToken));
             }

@@ -339,7 +339,7 @@ namespace Azure.Security.KeyVault.Test
 
             foreach (Secret createdSecret in createdSecrets)
             {
-                SecretProperties returnedSecret = allSecrets.Single(s => s.Value.Name == createdSecret.Name);
+                SecretProperties returnedSecret = allSecrets.Single(s => s.Name == createdSecret.Name);
                 AssertSecretPropertiesEqual(createdSecret.Properties, returnedSecret, compareId: false);
             }
         }
@@ -362,7 +362,7 @@ namespace Azure.Security.KeyVault.Test
 
             foreach (Secret createdSecret in createdSecrets)
             {
-                SecretBase returnedSecret = allSecrets.Single(s => s.Value.Id == createdSecret.Id);
+                SecretProperties returnedSecret = allSecrets.Single(s => s.Id == createdSecret.Id);
                 AssertSecretPropertiesEqual(createdSecret.Properties, returnedSecret);
             }
         }
@@ -392,7 +392,7 @@ namespace Azure.Security.KeyVault.Test
 
             foreach (Secret deletedSecret in deletedSecrets)
             {
-                Secret returnedSecret = allSecrets.Single(s => s.Value.Name == deletedSecret.Name);
+                Secret returnedSecret = allSecrets.Single(s => s.Name == deletedSecret.Name);
                 AssertSecretPropertiesEqual(deletedSecret.Properties, returnedSecret.Properties, compareId: false);
             }
         }

@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IEnumerable<Response<SecretProperties>> GetSecretVersions(string name, CancellationToken cancellationToken = default)
+        public virtual SyncCollection<SecretProperties> GetSecretVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -187,7 +187,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// requires the secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IEnumerable<Response<SecretProperties>> GetSecrets(CancellationToken cancellationToken = default)
+        public virtual SyncCollection<SecretProperties> GetSecrets(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = new Uri(_vaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
