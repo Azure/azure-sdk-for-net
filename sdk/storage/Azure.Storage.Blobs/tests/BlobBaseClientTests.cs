@@ -771,7 +771,7 @@ namespace Azure.Storage.Blobs.Test
                     destBlob.StartCopyFromUriAsync(
                         srcBlob.Uri,
                         accessTier: AccessTier.Archive,
-                        rehydratePriority: "None"),
+                        rehydratePriority: default),
                     e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
@@ -2408,7 +2408,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.SetTierAsync(AccessTier.Archive);
 
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetTierAsync(accessTier: AccessTier.Cool, rehydratePriority: "None"),
+                    blob.SetTierAsync(accessTier: AccessTier.Cool, rehydratePriority: default),
                     e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
