@@ -21,14 +21,12 @@ namespace Azure.Data.AppConfiguration.Samples
             var mock = new Mock<ConfigurationClient>();
 
             // Setup client method
-            // TODO: why does this not work?
-            mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<HttpRequestOptions>(), It.IsAny<CancellationToken>()))
+            mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(new Response<ConfigurationSetting>(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
 
             // Use the client mock
             ConfigurationClient client = mock.Object;
-            Response<ConfigurationSetting> response = client.Get("Key");
-            ConfigurationSetting setting = response;
+            ConfigurationSetting setting = client.Get("Key");
             Assert.AreEqual("Value", setting.Value);
         }
     }
