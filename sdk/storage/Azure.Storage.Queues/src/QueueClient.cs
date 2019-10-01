@@ -1000,9 +1000,7 @@ namespace Azure.Storage.Queues
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
                     // sequence only ever has one value so we'll unwrap it
-                    return new Response<EnqueuedMessage>(
-                        messages.GetRawResponse(),
-                        messages.Value.FirstOrDefault());
+                    return messages.GetRawResponse().WithValue(messages.Value.FirstOrDefault());
                 }
                 catch (Exception ex)
                 {
@@ -1119,7 +1117,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.DequeueMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return new Response<DequeuedMessage[]>(dequeuedMessage.GetRawResponse(), dequeuedMessage.Value.ToArray());
+                    return dequeuedMessage.GetRawResponse().WithValue(dequeuedMessage.Value.ToArray());
                 }
                 catch (Exception ex)
                 {
@@ -1220,7 +1218,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return new Response<PeekedMessage[]>(peekedMessages.GetRawResponse(), peekedMessages.Value.ToArray());
+                    return peekedMessages.GetRawResponse().WithValue(peekedMessages.Value.ToArray());
                 }
                 catch (Exception ex)
                 {

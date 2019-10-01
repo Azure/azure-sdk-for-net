@@ -632,7 +632,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Response<VaultBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "/backup").ConfigureAwait(false);
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return backup.GetRawResponse().WithValue(backup.Value.Value);
             }
             catch (Exception e)
             {
@@ -663,7 +663,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Response<VaultBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "/backup");
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return backup.GetRawResponse().WithValue(backup.Value.Value);
             }
             catch (Exception e)
             {

@@ -137,7 +137,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const valueName = "_value";
     const pairName = `_headerPair`;
     let responseName = "_response";
-    const resultName = "_result";
     const scopeName = "_scope";
     const operationName = "operationName";
     const result = operation.response.model;
@@ -467,18 +466,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     } else {
                         processResponse(response);
 
-                        w.line(`// Create the response`)
-                        w.write(`${returnType} ${resultName} =`);
-                        w.scope(() => {
-                            w.write(`new ${returnType}(`);
-                            w.scope(() => {
-                                w.line(`${responseName},`);
-                                w.line(`${valueName});`);
-                            });
-                        });
-                        w.line();
-
-                        w.line(`return ${resultName};`);
+                        w.line(`// Create the response`);
+                        w.line(`return ${responseName}.WithValue(${valueName});`);
                     }
                 });
             }

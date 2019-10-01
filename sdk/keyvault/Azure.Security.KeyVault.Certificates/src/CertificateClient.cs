@@ -561,7 +561,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup");
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return backup.GetRawResponse().WithValue(backup.Value.Value);
             }
             catch (Exception e)
             {
@@ -589,7 +589,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup").ConfigureAwait(false);
 
-                return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
+                return backup.GetRawResponse().WithValue(backup.Value.Value);
             }
             catch (Exception e)
             {
@@ -1313,7 +1313,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Put, new ContactList(contacts), () => new ContactList(), cancellationToken, ContactsPath);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return contactList.GetRawResponse().WithValue(contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1339,7 +1339,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Put, new ContactList(contacts), () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return contactList.GetRawResponse().WithValue(contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1362,7 +1362,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Get, () => new ContactList(), cancellationToken, ContactsPath);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return contactList.GetRawResponse().WithValue(contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1385,7 +1385,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return contactList.GetRawResponse().WithValue(contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1408,7 +1408,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return contactList.GetRawResponse().WithValue(contactList.Value.ToList());
             }
             catch (Exception e)
             {
@@ -1431,7 +1431,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
-                return new Response<IList<Contact>>(contactList.GetRawResponse(), contactList.Value.ToList());
+                return contactList.GetRawResponse().WithValue(contactList.Value.ToList());
             }
             catch (Exception e)
             {

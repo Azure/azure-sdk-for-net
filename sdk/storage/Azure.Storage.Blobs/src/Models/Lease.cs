@@ -36,13 +36,11 @@ namespace Azure.Storage.Blobs
         /// <param name="response">The original response.</param>
         /// <returns>The Lease response.</returns>
         internal static Response<Lease> ToLease(this Response<BrokenLease> response)
-            => new Response<Lease>(
-                response.GetRawResponse(),
-                new Lease
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified,
-                    LeaseTime = response.Value.LeaseTime
-                });
+            => response.GetRawResponse().WithValue(new Lease
+            {
+                ETag = response.Value.ETag,
+                LastModified = response.Value.LastModified,
+                LeaseTime = response.Value.LeaseTime
+            });
     }
 }

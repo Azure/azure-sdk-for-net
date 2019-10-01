@@ -662,7 +662,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
-                    return new Response<BlobDownloadInfo>(response.GetRawResponse(), new BlobDownloadInfo(response.Value));
+                    return response.GetRawResponse().WithValue(new BlobDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -2348,14 +2348,12 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return new Response<BlobInfo>(
-                        response.GetRawResponse(),
-                        new BlobInfo
-                        {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag,
-                            BlobSequenceNumber = response.Value.BlobSequenceNumber
-                        });
+                    return response.GetRawResponse().WithValue(new BlobInfo
+                    {
+                        LastModified = response.Value.LastModified,
+                        ETag = response.Value.ETag,
+                        BlobSequenceNumber = response.Value.BlobSequenceNumber
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -2505,13 +2503,11 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return new Response<BlobInfo>(
-                        response.GetRawResponse(),
-                        new BlobInfo
-                        {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag
-                        });
+                    return response.GetRawResponse().WithValue(new BlobInfo
+                    {
+                        LastModified = response.Value.LastModified,
+                        ETag = response.Value.ETag
+                    });
                 }
                 catch (Exception ex)
                 {

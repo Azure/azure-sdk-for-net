@@ -19,7 +19,7 @@ namespace Azure.Core
                 Page<T> pageResponse = pageFunc(nextLink);
                 foreach (T setting in pageResponse.Values)
                 {
-                    yield return new Response<T>(pageResponse.GetRawResponse(), setting);
+                    yield return pageResponse.GetRawResponse().WithValue(setting);
                 }
                 nextLink = pageResponse.ContinuationToken;
             } while (nextLink != null);
