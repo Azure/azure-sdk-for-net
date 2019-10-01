@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
-        public KeyCurveName CurveName { get; set; }
+        public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
@@ -359,7 +359,7 @@ namespace Azure.Security.KeyVault.Keys
                         }
                         break;
                     case CurveNamePropertyName:
-                        CurveName = prop.Value.GetString() ?? string.Empty;
+                        CurveName = prop.Value.GetString();
                         break;
                     case NPropertyName:
                         N = Base64Url.Decode(prop.Value.GetString());
@@ -416,9 +416,9 @@ namespace Azure.Security.KeyVault.Keys
                 }
                 json.WriteEndArray();
             }
-            if (CurveName != default)
+            if (CurveName.HasValue)
             {
-                json.WriteString(s_curveNamePropertyNameBytes, CurveName.ToString());
+                json.WriteString(s_curveNamePropertyNameBytes, CurveName.Value.ToString());
             }
             if (N != null)
             {
@@ -565,7 +565,7 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private ECDsa Convert(bool includePrivateParameters, bool throwIfNotSupported)
         {
-            if (CurveName == default)
+            if (!CurveName.HasValue)
             {
                 if (throwIfNotSupported)
                 {
@@ -575,7 +575,7 @@ namespace Azure.Security.KeyVault.Keys
                 return null;
             }
 
-            KeyCurveName curveName = CurveName;
+            KeyCurveName curveName = CurveName.Value;
 
             int requiredParameterSize = curveName.KeyParameterSize;
             if (requiredParameterSize <= 0)
