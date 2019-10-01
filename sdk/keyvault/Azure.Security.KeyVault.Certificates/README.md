@@ -202,7 +202,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [certificate_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/src
 [certificate_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Certificate/
-[API_reference]: https://azure.github.io/azure-sdk-for-net/api/KeyVault/Azure.Security.KeyVault.Certificates.html
+[API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Certificates.html
 [keyvault_docs]: https://docs.microsoft.com/en-us/azure/key-vault/
 [certificate_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples
 [nuget]: https://www.nuget.org/
