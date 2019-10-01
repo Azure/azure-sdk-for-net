@@ -127,7 +127,7 @@ namespace Azure.Storage
                 continuationToken = page.ContinuationToken;
                 foreach (T item in page.Values)
                 {
-                    yield return new Response<T>(page.GetRawResponse(), item);
+                    yield return Response.FromValue(page.GetRawResponse(), item);
                 }
             } while (CanContinue(continuationToken));
         }
@@ -151,7 +151,7 @@ namespace Azure.Storage
                 continuationToken = page.ContinuationToken;
                 foreach (T item in page.Values)
                 {
-                    yield return new Response<T>(page.GetRawResponse(), item);
+                    yield return Response.FromValue(page.GetRawResponse(), item);
                 }
             } while (CanContinue(continuationToken));
         }

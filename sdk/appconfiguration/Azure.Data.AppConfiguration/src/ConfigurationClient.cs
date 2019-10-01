@@ -687,7 +687,7 @@ namespace Azure.Data.AppConfiguration
                             etag = etag.Trim('\"');
                         }
 
-                        return new Response<bool>(response, setting.ETag != new ETag(etag));
+                        return Response.FromValue(response, setting.ETag != new ETag(etag));
 
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -727,7 +727,7 @@ namespace Azure.Data.AppConfiguration
                                 etag = etag.Trim('\"');
                             }
 
-                            return new Response<bool>(response, setting.ETag != new ETag(etag));
+                            return Response.FromValue(response, setting.ETag != new ETag(etag));
 
                         default:
                             throw response.CreateRequestFailedException();

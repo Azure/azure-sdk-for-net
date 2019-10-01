@@ -619,7 +619,7 @@ namespace Azure.Storage.Queues
         {
             QueueClient queue = GetQueueClient(queueName);
             Response response = queue.Create(metadata, cancellationToken);
-            return new Response<QueueClient>(response, queue);
+            return Response.FromValue(response, queue);
         }
 
         /// <summary>
@@ -647,7 +647,7 @@ namespace Azure.Storage.Queues
         {
             QueueClient queue = GetQueueClient(queueName);
             Response response = await queue.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
-            return new Response<QueueClient>(response, queue);
+            return Response.FromValue(response, queue);
         }
         #endregion CreateQueue
 

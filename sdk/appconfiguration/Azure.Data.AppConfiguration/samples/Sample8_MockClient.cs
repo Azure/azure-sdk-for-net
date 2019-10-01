@@ -19,7 +19,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var mock = new Mock<ConfigurationClient>();
             // Setup client method
             mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
-                .Returns(new Response<ConfigurationSetting>(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
+                .Returns(Response.FromValue(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
 
             // Use the client mock
             ConfigurationClient client = mock.Object;
