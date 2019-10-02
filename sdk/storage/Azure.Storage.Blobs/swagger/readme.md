@@ -1204,3 +1204,27 @@ directive:
   transform: >
     $.put.operationId = "Blob_SetAccessTier";
 ```
+
+### Append Blob prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Logging["x-ms-client-name"] = "BlobAnalyticsLogging";
+    $.Logging.xml = { "name": "Logging"};
+    $.BlobServiceProperties.properties.Logging.xml = { "name": "Logging"};
+    $.Metrics["x-ms-client-name"] = "BlobMetrics";
+    $.Metrics.xml = { "name": "Metrics"};
+    $.BlobServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.BlobServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "BlobCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.BlobServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "BlobRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
+    $.BlobServiceProperties.properties.DeleteRetentionPolicy.xml = { "name": "DeleteRetentionPolicy"};
+    $.StaticWebsite["x-ms-client-name"] = "BlobStaticWebsite";
+    $.StaticWebsite.xml = { "name": "StaticWebsite"};
+    $.BlobServiceProperties.properties.StaticWebsite.xml = { "name": "StaticWebsite"};
+ ```

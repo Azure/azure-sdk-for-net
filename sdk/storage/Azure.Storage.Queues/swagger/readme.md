@@ -321,3 +321,21 @@ directive:
   where: $.parameters.ApiVersionParameter
   transform: $.enum = [ "2018-11-09" ];
 ```
+
+### Append Queue prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Logging["x-ms-client-name"] = "QueueAnalyticsLogging";
+    $.Logging.xml = { "name": "Logging"};
+    $.QueueServiceProperties.properties.Logging.xml = { "name": "Logging"};
+    $.Metrics["x-ms-client-name"] = "QueueMetrics";
+    $.Metrics.xml = { "name": "Metrics" };
+    $.QueueServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
+```

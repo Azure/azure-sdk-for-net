@@ -658,3 +658,18 @@ directive:
     delete $.required;
     delete $.properties;
 ```
+
+### Append File prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Metrics["x-ms-client-name"] = "FileMetrics";
+    $.Metrics.xml = { "name": "Metrics" };
+    $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "FileCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+```

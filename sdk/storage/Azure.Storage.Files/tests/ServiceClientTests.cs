@@ -84,7 +84,7 @@ namespace Azure.Storage.Files.Test
             _ = properties.Value.Cors.ToArray();
             properties.Value.Cors.Clear();
             properties.Value.Cors.Add(
-                new CorsRule
+                new FileCorsRule
                 {
                     MaxAgeInSeconds = 1000,
                     AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",

@@ -284,11 +284,11 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobServiceProperties properties = (await service.GetPropertiesAsync()).Value;
-            CorsRule[] originalCors = properties.Cors.ToArray();
+            BlobCorsRule[] originalCors = properties.Cors.ToArray();
             properties.Cors =
                 new[]
                 {
-                    new CorsRule
+                    new BlobCorsRule
                     {
                         MaxAgeInSeconds = 1000,
                         AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
