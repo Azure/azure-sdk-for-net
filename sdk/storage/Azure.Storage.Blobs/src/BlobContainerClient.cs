@@ -692,11 +692,11 @@ namespace Azure.Storage.Blobs
 
                     // Turn the flattened properties into a BlobContainerItem
                     var uri = new BlobUriBuilder(Uri);
-                    return Response.FromValue(response.GetRawResponse(), new ContainerItem(false)
+                    return Response.FromValue(response.GetRawResponse(), new BlobContainerItem(false)
                     {
-                        Name = uri.ContainerName,
+                        Name = uri.BlobContainerName,
                         Metadata = response.Value.Metadata,
-                        Properties = new ContainerProperties()
+                        Properties = new BlobContainerProperties()
                         {
                             LastModified = response.Value.LastModified,
                             ETag = response.Value.ETag,

@@ -1000,8 +1000,8 @@ namespace Azure.Storage.Blobs
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            BlobContainerClient container = GetBlobContainerClient(containerName);
-            Response<ContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
+            BlobContainerClient container = GetBlobContainerClient(blobContainerName);
+            Response<BlobContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
             return Response.FromValue(response.GetRawResponse(), container);
         }
 
@@ -1050,8 +1050,8 @@ namespace Azure.Storage.Blobs
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            BlobContainerClient container = GetBlobContainerClient(containerName);
-            Response<ContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+            BlobContainerClient container = GetBlobContainerClient(blobContainerName);
+            Response<BlobContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.GetRawResponse(), container);
         }
         #endregion CreateBlobContainer
