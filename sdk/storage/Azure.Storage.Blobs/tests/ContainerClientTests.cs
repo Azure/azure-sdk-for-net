@@ -947,7 +947,7 @@ namespace Azure.Storage.Blobs.Test
                 var id = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
                 await InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(duration);
-                var breakPeriod = 0;
+                TimeSpan breakPeriod = TimeSpan.FromSeconds(0);
 
                 // Act
                 Response<Lease> breakResponse = await InstrumentClient(container.GetLeaseClient()).BreakAsync(breakPeriod);

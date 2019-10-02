@@ -839,7 +839,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Once a lease is broken, it cannot be renewed.  Any authorized
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
-        /// break <paramref name="breakPeriodInSeconds"/> is allowed to elapse,
+        /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
         /// <see cref="Break"/> and <see cref="Release"/> can be
         /// performed on the blob or container.  When a lease is successfully
@@ -852,7 +852,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="breakPeriodInSeconds">
+        /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
         /// it is broken, in seconds, between 0 and 60.  This break period is
         /// only used if it is shorter than the time remaining on the lease.
@@ -878,11 +878,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<Lease> Break(
-            int? breakPeriodInSeconds = default,
+            TimeSpan? breakPeriod = default,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             BreakInternal(
-                breakPeriodInSeconds,
+                breakPeriod,
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
@@ -895,7 +895,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Once a lease is broken, it cannot be renewed.  Any authorized
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
-        /// break <paramref name="breakPeriodInSeconds"/> is allowed to elapse,
+        /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
         /// <see cref="BreakAsync"/> and <see cref="ReleaseAsync"/> can be
         /// performed on the blob or container.  When a lease is successfully
@@ -908,7 +908,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="breakPeriodInSeconds">
+        /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
         /// it is broken, in seconds, between 0 and 60.  This break period is
         /// only used if it is shorter than the time remaining on the lease.
@@ -934,11 +934,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<Lease>> BreakAsync(
-            int? breakPeriodInSeconds = default,
+            TimeSpan? breakPeriod = default,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             await BreakInternal(
-                breakPeriodInSeconds,
+                breakPeriod,
                 httpAccessConditions,
                 true, // async
                 cancellationToken)
@@ -951,7 +951,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Once a lease is broken, it cannot be renewed.  Any authorized
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
-        /// break <paramref name="breakPeriodInSeconds"/> is allowed to elapse,
+        /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
         /// <see cref="BreakAsync"/> and <see cref="ReleaseAsync"/> can be
         /// performed on the blob or container.  When a lease is successfully
@@ -964,7 +964,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="breakPeriodInSeconds">
+        /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
         /// it is broken, in seconds, between 0 and 60.  This break period is
         /// only used if it is shorter than the time remaining on the lease.
@@ -993,19 +993,20 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<Lease>> BreakInternal(
-            int? breakPeriodInSeconds,
+            TimeSpan? breakPeriod,
             HttpAccessConditions? httpAccessConditions,
             bool async,
             CancellationToken cancellationToken)
         {
             EnsureClient();
+            long? serviceBreakPeriod = breakPeriod != null ? Convert.ToInt64(breakPeriod.Value.TotalSeconds) : (long?) null;
             using (Pipeline.BeginLoggingScope(nameof(LeaseClient)))
             {
                 Pipeline.LogMethodEnter(
                     nameof(LeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(breakPeriodInSeconds)}: {breakPeriodInSeconds}\n" +
+                    $"{nameof(breakPeriod)}: {breakPeriod}\n" +
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
@@ -1014,7 +1015,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return (await BlobRestClient.Blob.BreakLeaseAsync(
                             Pipeline,
                             Uri,
-                            breakPeriod: breakPeriodInSeconds,
+                            breakPeriod: serviceBreakPeriod,
                             ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                             ifMatch: httpAccessConditions?.IfMatch,
@@ -1036,7 +1037,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return (await BlobRestClient.Container.BreakLeaseAsync(
                             Pipeline,
                             Uri,
-                            breakPeriod: breakPeriodInSeconds,
+                            breakPeriod: serviceBreakPeriod,
                             ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                             async: async,
