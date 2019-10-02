@@ -400,7 +400,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             foreach (Key createdKey in createdKeys)
             {
-                KeyProperties returnedKey = allKeys.Single(s => s.Version == createdKey.Version);
+                KeyProperties returnedKey = allKeys.Single(s => s.Version == createdKey.Properties.Version);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey);
             }
         }
