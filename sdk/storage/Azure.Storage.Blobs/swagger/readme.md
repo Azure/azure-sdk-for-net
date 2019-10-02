@@ -1205,7 +1205,7 @@ directive:
     $.put.operationId = "Blob_SetAccessTier";
 ```
 
-### Append Blob prefix to service property types
+### Prepend Blob prefix to service property types
 ``` yaml
 directive:
 - from: swagger-document

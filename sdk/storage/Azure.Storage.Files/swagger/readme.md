@@ -659,7 +659,7 @@ directive:
     delete $.properties;
 ```
 
-### Append File prefix to service property types
+### Prepend File prefix to service property types
 ``` yaml
 directive:
 - from: swagger-document

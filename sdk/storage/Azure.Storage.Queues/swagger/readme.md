@@ -322,7 +322,7 @@ directive:
   transform: $.enum = [ "2018-11-09" ];
 ```
 
-### Append Queue prefix to service property types
+### Prepend Queue prefix to service property types
 ``` yaml
 directive:
 - from: swagger-document
