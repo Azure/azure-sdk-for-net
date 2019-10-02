@@ -105,9 +105,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.AreEqual(certificateWithPolicy.Name, certName);
 
-            Assert.NotNull(certificateWithPolicy.Version);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Version);
+            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -131,9 +131,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.AreEqual(certificateWithPolicy.Name, certName);
 
-            Assert.NotNull(certificateWithPolicy.Version);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Version);
+            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -154,13 +154,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             IDictionary<string, string> expTags = new Dictionary<string, string>() { { "key1", "value1" } };
 
-            Certificate updated = await Client.UpdateCertificateAsync(certName, original.Version, tags: expTags);
+            Certificate updated = await Client.UpdateCertificateAsync(certName, original.Properties.Version, tags: expTags);
 
             Assert.IsEmpty(original.Properties.Tags);
 
             CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
 
-            updated = await Client.UpdateCertificateAsync(certName, original.Version, enabled: false);
+            updated = await Client.UpdateCertificateAsync(certName, original.Properties.Version, enabled: false);
 
             Assert.IsFalse(updated.Properties.Enabled);
         }

@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Test
             Secret version2 = await Client.SetAsync(secretName, "value2");
             await Client.SetAsync(secretName, "value3");
 
-            Secret secret = await Client.GetAsync(secretName, version2.Version);
+            Secret secret = await Client.GetAsync(secretName, version2.Properties.Version);
 
             Assert.AreEqual("value2", secret.Value);
         }
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Test
 
                 RegisterForCleanup(secret.Name, delete: false);
 
-                Assert.IsNotEmpty(setResult.Version);
+                Assert.IsNotEmpty(setResult.Properties.Version);
                 Assert.AreEqual("password", setResult.Properties.ContentType);
                 Assert.AreEqual(nbf, setResult.Properties.NotBefore);
                 Assert.AreEqual(exp, setResult.Properties.Expires);
@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Test
                 Assert.AreEqual("value2", setResult.Properties.Tags["tag2"]);
                 Assert.AreEqual(secretName, setResult.Name);
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
-                Assert.AreEqual(VaultUri, setResult.VaultUri);
+                Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
                 Assert.AreEqual("Recoverable+Purgeable", setResult.Properties.RecoveryLevel);
                 Assert.That(setResult.Properties.Created, createdUpdatedConstraint);
                 Assert.That(setResult.Properties.Updated, createdUpdatedConstraint);
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Test
             Secret version2 = await Client.SetAsync(secretName, "value2");
             await Client.SetAsync(secretName, "value3");
 
-            Secret secret = await Client.GetAsync(secretName, version2.Version);
+            Secret secret = await Client.GetAsync(secretName, version2.Properties.Version);
 
             Assert.AreEqual("value2", secret.Value);
         }

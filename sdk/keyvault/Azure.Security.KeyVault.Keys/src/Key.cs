@@ -28,24 +28,14 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Name of the key.
-        /// </summary>
-        public string Name => Properties.Name;
-
-        /// <summary>
         /// Key identifier.
         /// </summary>
         public Uri Id => Properties.Id;
 
         /// <summary>
-        /// Vault base URL.
+        /// Name of the key.
         /// </summary>
-        public Uri VaultUri => Properties.VaultUri;
-
-        /// <summary>
-        /// Version of the key.
-        /// </summary>
-        public string Version => Properties.Version;
+        public string Name => Properties.Name;
 
         /// <summary>
         /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
