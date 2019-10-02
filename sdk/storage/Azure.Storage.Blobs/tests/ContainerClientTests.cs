@@ -56,10 +56,12 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            var blob = this.InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
-            var builder = new BlobUriBuilder(blob.Uri);
+            BlobContainerClient client1 = InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
+            BlobContainerClient client2 = InstrumentClient(new BlobContainerClient(blobEndpoint));
 
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.AreEqual(accountName, client1.AccountName);
+            Assert.AreEqual(accountName, client2.AccountName);
+
         }
 
         [Test]

@@ -154,6 +154,24 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the container that includes the
         /// name of the account and the name of the container.
         /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobContainerClient(Uri containerUri, BlobClientOptions options = default)
+            : this(containerUri, (HttpPipelinePolicy)null,  options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobContainerClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="containerUri">
+        /// A <see cref="Uri"/> referencing the container that includes the
+        /// name of the account and the name of the container.
+        /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
         /// </param>
