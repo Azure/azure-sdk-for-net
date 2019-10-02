@@ -15,15 +15,12 @@ namespace Azure.Storage.Blobs.Models
     /// </summary>
     public struct GetBlobsOptions : IEquatable<GetBlobsOptions>
     {
-        // we can get rid of whole type by making prefix and enums parameters to wherever this type is currently used
-
         /// <summary>
         /// Gets or sets a string that filters the results to return only
         /// blobs whose name begins with the specified prefix.
         /// </summary>
         public string Prefix { get; set; }  // No Prefix header is produced if ""
 
-        // start enum
         /// <summary>
         /// Gets or sets a flag specifing that metadata related to any current
         /// or previous copy operation should be included.
@@ -56,7 +53,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public bool IncludeDeletedBlobs { get; set; }
 
-        // end enum
         /// <summary>
         /// Convert the details into ListBlobsIncludeItem values.
         /// </summary>
