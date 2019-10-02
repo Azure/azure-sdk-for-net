@@ -187,14 +187,6 @@ directive:
     $["x-ms-enum"].name = "GeoReplicationStatus";
 ```
 
-### Logging disable warning
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.Logging
-  transform: $["x-az-disable-warnings"] = "CA1724"
-```
-
 ### StorageError
 ``` yaml
 directive:

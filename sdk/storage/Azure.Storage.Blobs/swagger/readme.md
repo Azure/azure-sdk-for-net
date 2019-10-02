@@ -1025,15 +1025,6 @@ directive:
     $["x-ms-enum"].name = "ListBlobContainersIncludeType"
 ```
 
-### Logging
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.Logging
-  transform: >
-    $["x-az-disable-warnings"] = "CA1724";
-```
-
 ### Hide Error models
 ``` yaml
 directive:

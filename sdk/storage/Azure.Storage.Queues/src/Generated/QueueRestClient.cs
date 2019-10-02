@@ -2837,9 +2837,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary>
     /// Azure Analytics Logging settings.
     /// </summary>
-    #pragma warning disable CA1724
     public partial class QueueAnalyticsLogging
-    #pragma warning restore CA1724
     {
         /// <summary>
         /// The version of Storage Analytics to configure.
