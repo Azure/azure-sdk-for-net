@@ -203,20 +203,20 @@ namespace Azure.Security.KeyVault.Secrets
         /// unchanged. The value of a secret itself cannot be changed. This operation
         /// requires the secrets/set permission.
         /// </remarks>
-        /// <param name="secret">The secret object with updated properties.</param>
+        /// <param name="properties">The secret object with updated properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<SecretProperties>> UpdateSecretPropertiesAsync(SecretProperties secret, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretProperties>> UpdateSecretPropertiesAsync(SecretProperties properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(secret, nameof(secret));
-            Argument.AssertNotNull(secret.Version, nameof(secret.Version));
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.UpdateSecretProperties");
-            scope.AddAttribute("secret", secret.Name);
+            scope.AddAttribute("secret", properties.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, secret, () => new SecretProperties(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Patch, properties, () => new SecretProperties(), cancellationToken, SecretsPath, properties.Name, "/", properties.Version).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -234,20 +234,20 @@ namespace Azure.Security.KeyVault.Secrets
         /// unchanged. The value of a secret itself cannot be changed. This operation
         /// requires the secrets/set permission.
         /// </remarks>
-        /// <param name="secret">The secret object with updated properties.</param>
+        /// <param name="properties">The secret object with updated properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<SecretProperties> UpdateSecretProperties(SecretProperties secret, CancellationToken cancellationToken = default)
+        public virtual Response<SecretProperties> UpdateSecretProperties(SecretProperties properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(secret, nameof(secret));
-            Argument.AssertNotNull(secret.Version, nameof(secret.Version));
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.UpdateSecretProperties");
-            scope.AddAttribute("secret", secret.Name);
+            scope.AddAttribute("secret", properties.Name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, secret, () => new SecretProperties(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
+                return _pipeline.SendRequest(RequestMethod.Patch, properties, () => new SecretProperties(), cancellationToken, SecretsPath, properties.Name, "/", properties.Version);
             }
             catch (Exception e)
             {

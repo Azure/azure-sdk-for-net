@@ -274,27 +274,22 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Updates the specified <see cref="Certificate"/> with the specified values for its mutable properties. This operation requires the certificates/update permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="Certificate"/> to update</param>
-        /// <param name="version">The version of the <see cref="Certificate"/> to update, if unspecified the latest version will be updated</param>
-        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateProperties.Enabled"/> remains unchanged</param>
-        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateProperties.Tags"/> remains unchanged</param>
+        /// <param name="properties">The <see cref="CertificateProperties"/> object with updated properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated <see cref="Certificate"/></returns>
-        public virtual Response<Certificate> UpdateCertificate(string name, string version = default, bool enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual Response<Certificate> UpdateCertificateProperties(CertificateProperties properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            version ??= string.Empty;
+            var parameters = new CertificateUpdateParameters(properties);
 
-            var parameters = new CertificateUpdateParameters(enabled, tags);
-
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificate");
-            scope.AddAttribute("certificate", name);
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificateProperties");
+            scope.AddAttribute("certificate", properties.Name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new Certificate(), cancellationToken, CertificatesPath, name, "/", version);
+                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new Certificate(), cancellationToken, CertificatesPath, properties.Name, "/", properties.Version);
             }
             catch (Exception e)
             {
@@ -306,27 +301,22 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Updates the specified <see cref="Certificate"/> with the specified values for its mutable properties. This operation requires the certificates/update permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="Certificate"/> to update</param>
-        /// <param name="version">The version of the <see cref="Certificate"/> to update, if unspecified the latest version will be updated</param>
-        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateProperties.Enabled"/> remains unchanged</param>
-        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateProperties.Tags"/> remains unchanged</param>
+        /// <param name="properties">The <see cref="CertificateProperties"/> object with updated properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated <see cref="Certificate"/></returns>
-        public virtual async Task<Response<Certificate>> UpdateCertificateAsync(string name, string version = default, bool enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Certificate>> UpdateCertificatePropertiesAsync(CertificateProperties properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            version ??= string.Empty;
+            var parameters = new CertificateUpdateParameters(properties);
 
-            var parameters = new CertificateUpdateParameters(enabled, tags);
-
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificate");
-            scope.AddAttribute("certificate", name);
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificateProperties");
+            scope.AddAttribute("certificate", properties.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new Certificate(), cancellationToken, CertificatesPath, name, "/", version).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new Certificate(), cancellationToken, CertificatesPath, properties.Name, "/", properties.Version).ConfigureAwait(false);
             }
             catch (Exception e)
             {
