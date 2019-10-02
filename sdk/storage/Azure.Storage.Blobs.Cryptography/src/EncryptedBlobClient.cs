@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using Azure.Core;
 using Azure.Core.Cryptography;
@@ -136,8 +137,11 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKey keyEncryptionKey = default,
             IKeyEncryptionKeyResolver keyResolver = default,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyEncryptionKey)))
-        { }
+            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+        {
+            this.KeyWrapper = keyEncryptionKey;
+            this.KeyResolver = keyResolver;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
@@ -170,8 +174,11 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKey keyEncryptionKey = default,
             IKeyEncryptionKeyResolver keyResolver = default,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyEncryptionKey)))
-        { }
+            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+        {
+            this.KeyWrapper = keyEncryptionKey;
+            this.KeyResolver = keyResolver;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
@@ -213,11 +220,14 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <returns>Transformed content stream.</returns>
         internal protected override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
+            metadata ??= new Dictionary<string, string>();
+
             var (encryptionStream, encryptionData) = EncryptStream(content);
 
             using (var stream = new MemoryStream())
             {
-                new System.Xml.Serialization.XmlSerializer(typeof(EncryptionData)).Serialize(stream, encryptionData);
+                var serializer = new DataContractJsonSerializer(typeof(EncryptionData));
+                serializer.WriteObject(stream, encryptionData);
                 metadata.Add(EncryptionConstants.ENCRYPTION_DATA_KEY, new StreamReader(stream).ReadToEnd());
             }
 
@@ -226,7 +236,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         private (Stream, EncryptionData) EncryptStream(Stream plaintext)
         {
-            var generatedKey = CreateKey(EncryptionConstants.ENCRYPTION_KEY_SIZE);
+            var generatedKey = CreateKey(EncryptionConstants.ENCRYPTION_KEY_SIZE_BITS);
 
             using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
             {
@@ -248,26 +258,56 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     {
                         Algorithm = null, // TODO
                         EncryptedKey = this.KeyWrapper.WrapKey(null /*algorithm*/, generatedKey).ToArray(), // TODO what algorithm?
-                        KeyId = this.KeyWrapper.KeyId.ToString()
+                        KeyId = this.KeyWrapper.KeyId
                     }
                 };
 
-                return (new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Write), encryptionData);
+                return (new CryptoStreamWrapper(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Write), encryptionData);
             }
         }
 
         /// <summary>
         /// Securely generate a key.
         /// </summary>
-        /// <param name="numBytes">Key size.</param>
+        /// <param name="numBits">Key size.</param>
         /// <returns>The generated key bytes.</returns>
-        private static byte[] CreateKey(int numBytes)
+        private static byte[] CreateKey(int numBits)
         {
             using (var rng = new RNGCryptoServiceProvider())
             {
-                var buff = new byte[numBytes];
+                var buff = new byte[numBits / 8];
                 rng.GetBytes(buff);
                 return buff;
+            }
+        }
+
+        // TODO: remove pending issue #7871
+        // This class temporarily hacks around issue #7871
+        private class CryptoStreamWrapper : CryptoStream
+        {
+            private Stream _innerStream;
+
+            public override long Length => _innerStream.Length;
+
+            public CryptoStreamWrapper(Stream stream, ICryptoTransform transform, CryptoStreamMode mode)
+                : base(stream, transform, mode)
+            {
+                _innerStream = stream;
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                // no-op
+                switch (origin)
+                {
+                    case SeekOrigin.Begin:
+                        return offset;
+                    case SeekOrigin.Current:
+                        return Position + offset;
+                    case SeekOrigin.End:
+                        return Length + offset;
+                }
+                return 0;
             }
         }
     }

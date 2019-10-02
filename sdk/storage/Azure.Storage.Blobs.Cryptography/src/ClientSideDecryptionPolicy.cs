@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Azure.Core.Cryptography;
@@ -212,7 +214,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         #endregion
 
-        private Metadata ExtractMetadata(RequestHeaders headers)
+        private static Metadata ExtractMetadata(RequestHeaders headers)
         {
             const string metadataPrefix = "x-ms-meta-";
 
@@ -233,7 +235,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// </summary>
         /// <param name="metadata">The blob's metadata</param>
         /// <returns>The relevant metadata.</returns>
-        private EncryptionData GetAndValidateEncryptionData(Metadata metadata)
+        private static EncryptionData GetAndValidateEncryptionData(Metadata metadata)
         {
             _ = metadata ?? throw new InvalidOperationException();
 
@@ -243,10 +245,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 throw new InvalidOperationException("Encryption data does not exist.");
             }
 
-            using (var reader = new StringReader(encryptedDataString))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(encryptedDataString)))
             {
-                var serializer = new XmlSerializer(typeof(EncryptionData));
-                encryptionData = (EncryptionData)serializer.Deserialize(reader);
+                var serializer = new DataContractJsonSerializer(typeof(EncryptionData));
+                encryptionData = (EncryptionData)serializer.ReadObject(stream);
             }
 
             _ = encryptionData.ContentEncryptionIV ?? throw new NullReferenceException();
@@ -277,7 +279,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKey key;
 
             // If we already have a local key and it is the correct one, use that.
-            if (encryptionData.WrappedContentKey.KeyId == this.LocalKey?.KeyId.ToString())
+            if (encryptionData.WrappedContentKey.KeyId == this.LocalKey?.KeyId)
             {
                 key = this.LocalKey;
             }
@@ -304,7 +306,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKey key;
 
             // If we already have a local key and it is the correct one, use that.
-            if (encryptionData.WrappedContentKey.KeyId == this.LocalKey?.KeyId.ToString())
+            if (encryptionData.WrappedContentKey.KeyId == this.LocalKey?.KeyId)
             {
                 key = this.LocalKey;
             }
@@ -324,7 +326,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         #endregion
 
-        private CryptoStream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
+        private static CryptoStream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
             EncryptionData encryptionData, byte[] iv, bool noPadding)
         {
             switch (encryptionData.EncryptionAgent.Algorithm)

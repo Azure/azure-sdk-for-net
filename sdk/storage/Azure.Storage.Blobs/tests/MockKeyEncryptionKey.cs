@@ -17,18 +17,17 @@ namespace Azure.Storage.Blobs.Tests
     {
         public ReadOnlyMemory<byte> KeyEncryptionKey { get; }
 
-        public Uri KeyId { get; }
+        public string KeyId { get; }
 
         /// <summary>
         /// Generates a key encryption key with the given properties.
         /// </summary>
         public MockKeyEncryptionKey(int keySizeBits = 256, string keyId = default)
         {
-            KeyId = new Uri($"http//:myaccount.com/{keyId ?? Guid.NewGuid().ToString()}");
-            KeyEncryptionKey = new byte[keySizeBits >> 3];
+            KeyId = keyId ?? Guid.NewGuid().ToString();
             using (var random = new RNGCryptoServiceProvider())
             {
-                var bytes = new byte[keySizeBits];
+                var bytes = new byte[keySizeBits >> 3];
                 random.GetBytes(bytes);
                 KeyEncryptionKey = bytes;
             }

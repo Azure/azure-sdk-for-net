@@ -23,6 +23,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         public const int ENCRYPTION_BLOCK_SIZE = 16;
 
-        public const int ENCRYPTION_KEY_SIZE = 256;
+        public const int ENCRYPTION_KEY_SIZE_BITS = 256;
     }
 }

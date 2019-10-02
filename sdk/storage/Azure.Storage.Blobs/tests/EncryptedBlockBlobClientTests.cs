@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Test
             using (var memStream = new MemoryStream())
             using (var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
             {
-                cryptoStream.Write(data);
+                cryptoStream.Write(data, 0, data.Length);
                 return memStream.ToArray();
             }
         }
@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs.Test
                 // download without decrypting
                 var normalBlob = new BlobClient(blob.Uri, this.GetNewSharedKeyCredentials()).Download().Value;
                 var encryptedData = new byte[normalBlob.ContentLength];
-                normalBlob.Content.Read(encryptedData);
+                normalBlob.Content.Read(encryptedData, 0, encryptedData.Length);
 
                 // encrypt original data manually for comparison
                 var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.Test
                 // download without decrypting
                 var normalBlob = (await new BlobClient(blob.Uri, this.GetNewSharedKeyCredentials()).DownloadAsync()).Value;
                 var encryptedData = new byte[normalBlob.ContentLength];
-                await normalBlob.Content.ReadAsync(encryptedData);
+                await normalBlob.Content.ReadAsync(encryptedData, 0, encryptedData.Length);
 
                 // encrypt original data manually for comparison
                 var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
