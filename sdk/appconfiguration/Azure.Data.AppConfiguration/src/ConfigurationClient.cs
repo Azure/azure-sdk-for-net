@@ -169,7 +169,10 @@ namespace Azure.Data.AppConfiguration
 
             BuildUriForKvRoute(request.Uri, setting);
 
-            request.Headers.Add(IfNoneMatchHeader, "*");
+            ConditionalRequestOptions requestOptions = new ConditionalRequestOptions();
+            requestOptions.SetIfAbsentCondition();
+            requestOptions.ApplyHeaders(request);
+
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = HttpPipelineRequestContent.Create(content);
@@ -188,7 +191,7 @@ namespace Azure.Data.AppConfiguration
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value, label), default(HttpRequestOptions), cancellationToken).ConfigureAwait(false);
+            return await SetAsync(new ConfigurationSetting(key, value, label), default(ConditionalRequestOptions), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,7 +205,7 @@ namespace Azure.Data.AppConfiguration
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
-            return Set(new ConfigurationSetting(key, value, label), default(HttpRequestOptions), cancellationToken);
+            return Set(new ConfigurationSetting(key, value, label), default(ConditionalRequestOptions), cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +219,13 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            HttpRequestOptions requestOptions = onlyIfUnchanged ? new HttpRequestOptions { IfMatch = setting.ETag } : default;
+            ConditionalRequestOptions requestOptions = default;
+            if (onlyIfUnchanged)
+            {
+                requestOptions = new ConditionalRequestOptions();
+                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+            }
+
             return await SetAsync(setting, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -231,7 +240,13 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            HttpRequestOptions requestOptions = onlyIfUnchanged ? new HttpRequestOptions { IfMatch = setting.ETag } : default;
+            ConditionalRequestOptions requestOptions = default;
+            if (onlyIfUnchanged)
+            {
+                requestOptions = new ConditionalRequestOptions();
+                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+            }
+
             return Set(setting, requestOptions, cancellationToken);
         }
 
@@ -241,7 +256,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -274,7 +289,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -302,7 +317,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateSetRequest(ConfigurationSetting setting, HttpRequestOptions requestOptions)
+        private Request CreateSetRequest(ConfigurationSetting setting, ConditionalRequestOptions requestOptions)
         {
             if (setting == null)
                 throw new ArgumentNullException(nameof(setting));
@@ -319,15 +334,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                if (requestOptions.IfMatch != default)
-                {
-                    request.Headers.Add(IfMatchHeader, $"\"{requestOptions.IfMatch.ToString()}\"");
-                }
-
-                if (requestOptions.IfNoneMatch != default)
-                {
-                    request.Headers.Add(IfNoneMatchHeader, $"\"{requestOptions.IfNoneMatch.ToString()}\"");
-                }
+                requestOptions.ApplyHeaders(request);
             }
 
             request.Content = HttpPipelineRequestContent.Create(content);
@@ -367,7 +374,13 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            HttpRequestOptions requestOptions = onlyIfUnchanged ? new HttpRequestOptions { IfMatch = setting.ETag } : default;
+            ConditionalRequestOptions requestOptions = default;
+            if (onlyIfUnchanged)
+            {
+                requestOptions = new ConditionalRequestOptions();
+                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+            }
+
             return await DeleteAsync(setting.Key, setting.Label, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -382,7 +395,13 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            HttpRequestOptions requestOptions = onlyIfUnchanged ? new HttpRequestOptions { IfMatch = setting.ETag } : default;
+            ConditionalRequestOptions requestOptions = default;
+            if (onlyIfUnchanged)
+            {
+                requestOptions = new ConditionalRequestOptions();
+                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+            }
+
             return Delete(setting.Key, setting.Label, requestOptions, cancellationToken);
         }
 
@@ -393,7 +412,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> DeleteAsync(string key, string label, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -428,7 +447,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response Delete(string key, string label, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -456,7 +475,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateDeleteRequest(string key, string label, HttpRequestOptions requestOptions)
+        private Request CreateDeleteRequest(string key, string label, ConditionalRequestOptions requestOptions)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
@@ -467,15 +486,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                if (requestOptions.IfMatch != default)
-                {
-                    request.Headers.Add(IfMatchHeader, $"\"{requestOptions.IfMatch.ToString()}\"");
-                }
-
-                if (requestOptions.IfNoneMatch != default)
-                {
-                    request.Headers.Add(IfNoneMatchHeader, $"\"{requestOptions.IfNoneMatch.ToString()}\"");
-                }
+                requestOptions.ApplyHeaders(request);
             }
 
             return request;
@@ -514,7 +525,13 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            HttpRequestOptions requestOptions = onlyIfChanged ? new HttpRequestOptions { IfNoneMatch = setting.ETag } : default;
+            ConditionalRequestOptions requestOptions = default;
+            if (onlyIfChanged)
+            {
+                requestOptions = new ConditionalRequestOptions();
+                requestOptions.SetIfModifiedCondition(setting.ETag);
+            }
+
             return await GetAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -529,7 +546,13 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            HttpRequestOptions requestOptions = onlyIfChanged ? new HttpRequestOptions { IfNoneMatch = setting.ETag } : default;
+            ConditionalRequestOptions requestOptions = default;
+            if (onlyIfChanged)
+            {
+                requestOptions = new ConditionalRequestOptions();
+                requestOptions.SetIfModifiedCondition(setting.ETag);
+            }
+
             return Get(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
         }
 
@@ -541,7 +564,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute("key", key);
@@ -574,7 +597,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute(nameof(key), key);
@@ -641,7 +664,7 @@ namespace Azure.Data.AppConfiguration
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
         }
 
-        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, HttpRequestOptions requestOptions)
+        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
@@ -659,15 +682,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                if (requestOptions.IfMatch != default)
-                {
-                    request.Headers.Add(IfMatchHeader, $"\"{requestOptions.IfMatch.ToString()}\"");
-                }
-
-                if (requestOptions.IfNoneMatch != default)
-                {
-                    request.Headers.Add(IfNoneMatchHeader, $"\"{requestOptions.IfNoneMatch.ToString()}\"");
-                }
+                requestOptions.ApplyHeaders(request);
             }
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
