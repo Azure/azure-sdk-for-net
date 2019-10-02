@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Management.DataFactory
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=D:\\Source\\adf0929\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "9aaa1b6b1ceddfe31e03867fdfa1cedebb99185d";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/jackmagic313/azure-rest-api-specs/blob/fixname/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\GitHub\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "jackmagic313";
+      public static readonly String GithubBranchName = "fixname";
+      public static readonly String GithubCommidId = "199bf6080267424f98ad6a5ba39fbe1a505e5e49";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
