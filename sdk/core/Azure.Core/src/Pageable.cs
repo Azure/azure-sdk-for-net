@@ -17,14 +17,14 @@ namespace Azure
         protected virtual CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncPageable{T}"/>
+        /// Initializes a new instance of the <see cref="Pageable{T}"/>
         /// class for mocking.
         /// </summary>
         protected Pageable() =>
             CancellationToken = CancellationToken.None;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncPageable{T}"/>
+        /// Initializes a new instance of the <see cref="Pageable{T}"/>
         /// class.
         /// </summary>
         /// <param name="cancellationToken">
@@ -54,10 +54,10 @@ namespace Azure
             int? pageSizeHint = default);
 
         /// <summary>
-        /// Creates a string representation of an <see cref="AsyncPageable{T}"/>.
+        /// Creates a string representation of an <see cref="Pageable{T}"/>.
         /// </summary>
         /// <returns>
-        /// A string representation of an <see cref="AsyncPageable{T}"/>.
+        /// A string representation of an <see cref="Pageable{T}"/>.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
@@ -82,7 +82,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Check if two <see cref="AsyncPageable{T}"/> instances are equal.
+        /// Check if two <see cref="Pageable{T}"/> instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -90,9 +90,9 @@ namespace Azure
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the <see cref="AsyncPageable{T}"/>.
+        /// Get a hash code for the <see cref="Pageable{T}"/>.
         /// </summary>
-        /// <returns>Hash code for the <see cref="Page{T}"/>.</returns>
+        /// <returns>Hash code for the <see cref="Pageable{T}"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
     }
