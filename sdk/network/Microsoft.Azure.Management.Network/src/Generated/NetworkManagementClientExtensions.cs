@@ -107,5 +107,113 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            /// <summary>
+            /// Generates a unique VPN profile for P2S clients for VirtualWan and
+            /// associated VpnServerConfiguration combination in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='virtualWANName'>
+            /// The name of the VirtualWAN whose associated VpnServerConfigurations is
+            /// needed.
+            /// </param>
+            /// <param name='vpnClientParams'>
+            /// Parameters supplied to the generate VirtualWan VPN profile generation
+            /// operation.
+            /// </param>
+            public static VpnProfileResponse Generatevirtualwanvpnserverconfigurationvpnprofile(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams)
+            {
+                return operations.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(resourceGroupName, virtualWANName, vpnClientParams).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates a unique VPN profile for P2S clients for VirtualWan and
+            /// associated VpnServerConfiguration combination in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='virtualWANName'>
+            /// The name of the VirtualWAN whose associated VpnServerConfigurations is
+            /// needed.
+            /// </param>
+            /// <param name='vpnClientParams'>
+            /// Parameters supplied to the generate VirtualWan VPN profile generation
+            /// operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VpnProfileResponse> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(resourceGroupName, virtualWANName, vpnClientParams, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Generates a unique VPN profile for P2S clients for VirtualWan and
+            /// associated VpnServerConfiguration combination in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='virtualWANName'>
+            /// The name of the VirtualWAN whose associated VpnServerConfigurations is
+            /// needed.
+            /// </param>
+            /// <param name='vpnClientParams'>
+            /// Parameters supplied to the generate VirtualWan VPN profile generation
+            /// operation.
+            /// </param>
+            public static VpnProfileResponse BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams)
+            {
+                return operations.BeginGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(resourceGroupName, virtualWANName, vpnClientParams).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates a unique VPN profile for P2S clients for VirtualWan and
+            /// associated VpnServerConfiguration combination in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='virtualWANName'>
+            /// The name of the VirtualWAN whose associated VpnServerConfigurations is
+            /// needed.
+            /// </param>
+            /// <param name='vpnClientParams'>
+            /// Parameters supplied to the generate VirtualWan VPN profile generation
+            /// operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VpnProfileResponse> BeginGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(resourceGroupName, virtualWANName, vpnClientParams, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

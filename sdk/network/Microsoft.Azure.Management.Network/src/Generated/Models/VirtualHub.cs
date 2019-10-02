@@ -47,6 +47,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VirtualHub.</param>
         /// <param name="expressRouteGateway">The expressRouteGateway
         /// associated with this VirtualHub.</param>
+        /// <param name="azureFirewall">The azureFirewall associated with this
+        /// VirtualHub.</param>
         /// <param name="virtualNetworkConnections">List of all vnet
         /// connections with this VirtualHub.</param>
         /// <param name="addressPrefix">Address-prefix for this
@@ -56,19 +58,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// virtual hub resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="securityProviderName">The Security Provider
+        /// name.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), IList<HubVirtualNetworkConnection> virtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string etag = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), IList<HubVirtualNetworkConnection> virtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
             VpnGateway = vpnGateway;
             P2SVpnGateway = p2SVpnGateway;
             ExpressRouteGateway = expressRouteGateway;
+            AzureFirewall = azureFirewall;
             VirtualNetworkConnections = virtualNetworkConnections;
             AddressPrefix = addressPrefix;
             RouteTable = routeTable;
             ProvisioningState = provisioningState;
+            SecurityProviderName = securityProviderName;
             Etag = etag;
             CustomInit();
         }
@@ -104,6 +110,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource ExpressRouteGateway { get; set; }
 
         /// <summary>
+        /// Gets or sets the azureFirewall associated with this VirtualHub.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureFirewall")]
+        public SubResource AzureFirewall { get; set; }
+
+        /// <summary>
         /// Gets or sets list of all vnet connections with this VirtualHub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualNetworkConnections")]
@@ -128,6 +140,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Security Provider name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProviderName")]
+        public string SecurityProviderName { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
