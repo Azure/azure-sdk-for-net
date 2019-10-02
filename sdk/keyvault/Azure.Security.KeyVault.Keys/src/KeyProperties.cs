@@ -27,14 +27,29 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the KeyBase class.
+        /// Initializes a new instance of the <see cref="KeyProperties"/> class.
         /// </summary>
         /// <param name="name">The name of the key.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public KeyProperties(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyProperties"/> class.
+        /// </summary>
+        /// <param name="id">The Id of the key.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        public KeyProperties(Uri id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
+            ParseId(id);
         }
 
         private KeyAttributes _attributes;
