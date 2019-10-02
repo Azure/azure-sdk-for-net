@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Management.Peering
             /// The operations group for this extension method.
             /// </param>
             /// <param name='checkServiceProviderAvailabilityInput'>
-            /// The CheckServiceProviderAvailabilityInput
-            /// indicating customer location and service provider.
+            /// The CheckServiceProviderAvailabilityInput indicating customer location and
+            /// service provider.
             /// </param>
             public static string CheckServiceProviderAvailability(this IPeeringManagementClient operations, CheckServiceProviderAvailabilityInput checkServiceProviderAvailabilityInput)
             {
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Peering
             /// The operations group for this extension method.
             /// </param>
             /// <param name='checkServiceProviderAvailabilityInput'>
-            /// The CheckServiceProviderAvailabilityInput
-            /// indicating customer location and service provider.
+            /// The CheckServiceProviderAvailabilityInput indicating customer location and
+            /// service provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

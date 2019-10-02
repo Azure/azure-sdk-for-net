@@ -103,11 +103,6 @@ namespace Microsoft.Azure.Management.Peering
         public virtual IPeeringServiceLocationsOperations PeeringServiceLocations { get; private set; }
 
         /// <summary>
-        /// Gets the IPeeringServicePrefixesOperations.
-        /// </summary>
-        public virtual IPeeringServicePrefixesOperations PeeringServicePrefixes { get; private set; }
-
-        /// <summary>
         /// Gets the IPrefixesOperations.
         /// </summary>
         public virtual IPrefixesOperations Prefixes { get; private set; }
@@ -369,12 +364,11 @@ namespace Microsoft.Azure.Management.Peering
             PeeringLocations = new PeeringLocationsOperations(this);
             Peerings = new PeeringsOperations(this);
             PeeringServiceLocations = new PeeringServiceLocationsOperations(this);
-            PeeringServicePrefixes = new PeeringServicePrefixesOperations(this);
             Prefixes = new PrefixesOperations(this);
             PeeringServiceProviders = new PeeringServiceProvidersOperations(this);
             PeeringServices = new PeeringServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-01-preview";
+            ApiVersion = "2019-09-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -413,8 +407,8 @@ namespace Microsoft.Azure.Management.Peering
         /// customer's location
         /// </summary>
         /// <param name='checkServiceProviderAvailabilityInput'>
-        /// The CheckServiceProviderAvailabilityInput
-        /// indicating customer location and service provider.
+        /// The CheckServiceProviderAvailabilityInput indicating customer location and
+        /// service provider.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// connection.</param>
         /// <param name="connectionIdentifier">The unique identifier (GUID) for
         /// the connection.</param>
-        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), string sessionAddressProvider = default(string), bool? useForPeeringService = default(bool?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string))
+        /// <param name="errorMessage">The error message related to the
+        /// connection state, if any.</param>
+        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), string sessionAddressProvider = default(string), bool? useForPeeringService = default(bool?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string), string errorMessage = default(string))
         {
             BandwidthInMbps = bandwidthInMbps;
             ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.Peering.Models
             ConnectionState = connectionState;
             BgpSession = bgpSession;
             ConnectionIdentifier = connectionIdentifier;
+            ErrorMessage = errorMessage;
             CustomInit();
         }
 
@@ -69,10 +72,10 @@ namespace Microsoft.Azure.Management.Peering.Models
         public int? BandwidthInMbps { get; set; }
 
         /// <summary>
-        /// Gets or sets the bandwidth that is actually provisioned.
+        /// Gets the bandwidth that is actually provisioned.
         /// </summary>
         [JsonProperty(PropertyName = "provisionedBandwidthInMbps")]
-        public int? ProvisionedBandwidthInMbps { get; set; }
+        public int? ProvisionedBandwidthInMbps { get; private set; }
 
         /// <summary>
         /// Gets or sets the field indicating if Microsoft provides session ip
@@ -115,6 +118,12 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "connectionIdentifier")]
         public string ConnectionIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets the error message related to the connection state, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "errorMessage")]
+        public string ErrorMessage { get; private set; }
 
     }
 }

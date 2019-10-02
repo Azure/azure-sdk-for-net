@@ -57,11 +57,11 @@ namespace Microsoft.Azure.Management.Peering.Models
         public IList<DirectConnection> Connections { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag that indicates whether or not the peering is
-        /// used for peering service.
+        /// Gets the flag that indicates whether or not the peering is used for
+        /// peering service.
         /// </summary>
         [JsonProperty(PropertyName = "useForPeeringService")]
-        public bool? UseForPeeringService { get; set; }
+        public bool? UseForPeeringService { get; private set; }
 
         /// <summary>
         /// Gets or sets the reference of the peer ASN.

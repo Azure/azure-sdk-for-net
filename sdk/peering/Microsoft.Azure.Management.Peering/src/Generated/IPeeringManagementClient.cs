@@ -100,11 +100,6 @@ namespace Microsoft.Azure.Management.Peering
         IPeeringServiceLocationsOperations PeeringServiceLocations { get; }
 
         /// <summary>
-        /// Gets the IPeeringServicePrefixesOperations.
-        /// </summary>
-        IPeeringServicePrefixesOperations PeeringServicePrefixes { get; }
-
-        /// <summary>
         /// Gets the IPrefixesOperations.
         /// </summary>
         IPrefixesOperations Prefixes { get; }
@@ -124,8 +119,8 @@ namespace Microsoft.Azure.Management.Peering
         /// of customer's location
         /// </summary>
         /// <param name='checkServiceProviderAvailabilityInput'>
-        /// The CheckServiceProviderAvailabilityInput
-        /// indicating customer location and service provider.
+        /// The CheckServiceProviderAvailabilityInput indicating customer
+        /// location and service provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

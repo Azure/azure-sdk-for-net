@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     public static class LearnedType
     {
         public const string None = "None";
-        public const string ViaPartner = "ViaPartner";
+        public const string ViaServiceProvider = "ViaServiceProvider";
         public const string ViaSession = "ViaSession";
     }
 }

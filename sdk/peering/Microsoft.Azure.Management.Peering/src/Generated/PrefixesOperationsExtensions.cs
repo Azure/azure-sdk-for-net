@@ -18,47 +18,209 @@ namespace Microsoft.Azure.Management.Peering
     public static partial class PrefixesOperationsExtensions
     {
             /// <summary>
-            /// Lists the peerings prefix in the resource group.
+            /// Gets an existing prefix with the specified name under the given
+            /// subscription, resource group and peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringServiceName'>
-            /// The peering service name.
+            /// The name of the peering service.
             /// </param>
-            public static IPage<PeeringServicePrefix> ListByPeeringService(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName)
+            /// <param name='prefixName'>
+            /// The name of the prefix.
+            /// </param>
+            /// <param name='expand'>
+            /// The properties to be expanded.
+            /// </param>
+            public static PeeringServicePrefix Get(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string))
             {
-                return operations.ListByPeeringServiceAsync(resourceGroupName, peeringServiceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, peeringServiceName, prefixName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the peerings prefix in the resource group.
+            /// Gets an existing prefix with the specified name under the given
+            /// subscription, resource group and peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringServiceName'>
-            /// The peering service name.
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='prefixName'>
+            /// The name of the prefix.
+            /// </param>
+            /// <param name='expand'>
+            /// The properties to be expanded.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringServicePrefix>> ListByPeeringServiceAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringServicePrefix> GetAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByPeeringServiceWithHttpMessagesAsync(resourceGroupName, peeringServiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the peerings prefix in the resource group.
+            /// Creates a new prefix with the specified name under the given subscription,
+            /// resource group and peering service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='peeringServiceName'>
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='prefixName'>
+            /// The name of the prefix.
+            /// </param>
+            /// <param name='peeringServicePrefix'>
+            /// The properties needed to create a prefix.
+            /// </param>
+            public static PeeringServicePrefix CreateOrUpdate(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, PeeringServicePrefix peeringServicePrefix)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, peeringServiceName, prefixName, peeringServicePrefix).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new prefix with the specified name under the given subscription,
+            /// resource group and peering service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='peeringServiceName'>
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='prefixName'>
+            /// The name of the prefix.
+            /// </param>
+            /// <param name='peeringServicePrefix'>
+            /// The properties needed to create a prefix.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PeeringServicePrefix> CreateOrUpdateAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, PeeringServicePrefix peeringServicePrefix, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, peeringServicePrefix, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing prefix with the specified name under the given
+            /// subscription, resource group and peering service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='peeringServiceName'>
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='prefixName'>
+            /// The name of the prefix.
+            /// </param>
+            public static void Delete(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName)
+            {
+                operations.DeleteAsync(resourceGroupName, peeringServiceName, prefixName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an existing prefix with the specified name under the given
+            /// subscription, resource group and peering service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='peeringServiceName'>
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='prefixName'>
+            /// The name of the prefix.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all prefixes under the given subscription, resource group and peering
+            /// service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='peeringServiceName'>
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='expand'>
+            /// The properties to be expanded.
+            /// </param>
+            public static IPage<PeeringServicePrefix> ListByPeeringService(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string expand = default(string))
+            {
+                return operations.ListByPeeringServiceAsync(resourceGroupName, peeringServiceName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all prefixes under the given subscription, resource group and peering
+            /// service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='peeringServiceName'>
+            /// The name of the peering service.
+            /// </param>
+            /// <param name='expand'>
+            /// The properties to be expanded.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PeeringServicePrefix>> ListByPeeringServiceAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByPeeringServiceWithHttpMessagesAsync(resourceGroupName, peeringServiceName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all prefixes under the given subscription, resource group and peering
+            /// service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -72,7 +234,8 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Lists the peerings prefix in the resource group.
+            /// Lists all prefixes under the given subscription, resource group and peering
+            /// service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
