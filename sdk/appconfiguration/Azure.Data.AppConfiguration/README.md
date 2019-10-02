@@ -115,37 +115,31 @@ client.Set(setting);
 
 ### Retrieve a Configuration Setting
 
-Retrieve a previously stored Configuration Setting by calling Get.
+Retrieve a previously stored Configuration Setting by calling Get.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
 ConfigurationSetting setting = client.Get("some_key");
 ```
 
 ### Update an existing Configuration Setting
 
-Update an existing Configuration Setting by calling Update.
+Update an existing Configuration Setting by calling Set.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
-ConfigurationSetting setting = client.Update("some_key", "new_value");
+ConfigurationSetting setting = client.Set("some_key", "new_value");
 ```
 
 ### Delete a Configuration Setting
 
-Delete an existing Configuration Setting by calling Delete.
+Delete an existing Configuration Setting by calling Delete.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
 ConfigurationSetting setting = client.Delete("some_key");
 ```
 

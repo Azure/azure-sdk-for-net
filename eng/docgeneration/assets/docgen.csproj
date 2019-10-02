@@ -22,11 +22,9 @@
     <ItemGroup>
       <ECMA2YmlFiles Include="$(ECMA2YmlPath)" />
       <PopImportFiles Include="$(PopImportPath)" />
-      <RestoredDlls Include="$(NuGetPackageRoot)\**\lib\**\*.dll" />
     </ItemGroup>
 
     <Copy SourceFiles="@(ECMA2YmlFiles)" DestinationFolder="$(BuildBinariesDirectory)\ECMA2Yml" />
     <Copy SourceFiles="@(PopImportFiles)" DestinationFolder="$(BuildBinariesDirectory)\PopImport" />
-    <Copy SourceFiles="@(RestoredDlls)" DestinationFolder="$(BuildBinariesDirectory)\dll-docs\dependencies\my-api" />
   </Target>
 </Project>

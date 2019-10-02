@@ -153,7 +153,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='location'>
             /// Resource location.
             /// </param>
-            public static IPage<StorageQuota> List(this IStorageQuotasOperations operations, string location)
+            public static StorageQuotaList List(this IStorageQuotasOperations operations, string location)
             {
                 return operations.ListAsync(location).GetAwaiter().GetResult();
             }
@@ -170,43 +170,9 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageQuota>> ListAsync(this IStorageQuotasOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageQuotaList> ListAsync(this IStorageQuotasOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns a list of storage quotas at the given location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<StorageQuota> ListNext(this IStorageQuotasOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns a list of storage quotas at the given location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<StorageQuota>> ListNextAsync(this IStorageQuotasOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

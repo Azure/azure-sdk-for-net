@@ -27,12 +27,11 @@
 
 /sdk/identity/azure.identity/ @schaabs
 
-/sdk/keyvault/ @schaabs 
-/sdk/keyvault/azure.*/ @schaabs @shahabhijeet 
+/sdk/keyvault/ @schaabs @heaths
 
 /sdk/search/ @brjohnstmsft
 /sdk/servicebus/ @nemakam @jsquire
-/sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
+/sdk/storage/ @seanmcc-msft @amnguye @tg-msft
 # Management Plane
 /**/*Management*/ @erich-wang
 

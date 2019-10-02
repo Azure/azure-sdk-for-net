@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -54,12 +53,12 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
-            if (this.Add) { sb.Append(Constants.Sas.Permissions.Add); }
-            if (this.Create) { sb.Append(Constants.Sas.Permissions.Create); }
-            if (this.Write) { sb.Append(Constants.Sas.Permissions.Write); }
-            if (this.Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
-            if (this.List) { sb.Append(Constants.Sas.Permissions.List); }
+            if (Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (Add) { sb.Append(Constants.Sas.Permissions.Add); }
+            if (Create) { sb.Append(Constants.Sas.Permissions.Create); }
+            if (Write) { sb.Append(Constants.Sas.Permissions.Write); }
+            if (Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
+            if (List) { sb.Append(Constants.Sas.Permissions.List); }
             return sb.ToString();
         }
 
@@ -75,13 +74,26 @@ namespace Azure.Storage.Sas
             {
                 switch (c)
                 {
-                    case Constants.Sas.Permissions.Read: p.Read = true; break;
-                    case Constants.Sas.Permissions.Add: p.Add = true; break;
-                    case Constants.Sas.Permissions.Create: p.Create = true; break;
-                    case Constants.Sas.Permissions.Write: p.Write = true; break;
-                    case Constants.Sas.Permissions.Delete: p.Delete = true; break;
-                    case Constants.Sas.Permissions.List: p.List = true; break;
-                    default: throw Errors.InvalidPermission(c);
+                    case Constants.Sas.Permissions.Read:
+                        p.Read = true;
+                        break;
+                    case Constants.Sas.Permissions.Add:
+                        p.Add = true;
+                        break;
+                    case Constants.Sas.Permissions.Create:
+                        p.Create = true;
+                        break;
+                    case Constants.Sas.Permissions.Write:
+                        p.Write = true;
+                        break;
+                    case Constants.Sas.Permissions.Delete:
+                        p.Delete = true;
+                        break;
+                    case Constants.Sas.Permissions.List:
+                        p.List = true;
+                        break;
+                    default:
+                        throw Errors.InvalidPermission(c);
                 }
             }
             return p;
@@ -94,7 +106,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is ContainerSasPermissions other && this.Equals(other);
+            obj is ContainerSasPermissions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the ContainerSasPermissions.
@@ -102,12 +114,12 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the ContainerSasPermissions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Read   ? 0b000001 : 0) +
-            (this.Add    ? 0b000010 : 0) +
-            (this.Create ? 0b000100 : 0) +
-            (this.Write  ? 0b001000 : 0) +
-            (this.Delete ? 0b010000 : 0) +
-            (this.List   ? 0b100000 : 0);
+            (Read ? 0b000001 : 0) +
+            (Add ? 0b000010 : 0) +
+            (Create ? 0b000100 : 0) +
+            (Write ? 0b001000 : 0) +
+            (Delete ? 0b010000 : 0) +
+            (List ? 0b100000 : 0);
 
         /// <summary>
         /// Check if two ContainerSasPermissions instances are equal.
@@ -133,11 +145,11 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(ContainerSasPermissions other) =>
-            this.Read == other.Read &&
-            this.Add == other.Add &&
-            this.Create == other.Create &&
-            this.Write == other.Write &&
-            this.Delete == other.Delete &&
-            this.List == other.List;
+            Read == other.Read &&
+            Add == other.Add &&
+            Create == other.Create &&
+            Write == other.Write &&
+            Delete == other.Delete &&
+            List == other.List;
     }
 }

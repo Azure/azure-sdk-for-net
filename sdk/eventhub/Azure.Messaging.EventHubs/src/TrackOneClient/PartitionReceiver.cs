@@ -1,14 +1,13 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Text;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// This is a logical representation of receiving from a EventHub partition.
     /// <para>
@@ -28,10 +27,9 @@ namespace TrackOne
         public static readonly string DefaultConsumerGroupName = "$Default";
 
         internal const long NullEpoch = 0;
-
-        const int MinPrefetchCount = 10;
-        const int DefaultPrefetchCount = 300;
-        int prefetchCount;
+        private const int MinPrefetchCount = 10;
+        private const int DefaultPrefetchCount = 300;
+        private int prefetchCount;
 
         /// <summary></summary>
         /// <param name="eventHubClient"></param>
@@ -49,23 +47,23 @@ namespace TrackOne
             ReceiverOptions receiverOptions)
             : base($"{nameof(PartitionReceiver)}{ClientEntity.GetNextId()}({eventHubClient.EventHubName},{consumerGroupName},{partitionId})")
         {
-            this.EventHubClient = eventHubClient;
-            this.ConsumerGroupName = consumerGroupName;
-            this.PartitionId = partitionId;
-            this.EventPosition = eventPosition;
-            this.prefetchCount = DefaultPrefetchCount;
-            this.Epoch = epoch;
-            this.RuntimeInfo = new ReceiverRuntimeInformation(partitionId);
-            this.ReceiverRuntimeMetricEnabled = receiverOptions == null
-                ? this.EventHubClient.EnableReceiverRuntimeMetric
+            EventHubClient = eventHubClient;
+            ConsumerGroupName = consumerGroupName;
+            PartitionId = partitionId;
+            EventPosition = eventPosition;
+            prefetchCount = DefaultPrefetchCount;
+            Epoch = epoch;
+            RuntimeInfo = new ReceiverRuntimeInformation(partitionId);
+            ReceiverRuntimeMetricEnabled = receiverOptions == null
+                ? EventHubClient.EnableReceiverRuntimeMetric
                 : receiverOptions.EnableReceiverRuntimeMetric;
 
-            this.Identifier = receiverOptions != null
+            Identifier = receiverOptions != null
                 ? receiverOptions.Identifier
                 : null;
-            this.RetryPolicy = eventHubClient.RetryPolicy.Clone();
+            RetryPolicy = eventHubClient.RetryPolicy.Clone();
 
-            EventHubsEventSource.Log.ClientCreated(this.ClientId, this.FormatTraceDetails());
+            EventHubsEventSource.Log.ClientCreated(ClientId, FormatTraceDetails());
         }
 
         /// <summary>
@@ -90,7 +88,7 @@ namespace TrackOne
         /// <value>The upper limit of events this receiver will actively receive regardless of whether a receive operation is pending.</value>
         public int PrefetchCount
         {
-            get => this.prefetchCount;
+            get => prefetchCount;
 
             set
             {
@@ -102,7 +100,7 @@ namespace TrackOne
                         Resources.ValueOutOfRange.FormatForUser(MinPrefetchCount, int.MaxValue));
                 }
 
-                this.prefetchCount = value;
+                prefetchCount = value;
             }
         }
 
@@ -154,7 +152,7 @@ namespace TrackOne
         /// <returns>A Task that will yield a batch of <see cref="EventData"/> from the partition on which this receiver is created. Returns 'null' if no EventData is present.</returns>
         public Task<IEnumerable<EventData>> ReceiveAsync(int maxMessageCount)
         {
-            return this.ReceiveAsync(maxMessageCount, this.EventHubClient.ConnectionStringBuilder.OperationTimeout);
+            return ReceiveAsync(maxMessageCount, EventHubClient.ConnectionStringBuilder.OperationTimeout);
         }
 
         /// <summary>
@@ -163,30 +161,30 @@ namespace TrackOne
         /// <returns>A Task that will yield a batch of <see cref="EventData"/> from the partition on which this receiver is created. Returns 'null' if no EventData is present.</returns>
         public async Task<IEnumerable<EventData>> ReceiveAsync(int maxMessageCount, TimeSpan? waitTime = default)
         {
-            waitTime = waitTime ?? this.EventHubClient.ConnectionStringBuilder.OperationTimeout;
+            waitTime ??= EventHubClient.ConnectionStringBuilder.OperationTimeout;
 
-            EventHubsEventSource.Log.EventReceiveStart(this.ClientId);
+            EventHubsEventSource.Log.EventReceiveStart(ClientId);
             Task<IList<EventData>> receiveTask = null;
             IList<EventData> events = null;
             int count = 0;
 
             try
             {
-                receiveTask = this.OnReceiveAsync(maxMessageCount, waitTime.Value);
+                receiveTask = OnReceiveAsync(maxMessageCount, waitTime.Value);
                 events = await receiveTask.ConfigureAwait(false);
                 count = events?.Count ?? 0;
                 EventData lastEvent = events?[count - 1];
                 if (lastEvent != null)
                 {
                     // Store the current position in the stream of messages
-                    this.EventPosition.Offset = lastEvent.SystemProperties.Offset;
-                    this.EventPosition.EnqueuedTimeUtc = lastEvent.SystemProperties.EnqueuedTimeUtc;
-                    this.EventPosition.SequenceNumber = lastEvent.SystemProperties.SequenceNumber;
+                    EventPosition.Offset = lastEvent.SystemProperties.Offset;
+                    EventPosition.EnqueuedTimeUtc = lastEvent.SystemProperties.EnqueuedTimeUtc;
+                    EventPosition.SequenceNumber = lastEvent.SystemProperties.SequenceNumber;
 
                     // Update receiver runtime metrics?
-                    if (this.ReceiverRuntimeMetricEnabled)
+                    if (ReceiverRuntimeMetricEnabled)
                     {
-                        this.RuntimeInfo.Update(lastEvent);
+                        RuntimeInfo.Update(lastEvent);
                     }
                 }
 
@@ -194,12 +192,12 @@ namespace TrackOne
             }
             catch (Exception e)
             {
-                EventHubsEventSource.Log.EventReceiveException(this.ClientId, e.ToString());
+                EventHubsEventSource.Log.EventReceiveException(ClientId, e.ToString());
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.EventReceiveStop(this.ClientId, count);
+                EventHubsEventSource.Log.EventReceiveStop(ClientId, count);
             }
         }
 
@@ -210,9 +208,9 @@ namespace TrackOne
         /// <param name="invokeWhenNoEvents">Flag to indicate whether the handler should be invoked when the receive call times out.</param>
         public void SetReceiveHandler(IPartitionReceiveHandler receiveHandler, bool invokeWhenNoEvents = false)
         {
-            EventHubsEventSource.Log.SetReceiveHandlerStart(this.ClientId, receiveHandler != null ? receiveHandler.GetType().ToString() : "null");
-            this.OnSetReceiveHandler(receiveHandler, invokeWhenNoEvents);
-            EventHubsEventSource.Log.SetReceiveHandlerStop(this.ClientId);
+            EventHubsEventSource.Log.SetReceiveHandlerStart(ClientId, receiveHandler != null ? receiveHandler.GetType().ToString() : "null");
+            OnSetReceiveHandler(receiveHandler, invokeWhenNoEvents);
+            EventHubsEventSource.Log.SetReceiveHandlerStop(ClientId);
         }
 
         /// <summary>
@@ -221,14 +219,14 @@ namespace TrackOne
         /// <returns>An asynchronous operation</returns>
         public sealed override Task CloseAsync()
         {
-            EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
+            EventHubsEventSource.Log.ClientCloseStart(ClientId);
             try
             {
-                return this.OnCloseAsync();
+                return OnCloseAsync();
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseStop(this.ClientId);
+                EventHubsEventSource.Log.ClientCloseStop(ClientId);
             }
         }
 
@@ -256,29 +254,29 @@ namespace TrackOne
         /// <returns></returns>
         protected abstract Task OnCloseAsync();
 
-        string FormatTraceDetails()
+        private string FormatTraceDetails()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("ConsumerGroup:{0}, PartitionId:{1}", this.ConsumerGroupName, PartitionId);
+            sb.AppendFormat("ConsumerGroup:{0}, PartitionId:{1}", ConsumerGroupName, PartitionId);
 
-            if (!string.IsNullOrEmpty(this.EventPosition.Offset))
+            if (!string.IsNullOrEmpty(EventPosition.Offset))
             {
-                sb.AppendFormat(", StartOffset:{0}, IsInclusive:{1}", this.EventPosition.Offset, this.EventPosition.IsInclusive);
+                sb.AppendFormat(", StartOffset:{0}, IsInclusive:{1}", EventPosition.Offset, EventPosition.IsInclusive);
             }
 
-            if (this.EventPosition.SequenceNumber != null)
+            if (EventPosition.SequenceNumber != null)
             {
-                sb.AppendFormat(", SequenceNumber:{0}, IsInclusive:{1}", this.EventPosition.SequenceNumber, this.EventPosition.IsInclusive);
+                sb.AppendFormat(", SequenceNumber:{0}, IsInclusive:{1}", EventPosition.SequenceNumber, EventPosition.IsInclusive);
             }
 
-            if (this.EventPosition.EnqueuedTimeUtc != null)
+            if (EventPosition.EnqueuedTimeUtc != null)
             {
-                sb.AppendFormat(", StartTime:{0}", this.EventPosition.EnqueuedTimeUtc);
+                sb.AppendFormat(", StartTime:{0}", EventPosition.EnqueuedTimeUtc);
             }
 
-            if (this.Epoch.HasValue)
+            if (Epoch.HasValue)
             {
-                sb.AppendFormat(", Epoch:{0}", this.Epoch.Value);
+                sb.AppendFormat(", Epoch:{0}", Epoch.Value);
             }
 
             return sb.ToString();

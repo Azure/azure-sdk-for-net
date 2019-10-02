@@ -1,4 +1,4 @@
-﻿using NetApp.Tests.Helpers;
+using NetApp.Tests.Helpers;
 using Microsoft.Azure.Management.NetApp.Models;
 using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.Resources;
@@ -23,7 +23,7 @@ namespace NetApp.Tests.ResourceTests
             UnixReadWrite = true,
             Cifs = false,
             Nfsv3 = true,
-            Nfsv4 = false,
+            Nfsv41 = false,
             AllowedClients = "1.2.3.0/24"
         };
 
@@ -80,7 +80,7 @@ namespace NetApp.Tests.ResourceTests
                 // create a volume with tags and export policy
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag2", "Value2");
-                var  protocolTypes = new List<string>() { "NFSv3", "NFSv4" };
+                var  protocolTypes = new List<string>() { "NFSv3", "NFSv4.1" };
 
                 var resource = ResourceUtils.CreateVolume(netAppMgmtClient, protocolTypes: protocolTypes,  tags: dict, exportPolicy: exportPolicy);
                 Assert.Equal(exportPolicy.ToString(), resource.ExportPolicy.ToString());
@@ -314,15 +314,15 @@ namespace NetApp.Tests.ResourceTests
                 var volume = new Volume
                 {
                     Location = oldVolume.Location,
-                    UsageThreshold = 2 * oldVolume.UsageThreshold,
                     ServiceLevel = oldVolume.ServiceLevel,
                     CreationToken = oldVolume.CreationToken,
                     SubnetId = oldVolume.SubnetId,
                 };
                 // update
-                volume.ServiceLevel = "Standard";
+                volume.UsageThreshold = 2 * oldVolume.UsageThreshold;
+
                 var updatedVolume = netAppMgmtClient.Volumes.CreateOrUpdate(volume, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
-                Assert.Equal("Standard", updatedVolume.ServiceLevel);
+                Assert.Equal("Premium", updatedVolume.ServiceLevel); // didn't attempt to change - it would be rejected
                 Assert.Equal(100 * ResourceUtils.gibibyte * 2, updatedVolume.UsageThreshold);
 
                 // cleanup
@@ -343,7 +343,9 @@ namespace NetApp.Tests.ResourceTests
                 // create the volume
                 var volume = ResourceUtils.CreateVolume(netAppMgmtClient);
                 Assert.Equal("Premium", volume.ServiceLevel);
-
+                Assert.Equal(100 * ResourceUtils.gibibyte, volume.UsageThreshold);
+                Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), volume.ExportPolicy.ToString());
+                Assert.Null(volume.Tags);
 
                 // create a volume with tags and export policy
                 var dict = new Dictionary<string, string>();
@@ -352,14 +354,15 @@ namespace NetApp.Tests.ResourceTests
                 // Now try and modify it
                 var volumePatch = new VolumePatch()
                 {
-                    ServiceLevel = "Standard",
+                    UsageThreshold = 2 * volume.UsageThreshold,
                     Tags = dict,
                     ExportPolicy = exportPatchPolicy
                 };
 
                 // patch
                 var updatedVolume = netAppMgmtClient.Volumes.Update(volumePatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
-                Assert.Equal("Standard", updatedVolume.ServiceLevel);
+                Assert.Equal("Premium", updatedVolume.ServiceLevel); // didn't attempt to change - it would be rejected
+                Assert.Equal(200 * ResourceUtils.gibibyte, updatedVolume.UsageThreshold);
                 Assert.Equal(exportPolicy.ToString(), updatedVolume.ExportPolicy.ToString());
                 Assert.True(updatedVolume.Tags.ToString().Contains("Tag2") && updatedVolume.Tags.ToString().Contains("Value2"));
 

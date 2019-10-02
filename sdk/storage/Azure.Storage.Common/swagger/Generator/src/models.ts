@@ -115,7 +115,8 @@ export interface IModelType {
     type: string,
     description?: string,
     external?: boolean,
-    extendedHeaders: IHeader[]
+    extendedHeaders: IHeader[],
+    returnStream?: boolean
 }
 
 export interface IVoidType extends IModelType {
@@ -150,7 +151,8 @@ export interface IProperty {
     required?: boolean,
     readonly: boolean,
     xml?: IXmlSettings,
-    model: IModelType
+    model: IModelType,
+    isNullable?: boolean
 }
 
 export interface IXmlSettings {
@@ -168,6 +170,7 @@ export interface IEnumType extends IModelType {
     customSerialization: boolean,
     constant: boolean,
     public: boolean,
+    skipValue?: string,
     values: IEnumValue[]
 }
 
@@ -234,7 +237,8 @@ export interface IResponse {
     headers: IHeaders,
     model?: IModelType,
     exception?: boolean,
-    public: boolean
+    public: boolean,
+    returnStream?: boolean
 }
 
 export interface IResponseGroup {

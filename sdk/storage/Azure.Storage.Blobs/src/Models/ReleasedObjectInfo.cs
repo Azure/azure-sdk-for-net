@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -41,8 +40,8 @@ namespace Azure.Storage.Blobs.Models
         /// </param>
         public ReleasedObjectInfo(ETag eTag, DateTimeOffset lastModified)
         {
-            this.ETag = eTag;
-            this.LastModified = lastModified;
+            ETag = eTag;
+            LastModified = lastModified;
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is ReleasedObjectInfo other && this.Equals(other);
+            obj is ReleasedObjectInfo other && Equals(other);
 
         /// <summary>
         /// Check if two <see cref="ReleasedObjectInfo"/> instances are equal.
@@ -85,8 +84,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(ReleasedObjectInfo other) =>
-            this.ETag == other.ETag &&
-            this.LastModified == other.LastModified;
+            ETag == other.ETag &&
+            LastModified == other.LastModified;
 
         /// <summary>
         /// Get a hash code for the <see cref="ReleasedObjectInfo"/>.
@@ -94,8 +93,8 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>Hash code for the <see cref="ReleasedObjectInfo"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            this.ETag.GetHashCode() ^
-            this.LastModified.GetHashCode();
+            ETag.GetHashCode() ^
+            LastModified.GetHashCode();
 
         /// <summary>
         /// Check if two <see cref="ReleasedObjectInfo"/> instances are equal.

@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: ./file-2019-02-02.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -115,6 +115,16 @@ directive:
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/FileServiceProperties");
         $.get.responses["200"].schema = { "$ref": path };
     }
+```
+
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.FileServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
 ```
 
 ### /?comp=list
@@ -230,7 +240,9 @@ directive:
   transform: >
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["201"]["x-az-response-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["201"]["x-az-public"] = false;
     $.get.responses["200"]["x-az-response-name"] = "RawStorageDirectoryProperties";
+    $.get.responses["200"]["x-az-public"] = false;
 ```
 
 ### /{shareName}/{directory}?restype=directory&comp=metadata
@@ -240,6 +252,7 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=metadata"]
   transform: >
     $.put.responses["200"]["x-az-response-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["200"]["x-az-public"] = false;
     $.put.responses["200"].description = "Success, Directory created.";
     $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["200"].headers["Last-Modified"] = {
@@ -378,6 +391,7 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "RawStorageFileInfo";
+    $.put.responses["201"]["x-az-public"] = false;
     $.get.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
@@ -391,6 +405,7 @@ directive:
     $.get.responses["200"]["x-az-response-name"] = "FlattenedStorageFileProperties";
     $.get.responses["200"]["x-az-public"] = false;
     $.get.responses["200"]["x-az-response-schema-name"] = "Content";
+    $.get.responses["200"]["x-az-stream"] = true;
     $.get.responses["206"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
@@ -404,6 +419,7 @@ directive:
     $.get.responses["206"]["x-az-response-name"] = "FlattenedStorageFileProperties";
     $.get.responses["206"]["x-az-public"] = false;
     $.get.responses["206"]["x-az-response-schema-name"] = "Content";
+    $.get.responses["206"]["x-az-stream"] = true;
     $.head.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.head.responses["200"].headers["Content-Encoding"].type = "array";
     $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";
@@ -413,6 +429,7 @@ directive:
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.head.responses["200"]["x-az-response-name"] = "RawStorageFileProperties";
+    $.head.responses["200"]["x-az-public"] = false;
     $.head.responses.default = {
         "description": "Failure",
         "x-az-response-name": "FailureNoContent",
@@ -432,6 +449,15 @@ directive:
     $.type = "array";
     $.collectionFormat = "csv";
     $.items = { "type": "string" };
+```
+
+### /{shareName}/{directory}/{fileName}?comp=range&fromURL
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=range&fromURL"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
 ```
 
 ### MD5 to Hash
@@ -609,4 +635,26 @@ directive:
   where: $.parameters.FileLastWriteTime
   transform: >
     delete $.format;
+```
+
+### Temporarily work around proper JSON support for file permissions
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=filepermission"]
+  transform: >
+    delete $.put.consumes;
+    $.put.responses["201"]["x-az-response-name"] = "PermissionInfo";
+    delete $.get.produces;
+- from: swagger-document
+  where: $.parameters.SharePermission
+  transform: >
+    $.schema = { "type": "string" };
+    $["x-ms-client-name"] = "sharePermissionJson";
+- from: swagger-document
+  where: $.definitions.SharePermission
+  transform: >
+    $.type = "string";
+    delete $.required;
+    delete $.properties;
 ```

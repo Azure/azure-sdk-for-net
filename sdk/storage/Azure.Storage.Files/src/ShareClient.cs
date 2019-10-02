@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -28,7 +30,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the share's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public virtual Uri Uri => this._uri;
+        public virtual Uri Uri => _uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -40,7 +42,41 @@ namespace Azure.Storage.Files
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => this._pipeline;
+        protected virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the share client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the share client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the share.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the share.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -93,8 +129,8 @@ namespace Azure.Storage.Files
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            this._uri = builder.ToUri();
-            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+            _uri = builder.ToUri();
+            _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
@@ -154,8 +190,8 @@ namespace Azure.Storage.Files
         /// </param>
         internal ShareClient(Uri shareUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
-            this._uri = shareUri;
-            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+            _uri = shareUri;
+            _pipeline = (options ?? new FileClientOptions()).Build(authentication);
         }
 
         /// <summary>
@@ -171,8 +207,8 @@ namespace Azure.Storage.Files
         /// </param>
         internal ShareClient(Uri shareUri, HttpPipeline pipeline)
         {
-            this._uri = shareUri;
-            this._pipeline = pipeline;
+            _uri = shareUri;
+            _pipeline = pipeline;
         }
         #endregion ctors
 
@@ -194,8 +230,8 @@ namespace Azure.Storage.Files
         /// </returns>
         public virtual ShareClient WithSnapshot(string snapshot)
         {
-            var p = new FileUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), this.Pipeline);
+            var p = new FileUriBuilder(Uri) { Snapshot = snapshot };
+            return new ShareClient(p.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -207,7 +243,7 @@ namespace Azure.Storage.Files
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetDirectoryClient(string directoryName)
-            => new DirectoryClient(this.Uri.AppendToPath(directoryName), this.Pipeline);
+            => new DirectoryClient(Uri.AppendToPath(directoryName), Pipeline);
 
         /// <summary>
         /// Create a <see cref="DirectoryClient"/> object for the root of the
@@ -216,7 +252,20 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetRootDirectoryClient()
-            => this.GetDirectoryClient("");
+            => GetDirectoryClient("");
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>
@@ -248,7 +297,7 @@ namespace Azure.Storage.Files
             Metadata metadata = default,
             int? quotaInBytes = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateInternal(
+            CreateInternal(
                 metadata,
                 quotaInBytes,
                 false, // async
@@ -284,7 +333,7 @@ namespace Azure.Storage.Files
             Metadata metadata = default,
             int? quotaInBytes = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateInternal(
+            await CreateInternal(
                 metadata,
                 quotaInBytes,
                 true, // async
@@ -325,18 +374,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(quotaInBytes)}: {quotaInBytes}");
                 try
                 {
                     return await FileRestClient.Share.CreateAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         metadata: metadata,
                         quota: quotaInBytes,
                         async: async,
@@ -346,12 +395,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -381,7 +430,7 @@ namespace Azure.Storage.Files
         public virtual Response<ShareSnapshotInfo> CreateSnapshot(
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateSnapshotInternal(
+            CreateSnapshotInternal(
                 metadata,
                 false, // async
                 cancellationToken)
@@ -410,7 +459,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<ShareSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateSnapshotInternal(
+            await CreateSnapshotInternal(
                 metadata,
                 true, // async
                 cancellationToken)
@@ -444,16 +493,16 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.CreateSnapshotAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         metadata: metadata,
                         async: async,
                         operationName: Constants.File.Share.CreateSnapshotOperationName,
@@ -462,12 +511,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -499,7 +548,7 @@ namespace Azure.Storage.Files
         public virtual Response Delete(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            this.DeleteInternal(
+            DeleteInternal(
                 shareSnapshot,
                 false, // async
                 cancellationToken)
@@ -530,7 +579,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response> DeleteAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            await this.DeleteInternal(
+            await DeleteInternal(
                 shareSnapshot,
                 true, // async
                 cancellationToken)
@@ -566,18 +615,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
                     return await FileRestClient.Share.DeleteAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Share.DeleteOperationName,
@@ -586,12 +635,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -623,7 +672,7 @@ namespace Azure.Storage.Files
         public virtual Response<ShareProperties> GetProperties(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesInternal(
+            GetPropertiesInternal(
                 shareSnapshot,
                 false, // async
                 cancellationToken)
@@ -654,7 +703,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<ShareProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesInternal(
+            await GetPropertiesInternal(
                 shareSnapshot,
                 true, // async
                 cancellationToken)
@@ -690,18 +739,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
                     return await FileRestClient.Share.GetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Share.GetPropertiesOperationName,
@@ -710,12 +759,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -743,7 +792,7 @@ namespace Azure.Storage.Files
         public virtual Response<ShareInfo> SetQuota(
             int quotaInBytes = default,
             CancellationToken cancellationToken = default) =>
-            this.SetQuotaInternal(
+            SetQuotaInternal(
                 quotaInBytes,
                 false, // async
                 cancellationToken)
@@ -770,7 +819,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
             int quotaInBytes = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetQuotaInternal(
+            await SetQuotaInternal(
                 quotaInBytes,
                 true, // async
                 cancellationToken)
@@ -802,18 +851,18 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(quotaInBytes)}: {quotaInBytes}");
                 try
                 {
                     return await FileRestClient.Share.SetQuotaAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         quota: quotaInBytes,
                         async: async,
                         operationName: "Azure.Storage.Files.ShareClient.SetQuota",
@@ -822,12 +871,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -858,7 +907,7 @@ namespace Azure.Storage.Files
         public virtual Response<ShareInfo> SetMetadata(
             Metadata metadata,
             CancellationToken cancellationToken = default) =>
-            this.SetMetadataInternal(
+            SetMetadataInternal(
                 metadata,
                 false, // async
                 cancellationToken)
@@ -888,7 +937,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default) =>
-            await this.SetMetadataInternal(
+            await SetMetadataInternal(
                 metadata,
                 true, // async
                 cancellationToken)
@@ -923,16 +972,16 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.SetMetadataAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         metadata: metadata,
                         async: async,
                         operationName: Constants.File.Share.SetMetadataOperationName,
@@ -941,12 +990,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -974,7 +1023,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<IEnumerable<SignedIdentifier>> GetAccessPolicy(
             CancellationToken cancellationToken = default) =>
-            this.GetAccessPolicyInternal(
+            GetAccessPolicyInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1000,7 +1049,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetAccessPolicyInternal(
+            await GetAccessPolicyInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1031,16 +1080,16 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.GetAccessPolicyAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         async: async,
                         operationName: Constants.File.Share.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
@@ -1048,12 +1097,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -1086,7 +1135,7 @@ namespace Azure.Storage.Files
         public virtual Response<ShareInfo> SetAccessPolicy(
             IEnumerable<SignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
-            this.SetAccessPolicyInternal(
+            SetAccessPolicyInternal(
                 permissions,
                 false, // async
                 cancellationToken)
@@ -1118,7 +1167,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
             IEnumerable<SignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
-            await this.SetAccessPolicyInternal(
+            await SetAccessPolicyInternal(
                 permissions,
                 true, // async
                 cancellationToken)
@@ -1155,16 +1204,16 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.SetAccessPolicyAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         permissions: permissions,
                         async: async,
                         operationName: Constants.File.Share.SetAccessPolicyOperationName,
@@ -1173,12 +1222,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -1204,7 +1253,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<ShareStatistics> GetStatistics(
             CancellationToken cancellationToken = default) =>
-            this.GetStatisticsInternal(
+            GetStatisticsInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1228,7 +1277,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetStatisticsInternal(
+            await GetStatisticsInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1257,16 +1306,16 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(ShareClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.GetStatisticsAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         async: async,
                         operationName: Constants.File.Share.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
@@ -1274,16 +1323,211 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                    Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
         #endregion GetStatistics
+
+        #region GetPermission
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual Response<string> GetPermission(
+            string filePermissionKey = default,
+            CancellationToken cancellationToken = default) =>
+            GetPermissionInternal(
+                filePermissionKey,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual async Task<Response<string>> GetPermissionAsync(
+            string filePermissionKey = default,
+            CancellationToken cancellationToken = default) =>
+            await GetPermissionInternal(
+                filePermissionKey,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<string>> GetPermissionInternal(
+            string filePermissionKey,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message: $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    // Get the permission as a JSON object
+                    Response<string> jsonResponse =
+                        await FileRestClient.Share.GetPermissionAsync(
+                            Pipeline,
+                            Uri,
+                            filePermissionKey: filePermissionKey,
+                            async: async,
+                            operationName: Constants.File.Share.GetPermissionOperationName,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                    // Parse the JSON object
+                    using var doc = JsonDocument.Parse(jsonResponse.Value);
+                    if (doc.RootElement.ValueKind != JsonValueKind.Object ||
+                        !doc.RootElement.TryGetProperty("permission", out JsonElement permissionProperty) ||
+                        permissionProperty.ValueKind != JsonValueKind.String)
+                    {
+                        throw FileErrors.InvalidPermissionJson(jsonResponse.Value);
+                    }
+                    var permission = permissionProperty.GetString();
+
+                    // Return the Permission string
+                    return Response.FromValue(jsonResponse.GetRawResponse(), permission);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion GetPermission
+
+        #region CreatePermission
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
+        /// </summary>
+        /// <param name="permission">
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
+        /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        public virtual Response<PermissionInfo> CreatePermission(
+            string permission,
+            CancellationToken cancellationToken = default) =>
+            CreatePermissionInternal(
+                permission,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
+        /// </summary>
+        /// <param name="permission">
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
+        /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+            string permission,
+            CancellationToken cancellationToken = default) =>
+            await CreatePermissionInternal(
+                permission,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<PermissionInfo>> CreatePermissionInternal(
+            string permission,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message: $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    // Serialize the permission as a JSON object
+                    using var stream = new MemoryStream();
+                    using var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WriteString("permission", permission);
+                    writer.WriteEndObject();
+                    if (async)
+                    {
+                        await writer.FlushAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        writer.Flush();
+                    }
+                    var json = Encoding.UTF8.GetString(stream.ToArray());
+
+                    return await FileRestClient.Share.CreatePermissionAsync(
+                        Pipeline,
+                        Uri,
+                        sharePermissionJson: json,
+                        async: async,
+                        operationName: Constants.File.Share.CreatePermissionOperationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion CreatePermission
 
         #region CreateDirectory
         /// <summary>
@@ -1324,13 +1568,13 @@ namespace Azure.Storage.Files
            string filePermission = default,
            CancellationToken cancellationToken = default)
         {
-            var directory = this.GetDirectoryClient(directoryName);
-            var response = directory.Create(
+            DirectoryClient directory = GetDirectoryClient(directoryName);
+            Response<StorageDirectoryInfo> response = directory.Create(
                 metadata,
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+            return Response.FromValue(response.GetRawResponse(), directory);
         }
 
         /// <summary>
@@ -1371,13 +1615,13 @@ namespace Azure.Storage.Files
            string filePermission = default,
            CancellationToken cancellationToken = default)
         {
-            var directory = this.GetDirectoryClient(directoryName);
-            var response = await directory.CreateAsync(
+            DirectoryClient directory = GetDirectoryClient(directoryName);
+            Response<StorageDirectoryInfo> response = await directory.CreateAsync(
                 metadata,
                 smbProperties,
                 filePermission,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+            return Response.FromValue(response.GetRawResponse(), directory);
         }
         #endregion CreateDirectory
 
@@ -1405,7 +1649,7 @@ namespace Azure.Storage.Files
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
-            this.GetDirectoryClient(directoryName).Delete(cancellationToken);
+            GetDirectoryClient(directoryName).Delete(cancellationToken);
 
         /// <summary>
         /// The <see cref="DeleteDirectoryAsync"/> operation removes the specified empty
@@ -1430,7 +1674,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>
-            await this.GetDirectoryClient(directoryName)
+            await GetDirectoryClient(directoryName)
                 .DeleteAsync(cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteDirectory

@@ -1,102 +1,165 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Net;
+using System.Text;
+using Azure.Core.Http;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Blobs
 {
     /// <summary>
     /// The <see cref="BlobUriBuilder"/> class provides a convenient way to
-    /// modify the contents of a <see cref="Uri"/> instance to point to
+    /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, container, or blob.
     ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata" />.
     /// </summary>
-    internal struct BlobUriBuilder : IEquatable<BlobUriBuilder>
+    public class BlobUriBuilder
     {
+        /// <summary>
+        /// The Uri instance constructed by this builder.  It will be reset to
+        /// null when changes are made and reconstructed when <see cref="Uri"/>
+        /// is accessed.
+        /// </summary>
+        private Uri _uri;
+
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
         /// </summary>
-        public string Scheme;
+        public string Scheme
+        {
+            get => _scheme;
+            set { ResetUri(); _scheme = value; }
+        }
+        private string _scheme;
 
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
+        ///
         /// Example: "account.blob.core.windows.net"
         /// </summary>
-        public string Host;
+        public string Host
+        {
+            get => _host;
+            set { ResetUri(); _host = value; }
+        }
+        private string _host;
 
         /// <summary>
         /// Gets or sets the port number of the URI.
         /// </summary>
-        public int Port;
+        public int Port
+        {
+            get => _port;
+            set { ResetUri(); _port = value; }
+        }
+        private int _port;
 
         /// <summary>
         /// Gets or sets the Azure Storage account name.  This is only
-        /// populated for IP-style <see cref="Uri"/>s.
+        /// populated for IP-style <see cref="System.Uri"/>s.
         /// </summary>
-        public string AccountName;
+        public string AccountName
+        {
+            get => _accountName;
+            set { ResetUri(); _accountName = value; }
+        }
+        private string _accountName;
 
         /// <summary>
         /// Gets or sets the name of a blob storage Container.  The value
         /// defaults to <see cref="String.Empty"/> if not present in the
-        /// <see cref="Uri"/>.
+        /// <see cref="System.Uri"/>.
         /// </summary>
-        public string ContainerName;
+        public string ContainerName
+        {
+            get => _containerName;
+            set { ResetUri(); _containerName = value; }
+        }
+        private string _containerName;
 
         /// <summary>
         /// Gets or sets the name of a blob.  The value defaults to
-        /// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
+        /// <see cref="String.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public string BlobName;
+        public string BlobName
+        {
+            get => _blobName;
+            set { ResetUri(); _blobName = value; }
+        }
+        private string _blobName;
 
         /// <summary>
         /// Gets or sets the name of a blob snapshot.  The value defaults to
-        /// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
+        /// <see cref="String.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public string Snapshot;
+        public string Snapshot
+        {
+            get => _snapshot;
+            set { ResetUri(); _snapshot = value; }
+        }
+        private string _snapshot;
 
         ///// <summary>
-        ///// VersionId.  Empty string if not present in URI.
+        ///// Gets or sets the VersionId.  The value defaults to
+        ///// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
         ///// </summary>
-        //public string VersionId;
+        //public string VersionId
+        //{
+        //    get => this._versionId;
+        //    set { this.ResetUri(); this._versionId = value; }
+        //}
+        //private string _versionId;
 
         /// <summary>
         /// Gets or sets the Shared Access Signature query parameters, or null
-        /// if not present in the <see cref="Uri"/>.
+        /// if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public BlobSasQueryParameters Sas;
+        public BlobSasQueryParameters Sas
+        {
+            get => _sas;
+            set { ResetUri(); _sas = value; }
+        }
+        private BlobSasQueryParameters _sas;
 
         /// <summary>
-        /// Gets or sets the query parameters not relevant to addressing
-        /// Azure storage resources.
+        /// Gets or sets any query information included in the URI that's not
+        /// relevant to addressing Azure storage resources.
         /// </summary>
-        public string UnparsedParams;
+        public string Query
+        {
+            get => _query;
+            set { ResetUri(); _query = value; }
+        }
+        private string _query;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobUriBuilder"/>
-        /// class with the specified <see cref="Uri"/>.
+        /// class with the specified <see cref="System.Uri"/>.
         /// </summary>
         /// <param name="uri">
-        /// The <see cref="Uri"/> to a storage resource.
+        /// The <see cref="System.Uri"/> to a storage resource.
         /// </param>
         public BlobUriBuilder(Uri uri)
         {
-            this.Scheme = uri.Scheme;
-            this.Host = uri.Host;
-            this.Port = uri.Port;
-            this.AccountName = "";
+            uri = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            this.ContainerName = "";
-            this.BlobName = "";
+            Scheme = uri.Scheme;
+            Host = uri.Host;
+            Port = uri.Port;
 
-            this.Snapshot = "";
+            AccountName = "";
+            ContainerName = "";
+            BlobName = "";
+
+            Snapshot = "";
             //this.VersionId = "";
-            this.Sas = null;
+            Sas = null;
+            Query = "";
 
             // Find the account, container, & blob names (if any)
             if (!String.IsNullOrEmpty(uri.AbsolutePath))
@@ -109,19 +172,19 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                if(IsHostIPEndPointStyle(uri.Host))
+                if (IsHostIPEndPointStyle(uri.Host))
                 {
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path;
+                        AccountName = path;
                         startIndex = path.Length;
                     }
                     else
                     {
-                        this.AccountName = path.Substring(0, accountEndIndex);
+                        AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
                 }
@@ -130,12 +193,12 @@ namespace Azure.Storage.Blobs
                 var containerEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (containerEndIndex == -1)
                 {
-                    this.ContainerName = path.Substring(startIndex); // Slash not found; path has container name & no blob name
+                    ContainerName = path.Substring(startIndex); // Slash not found; path has container name & no blob name
                 }
                 else
                 {
-                    this.ContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    this.BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
+                    ContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
+                    BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
                 }
             }
 
@@ -144,7 +207,7 @@ namespace Azure.Storage.Blobs
 
             if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
-                this.Snapshot = snapshotTime;
+                Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
                 paramsMap.Remove(Constants.SnapshotParameterName);
@@ -160,145 +223,101 @@ namespace Azure.Storage.Blobs
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                this.Sas = new BlobSasQueryParameters(paramsMap);
+                Sas = new BlobSasQueryParameters(paramsMap);
             }
 
-            this.UnparsedParams = paramsMap.ToString();
+            Query = paramsMap.ToString();
         }
 
         /// <summary>
-        /// Construct a <see cref="Uri"/> representing the
-        /// <see cref="BlobUriBuilder"/>'s fields.   The <see cref="Uri.Query"/>
-        /// property contains the SAS, snapshot, and unparsed query parameters.
+        /// Returns the <see cref="System.Uri"/> constructed from the
+        /// <see cref="BlobUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
+        /// property contains the SAS and additional query parameters.
         /// </summary>
-        /// <returns>The constructed <see cref="Uri"/>.</returns>
         public Uri ToUri()
         {
-            var path = "";
+            if (_uri == null)
+            {
+                _uri = BuildUri().ToUri();
+            }
+            return _uri;
+        }
 
+        /// <summary>
+        /// Returns the display string for the specified
+        /// <see cref="BlobUriBuilder"/> instance.
+        /// </summary>
+        /// <returns>
+        /// The display string for the specified <see cref="BlobUriBuilder"/>
+        /// instance.
+        /// </returns>
+        public override string ToString() =>
+            BuildUri().ToString();
+
+        /// <summary>
+        /// Reset our cached URI.
+        /// </summary>
+        private void ResetUri() =>
+            _uri = null;
+
+        /// <summary>
+        /// Construct a <see cref="RequestUriBuilder"/> representing the
+        /// <see cref="BlobUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
+        /// property contains the SAS, snapshot, and unparsed query parameters.
+        /// </summary>
+        /// <returns>The constructed <see cref="RequestUriBuilder"/>.</returns>
+        private RequestUriBuilder BuildUri()
+        {
             // Concatenate account, container, & blob names (if they exist)
-            if (!String.IsNullOrWhiteSpace(this.AccountName))
+            var path = new StringBuilder("");
+            if (!String.IsNullOrWhiteSpace(AccountName))
             {
-                path += "/" + this.AccountName;
+                path.Append("/").Append(AccountName);
             }
-
-            if (!String.IsNullOrWhiteSpace(this.ContainerName))
+            if (!String.IsNullOrWhiteSpace(ContainerName))
             {
-                path += "/" + this.ContainerName;
-                if (!String.IsNullOrWhiteSpace(this.BlobName))
+                path.Append("/").Append(ContainerName);
+                if (!String.IsNullOrWhiteSpace(BlobName))
                 {
-                    path += "/" + this.BlobName;
+                    path.Append("/").Append(BlobName);
                 }
             }
 
-            var rawQuery = this.UnparsedParams;
-
-            // Concatenate blob snapshot query parameter (if it exists)
-            if (!String.IsNullOrWhiteSpace(this.Snapshot))
+            // Concatenate query parameters
+            var query = new StringBuilder(Query);
+            if (!String.IsNullOrWhiteSpace(Snapshot))
             {
-                if (rawQuery.Length > 0)
-                {
-                    rawQuery += "&";
-                }
-
-                rawQuery += Constants.SnapshotParameterName + "=" + this.Snapshot;
+                if (query.Length > 0)
+                { query.Append("&"); }
+                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
-
-            //// Concatenate blob version query parameter (if it exists)
             //if (!String.IsNullOrWhiteSpace(this.VersionId))
             //{
-            //    if (rawQuery.Length > 0)
-            //    {
-            //        rawQuery += "&";
-            //    }
-
-            //    rawQuery += VersionIdParameterName + "=" + this.VersionId;
+            //    if (query.Length > 0) { query += "&"; }
+            //    query.Append(VersionIdParameterName).Append("=").Append(this.VersionId);
             //}
-
-            if(this.Sas != null)
+            var sas = Sas?.ToString();
+            if (!String.IsNullOrWhiteSpace(sas))
             {
-                var sas = this.Sas.ToString();
-
-                if (!String.IsNullOrWhiteSpace(sas))
-                {
-                    if (rawQuery.Length > 0)
-                    {
-                        rawQuery += "&";
-                    }
-
-                    rawQuery += sas;
-                }
+                if (query.Length > 0)
+                { query.Append("&"); }
+                query.Append(sas);
             }
 
-            rawQuery = "?" + rawQuery;
-
-            var uriBuilder = new UriBuilder(this.Scheme, this.Host, this.Port, path, rawQuery);
-
-            return uriBuilder.Uri;
+            // Use RequestUriBuilder, which has slightly nicer formatting
+            return new RequestUriBuilder
+            {
+                Scheme = Scheme,
+                Host = Host,
+                Port = Port,
+                Path = path.ToString(),
+                Query = query.Length > 0 ? "?" + query.ToString() : null
+            };
         }
 
         // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
         // TODO refactor to shared method
-        private static bool IsHostIPEndPointStyle(string host)
-            => String.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out _);
-
-        /// <summary>
-        /// Check if two BlobUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is BlobUriBuilder other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the BlobUriBuilder.
-        /// </summary>
-        /// <returns>Hash code for the BlobUriBuilder.</returns>
-        public override int GetHashCode()
-            => (this.Scheme?.GetHashCode() ?? 0)
-            ^ (this.Host?.GetHashCode() ?? 0)
-            ^ this.Port.GetHashCode()
-            ^ (this.AccountName?.GetHashCode() ?? 0)
-            ^ (this.ContainerName?.GetHashCode() ?? 0)
-            ^ (this.BlobName?.GetHashCode() ?? 0)
-            ^ (this.Snapshot?.GetHashCode() ?? 0)
-            // ^ (this.VersionId?.GetHashCode() ?? 0)
-            ^ (this.Sas?.GetHashCode() ?? 0)
-            ^ (this.UnparsedParams?.GetHashCode() ?? 0)
-            ;
-
-        /// <summary>
-        /// Check if two BlobUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobUriBuilder left, BlobUriBuilder right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobUriBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobUriBuilder left, BlobUriBuilder right) => !(left == right);
-
-        /// <summary>
-        /// Check if two BlobUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobUriBuilder other)
-            => this.Scheme == other.Scheme
-            && this.Host == other.Host
-            && this.Port == other.Port
-            && this.AccountName == other.AccountName
-            && this.ContainerName == other.ContainerName
-            && this.BlobName == other.BlobName
-            && this.Snapshot == other.Snapshot
-            // && this.VersionId == other.VersionId
-            && this.Sas == other.Sas
-            && this.UnparsedParams == other.UnparsedParams
-            ;
+        private static bool IsHostIPEndPointStyle(string host) =>
+            !String.IsNullOrEmpty(host) && IPAddress.TryParse(host, out _);
     }
 }

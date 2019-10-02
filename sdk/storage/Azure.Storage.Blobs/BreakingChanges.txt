@@ -1,5 +1,14 @@
 Breaking Changes
 ================
+Next Release
+--------------------------
+- Removing Uri property from BlobUriBuilder and replacing with a ToUri method that returns the Uri.
+
+12.0.0-preview.3 (2019-09)
+--------------------------
+- Changing from Nullable<PublicAccessType> to just PublicAccessType in all
+  relevant APIs. Use PublicAccessType.None instead of null.
+- Changed from int to TimeSpan for Lease durations.
 
 12.0.0-preview.2 (2019-08)
 --------------------------

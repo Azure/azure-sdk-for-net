@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -25,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(36) }
             };
 
-            var clone = options.Clone();
+            EventHubProducerOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the clone should match.");

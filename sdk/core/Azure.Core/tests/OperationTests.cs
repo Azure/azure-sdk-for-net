@@ -21,9 +21,11 @@ namespace Azure.Core.Tests
             var testResult = 100;
             var testResponse = new MockResponse(200);
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse);
-            operation.PollingInterval = TimeSpan.FromMilliseconds(1);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(1),
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             Response<int> operationResult = await operation.WaitCompletionAsync();
 
@@ -45,8 +47,10 @@ namespace Azure.Core.Tests
             var testResult = 100;
             var testResponse = new MockResponse(200);
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
+            {
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             while (!operation.HasValue)
             {
@@ -69,8 +73,10 @@ namespace Azure.Core.Tests
             var testResult = 10;
             var testResponse = new MockResponse(200);
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
+            {
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             while (!operation.HasValue)
             {
@@ -94,9 +100,11 @@ namespace Azure.Core.Tests
 
             int updateCalled = 0;
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(1000), 100, null);
-            operation.PollingInterval = TimeSpan.FromMilliseconds(10);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(1000), 100, null)
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(10),
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             Assert.That(async () =>
             {

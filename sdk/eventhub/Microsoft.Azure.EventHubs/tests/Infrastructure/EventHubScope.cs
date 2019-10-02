@@ -15,17 +15,18 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
+using Microsoft.Rest.Azure;
 using Polly;
 
-using Storage = Microsoft.Azure.Management.Storage.Models;
+using StorageManagement = Microsoft.Azure.Management.Storage.Models;
 
 namespace Microsoft.Azure.EventHubs.Tests
 {
     internal sealed class EventHubScope : IAsyncDisposable
     {
         private const int RetryMaximumAttemps = 15;
-        private const double RetryExponentialBackoffSeconds = 1.5;
-        private const double RetryBaseJitterSeconds = 7.0;
+        private const double RetryExponentialBackoffSeconds = 2.5;
+        private const double RetryBaseJitterSeconds = 10.0;
 
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -163,11 +164,11 @@ namespace Microsoft.Azure.EventHubs.Tests
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
-                var sku = new Storage.Sku(Storage.SkuName.StandardLRS, Storage.SkuTier.Standard);
-                var parameters = new Storage.StorageAccountCreateParameters(sku, Storage.Kind.BlobStorage, location: location, tags: GetResourceTags(), accessTier: Storage.AccessTier.Hot);
-                var storageAccount = await CreateRetryPolicy<Storage.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
+                var sku = new StorageManagement.Sku(StorageManagement.SkuName.StandardLRS, StorageManagement.SkuTier.Standard);
+                var parameters = new StorageManagement.StorageAccountCreateParameters(sku, StorageManagement.Kind.BlobStorage, location: location, tags: GetResourceTags(), accessTier: StorageManagement.AccessTier.Hot);
+                var storageAccount = await CreateRetryPolicy<StorageManagement.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
-                var storageKeys = await CreateRetryPolicy<Storage.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
+                var storageKeys = await CreateRetryPolicy<StorageManagement.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
                 return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
             }
         }
@@ -208,11 +209,13 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttemps, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+               .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttemps, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
                 .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>

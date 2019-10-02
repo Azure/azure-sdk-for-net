@@ -40,12 +40,12 @@ namespace Azure.Messaging.EventHubs.Errors
         {
             get
             {
-                if (String.IsNullOrEmpty(ResourceName))
+                if (string.IsNullOrEmpty(ResourceName))
                 {
                     return base.Message;
                 }
 
-                return String.Format(CultureInfo.InvariantCulture, "{0}, ({1})", base.Message, ResourceName);
+                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, ResourceName);
             }
         }
 

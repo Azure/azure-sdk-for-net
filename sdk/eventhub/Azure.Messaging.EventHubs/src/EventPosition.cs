@@ -3,7 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs
         internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   The sequence number of the event identified by this position;
+        ///   The sequence number of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs
         private static EventPosition FromOffset(string offset,
                                                 bool isInclusive = false)
         {
-            Guard.ArgumentNotNullOrWhitespace(nameof(offset), offset);
+            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
 
             return new EventPosition
             {

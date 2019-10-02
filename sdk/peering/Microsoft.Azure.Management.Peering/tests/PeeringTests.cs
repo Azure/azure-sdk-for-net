@@ -230,7 +230,7 @@ namespace Peering.Tests
                 //List Providers
                 var listProviders = this.client.PeeringServiceProviders.List().ToList();
                 Assert.NotNull(listProviders);
-                var myProvider = listProviders.Find(p => p.ServiceProviderName == "AS54733-Global2445");
+                var myProvider = listProviders.Find(p => p.ServiceProviderName == "TestPeer1");
 
                 //Create Peering Service
                 var peeringService = new PeeringService
@@ -274,12 +274,6 @@ namespace Peering.Tests
                 }
                 finally
                 {
-                    var prefixDeleted = this.DeletePrefix(context, prefixName, name, rgname);
-                    var peeringserviceDeleted = this.DeletePeeringService(context, name, rgname);
-                    //var resourceGroupDeleted = this.DeleteResourceGroup(context, rgname);
-                    //Assert.True(resourceGroupDeleted);
-                    Assert.True(peeringserviceDeleted);
-                    Assert.True(prefixDeleted);
                 }
             }
         }

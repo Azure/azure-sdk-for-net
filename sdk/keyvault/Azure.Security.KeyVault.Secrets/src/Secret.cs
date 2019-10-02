@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -8,12 +7,17 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// Secret is the resource consisting of name, value and its attributes inherited from <see cref="SecretBase"/>.
+    /// <see cref="Secret"/> is the resource consisting of a value and its <see cref="Properties"/>.
     /// </summary>
-    public class Secret : SecretBase
+    public class Secret : IJsonDeserializable, IJsonSerializable
     {
+        private const string ValuePropertyName = "value";
+
+        private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
+
         internal Secret()
         {
+            Properties = new SecretProperties();
         }
 
         /// <summary>
@@ -21,37 +25,76 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="name">The name of the secret.</param>
         /// <param name="value">The value of the secret.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="value"/> is null.</exception>
         public Secret(string name, string value)
-            : base(name)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
-
-            Value = value;
+            Properties = new SecretProperties(name);
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Secret identifier.
+        /// </summary>
+        public Uri Id => Properties.Id;
+
+        /// <summary>
+        /// Vault base URL.
+        /// </summary>
+        public Uri VaultUri => Properties.VaultUri;
+
+        /// <summary>
+        /// Name of the secret.
+        /// </summary>
+        public string Name => Properties.Name;
+
+        /// <summary>
+        /// Version of the secret.
+        /// </summary>
+        public string Version => Properties.Version;
+
+        /// <summary>
+        /// Gets or sets the attributes of the <see cref="Secret"/>.
+        /// </summary>
+        public SecretProperties Properties { get; }
 
         /// <summary>
         /// The value of the secret.
         /// </summary>
         public string Value { get; private set; }
 
-        internal override void ReadProperties(JsonElement json)
+        internal virtual void ReadProperty(JsonProperty prop)
         {
-            if (json.TryGetProperty("value", out JsonElement value))
+            switch (prop.Name)
             {
-                Value = value.GetString();
-            }
+                case ValuePropertyName:
+                    Value = prop.Value.GetString();
+                    break;
 
-            base.ReadProperties(json);
+                default:
+                    Properties.ReadProperty(prop);
+                    break;
+            }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal virtual void WriteProperties(Utf8JsonWriter json)
         {
             if (Value != null)
             {
-                json.WriteString("value", Value);
+                json.WriteString(s_valuePropertyNameBytes, Value);
             }
 
-            base.WriteProperties(ref json);
+            Properties.WriteProperties(json);
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json)
+        {
+            foreach (JsonProperty prop in json.EnumerateObject())
+            {
+                ReadProperty(prop);
+            }
+        }
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

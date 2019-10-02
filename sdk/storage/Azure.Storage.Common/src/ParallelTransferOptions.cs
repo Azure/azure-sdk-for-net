@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -13,9 +12,9 @@ namespace Azure.Storage.Common
     public struct ParallelTransferOptions : IEquatable<ParallelTransferOptions>
     {
         /// <summary>
-        /// The maximum length of an upload block in bytes.
+        /// The maximum length of an transfer in bytes.
         /// </summary>
-        public int? MaximumBlockLength { get; set; }
+        public int? MaximumTransferLength { get; set; }
 
         /// <summary>
         /// The maximum number of threads that may be used in a parallel transfer.
@@ -30,7 +29,7 @@ namespace Azure.Storage.Common
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is ParallelTransferOptions other
-            && this.Equals(other)
+            && Equals(other)
             ;
 
         /// <summary>
@@ -39,8 +38,8 @@ namespace Azure.Storage.Common
         /// <returns>Hash code for the ParallelTransferOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => this.MaximumBlockLength.GetHashCode()
-            ^ this.MaximumThreadCount.GetHashCode()
+            => MaximumTransferLength.GetHashCode()
+            ^ MaximumThreadCount.GetHashCode()
             ;
 
         /// <summary>
@@ -68,8 +67,8 @@ namespace Azure.Storage.Common
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(ParallelTransferOptions obj)
-            => this.MaximumBlockLength == obj.MaximumBlockLength
-            && this.MaximumThreadCount == obj.MaximumThreadCount
+            => MaximumTransferLength == obj.MaximumTransferLength
+            && MaximumThreadCount == obj.MaximumThreadCount
             ;
     }
 }

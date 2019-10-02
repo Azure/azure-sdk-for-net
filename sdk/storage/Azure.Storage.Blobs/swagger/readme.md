@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: ./blob-2019-02-02.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-02-02/blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -145,6 +145,16 @@ directive:
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobServiceProperties");
         $.get.responses["200"].schema = { "$ref": path };
     }
+```
+
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
 ```
 
 ### /?restype=service&comp=stats
@@ -440,6 +450,7 @@ directive:
   transform: >
     $.get.responses["200"]["x-az-response-name"] = "FlattenedDownloadProperties";
     $.get.responses["200"]["x-az-public"] = false;
+    $.get.responses["200"]["x-az-stream"] = true;
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -448,6 +459,7 @@ directive:
     $.get.responses["200"]["x-az-response-schema-name"] = "Content";
     $.get.responses["206"]["x-az-response-name"] = "FlattenedDownloadProperties";
     $.get.responses["206"]["x-az-public"] = false;
+    $.get.responses["206"]["x-az-stream"] = true;
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -937,15 +949,6 @@ directive:
     delete $.properties.Etag;
 ```
 
-### PublicAccessType
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.PublicAccessType
-  transform: >
-    $["x-ms-enum"].modelAsString = false;
-```
-
 ### Make sure everything has a type
 ``` yaml
 directive:
@@ -996,7 +999,7 @@ directive:
     $["x-az-disable-warnings"] = "CA1724";
 ```
 
-### Hide StorageError
+### Hide Error models
 ``` yaml
 directive:
 - from: swagger-document
@@ -1008,20 +1011,10 @@ directive:
   where: $.definitions.DataLakeStorageError
   transform: >
     $["x-az-public"] = false;
-```
-
-### Make AccessTier Unique
-autorest.python complains that the same enum has different values
-``` yaml
-directive:
 - from: swagger-document
-  where: $.parameters.AccessTierRequired
+  where: $.definitions.DataLakeStorageError.properties["error"]
   transform: >
-    $["x-ms-enum"].name = "AccessTierRequired";
-- from: swagger-document
-  where: $.parameters.AccessTierOptional
-  transform: >
-    $["x-ms-enum"].name = "AccessTierOptional";
+    $["x-az-public"] = false;
 ```
 
 ### Fix doc comments
@@ -1043,4 +1036,123 @@ directive:
   where: $.parameters.MultipartContentType
   transform: >
     $.description = $.description.replace("<GUID>", "{GUID}");
+```
+
+### Add PublicAccessType.None
+``` yaml
+directive:
+- from: swagger-document
+  where:
+    - $.definitions.PublicAccessType
+    - $.parameters.BlobPublicAccess
+    - $["x-ms-paths"]["/{containerName}?restype=container"].get.responses["200"].headers["x-ms-blob-public-access"]
+    - $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"].get.responses["200"].headers["x-ms-blob-public-access"]
+  transform: >
+    $.enum = [ "none", "container", "blob" ];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "container", value: "container" }, { name: "blob", value: "blob" }];
+    $["x-az-enum-skip-value"] = "none";
+- from: swagger-document
+  where: $.definitions.PublicAccessType
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+- from: swagger-document
+  where: $.parameters.BlobPublicAccess
+  transform: $.required = true;
+- from: swagger-document
+  where: $.definitions.ContainerProperties
+  transform: $.required.push("PublicAccess");
+  ```
+
+### Make lease duration a long
+Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+```
+
+### Merge the PageBlob AccessTier type
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PremiumPageBlobAccessTierOptional
+  transform: >
+    $["x-ms-enum"].name = "AccessTier";
+```
+
+### Hide Result models relating to data lake
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&directory"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&blob"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&directory"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&blob"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?FileRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?resource=directory&Create"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryDelete"]
+  transform: >
+    $.delete.responses["200"]["x-az-public"] = false;
+```
+
+### Remove XMS prefix from ContentCrc64 property in Info models
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block&fromURL"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=blocklist"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&clear"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
 ```

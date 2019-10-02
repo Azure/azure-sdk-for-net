@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 
 namespace TrackOne
 {
-    using System;
-
-    static class ClientConstants
+    internal static class ClientConstants
     {
         public const int TimerToleranceInSeconds = 5;
         public const int ServerBusyBaseSleepTimeInSecs = 4;

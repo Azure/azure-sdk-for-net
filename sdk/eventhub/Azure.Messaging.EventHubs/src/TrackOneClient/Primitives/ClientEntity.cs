@@ -1,30 +1,29 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
+using System;
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using TrackOne.Core;
 
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Concurrent;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using TrackOne.Core;
-
     /// <summary>
     /// Contract for all client entities with Open-Close/Abort state m/c
     /// main-purpose: closeAll related entities
     /// </summary>
     internal abstract class ClientEntity
     {
-        static int nextId;
-        RetryPolicy retryPolicy;
+        private static int s_nextId;
+        private RetryPolicy _retryPolicy;
 
         /// <summary></summary>
         /// <param name="clientId"></param>
         protected ClientEntity(string clientId)
         {
-            this.ClientId = clientId;
+            ClientId = clientId;
         }
 
         /// <summary>
@@ -46,12 +45,12 @@ namespace TrackOne
         /// </summary>
         public RetryPolicy RetryPolicy
         {
-            get => this.retryPolicy;
+            get => _retryPolicy;
 
             set
             {
-                this.retryPolicy = value;
-                this.OnRetryPolicyUpdate();
+                _retryPolicy = value;
+                OnRetryPolicyUpdate();
             }
         }
 
@@ -70,11 +69,11 @@ namespace TrackOne
             {
                 throw new ArgumentNullException(nameof(eventHubsPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(eventHubsPlugin)));
             }
-            if (this.RegisteredPlugins.Any(p => p.Value.Name == eventHubsPlugin.Name))
+            if (RegisteredPlugins.Any(p => p.Value.Name == eventHubsPlugin.Name))
             {
                 throw new ArgumentException(eventHubsPlugin.Name, Resources.PluginAlreadyRegistered.FormatForUser(eventHubsPlugin.Name));
             }
-            if (!this.RegisteredPlugins.TryAdd(eventHubsPlugin.Name, eventHubsPlugin))
+            if (!RegisteredPlugins.TryAdd(eventHubsPlugin.Name, eventHubsPlugin))
             {
                 throw new ArgumentException(eventHubsPlugin.Name, Resources.PluginRegistrationFailed.FormatForUser(eventHubsPlugin.Name));
             }
@@ -86,7 +85,7 @@ namespace TrackOne
         /// <param name="pluginName">The <see cref="EventHubsPlugin.Name"/> of the plugin to be unregistered.</param>
         public virtual void UnregisterPlugin(string pluginName)
         {
-            if (this.RegisteredPlugins == null)
+            if (RegisteredPlugins == null)
             {
                 return;
             }
@@ -96,7 +95,7 @@ namespace TrackOne
                 throw new ArgumentNullException(nameof(pluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(pluginName)));
             }
 
-            this.RegisteredPlugins.TryRemove(pluginName, out EventHubsPlugin plugin);
+            RegisteredPlugins.TryRemove(pluginName, out EventHubsPlugin plugin);
         }
 
         /// <summary>
@@ -104,14 +103,14 @@ namespace TrackOne
         /// </summary>
         public void Close()
         {
-            this.CloseAsync().GetAwaiter().GetResult();
+            CloseAsync().GetAwaiter().GetResult();
         }
 
         /// <summary></summary>
         /// <returns></returns>
         protected static long GetNextId()
         {
-            return Interlocked.Increment(ref nextId);
+            return Interlocked.Increment(ref s_nextId);
         }
 
         /// <summary>

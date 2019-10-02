@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +10,8 @@ namespace Azure.Identity.Tests
 {
     internal class TestEnvVar : IDisposable
     {
-        private string _origValue = null;
-        private string _name;
+        private readonly string _origValue = null;
+        private readonly string _name;
 
         public TestEnvVar(string name, string value)
         {

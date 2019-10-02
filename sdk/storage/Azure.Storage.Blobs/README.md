@@ -1,6 +1,6 @@
 # Azure Storage Blobs client library for .NET
 
-> Server Version: 2018-11-09
+> Server Version: 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.
@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.2
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -42,6 +42,14 @@ Blob storage is designed for:
 - Writing to log files.
 - Storing data for backup and restore, disaster recovery, and archiving.
 - Storing data for analysis by an on-premises or Azure-hosted service.
+
+Blob storage offers three types of resources:
+
+- The _storage account_ used via `BlobServiceClient`
+- A _container_ in the storage account used via `BlobContainerClient`
+- A _blob_ in a container used via `BlobClient`
+
+Learn more about options for authentication _(including Connection Strings, Shared Key, Shared Key Signatures, Active Directory, and anonymous public access)_ [in our samples.](samples/Sample02_Auth.cs)
 
 ## Examples
 
@@ -84,10 +92,10 @@ using (FileStream file = File.OpenRead("local-file.jpg"))
 BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
 
 // Download the blob
-BlobDownloadInfo download = blob.Download();
+Response<BlobDownloadInfo> download = blob.Download();
 using (FileStream file = File.OpenWrite("hello.jpg"))
 {
-    download.Content.CopyTo(file);
+    download.Value.Content.CopyTo(file);
 }
 ```
 
@@ -100,9 +108,9 @@ string connectionString = "<connection_string>";
 BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
 
 // List all of its blobs
-foreach (BlobItem blob in container.GetBlobs())
+foreach (Response<BlobItem> blob in container.GetBlobs())
 {
-    Console.WriteLine(blob.Name);
+    Console.WriteLine(blob.Value.Name);
 }
 ```
 
@@ -115,10 +123,10 @@ We fully support both synchronous and asynchronous APIs.
 BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
 
 // Download the blob
-BlobDownloadInfo download = await blob.DownloadAsync();
+Response<BlobDownloadInfo> download = await blob.DownloadAsync();
 using (FileStream file = File.OpenWrite("hello.jpg"))
 {
-    await download.Content.CopyToAsync(file);
+    await download.Value.Content.CopyToAsync(file);
 }
 ```
 
@@ -186,7 +194,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.Blobs.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/

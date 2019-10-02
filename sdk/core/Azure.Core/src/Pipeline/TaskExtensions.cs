@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -18,6 +19,30 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(task.IsCompleted);
             task.GetAwaiter().GetResult();
+        }
+
+        public static T EnsureCompleted<T>(this ValueTask<T> task)
+        {
+            Debug.Assert(task.IsCompleted);
+            return task.GetAwaiter().GetResult();
+        }
+
+        public static void EnsureCompleted(this ValueTask task)
+        {
+            Debug.Assert(task.IsCompleted);
+            task.GetAwaiter().GetResult();
+        }
+
+        public static ConfiguredValueTaskAwaitable<T> EnsureCompleted<T>(this ConfiguredValueTaskAwaitable<T> task, bool async)
+        {
+            Debug.Assert(async || task.GetAwaiter().IsCompleted);
+            return task;
+        }
+
+        public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable task, bool async)
+        {
+            Debug.Assert(async || task.GetAwaiter().IsCompleted);
+            return task;
         }
     }
 }

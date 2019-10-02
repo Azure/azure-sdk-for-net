@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -14,8 +13,6 @@ namespace Azure.Core
     internal sealed class ArrayBufferWriter<T> : IBufferWriter<T>
     {
         private T[] _buffer;
-        private int _index;
-
         private const int DefaultInitialBufferSize = 256;
 
         /// <summary>
@@ -25,7 +22,7 @@ namespace Azure.Core
         public ArrayBufferWriter()
         {
             _buffer = Array.Empty<T>();
-            _index = 0;
+            WrittenCount = 0;
         }
 
         /// <summary>
@@ -44,23 +41,23 @@ namespace Azure.Core
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
             _buffer = new T[initialCapacity];
-            _index = 0;
+            WrittenCount = 0;
         }
 
         /// <summary>
         /// Returns the data written to the underlying buffer so far, as a <see cref="ReadOnlyMemory{T}"/>.
         /// </summary>
-        public ReadOnlyMemory<T> WrittenMemory => _buffer.AsMemory(0, _index);
+        public ReadOnlyMemory<T> WrittenMemory => _buffer.AsMemory(0, WrittenCount);
 
         /// <summary>
         /// Returns the data written to the underlying buffer so far, as a <see cref="ReadOnlySpan{T}"/>.
         /// </summary>
-        public ReadOnlySpan<T> WrittenSpan => _buffer.AsSpan(0, _index);
+        public ReadOnlySpan<T> WrittenSpan => _buffer.AsSpan(0, WrittenCount);
 
         /// <summary>
         /// Returns the amount of data written to the underlying buffer so far.
         /// </summary>
-        public int WrittenCount => _index;
+        public int WrittenCount { get; private set; }
 
         /// <summary>
         /// Returns the total amount of space within the underlying buffer.
@@ -70,7 +67,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the amount of space available that can still be written into without forcing the underlying buffer to grow.
         /// </summary>
-        public int FreeCapacity => _buffer.Length - _index;
+        public int FreeCapacity => _buffer.Length - WrittenCount;
 
         /// <summary>
         /// Clears the data written to the underlying buffer.
@@ -80,9 +77,9 @@ namespace Azure.Core
         /// </remarks>
         public void Clear()
         {
-            Debug.Assert(_buffer.Length >= _index);
-            _buffer.AsSpan(0, _index).Clear();
-            _index = 0;
+            Debug.Assert(_buffer.Length >= WrittenCount);
+            _buffer.AsSpan(0, WrittenCount).Clear();
+            WrittenCount = 0;
         }
 
         /// <summary>
@@ -104,10 +101,10 @@ namespace Azure.Core
                 throw new ArgumentException(nameof(count));
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
-            if (_index > _buffer.Length - count)
+            if (WrittenCount > _buffer.Length - count)
                 ThrowInvalidOperationException_AdvancedTooFar(_buffer.Length);
 
-            _index += count;
+            WrittenCount += count;
         }
 
         /// <summary>
@@ -129,8 +126,8 @@ namespace Azure.Core
         public Memory<T> GetMemory(int sizeHint = 0)
         {
             CheckAndResizeBuffer(sizeHint);
-            Debug.Assert(_buffer.Length > _index);
-            return _buffer.AsMemory(_index);
+            Debug.Assert(_buffer.Length > WrittenCount);
+            return _buffer.AsMemory(WrittenCount);
         }
 
         /// <summary>
@@ -152,8 +149,8 @@ namespace Azure.Core
         public Span<T> GetSpan(int sizeHint = 0)
         {
             CheckAndResizeBuffer(sizeHint);
-            Debug.Assert(_buffer.Length > _index);
-            return _buffer.AsSpan(_index);
+            Debug.Assert(_buffer.Length > WrittenCount);
+            return _buffer.AsSpan(WrittenCount);
         }
 
         private void CheckAndResizeBuffer(int sizeHint)

@@ -23,7 +23,7 @@ namespace Fabric.Tests
                     numOperations += operations.Count();
                 }
                 Assert.Null(operations.NextPageLink);
-                Assert.Equal(13, numOperations);
+                Assert.Equal(39, numOperations);
             });
         }
     }

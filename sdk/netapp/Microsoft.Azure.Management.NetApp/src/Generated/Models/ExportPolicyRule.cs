@@ -34,18 +34,18 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="unixReadWrite">Read and write access</param>
         /// <param name="cifs">Allows CIFS protocol</param>
         /// <param name="nfsv3">Allows NFSv3 protocol</param>
-        /// <param name="nfsv4">Allows NFSv4 protocol</param>
+        /// <param name="nfsv41">Allows NFSv4.1 protocol</param>
         /// <param name="allowedClients">Client ingress specification as comma
         /// separated string with IPv4 CIDRs, IPv4 host addresses and host
         /// names</param>
-        public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv4 = default(bool?), string allowedClients = default(string))
+        public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv41 = default(bool?), string allowedClients = default(string))
         {
             RuleIndex = ruleIndex;
             UnixReadOnly = unixReadOnly;
             UnixReadWrite = unixReadWrite;
             Cifs = cifs;
             Nfsv3 = nfsv3;
-            Nfsv4 = nfsv4;
+            Nfsv41 = nfsv41;
             AllowedClients = allowedClients;
             CustomInit();
         }
@@ -86,10 +86,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? Nfsv3 { get; set; }
 
         /// <summary>
-        /// Gets or sets allows NFSv4 protocol
+        /// Gets or sets allows NFSv4.1 protocol
         /// </summary>
-        [JsonProperty(PropertyName = "nfsv4")]
-        public bool? Nfsv4 { get; set; }
+        [JsonProperty(PropertyName = "nfsv41")]
+        public bool? Nfsv41 { get; set; }
 
         /// <summary>
         /// Gets or sets client ingress specification as comma separated string

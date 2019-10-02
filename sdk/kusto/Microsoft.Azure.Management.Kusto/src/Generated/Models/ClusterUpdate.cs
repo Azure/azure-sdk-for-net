@@ -48,13 +48,21 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Deleted', 'Stopping', 'Stopped', 'Starting', 'Updating'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
-        /// 'Deleting', 'Succeeded', 'Failed'</param>
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
         /// <param name="uri">The cluster URI.</param>
         /// <param name="dataIngestionUri">The cluster data ingestion
         /// URI.</param>
         /// <param name="trustedExternalTenants">The cluster's external
         /// tenants.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>))
+        /// <param name="optimizedAutoscale">Optimized auto scale
+        /// definition.</param>
+        /// <param name="enableDiskEncryption">A boolean value that indicates
+        /// if the cluster's disks are encrypted.</param>
+        /// <param name="enableStreamingIngest">A boolean value that indicates
+        /// if the streaming ingest is enabled.</param>
+        /// <param name="virtualNetworkConfiguration">Virtual network
+        /// definition.</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration))
             : base(id, name, type)
         {
             Tags = tags;
@@ -65,6 +73,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
             Uri = uri;
             DataIngestionUri = dataIngestionUri;
             TrustedExternalTenants = trustedExternalTenants;
+            OptimizedAutoscale = optimizedAutoscale;
+            EnableDiskEncryption = enableDiskEncryption;
+            EnableStreamingIngest = enableStreamingIngest;
+            VirtualNetworkConfiguration = virtualNetworkConfiguration;
             CustomInit();
         }
 
@@ -101,7 +113,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values
-        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed'
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -125,6 +138,32 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public IList<TrustedExternalTenant> TrustedExternalTenants { get; set; }
 
         /// <summary>
+        /// Gets or sets optimized auto scale definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.optimizedAutoscale")]
+        public OptimizedAutoscale OptimizedAutoscale { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if the cluster's disks
+        /// are encrypted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableDiskEncryption")]
+        public bool? EnableDiskEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if the streaming ingest
+        /// is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableStreamingIngest")]
+        public bool? EnableStreamingIngest { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual network definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkConfiguration")]
+        public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -135,6 +174,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (OptimizedAutoscale != null)
+            {
+                OptimizedAutoscale.Validate();
+            }
+            if (VirtualNetworkConfiguration != null)
+            {
+                VirtualNetworkConfiguration.Validate();
             }
         }
     }

@@ -69,14 +69,14 @@ namespace Microsoft.Azure.Management.Reservations
 
 
         /// <summary>
-        /// Gets the IReservationOrderOperations.
-        /// </summary>
-        IReservationOrderOperations ReservationOrder { get; }
-
-        /// <summary>
         /// Gets the IReservationOperations.
         /// </summary>
         IReservationOperations Reservation { get; }
+
+        /// <summary>
+        /// Gets the IReservationOrderOperations.
+        /// </summary>
+        IReservationOrderOperations ReservationOrder { get; }
 
         /// <summary>
         /// Gets the IOperationOperations.

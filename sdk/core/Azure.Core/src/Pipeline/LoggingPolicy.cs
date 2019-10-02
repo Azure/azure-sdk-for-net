@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,19 +17,39 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
+        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters)
+        {
+            _logContent = logContent;
+            _maxLength = maxLength;
+            _allowedHeaderNames = new HashSet<string>(allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
+            _logAllHeaders = _allowedHeaderNames.Contains(LogAllValue);
+            _allowedQueryParameters = allowedQueryParameters;
+            _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
+        }
+
         private const long DelayWarningThreshold = 3000; // 3000ms
+
+        private const string LogAllValue = "*";
+        private const string RedactedPlaceholder = "REDACTED";
+
         private static readonly long s_frequency = Stopwatch.Frequency;
-        private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
+        private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
-        public static readonly LoggingPolicy Shared = new LoggingPolicy();
+        private readonly bool _logContent;
+        private readonly int _maxLength;
 
-        // TODO (pri 1): we should remove sensitive information, e.g. keys
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        private readonly HashSet<string> _allowedHeaderNames;
+        private readonly string[] _allowedQueryParameters;
+
+        private bool _logAllHeaders;
+        private bool _logFullQueries;
+
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
-        private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (!s_eventSource.IsEnabled())
             {
@@ -41,40 +64,23 @@ namespace Azure.Core.Pipeline
                 return;
             }
 
-            s_eventSource.Request(message.Request);
+            Request request = message.Request;
+
+            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers));
 
             Encoding? requestTextEncoding = null;
 
-            bool textRequest = message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) &&
-                ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
-
-            if (message.Request.Content != null)
+            if (request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType))
             {
-                if (textRequest)
-                {
-                    if (async)
-                    {
-                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding!, message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        s_eventSource.RequestContentText(message.Request, requestTextEncoding!, message.CancellationToken);
-                    }
-                }
-                else
-                {
-                    if (async)
-                    {
-                        await s_eventSource.RequestContentAsync(message.Request, message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        s_eventSource.RequestContent(message.Request, message.CancellationToken);
-                    }
-                }
+                ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
             }
 
+            var logWrapper = new ContentEventSourceWrapper(s_eventSource, _logContent, _maxLength, message.CancellationToken);
+
+            await logWrapper.LogAsync(request.ClientRequestId, request.Content, requestTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
+
             var before = Stopwatch.GetTimestamp();
+
             if (async)
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -84,86 +90,45 @@ namespace Azure.Core.Pipeline
                 ProcessNext(message, pipeline);
             }
 
-            
-
             var after = Stopwatch.GetTimestamp();
 
-            bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
+            bool isError = message.ResponseClassifier.IsErrorResponse(message);
 
-            var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding? responseTextEncoding);
+            Response response = message.Response;
+            ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding? responseTextEncoding);
 
-            bool wrapResponseStream = message.Response.ContentStream != null && message.Response.ContentStream?.CanSeek == false && s_eventSource.ShouldLogContent(isError);
-
-            if (wrapResponseStream)
-            {
-                message.Response.ContentStream = new LoggingStream(
-                    message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream!, isError, responseTextEncoding);
-            }
+            bool wrapResponseContent = response.ContentStream != null &&
+                                       response.ContentStream?.CanSeek == false &&
+                                       logWrapper.IsEnabled(isError);
 
             if (isError)
             {
-                s_eventSource.ErrorResponse(message.Response);
-
-                if (!wrapResponseStream && message.Response.ContentStream != null)
-                {
-                    if (textResponse)
-                    {
-                        if (async)
-                        {
-                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding!, message.CancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding!);
-                        }
-                    }
-                    else
-                    {
-                        if (async)
-                        {
-                            await s_eventSource.ErrorResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            s_eventSource.ErrorResponseContent(message.Response);
-                        }
-                    }
-                }
+                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
+            }
+            else
+            {
+                s_eventSource.Response(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
             }
 
-            s_eventSource.Response(message.Response);
-
-            if (!wrapResponseStream && message.Response.ContentStream != null)
+            if (wrapResponseContent)
             {
-                if (textResponse)
-                {
-                    if (async)
-                    {
-                        await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding!, message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding!);
-                    }
-                }
-                else
-                {
-                    if (async)
-                    {
-                        await s_eventSource.ResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        s_eventSource.ResponseContent(message.Response);
-                    }
-                }
+                response.ContentStream = new LoggingStream(response.ClientRequestId, logWrapper, _maxLength, response.ContentStream!, isError, responseTextEncoding);
+            }
+            else
+            {
+                await logWrapper.LogAsync(response.ClientRequestId, isError, response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
             if (elapsedMilliseconds > DelayWarningThreshold)
             {
-                s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
+                s_eventSource.ResponseDelay(response.ClientRequestId, elapsedMilliseconds);
             }
+        }
+
+        private string FormatUri(RequestUriBuilder requestUri)
+        {
+            return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters, RedactedPlaceholder);
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -171,11 +136,32 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
+        private string FormatHeaders(IEnumerable<HttpHeader> headers)
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (HttpHeader header in headers)
+            {
+                stringBuilder.Append(header.Name);
+                stringBuilder.Append(':');
+                if (_logAllHeaders || _allowedHeaderNames.Contains(header.Name))
+                {
+                    stringBuilder.AppendLine(header.Value);
+                }
+                else
+                {
+                    stringBuilder.AppendLine(RedactedPlaceholder);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+
         private class LoggingStream : ReadOnlyStream
         {
             private readonly string _requestId;
 
-            private readonly HttpPipelineEventSource _eventSource;
+            private readonly ContentEventSourceWrapper _eventSourceWrapper;
+
+            private int _maxLoggedBytes;
 
             private readonly Stream _originalStream;
 
@@ -185,12 +171,13 @@ namespace Azure.Core.Pipeline
 
             private int _blockNumber;
 
-            public LoggingStream(string requestId, HttpPipelineEventSource eventSource, Stream originalStream, bool error, Encoding? textEncoding)
+            public LoggingStream(string requestId, ContentEventSourceWrapper eventSourceWrapper, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
             {
                 // Should only wrap non-seekable streams
                 Debug.Assert(!originalStream.CanSeek);
                 _requestId = requestId;
-                _eventSource = eventSource;
+                _eventSourceWrapper = eventSourceWrapper;
+                _maxLoggedBytes = maxLoggedBytes;
                 _originalStream = originalStream;
                 _error = error;
                 _textEncoding = textEncoding;
@@ -205,7 +192,9 @@ namespace Azure.Core.Pipeline
             {
                 var result = _originalStream.Read(buffer, offset, count);
 
-                LogBuffer(buffer, offset, result);
+                var countToLog = result;
+                DecrementLength(ref countToLog);
+                LogBuffer(buffer, offset, countToLog);
 
                 return result;
             }
@@ -217,24 +206,7 @@ namespace Azure.Core.Pipeline
                     return;
                 }
 
-                if (_textEncoding != null)
-                {
-                    _eventSource.ResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(buffer, offset, count));
-
-                    if (_error)
-                    {
-                        _eventSource.ErrorResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(buffer, offset, count));
-                    }
-                }
-                else
-                {
-                    _eventSource.ResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
-
-                    if (_error)
-                    {
-                        _eventSource.ErrorResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
-                    }
-                }
+                _eventSourceWrapper.Log(_requestId, _error, buffer, offset, count, _textEncoding, _blockNumber);
 
                 _blockNumber++;
             }
@@ -243,7 +215,9 @@ namespace Azure.Core.Pipeline
             {
                 var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-                LogBuffer(buffer, offset, result);
+                var countToLog = result;
+                DecrementLength(ref countToLog);
+                LogBuffer(buffer, offset, countToLog);
 
                 return result;
             }
@@ -267,6 +241,220 @@ namespace Azure.Core.Pipeline
                 base.Dispose(disposing);
 
                 _originalStream.Dispose();
+            }
+
+            private void DecrementLength(ref int count)
+            {
+                var left = Math.Min(count, _maxLoggedBytes);
+                count = left;
+                _maxLoggedBytes -= count;
+            }
+        }
+
+        private readonly struct ContentEventSourceWrapper
+        {
+            private const int CopyBufferSize = 8 * 1024;
+            private readonly AzureCoreEventSource? _eventSource;
+
+            private readonly int _maxLength;
+
+            private readonly CancellationToken _cancellationToken;
+
+            public ContentEventSourceWrapper(AzureCoreEventSource eventSource, bool logContent, int maxLength, CancellationToken cancellationToken)
+            {
+                _eventSource = logContent ? eventSource : null;
+                _maxLength = maxLength;
+                _cancellationToken = cancellationToken;
+            }
+
+            public async ValueTask LogAsync(string requestId, bool isError, Stream? stream, Encoding? textEncoding, bool async)
+            {
+                EventType eventType = ResponseOrError(isError);
+
+                if (stream == null || !IsEnabled(eventType))
+                {
+                    return;
+                }
+
+                var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
+                Log(requestId, eventType, bytes, textEncoding);
+
+            }
+
+            public async ValueTask LogAsync(string requestId, HttpPipelineRequestContent? content, Encoding? textEncoding, bool async)
+            {
+                EventType eventType = EventType.Request;
+
+                if (content == null || !IsEnabled(eventType))
+                {
+                    return;
+                }
+
+                var bytes = await FormatAsync(content, async).ConfigureAwait(false).EnsureCompleted(async);
+
+                Log(requestId, eventType, bytes, textEncoding);
+            }
+
+            public void Log(string requestId, bool isError, byte[] buffer, int offset, int length, Encoding? textEncoding, int? block = null)
+            {
+                EventType eventType = ResponseOrError(isError);
+
+                if (buffer == null || !IsEnabled(eventType))
+                {
+                    return;
+                }
+
+                var logLength = Math.Min(length, _maxLength);
+
+                byte[] bytes;
+                if (length == logLength && offset == 0)
+                {
+                    bytes = buffer;
+                }
+                else
+                {
+                    bytes = new byte[logLength];
+                    Array.Copy(buffer, offset, bytes, 0, logLength);
+                }
+
+                Log(requestId, eventType, bytes, textEncoding, block);
+            }
+
+            public bool IsEnabled(bool isError)
+            {
+                return IsEnabled(ResponseOrError(isError));
+            }
+
+            private bool IsEnabled(EventType errorResponse)
+            {
+                return _eventSource != null &&
+                       (_eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All) ||
+                       (errorResponse == EventType.ErrorResponse && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All)));
+            }
+
+            private async ValueTask<byte[]> FormatAsync(HttpPipelineRequestContent requestContent, bool async)
+            {
+                using var memoryStream = new MaxLengthStream(_maxLength);
+
+                if (async)
+                {
+                    await requestContent.WriteToAsync(memoryStream, _cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    requestContent.WriteTo(memoryStream, _cancellationToken);
+                }
+
+                return memoryStream.ToArray();
+            }
+
+            private async ValueTask<byte[]> FormatAsync(Stream content, bool async)
+            {
+                using var memoryStream = new MaxLengthStream(_maxLength);
+
+                if (async)
+                {
+                    await content.CopyToAsync(memoryStream, CopyBufferSize, _cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    content.CopyTo(memoryStream);
+                }
+
+                content.Seek(0, SeekOrigin.Begin);
+
+                return memoryStream.ToArray();
+            }
+
+            private void Log(string requestId, EventType eventType, byte[] bytes, Encoding? textEncoding, int? block = null)
+            {
+                string? stringValue = textEncoding?.GetString(bytes);
+
+                // We checked IsEnabled before we got here
+                Debug.Assert(_eventSource != null);
+                AzureCoreEventSource azureCoreEventSource = _eventSource!;
+
+                switch (eventType)
+                {
+                    case EventType.Request when stringValue != null:
+                        azureCoreEventSource.RequestContentText(requestId, stringValue);
+                        break;
+                    case EventType.Request:
+                        azureCoreEventSource.RequestContent(requestId, bytes);
+                        break;
+
+                    // Response
+                    case EventType.Response when block != null && stringValue != null:
+                        azureCoreEventSource.ResponseContentTextBlock(requestId, block.Value, stringValue);
+                        break;
+                    case EventType.Response when block != null:
+                        azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes);
+                        break;
+                    case EventType.Response when stringValue != null:
+                        azureCoreEventSource.ResponseContentText(requestId, stringValue);
+                        break;
+                    case EventType.Response:
+                        azureCoreEventSource.ResponseContent(requestId, bytes);
+                        break;
+
+                    // ResponseError
+                    case EventType.ErrorResponse when block != null && stringValue != null:
+                        azureCoreEventSource.ErrorResponseContentTextBlock(requestId, block.Value, stringValue);
+                        break;
+                    case EventType.ErrorResponse when block != null:
+                        azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes);
+                        break;
+                    case EventType.ErrorResponse when stringValue != null:
+                        azureCoreEventSource.ErrorResponseContentText(requestId, stringValue);
+                        break;
+                    case EventType.ErrorResponse:
+                        azureCoreEventSource.ErrorResponseContent(requestId, bytes);
+                        break;
+                }
+            }
+
+            private static EventType ResponseOrError(bool isError)
+            {
+                return isError ? EventType.ErrorResponse : EventType.Response;
+            }
+
+            private enum EventType
+            {
+                Request,
+                Response,
+                ErrorResponse
+            }
+
+            private class MaxLengthStream : MemoryStream
+            {
+                private int _bytesLeft;
+
+                public MaxLengthStream(int maxLength) : base()
+                {
+                    _bytesLeft = maxLength;
+                }
+
+                public override void Write(byte[] buffer, int offset, int count)
+                {
+                    DecrementLength(ref count);
+                    if (count > 0)
+                    {
+                        base.Write(buffer, offset, count);
+                    }
+                }
+
+                public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+                {
+                    return count > 0 ? base.WriteAsync(buffer, offset, count, cancellationToken) : Task.CompletedTask;
+                }
+
+                private void DecrementLength(ref int count)
+                {
+                    var left = Math.Min(count, _bytesLeft);
+                    count = left;
+
+                    _bytesLeft -= count;
+                }
             }
         }
     }

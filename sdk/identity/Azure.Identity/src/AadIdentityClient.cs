@@ -21,7 +21,7 @@ namespace Azure.Identity
 {
     internal class AadIdentityClient
     {
-        private static Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
+        private static readonly Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
 
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
@@ -142,13 +142,13 @@ namespace Azure.Identity
 
         private async Task<AccessToken> SendAuthRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (response.Status == 200 || response.Status == 201)
             {
-                var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
+                AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return new Response<AccessToken>(response, result);
+                return Response.FromValue(response, result);
             }
 
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -156,13 +156,13 @@ namespace Azure.Identity
 
         private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
         {
-            var response = _pipeline.SendRequest(request, cancellationToken);
+            Response response = _pipeline.SendRequest(request, cancellationToken);
 
             if (response.Status == 200 || response.Status == 201)
             {
-                var result = Deserialize(response.ContentStream);
+                AccessToken result = Deserialize(response.ContentStream);
 
-                return new Response<AccessToken>(response, result);
+                return Response.FromValue(response, result);
             }
 
             throw response.CreateRequestFailedException();
@@ -176,11 +176,11 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.Uri.Reset(_options.AuthorityHost);
 
-            request.UriBuilder.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token");
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 
@@ -199,13 +199,13 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.Uri.Reset(_options.AuthorityHost);
 
-            request.UriBuilder.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token");
 
-            string clientAssertion = CreateClientAssertionJWT(clientId, request.UriBuilder.ToString(), clientCertficate);
+            string clientAssertion = CreateClientAssertionJWT(clientId, request.Uri.ToString(), clientCertficate);
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_assertion_type={Uri.EscapeDataString(ClientAssertionType)}&client_assertion={Uri.EscapeDataString(clientAssertion)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 

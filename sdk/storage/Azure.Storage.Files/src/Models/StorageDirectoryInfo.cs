@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Http;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
@@ -19,13 +20,13 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
         /// </summary>
-        public ETag ETag => this._rawStorageDirectoryInfo.ETag;
+        public ETag ETag => _rawStorageDirectoryInfo.ETag;
 
         /// <summary>
-        /// Returns the date and time the directory was last modified. Any operation that modifies the directory or 
+        /// Returns the date and time the directory was last modified. Any operation that modifies the directory or
         /// its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
         /// </summary>
-        public DateTimeOffset LastModified => this._rawStorageDirectoryInfo.LastModified;
+        public DateTimeOffset LastModified => _rawStorageDirectoryInfo.LastModified;
 
         /// <summary>
         /// The directory's SMB properties.
@@ -34,8 +35,8 @@ namespace Azure.Storage.Files.Models
 
         internal StorageDirectoryInfo(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {
-            this._rawStorageDirectoryInfo = rawStorageDirectoryInfo;
-            this.SmbProperties = new FileSmbProperties(rawStorageDirectoryInfo);
+            _rawStorageDirectoryInfo = rawStorageDirectoryInfo;
+            SmbProperties = new FileSmbProperties(rawStorageDirectoryInfo);
         }
     }
 
@@ -47,7 +48,28 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageDirectoryInfo instance for mocking.
         /// </summary>
-        public static StorageDirectoryInfo StorageDirectoryInfo(RawStorageDirectoryInfo rawStorageDirectoryInfo)
-            => new StorageDirectoryInfo(rawStorageDirectoryInfo);
+        public static StorageDirectoryInfo StorageDirectoryInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            string filePermissionKey,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId
+            )
+            => new StorageDirectoryInfo(new RawStorageDirectoryInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                FilePermissionKey = filePermissionKey,
+                FileAttributes = fileAttributes,
+                FileCreationTime = fileCreationTime,
+                FileLastWriteTime = fileLastWriteTime,
+                FileChangeTime = fileChangeTime,
+                FileId = fileId,
+                FileParentId = fileParentId
+            });
     }
 }

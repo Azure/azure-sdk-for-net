@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate queue storage
-input-file: ./queue-2018-03-28.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.QueueStorage/preview/2018-03-28/queue.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -96,6 +96,16 @@ directive:
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueServiceProperties");
         $.get.responses["200"].schema = { "$ref": path };
     }
+```
+
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.QueueServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
 ```
 
 ### QueueServiceStatistics

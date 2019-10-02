@@ -20,10 +20,10 @@ namespace Azure.Identity
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
-        private TokenCredential _credential = null;
+        private readonly TokenCredential _credential = null;
 
         /// <summary>
-        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.  
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         public EnvironmentCredential()
@@ -32,7 +32,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.  
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
@@ -49,33 +49,33 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables 
+        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
         /// </remarks>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? _credential.GetToken(scopes, cancellationToken) : default;
+            return (_credential != null) ? _credential.GetToken(request, cancellationToken) : default;
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables 
+        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specifeid, the default <see cref="AccessToken"/>
         /// </remarks>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
-        public async override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? await _credential.GetTokenAsync(scopes, cancellationToken).ConfigureAwait(false) : default;
+            return (_credential != null) ? await _credential.GetTokenAsync(request, cancellationToken).ConfigureAwait(false) : default;
         }
     }
 }

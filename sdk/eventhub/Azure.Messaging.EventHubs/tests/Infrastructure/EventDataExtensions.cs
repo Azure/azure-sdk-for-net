@@ -64,16 +64,28 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if ((considerSystemProperties) && (!Object.ReferenceEquals(instance.SystemProperties, other.SystemProperties)))
             {
-
                 if ((instance.SystemProperties == null) || (other.SystemProperties == null))
                 {
                     return false;
                 }
 
-                if ((instance.SystemProperties.Offset != other.SystemProperties.Offset)
-                    || (instance.SystemProperties.EnqueuedTime != other.SystemProperties.EnqueuedTime)
-                    || (instance.SystemProperties.PartitionKey != other.SystemProperties.PartitionKey)
-                    || (instance.SystemProperties.SequenceNumber != other.SystemProperties.SequenceNumber))
+                if (instance.SystemProperties.Count != other.SystemProperties.Count)
+                {
+                    return false;
+                }
+
+                if ((instance.Offset != other.Offset)
+                    || (instance.EnqueuedTime != other.EnqueuedTime)
+                    || (instance.PartitionKey != other.PartitionKey)
+                    || (instance.SequenceNumber != other.SequenceNumber)
+                    || (instance.LastPartitionSequenceNumber != other.LastPartitionSequenceNumber)
+                    || (instance.LastPartitionOffset != other.LastPartitionOffset)
+                    || (instance.LastPartitionEnqueuedTime != other.LastPartitionEnqueuedTime))
+                {
+                    return false;
+                }
+
+                if (!instance.SystemProperties.OrderBy(kvp => kvp.Key).SequenceEqual(other.SystemProperties.OrderBy(kvp => kvp.Key)))
                 {
                     return false;
                 }

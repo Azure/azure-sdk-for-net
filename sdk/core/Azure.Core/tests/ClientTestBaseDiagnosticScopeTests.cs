@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsWhenNoDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.NoScopeAsync());
             StringAssert.Contains("Expected some diagnostic event to fire", ex.Message);
         }
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsWhenWrongDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.WrongScopeAsync());
             StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).FullName}.{nameof(client.WrongScope)}", ex.Message);
 
@@ -41,77 +41,77 @@ namespace Azure.Core.Tests
         [Test]
         public async Task DoesNotThrowForForwardedDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             await client.ForwardsAsync();
         }
 
         [Test]
         public async Task DoesNotThrowForCorrectDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             await client.CorrectScopeAsync();
         }
-    }
 
-    public class InvalidDiagnosticScopeTestClient
-    {
-        private void FireScope(string method)
+        public class InvalidDiagnosticScopeTestClient
         {
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
-            string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).FullName}.{method}";
-            DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
-            scope.Start();
-            scope.Dispose();
-        }
+            private void FireScope(string method)
+            {
+                ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
+                string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).FullName}.{method}";
+                DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
+                scope.Start();
+                scope.Dispose();
+            }
 
-        [ForwardsClientCalls]
-        public virtual Task<bool> NoScopeAsync()
-        {
-            return Task.FromResult(true);
-        }
+            [ForwardsClientCalls]
+            public virtual Task<bool> NoScopeAsync()
+            {
+                return Task.FromResult(true);
+            }
 
-        [ForwardsClientCalls]
-        public virtual bool NoScope()
-        {
-            return true;
-        }
+            [ForwardsClientCalls]
+            public virtual bool NoScope()
+            {
+                return true;
+            }
 
-        public virtual Task<bool> WrongScopeAsync()
-        {
-            FireScope("DoesNotExist");
-            return Task.FromResult(true);
-        }
+            public virtual Task<bool> WrongScopeAsync()
+            {
+                FireScope("DoesNotExist");
+                return Task.FromResult(true);
+            }
 
-        public virtual bool WrongScope()
-        {
-            FireScope("DoesNotExist");
-            return true;
-        }
+            public virtual bool WrongScope()
+            {
+                FireScope("DoesNotExist");
+                return true;
+            }
 
-        public virtual Task<bool> CorrectScopeAsync()
-        {
-            FireScope(nameof(CorrectScope));
-            return Task.FromResult(true);
-        }
+            public virtual Task<bool> CorrectScopeAsync()
+            {
+                FireScope(nameof(CorrectScope));
+                return Task.FromResult(true);
+            }
 
-        public virtual bool CorrectScope()
-        {
-            FireScope(nameof(CorrectScope));
-            return true;
-        }
+            public virtual bool CorrectScope()
+            {
+                FireScope(nameof(CorrectScope));
+                return true;
+            }
 
-        [ForwardsClientCalls]
-        public virtual Task<bool> ForwardsAsync()
-        {
-            FireScope(nameof(CorrectScope));
-            return Task.FromResult(true);
-        }
+            [ForwardsClientCalls]
+            public virtual Task<bool> ForwardsAsync()
+            {
+                FireScope(nameof(CorrectScope));
+                return Task.FromResult(true);
+            }
 
-        [ForwardsClientCalls]
-        public virtual bool Forwards()
-        {
-            FireScope(nameof(CorrectScope));
-            return true;
+            [ForwardsClientCalls]
+            public virtual bool Forwards()
+            {
+                FireScope(nameof(CorrectScope));
+                return true;
+            }
         }
     }
 }

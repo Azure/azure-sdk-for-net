@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
     internal sealed class TrackOneRetryPolicy : TrackOne.RetryPolicy
     {
         /// <summary>The modern retry policy to use as the source of retry calculations.</summary>
-        private EventHubRetryPolicy _sourcePolicy;
+        private readonly EventHubRetryPolicy _sourcePolicy;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TrackOneRetryPolicy"/> class.
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneRetryPolicy(EventHubRetryPolicy sourcePolicy) : base()
         {
-            Guard.ArgumentNotNull(nameof(sourcePolicy), sourcePolicy);
+            Argument.AssertNotNull(sourcePolicy, nameof(sourcePolicy));
             _sourcePolicy = sourcePolicy;
         }
 
@@ -63,20 +63,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 return null;
             }
 
-            Exception mappedException;
-
-            switch (lastException)
+            Exception mappedException = lastException switch
             {
-                case TrackOne.EventHubsException ex:
-                    mappedException = ex.MapToTrackTwoException();
-                    break;
+                TrackOne.EventHubsException ex => ex.MapToTrackTwoException(),
 
-                default:
-                    mappedException = lastException;
-                    break;
-            }
-
-            var delay = _sourcePolicy.CalculateRetryDelay(mappedException, retryCount);
+                _ => lastException,
+            };
+            TimeSpan? delay = _sourcePolicy.CalculateRetryDelay(mappedException, retryCount);
 
             if (delay > remainingTime)
             {

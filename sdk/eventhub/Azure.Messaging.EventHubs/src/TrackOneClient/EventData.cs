@@ -1,19 +1,20 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Azure.Amqp;
 
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Amqp;
-
     /// <summary>
     /// The data structure encapsulating the Event being sent-to and received-from EventHubs.
     /// Each EventHubs partition can be visualized as a Stream of EventData.
     /// </summary>
     internal class EventData : IDisposable
     {
-        bool disposed;
+        private bool disposed;
 
         /// <summary>
         /// Construct EventData to send to EventHub.
@@ -50,8 +51,8 @@ namespace TrackOne
         /// <param name="arraySegment">The payload bytes, offset and length to be sent to the EventHub.</param>
         public EventData(ArraySegment<byte> arraySegment)
         {
-            this.Body = arraySegment;
-            this.Properties = new Dictionary<string, object>();
+            Body = arraySegment;
+            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace TrackOne
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -134,8 +135,7 @@ namespace TrackOne
             {
                 get
                 {
-                    object value;
-                    if (this.TryGetValue(ClientConstants.SequenceNumberName, out value))
+                    if (TryGetValue(ClientConstants.SequenceNumberName, out object value))
                     {
                         return (long)value;
                     }
@@ -150,8 +150,7 @@ namespace TrackOne
             {
                 get
                 {
-                    object value;
-                    if (this.TryGetValue(ClientConstants.EnqueuedTimeUtcName, out value))
+                    if (TryGetValue(ClientConstants.EnqueuedTimeUtcName, out object value))
                     {
                         return (DateTime)value;
                     }
@@ -167,8 +166,7 @@ namespace TrackOne
             {
                 get
                 {
-                    object value;
-                    if (this.TryGetValue(ClientConstants.OffsetName, out value))
+                    if (TryGetValue(ClientConstants.OffsetName, out object value))
                     {
                         return (string)value;
                     }
@@ -182,8 +180,7 @@ namespace TrackOne
             {
                 get
                 {
-                    object value;
-                    if (this.TryGetValue(ClientConstants.PartitionKeyName, out value))
+                    if (TryGetValue(ClientConstants.PartitionKeyName, out object value))
                     {
                         return (string)value;
                     }
@@ -191,7 +188,14 @@ namespace TrackOne
                     return null;
                 }
             }
+
+            public Dictionary<string, object> WithoutTypedMembers() =>
+                this
+                    .Where(pair => pair.Key != ClientConstants.SequenceNumberName
+                        && pair.Key != ClientConstants.OffsetName
+                        && pair.Key != ClientConstants.EnqueuedTimeUtcName
+                        && pair.Key != ClientConstants.PartitionKeyName)
+                    .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }
-

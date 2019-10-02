@@ -186,6 +186,16 @@ namespace Sql.Tests
             {
                 AssertCollection(expected.Tags, actual.Tags);
             }
+
+            if (expected.ReadScale != null)
+            {
+                Assert.Equal(expected.ReadScale, actual.ReadScale);
+            }
+
+            if (expected.ReadReplicaCount != null)
+            {
+                Assert.Equal(expected.ReadReplicaCount, actual.ReadReplicaCount);
+            }
         }
 
         public static void ValidateDatabaseEx(Database expected, Database actual)
@@ -398,6 +408,13 @@ namespace Sql.Tests
         {
             Assert.NotNull(actual.Id);
             Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
+        }
+
+        public static void ValidatePrivateEndpointConnection(PrivateEndpointConnection expected, PrivateEndpointConnection actual)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.PrivateLinkServiceConnectionState.Status, actual.PrivateLinkServiceConnectionState.Status);
         }
 
         internal static Task<Database[]> CreateDatabasesAsync(

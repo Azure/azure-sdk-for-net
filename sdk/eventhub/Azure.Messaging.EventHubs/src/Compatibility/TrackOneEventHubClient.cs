@@ -30,6 +30,23 @@ namespace Azure.Messaging.EventHubs.Compatibility
         private Lazy<TrackOne.EventHubClient> _trackOneClient;
 
         /// <summary>
+        ///   The name of the Event Hub that the consumer is connected to, specific to the
+        ///   Event Hubs namespace that contains it.
+        /// </summary>
+        ///
+        public string EventHubName { get; }
+
+        /// <summary>
+        ///   Indicates whether or not this client has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public override bool Closed => (_trackOneClient.IsValueCreated) ? _trackOneClient.Value.CloseCalled : false;
+
+        /// <summary>
         ///   The track one <see cref="TrackOne.EventHubClient" /> for use with this transport client.
         /// </summary>
         ///
@@ -89,11 +106,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                       EventHubRetryPolicy defaultRetryPolicy,
                                       Func<string, string, TokenCredential, EventHubClientOptions, Func<EventHubRetryPolicy>, TrackOne.EventHubClient> eventHubClientFactory)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
-            Guard.ArgumentNotNull(nameof(clientOptions), clientOptions);
-            Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
+            Argument.AssertNotNullOrEmpty(host, nameof(host));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
+            Argument.AssertNotNull(defaultRetryPolicy, nameof(defaultRetryPolicy));
+
+            EventHubName = eventHubName;
 
             _retryPolicy = defaultRetryPolicy;
             _trackOneClient = new Lazy<TrackOne.EventHubClient>(() => eventHubClientFactory(host, eventHubName, credential, clientOptions, () => _retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -118,6 +137,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                                            EventHubClientOptions clientOptions,
                                                            Func<EventHubRetryPolicy> defaultRetryPolicyFactory)
         {
+
             // Translate the connection type into the corresponding Track One transport type.
 
             TrackOne.TransportType transportType;
@@ -133,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     break;
 
                 default:
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, clientOptions.TransportType.ToString(), nameof(clientOptions.TransportType)));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, clientOptions.TransportType.ToString(), nameof(clientOptions.TransportType)));
             }
 
             // Translate the provided credential into a Track One token provider.
@@ -166,12 +186,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             // Build and configure the client.
 
-            var retryPolicy = (clientOptions.RetryOptions != null)
+            EventHubRetryPolicy retryPolicy = (clientOptions.RetryOptions != null)
                 ? new BasicRetryPolicy(clientOptions.RetryOptions)
                 : defaultRetryPolicyFactory();
 
-            var operationTimeout = retryPolicy.CalculateTryTimeout(0);
-            var client = TrackOne.EventHubClient.Create(endpointBuilder.Uri, eventHubName, tokenProvider, operationTimeout, transportType);
+            TimeSpan operationTimeout = retryPolicy.CalculateTryTimeout(0);
+            TrackOne.EventHubClient client = TrackOne.EventHubClient.Create(endpointBuilder.Uri, eventHubName, tokenProvider, operationTimeout, transportType);
 
             client.WebProxy = clientOptions.Proxy;
             client.RetryPolicy = new TrackOneRetryPolicy(retryPolicy);
@@ -210,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         {
             try
             {
-                var runtimeInformation = await TrackOneClient.GetRuntimeInformationAsync().ConfigureAwait(false);
+                EventHubRuntimeInformation runtimeInformation = await TrackOneClient.GetRuntimeInformationAsync().ConfigureAwait(false);
 
                 return new EventHubProperties
                 (
@@ -240,11 +260,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
         {
             try
             {
-                var runtimeInformation = await TrackOneClient.GetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
+                EventHubPartitionRuntimeInformation runtimeInformation = await TrackOneClient.GetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
 
-                if (!Int64.TryParse(runtimeInformation.LastEnqueuedOffset, out var lastEnqueuedOffset))
+                if (!long.TryParse(runtimeInformation.LastEnqueuedOffset, out var lastEnqueuedOffset))
                 {
-                    throw new FormatException(String.Format(CultureInfo.CurrentCulture, Resources.CannotParseIntegerType, nameof(runtimeInformation.LastEnqueuedOffset), 64, runtimeInformation.LastEnqueuedOffset));
+                    throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.CannotParseIntegerType, nameof(runtimeInformation.LastEnqueuedOffset), 64, runtimeInformation.LastEnqueuedOffset));
                 }
 
                 return new PartitionProperties
@@ -281,13 +301,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
         {
             TrackOne.EventDataSender CreateSenderFactory(EventHubRetryPolicy activeRetryPolicy)
             {
-                var producer = TrackOneClient.CreateEventSender(producerOptions.PartitionId);
+                EventDataSender producer = TrackOneClient.CreateEventSender(producerOptions.PartitionId);
                 producer.RetryPolicy = new TrackOneRetryPolicy(activeRetryPolicy);
 
                 return producer;
             }
 
-            var initialRetryPolicy = (producerOptions.RetryOptions != null)
+            EventHubRetryPolicy initialRetryPolicy = (producerOptions.RetryOptions != null)
                 ? new BasicRetryPolicy(producerOptions.RetryOptions)
                 : defaultRetryPolicy;
 
@@ -343,7 +363,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
                 var trackOneOptions = new TrackOne.ReceiverOptions
                 {
-                    Identifier = consumerOptions.Identifier
+                    Identifier = consumerOptions.Identifier,
+                    EnableReceiverRuntimeMetric = consumerOptions.TrackLastEnqueuedEventInformation
                 };
 
                 PartitionReceiver consumer;
@@ -362,13 +383,17 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 return consumer;
             }
 
-            var initialRetryPolicy = (consumerOptions.RetryOptions != null)
+            EventHubRetryPolicy initialRetryPolicy = (consumerOptions.RetryOptions != null)
                 ? new BasicRetryPolicy(consumerOptions.RetryOptions)
                 : defaultRetryPolicy;
 
+            LastEnqueuedEventProperties partitionMetrics = (consumerOptions.TrackLastEnqueuedEventInformation)
+                ? new LastEnqueuedEventProperties(EventHubName, partitionId)
+                : null;
+
             return new EventHubConsumer
             (
-                new TrackOneEventHubConsumer(CreateReceiverFactory, initialRetryPolicy),
+                new TrackOneEventHubConsumer(CreateReceiverFactory, initialRetryPolicy, partitionMetrics),
                 TrackOneClient.EventHubName,
                 partitionId,
                 consumerGroup,

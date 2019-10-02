@@ -97,7 +97,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="geoReplicationStats">Geo Replication Stats</param>
         /// <param name="failoverInProgress">If the failover is in progress,
         /// the value will be true, otherwise, it will be null.</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?))
+        /// <param name="largeFileSharesState">Allow large file shares if sets
+        /// to Enabled. It cannot be disabled once it is enabled. Possible
+        /// values include: 'Disabled', 'Enabled'</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -121,6 +124,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             IsHnsEnabled = isHnsEnabled;
             GeoReplicationStats = geoReplicationStats;
             FailoverInProgress = failoverInProgress;
+            LargeFileSharesState = largeFileSharesState;
             CustomInit();
         }
 
@@ -279,6 +283,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.failoverInProgress")]
         public bool? FailoverInProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets allow large file shares if sets to Enabled. It cannot
+        /// be disabled once it is enabled. Possible values include:
+        /// 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.largeFileSharesState")]
+        public string LargeFileSharesState { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// and list deleted secrets in a soft-delete enabled key vault
     /// using the synchronous methods of the SecretClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class GetSecrets
     {
         [Test]
@@ -37,12 +37,18 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var bankSecret = new Secret(bankSecretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             var storageSecret = new Secret(storageSecretName, "f4G34fMh8v547")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             client.Set(bankSecret);
@@ -52,8 +58,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // List operations don't return the secrets with value information.
             // So, for each returned secret we call Get to get the secret with its value information.
 
-            IEnumerable<Response<SecretBase>> secrets = client.GetSecrets();
-            foreach (SecretBase secret in secrets)
+            IEnumerable<SecretProperties> secrets = client.GetSecrets();
+            foreach (SecretProperties secret in secrets)
             {
                 Secret secretWithValue = client.Get(secret.Name);
                 Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
@@ -65,8 +71,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
-            IEnumerable<Response<SecretBase>> secretVersions = client.GetSecretVersions(bankSecretName);
-            foreach (SecretBase secret in secretVersions)
+            IEnumerable<SecretProperties> secretVersions = client.GetSecretVersions(bankSecretName);
+            foreach (SecretProperties secret in secretVersions)
             {
                 Debug.WriteLine($"Secret's version {secret.Version} with name {secret.Name}");
             }
@@ -81,7 +87,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             Assert.IsTrue(WaitForDeletedSecret(client, storageSecretName));
 
             // You can list all the deleted and non-purged secrets, assuming key vault is soft-delete enabled.
-            IEnumerable<Response<DeletedSecret>> secretsDeleted = client.GetDeletedSecrets();
+            IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();
             foreach (DeletedSecret secret in secretsDeleted)
             {
                 Debug.WriteLine($"Deleted secret's recovery Id {secret.RecoveryId}");

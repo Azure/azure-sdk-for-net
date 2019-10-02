@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
@@ -53,8 +54,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public TrackOneEventHubProducer(Func<EventHubRetryPolicy, TrackOne.EventDataSender> trackOneSenderFactory,
                                         EventHubRetryPolicy retryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(trackOneSenderFactory), trackOneSenderFactory);
-            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+            Argument.AssertNotNull(trackOneSenderFactory, nameof(trackOneSenderFactory));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _retryPolicy = retryPolicy;
             _trackOneSender = new Lazy<TrackOne.EventDataSender>(() => trackOneSenderFactory(_retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -125,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             try
             {
-                var events = eventBatch.AsEnumerable<AmqpMessage>().Select(TransformMessage);
+                IEnumerable<TrackOne.EventData> events = eventBatch.AsEnumerable<AmqpMessage>().Select(TransformMessage);
                 await TrackOneSender.SendAsync(events, eventBatch.SendOptions?.PartitionKey).ConfigureAwait(false);
             }
             catch (TrackOne.EventHubsException ex)
@@ -150,10 +151,10 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
         ///
-        public override async Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
-                                                                         CancellationToken cancellationToken)
+        public override async ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                              CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNull(nameof(options), options);
+            Argument.AssertNotNull(options, nameof(options));
 
             // Ensure that the underlying AMQP link was created so that the maximum
             // message size was set on the track one sender.
@@ -163,9 +164,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
             // Ensure that there was a maximum size populated; if none was provided,
             // default to the maximum size allowed by the link.
 
-            options.MaximumizeInBytes = options.MaximumizeInBytes ?? TrackOneSender.MaxMessageSize;
+            options.MaximumizeInBytes ??= TrackOneSender.MaxMessageSize;
 
-            Guard.ArgumentInRange(nameof(options.MaximumizeInBytes), options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize);
+            Argument.AssertInRange(options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize, nameof(options.MaximumizeInBytes));
 
             return new AmqpEventBatch(new AmqpMessageConverter(), options);
         }

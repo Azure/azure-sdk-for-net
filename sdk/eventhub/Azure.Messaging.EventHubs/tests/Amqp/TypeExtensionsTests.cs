@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(ValidTypeTestCases))]
         public void ToAmqpPropertyMapsKnownTypes(Type knownType)
         {
-            var amqpType = knownType.ToAmqpPropertyType();
+            AmqpProperty.Type amqpType = knownType.ToAmqpPropertyType();
 
             Assert.That(amqpType, Is.Not.EqualTo(AmqpProperty.Type.Null), "Known types should not map to Null");
             Assert.That(amqpType, Is.Not.EqualTo(AmqpProperty.Type.Unknown), "Known types should not map to Unknown");

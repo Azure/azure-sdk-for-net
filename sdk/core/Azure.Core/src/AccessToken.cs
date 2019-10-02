@@ -23,10 +23,8 @@ namespace Azure.Core
 
         public override bool Equals(object obj)
         {
-            if (obj is AccessToken)
+            if (obj is AccessToken accessToken)
             {
-                var accessToken = (AccessToken)obj;
-
                 return accessToken.ExpiresOn == ExpiresOn && accessToken.Token == Token;
             }
 

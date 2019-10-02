@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var mock = new Mock<ConfigurationClient>();
             // Setup client method
             mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
-                .Returns(new Response<ConfigurationSetting>(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
+                .Returns(Response.FromValue(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
 
             // Use the client mock
             ConfigurationClient client = mock.Object;

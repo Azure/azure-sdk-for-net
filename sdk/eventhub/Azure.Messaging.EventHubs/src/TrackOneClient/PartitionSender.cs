@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TrackOne.Primitives;
 
 namespace TrackOne
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using TrackOne.Primitives;
-
     /// <summary>
     /// This sender class is a logical representation of sending events to a specific EventHub partition. Do not use this class
     /// if you do not care about sending events to specific partitions, instead use <see cref="EventHubClient.SendAsync(EventData)"/>.
@@ -18,10 +18,10 @@ namespace TrackOne
         internal PartitionSender(EventHubClient eventHubClient, string partitionId)
             : base($"{nameof(PartitionSender)}{ClientEntity.GetNextId()}({eventHubClient.EventHubName},{partitionId})")
         {
-            this.EventHubClient = eventHubClient;
-            this.PartitionId = partitionId;
-            this.InnerSender = eventHubClient.CreateEventSender(partitionId);
-            EventHubsEventSource.Log.ClientCreated(this.ClientId, null);
+            EventHubClient = eventHubClient;
+            PartitionId = partitionId;
+            InnerSender = eventHubClient.CreateEventSender(partitionId);
+            EventHubsEventSource.Log.ClientCreated(ClientId, null);
         }
 
         /// <summary>
@@ -34,16 +34,16 @@ namespace TrackOne
         /// </summary>
         public string PartitionId { get; }
 
-        EventDataSender InnerSender { get; }
+        private EventDataSender InnerSender { get; }
 
-        object ThisLock { get; } = new object();
+        private object ThisLock { get; } = new object();
 
 
         /// <summary>Creates a batch where event data objects can be added for later SendAsync call.</summary>
         /// <returns>Returns <see cref="EventDataBatch" />.</returns>
         public EventDataBatch CreateBatch()
         {
-            return this.CreateBatch(new BatchOptions());
+            return CreateBatch(new BatchOptions());
         }
 
         /// <summary>Creates a batch where event data objects can be added for later SendAsync call.</summary>
@@ -56,7 +56,7 @@ namespace TrackOne
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            return new EventDataBatch(options.MaxMessageSize > 0 ? options.MaxMessageSize : this.InnerSender.MaxMessageSize);
+            return new EventDataBatch(options.MaxMessageSize > 0 ? options.MaxMessageSize : InnerSender.MaxMessageSize);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace TrackOne
         public Task SendAsync(EventData eventData)
         {
             Guard.ArgumentNotNull(nameof(eventData), eventData);
-            return this.SendAsync(new[] { eventData });
+            return SendAsync(new[] { eventData });
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace TrackOne
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            await this.InnerSender.SendAsync(eventDatas, null).ConfigureAwait(false);
+            await InnerSender.SendAsync(eventDatas, null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace TrackOne
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            await this.SendAsync(eventDataBatch.ToEnumerable());
+            await SendAsync(eventDataBatch.ToEnumerable());
         }
 
         /// <summary>
@@ -157,14 +157,14 @@ namespace TrackOne
         /// <returns>An asynchronous operation</returns>
         public override async Task CloseAsync()
         {
-            EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
+            EventHubsEventSource.Log.ClientCloseStart(ClientId);
             try
             {
-                await this.InnerSender.CloseAsync().ConfigureAwait(false);
+                await InnerSender.CloseAsync().ConfigureAwait(false);
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseStop(this.ClientId);
+                EventHubsEventSource.Log.ClientCloseStop(ClientId);
             }
         }
     }

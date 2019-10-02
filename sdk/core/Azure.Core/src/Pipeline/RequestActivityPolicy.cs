@@ -10,15 +10,20 @@ namespace Azure.Core.Pipeline
 {
     internal class RequestActivityPolicy : HttpPipelinePolicy
     {
+        private readonly bool _isDistributedTracingEnabled;
+
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private const string RequestIdHeaderName = "Request-Id";
 
-        public static RequestActivityPolicy Shared { get; } = new RequestActivityPolicy();
-
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Pipeline");
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public RequestActivityPolicy(bool isDistributedTracingEnabled)
+        {
+            _isDistributedTracingEnabled = isDistributedTracingEnabled;
+        }
+
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
@@ -28,8 +33,22 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
+            if (!_isDistributedTracingEnabled)
+            {
+                if (isAsync)
+                {
+                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                }
+
+                return;
+            }
+
             if (!s_diagnosticSource.IsEnabled())
             {
                 await ProcessNextAsync(message, pipeline, isAsync).ConfigureAwait(false);
@@ -39,8 +58,9 @@ namespace Azure.Core.Pipeline
 
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
-            activity.AddTag("http.url", message.Request.UriBuilder.ToString());
+            activity.AddTag("http.url", message.Request.Uri.ToString());
             activity.AddTag("requestId", message.Request.ClientRequestId);
+
             if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 activity.AddTag("http.user_agent", userAgent);
@@ -80,20 +100,20 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static async Task ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static async ValueTask ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
-            var currentActivity = Activity.Current;
+            Activity currentActivity = Activity.Current;
 
             if (currentActivity != null)
             {
-                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
+                if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
-                        if (currentActivity.TraceStateString != null)
+                        if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
-                            message.Request.Headers.Add(TraceStateHeaderName, currentActivity.TraceStateString);
+                            message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
                     }
                 }

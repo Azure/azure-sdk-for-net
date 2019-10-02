@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -41,20 +40,20 @@ namespace Azure.Storage.Common.Test
             try { configs.Add(TestConfigurations.DefaultTargetPremiumBlobTenant); } catch (InconclusiveException) { }
             try { configs.Add(TestConfigurations.DefaultTargetPreviewBlobTenant); } catch (InconclusiveException) { }
             try { configs.Add(TestConfigurations.DefaultTargetOAuthTenant); } catch (InconclusiveException) { }
-            foreach (var config in configs)
+            foreach (TenantConfiguration config in configs)
             {
                 // Blobs
                 var blobs = new BlobServiceClient(config.ConnectionString);
-                await foreach (var container in blobs.GetContainersAsync())
+                await foreach (ContainerItem container in blobs.GetContainersAsync())
                 {
                     try
                     {
-                        await blobs.DeleteBlobContainerAsync(container.Value.Name);
+                        await blobs.DeleteBlobContainerAsync(container.Name);
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
                     {
                         // Break any lingering leases
-                        await blobs.GetBlobContainerClient(container.Value.Name).GetLeaseClient().BreakAsync();
+                        await blobs.GetBlobContainerClient(container.Name).GetLeaseClient().BreakAsync();
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
                     {
@@ -64,11 +63,11 @@ namespace Azure.Storage.Common.Test
 
                 // Queues
                 var queues = new QueueServiceClient(config.ConnectionString);
-                await foreach (var queue in queues.GetQueuesAsync())
+                await foreach (QueueItem queue in queues.GetQueuesAsync())
                 {
                     try
                     {
-                        await queues.DeleteQueueAsync(queue.Value.Name);
+                        await queues.DeleteQueueAsync(queue.Name);
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == QueueErrorCode.QueueBeingDeleted)
                     {
@@ -78,11 +77,11 @@ namespace Azure.Storage.Common.Test
 
                 // Files
                 var files = new FileServiceClient(config.ConnectionString);
-                await foreach (var share in files.GetSharesAsync())
+                await foreach (ShareItem share in files.GetSharesAsync())
                 {
                     try
                     {
-                        await files.DeleteShareAsync(share.Value.Name);
+                        await files.DeleteShareAsync(share.Name);
                     }
                     catch (StorageRequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
                     {

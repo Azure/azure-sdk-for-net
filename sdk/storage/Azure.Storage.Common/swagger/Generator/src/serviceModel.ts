@@ -285,8 +285,7 @@ function createServiceInfo(project: IProject): IServiceInfo {
         license: {
             name: 'MIT',
             header: `Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the MIT License. See License.txt in the project root for
-license information.`
+Licensed under the MIT License.`
         }
     };
 }
@@ -391,13 +390,19 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         unsupported(() => def[`x-ms-client-flatten`], `${location}.properties['${name}']`);
         unsupported(() => def[`x-ms-mutability`], `${location}.properties['${name}']`);
 
+        let isNullable: boolean|undefined = def[`x-az-nullable-array`];
+        if (isNullable === undefined) {
+            isNullable = false;
+        }
+
         properties[name] = {
             name,
             clientName: optional(() => def[`x-ms-client-name`], name),
             description: def.description,
             readonly: true,
             xml: def.xml || { },
-            model: createType(project, name, def, `${location}.properties['${name}']`)
+            model: createType(project, name, def, `${location}.properties['${name}']`),
+            isNullable: isNullable
         };
     }
 
@@ -481,6 +486,7 @@ function createEnumType(project: IProject, name: string, swagger: any, location:
         constant: false,
         customSerialization,
         public: isPublic,
+        skipValue: swagger[`x-az-enum-skip-value`],
         values,
         extendedHeaders: []
     };
@@ -610,7 +616,8 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         bodyClientName: <string>optional(() => swagger[`x-az-response-schema-name`], `Body`), // TODO: switch from 'Body' to body.name?
         headers,
         exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
-        public: isPublic
+        public: isPublic,
+        returnStream: <boolean>optional(() => swagger[`x-az-stream`])
     };
 }
 
@@ -899,6 +906,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             successes.forEach(s => s.model = model);
             break;
     }
+    model.returnStream = successes[0].returnStream;
     
     // Return all the responses
     return {

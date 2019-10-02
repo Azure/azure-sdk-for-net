@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -15,14 +15,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string ValidPropertyName = "value";
 
         /// <summary>
-        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to decrypt
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to decrypt
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
         /// The result of the verification, true if the signature was valid otherwise false.
         /// </summary>
-        public bool IsValid { get; private set; }
+        public bool IsValid { get; internal set; }
 
         /// <summary>
         /// The algorithm used

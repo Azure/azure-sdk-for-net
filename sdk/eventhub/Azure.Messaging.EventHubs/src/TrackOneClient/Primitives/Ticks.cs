@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 
 namespace TrackOne
 {
-    using System;
-
-    static class Ticks
+    internal static class Ticks
     {
         public static long Now
         {

@@ -1,8 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 // This file was automatically generated.  Do not edit.
+
+#pragma warning disable IDE0016 // Null check can be simplified
+#pragma warning disable IDE0017 // Variable declaration can be inlined
+#pragma warning disable IDE0018 // Object initialization can be simplified
+#pragma warning disable SA1402  // File may only contain a single type
 
 #region Service
 namespace Azure.Storage.Files
@@ -30,7 +34,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.Models.FileServiceProperties properties,
@@ -44,18 +48,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         properties,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetPropertiesAsync_CreateResponse(_response);
                     }
@@ -78,8 +88,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Service.SetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
+            /// <returns>The Service.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.Models.FileServiceProperties properties,
@@ -96,14 +106,15 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -115,7 +126,7 @@ namespace Azure.Storage.Files
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -156,7 +167,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage service properties.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -169,17 +180,23 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -201,8 +218,8 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Service.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Service.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -214,19 +231,20 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -247,12 +265,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.FileServiceProperties _value = Azure.Storage.Files.Models.FileServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.FileServiceProperties> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -281,7 +294,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of shares.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.SharesSegment>> ListSharesSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.SharesSegment>> ListSharesSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -298,7 +311,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ListSharesSegmentAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListSharesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -307,12 +320,18 @@ namespace Azure.Storage.Files
                         include,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListSharesSegmentAsync_CreateResponse(_response);
                     }
@@ -338,8 +357,8 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Service.ListSharesSegmentAsync Request.</returns>
-            internal static Azure.Core.Http.Request ListSharesSegmentAsync_CreateRequest(
+            /// <returns>The Service.ListSharesSegmentAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListSharesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -355,22 +374,23 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "list");
-                if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (include != null) { _request.UriBuilder.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Files.FileRestClient.Serialization.ToString(item))))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "list");
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (include != null) { _request.Uri.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Files.FileRestClient.Serialization.ToString(item))))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -391,12 +411,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.SharesSegment _value = Azure.Storage.Files.Models.SharesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.SharesSegment> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.SharesSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -431,7 +446,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -446,19 +461,25 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata,
                         quota))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -482,8 +503,8 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
-            /// <returns>The Share.CreateAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
+            /// <returns>The Share.CreateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -497,13 +518,14 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -515,7 +537,7 @@ namespace Azure.Storage.Files
                 }
                 if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -546,12 +568,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -577,7 +594,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -591,18 +608,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -625,8 +648,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Share.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Share.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -639,19 +662,20 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -694,12 +718,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareProperties> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -726,7 +745,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -741,19 +760,25 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
                         timeout,
                         deleteSnapshots))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -777,8 +802,8 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
-            /// <returns>The Share.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The Share.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -792,20 +817,21 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (deleteSnapshots != null) { _request.Headers.SetValue("x-ms-delete-snapshots", Azure.Storage.Files.FileRestClient.Serialization.ToString(deleteSnapshots.Value)); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -847,7 +873,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareSnapshotInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -861,18 +887,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreateSnapshotAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateSnapshotAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateSnapshotAsync_CreateResponse(_response);
                     }
@@ -895,8 +927,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <returns>The Share.CreateSnapshotAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreateSnapshotAsync_CreateRequest(
+            /// <returns>The Share.CreateSnapshotAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateSnapshotAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -909,14 +941,15 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "snapshot");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "snapshot");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -927,7 +960,7 @@ namespace Azure.Storage.Files
                     }
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -962,12 +995,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -987,14 +1015,16 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="sharePermissionJson">A permission (a security descriptor) at the share level.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareCreatePermissionResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult>> CreatePermissionAsync(
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.PermissionInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.PermissionInfo>> CreatePermissionAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string sharePermissionJson,
                 int? timeout = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.CreatePermission",
@@ -1005,17 +1035,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreatePermissionAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreatePermissionAsync_CreateMessage(
                         pipeline,
                         resourceUri,
+                        sharePermissionJson,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreatePermissionAsync_CreateResponse(_response);
                     }
@@ -1036,11 +1073,13 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="sharePermissionJson">A permission (a security descriptor) at the share level.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Share.CreatePermissionAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreatePermissionAsync_CreateRequest(
+            /// <returns>The Share.CreatePermissionAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreatePermissionAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string sharePermissionJson,
                 int? timeout = default)
             {
                 // Validation
@@ -1048,29 +1087,40 @@ namespace Azure.Storage.Files
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
                 }
+                if (sharePermissionJson == null)
+                {
+                    throw new System.ArgumentNullException(nameof(sharePermissionJson));
+                }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "filepermission");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "filepermission");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                // Create the body
+                string _text = sharePermissionJson;
+                _request.Headers.SetValue("Content-Type", "application/json");
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+
+                return _message;
             }
 
             /// <summary>
             /// Create the Share.CreatePermissionAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.CreatePermissionAsync Azure.Response{Azure.Storage.Files.Models.ShareCreatePermissionResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult> CreatePermissionAsync_CreateResponse(
+            /// <returns>The Share.CreatePermissionAsync Azure.Response{Azure.Storage.Files.Models.PermissionInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Models.PermissionInfo> CreatePermissionAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1079,7 +1129,7 @@ namespace Azure.Storage.Files
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Files.Models.ShareCreatePermissionResult _value = new Azure.Storage.Files.Models.ShareCreatePermissionResult();
+                        Azure.Storage.Files.Models.PermissionInfo _value = new Azure.Storage.Files.Models.PermissionInfo();
 
                         // Get response headers
                         string _header;
@@ -1089,12 +1139,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1114,16 +1159,16 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> GetPermissionAsync(
+            /// <returns>A permission (a security descriptor) at the share level.</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<string>> GetPermissionAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                string filePermissionKey = default,
+                string filePermissionKey,
                 int? timeout = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.GetPermission",
@@ -1134,18 +1179,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPermissionAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPermissionAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         filePermissionKey,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPermissionAsync_CreateResponse(_response);
                     }
@@ -1166,13 +1217,13 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Share.GetPermissionAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPermissionAsync_CreateRequest(
+            /// <returns>The Share.GetPermissionAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPermissionAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                string filePermissionKey = default,
+                string filePermissionKey,
                 int? timeout = default)
             {
                 // Validation
@@ -1180,30 +1231,35 @@ namespace Azure.Storage.Files
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
                 }
+                if (filePermissionKey == null)
+                {
+                    throw new System.ArgumentNullException(nameof(filePermissionKey));
+                }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "filepermission");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "filepermission");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
+                _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey);
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
             /// Create the Share.GetPermissionAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.GetPermissionAsync Azure.Response.</returns>
-            internal static Azure.Response GetPermissionAsync_CreateResponse(
+            /// <returns>The Share.GetPermissionAsync Azure.Response{string}.</returns>
+            internal static Azure.Response<string> GetPermissionAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1211,7 +1267,15 @@ namespace Azure.Storage.Files
                 {
                     case 200:
                     {
-                        return response;
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        // Create the response
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1237,7 +1301,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1251,18 +1315,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetQuotaAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetQuotaAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         quota))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetQuotaAsync_CreateResponse(_response);
                     }
@@ -1285,8 +1355,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
-            /// <returns>The Share.SetQuotaAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetQuotaAsync_CreateRequest(
+            /// <returns>The Share.SetQuotaAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetQuotaAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1299,20 +1369,21 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1343,12 +1414,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1374,7 +1440,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1388,18 +1454,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -1422,8 +1494,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <returns>The Share.SetMetadataAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
+            /// <returns>The Share.SetMetadataAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1436,14 +1508,15 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -1454,7 +1527,7 @@ namespace Azure.Storage.Files
                     }
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1485,12 +1558,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1515,7 +1583,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1528,17 +1596,23 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1560,8 +1634,8 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Share.GetAccessPolicyAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetAccessPolicyAsync_CreateRequest(
+            /// <returns>The Share.GetAccessPolicyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -1573,19 +1647,20 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "acl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "acl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1610,12 +1685,7 @@ namespace Azure.Storage.Files
                                     Azure.Storage.Files.Models.SignedIdentifier.FromXml));
 
                         // Create the response
-                        Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>> _result =
-                            new Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1641,7 +1711,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
@@ -1655,18 +1725,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         permissions,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1689,8 +1765,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Share.SetAccessPolicyAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetAccessPolicyAsync_CreateRequest(
+            /// <returns>The Share.SetAccessPolicyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
@@ -1703,14 +1779,15 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "acl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "acl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -1729,7 +1806,7 @@ namespace Azure.Storage.Files
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1760,12 +1837,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1790,7 +1862,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Stats for the share.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareStatistics>> GetStatisticsAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1803,17 +1875,23 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetStatisticsAsync_CreateResponse(_response);
                     }
@@ -1835,8 +1913,8 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Share.GetStatisticsAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetStatisticsAsync_CreateRequest(
+            /// <returns>The Share.GetStatisticsAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -1848,19 +1926,20 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "share");
-                _request.UriBuilder.AppendQuery("comp", "stats");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share");
+                _request.Uri.AppendQuery("comp", "stats");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -1881,12 +1960,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.ShareStatistics _value = Azure.Storage.Files.Models.ShareStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareStatistics> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareStatistics>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -1925,7 +1999,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -1944,7 +2018,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileAttributes,
@@ -1955,12 +2029,18 @@ namespace Azure.Storage.Files
                         filePermission,
                         filePermissionKey))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -1988,8 +2068,8 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <returns>The Directory.CreateAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
+            /// <returns>The Directory.CreateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2019,13 +2099,14 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "directory");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "directory");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -2041,7 +2122,7 @@ namespace Azure.Storage.Files
                 if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
                 if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2100,12 +2181,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2131,7 +2207,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -2145,18 +2221,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -2179,8 +2261,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Directory.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The Directory.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -2193,19 +2275,20 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "directory");
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "directory");
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2276,12 +2359,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryProperties> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2306,7 +2384,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2319,17 +2397,23 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -2351,8 +2435,8 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Directory.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The Directory.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -2364,18 +2448,19 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "directory");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "directory");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2421,7 +2506,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> SetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2439,7 +2524,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileAttributes,
@@ -2449,12 +2534,18 @@ namespace Azure.Storage.Files
                         filePermission,
                         filePermissionKey))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetPropertiesAsync_CreateResponse(_response);
                     }
@@ -2481,8 +2572,8 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <returns>The Directory.SetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
+            /// <returns>The Directory.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2511,14 +2602,15 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "directory");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "directory");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -2528,7 +2620,7 @@ namespace Azure.Storage.Files
                 if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
                 if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2587,12 +2679,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2618,7 +2705,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2632,18 +2719,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -2666,8 +2759,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <returns>The Directory.SetMetadataAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
+            /// <returns>The Directory.SetMetadataAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2680,14 +2773,15 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "directory");
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "directory");
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -2698,7 +2792,7 @@ namespace Azure.Storage.Files
                     }
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2729,12 +2823,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2763,7 +2852,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of directories and files.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2780,7 +2869,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ListFilesAndDirectoriesSegmentAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListFilesAndDirectoriesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -2789,12 +2878,18 @@ namespace Azure.Storage.Files
                         maxresults,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListFilesAndDirectoriesSegmentAsync_CreateResponse(_response);
                     }
@@ -2820,8 +2915,8 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The Directory.ListFilesAndDirectoriesSegmentAsync Request.</returns>
-            internal static Azure.Core.Http.Request ListFilesAndDirectoriesSegmentAsync_CreateRequest(
+            /// <returns>The Directory.ListFilesAndDirectoriesSegmentAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListFilesAndDirectoriesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2837,23 +2932,24 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "directory");
-                _request.UriBuilder.AppendQuery("comp", "list");
-                if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "directory");
+                _request.Uri.AppendQuery("comp", "list");
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -2874,12 +2970,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.FilesAndDirectoriesSegment _value = Azure.Storage.Files.Models.FilesAndDirectoriesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -2908,7 +2999,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -2925,7 +3016,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         marker,
@@ -2934,12 +3025,18 @@ namespace Azure.Storage.Files
                         sharesnapshot,
                         recursive))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListHandlesAsync_CreateResponse(_response);
                     }
@@ -2965,8 +3062,8 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
-            /// <returns>The Directory.ListHandlesAsync Request.</returns>
-            internal static Azure.Core.Http.Request ListHandlesAsync_CreateRequest(
+            /// <returns>The Directory.ListHandlesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -2982,16 +3079,17 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "listhandles");
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "listhandles");
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3001,7 +3099,7 @@ namespace Azure.Storage.Files
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -3022,12 +3120,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.StorageHandlesSegment _value = Azure.Storage.Files.Models.StorageHandlesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3056,7 +3149,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -3073,7 +3166,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ForceCloseHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         handleId,
@@ -3082,12 +3175,18 @@ namespace Azure.Storage.Files
                         sharesnapshot,
                         recursive))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ForceCloseHandlesAsync_CreateResponse(_response);
                     }
@@ -3113,8 +3212,8 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
-            /// <returns>The Directory.ForceCloseHandlesAsync Request.</returns>
-            internal static Azure.Core.Http.Request ForceCloseHandlesAsync_CreateRequest(
+            /// <returns>The Directory.ForceCloseHandlesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ForceCloseHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -3134,15 +3233,16 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "forceclosehandles");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "forceclosehandles");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-handle-id", handleId);
@@ -3153,7 +3253,7 @@ namespace Azure.Storage.Files
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -3184,12 +3284,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3235,7 +3330,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
@@ -3261,7 +3356,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileContentLength,
@@ -3279,12 +3374,18 @@ namespace Azure.Storage.Files
                         filePermission,
                         filePermissionKey))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -3319,8 +3420,8 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <returns>The File.CreateAsync Request.</returns>
-            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
+            /// <returns>The File.CreateAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
@@ -3357,12 +3458,13 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3396,7 +3498,7 @@ namespace Azure.Storage.Files
                 if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
                 if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -3459,12 +3561,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3491,7 +3588,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>> DownloadAsync(
+            public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>, System.IO.Stream)> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3506,21 +3603,29 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DownloadAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DownloadAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         range,
                         rangeGetContentHash))
                     {
-                        Azure.Response _response = async ?
+                        // Avoid buffering if stream is going to be returned to the caller
+                        _message.BufferResponse = false;
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DownloadAsync_CreateResponse(_response);
+                        return (DownloadAsync_CreateResponse(_response), _message.ExtractResponseContent());
                     }
                 }
                 catch (System.Exception ex)
@@ -3542,8 +3647,8 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Return file data only from the specified byte range.</param>
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
-            /// <returns>The File.DownloadAsync Request.</returns>
-            internal static Azure.Core.Http.Request DownloadAsync_CreateRequest(
+            /// <returns>The File.DownloadAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DownloadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3557,12 +3662,13 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3573,7 +3679,7 @@ namespace Azure.Storage.Files
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -3709,12 +3815,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     case 206:
                     {
@@ -3838,12 +3939,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -3869,7 +3965,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageFileProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -3883,18 +3979,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -3917,8 +4019,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The File.GetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
+            /// <returns>The File.GetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -3931,18 +4033,19 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -4069,12 +4172,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageFileProperties> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageFileProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4105,7 +4203,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4118,17 +4216,23 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -4150,8 +4254,8 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The File.DeleteAsync Request.</returns>
-            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
+            /// <returns>The File.DeleteAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -4163,17 +4267,18 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -4226,7 +4331,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> SetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -4251,7 +4356,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileAttributes,
@@ -4268,12 +4373,18 @@ namespace Azure.Storage.Files
                         filePermission,
                         filePermissionKey))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetPropertiesAsync_CreateResponse(_response);
                     }
@@ -4307,8 +4418,8 @@ namespace Azure.Storage.Files
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <returns>The File.SetPropertiesAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
+            /// <returns>The File.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -4344,13 +4455,14 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -4377,7 +4489,7 @@ namespace Azure.Storage.Files
                 if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
                 if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -4440,12 +4552,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4471,7 +4578,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4485,18 +4592,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
                         metadata))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -4519,8 +4632,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <returns>The File.SetMetadataAsync Request.</returns>
-            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
+            /// <returns>The File.SetMetadataAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4533,13 +4646,14 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -4550,7 +4664,7 @@ namespace Azure.Storage.Files
                     }
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -4585,12 +4699,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4620,7 +4729,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileUploadInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4638,7 +4747,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = UploadRangeAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UploadRangeAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         range,
@@ -4648,12 +4757,18 @@ namespace Azure.Storage.Files
                         timeout,
                         contentHash))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return UploadRangeAsync_CreateResponse(_response);
                     }
@@ -4680,8 +4795,8 @@ namespace Azure.Storage.Files
             /// <param name="optionalbody">Initial data.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
-            /// <returns>The File.UploadRangeAsync Request.</returns>
-            internal static Azure.Core.Http.Request UploadRangeAsync_CreateRequest(
+            /// <returns>The File.UploadRangeAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage UploadRangeAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4702,13 +4817,14 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "range");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "range");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-range", range);
@@ -4720,7 +4836,7 @@ namespace Azure.Storage.Files
                 // Create the body
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(optionalbody);
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -4759,12 +4875,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4796,7 +4907,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FileUploadRangeFromURLResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult>> UploadRangeFromURLAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult>> UploadRangeFromURLAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4816,7 +4927,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = UploadRangeFromURLAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UploadRangeFromURLAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         range,
@@ -4828,12 +4939,18 @@ namespace Azure.Storage.Files
                         sourceIfMatchCrc64,
                         sourceIfNoneMatchCrc64))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return UploadRangeFromURLAsync_CreateResponse(_response);
                     }
@@ -4862,8 +4979,8 @@ namespace Azure.Storage.Files
             /// <param name="sourceContentCrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
             /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
-            /// <returns>The File.UploadRangeFromURLAsync Request.</returns>
-            internal static Azure.Core.Http.Request UploadRangeFromURLAsync_CreateRequest(
+            /// <returns>The File.UploadRangeFromURLAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage UploadRangeFromURLAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4890,13 +5007,14 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "range");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "range");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-range", range);
@@ -4909,7 +5027,7 @@ namespace Azure.Storage.Files
                 if (sourceIfMatchCrc64 != null) { _request.Headers.SetValue("x-ms-source-if-match-crc64", System.Convert.ToBase64String(sourceIfMatchCrc64)); }
                 if (sourceIfNoneMatchCrc64 != null) { _request.Headers.SetValue("x-ms-source-if-none-match-crc64", System.Convert.ToBase64String(sourceIfNoneMatchCrc64)); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -4948,12 +5066,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -4980,7 +5093,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileRangeInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -4995,19 +5108,25 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = GetRangeListAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetRangeListAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
                         timeout,
                         range))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetRangeListAsync_CreateResponse(_response);
                     }
@@ -5031,8 +5150,8 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
-            /// <returns>The File.GetRangeListAsync Request.</returns>
-            internal static Azure.Core.Http.Request GetRangeListAsync_CreateRequest(
+            /// <returns>The File.GetRangeListAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage GetRangeListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -5046,20 +5165,21 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "rangelist");
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "rangelist");
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -5100,12 +5220,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5132,7 +5247,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5147,19 +5262,25 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = StartCopyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = StartCopyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
                         timeout,
                         metadata))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return StartCopyAsync_CreateResponse(_response);
                     }
@@ -5183,8 +5304,8 @@ namespace Azure.Storage.Files
             /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <returns>The File.StartCopyAsync Request.</returns>
-            internal static Azure.Core.Http.Request StartCopyAsync_CreateRequest(
+            /// <returns>The File.StartCopyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage StartCopyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5202,12 +5323,13 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -5219,7 +5341,7 @@ namespace Azure.Storage.Files
                     }
                 }
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -5258,12 +5380,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5289,7 +5406,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> AbortCopyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -5303,18 +5420,24 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = AbortCopyAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = AbortCopyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copyId,
                         timeout))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return AbortCopyAsync_CreateResponse(_response);
                     }
@@ -5337,8 +5460,8 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="copyId">The copy identifier provided in the x-ms-copy-id header of the original Copy File operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <returns>The File.AbortCopyAsync Request.</returns>
-            internal static Azure.Core.Http.Request AbortCopyAsync_CreateRequest(
+            /// <returns>The File.AbortCopyAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage AbortCopyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -5355,20 +5478,21 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "copy");
-                _request.UriBuilder.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "copy");
+                _request.Uri.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-action", "abort");
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -5412,7 +5536,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -5428,7 +5552,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         marker,
@@ -5436,12 +5560,18 @@ namespace Azure.Storage.Files
                         timeout,
                         sharesnapshot))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListHandlesAsync_CreateResponse(_response);
                     }
@@ -5466,8 +5596,8 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
-            /// <returns>The File.ListHandlesAsync Request.</returns>
-            internal static Azure.Core.Http.Request ListHandlesAsync_CreateRequest(
+            /// <returns>The File.ListHandlesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -5482,21 +5612,22 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "listhandles");
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "listhandles");
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -5517,12 +5648,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.StorageHandlesSegment _value = Azure.Storage.Files.Models.StorageHandlesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5550,7 +5676,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -5566,7 +5692,7 @@ namespace Azure.Storage.Files
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ForceCloseHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         handleId,
@@ -5574,12 +5700,18 @@ namespace Azure.Storage.Files
                         marker,
                         sharesnapshot))
                     {
-                        Azure.Response _response = async ?
+                        if (async)
+                        {
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
                         return ForceCloseHandlesAsync_CreateResponse(_response);
                     }
@@ -5604,8 +5736,8 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
-            /// <returns>The File.ForceCloseHandlesAsync Request.</returns>
-            internal static Azure.Core.Http.Request ForceCloseHandlesAsync_CreateRequest(
+            /// <returns>The File.ForceCloseHandlesAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ForceCloseHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -5624,21 +5756,22 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Http.Request _request = _message.Request;
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "forceclosehandles");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "forceclosehandles");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-handle-id", handleId);
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
-                return _request;
+                return _message;
             }
 
             /// <summary>
@@ -5669,12 +5802,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(response, _value);
                     }
                     default:
                     {
@@ -5716,6 +5844,12 @@ namespace Azure.Storage.Files.Models
         /// The permissions for the ACL policy.
         /// </summary>
         public string Permission { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use FilesModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
 
         /// <summary>
         /// Serialize a AccessPolicy instance as XML.
@@ -5823,36 +5957,26 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.CopyStatus value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.CopyStatus.Pending:
-                        return "pending";
-                    case Azure.Storage.Files.Models.CopyStatus.Success:
-                        return "success";
-                    case Azure.Storage.Files.Models.CopyStatus.Aborted:
-                        return "aborted";
-                    case Azure.Storage.Files.Models.CopyStatus.Failed:
-                        return "failed";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
-                }
+                    Azure.Storage.Files.Models.CopyStatus.Pending => "pending",
+                    Azure.Storage.Files.Models.CopyStatus.Success => "success",
+                    Azure.Storage.Files.Models.CopyStatus.Aborted => "aborted",
+                    Azure.Storage.Files.Models.CopyStatus.Failed => "failed",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.CopyStatus ParseCopyStatus(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "pending":
-                        return Azure.Storage.Files.Models.CopyStatus.Pending;
-                    case "success":
-                        return Azure.Storage.Files.Models.CopyStatus.Success;
-                    case "aborted":
-                        return Azure.Storage.Files.Models.CopyStatus.Aborted;
-                    case "failed":
-                        return Azure.Storage.Files.Models.CopyStatus.Failed;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
-                }
+                    "pending" => Azure.Storage.Files.Models.CopyStatus.Pending,
+                    "success" => Azure.Storage.Files.Models.CopyStatus.Success,
+                    "aborted" => Azure.Storage.Files.Models.CopyStatus.Aborted,
+                    "failed" => Azure.Storage.Files.Models.CopyStatus.Failed,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.")
+                };
             }
         }
     }
@@ -5891,6 +6015,12 @@ namespace Azure.Storage.Files.Models
         /// The maximum amount time that a browser should cache the preflight OPTIONS request.
         /// </summary>
         public int MaxAgeInSeconds { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of CorsRule instances.
+        /// You can use FilesModelFactory.CorsRule instead.
+        /// </summary>
+        internal CorsRule() { }
 
         /// <summary>
         /// Serialize a CorsRule instance as XML.
@@ -5967,24 +6097,20 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.DeleteSnapshotsOptionType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include:
-                        return "include";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
-                }
+                    Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include => "include",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.DeleteSnapshotsOptionType ParseDeleteSnapshotsOptionType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "include":
-                        return Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
-                }
+                    "include" => Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.")
+                };
             }
         }
     }
@@ -6003,6 +6129,12 @@ namespace Azure.Storage.Files.Models
         /// Name
         /// </summary>
         public string Name { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DirectoryItem instances.
+        /// You can use FilesModelFactory.DirectoryItem instead.
+        /// </summary>
+        internal DirectoryItem() { }
 
         /// <summary>
         /// Deserializes XML into a new DirectoryItem instance.
@@ -6035,6 +6167,12 @@ namespace Azure.Storage.Files.Models
         /// x-ms-error-code
         /// </summary>
         public string ErrorCode { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FailureNoContent instances.
+        /// You can use FilesModelFactory.FailureNoContent instead.
+        /// </summary>
+        internal FailureNoContent() { }
     }
 }
 #endregion class FailureNoContent
@@ -6045,7 +6183,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// File UploadRangeFromURLResult
     /// </summary>
-    public partial class FileUploadRangeFromURLResult
+    internal partial class FileUploadRangeFromURLResult
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
@@ -6068,29 +6206,12 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
-    }
 
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
         /// <summary>
-        /// Creates a new FileUploadRangeFromURLResult instance for mocking.
+        /// Prevent direct instantiation of FileUploadRangeFromURLResult instances.
+        /// You can use FilesModelFactory.FileUploadRangeFromURLResult instead.
         /// </summary>
-        public static FileUploadRangeFromURLResult FileUploadRangeFromURLResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            byte[] xMSContentCrc64,
-            bool isServerEncrypted)
-        {
-            var _model = new FileUploadRangeFromURLResult();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.XMSContentCrc64 = xMSContentCrc64;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
-        }
+        internal FileUploadRangeFromURLResult() { }
     }
 }
 #endregion class FileUploadRangeFromURLResult
@@ -6107,302 +6228,332 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// AccountAlreadyExists
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists { get; } = @"AccountAlreadyExists";
 
         /// <summary>
         /// AccountBeingCreated
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated = @"AccountBeingCreated";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated { get; } = @"AccountBeingCreated";
 
         /// <summary>
         /// AccountIsDisabled
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled = @"AccountIsDisabled";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled { get; } = @"AccountIsDisabled";
 
         /// <summary>
         /// AuthenticationFailed
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed = @"AuthenticationFailed";
+        public static Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed { get; } = @"AuthenticationFailed";
 
         /// <summary>
         /// AuthorizationFailure
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure = @"AuthorizationFailure";
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure { get; } = @"AuthorizationFailure";
 
         /// <summary>
         /// ConditionHeadersNotSupported
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported { get; } = @"ConditionHeadersNotSupported";
 
         /// <summary>
         /// ConditionNotMet
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ConditionNotMet = @"ConditionNotMet";
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionNotMet { get; } = @"ConditionNotMet";
 
         /// <summary>
         /// EmptyMetadataKey
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
+        public static Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey { get; } = @"EmptyMetadataKey";
 
         /// <summary>
         /// InsufficientAccountPermissions
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
+        public static Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions { get; } = @"InsufficientAccountPermissions";
 
         /// <summary>
         /// InternalError
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InternalError = @"InternalError";
+        public static Azure.Storage.Files.Models.FileErrorCode InternalError { get; } = @"InternalError";
 
         /// <summary>
         /// InvalidAuthenticationInfo
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo { get; } = @"InvalidAuthenticationInfo";
 
         /// <summary>
         /// InvalidHeaderValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue { get; } = @"InvalidHeaderValue";
 
         /// <summary>
         /// InvalidHttpVerb
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb { get; } = @"InvalidHttpVerb";
 
         /// <summary>
         /// InvalidInput
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidInput = @"InvalidInput";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidInput { get; } = @"InvalidInput";
 
         /// <summary>
         /// InvalidMd5
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidMd5 = @"InvalidMd5";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMd5 { get; } = @"InvalidMd5";
 
         /// <summary>
         /// InvalidMetadata
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidMetadata = @"InvalidMetadata";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMetadata { get; } = @"InvalidMetadata";
 
         /// <summary>
         /// InvalidQueryParameterValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue { get; } = @"InvalidQueryParameterValue";
 
         /// <summary>
         /// InvalidRange
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidRange = @"InvalidRange";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidRange { get; } = @"InvalidRange";
 
         /// <summary>
         /// InvalidResourceName
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidResourceName = @"InvalidResourceName";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidResourceName { get; } = @"InvalidResourceName";
 
         /// <summary>
         /// InvalidUri
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidUri = @"InvalidUri";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidUri { get; } = @"InvalidUri";
 
         /// <summary>
         /// InvalidXmlDocument
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument { get; } = @"InvalidXmlDocument";
 
         /// <summary>
         /// InvalidXmlNodeValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue { get; } = @"InvalidXmlNodeValue";
 
         /// <summary>
         /// Md5Mismatch
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode Md5Mismatch = @"Md5Mismatch";
+        public static Azure.Storage.Files.Models.FileErrorCode Md5Mismatch { get; } = @"Md5Mismatch";
 
         /// <summary>
         /// MetadataTooLarge
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge = @"MetadataTooLarge";
+        public static Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge { get; } = @"MetadataTooLarge";
 
         /// <summary>
         /// MissingContentLengthHeader
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader { get; } = @"MissingContentLengthHeader";
 
         /// <summary>
         /// MissingRequiredQueryParameter
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter { get; } = @"MissingRequiredQueryParameter";
 
         /// <summary>
         /// MissingRequiredHeader
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader { get; } = @"MissingRequiredHeader";
 
         /// <summary>
         /// MissingRequiredXmlNode
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode { get; } = @"MissingRequiredXmlNode";
 
         /// <summary>
         /// MultipleConditionHeadersNotSupported
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported { get; } = @"MultipleConditionHeadersNotSupported";
 
         /// <summary>
         /// OperationTimedOut
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode OperationTimedOut = @"OperationTimedOut";
+        public static Azure.Storage.Files.Models.FileErrorCode OperationTimedOut { get; } = @"OperationTimedOut";
 
         /// <summary>
         /// OutOfRangeInput
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput = @"OutOfRangeInput";
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput { get; } = @"OutOfRangeInput";
 
         /// <summary>
         /// OutOfRangeQueryParameterValue
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue { get; } = @"OutOfRangeQueryParameterValue";
 
         /// <summary>
         /// RequestBodyTooLarge
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
+        public static Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge { get; } = @"RequestBodyTooLarge";
 
         /// <summary>
         /// ResourceTypeMismatch
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch { get; } = @"ResourceTypeMismatch";
 
         /// <summary>
         /// RequestUrlFailedToParse
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
+        public static Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse { get; } = @"RequestUrlFailedToParse";
 
         /// <summary>
         /// ResourceAlreadyExists
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists { get; } = @"ResourceAlreadyExists";
 
         /// <summary>
         /// ResourceNotFound
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ResourceNotFound = @"ResourceNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceNotFound { get; } = @"ResourceNotFound";
 
         /// <summary>
         /// ServerBusy
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ServerBusy = @"ServerBusy";
+        public static Azure.Storage.Files.Models.FileErrorCode ServerBusy { get; } = @"ServerBusy";
 
         /// <summary>
         /// UnsupportedHeader
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader = @"UnsupportedHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader { get; } = @"UnsupportedHeader";
 
         /// <summary>
         /// UnsupportedXmlNode
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode { get; } = @"UnsupportedXmlNode";
 
         /// <summary>
         /// UnsupportedQueryParameter
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter { get; } = @"UnsupportedQueryParameter";
 
         /// <summary>
         /// UnsupportedHttpVerb
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb { get; } = @"UnsupportedHttpVerb";
 
         /// <summary>
         /// CannotDeleteFileOrDirectory
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory = @"CannotDeleteFileOrDirectory";
+        public static Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory { get; } = @"CannotDeleteFileOrDirectory";
 
         /// <summary>
         /// ClientCacheFlushDelay
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay = @"ClientCacheFlushDelay";
+        public static Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay { get; } = @"ClientCacheFlushDelay";
 
         /// <summary>
         /// DeletePending
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode DeletePending = @"DeletePending";
+        public static Azure.Storage.Files.Models.FileErrorCode DeletePending { get; } = @"DeletePending";
 
         /// <summary>
         /// DirectoryNotEmpty
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty = @"DirectoryNotEmpty";
+        public static Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty { get; } = @"DirectoryNotEmpty";
 
         /// <summary>
         /// FileLockConflict
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode FileLockConflict = @"FileLockConflict";
+        public static Azure.Storage.Files.Models.FileErrorCode FileLockConflict { get; } = @"FileLockConflict";
 
         /// <summary>
         /// InvalidFileOrDirectoryPathName
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName = @"InvalidFileOrDirectoryPathName";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName { get; } = @"InvalidFileOrDirectoryPathName";
 
         /// <summary>
         /// ParentNotFound
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ParentNotFound = @"ParentNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ParentNotFound { get; } = @"ParentNotFound";
 
         /// <summary>
         /// ReadOnlyAttribute
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute = @"ReadOnlyAttribute";
+        public static Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute { get; } = @"ReadOnlyAttribute";
 
         /// <summary>
         /// ShareAlreadyExists
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists = @"ShareAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists { get; } = @"ShareAlreadyExists";
 
         /// <summary>
         /// ShareBeingDeleted
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted = @"ShareBeingDeleted";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted { get; } = @"ShareBeingDeleted";
 
         /// <summary>
         /// ShareDisabled
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareDisabled = @"ShareDisabled";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareDisabled { get; } = @"ShareDisabled";
 
         /// <summary>
         /// ShareNotFound
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareNotFound = @"ShareNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareNotFound { get; } = @"ShareNotFound";
 
         /// <summary>
         /// SharingViolation
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode SharingViolation = @"SharingViolation";
+        public static Azure.Storage.Files.Models.FileErrorCode SharingViolation { get; } = @"SharingViolation";
 
         /// <summary>
         /// ShareSnapshotInProgress
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress = @"ShareSnapshotInProgress";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress { get; } = @"ShareSnapshotInProgress";
 
         /// <summary>
         /// ShareSnapshotCountExceeded
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded = @"ShareSnapshotCountExceeded";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded { get; } = @"ShareSnapshotCountExceeded";
 
         /// <summary>
         /// ShareSnapshotOperationNotSupported
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported = @"ShareSnapshotOperationNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported { get; } = @"ShareSnapshotOperationNotSupported";
 
         /// <summary>
         /// ShareHasSnapshots
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots = @"ShareHasSnapshots";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots { get; } = @"ShareHasSnapshots";
 
         /// <summary>
         /// ContainerQuotaDowngradeNotAllowed
         /// </summary>
-        public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed = @"ContainerQuotaDowngradeNotAllowed";
+        public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed { get; } = @"ContainerQuotaDowngradeNotAllowed";
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
+
+        /// <summary>
+        /// FeatureVersionMismatch
+        /// </summary>
+        public static Azure.Storage.Files.Models.FileErrorCode FeatureVersionMismatch { get; } = @"FeatureVersionMismatch";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>
@@ -6414,33 +6565,33 @@ namespace Azure.Storage.Files.Models
         /// Creates a new FileErrorCode instance.
         /// </summary>
         /// <param name="value">The FileErrorCode value.</param>
-        private FileErrorCode(string value) { this._value = value; }
+        private FileErrorCode(string value) { _value = value; }
 
         /// <summary>
         /// Check if two FileErrorCode instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Files.Models.FileErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public bool Equals(Azure.Storage.Files.Models.FileErrorCode other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
 
         /// <summary>
         /// Check if two FileErrorCode instances are equal.
         /// </summary>
         /// <param name="o">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Files.Models.FileErrorCode other && this.Equals(other);
+        public override bool Equals(object o) => o is Azure.Storage.Files.Models.FileErrorCode other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the FileErrorCode.
         /// </summary>
         /// <returns>Hash code for the FileErrorCode.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
+        public override int GetHashCode() => _value.GetHashCode();
 
         /// <summary>
         /// Convert the FileErrorCode to a string.
         /// </summary>
         /// <returns>String representation of the FileErrorCode.</returns>
-        public override string ToString() => this._value;
+        public override string ToString() => _value;
 
         #pragma warning disable CA2225 // Operator overloads have named alternates
         /// <summary>
@@ -6454,25 +6605,25 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Convert an FileErrorCode to a string.
         /// </summary>
-        /// <param name="o">The FileErrorCode value.</param>
+        /// <param name="value">The FileErrorCode value.</param>
         /// <returns>String representation of the FileErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Files.Models.FileErrorCode o) => o._value;
+        public static implicit operator string(Azure.Storage.Files.Models.FileErrorCode value) => value._value;
 
         /// <summary>
         /// Check if two FileErrorCode instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode a, Azure.Storage.Files.Models.FileErrorCode b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => left.Equals(right);
 
         /// <summary>
         /// Check if two FileErrorCode instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Files.Models.FileErrorCode a, Azure.Storage.Files.Models.FileErrorCode b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => !left.Equals(right);
     }
 }
 #endregion enum strings FileErrorCode
@@ -6511,7 +6662,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.Properties = new Azure.Storage.Files.Models.FileProperty();
+                Properties = new Azure.Storage.Files.Models.FileProperty();
             }
         }
 
@@ -6547,6 +6698,12 @@ namespace Azure.Storage.Files.Models
         /// Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties.
         /// </summary>
         public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileProperty instances.
+        /// You can use FilesModelFactory.FileProperty instead.
+        /// </summary>
+        internal FileProperty() { }
 
         /// <summary>
         /// Deserializes XML into a new FileProperty instance.
@@ -6595,28 +6752,22 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.FileRangeWriteType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.FileRangeWriteType.Update:
-                        return "update";
-                    case Azure.Storage.Files.Models.FileRangeWriteType.Clear:
-                        return "clear";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
-                }
+                    Azure.Storage.Files.Models.FileRangeWriteType.Update => "update",
+                    Azure.Storage.Files.Models.FileRangeWriteType.Clear => "clear",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.FileRangeWriteType ParseFileRangeWriteType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "update":
-                        return Azure.Storage.Files.Models.FileRangeWriteType.Update;
-                    case "clear":
-                        return Azure.Storage.Files.Models.FileRangeWriteType.Clear;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
-                }
+                    "update" => Azure.Storage.Files.Models.FileRangeWriteType.Update,
+                    "clear" => Azure.Storage.Files.Models.FileRangeWriteType.Clear,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.")
+                };
             }
         }
     }
@@ -6644,7 +6795,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Files.Models.CorsRule> Cors { get; internal set; }
+        public System.Collections.Generic.IList<Azure.Storage.Files.Models.CorsRule> Cors { get; set; }
 
         /// <summary>
         /// Creates a new FileServiceProperties instance
@@ -6662,9 +6813,8 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.HourMetrics = new Azure.Storage.Files.Models.Metrics();
-                this.MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
-                this.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
+                HourMetrics = new Azure.Storage.Files.Models.Metrics();
+                MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
             }
         }
 
@@ -6814,8 +6964,8 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.DirectoryItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.DirectoryItem>();
-                this.FileItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.FileItem>();
+                DirectoryItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.DirectoryItem>();
+                FileItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.FileItem>();
             }
         }
 
@@ -7044,9 +7194,9 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public FlattenedStorageFileProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            this.ContentEncoding = new System.Collections.Generic.List<string>();
-            this.ContentLanguage = new System.Collections.Generic.List<string>();
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            ContentEncoding = new System.Collections.Generic.List<string>();
+            ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
 }
@@ -7080,28 +7230,22 @@ namespace Azure.Storage.Files
         {
             public static string ToString(Azure.Storage.Files.Models.ListSharesIncludeType value)
             {
-                switch (value)
+                return value switch
                 {
-                    case Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots:
-                        return "snapshots";
-                    case Azure.Storage.Files.Models.ListSharesIncludeType.Metadata:
-                        return "metadata";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
-                }
+                    Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots => "snapshots",
+                    Azure.Storage.Files.Models.ListSharesIncludeType.Metadata => "metadata",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.")
+                };
             }
 
             public static Azure.Storage.Files.Models.ListSharesIncludeType ParseListSharesIncludeType(string value)
             {
-                switch (value)
+                return value switch
                 {
-                    case "snapshots":
-                        return Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots;
-                    case "metadata":
-                        return Azure.Storage.Files.Models.ListSharesIncludeType.Metadata;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
-                }
+                    "snapshots" => Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots,
+                    "metadata" => Azure.Storage.Files.Models.ListSharesIncludeType.Metadata,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.")
+                };
             }
         }
     }
@@ -7152,7 +7296,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
+                RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
             }
         }
 
@@ -7221,6 +7365,46 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class Metrics
 
+#region class PermissionInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// PermissionInfo
+    /// </summary>
+    public partial class PermissionInfo
+    {
+        /// <summary>
+        /// Key of the permission set for the directory/file.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PermissionInfo instances.
+        /// You can use FilesModelFactory.PermissionInfo instead.
+        /// </summary>
+        internal PermissionInfo() { }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new PermissionInfo instance for mocking.
+        /// </summary>
+        public static PermissionInfo PermissionInfo(
+            string filePermissionKey)
+        {
+            return new PermissionInfo()
+            {
+                FilePermissionKey = filePermissionKey,
+            };
+        }
+    }
+}
+#endregion class PermissionInfo
+
 #region class Range
 namespace Azure.Storage.Files.Models
 {
@@ -7238,6 +7422,12 @@ namespace Azure.Storage.Files.Models
         /// End of the range.
         /// </summary>
         public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of Range instances.
+        /// You can use FilesModelFactory.Range instead.
+        /// </summary>
+        internal Range() { }
 
         /// <summary>
         /// Deserializes XML into a new Range instance.
@@ -7269,10 +7459,11 @@ namespace Azure.Storage.Files.Models
             long start,
             long end)
         {
-            var _model = new Range();
-            _model.Start = start;
-            _model.End = end;
-            return _model;
+            return new Range()
+            {
+                Start = start,
+                End = end,
+            };
         }
     }
 }
@@ -7284,7 +7475,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageDirectoryInfo
     /// </summary>
-    public partial class RawStorageDirectoryInfo
+    internal partial class RawStorageDirectoryInfo
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
@@ -7330,39 +7521,12 @@ namespace Azure.Storage.Files.Models
         /// The parent fileId of the directory.
         /// </summary>
         public string FileParentId { get; internal set; }
-    }
 
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
         /// <summary>
-        /// Creates a new RawStorageDirectoryInfo instance for mocking.
+        /// Prevent direct instantiation of RawStorageDirectoryInfo instances.
+        /// You can use FilesModelFactory.RawStorageDirectoryInfo instead.
         /// </summary>
-        public static RawStorageDirectoryInfo RawStorageDirectoryInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string filePermissionKey,
-            string fileAttributes,
-            System.DateTimeOffset fileCreationTime,
-            System.DateTimeOffset fileLastWriteTime,
-            System.DateTimeOffset fileChangeTime,
-            string fileId,
-            string fileParentId)
-        {
-            var _model = new RawStorageDirectoryInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileAttributes = fileAttributes;
-            _model.FileCreationTime = fileCreationTime;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.FileChangeTime = fileChangeTime;
-            _model.FileId = fileId;
-            _model.FileParentId = fileParentId;
-            return _model;
-        }
+        internal RawStorageDirectoryInfo() { }
     }
 }
 #endregion class RawStorageDirectoryInfo
@@ -7373,7 +7537,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageDirectoryProperties
     /// </summary>
-    public partial class RawStorageDirectoryProperties
+    internal partial class RawStorageDirectoryProperties
     {
         /// <summary>
         /// A set of name-value pairs that contain metadata for the directory.
@@ -7435,44 +7599,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public RawStorageDirectoryProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new RawStorageDirectoryProperties instance for mocking.
-        /// </summary>
-        public static RawStorageDirectoryProperties RawStorageDirectoryProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            System.DateTimeOffset lastModified,
-            bool isServerEncrypted,
-            string fileAttributes,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset fileLastWriteTime,
-            System.DateTimeOffset fileChangeTime,
-            string filePermissionKey,
-            string fileId,
-            string fileParentId,
-            System.DateTimeOffset fileCreationTime)
-        {
-            var _model = new RawStorageDirectoryProperties();
-            _model.Metadata = metadata;
-            _model.LastModified = lastModified;
-            _model.IsServerEncrypted = isServerEncrypted;
-            _model.FileAttributes = fileAttributes;
-            _model.ETag = eTag;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.FileChangeTime = fileChangeTime;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileId = fileId;
-            _model.FileParentId = fileParentId;
-            _model.FileCreationTime = fileCreationTime;
-            return _model;
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
@@ -7484,7 +7611,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageFileInfo
     /// </summary>
-    public partial class RawStorageFileInfo
+    internal partial class RawStorageFileInfo
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
@@ -7535,41 +7662,12 @@ namespace Azure.Storage.Files.Models
         /// The parent fileId of the file.
         /// </summary>
         public string FileParentId { get; internal set; }
-    }
 
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
         /// <summary>
-        /// Creates a new RawStorageFileInfo instance for mocking.
+        /// Prevent direct instantiation of RawStorageFileInfo instances.
+        /// You can use FilesModelFactory.RawStorageFileInfo instead.
         /// </summary>
-        public static RawStorageFileInfo RawStorageFileInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            bool isServerEncrypted,
-            string filePermissionKey,
-            string fileAttributes,
-            System.DateTimeOffset fileCreationTime,
-            System.DateTimeOffset fileLastWriteTime,
-            System.DateTimeOffset fileChangeTime,
-            string fileId,
-            string fileParentId)
-        {
-            var _model = new RawStorageFileInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.IsServerEncrypted = isServerEncrypted;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileAttributes = fileAttributes;
-            _model.FileCreationTime = fileCreationTime;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.FileChangeTime = fileChangeTime;
-            _model.FileId = fileId;
-            _model.FileParentId = fileParentId;
-            return _model;
-        }
+        internal RawStorageFileInfo() { }
     }
 }
 #endregion class RawStorageFileInfo
@@ -7580,7 +7678,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// RawStorageFileProperties
     /// </summary>
-    public partial class RawStorageFileProperties
+    internal partial class RawStorageFileProperties
     {
         /// <summary>
         /// Returns the date and time the file was last modified. The date format follows RFC 1123. Any operation that modifies the file or its properties updates the last modified time.
@@ -7714,74 +7812,9 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public RawStorageFileProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            this.ContentEncoding = new System.Collections.Generic.List<string>();
-            this.ContentLanguage = new System.Collections.Generic.List<string>();
-        }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new RawStorageFileProperties instance for mocking.
-        /// </summary>
-        public static RawStorageFileProperties RawStorageFileProperties(
-            System.DateTimeOffset lastModified,
-            string contentDisposition,
-            System.Collections.Generic.IEnumerable<string> contentLanguage,
-            System.DateTimeOffset copyCompletionTime,
-            string cacheControl,
-            string copyId,
-            string copyProgress,
-            string copySource,
-            Azure.Storage.Files.Models.CopyStatus copyStatus,
-            bool isServerEncrypted,
-            System.Collections.Generic.IEnumerable<string> contentEncoding,
-            string fileAttributes,
-            byte[] contentHash,
-            System.DateTimeOffset fileCreationTime,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset fileLastWriteTime,
-            string contentType,
-            System.DateTimeOffset fileChangeTime,
-            long contentLength,
-            string filePermissionKey,
-            Azure.Storage.Files.Models.Header fileType,
-            string fileId,
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            string fileParentId,
-            string copyStatusDescription)
-        {
-            var _model = new RawStorageFileProperties();
-            _model.LastModified = lastModified;
-            _model.ContentDisposition = contentDisposition;
-            _model.ContentLanguage = contentLanguage;
-            _model.CopyCompletionTime = copyCompletionTime;
-            _model.CacheControl = cacheControl;
-            _model.CopyId = copyId;
-            _model.CopyProgress = copyProgress;
-            _model.CopySource = copySource;
-            _model.CopyStatus = copyStatus;
-            _model.IsServerEncrypted = isServerEncrypted;
-            _model.ContentEncoding = contentEncoding;
-            _model.FileAttributes = fileAttributes;
-            _model.ContentHash = contentHash;
-            _model.FileCreationTime = fileCreationTime;
-            _model.ETag = eTag;
-            _model.FileLastWriteTime = fileLastWriteTime;
-            _model.ContentType = contentType;
-            _model.FileChangeTime = fileChangeTime;
-            _model.ContentLength = contentLength;
-            _model.FilePermissionKey = filePermissionKey;
-            _model.FileType = fileType;
-            _model.FileId = fileId;
-            _model.Metadata = metadata;
-            _model.FileParentId = fileParentId;
-            _model.CopyStatusDescription = copyStatusDescription;
-            return _model;
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            ContentEncoding = new System.Collections.Generic.List<string>();
+            ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
 }
@@ -7804,6 +7837,12 @@ namespace Azure.Storage.Files.Models
         /// Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires.
         /// </summary>
         public int? Days { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of RetentionPolicy instances.
+        /// You can use FilesModelFactory.RetentionPolicy instead.
+        /// </summary>
+        internal RetentionPolicy() { }
 
         /// <summary>
         /// Serialize a RetentionPolicy instance as XML.
@@ -7855,39 +7894,6 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class RetentionPolicy
 
-#region class ShareCreatePermissionResult
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Share CreatePermissionResult
-    /// </summary>
-    public partial class ShareCreatePermissionResult
-    {
-        /// <summary>
-        /// Key of the permission set for the directory/file.
-        /// </summary>
-        public string FilePermissionKey { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareCreatePermissionResult instance for mocking.
-        /// </summary>
-        public static ShareCreatePermissionResult ShareCreatePermissionResult(
-            string filePermissionKey)
-        {
-            var _model = new ShareCreatePermissionResult();
-            _model.FilePermissionKey = filePermissionKey;
-            return _model;
-        }
-    }
-}
-#endregion class ShareCreatePermissionResult
-
 #region class ShareInfo
 namespace Azure.Storage.Files.Models
 {
@@ -7905,6 +7911,12 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareInfo instances.
+        /// You can use FilesModelFactory.ShareInfo instead.
+        /// </summary>
+        internal ShareInfo() { }
     }
 
     /// <summary>
@@ -7919,10 +7931,11 @@ namespace Azure.Storage.Files.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
-            var _model = new ShareInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
+            return new ShareInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+            };
         }
     }
 }
@@ -7972,8 +7985,8 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.Properties = new Azure.Storage.Files.Models.ShareItemProperties();
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                Properties = new Azure.Storage.Files.Models.ShareItemProperties();
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -8024,12 +8037,13 @@ namespace Azure.Storage.Files.Models
             string snapshot = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
-            var _model = new ShareItem();
-            _model.Name = name;
-            _model.Properties = properties;
-            _model.Snapshot = snapshot;
-            _model.Metadata = metadata;
-            return _model;
+            return new ShareItem()
+            {
+                Name = name,
+                Properties = properties,
+                Snapshot = snapshot,
+                Metadata = metadata,
+            };
         }
     }
 }
@@ -8057,6 +8071,12 @@ namespace Azure.Storage.Files.Models
         /// Quota
         /// </summary>
         public int? Quota { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareItemProperties instances.
+        /// You can use FilesModelFactory.ShareItemProperties instead.
+        /// </summary>
+        internal ShareItemProperties() { }
 
         /// <summary>
         /// Deserializes XML into a new ShareItemProperties instance.
@@ -8103,11 +8123,12 @@ namespace Azure.Storage.Files.Models
             Azure.Core.Http.ETag? etag = default,
             int? quota = default)
         {
-            var _model = new ShareItemProperties();
-            _model.LastModified = lastModified;
-            _model.Etag = etag;
-            _model.Quota = quota;
-            return _model;
+            return new ShareItemProperties()
+            {
+                LastModified = lastModified,
+                Etag = etag,
+                Quota = quota,
+            };
         }
     }
 }
@@ -8146,7 +8167,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public ShareProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -8164,12 +8185,13 @@ namespace Azure.Storage.Files.Models
             System.DateTimeOffset lastModified,
             int quota)
         {
-            var _model = new ShareProperties();
-            _model.Metadata = metadata;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.Quota = quota;
-            return _model;
+            return new ShareProperties()
+            {
+                Metadata = metadata,
+                ETag = eTag,
+                LastModified = lastModified,
+                Quota = quota,
+            };
         }
     }
 }
@@ -8197,6 +8219,12 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. A share snapshot cannot be modified, so the last modified time of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the last modified time of the share snapshot differs from that of the base share. If no metadata was specified with the request, the last modified time of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareSnapshotInfo instances.
+        /// You can use FilesModelFactory.ShareSnapshotInfo instead.
+        /// </summary>
+        internal ShareSnapshotInfo() { }
     }
 
     /// <summary>
@@ -8212,11 +8240,12 @@ namespace Azure.Storage.Files.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
-            var _model = new ShareSnapshotInfo();
-            _model.Snapshot = snapshot;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
+            return new ShareSnapshotInfo()
+            {
+                Snapshot = snapshot,
+                ETag = eTag,
+                LastModified = lastModified,
+            };
         }
     }
 }
@@ -8234,6 +8263,12 @@ namespace Azure.Storage.Files.Models
         /// The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.
         /// </summary>
         public int ShareUsageBytes { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ShareStatistics instances.
+        /// You can use FilesModelFactory.ShareStatistics instead.
+        /// </summary>
+        internal ShareStatistics() { }
 
         /// <summary>
         /// Deserializes XML into a new ShareStatistics instance.
@@ -8263,9 +8298,10 @@ namespace Azure.Storage.Files.Models
         public static ShareStatistics ShareStatistics(
             int shareUsageBytes)
         {
-            var _model = new ShareStatistics();
-            _model.ShareUsageBytes = shareUsageBytes;
-            return _model;
+            return new ShareStatistics()
+            {
+                ShareUsageBytes = shareUsageBytes,
+            };
         }
     }
 }
@@ -8325,7 +8361,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
+                ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
             }
         }
 
@@ -8411,7 +8447,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.AccessPolicy = new Azure.Storage.Files.Models.AccessPolicy();
+                AccessPolicy = new Azure.Storage.Files.Models.AccessPolicy();
             }
         }
 
@@ -8478,6 +8514,12 @@ namespace Azure.Storage.Files.Models
         /// Contains count of number of handles closed.
         /// </summary>
         public int NumberOfHandlesClosed { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageClosedHandlesSegment instances.
+        /// You can use FilesModelFactory.StorageClosedHandlesSegment instead.
+        /// </summary>
+        internal StorageClosedHandlesSegment() { }
     }
 
     /// <summary>
@@ -8492,10 +8534,11 @@ namespace Azure.Storage.Files.Models
             string marker,
             int numberOfHandlesClosed)
         {
-            var _model = new StorageClosedHandlesSegment();
-            _model.Marker = marker;
-            _model.NumberOfHandlesClosed = numberOfHandlesClosed;
-            return _model;
+            return new StorageClosedHandlesSegment()
+            {
+                Marker = marker,
+                NumberOfHandlesClosed = numberOfHandlesClosed,
+            };
         }
     }
 }
@@ -8518,6 +8561,12 @@ namespace Azure.Storage.Files.Models
         /// Code
         /// </summary>
         public string Code { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageError instances.
+        /// You can use FilesModelFactory.StorageError instead.
+        /// </summary>
+        internal StorageError() { }
 
         /// <summary>
         /// Deserializes XML into a new StorageError instance.
@@ -8575,6 +8624,12 @@ namespace Azure.Storage.Files.Models
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
         public Azure.Storage.Files.Models.CopyStatus CopyStatus { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageFileCopyInfo instances.
+        /// You can use FilesModelFactory.StorageFileCopyInfo instead.
+        /// </summary>
+        internal StorageFileCopyInfo() { }
     }
 
     /// <summary>
@@ -8591,12 +8646,13 @@ namespace Azure.Storage.Files.Models
             string copyId,
             Azure.Storage.Files.Models.CopyStatus copyStatus)
         {
-            var _model = new StorageFileCopyInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.CopyId = copyId;
-            _model.CopyStatus = copyStatus;
-            return _model;
+            return new StorageFileCopyInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+            };
         }
     }
 }
@@ -8635,7 +8691,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public StorageFileRangeInfo()
         {
-            this.Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.Range>();
+            Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.Range>();
         }
     }
 
@@ -8653,12 +8709,13 @@ namespace Azure.Storage.Files.Models
             long fileContentLength,
             System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> ranges)
         {
-            var _model = new StorageFileRangeInfo();
-            _model.LastModified = lastModified;
-            _model.ETag = eTag;
-            _model.FileContentLength = fileContentLength;
-            _model.Ranges = ranges;
-            return _model;
+            return new StorageFileRangeInfo()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                FileContentLength = fileContentLength,
+                Ranges = ranges,
+            };
         }
     }
 }
@@ -8693,6 +8750,12 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageFileUploadInfo instances.
+        /// You can use FilesModelFactory.StorageFileUploadInfo instead.
+        /// </summary>
+        internal StorageFileUploadInfo() { }
     }
 
     /// <summary>
@@ -8709,12 +8772,13 @@ namespace Azure.Storage.Files.Models
             byte[] contentHash,
             bool isServerEncrypted)
         {
-            var _model = new StorageFileUploadInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.ContentHash = contentHash;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
+            return new StorageFileUploadInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                IsServerEncrypted = isServerEncrypted,
+            };
         }
     }
 }
@@ -8769,6 +8833,12 @@ namespace Azure.Storage.Files.Models
         public System.DateTimeOffset? LastReconnectTime { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of StorageHandle instances.
+        /// You can use FilesModelFactory.StorageHandle instead.
+        /// </summary>
+        internal StorageHandle() { }
+
+        /// <summary>
         /// Deserializes XML into a new StorageHandle instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -8819,16 +8889,17 @@ namespace Azure.Storage.Files.Models
             string parentId = default,
             System.DateTimeOffset? lastReconnectTime = default)
         {
-            var _model = new StorageHandle();
-            _model.HandleId = handleId;
-            _model.Path = path;
-            _model.FileId = fileId;
-            _model.SessionId = sessionId;
-            _model.ClientIp = clientIp;
-            _model.OpenTime = openTime;
-            _model.ParentId = parentId;
-            _model.LastReconnectTime = lastReconnectTime;
-            return _model;
+            return new StorageHandle()
+            {
+                HandleId = handleId,
+                Path = path,
+                FileId = fileId,
+                SessionId = sessionId,
+                ClientIp = clientIp,
+                OpenTime = openTime,
+                ParentId = parentId,
+                LastReconnectTime = lastReconnectTime,
+            };
         }
     }
 }
@@ -8868,7 +8939,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                this.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
+                Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
             }
         }
 

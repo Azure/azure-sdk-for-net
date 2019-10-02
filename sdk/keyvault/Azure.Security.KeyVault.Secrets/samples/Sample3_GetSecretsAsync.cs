@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// and list deleted secrets in a soft-delete enabled key vault
     /// using the asynchronous methods of the SecretClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class GetSecrets
     {
         [Test]
@@ -38,12 +37,18 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             var bankSecret = new Secret(bankSecretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             var storageSecret = new Secret(storageSecretName, "f4G34fMh8v547")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    Expires = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
             await client.SetAsync(bankSecret);
@@ -52,7 +57,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // You need to check if any of the secrets are sharing same values. Let's list the secrets and print their values.
             // List operations don't return the secrets with value information.
             // So, for each returned secret we call Get to get the secret with its value information.
-            await foreach (SecretBase secret in client.GetSecretsAsync())
+            await foreach (SecretProperties secret in client.GetSecretsAsync())
             {
                 Secret secretWithValue = await client.GetAsync(secret.Name);
                 Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
@@ -64,7 +69,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
-            await foreach (SecretBase secret in client.GetSecretVersionsAsync(bankSecretName))
+            await foreach (SecretProperties secret in client.GetSecretVersionsAsync(bankSecretName))
             {
                 Debug.WriteLine($"Secret's version {secret.Version} with name {secret.Name}");
             }

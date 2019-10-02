@@ -58,11 +58,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'december/boxes.csv' will only fire the trigger for blobs named
         /// boxes in a december folder. At least one of these must be provided:
         /// blobPathBeginsWith, blobPathEndsWith.</param>
-        public BlobEventsTrigger(IList<string> events, string scope, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string blobPathBeginsWith = default(string), string blobPathEndsWith = default(string))
+        /// <param name="ignoreEmptyBlobs">If set to true, blobs with zero
+        /// bytes will be ignored.</param>
+        public BlobEventsTrigger(IList<string> events, string scope, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string blobPathBeginsWith = default(string), string blobPathEndsWith = default(string), bool? ignoreEmptyBlobs = default(bool?))
             : base(additionalProperties, description, runtimeState, annotations, pipelines)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
             BlobPathEndsWith = blobPathEndsWith;
+            IgnoreEmptyBlobs = ignoreEmptyBlobs;
             Events = events;
             Scope = scope;
             CustomInit();
@@ -92,6 +95,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.blobPathEndsWith")]
         public string BlobPathEndsWith { get; set; }
+
+        /// <summary>
+        /// Gets or sets if set to true, blobs with zero bytes will be ignored.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.ignoreEmptyBlobs")]
+        public bool? IgnoreEmptyBlobs { get; set; }
 
         /// <summary>
         /// Gets or sets the type of events that cause this trigger to fire.

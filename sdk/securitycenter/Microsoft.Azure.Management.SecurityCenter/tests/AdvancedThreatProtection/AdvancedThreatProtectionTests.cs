@@ -47,7 +47,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void AdvancedThreatProtection_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var resourceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{RgName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}";
@@ -59,7 +59,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void AdvancedThreatProtection_CreateOrUpdate()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var resourceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{RgName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}";

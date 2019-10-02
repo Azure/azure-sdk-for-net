@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for SAP HANA source.
     /// </summary>
-    public partial class SapHanaSource : CopySource
+    public partial class SapHanaSource : TabularSource
     {
         /// <summary>
         /// Initializes a new instance of the SapHanaSource class.
@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="query">SAP HANA Sql query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="packetSize">The packet size of data read from SAP
         /// HANA. Type: integer(or Expression with resultType integer).</param>
-        public SapHanaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), object packetSize = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public SapHanaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), object packetSize = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
         {
             Query = query;
             PacketSize = packetSize;

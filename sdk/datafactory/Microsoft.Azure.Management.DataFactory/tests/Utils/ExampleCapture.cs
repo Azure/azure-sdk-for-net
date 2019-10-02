@@ -26,7 +26,12 @@ namespace DataFactory.Tests.Utils
         private const string triggerName = "exampleTrigger";
         private const string eventTriggerName = "exampleEventTrigger";
         private const string datasetName = "exampleDataset";
+        private const string dataFlowName = "exampleDataFlow";
         private const string pipelineName = "examplePipeline";
+        private const string parentPipeline1Name = "parentPipeline1";
+        private const string parentPipeline2Name = "parentPipeline2";
+        private const string childPipelineName = "childPipeline";
+        private const string chainingTriggerName = "chainingTrigger";
         private const string outputBlobName = "exampleoutput.csv";
         private ExampleSecrets secrets;
         private string outputFolder;
@@ -105,6 +110,12 @@ namespace DataFactory.Tests.Utils
                 CaptureDatasets_Get(); // 200
                 CaptureDatasets_ListByFactory(); // 200
 
+                // Start DataFlows operations, leaving dataset available
+                CaptureDataFlows_Create(); // 200
+                CaptureDataFlows_Update(); // 200
+                CaptureDataFlows_Get(); // 200
+                CaptureDataFlows_ListByFactory(); // 200
+
                 // All Pipelines and PipelineRuns operations, creating/running/monitoring/deleting pipeline
                 CapturePipelines_Create(); // 200
                 CapturePipelines_Update(); // 200
@@ -146,6 +157,10 @@ namespace DataFactory.Tests.Utils
                 CaptureDatasets_Delete(); // 200
                 CaptureDatasets_Delete(); // 204
 
+                // Finish DataFlows operations, deleting data flow
+                CaptureDataFlows_Delete(); // 200
+                CaptureDataFlows_Delete(); // 204
+
                 // Finish LinkedServices operations, deleting linked service
                 CaptureLinkedServices_Delete(); // 200
                 CaptureLinkedServices_Delete(); // 204
@@ -153,6 +168,8 @@ namespace DataFactory.Tests.Utils
                 // Finish integration runtime operations, deleting integration runtime
                 CaptureIntegrationRuntimes_Delete(); // 202
                 CaptureIntegrationRuntimes_Delete(); // 204
+
+                CaptureChainingTrigger();
 
                 // Finish Factories operations, deleting factory
                 CaptureFactories_Delete(); // 200
@@ -671,6 +688,88 @@ namespace DataFactory.Tests.Utils
             client.Datasets.Delete(secrets.ResourceGroupName, secrets.FactoryName, datasetName);
         }
 
+        private DataFlowResource GetDataFlowResource(string description)
+        {
+            DataFlowResource resource = new DataFlowResource
+            {
+                Properties = new MappingDataFlow
+                {
+                    Description = description,
+                    Sources = new List<DataFlowSource>() {
+                        new DataFlowSource()
+                        {
+                            Name = "source",
+                            Description = "source 1",
+                            Dataset = new DatasetReference()
+                            {
+                                ReferenceName = "dataset",
+                                Parameters = new Dictionary<string, object>
+                                {
+                                    { "JobId", new Expression("@pipeline().parameters.JobId") }
+                                }
+                            }
+                        }
+                    },
+                    Sinks = new List<DataFlowSink>() {
+                        new DataFlowSink()
+                        {
+                            Name = "sink",
+                            Description = "sink 1",
+                            Dataset = new DatasetReference()
+                            {
+                                ReferenceName = "dataset",
+                                Parameters = new Dictionary<string, object>
+                                {
+                                    { "JobId", new Expression("@pipeline().parameters.JobId") }
+                                }
+                            }
+                        }
+                    },
+                    Transformations = new List<Transformation>() {
+                        new Transformation()
+                        {
+                            Name = "transformation",
+                            Description = "transformation 1"
+                        }
+                    }
+                }
+            };
+
+            return resource;
+        }
+
+        private void CaptureDataFlows_Create()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Create";
+            DataFlowResource resourceIn = GetDataFlowResource(null);
+            DataFlowResource resource = client.DataFlows.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName, resourceIn);
+        }
+
+        private void CaptureDataFlows_Update()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Update";
+            DataFlowResource resourceIn = GetDataFlowResource("Example description");
+            DataFlowResource resource = client.DataFlows.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName, resourceIn);
+        }
+
+        private void CaptureDataFlows_Get()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Get";
+            DataFlowResource resource = client.DataFlows.Get(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName);
+        }
+
+        private void CaptureDataFlows_ListByFactory()
+        {
+            interceptor.CurrentExampleName = "DataFlows_ListByFactory";
+            IPage<DataFlowResource> resources = client.DataFlows.ListByFactory(secrets.ResourceGroupName, secrets.FactoryName);
+        }
+
+        private void CaptureDataFlows_Delete()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Delete";
+            client.DataFlows.Delete(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName);
+        }
+
         private PipelineResource GetPipelineResource(string description)
         {
             PipelineResource resource = new PipelineResource
@@ -732,6 +831,29 @@ namespace DataFactory.Tests.Utils
             return resource;
         }
 
+        private PipelineResource GetWaitPipelineResource()
+        {
+            PipelineResource resource = new PipelineResource
+            {
+                Parameters = new Dictionary<string, ParameterSpecification>
+                    {
+                        { "JobId", new ParameterSpecification { Type = ParameterType.String } }
+                    },
+                Activities = new List<Activity>(),
+                RunDimensions = new Dictionary<string, object>
+                    {
+                        { "JobId", new Expression("@pipeline().parameters.JobId") }
+                    }
+            };
+            WaitActivity waitActivity = new WaitActivity
+            {
+                Name = "ExampleWaitActivity",
+                WaitTimeInSeconds = 10
+            };
+            resource.Activities.Add(waitActivity);
+            return resource;
+        }
+
         private void CapturePipelines_Create()
         {
             interceptor.CurrentExampleName = "Pipelines_Create";
@@ -777,7 +899,7 @@ namespace DataFactory.Tests.Utils
                 isRecovery: true, referencePipelineRunId: rtr1.RunId);
             return rtr2.RunId;
         }
-
+        
         private void CapturePipelineRuns_Cancel()
         {
             string runId = this.CapturePipelines_CreateRun();
@@ -958,13 +1080,37 @@ namespace DataFactory.Tests.Utils
             return resource;
         }
 
+        private TriggerResource GetChainingTriggerResource()
+        {
+            ChainingTrigger chainingTrigger = new ChainingTrigger()
+            {
+                DependsOn = new List<PipelineReference>(),
+                RunDimension = "JobId",
+            };
+
+            chainingTrigger.Pipeline = new TriggerPipelineReference()
+            {
+                PipelineReference = new PipelineReference(childPipelineName),
+                Parameters = new Dictionary<string, object>()
+            };
+            chainingTrigger.DependsOn.Add(new PipelineReference(parentPipeline1Name));
+            chainingTrigger.DependsOn.Add(new PipelineReference(parentPipeline2Name));
+
+            TriggerResource resource = new TriggerResource()
+            {
+                Properties = chainingTrigger,
+            };
+
+            return resource;
+        }
+
         private void CaptureTriggers_CreateEventful()
         {
             interceptor.CurrentExampleName = "Triggers_CreateEventTrigger";
             TriggerResource resourceIn = this.GetEventTriggerResource(null);
             TriggerResource resource = client.Triggers.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, eventTriggerName, resourceIn);
         }
-
+        
         private void CaptureTriggers_Create()
         {
             interceptor.CurrentExampleName = "Triggers_Create";
@@ -1021,7 +1167,7 @@ namespace DataFactory.Tests.Utils
             client.Triggers.Stop(secrets.ResourceGroupName, secrets.FactoryName, triggerName);
         }
 
-        private void CaptureTriggerRuns_QueryByFactory(DateTime lastUpdatedAfter, DateTime lastUpdatedBefore)
+        private void CaptureTriggerRuns_QueryByFactory(DateTime lastUpdatedAfter, DateTime lastUpdatedBefore, string triggerName = triggerName)
         {
             interceptor.CurrentExampleName = "TriggerRuns_QueryByFactory";
 
@@ -1076,5 +1222,46 @@ namespace DataFactory.Tests.Utils
             IPage<Operation> operations = client.Operations.List();
         }
 
+        private void CaptureChainingTrigger()
+        {
+            PipelineResource resourceIn = GetWaitPipelineResource();
+
+            interceptor.CurrentExampleName = "ParentPipeline1_Create";
+            PipelineResource resource = client.Pipelines.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, parentPipeline1Name, resourceIn);
+
+            interceptor.CurrentExampleName = "ParentPipeline2_Create";
+            resource = client.Pipelines.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, parentPipeline2Name, resourceIn);
+
+            interceptor.CurrentExampleName = "ChildPipeline_Create";
+            resource = client.Pipelines.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, childPipelineName, resourceIn);
+
+            interceptor.CurrentExampleName = "Triggers_CreateChainingTrigger";
+            TriggerResource triggerResource = this.GetChainingTriggerResource();
+            triggerResource = client.Triggers.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, chainingTriggerName, triggerResource);
+
+            client.Triggers.Start(secrets.ResourceGroupName, secrets.FactoryName, chainingTriggerName);
+
+            DateTime startTime = DateTime.UtcNow;
+
+            string jobId = Guid.NewGuid().ToString();
+            interceptor.CurrentExampleName = "Pipelines_CreateRunJobId";
+
+            Dictionary<string, object> arguments = new Dictionary<string, object>
+            {
+                { "JobId",  jobId }
+            };
+
+            CreateRunResponse rtr1 = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, parentPipeline1Name, parameters: arguments);
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(60));
+            this.CaptureTriggerRuns_QueryByFactory(startTime, startTime.AddMinutes(10), chainingTriggerName);
+
+            CreateRunResponse rtr2 = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, parentPipeline2Name, parameters: arguments);
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(60));
+            this.CaptureTriggerRuns_QueryByFactory(startTime, startTime.AddMinutes(10), chainingTriggerName);
+
+            client.Triggers.Stop(secrets.ResourceGroupName, secrets.FactoryName, chainingTriggerName);            
+        }
     }
 }

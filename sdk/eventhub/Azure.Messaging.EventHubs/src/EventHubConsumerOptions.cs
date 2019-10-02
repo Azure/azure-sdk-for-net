@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -106,10 +106,27 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentInRange(nameof(PrefetchCount), value, MinimumPrefetchCount, int.MaxValue);
+                Argument.AssertInRange(value, MinimumPrefetchCount, int.MaxValue, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }
+
+        /// <summary>
+        ///     Indicates whether or not the consumer should request information on the last enqueued event on its
+        ///     associated partition, and track that information as events are received.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if information about the partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
+        ///
+        /// <remarks>
+        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
+        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
+        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
+        ///   against periodically making requests for partition properties using the Event Hub client.
+        /// </remarks>
+        ///
+        ///
+        public bool TrackLastEnqueuedEventInformation { get; set; } = true;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -149,11 +166,11 @@ namespace Azure.Messaging.EventHubs
         internal EventHubConsumerOptions Clone() =>
             new EventHubConsumerOptions
             {
-                OwnerLevel = this.OwnerLevel,
-                RetryOptions = this.RetryOptions?.Clone(),
-                _identifier = this._identifier,
-                _prefetchCount = this._prefetchCount,
-                _maximumReceiveWaitTime = this._maximumReceiveWaitTime
+                OwnerLevel = OwnerLevel,
+                RetryOptions = RetryOptions?.Clone(),
+                _identifier = _identifier,
+                _prefetchCount = _prefetchCount,
+                _maximumReceiveWaitTime = _maximumReceiveWaitTime
             };
 
         /// <summary>
@@ -165,9 +182,9 @@ namespace Azure.Messaging.EventHubs
         ///
         private void ValidateIdentifier(string identifier)
         {
-            if ((!String.IsNullOrEmpty(identifier)) && (identifier.Length > MaximumIdentifierLength))
+            if ((!string.IsNullOrEmpty(identifier)) && (identifier.Length > MaximumIdentifierLength))
             {
-                throw new ArgumentException(nameof(identifier), String.Format(CultureInfo.CurrentCulture, Resources.ConsumerIdentifierOverMaxValue, MaximumIdentifierLength));
+                throw new ArgumentException(nameof(identifier), string.Format(CultureInfo.CurrentCulture, Resources.ConsumerIdentifierOverMaxValue, MaximumIdentifierLength));
             }
         }
 

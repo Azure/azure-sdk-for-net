@@ -1,22 +1,21 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    abstract class EventDataSender : ClientEntity
+    internal abstract class EventDataSender : ClientEntity
     {
         protected EventDataSender(EventHubClient eventHubClient, string partitionId)
             : base(nameof(EventDataSender) + StringUtility.GetRandomString())
         {
-            this.EventHubClient = eventHubClient;
-            this.PartitionId = partitionId;
-            this.RetryPolicy = eventHubClient.RetryPolicy.Clone();
+            EventHubClient = eventHubClient;
+            PartitionId = partitionId;
+            RetryPolicy = eventHubClient.RetryPolicy.Clone();
         }
 
         protected EventHubClient EventHubClient { get; }
@@ -32,28 +31,28 @@ namespace TrackOne
                 return;
             }
 
-            var activePartitionRouting = String.IsNullOrEmpty(partitionKey) ?
-                this.PartitionId :
+            var activePartitionRouting = string.IsNullOrEmpty(partitionKey) ?
+                PartitionId :
                 partitionKey;
 
-            EventHubsEventSource.Log.EventSendStart(this.ClientId, count, partitionKey);
+            EventHubsEventSource.Log.EventSendStart(ClientId, count, partitionKey);
 
             Task sendTask;
             try
             {
-                var processedEvents = await this.ProcessEvents(eventDatas).ConfigureAwait(false);
+                IEnumerable<EventData> processedEvents = await ProcessEvents(eventDatas).ConfigureAwait(false);
 
-                sendTask = this.OnSendAsync(processedEvents, partitionKey);
+                sendTask = OnSendAsync(processedEvents, partitionKey);
                 await sendTask.ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
+                EventHubsEventSource.Log.EventSendException(ClientId, exception.ToString());
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.EventSendStop(this.ClientId);
+                EventHubsEventSource.Log.EventSendStop(ClientId);
             }
         }
 
@@ -69,15 +68,15 @@ namespace TrackOne
             return eventDatas.Count();
         }
 
-        async Task<EventData> ProcessEvent(EventData eventData)
+        private async Task<EventData> ProcessEvent(EventData eventData)
         {
-            if (this.RegisteredPlugins == null || this.RegisteredPlugins.Count == 0)
+            if (RegisteredPlugins == null || RegisteredPlugins.Count == 0)
             {
                 return eventData;
             }
 
-            var processedEvent = eventData;
-            foreach (var plugin in this.RegisteredPlugins.Values)
+            EventData processedEvent = eventData;
+            foreach (Core.EventHubsPlugin plugin in RegisteredPlugins.Values)
             {
                 try
                 {
@@ -98,17 +97,17 @@ namespace TrackOne
             return processedEvent;
         }
 
-        async Task<IEnumerable<EventData>> ProcessEvents(IEnumerable<EventData> eventDatas)
+        private async Task<IEnumerable<EventData>> ProcessEvents(IEnumerable<EventData> eventDatas)
         {
-            if (this.RegisteredPlugins.Count < 1)
+            if (RegisteredPlugins.Count < 1)
             {
                 return eventDatas;
             }
 
             var processedEventList = new List<EventData>();
-            foreach (var eventData in eventDatas)
+            foreach (EventData eventData in eventDatas)
             {
-                var processedMessage = await this.ProcessEvent(eventData)
+                EventData processedMessage = await ProcessEvent(eventData)
                     .ConfigureAwait(false);
                 processedEventList.Add(processedMessage);
             }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -61,6 +60,9 @@ namespace Azure.Storage
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
+        /// <remarks>
+        /// This method assumes that individual uploads are automatically retried.
+        /// </remarks>
         public static async Task<Response<T>> UploadAsync<T, P>(
             Func<Task<Response<T>>> uploadStreamAsync,
             Func<Stream, long, bool, CancellationToken, Task<Response<P>>> uploadPartitionAsync,
@@ -77,7 +79,7 @@ namespace Azure.Storage
             if (uploadAsSinglePartition(singleUploadThreshold))
             {
                 // When possible, upload as a single partition
-                var uploadTask = uploadStreamAsync();
+                Task<Response<T>> uploadTask = uploadStreamAsync();
                 return async ?
                     await uploadTask.ConfigureAwait(false) :
                     uploadTask.EnsureCompleted();
@@ -89,11 +91,11 @@ namespace Azure.Storage
                 parallelTransferOptions ??= new ParallelTransferOptions();
 
                 var maximumThreadCount =
-                    parallelTransferOptions.Value.MaximumThreadCount ?? Constants.Blob.Block.DefaultParallelUploadCount;
+                    parallelTransferOptions.Value.MaximumThreadCount ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
                 var maximumBlockLength =
                     Math.Min(
                         Constants.Blob.Block.MaxStageBytes,
-                        parallelTransferOptions.Value.MaximumBlockLength ?? Constants.DefaultBufferSize
+                        parallelTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
                         );
 
                 var maximumActivePartitionCount = maximumThreadCount;
@@ -108,12 +110,12 @@ namespace Azure.Storage
                     memoryPool =
                     (maximumBlockLength < MemoryPool<byte>.Shared.MaxBufferSize)
                     ? MemoryPool<byte>.Shared
-                    : new UploadMemoryPool(maximumBlockLength, maximumLoadedPartitionCount);
+                    : new StorageMemoryPool(maximumBlockLength, maximumLoadedPartitionCount);
 
-                    using (var partitioner = getStreamPartitioner(memoryPool))
+                    using (StreamPartitioner partitioner = getStreamPartitioner(memoryPool))
                     {
                         await foreach (
-                            var partition
+                            StreamPartition partition
                             in partitioner.GetPartitionsAsync(
                                 maximumActivePartitionCount,
                                 maximumLoadedPartitionCount,
@@ -140,73 +142,18 @@ namespace Azure.Storage
                     }
 
                     // Complete the upload
-                    var commitTask = commitAsync(async, cancellationToken);
+                    Task<Response<T>> commitTask = commitAsync(async, cancellationToken);
                     return async ?
                         await commitTask.ConfigureAwait(false) :
                         commitTask.EnsureCompleted();
                 }
                 finally
                 {
-                    if (memoryPool is UploadMemoryPool)
+                    if (memoryPool is StorageMemoryPool)
                     {
                         memoryPool.Dispose();
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Private memory pool specific to partitioned uploads.
-        /// </summary>
-        class UploadMemoryPool : MemoryPool<byte>
-        {
-            ArrayPool<byte> arrayPool;
-
-            public UploadMemoryPool(int maximumBlockLength, int maximumLoadedBlocks)
-            {
-                this.MaxBufferSize = maximumBlockLength;
-                this.arrayPool = ArrayPool<byte>.Create(maximumBlockLength, maximumLoadedBlocks);
-            }
-
-            public override int MaxBufferSize { get; }
-
-            public override IMemoryOwner<byte> Rent(int minBufferSize = -1)
-            {
-                lock (this.arrayPool)
-                {
-                    return new UploadMemoryOwner(this, minBufferSize);
-                }
-            }
-
-            protected override void Dispose(bool disposing) => this.arrayPool = default;
-
-            class UploadMemoryOwner : IMemoryOwner<byte>
-            {
-                public UploadMemoryOwner(UploadMemoryPool pool, int minBufferSize)
-                {
-                    this.arrayPool = pool.arrayPool;
-                    this.Memory = this.arrayPool.Rent(minBufferSize);
-                }
-
-                ArrayPool<byte> arrayPool;
-
-                public Memory<byte> Memory { get; private set; }
-
-                #region IDisposable Support
-                private bool disposedValue = false; // To detect redundant calls
-
-                public void Dispose()
-                {
-                    if (!this.disposedValue)
-                    {
-                        this.disposedValue = true;
-
-                        this.arrayPool.Return(this.Memory.ToArray());
-                        this.arrayPool = null;
-                        this.Memory = null;
-                    }
-                }
-                #endregion
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -86,7 +85,7 @@ namespace Azure.Storage.Files.Models
         /// <param name="other">The other instance to compare to.</param>
         /// <returns></returns>
         public override bool Equals(object other)
-            => other is NtfsFileAttributes attributes && this.Equals(attributes);
+            => other is NtfsFileAttributes attributes && Equals(attributes);
 
         /// <summary>
         /// Checks if two FileNtfsAttributes are equal to each other.
@@ -94,17 +93,17 @@ namespace Azure.Storage.Files.Models
         /// <param name="other">TThe other instance to compare to.</param>
         /// <returns></returns>
         public bool Equals(NtfsFileAttributes other)
-            => this.None == other.None
-            && this.ReadOnly == other.ReadOnly
-            && this.Hidden == other.Hidden
-            && this.System == other.System
-            && this.Normal == other.Normal
-            && this.Directory == other.Directory
-            && this.Archive == other.Archive
-            && this.Temporary == other.Temporary
-            && this.Offline == other.Offline
-            && this.NotContentIndexed == other.NotContentIndexed
-            && this.NoScrubData == other.NoScrubData;
+            => None == other.None
+            && ReadOnly == other.ReadOnly
+            && Hidden == other.Hidden
+            && System == other.System
+            && Normal == other.Normal
+            && Directory == other.Directory
+            && Archive == other.Archive
+            && Temporary == other.Temporary
+            && Offline == other.Offline
+            && NotContentIndexed == other.NotContentIndexed
+            && NoScrubData == other.NoScrubData;
 
         /// <summary>
         /// Get a hash code for the FileNtfsAttributes.
@@ -112,17 +111,17 @@ namespace Azure.Storage.Files.Models
         /// <returns>Hash code for the FileNtfsAttributes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.None              ? 0b00000000001 : 0) +
-            (this.ReadOnly          ? 0b00000000010 : 0) +
-            (this.Hidden            ? 0b00000000100 : 0) +
-            (this.System            ? 0b00000001000 : 0) +
-            (this.Normal            ? 0b00000010000 : 0) +
-            (this.Directory         ? 0b00000100000 : 0) +
-            (this.Archive           ? 0b00001000000 : 0) +
-            (this.Temporary         ? 0b00010000000 : 0) +
-            (this.Offline           ? 0b00100000000 : 0) +
-            (this.NotContentIndexed ? 0b01000000000 : 0) +
-            (this.NoScrubData       ? 0b10000000000 : 0);
+            (None ? 0b00000000001 : 0) +
+            (ReadOnly ? 0b00000000010 : 0) +
+            (Hidden ? 0b00000000100 : 0) +
+            (System ? 0b00000001000 : 0) +
+            (Normal ? 0b00000010000 : 0) +
+            (Directory ? 0b00000100000 : 0) +
+            (Archive ? 0b00001000000 : 0) +
+            (Temporary ? 0b00010000000 : 0) +
+            (Offline ? 0b00100000000 : 0) +
+            (NotContentIndexed ? 0b01000000000 : 0) +
+            (NoScrubData ? 0b10000000000 : 0);
 
         /// <summary>
         /// ToString
@@ -132,59 +131,59 @@ namespace Azure.Storage.Files.Models
         {
             var stringBuilder = new StringBuilder();
 
-            if (this.None)
+            if (None)
             {
-                stringBuilder.Append(nameof(this.None) + "|");
+                stringBuilder.Append(nameof(None) + "|");
             }
 
-            if (this.ReadOnly)
+            if (ReadOnly)
             {
-                stringBuilder.Append(nameof(this.ReadOnly) + "|");
+                stringBuilder.Append(nameof(ReadOnly) + "|");
             }
 
-            if (this.Hidden)
+            if (Hidden)
             {
-                stringBuilder.Append(nameof(this.Hidden) + "|");
+                stringBuilder.Append(nameof(Hidden) + "|");
             }
 
-            if (this.System)
+            if (System)
             {
-                stringBuilder.Append(nameof(this.System) + "|");
+                stringBuilder.Append(nameof(System) + "|");
             }
 
-            if (this.Normal)
+            if (Normal)
             {
-                stringBuilder.Append(nameof(this.Normal) + "|");
+                stringBuilder.Append(nameof(Normal) + "|");
             }
 
-            if (this.Directory)
+            if (Directory)
             {
-                stringBuilder.Append(nameof(this.Directory) + "|");
+                stringBuilder.Append(nameof(Directory) + "|");
             }
 
-            if (this.Archive)
+            if (Archive)
             {
-                stringBuilder.Append(nameof(this.Archive) + "|");
+                stringBuilder.Append(nameof(Archive) + "|");
             }
 
-            if (this.Temporary)
+            if (Temporary)
             {
-                stringBuilder.Append(nameof(this.Temporary) + "|");
+                stringBuilder.Append(nameof(Temporary) + "|");
             }
 
-            if (this.Offline)
+            if (Offline)
             {
-                stringBuilder.Append(nameof(this.Offline) + "|");
+                stringBuilder.Append(nameof(Offline) + "|");
             }
 
-            if (this.NotContentIndexed)
+            if (NotContentIndexed)
             {
-                stringBuilder.Append(nameof(this.NotContentIndexed) + "|");
+                stringBuilder.Append(nameof(NotContentIndexed) + "|");
             }
 
-            if (this.NoScrubData)
+            if (NoScrubData)
             {
-                stringBuilder.Append(nameof(this.NoScrubData) + "|");
+                stringBuilder.Append(nameof(NoScrubData) + "|");
             }
 
             if (stringBuilder[stringBuilder.Length - 1] == '|')
@@ -209,7 +208,7 @@ namespace Azure.Storage.Files.Models
             var attributes = new NtfsFileAttributes();
             var splitString = attributesString.Split('|');
 
-            if(splitString.Length == 0)
+            if (splitString.Length == 0)
             {
                 throw Errors.InvalidArgument(attributesString);
             }
@@ -218,43 +217,43 @@ namespace Azure.Storage.Files.Models
             {
                 var trimmed = s.Trim();
 
-                if(trimmed.Equals(nameof(ReadOnly), StringComparison.InvariantCultureIgnoreCase))
+                if (trimmed.Equals(nameof(ReadOnly), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.ReadOnly = true;
                 }
-                else if(trimmed.Equals(nameof(Hidden), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(Hidden), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.Hidden = true;
                 }
-                else if(trimmed.Equals(nameof(System), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(System), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.System = true;
                 }
-                else if(trimmed.Equals(nameof(Normal), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(Normal), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.Normal = true;
                 }
-                else if(trimmed.Equals(nameof(Directory), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(Directory), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.Directory = true;
                 }
-                else if(trimmed.Equals(nameof(Archive), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(Archive), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.Archive = true;
                 }
-                else if(trimmed.Equals(nameof(Temporary), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(Temporary), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.Temporary = true;
                 }
-                else if(trimmed.Equals(nameof(Offline), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(Offline), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.Offline = true;
                 }
-                else if(trimmed.Equals(nameof(NotContentIndexed), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NotContentIndexed), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.NotContentIndexed = true;
                 }
-                else if(trimmed.Equals(nameof(NoScrubData), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NoScrubData), StringComparison.InvariantCultureIgnoreCase))
                 {
                     attributes.NoScrubData = true;
                 }

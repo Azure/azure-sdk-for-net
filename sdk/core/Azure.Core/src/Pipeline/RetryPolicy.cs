@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,12 +36,12 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
-        private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             int attempt = 0;
             List<Exception>? exceptions = null;
@@ -96,9 +95,9 @@ namespace Azure.Core.Pipeline
                         throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
                     }
                 }
-                else if (message.ResponseClassifier.IsErrorResponse(message.Response))
+                else if (message.ResponseClassifier.IsErrorResponse(message))
                 {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message.Response))
+                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message))
                     {
                         GetDelay(message, attempt, out delay);
                     }
@@ -124,7 +123,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                HttpPipelineEventSource.Singleton.RequestRetrying(message.Request, attempt);
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt);
             }
         }
 
@@ -160,7 +159,7 @@ namespace Azure.Core.Pipeline
                 {
                     return TimeSpan.FromSeconds(delaySeconds);
                 }
-                if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
+                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
                 {
                     return delayTime - DateTimeOffset.Now;
                 }

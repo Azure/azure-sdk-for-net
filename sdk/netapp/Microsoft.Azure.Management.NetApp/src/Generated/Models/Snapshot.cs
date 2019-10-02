@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="snapshotId">snapshotId</param>
         /// <param name="fileSystemId">fileSystemId</param>
-        /// <param name="creationDate">name</param>
+        /// <param name="created">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string snapshotId = default(string), string fileSystemId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string))
+        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string snapshotId = default(string), string fileSystemId = default(string), System.DateTime? created = default(System.DateTime?), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Tags = tags;
             SnapshotId = snapshotId;
             FileSystemId = fileSystemId;
-            CreationDate = creationDate;
+            Created = created;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -115,8 +115,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// The creation date of the snapshot
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; private set; }
+        [JsonProperty(PropertyName = "properties.created")]
+        public System.DateTime? Created { get; private set; }
 
         /// <summary>
         /// Gets azure lifecycle management

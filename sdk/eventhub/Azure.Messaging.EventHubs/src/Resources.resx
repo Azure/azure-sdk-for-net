@@ -120,18 +120,6 @@
   <data name="MessageSizeExceeded" xml:space="preserve">
     <value>The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes).</value>
   </data>
-  <data name="ArgumentNullOrEmpty" xml:space="preserve">
-    <value>The argument '{0}' may not be null or empty.</value>
-  </data>
-  <data name="ArgumentNullOrWhiteSpace" xml:space="preserve">
-    <value>The argument '{0}' may not be null or white space.</value>
-  </data>
-  <data name="ArgumentEmptyOrWhiteSpace" xml:space="preserve">
-    <value>The argument '{0}' may not be empty or white space, though it may be null.</value>
-  </data>
-  <data name="ArgumentStringTooLong" xml:space="preserve">
-    <value>The argument '{0}' cannot exceed {1} characters.</value>
-  </data>
   <data name="InvalidEncoding" xml:space="preserve">
     <value>The string has an invalid encoding format.</value>
   </data>
@@ -153,8 +141,8 @@
   <data name="ValueMustBeAtLeast" xml:space="preserve">
     <value>The value supplied must be greater than or equal to {0}.</value>
   </data>
-  <data name="ProxyMustUseWebsockets" xml:space="preserve">
-    <value>A proxy may only be used for a websockets connection.</value>
+  <data name="ProxyMustUseWebSockets" xml:space="preserve">
+    <value>A proxy may only be used for a web sockets connection.</value>
   </data>
   <data name="RetryOptionsMustBeSet" xml:space="preserve">
     <value>Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly.</value>
@@ -212,5 +200,14 @@
   </data>
   <data name="DisposedInstanceCannotPerformOperation" xml:space="preserve">
     <value>{0} has already been disposed and cannot perform the requested operation.</value>
+  </data>
+  <data name="CouldNotAcquireAccessToken" xml:space="preserve">
+    <value>Unable to acquire an access token using the provided credential.</value>
+  </data>
+  <data name="UnknownCommunicationException" xml:space="preserve">
+    <value>An unknown error was encountered while communicating with the Event Hubs service.</value>
+  </data>
+  <data name="InvalidMessageBody" xml:space="preserve">
+    <value>An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}</value>
   </data>
 </root>

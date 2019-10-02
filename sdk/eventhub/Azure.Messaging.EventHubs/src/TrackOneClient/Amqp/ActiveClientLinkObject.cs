@@ -1,19 +1,19 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using Microsoft.Azure.Amqp;
 
 namespace TrackOne.Amqp
 {
-    using System;
-    using Microsoft.Azure.Amqp;
-
-    abstract class ActiveClientLinkObject
+    internal abstract class ActiveClientLinkObject
     {
-        readonly bool isClientToken;
-        readonly string audience;
-        readonly string endpointUri;
-        readonly string[] requiredClaims;
-        readonly AmqpObject amqpLinkObject;
-        DateTime authorizationValidToUtc;
+        private readonly bool isClientToken;
+        private readonly string audience;
+        private readonly string endpointUri;
+        private readonly string[] requiredClaims;
+        private readonly AmqpObject amqpLinkObject;
+        private DateTime authorizationValidToUtc;
 
         protected ActiveClientLinkObject(
             AmqpObject amqpLinkObject,
@@ -31,21 +31,21 @@ namespace TrackOne.Amqp
             this.authorizationValidToUtc = authorizationValidToUtc;
         }
 
-        public bool IsClientToken => this.isClientToken;
+        public bool IsClientToken => isClientToken;
 
-        public string Audience => this.audience;
+        public string Audience => audience;
 
-        public string EndpointUri => this.endpointUri;
+        public string EndpointUri => endpointUri;
 
-        public string[] RequiredClaims => (string[])this.requiredClaims.Clone();
+        public string[] RequiredClaims => (string[])requiredClaims.Clone();
 
         public DateTime AuthorizationValidToUtc
         {
-            get => this.authorizationValidToUtc;
-            set => this.authorizationValidToUtc = value;
+            get => authorizationValidToUtc;
+            set => authorizationValidToUtc = value;
         }
 
-        public AmqpObject LinkObject => this.amqpLinkObject;
+        public AmqpObject LinkObject => amqpLinkObject;
 
         public abstract AmqpConnection Connection { get; }
     }

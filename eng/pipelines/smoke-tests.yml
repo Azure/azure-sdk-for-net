@@ -4,12 +4,42 @@ variables:
 jobs:
   - job: SmokeTest
 
+    strategy:
+      matrix:
+        Linux:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetFramework:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+        MacOs:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.13"
+          TestTargetFramework: netcoreapp2.1
+
+    pool:
+      vmImage: $(OSVmImage)
+
     steps:
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
       - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
+          packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: dotnet run -p ./samples/SmokeTest/SmokeTest/SmokeTest.csproj
+
+      - script: dotnet run -p ./samples/SmokeTest/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
         env:
           KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
