@@ -345,6 +345,12 @@ namespace Azure.Identity
 
                     return true;
                 }
+                // if the request failed for some reason, take that to mean the idms endpoint is not available.
+                catch (RequestFailedException)
+                {
+                    // todo: log
+                    return false;
+                }
                 // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
                 // this indicates that the request timed out and that imds is not available.  If the operation
                 // was user cancelled we don't wan't to handle the exception so s_identityAvailable will
