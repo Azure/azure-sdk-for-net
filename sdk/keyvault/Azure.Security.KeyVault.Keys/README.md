@@ -182,12 +182,12 @@ Console.WriteLine(key.DeletedDate);
 This example lists all the keys in the specified Key Vault.
 
 ```c#
-IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
+Pageable<KeyBase> allKeys = client.GetKeys();
 
-  foreach (Key key in allKeys)
-  {
-    Console.WriteLine(key.Name);
-  }
+foreach (Key key in allKeys)
+{
+  Console.WriteLine(key.Name);
+}
 ```
 
 ### Encrypt and Decrypt

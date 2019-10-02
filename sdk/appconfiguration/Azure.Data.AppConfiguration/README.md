@@ -94,10 +94,24 @@ Properties of a Configuration Setting:
 
 The following sections provide several code snippets covering some of the most common Configuration Service tasks. Note that there are sync and async methods available for both:
 
-- [Create a Configuration Setting](#create-a-configuration-setting)
-- [Retrieve a Configuration Setting](#retrieve-a-configuration-setting)
-- [Update an existing Configuration Setting](#update-an-existing-configuration-setting)
-- [Delete a Configuration Setting](#delete-a-configuration-setting)
+- [Azure App Configuration client library for .NET](#azure-app-configuration-client-library-for-net)
+  - [Getting started](#getting-started)
+    - [Install the package](#install-the-package)
+    - [Authenticate the client](#authenticate-the-client)
+      - [Get credentials](#get-credentials)
+      - [Create client](#create-client)
+  - [Key concepts](#key-concepts)
+    - [Configuration setting](#configuration-setting)
+  - [Examples](#examples)
+    - [Create a Configuration Setting](#create-a-configuration-setting)
+    - [Retrieve a Configuration Setting](#retrieve-a-configuration-setting)
+    - [Update an existing Configuration Setting](#update-an-existing-configuration-setting)
+    - [Delete a Configuration Setting](#delete-a-configuration-setting)
+  - [Troubleshooting](#troubleshooting)
+    - [General](#general)
+  - [Next Steps](#next-steps)
+    - [More sample code](#more-sample-code)
+    - [Project-to-project references](#project-to-project-references)
 
 ### Create a Configuration Setting
 
