@@ -1,4 +1,7 @@
-﻿namespace ResourceGroups.Tests
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace ResourceGroups.Tests
 {
     using System.IO;
     using System.Linq;
