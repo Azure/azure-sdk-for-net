@@ -14893,11 +14893,6 @@ namespace Azure.Storage.Blobs.Models
         public int? MaxResults { get; internal set; }
 
         /// <summary>
-        /// Delimiter
-        /// </summary>
-        public string Delimiter { get; internal set; }
-
-        /// <summary>
         /// NextMarker
         /// </summary>
         public string NextMarker { get; internal set; }
@@ -14953,11 +14948,6 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Delimiter", ""));
-            if (_child != null)
-            {
-                _value.Delimiter = _child.Value;
             }
             _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
