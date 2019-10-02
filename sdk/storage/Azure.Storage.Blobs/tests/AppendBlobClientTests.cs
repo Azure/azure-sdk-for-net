@@ -94,9 +94,9 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Name);
+                Assert.AreEqual(blobName, blobs.First().Name);
             }
         }
 

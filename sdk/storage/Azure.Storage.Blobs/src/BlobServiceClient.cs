@@ -249,10 +249,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<ContainerItem>> GetContainers(
+        public virtual Pageable<ContainerItem> GetContainers(
             GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options, cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetContainersAsync"/> operation returns an async
@@ -271,17 +271,17 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="AsyncCollection{ContainerItem}"/> describing the
+        /// An <see cref="AsyncPageable{T}"/> describing the
         /// containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<ContainerItem> GetContainersAsync(
+        public virtual AsyncPageable<ContainerItem> GetContainersAsync(
             GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options, cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetContainersInternal"/> operation returns a

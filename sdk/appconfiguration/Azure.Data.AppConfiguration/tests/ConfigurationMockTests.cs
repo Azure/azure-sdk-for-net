@@ -216,9 +216,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var query = new SettingSelector();
             int keyIndex = 0;
 
-            await foreach (Response<ConfigurationSetting> value in service.GetSettingsAsync(query, CancellationToken.None))
+            await foreach (ConfigurationSetting value in service.GetSettingsAsync(query, CancellationToken.None))
             {
-                Assert.AreEqual("key" + keyIndex, value.Value.Key);
+                Assert.AreEqual("key" + keyIndex, value.Key);
                 keyIndex++;
             }
 

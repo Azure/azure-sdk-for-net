@@ -345,11 +345,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 RegisterForCleanup(key.Name);
             }
 
-            List<Response<KeyProperties>> allKeys = await Client.GetKeysAsync().ToEnumerableAsync();
+            List<KeyProperties> allKeys = await Client.GetKeysAsync().ToEnumerableAsync();
 
             foreach (Key createdKey in createdKeys)
             {
-                KeyProperties returnedKey = allKeys.Single(s => s.Value.Name == createdKey.Name);
+                KeyProperties returnedKey = allKeys.Single(s => s.Name == createdKey.Name);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey);
             }
         }
@@ -374,11 +374,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 await WaitForDeletedKey(deletedKey.Name);
             }
 
-            List<Response<DeletedKey>> allKeys = await Client.GetDeletedKeysAsync().ToEnumerableAsync();
+            List<DeletedKey> allKeys = await Client.GetDeletedKeysAsync().ToEnumerableAsync();
 
             foreach (Key createdKey in createdKeys)
             {
-                Key returnedKey = allKeys.Single(s => s.Value.Properties.Name == createdKey.Name);
+                Key returnedKey = allKeys.Single(s => s.Properties.Name == createdKey.Name);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey.Properties);
             }
         }
@@ -396,11 +396,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
             RegisterForCleanup(createdKeys.First().Name);
 
-            List<Response<KeyProperties>> allKeys = await Client.GetKeyVersionsAsync(keyName).ToEnumerableAsync();
+            List<KeyProperties> allKeys = await Client.GetKeyVersionsAsync(keyName).ToEnumerableAsync();
 
             foreach (Key createdKey in createdKeys)
             {
-                KeyProperties returnedKey = allKeys.Single(s => s.Value.Version == createdKey.Properties.Version);
+                KeyProperties returnedKey = allKeys.Single(s => s.Version == createdKey.Version);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey);
             }
         }
@@ -409,7 +409,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetKeysVersionsNonExisting()
         {
             int count = 0;
-            List<Response<KeyProperties>> allKeys = await Client.GetKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
+            List<KeyProperties> allKeys = await Client.GetKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
             foreach (KeyProperties key in allKeys)
             {
                 count++;

@@ -70,9 +70,9 @@ namespace Azure.Storage.Blobs.Test
                     await blob.UploadAsync(stream);
                 }
 
-                System.Collections.Generic.IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                System.Collections.Generic.IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(name, blobs.First().Value.Name);
+                Assert.AreEqual(name, blobs.First().Name);
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync();
                 using var actual = new MemoryStream();
@@ -195,9 +195,9 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
 
-                System.Collections.Generic.IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                System.Collections.Generic.IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(name, blobs.First().Value.Name);
+                Assert.AreEqual(name, blobs.First().Name);
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync();
                 using var actual = new MemoryStream();

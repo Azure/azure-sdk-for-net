@@ -11,44 +11,61 @@ namespace Azure.Core
 {
     internal static class PageResponseEnumerator
     {
-        public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
+
+        public static FuncPageable<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
-            string? nextLink = null;
-            do
-            {
-                Page<T> pageResponse = pageFunc(nextLink);
-                foreach (T setting in pageResponse.Values)
-                {
-                    yield return Response.FromValue(pageResponse.GetRawResponse(), setting);
-                }
-                nextLink = pageResponse.ContinuationToken;
-            } while (nextLink != null);
+            return new FuncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
         }
 
-        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
+        public static FuncPageable<T> CreateEnumerable<T>(Func<string?, int?, Page<T>> pageFunc) where T : notnull
         {
-            return new FuncAsyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
+            return new FuncPageable<T>(pageFunc);
         }
 
-        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
+        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
         {
-            return new FuncAsyncCollection<T>(pageFunc);
+            return new FuncAsyncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
         }
 
-        internal class FuncAsyncCollection<T> : AsyncCollection<T> where T : notnull
+        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
+        {
+            return new FuncAsyncPageable<T>(pageFunc);
+        }
+
+        internal class FuncAsyncPageable<T> : AsyncPageable<T> where T : notnull
         {
             private readonly Func<string?, int?, Task<Page<T>>> _pageFunc;
 
-            public FuncAsyncCollection(Func<string?, int?, Task<Page<T>>> pageFunc)
+            public FuncAsyncPageable(Func<string?, int?, Task<Page<T>>> pageFunc)
             {
                 _pageFunc = pageFunc;
             }
 
-            public override async IAsyncEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
+            public override async IAsyncEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
                 do
                 {
                     Page<T> pageResponse = await _pageFunc(continuationToken, pageSizeHint).ConfigureAwait(false);
+                    yield return pageResponse;
+                    continuationToken = pageResponse.ContinuationToken;
+                } while (continuationToken != null);
+            }
+        }
+
+        internal class FuncPageable<T> : Pageable<T> where T : notnull
+        {
+            private readonly Func<string?, int?, Page<T>> _pageFunc;
+
+            public FuncPageable(Func<string?, int?, Page<T>> pageFunc)
+            {
+                _pageFunc = pageFunc;
+            }
+
+            public override IEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
+            {
+                do
+                {
+                    Page<T> pageResponse = _pageFunc(continuationToken, pageSizeHint);
                     yield return pageResponse;
                     continuationToken = pageResponse.ContinuationToken;
                 } while (continuationToken != null);

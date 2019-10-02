@@ -7,22 +7,20 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Files.Models
 {
-    internal class GetDirectoryHandlesAsyncCollection : StorageAsyncCollection<StorageHandle>
+    internal class GetDirectoryHandlesAsyncCollection : StorageCollectionEnumerator<StorageHandle>
     {
         private readonly DirectoryClient _client;
         private readonly bool? _recursive;
 
         public GetDirectoryHandlesAsyncCollection(
             DirectoryClient client,
-            bool? recursive,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            bool? recursive)
         {
             _client = client;
             _recursive = recursive;
         }
 
-        protected override async Task<Page<StorageHandle>> GetNextPageAsync(
+        public override async ValueTask<Page<StorageHandle>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,

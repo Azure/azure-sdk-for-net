@@ -224,10 +224,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<ShareItem>> GetShares(
+        public virtual Pageable<ShareItem> GetShares(
             GetSharesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options, cancellationToken);
+            new GetSharesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesAsync"/> operation returns an async collection
@@ -246,17 +246,17 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{ShareItem}"/> describing the shares in
+        /// A <see cref="AsyncPageable{T}"/> describing the shares in
         /// the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<ShareItem> GetSharesAsync(
+        public virtual AsyncPageable<ShareItem> GetSharesAsync(
             GetSharesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options, cancellationToken);
+            new GetSharesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesInternal"/> operation returns a
