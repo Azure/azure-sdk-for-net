@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
-    public class JsonStream : IDisposable
+    internal class JsonStream : IDisposable
     {
         private readonly MemoryStream _buffer;
 
@@ -30,5 +30,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void Dispose() => _buffer.Dispose();
 
         public override string ToString() => Encoding.UTF8.GetString(_buffer.GetBuffer(), 0, (int)_buffer.Length);
+
+        public void WriteObject(IJsonSerializable @object, JsonWriterOptions options = default)
+        {
+            using Utf8JsonWriter writer = CreateWriter(options);
+
+            writer.WriteStartObject();
+            @object.WriteProperties(writer);
+            writer.WriteEndObject();
+        }
     }
 }

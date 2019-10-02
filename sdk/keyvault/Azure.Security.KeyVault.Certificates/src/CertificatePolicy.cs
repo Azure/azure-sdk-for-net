@@ -43,6 +43,7 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
         private static readonly JsonEncodedText s_lifetimeActionsPropertyNameBytes = JsonEncodedText.Encode(LifetimeActionsPropertyName);
         private static readonly JsonEncodedText s_issuerPropertyNameBytes = JsonEncodedText.Encode(IssuerPropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_keyPropsPropertyNameBytes = JsonEncodedText.Encode(KeyPropsPropertyName);
         private static readonly JsonEncodedText s_secretPropsPropertyNameBytes = JsonEncodedText.Encode(SecretPropsPropertyName);
         private static readonly JsonEncodedText s_x509PropsPropertyNameBytes = JsonEncodedText.Encode(X509PropsPropertyName);
@@ -55,6 +56,7 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_issuerNamePropertyNameBytes = JsonEncodedText.Encode(IssuerNamePropertyName);
         private static readonly JsonEncodedText s_certificateTypePropertyNameBytes = JsonEncodedText.Encode(CertificateTypePropertyName);
         private static readonly JsonEncodedText s_certificateTransparencyPropertyNameNameBytes = JsonEncodedText.Encode(CertificateTransparencyPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
 
         /// <summary>
         /// The type of backing key to be generated when issuing new certificates
@@ -74,7 +76,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The curve which back the EC key
         /// </summary>
-        public CertificateKeyCurveName? CurveName { get; set; }
+        public CertificateKeyCurveName? KeyCurveName { get; set; }
 
         /// <summary>
         /// The size of the RSA key, the value must be a valid RSA key length such as 2048 or 4092
@@ -119,7 +121,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Specifies if the certificate is currently enabled.
         /// </summary>
-        public bool? Enabled { get; private set; }
+        public bool? Enabled { get; set; }
 
         /// <summary>
         /// The last updated time in UTC.
@@ -187,7 +189,7 @@ namespace Azure.Security.KeyVault.Certificates
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             // Key Props
-            if (KeyType.HasValue || CurveName.HasValue || KeySize.HasValue)
+            if (KeyType.HasValue || KeyCurveName.HasValue || KeySize.HasValue)
             {
                 json.WriteStartObject(s_keyPropsPropertyNameBytes);
 
@@ -222,6 +224,15 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteStartObject(s_issuerPropertyNameBytes);
 
                 WriteIssuerProperties(json);
+
+                json.WriteEndObject();
+            }
+
+            if (Enabled.HasValue)
+            {
+                json.WriteStartObject(s_attributesPropertyNameBytes);
+
+                WriteAttributesProperties(json);
 
                 json.WriteEndObject();
             }
@@ -265,7 +276,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case CurveNamePropertyName:
-                        CurveName = prop.Value.GetString();
+                        KeyCurveName = prop.Value.GetString();
                         break;
 
                     case KeySizePropertyName:
@@ -292,9 +303,9 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteBoolean(s_exportablePropertyNameBytes, Exportable.Value);
             }
 
-            if (CurveName.HasValue)
+            if (KeyCurveName.HasValue)
             {
-                json.WriteString(s_curveNamePropertyNameBytes, CurveName.ToString());
+                json.WriteString(s_curveNamePropertyNameBytes, KeyCurveName.ToString());
             }
 
             if (KeySize.HasValue)
@@ -459,5 +470,12 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        private void WriteAttributesProperties(Utf8JsonWriter json)
+        {
+            if (Enabled.HasValue)
+            {
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
+            }
+        }
     }
 }

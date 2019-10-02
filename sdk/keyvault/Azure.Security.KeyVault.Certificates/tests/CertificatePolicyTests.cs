@@ -85,14 +85,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     Indented = true,
                 };
 
-                using (Utf8JsonWriter writer = json.CreateWriter(options))
-                {
-                    writer.WriteStartObject();
-                    ((IJsonSerializable)policy).WriteProperties(writer);
-                    writer.WriteEndObject();
-
-                    writer.Flush();
-                }
+                json.WriteObject(policy, options);
 
                 string expectedJson = @"{
   ""key_props"": {
@@ -113,6 +106,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
   ""issuer"": {
     ""name"": ""Unknown""
   },
+  ""attributes"": {
+    ""enabled"": true
+  },
   ""lifetime_actions"": [
     {
       ""trigger"": {
@@ -127,6 +123,28 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
 
                 Assert.AreEqual(expectedJson, json.ToString());
+            }
+        }
+
+        [Test]
+        public void DisablePolicySerialized()
+        {
+            CertificatePolicy policy = new CertificatePolicy();
+
+            using (JsonStream json = new JsonStream())
+            {
+                json.WriteObject(policy);
+
+                Assert.AreEqual(@"{}", json.ToString());
+            }
+
+            policy.Enabled = false;
+
+            using (JsonStream json = new JsonStream())
+            {
+                json.WriteObject(policy);
+
+                Assert.AreEqual(@"{""attributes"":{""enabled"":false}}", json.ToString());
             }
         }
     }
