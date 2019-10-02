@@ -17,12 +17,12 @@ namespace Azure.Storage.Blobs.Models
         public HttpAccessConditions? HttpAccessConditions { get; set; }
 
         /// <summary>
-        /// Specifies container lease access conditions.
+        /// Specifies blob container lease access conditions.
         /// </summary>
         public LeaseAccessConditions? LeaseAccessConditions { get; set; }
 
         /// <summary>
-        /// Check if two ContainerAccessConditions instances are equal.
+        /// Check if two BlobContainerAccessConditions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -30,16 +30,16 @@ namespace Azure.Storage.Blobs.Models
             => obj is BlobContainerAccessConditions other && Equals(other);
 
         /// <summary>
-        /// Get a hash code for the ContainerAccessConditions.
+        /// Get a hash code for the BlobContainerAccessConditions.
         /// </summary>
-        /// <returns>Hash code for the ContainerAccessConditions.</returns>
+        /// <returns>Hash code for the BlobContainerAccessConditions.</returns>
         public override int GetHashCode()
             => HttpAccessConditions.GetHashCode()
             ^ LeaseAccessConditions.GetHashCode()
             ;
 
         /// <summary>
-        /// Check if two ContainerAccessConditions instances are equal.
+        /// Check if two BlobContainerAccessConditions instances are equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator ==(BlobContainerAccessConditions left, BlobContainerAccessConditions right) => left.Equals(right);
 
         /// <summary>
-        /// Check if two ContainerAccessConditions instances are not equal.
+        /// Check if two BlobContainerAccessConditions instances are not equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
@@ -55,7 +55,7 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator !=(BlobContainerAccessConditions left, BlobContainerAccessConditions right) => !(left == right);
 
         /// <summary>
-        /// Check if two ContainerAccessConditions instances are equal.
+        /// Check if two BlobContainerAccessConditions instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -65,11 +65,11 @@ namespace Azure.Storage.Blobs.Models
             ;
 
         /// <summary>
-        /// Converts the value of the current ContainerAccessConditions object
+        /// Converts the value of the current BlobContainerAccessConditions object
         /// to its equivalent string representation.
         /// </summary>
         /// <returns>
-        /// A string representation of the ContainerAccessConditions.
+        /// A string representation of the BlobContainerAccessConditions.
         /// </returns>
         public override string ToString()
             => $"[{nameof(BlobContainerAccessConditions)}:{nameof(HttpAccessConditions)}={HttpAccessConditions};{nameof(LeaseAccessConditions)}={LeaseAccessConditions}]";

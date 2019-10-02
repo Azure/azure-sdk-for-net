@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class GetContainersAsyncCollection : StorageCollectionEnumerator<ContainerItem>
+    internal class GetBlobContainersAsyncCollection : StorageAsyncCollection<BlobContainerItem>
     {
         private readonly BlobServiceClient _client;
         private readonly GetBlobContainersOptions? _options;
@@ -35,8 +35,8 @@ namespace Azure.Storage.Blobs.Models
             Response<BlobContainersSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
-            return new Page<ContainerItem>(
-                response.Value.ContainerItems.ToArray(),
+            return new Page<BlobContainerItem>(
+                response.Value.BlobContainerItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Specifies options for listing containers with the
+    /// Specifies options for listing blob containers with the
     /// <see cref="BlobServiceClient.GetBlobContainersAsync"/> operation.
     /// </summary>
 
@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary>
         /// Gets or sets a string that filters the results to return only
-        /// containers whose name begins with the specified prefix.
+        /// blob containers whose name begins with the specified prefix.
         /// </summary>
         public string Prefix { get; set; }
 
@@ -31,16 +31,16 @@ namespace Azure.Storage.Blobs.Models
         public bool IncludeMetadata { get; set; }
 
         /// <summary>
-        /// Convert the details into a ListContainersIncludeType value.
+        /// Convert the details into a ListBlobContainersIncludeType value.
         /// </summary>
-        /// <returns>A ListContainersIncludeType value.</returns>
+        /// <returns>A ListBlobContainersIncludeType value.</returns>
         internal ListBlobContainersIncludeType? AsIncludeType()
             => IncludeMetadata ?
                 ListBlobContainersIncludeType.Metadata :
                 (ListBlobContainersIncludeType?)null;
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are equal.
+        /// Check if two GetBlobContainersOptions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -49,16 +49,16 @@ namespace Azure.Storage.Blobs.Models
             obj is GetBlobContainersOptions other && Equals(other);
 
         /// <summary>
-        /// Get a hash code for the GetContainersOptions.
+        /// Get a hash code for the GetBlobContainersOptions.
         /// </summary>
-        /// <returns>Hash code for the GetContainersOptions.</returns>
+        /// <returns>Hash code for the GetBlobContainersOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             IncludeMetadata.GetHashCode() ^
             Prefix.GetHashCode();
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are equal.
+        /// Check if two GetBlobContainersOptions instances are equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Models
             left.Equals(right);
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are not equal.
+        /// Check if two GetBlobContainersOptions instances are not equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.Models
             !(left == right);
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are equal.
+        /// Check if two GetBlobContainersOptions instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>

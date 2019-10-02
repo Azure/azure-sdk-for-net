@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(blob.Uri);
 
-            Assert.AreEqual(containerName, builder.ContainerName);
+            Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual("accountName", builder.AccountName);
         }
@@ -1221,7 +1221,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                 var data = GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
@@ -1291,7 +1291,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                     var data = GetRandomBuffer(Constants.KB);
                     var expectedData = new byte[4 * Constants.KB];
                     data.CopyTo(expectedData, 0);
@@ -1349,7 +1349,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                     var data = GetRandomBuffer(Constants.KB);
                     var expectedData = new byte[4 * Constants.KB];
                     data.CopyTo(expectedData, 0);
@@ -1519,7 +1519,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1548,7 +1548,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1577,7 +1577,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1614,7 +1614,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(4 * Constants.KB);
 
@@ -1650,7 +1650,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1680,7 +1680,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1734,7 +1734,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                     var data = GetRandomBuffer(Constants.KB);
 
@@ -1797,7 +1797,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                     var data = GetRandomBuffer(Constants.KB);
 

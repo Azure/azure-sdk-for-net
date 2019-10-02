@@ -126,7 +126,7 @@ namespace Azure.Storage.Files.Tests
             {
                 Protocol = SasProtocol.None,
                 Services = new AccountSasServices { Files = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
+                ResourceTypes = new AccountSasResourceTypes { BlobContainer = true }.ToString(),
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new FileAccountSasPermissions { Create = true, Delete = true }.ToString(),

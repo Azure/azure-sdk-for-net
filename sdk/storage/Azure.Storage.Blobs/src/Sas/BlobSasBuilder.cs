@@ -75,9 +75,9 @@ namespace Azure.Storage.Sas
         public string Identifier { get; set; }
 
         /// <summary>
-        /// The name of the container being made accessible.
+        /// The name of the blob container being made accessible.
         /// </summary>
-        public string ContainerName { get; set; }
+        public string BlobContainerName { get; set; }
 
         /// <summary>
         /// The name of the blob being made accessible, or
@@ -98,7 +98,7 @@ namespace Azure.Storage.Sas
         /// Specify b if the shared resource is a blob. This grants access to
         /// the content and metadata of the blob.
         ///
-        /// Specify c if the shared resource is a container. This grants
+        /// Specify c if the shared resource is a blob container. This grants
         /// access to the content and metadata of any blob in the container,
         /// and to the list of blobs in the container.
         ///
@@ -161,7 +161,7 @@ namespace Azure.Storage.Sas
                 Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, ContainerName ?? String.Empty, BlobName ?? String.Empty),
+                GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
                 Identifier,
                 IPRange.ToString(),
                 Protocol.ToString(),
@@ -225,7 +225,7 @@ namespace Azure.Storage.Sas
                 Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(accountName, ContainerName ?? String.Empty, BlobName ?? String.Empty),
+                GetCanonicalName(accountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
                 userDelegationKey.SignedOid,
                 userDelegationKey.SignedTid,
                 signedStart,
@@ -365,7 +365,7 @@ namespace Azure.Storage.Sas
         public override int GetHashCode() =>
             BlobName.GetHashCode() ^
             CacheControl.GetHashCode() ^
-            ContainerName.GetHashCode() ^
+            BlobContainerName.GetHashCode() ^
             ContentDisposition.GetHashCode() ^
             ContentEncoding.GetHashCode() ^
             ContentLanguage.GetHashCode() ^
@@ -404,7 +404,7 @@ namespace Azure.Storage.Sas
         public bool Equals(BlobSasBuilder other) =>
             BlobName == other.BlobName &&
             CacheControl == other.CacheControl &&
-            ContainerName == other.ContainerName &&
+            BlobContainerName == other.BlobContainerName &&
             ContentDisposition == other.ContentDisposition &&
             ContentEncoding == other.ContentEncoding &&
             ContentLanguage == other.ContentEncoding &&

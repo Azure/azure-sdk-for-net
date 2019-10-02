@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(container.Uri);
 
-            Assert.AreEqual(containerName, builder.ContainerName);
+            Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual("", builder.BlobName);
             Assert.AreEqual(accountName, builder.AccountName);
         }
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 Assert.Fail("CreateAsync unexpected success: blob service SAS should not be usable to create container");
             }
@@ -175,7 +175,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync(metadata: metadata);
 
             // Assert
-            Response<ContainerItem> response = await container.GetPropertiesAsync();
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
             AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync(publicAccessType: PublicAccessType.Blob);
 
             // Assert
-            Response<ContainerItem> response = await container.GetPropertiesAsync();
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
             Assert.AreEqual(PublicAccessType.Blob, response.Value.Properties.PublicAccess);
 
             // Cleanup
@@ -296,13 +296,13 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container, publicAccessType: PublicAccessType.Container))
+            using (GetNewContainer(out BlobContainerClient container, publicAccessType: PublicAccessType.BlobContainer))
             {
                 // Act
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
 
                 // Assert
-                Assert.AreEqual(PublicAccessType.Container, response.Value.Properties.PublicAccess);
+                Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.Properties.PublicAccess);
             }
         }
 
@@ -331,7 +331,7 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Assert
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
                 AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
@@ -376,7 +376,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Response<ContainerInfo> response = await container.SetMetadataAsync(
+                Response<BlobContainerInfo> response = await container.SetMetadataAsync(
                     metadata: metadata,
                     accessConditions: accessConditions);
 
@@ -502,7 +502,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                PublicAccessType publicAccessType = PublicAccessType.Container;
+                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                 SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
@@ -512,7 +512,7 @@ namespace Azure.Storage.Blobs.Test
                 );
 
                 // Assert
-                Response<ContainerItem> propertiesResponse = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> propertiesResponse = await container.GetPropertiesAsync();
                 Assert.AreEqual(publicAccessType, propertiesResponse.Value.Properties.PublicAccess);
 
                 Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
@@ -550,7 +550,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                PublicAccessType publicAccessType = PublicAccessType.Container;
+                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                 SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
                 BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
@@ -587,7 +587,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    PublicAccessType publicAccessType = PublicAccessType.Container;
+                    PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                     SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                     BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
@@ -853,7 +853,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(container.GetLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
                 // Assert
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
 
                 Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
                 Assert.AreEqual(LeaseState.Available, response.Value.Properties.LeaseState);
@@ -953,7 +953,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<Lease> breakResponse = await InstrumentClient(container.GetLeaseClient()).BreakAsync(breakPeriod);
 
                 // Assert
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
                 Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
                 Assert.AreEqual(LeaseState.Broken, response.Value.Properties.LeaseState);
             }

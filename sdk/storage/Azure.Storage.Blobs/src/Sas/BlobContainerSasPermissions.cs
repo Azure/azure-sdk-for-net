@@ -9,7 +9,7 @@ namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="BlobContainerSasPermissions"/> supports reading and writing
-    /// permissions string for a containers's access policy.  Use <see cref="ToString"/>
+    /// permissions string for a blob containers's access policy.  Use <see cref="ToString"/>
     /// to generate a permissions string you can provide to
     /// <see cref="BlobSasBuilder.Permissions"/>.
     /// </summary>
@@ -100,7 +100,7 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are equal.
+        /// Check if two BlobContainerSasPermissions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -109,9 +109,9 @@ namespace Azure.Storage.Sas
             obj is BlobContainerSasPermissions other && Equals(other);
 
         /// <summary>
-        /// Get a hash code for the ContainerSasPermissions.
+        /// Get a hash code for the BlobContainerSasPermissions.
         /// </summary>
-        /// <returns>Hash code for the ContainerSasPermissions.</returns>
+        /// <returns>Hash code for the BlobContainerSasPermissions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             (Read ? 0b000001 : 0) +
@@ -122,7 +122,7 @@ namespace Azure.Storage.Sas
             (List ? 0b100000 : 0);
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are equal.
+        /// Check if two BlobContainerSasPermissions instances are equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
@@ -131,7 +131,7 @@ namespace Azure.Storage.Sas
             left.Equals(right);
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are not equal.
+        /// Check if two BlobContainerSasPermissions instances are not equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
@@ -140,7 +140,7 @@ namespace Azure.Storage.Sas
             !(left == right);
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are equal.
+        /// Check if two BlobContainerSasPermissions instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>

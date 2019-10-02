@@ -45,11 +45,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
 
-            Assert.AreEqual(containerName, builder1.ContainerName);
+            Assert.AreEqual(containerName, builder1.BlobContainerName);
             Assert.AreEqual(blobName, builder1.BlobName);
             Assert.AreEqual("accountName", builder1.AccountName);
 
-            Assert.AreEqual(containerName, builder2.ContainerName);
+            Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
         }

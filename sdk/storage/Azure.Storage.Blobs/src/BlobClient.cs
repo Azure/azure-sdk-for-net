@@ -45,14 +45,14 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        public BlobClient(string connectionString, string containerName, string blobName)
-            : base(connectionString, containerName, blobName)
+        public BlobClient(string connectionString, string blobContainerName, string blobName)
+            : base(connectionString, blobContainerName, blobName)
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
@@ -78,8 +78,8 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public BlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 

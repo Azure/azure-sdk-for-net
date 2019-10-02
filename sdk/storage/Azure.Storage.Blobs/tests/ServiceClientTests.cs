@@ -40,11 +40,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(service1.Uri);
             var builder2 = new BlobUriBuilder(service2.Uri);
 
-            Assert.IsEmpty(builder1.ContainerName);
+            Assert.IsEmpty(builder1.BlobContainerName);
             Assert.IsEmpty(builder1.BlobName);
             Assert.AreEqual(accountName, builder1.AccountName);
 
-            Assert.IsEmpty(builder2.ContainerName);
+            Assert.IsEmpty(builder2.BlobContainerName);
             Assert.IsEmpty(builder2.BlobName);
             Assert.AreEqual(accountName, builder2.AccountName);
         }
@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
             var builder = new BlobUriBuilder(service.Uri);
 
-            Assert.IsEmpty(builder.ContainerName);
+            Assert.IsEmpty(builder.BlobContainerName);
             Assert.AreEqual("", builder.BlobName);
             Assert.AreEqual(accountName, builder.AccountName);
         }
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service))
             {
                 var marker = default(string);
-                var containers = new List<ContainerItem>();
+                var containers = new List<BlobContainerItem>();
 
                 await foreach (Page<ContainerItem> page in service.GetContainersAsync().AsPages(marker))
                 {
@@ -394,7 +394,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
-                Response<ContainerItem> properties = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally

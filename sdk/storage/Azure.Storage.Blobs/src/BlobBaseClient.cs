@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the container name corresponding to the blob client.
         /// </summary>
-        public virtual string ContainerName
+        public virtual string BlobContainerName
         {
             get
             {
@@ -126,14 +126,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        public BlobBaseClient(string connectionString, string containerName, string blobName)
-            : this(connectionString, containerName, blobName, null)
+        public BlobBaseClient(string connectionString, string blobContainerName, string blobName)
+            : this(connectionString, blobContainerName, blobName, null)
         {
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
@@ -159,13 +159,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobBaseClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+        public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
-                    ContainerName = containerName,
+                    BlobContainerName = blobContainerName,
                     BlobName = blobName
                 };
             _uri = builder.ToUri();
@@ -356,7 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 var builder = new BlobUriBuilder(Uri);
                 _name = builder.BlobName;
-                _containerName = builder.ContainerName;
+                _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
         }
