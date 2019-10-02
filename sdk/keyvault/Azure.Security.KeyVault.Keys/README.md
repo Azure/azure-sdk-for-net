@@ -161,7 +161,7 @@ Key key = client.CreateKey("key-name", KeyType.EllipticCurve);
 // You can specify additional application-specific metadata in the form of tags.
 key.Tags["foo"] = "updated tag";
 
-KeyBase updatedKey = client.UpdateKey(key, key.KeyMaterial.KeyOps);
+KeyProperties updatedKey = client.UpdateKey(key, key.KeyMaterial.KeyOps);
 
 Console.WriteLine(updatedKey.Name);
 Console.WriteLine(updatedKey.Version);
@@ -182,12 +182,12 @@ Console.WriteLine(key.DeletedDate);
 This example lists all the keys in the specified Key Vault.
 
 ```c#
-IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
+Pageable<KeyProperties> allKeys = client.GetKeys();
 
-  foreach (Key key in allKeys)
-  {
-    Console.WriteLine(key.Name);
-  }
+foreach (Key key in allKeys)
+{
+  Console.WriteLine(key.Name);
+}
 ```
 
 ### Encrypt and Decrypt

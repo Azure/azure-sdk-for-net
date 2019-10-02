@@ -137,7 +137,7 @@ secret.ContentType = "text/plain";
 // You can specify additional application-specific metadata in the form of tags.
 secret.Tags["foo"] = "updated tag";
 
-SecretBase updatedSecret = client.Update(secret);
+SecretProperties updatedSecret = client.Update(secret);
 
 Console.WriteLine(updatedSecret.Name);
 Console.WriteLine(updatedSecret.Value);
@@ -159,12 +159,12 @@ Console.WriteLine(secret.Value);
 This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.Get` to retrive the value.
 
 ```c#
-IEnumerable<Response<SecretBase>> allSecrets = client.GetSecrets();
+Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
-  foreach (SecretBase secret in allSecrets)
-  {
-    Console.WriteLine(secret.Name);
-  }
+foreach (SecretProperties secret in allSecrets)
+{
+  Console.WriteLine(secret.Name);
+}
 ```
 ### Async create a secret
 Async APIs are identical to their synchronous counterparts. Note that all methods end with `Async`.
