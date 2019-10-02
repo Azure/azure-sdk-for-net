@@ -74,7 +74,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out _, service: service))
             {
                 // Act
-                IList<ContainerItem> containers = await service.GetContainersAsync().ToListAsync();
+                IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
 
                 // Assert
                 Assert.IsTrue(containers.Count() >= 1);
@@ -120,8 +120,8 @@ namespace Azure.Storage.Blobs.Test
                 retryOn404);
             using (GetNewContainer(out _, service: service))
             {
-                IList<ContainerItem> containers = await EnsurePropagatedAsync(
-                    async () => await service.GetContainersAsync().ToListAsync(),
+                IList<BlobContainerItem> containers = await EnsurePropagatedAsync(
+                    async () => await service.GetBlobContainersAsync().ToListAsync(),
                     containers => containers.Count > 0);
                 Assert.IsTrue(containers.Count >= 1);
             }
@@ -139,7 +139,7 @@ namespace Azure.Storage.Blobs.Test
                 var marker = default(string);
                 var containers = new List<BlobContainerItem>();
 
-                await foreach (Page<ContainerItem> page in service.GetContainersAsync().AsPages(marker))
+                await foreach (Page<BlobContainerItem> page in service.GetBlobContainersAsync().AsPages(marker))
                 {
                     containers.AddRange(page.Values);
                 }
@@ -160,8 +160,8 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service))
             {
                 // Act
-                Page<ContainerItem> page = await
-                    service.GetContainersAsync()
+                Page<BlobContainerItem> page = await
+                    service.GetBlobContainersAsync()
                     .AsPages(pageSizeHint: 1)
                     .FirstAsync();
 
@@ -180,8 +180,8 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service, containerName: containerName))
             {
                 // Act
-                AsyncPageable<ContainerItem> containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
-                IList<ContainerItem> items = await containers.ToListAsync();
+                AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(new GetBlobContainersOptions { Prefix = prefix });
+                IList<BlobContainerItem> items = await containers.ToListAsync();
                 // Assert
                 Assert.AreNotEqual(0, items.Count());
                 Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Act
-                ContainerItem first = await service.GetContainersAsync(new GetContainersOptions { IncludeMetadata = true }).FirstAsync();
+                BlobContainerItem first = await service.GetBlobContainersAsync(new GetBlobContainersOptions { IncludeMetadata = true }).FirstAsync();
 
                 // Assert
                 Assert.IsNotNull(first.Metadata);
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
+                service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 

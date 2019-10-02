@@ -249,10 +249,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<ContainerItem> GetContainers(
-            GetContainersOptions? options = default,
+        public virtual Pageable<BlobContainerItem> GetBlobContainers(
+            GetBlobContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetBlobContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersAsync"/> operation returns an async
@@ -278,10 +278,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<ContainerItem> GetContainersAsync(
-            GetContainersOptions? options = default,
+        public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
+            GetBlobContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetBlobContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersInternal"/> operation returns a
