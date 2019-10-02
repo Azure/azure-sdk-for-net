@@ -29,12 +29,12 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient BlobClient => _blob;
 
         /// <summary>
-        /// The <see cref="Blobs.BlobContainerClient"/> to manage leases for.
+        /// The <see cref="BlobContainerClient"/> to manage leases for.
         /// </summary>
         private readonly BlobContainerClient _container;
 
         /// <summary>
-        /// Gets the <see cref="Blobs.BlobContainerClient"/> to manage leases for.
+        /// Gets the <see cref="BlobContainerClient"/> to manage leases for.
         /// </summary>
         protected virtual BlobContainerClient BlobContainerClient => _container;
 
@@ -90,7 +90,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="LeaseClient"/>  class.
         /// </summary>
         /// <param name="client">
-        /// A <see cref="Blobs.BlobContainerClient"/> representing the blob container
+        /// A <see cref="BlobContainerClient"/> representing the blob container
         /// being leased.
         /// </param>
         /// <param name="leaseId">
@@ -118,7 +118,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (BlobClient == null && BlobContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
-                throw BlobErrors.BlobOrContainerMissing(nameof(Specialized.LeaseClient), nameof(Specialized.BlobBaseClient), nameof(Blobs.BlobContainerClient));
+                throw BlobErrors.BlobOrContainerMissing(nameof(LeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
             }
         }
 
