@@ -8,10 +8,13 @@ The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC
 ## Getting started
 
 ### Install the package
-Install the Azure Key Vault Keys client library for .NET with [NuGet][nuget]:
+Install the Azure Key Vault Keys client library for .NET and the Azure Identity package with [NuGet][nuget]:
 
 ```PowerShell
 Install-Package Azure.Security.KeyVault.Keys -IncludePrerelease
+```
+```PowerShell
+Install-Package Azure.Identity -IncludePrerelease
 ```
 
 ### Prerequisites
@@ -76,7 +79,7 @@ using Azure.Security.KeyVault.Keys;
 var client = new KeyClient(vaultUri: <your-vault-url>, credential: new DefaultAzureCredential());
 
 // Create a new key using the key client
-Key key = await Client.CreateKey("key-name", KeyType.EllipticCurve);
+Key key = client.CreateKey("key-name", KeyType.EllipticCurve);
 ```
 > new DefaultAzureCredential():
 > Uses the environment variables previously set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`).
@@ -122,24 +125,24 @@ Create a Key to be stored in the Azure Key Vault. If a key with the same name al
 ```c#
 // Create a key. Note that you can specify the type of key
 // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
-Key key = client.CreateKey("key-name", KeyType.EllipticCurve);
+Key ecKey = client.CreateKey("key-name", KeyType.EllipticCurve);
 
 Console.WriteLine(key.Name);
 Console.WriteLine(key.KeyMaterial.KeyType);
 
 // Create a software RSA key
-var rsaCreateKey = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
-Key rsaKey = client.CreateRsaKey(rsaCreateKey);
+var rsaKeyOptions = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
+Key rsaKey = client.CreateRsaKey(rsaKeyOptions);
 
 Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyMaterial.KeyType);
 
 // Create a hardware Elliptic Curve key
-var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
-Key ecKey = client.CreateEcKey(echsmkey);
+var echsmKeyOptions = new EcKeyCreateOptions("ec-key-name", hsm: true);
+Key echsmKey = client.CreateEcKey(echsmKeyOptions);
 
-Console.WriteLine(ecKey.Name);
-Console.WriteLine(ecKey.KeyMaterial.KeyType);
+Console.WriteLine(echsmKey.Name);
+Console.WriteLine(echsmKey.KeyMaterial.KeyType);
 ```
 
 ### Retrieve a Key
@@ -182,7 +185,7 @@ Console.WriteLine(key.DeletedDate);
 This example lists all the keys in the specified Key Vault.
 
 ```c#
-IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
+IEnumerable<Azure.Response<KeyBase>> allKeys = client.GetKeys();
 
   foreach (Key key in allKeys)
   {
@@ -194,6 +197,8 @@ IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
 This example creates a CryptographyClient and uses it to encrypt and decrypt with a key in Key Vault.
 
 ```c#
+using System.Text;
+
 byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
 // encrypt the data using the algorithm RSAOAEP
@@ -214,18 +219,18 @@ Console.WriteLine(key.Name);
 Console.WriteLine(key.KeyMaterial.KeyType);
 
 // Create a software RSA key
-var rsaCreateKey = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
-Key rsaKey = await client.CreateRsaKeyAsync(rsarsaCreateKeyKey);
+var rsaCreateKeyOptions = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
+Key rsaKey = await client.CreateRsaKeyAsync(rsarsaCreateKeyOptions);
 
 Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyMaterial.KeyType);
 
 // Create a hardware Elliptic Curve key
-var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
-Key ecKey = await client.CreateEcKeyAsync(echsmkey);
+var echsmKeyOptions = new EcKeyCreateOptions("ec-key-name", hsm: true);
+Key echsmKey = await client.CreateEcKeyAsync(echsmKeyOptions);
 
-Console.WriteLine(ecKey.Name);
-Console.WriteLine(ecKey.KeyMaterial.KeyType);
+Console.WriteLine(echsmKey.Name);
+Console.WriteLine(echsmKey.KeyMaterial.KeyType);
 ```
 
 ## Troubleshooting
