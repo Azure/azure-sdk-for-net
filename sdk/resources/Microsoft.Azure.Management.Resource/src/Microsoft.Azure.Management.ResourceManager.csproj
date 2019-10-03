@@ -11,7 +11,7 @@
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Resource Manager SDK. This release introduces support for deployment at tenant scope.  
+        This is a public release of the Azure Resource Manager SDK. This release introduces support for deployment what-if at subscription scope and resource group scope.  
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
