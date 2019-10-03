@@ -297,7 +297,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotImpl(snapshot);
+        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotCore(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -306,7 +306,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        protected virtual BlobBaseClient WithSnapshotImpl(string snapshot)
+        protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
             return new BlobBaseClient(builder.ToUri(), Pipeline);
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>A new <see cref="BlobClient"/></returns>
         public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) =>
-            WithCustomerProvidedKeyImpl(customerProvidedKey);
+            WithCustomerProvidedKeyCore(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -333,7 +333,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="BlobClient"/></returns>
-        protected virtual BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        protected virtual BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {
