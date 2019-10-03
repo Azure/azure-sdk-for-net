@@ -642,21 +642,21 @@ namespace Azure.Security.KeyVault.Certificates
         /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the
         /// certifcates/import permission
         /// </summary>
-        /// <param name="import">The details of the certificate to import to the key vault</param>
+        /// <param name="certificateImportOptions">The details of the certificate to import to the key vault</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The imported certificate and policy</returns>
-        public virtual Response<CertificateWithPolicy> ImportCertificate(CertificateImport import, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateWithPolicy> ImportCertificate(CertificateImportOptions certificateImportOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(import, nameof(import));
-            Argument.AssertNotNullOrEmpty(import.Name, nameof(import.Name));
+            Argument.AssertNotNull(certificateImportOptions, nameof(certificateImportOptions));
+            Argument.AssertNotNullOrEmpty(certificateImportOptions.Name, nameof(certificateImportOptions.Name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.ImportCertificate");
-            scope.AddAttribute("certificate", import.Name);
+            scope.AddAttribute("certificate", certificateImportOptions.Name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, import, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, "/", import.Name, "/import");
+                return _pipeline.SendRequest(RequestMethod.Post, certificateImportOptions, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, "/", certificateImportOptions.Name, "/import");
             }
             catch (Exception e)
             {
@@ -669,21 +669,21 @@ namespace Azure.Security.KeyVault.Certificates
         /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the
         /// certifcates/import permission
         /// </summary>
-        /// <param name="import">The details of the certificate to import to the key vault</param>
+        /// <param name="certificateImportOptions">The details of the certificate to import to the key vault</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The imported certificate and policy</returns>
-        public virtual async Task<Response<CertificateWithPolicy>> ImportCertificateAsync(CertificateImport import, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateWithPolicy>> ImportCertificateAsync(CertificateImportOptions certificateImportOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(import, nameof(import));
-            Argument.AssertNotNullOrEmpty(import.Name, nameof(import.Name));
+            Argument.AssertNotNull(certificateImportOptions, nameof(certificateImportOptions));
+            Argument.AssertNotNullOrEmpty(certificateImportOptions.Name, nameof(certificateImportOptions.Name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.ImportCertificate");
-            scope.AddAttribute("certificate", import.Name);
+            scope.AddAttribute("certificate", certificateImportOptions.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, import, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, "/", import.Name, "/import").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, certificateImportOptions, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, "/", certificateImportOptions.Name, "/import").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1422,6 +1422,60 @@ namespace Azure.Security.KeyVault.Certificates
                 Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
 
                 return Response.FromValue(contactList.GetRawResponse(), contactList.Value.ToList());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges a certificate or a certificate chain with a key pair currently available in the service. This operation requires the certificate/create permission.
+        /// </summary>
+        /// <param name="certificateMergeOptions">The details of the certificate or certificate chain to merge into the key vault.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The merged certificate.</returns>
+        public virtual Response<CertificateWithPolicy> MergeCertificate(CertificateMergeOptions certificateMergeOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(certificateMergeOptions, nameof(certificateMergeOptions));
+
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.MergeCertificate");
+            scope.AddAttribute("certificate", certificateMergeOptions.Name);
+            scope.Start();
+
+            try
+            {
+                Response<CertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, certificateMergeOptions.Name, "/pending/merge");
+
+                return Response.FromValue(certificate.GetRawResponse(), certificate.Value);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges a certificate or a certificate chain with a key pair currently available in the service. This operation requires the certificate/create permission.
+        /// </summary>
+        /// <param name="certificateMergeOptions">The details of the certificate or certificate chain to merge into the key vault.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The merged certificate.</returns>
+        public virtual async Task<Response<CertificateWithPolicy>> MergeCertificateAsync(CertificateMergeOptions certificateMergeOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(certificateMergeOptions, nameof(certificateMergeOptions));
+
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.MergeCertificate");
+            scope.AddAttribute("certificate", certificateMergeOptions.Name);
+            scope.Start();
+
+            try
+            {
+                Response<CertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, certificateMergeOptions.Name, "/pending/merge").ConfigureAwait(false);
+
+                return Response.FromValue(certificate.GetRawResponse(), certificate.Value);
             }
             catch (Exception e)
             {

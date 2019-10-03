@@ -4,14 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate to be imported into Azure Key Vault
+    /// Options for a certificate to be imported into Azure Key Vault.
     /// </summary>
-    public class CertificateImport : IJsonSerializable
+    public class CertificateImportOptions : IJsonSerializable
     {
         private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode("value");
         private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode("policy");
@@ -20,13 +21,15 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode("tags");
 
+        private Dictionary<string, string> _tags;
+
         /// <summary>
-        /// Creates a certificate import used to import a certificate into Azure Key Vault
+        /// Creates a certificate import used to import a certificate into Azure Key Vault.
         /// </summary>
-        /// <param name="name">A name for the imported certificate</param>
-        /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key</param>
-        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated</param>
-        public CertificateImport(string name, byte[] value, CertificatePolicy policy)
+        /// <param name="name">A name for the imported certificate.</param>
+        /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.</param>
+        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.</param>
+        public CertificateImportOptions(string name, byte[] value, CertificatePolicy policy)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(value, nameof(value));
@@ -38,40 +41,41 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The name of the certificate to import
+        /// The name of the certificate to import.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
-        /// The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key
+        /// The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.
         /// </summary>
         public byte[] Value { get; set; }
 
         /// <summary>
-        /// The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated
+        /// The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.
         /// </summary>
         public CertificatePolicy Policy { get; set; }
 
         /// <summary>
-        /// The password protecting the certificate specified in the Value
+        /// The password protecting the certificate specified in the Value.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// Sepcifies whether the imported certificate should be initially enabled
+        /// Gets or sets whether the merged certificate should be enabled.
         /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Tags to be applied to the imported certifiate
+        /// Tags to be applied to the imported certificate.
         /// </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (Value != null)
             {
-                json.WriteBase64String(s_valuePropertyNameBytes, Value);
+                string encoded = Base64Url.Encode(Value);
+                json.WriteString(s_valuePropertyNameBytes, encoded);
             }
 
             if (!string.IsNullOrEmpty(Password))
@@ -97,11 +101,11 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (Tags != null)
+            if (_tags != null && _tags.Count > 0)
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (KeyValuePair<string, string> kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in _tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }
