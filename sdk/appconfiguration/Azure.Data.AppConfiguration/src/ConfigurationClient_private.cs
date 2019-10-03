@@ -23,7 +23,6 @@ namespace Azure.Data.AppConfiguration
         private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
         private const string FieldsQueryFilter = "$select";
-        private const string ETag = "ETag";
 
         private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
