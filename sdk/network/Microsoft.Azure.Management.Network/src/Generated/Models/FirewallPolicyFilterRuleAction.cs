@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="type">The type of action. Possible values include:
-        /// 'Allow', 'Deny', 'Alert '</param>
+        /// 'Allow', 'Deny'</param>
         public FirewallPolicyFilterRuleAction(string type = default(string))
         {
             Type = type;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the type of action. Possible values include: 'Allow',
-        /// 'Deny', 'Alert '
+        /// 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
