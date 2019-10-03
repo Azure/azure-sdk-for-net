@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 
 namespace Azure.Core.Http
 {
@@ -35,6 +36,21 @@ namespace Azure.Core.Http
         public virtual void SetIfUnmodifiedSinceCondition(DateTimeOffset dateTime)
         {
             IfUnmodifiedSince = dateTime;
+        }
+
+        protected override void ApplyHeaders(Request request)
+        {
+            base.ApplyHeaders(request);
+
+            if (IfModifiedSince.HasValue)
+            {
+                request.Headers.Add(HttpHeader.Names.IfModifiedSince, IfModifiedSince.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture));
+            }
+
+            if (IfUnmodifiedSince.HasValue)
+            {
+                request.Headers.Add(HttpHeader.Names.IfUnmodifiedSince, IfUnmodifiedSince.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture));
+            }
         }
     }
 }

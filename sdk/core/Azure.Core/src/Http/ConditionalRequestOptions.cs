@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Core.Http
 {
     /// <summary>
@@ -55,6 +53,28 @@ namespace Azure.Core.Http
         public virtual void SetIfNotExistsCondition()
         {
             IfNoneMatch = ETag.All;
+        }
+
+        protected virtual void ApplyHeaders(Request request)
+        {
+            if (IfMatch.HasValue)
+            {
+                string value = IfMatch.Value == ETag.All ?
+                    IfMatch.Value.ToString() : $"\"{IfMatch.Value.ToString()}\"";
+                request.Headers.Add(HttpHeader.Names.IfMatch, value);
+            }
+
+            if (IfNoneMatch.HasValue)
+            {
+                string value = IfNoneMatch.Value == ETag.All ?
+                    IfNoneMatch.Value.ToString() : $"\"{IfNoneMatch.Value.ToString()}\"";
+                request.Headers.Add(HttpHeader.Names.IfNoneMatch, value);
+            }
+        }
+
+        protected static void ApplyHeaders(Request request, ConditionalRequestOptions options)
+        {
+            options.ApplyHeaders(request);
         }
     }
 }

@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ConditionalRequestHelpers.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConditionalRequestOptionsExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
   </ItemGroup>

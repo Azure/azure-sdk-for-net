@@ -171,7 +171,7 @@ namespace Azure.Data.AppConfiguration
 
             ConditionalRequestOptions requestOptions = new ConditionalRequestOptions();
             requestOptions.SetIfNotExistsCondition();
-            ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
+            ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
 
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -334,7 +334,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
+                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
 
             request.Content = HttpPipelineRequestContent.Create(content);
@@ -486,7 +486,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
+                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
 
             return request;
@@ -682,7 +682,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
+                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
