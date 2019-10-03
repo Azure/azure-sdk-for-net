@@ -270,7 +270,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await response.CreateRequestFailedExceptionAsync("The setting is locked").ConfigureAwait(false),
+                    409 => throw await response.CreateRequestFailedExceptionAsync("The setting is read only").ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
                     _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
@@ -304,7 +304,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw response.CreateRequestFailedException("The setting is locked"),
+                    409 => throw response.CreateRequestFailedException("The setting is read only"),
 
                     // Throws on 412 if resource was modified.
                     _ => throw response.CreateRequestFailedException(),
@@ -412,7 +412,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -427,7 +427,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw response.CreateRequestFailedException("The setting is locked"),
+                    409 => throw response.CreateRequestFailedException("The setting is read only"),
 
                     // Throws on 412 if resource was modified.
                     _ => throw response.CreateRequestFailedException()
@@ -462,7 +462,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw response.CreateRequestFailedException("The setting is locked"),
+                    409 => throw response.CreateRequestFailedException("The setting is read only."),
 
                     // Throws on 412 if resource was modified.
                     _ => throw response.CreateRequestFailedException()

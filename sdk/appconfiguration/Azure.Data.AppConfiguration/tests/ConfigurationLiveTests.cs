@@ -151,7 +151,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task DeleteSettingLocked()
+        public async Task DeleteSettingReadOnly()
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
@@ -159,7 +159,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddAsync(testSetting);
-                var locked = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
 
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -255,7 +255,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task SetSettingLocked()
+        public async Task SetSettingReadOnly()
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
@@ -263,7 +263,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddAsync(testSetting);
-                var locked = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
 
                 testSetting.Value = "new_value";
 
@@ -824,7 +824,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsNull(batch[0].Value.Value);
                 Assert.IsNull(batch[0].Value.ContentType);
                 Assert.IsNull(batch[0].Value.LastModified);
-                Assert.IsNull(batch[0].Value.Locked);
+                Assert.IsNull(batch[0].Value.ReadOnly);
             }
             finally
             {
@@ -860,7 +860,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsNotNull(batch[0].Value.ContentType);
                 Assert.IsNotNull(batch[0].Value.ETag);
                 Assert.IsNotNull(batch[0].Value.LastModified);
-                Assert.IsNotNull(batch[0].Value.Locked);
+                Assert.IsNotNull(batch[0].Value.ReadOnly);
             }
             finally
             {
@@ -975,8 +975,8 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddAsync(testSetting);
-                var locked = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
-                Assert.IsTrue(locked.Value.Locked);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsTrue(readOnly.Value.ReadOnly);
             }
             finally
             {
@@ -1013,8 +1013,8 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddAsync(testSetting);
-                var unlocked = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
-                Assert.IsFalse(unlocked.Value.Locked);
+                var readOnly = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsFalse(readOnly.Value.ReadOnly);
             }
             finally
             {

@@ -50,7 +50,10 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Transport = transport
             };
-            return InstrumentClient(new ConfigurationClient(s_connectionString, options));
+
+            var client = InstrumentClient(new ConfigurationClient(s_connectionString, options));
+
+            return client;
         }
 
         [Test]
@@ -267,7 +270,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void SetLocked()
+        public void SetReadOnlySetting()
         {
             var response = new MockResponse(409);
 
@@ -419,7 +422,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void DeleteLocked()
+        public void DeleteReadOnlySetting()
         {
             var mockTransport = new MockTransport(new MockResponse(409));
             ConfigurationClient service = CreateTestService(mockTransport);
@@ -771,7 +774,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                Locked = true
+                ReadOnly = true
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -800,7 +803,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                Locked = true
+                ReadOnly = true
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -844,7 +847,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                Locked = false
+                ReadOnly = false
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -873,7 +876,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                Locked = false
+                ReadOnly = false
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -981,8 +984,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteString("etag", setting.ETag.ToString());
             if (setting.LastModified.HasValue)
                 json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.Locked.HasValue)
-                json.WriteBoolean("locked", setting.Locked.Value);
+            if (setting.ReadOnly.HasValue)
+                json.WriteBoolean("locked", setting.ReadOnly.Value);
             json.WriteEndObject();
         }
 
@@ -1006,8 +1009,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteString("etag", setting.ETag.ToString());
             if (setting.LastModified.HasValue)
                 json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.Locked.HasValue)
-                json.WriteBoolean("locked", setting.Locked.Value);
+            if (setting.ReadOnly.HasValue)
+                json.WriteBoolean("locked", setting.ReadOnly.Value);
             json.WriteEndObject();
         }
 
