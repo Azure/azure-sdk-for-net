@@ -721,11 +721,13 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SettingTheRetryPolicyUpdatesTheTransportClient()
         {
             EventHubRetryPolicy newRetry = Mock.Of<EventHubRetryPolicy>();
+
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake")
             {
                 RetryPolicy = newRetry
             };
+
             Assert.That(transportClient.UpdateRetryPolicyCalledWith, Is.SameAs(newRetry), "The retry policy should have been passed as the update.");
         }
 
