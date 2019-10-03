@@ -29,6 +29,10 @@ namespace Azure.Data.AppConfiguration
                 }
                 json.WriteEndObject();
             }
+            if (setting.ETag != default)
+            {
+                json.WriteString("etag", setting.ETag.ToString());
+            }
             json.WriteEndObject();
             json.Flush();
         }
@@ -58,15 +62,15 @@ namespace Azure.Data.AppConfiguration
                     setting.LastModified = DateTimeOffset.Parse(lastModified.GetString(), CultureInfo.InvariantCulture);
                 }
             }
-            if (root.TryGetProperty("locked", out JsonElement lockedValue))
+            if (root.TryGetProperty("locked", out JsonElement readOnlyValue))
             {
-                if (lockedValue.ValueKind == JsonValueKind.Null)
+                if (readOnlyValue.ValueKind == JsonValueKind.Null)
                 {
-                    setting.Locked = null;
+                    setting.ReadOnly = null;
                 }
                 else
                 {
-                    setting.Locked = lockedValue.GetBoolean();
+                    setting.ReadOnly = readOnlyValue.GetBoolean();
                 }
             }
             if (root.TryGetProperty("tags", out JsonElement tagsValue))

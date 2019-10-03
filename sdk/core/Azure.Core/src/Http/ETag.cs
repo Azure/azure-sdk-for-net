@@ -15,6 +15,8 @@ namespace Azure.Core.Http
 
         public static bool operator !=(ETag left, ETag right) => !left.Equals(right);
 
+        public static readonly ETag All = new ETag("*");
+
         public bool Equals(ETag other)
         {
             return string.Equals(_value, other._value, StringComparison.Ordinal);
