@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);TESTFRAMEWORK;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,4 +21,8 @@
       <Name>Azure.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\src\Shared\ContentTypeUtilities.cs" />
+  </ItemGroup>
+
 </Project>
