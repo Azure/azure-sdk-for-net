@@ -610,27 +610,6 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task GetWithAcceptDateTime()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting();
-
-            try
-            {
-                await service.SetAsync(testSetting);
-
-                // Test
-                // TODO: add a test with a more granular timestamp.
-                ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
-                Assert.AreEqual(testSetting, responseSetting);
-            }
-            finally
-            {
-                await service.DeleteAsync(testSetting.Key, testSetting.Label);
-            }
-        }
-
-        [Test]
         public async Task GetIfChangedSettingModified()
         {
             ConfigurationClient service = GetClient();
