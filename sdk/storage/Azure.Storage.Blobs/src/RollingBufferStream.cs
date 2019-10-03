@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs
         public override long Position
         {
             get => _hasFilled
-                ? _underlyingStreamBytesRead - BufferSize + ((_reservedBytePos - _nextBufferBytePos + BufferSize) % BufferSize)
+                ? _underlyingStreamBytesRead - ((_reservedBytePos - _nextBufferBytePos + BufferSize) % BufferSize)
                 : _nextBufferBytePos;
             set
             {
@@ -76,14 +76,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Tried to seek ahead of what has already been read from stream");
                 }
 
-                if (_hasFilled)
-                {
-                    _nextBufferBytePos = ((int)(_underlyingStreamBytesRead - value + _reservedBytePos + 1) % BufferSize);
-                }
-                else
-                {
-                    _nextBufferBytePos = (int)value;
-                }
+                _nextBufferBytePos = (int)(value % BufferSize);
             }
         }
 
@@ -112,7 +105,7 @@ namespace Azure.Storage.Blobs
             if (_nextBufferBytePos > _reservedBytePos)
             {
                 var bytesToRead = Math.Min(BufferSize - _nextBufferBytePos, count);
-                Array.Copy(_rollingBuffer, _nextBufferBytePos + 1, buffer, offset, bytesToRead);
+                Array.Copy(_rollingBuffer, _nextBufferBytePos, buffer, offset, bytesToRead);
                 totalRead += bytesToRead;
                 _nextBufferBytePos = (_nextBufferBytePos + bytesToRead) % BufferSize;
 
@@ -156,6 +149,7 @@ namespace Azure.Storage.Blobs
                     _rollingBuffer, 0, BufferSize - 1);
                 _nextBufferBytePos = BufferSize - 1;
                 _reservedBytePos = BufferSize - 1;
+                _hasFilled = true;
             }
             // normal save
             else
