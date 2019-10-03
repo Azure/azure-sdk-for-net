@@ -265,7 +265,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.FileServiceProperties _value = Azure.Storage.Files.Models.FileServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -411,7 +411,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.SharesSegment _value = Azure.Storage.Files.Models.SharesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -568,7 +568,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -718,7 +718,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -995,7 +995,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1139,7 +1139,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1275,7 +1275,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1414,7 +1414,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1558,7 +1558,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1685,7 +1685,7 @@ namespace Azure.Storage.Files
                                     Azure.Storage.Files.Models.SignedIdentifier.FromXml));
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1837,7 +1837,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1960,7 +1960,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.ShareStatistics _value = Azure.Storage.Files.Models.ShareStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2181,7 +2181,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2359,7 +2359,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2679,7 +2679,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2823,7 +2823,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2970,7 +2970,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.FilesAndDirectoriesSegment _value = Azure.Storage.Files.Models.FilesAndDirectoriesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3120,7 +3120,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.StorageHandlesSegment _value = Azure.Storage.Files.Models.StorageHandlesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3284,7 +3284,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3561,7 +3561,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3815,7 +3815,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 206:
                     {
@@ -3939,7 +3939,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4172,7 +4172,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4552,7 +4552,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4699,7 +4699,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4875,7 +4875,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5066,7 +5066,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5220,7 +5220,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5380,7 +5380,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5648,7 +5648,7 @@ namespace Azure.Storage.Files
                         Azure.Storage.Files.Models.StorageHandlesSegment _value = Azure.Storage.Files.Models.StorageHandlesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5802,7 +5802,7 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {

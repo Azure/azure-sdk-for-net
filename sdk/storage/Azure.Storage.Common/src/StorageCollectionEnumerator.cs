@@ -232,7 +232,7 @@ namespace Azure.Storage
                     continuationToken = page.ContinuationToken;
                     foreach (T item in page.Values)
                     {
-                        yield return Response.FromValue(page.GetRawResponse(), item);
+                        yield return Response.FromValue(item, page.GetRawResponse());
                     }
                 } while (CanContinue(continuationToken));
             }

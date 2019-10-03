@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobServiceProperties _value = Azure.Storage.Blobs.Models.BlobServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -406,7 +406,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobServiceStatistics _value = Azure.Storage.Blobs.Models.BlobServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -558,7 +558,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobContainersSegment _value = Azure.Storage.Blobs.Models.BlobContainersSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -703,7 +703,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.UserDelegationKey _value = Azure.Storage.Blobs.Models.UserDelegationKey.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -832,7 +832,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo(skuName, accountKind);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -995,7 +995,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1158,7 +1158,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1334,7 +1334,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1637,7 +1637,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1792,7 +1792,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1974,7 +1974,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2142,7 +2142,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2304,7 +2304,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2470,7 +2470,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2632,7 +2632,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2808,7 +2808,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2961,7 +2961,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobsFlatSegment _value = Azure.Storage.Blobs.Models.BlobsFlatSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3120,7 +3120,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobsHierarchySegment _value = Azure.Storage.Blobs.Models.BlobsHierarchySegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3452,7 +3452,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 206:
                     {
@@ -3580,7 +3580,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -3909,7 +3909,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -4285,7 +4285,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4479,7 +4479,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4744,7 +4744,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5085,7 +5085,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5290,7 +5290,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5469,7 +5469,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5642,7 +5642,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5819,7 +5819,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6006,7 +6006,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6179,7 +6179,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6384,7 +6384,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6616,7 +6616,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6843,7 +6843,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -7415,7 +7415,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -7678,7 +7678,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -7917,7 +7917,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -8216,7 +8216,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -8416,7 +8416,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -8622,7 +8622,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -8832,7 +8832,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9016,7 +9016,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9196,7 +9196,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9465,7 +9465,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9717,7 +9717,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -10003,7 +10003,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -10304,7 +10304,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -10510,7 +10510,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -10744,7 +10744,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -11047,7 +11047,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11213,7 +11213,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11441,7 +11441,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11716,7 +11716,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11895,7 +11895,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -12087,7 +12087,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -12281,7 +12281,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
