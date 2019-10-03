@@ -332,7 +332,7 @@ namespace Azure.Data.AppConfiguration
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
 
-            if (requestOptions != default)
+            if (requestOptions != null)
             {
                 ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
@@ -484,7 +484,7 @@ namespace Azure.Data.AppConfiguration
             request.Method = RequestMethod.Delete;
             BuildUriForKvRoute(request.Uri, key, label);
 
-            if (requestOptions != default)
+            if (requestOptions != null)
             {
                 ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
@@ -680,7 +680,7 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
-            if (requestOptions != default)
+            if (requestOptions != null)
             {
                 ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }

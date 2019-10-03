@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    public static class RetriableStream
+    internal static class RetriableStream
     {
         public static Stream Create(
             Func<long, Stream> responseFactory,
@@ -40,7 +43,7 @@ namespace Azure.Core.Pipeline
             return new RetriableStreamImpl(initialResponse, streamFactory, asyncResponseFactory, responseClassifier, maxRetries);
         }
 
-        private class RetriableStreamImpl : ReadOnlyStream
+        private class RetriableStreamImpl : Stream
         {
             private readonly ResponseClassifier _responseClassifier;
 
@@ -58,7 +61,7 @@ namespace Azure.Core.Pipeline
 
             private int _retryCount;
 
-            private List<Exception>? _exceptions;
+            private List<Exception> _exceptions;
 
             public RetriableStreamImpl(Stream initialStream, Func<long, Stream> streamFactory, Func<long, ValueTask<Stream>> asyncStreamFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
@@ -129,7 +132,9 @@ namespace Azure.Core.Pipeline
                     }
                     catch (Exception e)
                     {
-                        RetryAsync(e, false).EnsureCompleted();
+                        Task task = RetryAsync(e, false);
+                        Debug.Assert(task.IsCompleted);
+                        task.GetAwaiter().GetResult();
                     }
                 }
             }
@@ -152,6 +157,23 @@ namespace Azure.Core.Pipeline
                 }
 
                 return stream;
+            }
+
+            public override bool CanWrite => false;
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override void SetLength(long value)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override void Flush()
+            {
+                throw new NotSupportedException();
             }
         }
     }

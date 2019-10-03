@@ -1,6 +1,7 @@
 ﻿<Project ToolsVersion="15.0">
   <PropertyGroup>
     <SessionRecordsDirectory>SessionRecords</SessionRecordsDirectory>
+    <DefineConstants>$(DefineConstants);TESTFRAMEWORK</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
