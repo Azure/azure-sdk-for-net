@@ -7,36 +7,36 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class GetContainersAsyncCollection : StorageCollectionEnumerator<ContainerItem>
+    internal class GetBlobContainersAsyncCollection : StorageCollectionEnumerator<BlobContainerItem>
     {
         private readonly BlobServiceClient _client;
-        private readonly GetContainersOptions? _options;
+        private readonly GetBlobContainersOptions? _options;
 
-        public GetContainersAsyncCollection(
+        public GetBlobContainersAsyncCollection(
             BlobServiceClient client,
-            GetContainersOptions? options)
+            GetBlobContainersOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        public override async ValueTask<Page<ContainerItem>> GetNextPageAsync(
+        public override async ValueTask<Page<BlobContainerItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            Task<Response<ContainersSegment>> task = _client.GetContainersInternal(
+            Task<Response<BlobContainersSegment>> task = _client.GetBlobContainersInternal(
                 continuationToken,
                 _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
-            Response<ContainersSegment> response = isAsync ?
+            Response<BlobContainersSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
-            return new Page<ContainerItem>(
-                response.Value.ContainerItems.ToArray(),
+            return new Page<BlobContainerItem>(
+                response.Value.BlobContainerItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

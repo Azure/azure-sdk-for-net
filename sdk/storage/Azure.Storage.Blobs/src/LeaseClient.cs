@@ -36,12 +36,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the <see cref="BlobContainerClient"/> to manage leases for.
         /// </summary>
-        protected virtual BlobContainerClient ContainerClient => _container;
+        protected virtual BlobContainerClient BlobContainerClient => _container;
 
         /// <summary>
         /// Gets the URI of the object being leased.
         /// </summary>
-        public Uri Uri => BlobClient?.Uri ?? ContainerClient?.Uri;
+        public Uri Uri => BlobClient?.Uri ?? BlobContainerClient?.Uri;
 
         /// <summary>
         /// Gets the Lease ID for this lease.
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        private HttpPipeline Pipeline => BlobClient?.Pipeline ?? ContainerClient.Pipeline;
+        private HttpPipeline Pipeline => BlobClient?.Pipeline ?? BlobContainerClient.Pipeline;
 
         /// <summary>
         /// The <see cref="TimeSpan"/> representing an infinite lease duration.
@@ -90,7 +90,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="LeaseClient"/>  class.
         /// </summary>
         /// <param name="client">
-        /// A <see cref="BlobContainerClient"/> representing the container
+        /// A <see cref="BlobContainerClient"/> representing the blob container
         /// being leased.
         /// </param>
         /// <param name="leaseId">
@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         private void EnsureClient()
         {
-            if (BlobClient == null && ContainerClient == null)
+            if (BlobClient == null && BlobContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
                 throw BlobErrors.BlobOrContainerMissing(nameof(LeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
@@ -629,7 +629,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
-                        Response<ContainerInfo> response =
+                        Response<BlobContainerInfo> response =
                             await BlobRestClient.Container.ReleaseLeaseAsync(
                                 Pipeline,
                                 Uri,

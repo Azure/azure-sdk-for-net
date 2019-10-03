@@ -424,7 +424,7 @@ namespace Azure.Storage
             internal static class AccountResources
             {
                 public const char Service = 's';
-                public const char Container = 'c';
+                public const char BlobContainer = 'c';
                 public const char Object = 'o';
             }
         }
