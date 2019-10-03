@@ -38,7 +38,7 @@ namespace Azure.Storage.Files
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The Storage account name corresponding to the directory client.
@@ -421,9 +421,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageDirectoryInfo>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -654,9 +652,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageDirectoryProperties>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryProperties(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryProperties(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -804,9 +800,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageDirectoryInfo>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -925,9 +919,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageDirectoryInfo>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryInfo(response.Value));
+                    return Response.FromValue(response.GetRawResponse(), new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -966,10 +958,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<StorageFileItem>> GetFilesAndDirectories(
+        public virtual Pageable<StorageFileItem> GetFilesAndDirectories(
             GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, options, cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
@@ -987,17 +979,17 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{StorageFileItem}"/> describing the
+        /// A <see cref="AsyncPageable{T}"/> describing the
         /// items in the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<StorageFileItem> GetFilesAndDirectoriesAsync(
+        public virtual AsyncPageable<StorageFileItem> GetFilesAndDirectoriesAsync(
             GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, options, cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
@@ -1103,10 +1095,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<StorageHandle>> GetHandles(
+        public virtual Pageable<StorageHandle> GetHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
+            new GetDirectoryHandlesAsyncCollection(this, recursive).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns an async
@@ -1124,17 +1116,17 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{StorageHandle}"/> describing the
+        /// A <see cref="AsyncPageable{T}"/> describing the
         /// handles on the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
+        public virtual AsyncPageable<StorageHandle> GetHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
+            new GetDirectoryHandlesAsyncCollection(this, recursive).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns a list of open
@@ -1456,7 +1448,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
+            return Response.FromValue(response.GetRawResponse(), subdir);
         }
 
         /// <summary>
@@ -1502,7 +1494,7 @@ namespace Azure.Storage.Files
                     filePermission,
                     cancellationToken)
                 .ConfigureAwait(false);
-            return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
+            return Response.FromValue(response.GetRawResponse(), subdir);
         }
         #endregion CreateSubdirectory
 
@@ -1611,7 +1603,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return new Response<FileClient>(response.GetRawResponse(), file);
+            return Response.FromValue(response.GetRawResponse(), file);
         }
 
         /// <summary>
@@ -1668,7 +1660,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<FileClient>(response.GetRawResponse(), file);
+            return Response.FromValue(response.GetRawResponse(), file);
         }
         #endregion CreateFile
 

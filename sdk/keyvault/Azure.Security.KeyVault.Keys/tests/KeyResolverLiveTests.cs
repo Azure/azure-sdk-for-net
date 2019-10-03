@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 }
             };
 
-            secret = await secretClient.SetAsync(secret);
+            secret = await secretClient.SetSecretAsync(secret);
 
             CryptographyClient cryptoClient = await Resolver.ResolveAsync(secret.Id);
 

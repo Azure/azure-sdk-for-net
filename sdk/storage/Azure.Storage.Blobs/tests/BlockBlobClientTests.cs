@@ -1167,9 +1167,9 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blockBlobName, blobs.First().Value.Name);
+                Assert.AreEqual(blockBlobName, blobs.First().Name);
 
                 Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
                 var actual = new MemoryStream();
@@ -1419,9 +1419,9 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blockBlobName, blobs.First().Value.Name);
+                Assert.AreEqual(blockBlobName, blobs.First().Name);
 
                 Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
                 AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);

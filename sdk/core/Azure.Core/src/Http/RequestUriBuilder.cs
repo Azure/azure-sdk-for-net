@@ -169,10 +169,10 @@ namespace Azure.Core.Http
 
         public override string ToString()
         {
-            return ToString(null);
+            return ToString(null, string.Empty);
         }
 
-        internal string ToString(string[]? allowedQueryParameters)
+        internal string ToString(string[]? allowedQueryParameters, string redactedValue)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(Scheme);
@@ -203,14 +203,14 @@ namespace Azure.Core.Http
                 }
                 else
                 {
-                    AppendSanitizedQuery(stringBuilder, allowedQueryParameters);
+                    AppendRedactedQuery(stringBuilder, allowedQueryParameters, redactedValue);
                 }
             }
 
             return stringBuilder.ToString();
         }
 
-        private void AppendSanitizedQuery(StringBuilder stringBuilder, string[] allowedQueryParameters)
+        private void AppendRedactedQuery(StringBuilder stringBuilder, string[] allowedQueryParameters, string redactedValue)
         {
             string query = _pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex);
             int queryIndex = 1;
@@ -220,12 +220,14 @@ namespace Azure.Core.Http
             {
                 int endOfParameterValue = query.IndexOf('&', queryIndex);
                 int endOfParameterName = query.IndexOf('=', queryIndex);
+                bool noValue = false;
 
                 // Check if we have parameter without value
-                if (endOfParameterValue != -1 &&
-                    (endOfParameterName == -1 || endOfParameterName > endOfParameterValue))
+                if ((endOfParameterValue == -1 && endOfParameterName == -1) ||
+                    (endOfParameterValue != -1 && (endOfParameterName == -1 || endOfParameterName > endOfParameterValue)))
                 {
                     endOfParameterName = endOfParameterValue;
+                    noValue = true;
                 }
 
                 if (endOfParameterName == -1)
@@ -256,10 +258,28 @@ namespace Azure.Core.Http
                 }
 
                 int valueLength = endOfParameterValue - queryIndex;
+                int nameLength = endOfParameterName - queryIndex;
 
                 if (isAllowed)
                 {
                     stringBuilder.Append(query, queryIndex, valueLength);
+                }
+                else
+                {
+                    if (noValue)
+                    {
+                        stringBuilder.Append(query, queryIndex, valueLength);
+                    }
+                    else
+                    {
+                        stringBuilder.Append(query, queryIndex, nameLength);
+                        stringBuilder.Append("=");
+                        stringBuilder.Append(redactedValue);
+                        if (query[endOfParameterValue - 1] == '&')
+                        {
+                            stringBuilder.Append("&");
+                        }
+                    }
                 }
 
                 queryIndex += valueLength;

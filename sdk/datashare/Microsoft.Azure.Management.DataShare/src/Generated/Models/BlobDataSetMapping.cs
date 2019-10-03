@@ -48,13 +48,16 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="dataSetId">Gets the id of source dataset.</param>
         /// <param name="dataSetMappingStatus">Gets the status of the dataset
         /// mapping. Possible values include: 'Ok', 'Broken'</param>
-        public BlobDataSetMapping(string containerName, string filePath, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetMappingStatus = default(string))
+        /// <param name="outputType">File output type. Possible values include:
+        /// 'Csv', 'Parquet'</param>
+        public BlobDataSetMapping(string containerName, string filePath, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetMappingStatus = default(string), string outputType = default(string))
             : base(id, name, type)
         {
             ContainerName = containerName;
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
             FilePath = filePath;
+            OutputType = outputType;
             ResourceGroup = resourceGroup;
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
@@ -90,6 +93,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.filePath")]
         public string FilePath { get; set; }
+
+        /// <summary>
+        /// Gets or sets file output type. Possible values include: 'Csv',
+        /// 'Parquet'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outputType")]
+        public string OutputType { get; set; }
 
         /// <summary>
         /// Gets or sets resource group of storage account.

@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -249,10 +249,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<ContainerItem>> GetContainers(
+        public virtual Pageable<ContainerItem> GetContainers(
             GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options, cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetContainersAsync"/> operation returns an async
@@ -271,17 +271,17 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="AsyncCollection{ContainerItem}"/> describing the
+        /// An <see cref="AsyncPageable{T}"/> describing the
         /// containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<ContainerItem> GetContainersAsync(
+        public virtual AsyncPageable<ContainerItem> GetContainersAsync(
             GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetContainersAsyncCollection(this, options, cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetContainersInternal"/> operation returns a
@@ -1002,7 +1002,7 @@ namespace Azure.Storage.Blobs
         {
             BlobContainerClient container = GetBlobContainerClient(containerName);
             Response<ContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
-            return new Response<BlobContainerClient>(response.GetRawResponse(), container);
+            return Response.FromValue(response.GetRawResponse(), container);
         }
 
         /// <summary>
@@ -1052,7 +1052,7 @@ namespace Azure.Storage.Blobs
         {
             BlobContainerClient container = GetBlobContainerClient(containerName);
             Response<ContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
-            return new Response<BlobContainerClient>(response.GetRawResponse(), container);
+            return Response.FromValue(response.GetRawResponse(), container);
         }
         #endregion CreateBlobContainer
 

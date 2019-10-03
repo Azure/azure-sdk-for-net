@@ -147,6 +147,16 @@ directive:
     }
 ```
 
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
+```
+
 ### /?restype=service&comp=stats
 ``` yaml
 directive:
@@ -1053,13 +1063,17 @@ directive:
   transform: $.required.push("PublicAccess");
   ```
 
-### Make lease duration a long
-Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+### Make lease duration/break period a long
+Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
 type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+- from: swagger-document
+  where: $.parameters.LeaseBreakPeriod
   transform: >
     $.format = "int64";
 ```
@@ -1145,4 +1159,13 @@ directive:
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock"]
   transform: >
     $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+```
+
+### Rename SetTier to SetAccessTier
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=tier"]
+  transform: >
+    $.put.operationId = "Blob_SetAccessTier";
 ```

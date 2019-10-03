@@ -42,23 +42,23 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             };
 
-            Secret storedSecret = client.Set(secret);
+            Secret storedSecret = client.SetSecret(secret);
 
             // Backups are good to have if in case secrets get accidentally deleted by you.
             // For long term storage, it is ideal to write the backup to a file.
-            File.WriteAllBytes(backupPath, client.Backup(secretName));
+            File.WriteAllBytes(backupPath, client.BackupSecret(secretName));
 
             // The storage account secret is no longer in use, so you delete it.
-            client.Delete(secretName);
+            client.DeleteSecret(secretName);
 
             // To ensure secret is deleted on server side.
             Assert.IsTrue(WaitForDeletedSecret(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeleted(secretName);
+            client.PurgeDeletedSecret(secretName);
 
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
-            SecretProperties restoreSecret = client.Restore(File.ReadAllBytes(backupPath));
+            SecretProperties restoreSecret = client.RestoreSecret(File.ReadAllBytes(backupPath));
 
             AssertSecretsEqual(storedSecret.Properties, restoreSecret);
         }
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    client.GetDeleted(secretName);
+                    client.GetDeletedSecret(secretName);
                     return true;
                 }
                 catch
