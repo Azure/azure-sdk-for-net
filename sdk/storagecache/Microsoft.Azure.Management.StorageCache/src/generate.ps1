@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "storagecache/resource-manager" -AutoRestVersion "latest"
