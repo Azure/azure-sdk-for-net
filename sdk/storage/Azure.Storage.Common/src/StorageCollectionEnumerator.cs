@@ -72,7 +72,7 @@ namespace Azure.Storage
             /// <returns>
             /// An async sequence of <see cref="Page{T}"/>s.
             /// </returns>
-            public override IEnumerable<Page<T>> ByPage(
+            public override IEnumerable<Page<T>> AsPages(
                 string continuationToken = default,
                 int? pageHintSize = default)
             {
