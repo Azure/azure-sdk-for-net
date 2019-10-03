@@ -256,10 +256,7 @@ namespace Peering.Tests
                 }
                 try
                 {
-                    var prefix = new PeeringServicePrefix
-                    {
-                        Prefix = "10.10.10.2",
-                    };
+                    var prefix = "10.10.10.2";
 
                     var peeringServicePrefix = this.client.Prefixes.CreateOrUpdate(rgname, name, prefixName, prefix);
                     Assert.NotNull(peeringServicePrefix);
