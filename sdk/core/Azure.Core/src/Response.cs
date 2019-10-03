@@ -35,10 +35,5 @@ namespace Azure
         {
             return new ValueResponse<T>(response, value);
         }
-
-        public static Response<T> FromFunc<T>(Response response, Func<T> func)
-        {
-            return new FuncResponse<T>(response, func);
-        }
     }
 }

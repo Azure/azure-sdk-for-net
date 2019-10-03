@@ -5,18 +5,22 @@ using System;
 
 namespace Azure
 {
-    internal class FuncResponse<T> : Response<T>
+    internal class NoBodyResponse<T> : Response<T>
     {
         private readonly Response _response;
-        private readonly Func<T> _func;
 
-        public FuncResponse(Response response, Func<T> func)
+        public NoBodyResponse(Response response)
         {
             _response = response;
-            _func = func;
         }
 
-        public override T Value { get { return _func(); } }
+        public override T Value
+        {
+            get
+            {
+                throw new ResponseBodyNotFoundException(_response.Status, _response.ReasonPhrase);
+            }
+        }
 
         public override Response GetRawResponse() => _response;
     }

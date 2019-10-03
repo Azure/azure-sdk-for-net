@@ -45,7 +45,7 @@ namespace Azure.Data.AppConfiguration
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
         {
-            return Response.FromFunc<ConfigurationSetting>(response, () => { throw new ResponseBodyNotFoundException(response.Status, response.ReasonPhrase); });
+            return new NoBodyResponse<ConfigurationSetting>(response);
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
