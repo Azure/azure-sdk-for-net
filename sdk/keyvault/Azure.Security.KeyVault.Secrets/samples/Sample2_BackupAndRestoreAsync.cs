@@ -43,25 +43,25 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             };
 
-            Secret storedSecret = await client.SetAsync(secret);
+            Secret storedSecret = await client.SetSecretAsync(secret);
 
             // Backups are good to have if in case secrets get accidentally deleted by you.
             // For long term storage, it is ideal to write the backup to a file.
             using (FileStream sourceStream = File.Open(backupPath, FileMode.OpenOrCreate))
             {
-                byte[] byteSecret = await client.BackupAsync(secretName);
+                byte[] byteSecret = await client.BackupSecretAsync(secretName);
                 sourceStream.Seek(0, SeekOrigin.End);
                 await sourceStream.WriteAsync(byteSecret, 0, byteSecret.Length);
             }
 
             // The storage account secret is no longer in use, so you delete it.
-            await client.DeleteAsync(secretName);
+            await client.DeleteSecretAsync(secretName);
 
             // To ensure secret is deleted on server side.
             Assert.IsTrue(await WaitForDeletedSecretAsync(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            await client.PurgeDeletedAsync(secretName);
+            await client.PurgeDeletedSecretAsync(secretName);
 
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
             SecretProperties restoreSecret = null;
@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 byte[] result = new byte[sourceStream.Length];
                 await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length);
-                restoreSecret = await client.RestoreAsync(result);
+                restoreSecret = await client.RestoreSecretAsync(result);
             }
 
             AssertSecretsEqual(storedSecret.Properties, restoreSecret);
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    await client.GetDeletedAsync(secretName);
+                    await client.GetDeletedSecretAsync(secretName);
                     return true;
                 }
                 catch

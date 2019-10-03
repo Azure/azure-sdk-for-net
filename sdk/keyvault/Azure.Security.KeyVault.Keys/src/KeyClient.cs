@@ -275,25 +275,25 @@ namespace Azure.Security.KeyVault.Keys
         /// Vault. Note: The cryptographic material of a key itself cannot be changed.
         /// This operation requires the keys/update permission.
         /// </remarks>
-        /// <param name="key">The <see cref="KeyProperties"/> object with updated properties.</param>
+        /// <param name="properties">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="key"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="properties"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<Key> UpdateKeyProperties(KeyProperties key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
+        public virtual Response<Key> UpdateKeyProperties(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(key.Version, $"{nameof(key)}.{nameof(key.Version)}");
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
 
-            var parameters = new KeyRequestParameters(key, keyOperations);
+            var parameters = new KeyRequestParameters(properties, keyOperations);
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKeyProperties");
-            scope.AddAttribute("key", key.Name);
+            scope.AddAttribute("key", properties.Name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version);
+                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new Key(properties.Name), cancellationToken, KeysPath, properties.Name, "/", properties.Version);
             }
             catch (Exception e)
             {
@@ -311,25 +311,25 @@ namespace Azure.Security.KeyVault.Keys
         /// Vault. Note: The cryptographic material of a key itself cannot be changed.
         /// This operation requires the keys/update permission.
         /// </remarks>
-        /// <param name="key">The <see cref="KeyProperties"/> object with updated properties.</param>
+        /// <param name="properties">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="key"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="properties"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual async Task<Response<Key>> UpdateKeyPropertiesAsync(KeyProperties key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> UpdateKeyPropertiesAsync(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(key.Version, $"{nameof(key)}.{nameof(key.Version)}");
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
 
-            var parameters = new KeyRequestParameters(key, keyOperations);
+            var parameters = new KeyRequestParameters(properties, keyOperations);
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKeyProperties");
-            scope.AddAttribute("key", key.Name);
+            scope.AddAttribute("key", properties.Name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new Key(properties.Name), cancellationToken, KeysPath, properties.Name, "/", properties.Version).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -416,7 +416,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<KeyProperties>> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Pageable<KeyProperties> GetKeys(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
@@ -434,7 +434,7 @@ namespace Azure.Security.KeyVault.Keys
         /// permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncCollection<KeyProperties> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KeyProperties> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
@@ -453,7 +453,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<KeyProperties>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
+        public virtual Pageable<KeyProperties> GetKeyVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -474,7 +474,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual AsyncCollection<KeyProperties> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KeyProperties> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -630,7 +630,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual IEnumerable<Response<DeletedKey>> GetDeletedKeys(CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedKey> GetDeletedKeys(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
@@ -650,7 +650,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual AsyncCollection<DeletedKey> GetDeletedKeysAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedKey> GetDeletedKeysAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 

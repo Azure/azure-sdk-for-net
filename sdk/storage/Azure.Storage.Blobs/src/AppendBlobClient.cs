@@ -65,14 +65,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this append blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this append blob.
         /// </param>
-        public AppendBlobClient(string connectionString, string containerName, string blobName)
-            : base(connectionString, containerName, blobName)
+        public AppendBlobClient(string connectionString, string blobContainerName, string blobName)
+            : base(connectionString, blobContainerName, blobName)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this append blob.
         /// </param>
         /// <param name="blobName">
@@ -98,8 +98,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public AppendBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public AppendBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
-        public new AppendBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (AppendBlobClient)WithCustomerProvidedKeyImpl(customerProvidedKey);
+        public new AppendBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (AppendBlobClient)WithCustomerProvidedKeyCore(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="AppendBlobClient"/> class
@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        protected sealed override BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {

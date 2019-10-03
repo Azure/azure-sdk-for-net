@@ -40,11 +40,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(service1.Uri);
             var builder2 = new BlobUriBuilder(service2.Uri);
 
-            Assert.IsEmpty(builder1.ContainerName);
+            Assert.IsEmpty(builder1.BlobContainerName);
             Assert.IsEmpty(builder1.BlobName);
             Assert.AreEqual(accountName, builder1.AccountName);
 
-            Assert.IsEmpty(builder2.ContainerName);
+            Assert.IsEmpty(builder2.BlobContainerName);
             Assert.IsEmpty(builder2.BlobName);
             Assert.AreEqual(accountName, builder2.AccountName);
         }
@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
             var builder = new BlobUriBuilder(service.Uri);
 
-            Assert.IsEmpty(builder.ContainerName);
+            Assert.IsEmpty(builder.BlobContainerName);
             Assert.AreEqual("", builder.BlobName);
             Assert.AreEqual(accountName, builder.AccountName);
         }
@@ -74,7 +74,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out _, service: service))
             {
                 // Act
-                IList<Response<ContainerItem>> containers = await service.GetContainersAsync().ToListAsync();
+                IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
 
                 // Assert
                 Assert.IsTrue(containers.Count() >= 1);
@@ -120,11 +120,10 @@ namespace Azure.Storage.Blobs.Test
                 retryOn404);
             using (GetNewContainer(out _, service: service))
             {
-                IList<Response<ContainerItem>> containers = await EnsurePropagatedAsync(
-                    async () => await service.GetContainersAsync().ToListAsync(),
+                IList<BlobContainerItem> containers = await EnsurePropagatedAsync(
+                    async () => await service.GetBlobContainersAsync().ToListAsync(),
                     containers => containers.Count > 0);
                 Assert.IsTrue(containers.Count >= 1);
-                Assert.AreEqual(200, containers[0].GetRawResponse().Status);
             }
             return testExceptionPolicy;
         }
@@ -138,9 +137,9 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service))
             {
                 var marker = default(string);
-                var containers = new List<ContainerItem>();
+                var containers = new List<BlobContainerItem>();
 
-                await foreach (Page<ContainerItem> page in service.GetContainersAsync().ByPage(marker))
+                await foreach (Page<BlobContainerItem> page in service.GetBlobContainersAsync().AsPages(marker))
                 {
                     containers.AddRange(page.Values);
                 }
@@ -161,9 +160,9 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service))
             {
                 // Act
-                Page<ContainerItem> page = await
-                    service.GetContainersAsync()
-                    .ByPage(pageSizeHint: 1)
+                Page<BlobContainerItem> page = await
+                    service.GetBlobContainersAsync()
+                    .AsPages(pageSizeHint: 1)
                     .FirstAsync();
 
                 // Assert
@@ -181,12 +180,12 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service, containerName: containerName))
             {
                 // Act
-                AsyncCollection<ContainerItem> containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
-                IList<Response<ContainerItem>> items = await containers.ToListAsync();
+                AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(new GetBlobContainersOptions { Prefix = prefix });
+                IList<BlobContainerItem> items = await containers.ToListAsync();
                 // Assert
                 Assert.AreNotEqual(0, items.Count());
-                Assert.IsTrue(items.All(c => c.Value.Name.StartsWith(prefix)));
-                Assert.IsNotNull(items.Single(c => c.Value.Name == containerName));
+                Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
+                Assert.IsNotNull(items.Single(c => c.Name == containerName));
             }
         }
 
@@ -202,10 +201,10 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Act
-                Response<ContainerItem> first = await service.GetContainersAsync(new GetContainersOptions { IncludeMetadata = true }).FirstAsync();
+                BlobContainerItem first = await service.GetBlobContainersAsync(new GetBlobContainersOptions { IncludeMetadata = true }).FirstAsync();
 
                 // Assert
-                Assert.IsNotNull(first.Value.Metadata);
+                Assert.IsNotNull(first.Metadata);
             }
         }
 
@@ -218,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetContainersAsync().ByPage(continuationToken: "garbage").FirstAsync(),
+                service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
@@ -395,7 +394,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
-                Response<ContainerItem> properties = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally

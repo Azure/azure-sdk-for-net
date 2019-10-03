@@ -65,14 +65,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this page blob.
         /// </param>
-        public PageBlobClient(string connectionString, string containerName, string blobName)
-            : base(connectionString, containerName, blobName)
+        public PageBlobClient(string connectionString, string blobContainerName, string blobName)
+            : base(connectionString, blobContainerName, blobName)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
         /// </param>
         /// <param name="blobName">
@@ -98,8 +98,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PageBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="options">
@@ -128,7 +128,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="credential">
@@ -150,7 +150,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="credential">
@@ -172,7 +172,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="pipeline">
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public new PageBlobClient WithSnapshot(string snapshot) => (PageBlobClient)WithSnapshotImpl(snapshot);
+        public new PageBlobClient WithSnapshot(string snapshot) => (PageBlobClient)WithSnapshotCore(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="PageBlobClient"/> class
@@ -210,7 +210,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
+        protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
             return new PageBlobClient(builder.ToUri(), Pipeline);
@@ -225,7 +225,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        public new PageBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (PageBlobClient)WithCustomerProvidedKeyImpl(customerProvidedKey);
+        public new PageBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (PageBlobClient)WithCustomerProvidedKeyCore(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="PageBlobClient"/> class
@@ -236,7 +236,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        protected sealed override BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {

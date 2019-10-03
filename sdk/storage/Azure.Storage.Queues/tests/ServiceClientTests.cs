@@ -68,7 +68,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             using (GetNewQueue(out _, service: service)) // Ensure at least one queue
             {
-                IList<Response<QueueItem>> queues = await service.GetQueuesAsync().ToListAsync();
+                IList<QueueItem> queues = await service.GetQueuesAsync().ToListAsync();
                 Assert.IsTrue(queues.Count >= 1);
             }
             var accountName = new QueueUriBuilder(service.Uri).AccountName;
@@ -83,7 +83,7 @@ namespace Azure.Storage.Queues.Test
             {
                 var marker = default(string);
                 var queues = new List<QueueItem>();
-                await foreach (Page<QueueItem> page in service.GetQueuesAsync().ByPage(marker))
+                await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
                 {
                     queues.AddRange(page.Values);
                 }
@@ -104,7 +104,7 @@ namespace Azure.Storage.Queues.Test
             {
                 Page<QueueItem> page = await
                     service.GetQueuesAsync()
-                    .ByPage(pageSizeHint: 1)
+                    .AsPages(pageSizeHint: 1)
                     .FirstAsync();
                 Assert.AreEqual(1, page.Values.Count);
             }
@@ -119,12 +119,12 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = (await service.CreateQueueAsync(queueName)).Value; // Ensure at least one queue
             try
             {
-                AsyncCollection<QueueItem> queues = service.GetQueuesAsync(new GetQueuesOptions { Prefix = prefix });
-                IList<Response<QueueItem>> items = await queues.ToListAsync();
+                AsyncPageable<QueueItem> queues = service.GetQueuesAsync(new GetQueuesOptions { Prefix = prefix });
+                IList<QueueItem> items = await queues.ToListAsync();
 
                 Assert.AreNotEqual(0, items.Count());
-                Assert.IsTrue(items.All(c => c.Value.Name.StartsWith(prefix)));
-                Assert.IsNotNull(items.Single(c => c.Value.Name == queueName));
+                Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
+                Assert.IsNotNull(items.Single(c => c.Name == queueName));
             }
             finally
             {
@@ -140,8 +140,8 @@ namespace Azure.Storage.Queues.Test
             {
                 IDictionary<string, string> metadata = BuildMetadata();
                 await queue.SetMetadataAsync(metadata);
-                Response<QueueItem> first = await service.GetQueuesAsync(new GetQueuesOptions { IncludeMetadata = true }).FirstAsync();
-                Assert.IsNotNull(first.Value.Metadata);
+                QueueItem first = await service.GetQueuesAsync(new GetQueuesOptions { IncludeMetadata = true }).FirstAsync();
+                Assert.IsNotNull(first.Metadata);
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Storage.Queues.Test
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetQueuesAsync().ByPage(continuationToken: "garbage").FirstAsync(),
+                service.GetQueuesAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
@@ -189,11 +189,10 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
             using (GetNewQueue(out _, service: service))
             {
-                IList<Response<QueueItem>> queues = await EnsurePropagatedAsync(
+                IList<QueueItem> queues = await EnsurePropagatedAsync(
                     async () => await service.GetQueuesAsync().ToListAsync(),
                     queues => queues.Count > 0);
                 Assert.AreEqual(1, queues.Count);
-                Assert.AreEqual(200, queues[0].GetRawResponse().Status);
             }
             return testExceptionPolicy;
         }

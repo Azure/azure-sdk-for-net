@@ -27,7 +27,7 @@ namespace Azure.Core.Testing
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
-                if (invocation.Method.ReturnType.Name.Contains("AsyncCollection") ||
+                if (invocation.Method.ReturnType.Name.Contains("Pageable") ||
                     invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
                 {
                     return;

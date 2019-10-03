@@ -161,7 +161,7 @@ Key key = client.CreateKey("key-name", KeyType.EllipticCurve);
 // You can specify additional application-specific metadata in the form of tags.
 key.Tags["foo"] = "updated tag";
 
-KeyBase updatedKey = client.UpdateKey(key, key.KeyMaterial.KeyOps);
+KeyProperties updatedKey = client.UpdateKey(key, key.KeyMaterial.KeyOps);
 
 Console.WriteLine(updatedKey.Name);
 Console.WriteLine(updatedKey.Version);
@@ -182,12 +182,12 @@ Console.WriteLine(key.DeletedDate);
 This example lists all the keys in the specified Key Vault.
 
 ```c#
-IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
+Pageable<KeyProperties> allKeys = client.GetKeys();
 
-  foreach (Key key in allKeys)
-  {
-    Console.WriteLine(key.Name);
-  }
+foreach (Key key in allKeys)
+{
+  Console.WriteLine(key.Name);
+}
 ```
 
 ### Encrypt and Decrypt
@@ -317,7 +317,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://azure.github.io/azure-sdk-for-net/api/KeyVault/Azure.Security.KeyVault.Keys.html
+[API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Keys.html
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/

@@ -496,7 +496,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const model = response.model;
 
         // Deserialize
-        w.line(`// Create the result`);
+        if (!response.struct) w.line(`// Create the result`);
         if (response.body) {
             const responseType = response.body;
             if (responseType.type === `string`) {
@@ -570,7 +570,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
             }
-        } else {
+        } else if (!response.struct) {
             w.line(`${types.getName(model)} ${valueName} = new ${types.getName(model)}();`);
         }
         w.line();
@@ -579,6 +579,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         if (headers.length > 0) {
             w.line(`// Get response headers`);
             w.line(`string ${headerName};`);
+            if (response.struct) {
+                for (const header of headers) {
+                    w.line(`${types.getDeclarationType(header.model, true, false, true)} ${naming.parameter(header.clientName)} = default;`);
+                }
+            }
             for (const header of headers) {
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
                     const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
@@ -593,7 +598,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 } else {
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
-                        w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
+                        if (response.struct) {
+                            w.write(`${naming.parameter(header.clientName)} = `);
+                        } else {
+                            w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
+                        }
                         if (isPrimitiveType(header.model) && header.model.collectionFormat === `csv`) {
                             if (!header.model.itemType || header.model.itemType.type !== `string`) {
                                 throw `collectionFormat csv is only supported for strings, at the moment`;
@@ -605,6 +614,17 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`;`);
                     });
                 }
+            }
+            if (response.struct) {
+                w.line();
+                const separator = IndentWriter.createFenceposter();
+                w.write(`${types.getName(model)} ${valueName} = new ${types.getName(model)}(`);
+                for (const header of headers) {
+                    if (separator()) { w.write(`, `); }
+                    w.write(`${naming.parameter(header.clientName)}`);
+                }
+                w.write(`);`);
+                w.line();
             }
             w.line();
         }
@@ -822,7 +842,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
 
 function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType) {
     const service = model.service;
-    const regionName = `class ${naming.type(type.name)}`;
+    const regionName = type.struct ? `struct ${naming.type(type.name)}` : `class ${naming.type(type.name)}`;
     w.line(`#region ${regionName}`);
     w.line(`namespace ${naming.namespace(type.namespace)}`);
     w.scope('{', '}', () => {
@@ -830,7 +850,8 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
         w.line(`/// ${type.description || type.name}`);
         w.line(`/// </summary>`);
         if (type.disableWarnings) { w.line(`#pragma warning disable ${type.disableWarnings}`); }
-        w.line(`${type.public ? 'public' : 'internal'} partial class ${naming.type(type.name)}`);
+        if (type.struct) { w.line(`${type.public ? 'public' : 'internal'} readonly partial struct ${naming.type(type.name)}: System.IEquatable<${naming.type(type.name)}>`); }
+        else { w.line(`${type.public ? 'public' : 'internal'} partial class ${naming.type(type.name)}`); }
         if (type.disableWarnings) { w.line(`#pragma warning restore ${type.disableWarnings}`); }
         const separator = IndentWriter.createFenceposter();
         w.scope('{', '}', () => {
@@ -843,10 +864,14 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
-                if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
-                    w.write(`internal `);
+                if (!type.struct) {
+                    if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
+                        w.write(`internal `);
+                    }
+                    w.write(`set; `);
                 }
-                w.line(`set; }`);
+                w.write(`}`);
+                w.line();
                 if (property.model.type === `byte`) {
                     w.line(`#pragma warning restore CA1819 // Properties should not return arrays`);
                 }
@@ -902,7 +927,81 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// Prevent direct instantiation of ${naming.type(type.name)} instances.`);
                 w.line(`/// You can use ${factoryName}.${naming.type(type.name)} instead.`);
                 w.line(`/// </summary>`);
-                w.line(`internal ${naming.type(type.name)}() { }`);
+                if (type.struct) {
+                    const properties = <IProperty[]>Object.values(type.properties);
+                    w.write(`internal ${naming.type(type.name)}(`);
+                    w.scope(() => {
+                        const separator = IndentWriter.createFenceposter();
+                        for (const property of properties) {
+                            if (separator()) { w.line(`,`); }
+                            w.write(`${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.parameter(property.clientName)}`);
+                        }
+                        w.line(`)`);
+                        w.scope('{', '}', () => {
+                            for (const property of properties) {
+                                w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);
+                            }
+                        });
+                    });
+                    w.line();
+                    w.line(`/// <summary>`)
+                    w.line(`/// Check if two ${naming.type(type.name)} instances are equal.`);
+                    w.line(`/// </summary>`);
+                    w.line(`/// <param name="other">The instance to compare to.</param>`);
+                    w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+                    w.line(`[System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]`);
+                    w.line(`public bool Equals(${naming.type(type.name)} other)`);
+                    w.scope('{', '}', () => {
+                        for (const property of properties) {
+                            const a = naming.property(property.clientName);
+                            const b = `other.${naming.property(property.clientName)}`;
+                            if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
+                                w.line(`if (!System.StringComparer.Ordinal.Equals(${a}, ${b}))`);
+                            } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
+                                w.line(`if (!System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(${a}, ${b}))`);
+                            } else {
+                                w.line(`if (!${a}.Equals(${b}))`);
+                            }
+                            w.scope('{', '}', () => {
+                                w.line(`return false;`);
+                            });
+                        }
+                        w.line();
+                        w.line(`return true;`);
+                    });
+                    w.line();
+                    w.line(`/// <summary>`);
+                    w.line(`/// Check if two ${naming.type(type.name)} instances are equal.`);
+                    w.line(`/// </summary>`);
+                    w.line(`/// <param name="obj">The instance to compare to.</param>`);
+                    w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+                    w.line(`[System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]`);
+                    w.line(`public override bool Equals(object obj) => obj is ${naming.type(type.name)} && Equals((${naming.type(type.name)})obj);`);
+                    w.line();
+                    w.line(`/// <summary>`)
+                    w.line(`/// Get a hash code for the ${naming.type(type.name)}.`);
+                    w.line(`/// </summary>`);
+                    w.line(`[System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]`);
+                    w.line(`public override int GetHashCode()`);
+                    w.scope('{', '}', () => {
+                        w.line(`var hashCode = new Azure.Core.HashCodeBuilder();`);
+                        for (const property of properties) {
+                            if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
+                                w.line(`if (${naming.property(property.clientName)} != null)`)
+                                w.scope('{', '}', () => {
+                                    w.line(`hashCode.Add(${naming.property(property.clientName)}, System.StringComparer.Ordinal);`);
+                                });
+                            } else if (types.getDeclarationType(property.model, property.required, property.readonly).includes("[]")) {
+                                w.line(`hashCode.Add(System.Collections.StructuralComparisons.StructuralEqualityComparer.GetHashCode(${naming.property(property.clientName)}));`);
+                            } else {
+                                w.line(`hashCode.Add(${naming.property(property.clientName)});`);
+                            }
+                        }
+                        w.line();
+                        w.line(`return hashCode.ToHashCode();`);
+                    });
+                }
+                else { w.line(`internal ${naming.type(type.name)}() { }`); }
             }
 
             // Create serializers if necessary
@@ -956,15 +1055,28 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     }
                     w.write(`)`);
                 });
-                w.scope('{', '}', () => {
-                    w.line(`return new ${typeName}()`);
-
-                    w.scope('{', '};', () => {
+                const separator = IndentWriter.createFenceposter();
+                if (type.struct) {
+                    w.scope('{', '}', () => {
+                        w.write(`return new ${typeName}(`);
                         for (const property of props) {
-                            w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)},`);
+                            if (separator()) { w.write(`, `); }
+                            w.write(`${naming.parameter(property.clientName)}`);
+                            if (!property.required) { w.write(` = default`); }
                         }
+                        w.write(`);`);
                     });
-                });
+                } else {
+                    w.scope('{', '}', () => {
+                        w.line(`return new ${typeName}()`);
+
+                        w.scope('{', '};', () => {
+                            for (const property of props) {
+                                w.line(`${naming.property(property.clientName)} = ${naming.parameter(property.clientName)},`);
+                            }
+                        });
+                    });
+                }
             });
         }
     });
@@ -1085,7 +1197,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
         // Create the model
         const valueName = '_value';
         const skipInit = (<IProperty[]>Object.values(type.properties)).some(p => isObjectType(p.model) || (isPrimitiveType(p.model) && (!!p.model.itemType || p.model.type === `dictionary`)));
-        w.line(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(${skipInit ? 'true' : ''});`);
+        if (!type.struct) { w.line(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(${skipInit ? 'true' : ''});`); }
 
         // Deserialize each of its properties
         for (const property of properties) {
@@ -1181,7 +1293,8 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                 }
             } else {
                 // Assign the value
-                const assignment = `${valueName}.${naming.property(property.clientName)} = ${parse(target, property.model)};`;
+                const assignment = type.struct ? `${types.getDeclarationType(property.model, true, false, true)} ${naming.parameter(property.clientName)} = ${parse(target, property.model)};`
+                    : `${valueName}.${naming.property(property.clientName)} = ${parse(target, property.model)};`;
                 if (property.required) {
                     // If a property is required, the XML element will always be there so we can just use it
                     w.line(assignment);
@@ -1196,6 +1309,16 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     w.scope('{', '}', () => w.line(assignment));
                 }
             }
+        }
+        if (type.struct) {
+            const separator = IndentWriter.createFenceposter();
+            w.write(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(`);
+            for (const property of properties) {
+                if (separator()) { w.write(`, `); }
+                w.write(`${naming.parameter(property.clientName)}`);
+            }
+            w.write(`);`);
+            w.line();
         }
         w.line(`Customize${fromName}(${rootName}, ${valueName});`);
         w.line(`return ${valueName};`);

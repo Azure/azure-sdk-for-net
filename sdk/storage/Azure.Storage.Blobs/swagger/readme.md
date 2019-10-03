@@ -123,6 +123,16 @@ directive:
         delete $.StorageServiceProperties;
         $.BlobServiceProperties.xml = { "name": "StorageServiceProperties" };
     }
+    if (!$.BlobContainerProperties) {
+        $.BlobContainerProperties = $.ContainerProperties;
+        delete $.ContainerProperties;
+    }
+    if (!$.BlobContainerItem) {
+        $.BlobContainerItem = $.ContainerItem;
+        const path = $.BlobContainerItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobContainerProperties");
+        $.BlobContainerItem.properties.Properties.$ref = path;
+        delete $.ContainerItem;
+    }
 - from: swagger-document
   where: $.parameters
   transform: >
@@ -185,20 +195,25 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.ContainersSegment) {
-        $.ContainersSegment = $.ListContainersSegmentResponse;
+    if (!$.BlobContainersSegment) {
+        $.BlobContainersSegment = $.ListContainersSegmentResponse;
         delete $.ListContainersSegmentResponse;
-        $.ContainersSegment["x-az-public"] = false;
-        $.ContainersSegment.required.push("NextMarker");
+        $.BlobContainersSegment["x-az-public"] = false;
+        $.BlobContainersSegment.required.push("NextMarker");
+        $.BlobContainersSegment.properties.BlobContainerItems = $.BlobContainersSegment.properties.ContainerItems;
+        delete $.BlobContainersSegment.properties.ContainerItems;
+        const path = $.BlobContainersSegment.properties.BlobContainerItems.items.$ref.replace(/[#].*$/, "#/definitions/BlobContainerItem");
+        $.BlobContainersSegment.properties.BlobContainerItems.items.$ref = path;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/?comp=list"]
   transform: >
     const def = $.get.responses["200"].schema;
-    if (def && def["$ref"] && !def["$ref"].endsWith("ContainersSegment")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/ContainersSegment");
+    if (def && def["$ref"] && !def["$ref"].endsWith("BlobContainersSegment")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobContainersSegment");
         $.get.responses["200"].schema = { "$ref": path };
     }
+    $.get.operationId = "Service_ListBlobContainersSegment";
 ```
 
 ### /{containerName}?restype=container
@@ -212,7 +227,8 @@ directive:
     $.get.responses["200"].headers["x-ms-blob-public-access"]["x-ms-enum"].modelAsString = false;
     $.get.responses["200"]["x-az-response-name"] = "FlattenedContainerItem";
     $.get.responses["200"]["x-az-public"] = false;
-    $.put.responses["201"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["201"]["x-az-response-name"] = "BlobContainerInfo";
+
 ```
 
 ### BlobPublicAccess
@@ -232,6 +248,7 @@ directive:
   transform: >
     $.get.description = "Returns the sku name and account kind";
     $.get.responses["200"]["x-az-response-name"] = "AccountInfo";
+    $.get.responses["200"]["x-az-struct"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
@@ -249,7 +266,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=metadata"]
   transform: >
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 ```
 
 ### /{containerName}?restype=container&comp=acl
@@ -259,10 +276,10 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"]
   transform: >
     $.get.responses["200"].headers["x-ms-blob-public-access"]["x-ms-enum"].modelAsString = false;
-    $.get.responses["200"]["x-az-response-name"] = "ContainerAccessPolicy";
+    $.get.responses["200"]["x-az-response-name"] = "BlobContainerAccessPolicy";
     $.get.responses["200"]["x-az-response-schema-name"] = "SignedIdentifiers";
     $.put.responses["200"].description = "Success";
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 - from: swagger-document
   where: $.parameters.ContainerAcl
   transform: $["x-ms-client-name"] = "permissions"
@@ -290,7 +307,7 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?comp=lease&restype=container&release"]
   transform: >
     $.put.responses["200"].description = "Success";
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 ```
 
 ### /{containerName}?comp=lease&restype=container&renew
@@ -711,6 +728,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
 ```
@@ -723,6 +741,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"] = {
         "x-ms-client-name": "IsServerEncrypted",
@@ -730,6 +749,11 @@ directive:
         "x-az-demote-header": true,
         "description": "The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise."
     };
+    $.put.responses["201"].headers["x-ms-encryption-key-sha256"] = {
+          "x-ms-client-name": "EncryptionKeySha256",
+          "type": "string",
+          "description": "The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key."
+              };
 ```
 
 ### /{containerName}/{blob}?comp=page&update&fromUrl
@@ -741,6 +765,7 @@ directive:
     $.put.operationId = "PageBlob_UploadPagesFromUri";
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["304"] = {
@@ -782,6 +807,15 @@ directive:
         "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
+```
+
+### Define PageRange as struct
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.PageRange
+  transform: >
+     $["x-az-struct"] = true;
 ```
 
 ### /{containerName}/{blob}?comp=properties&Resize
@@ -959,7 +993,7 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.ContainerProperties
+  where: $.definitions.BlobContainerProperties
   transform: >
     $.required = ["Last-Modified", "ETag"];
     $.properties.ETag = $.properties.Etag;
@@ -1006,6 +1040,7 @@ directive:
   where: $.parameters.ListContainersInclude
   transform: >
     $["x-az-public"] = false;
+    $["x-ms-enum"].name = "ListBlobContainersIncludeType"
 ```
 
 ### Logging
@@ -1067,7 +1102,7 @@ directive:
     - $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"].get.responses["200"].headers["x-ms-blob-public-access"]
   transform: >
     $.enum = [ "none", "container", "blob" ];
-    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "container", value: "container" }, { name: "blob", value: "blob" }];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "blobContainer", value: "container" }, { name: "blob", value: "blob" }];
     $["x-az-enum-skip-value"] = "none";
 - from: swagger-document
   where: $.definitions.PublicAccessType
@@ -1081,13 +1116,17 @@ directive:
   transform: $.required.push("PublicAccess");
   ```
 
-### Make lease duration a long
-Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+### Make lease duration/break period a long
+Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
 type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+- from: swagger-document
+  where: $.parameters.LeaseBreakPeriod
   transform: >
     $.format = "int64";
 ```
@@ -1173,4 +1212,13 @@ directive:
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock"]
   transform: >
     $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+```
+
+### Rename SetTier to SetAccessTier
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=tier"]
+  transform: >
+    $.put.operationId = "Blob_SetAccessTier";
 ```

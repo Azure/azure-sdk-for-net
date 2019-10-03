@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// SecretBase is the resource containing all the properties of the secret except its value.
+    /// <see cref="SecretProperties"/> is the resource containing all the properties of the secret except its value.
     /// </summary>
     public class SecretProperties : IJsonDeserializable, IJsonSerializable
     {
@@ -34,14 +34,28 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Initializes a new instance of the SecretBase class.
+        /// Initializes a new instance of the <see cref="SecretProperties"/> class.
         /// </summary>
         /// <param name="name">The name of the secret.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public SecretProperties(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             _identifier.Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecretProperties"/> class.
+        /// </summary>
+        /// <param name="id">The Id of the secret.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        public SecretProperties(Uri id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            _identifier.ParseId("secrets", id);
         }
 
         /// <summary>

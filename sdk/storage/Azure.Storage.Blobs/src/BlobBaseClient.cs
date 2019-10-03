@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the container name corresponding to the blob client.
         /// </summary>
-        public virtual string ContainerName
+        public virtual string BlobContainerName
         {
             get
             {
@@ -126,14 +126,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        public BlobBaseClient(string connectionString, string containerName, string blobName)
-            : this(connectionString, containerName, blobName, null)
+        public BlobBaseClient(string connectionString, string blobContainerName, string blobName)
+            : this(connectionString, blobContainerName, blobName, null)
         {
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
@@ -159,13 +159,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobBaseClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+        public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
-                    ContainerName = containerName,
+                    BlobContainerName = blobContainerName,
                     BlobName = blobName
                 };
             _uri = builder.ToUri();
@@ -297,7 +297,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotImpl(snapshot);
+        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotCore(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -306,7 +306,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        protected virtual BlobBaseClient WithSnapshotImpl(string snapshot)
+        protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
             return new BlobBaseClient(builder.ToUri(), Pipeline);
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>A new <see cref="BlobClient"/></returns>
         public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) =>
-            WithCustomerProvidedKeyImpl(customerProvidedKey);
+            WithCustomerProvidedKeyCore(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -333,7 +333,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="BlobClient"/></returns>
-        protected virtual BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        protected virtual BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {
@@ -356,7 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 var builder = new BlobUriBuilder(Uri);
                 _name = builder.BlobName;
-                _containerName = builder.ContainerName;
+                _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
         }
@@ -2670,9 +2670,9 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion CreateSnapshot
 
-        #region SetTier
+        #region SetAccessTier
         /// <summary>
-        /// The <see cref="SetTier"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTier"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2708,12 +2708,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response SetTier(
+        public virtual Response SetAccessTier(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            SetTierInternal(
+            SetAccessTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2722,7 +2722,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetTierAsync"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTierAsync"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2758,12 +2758,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> SetTierAsync(
+        public virtual async Task<Response> SetAccessTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            await SetTierInternal(
+            await SetAccessTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2772,7 +2772,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetTierInternal"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTierInternal"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2811,7 +2811,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> SetTierInternal(
+        private async Task<Response> SetAccessTierInternal(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions,
             RehydratePriority? rehydratePriority,
@@ -2828,14 +2828,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.SetTierAsync(
+                    return await BlobRestClient.Blob.SetAccessTierAsync(
                         Pipeline,
                         Uri,
                         tier: accessTier,
                         rehydratePriority: rehydratePriority,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetAccessTier",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2850,7 +2850,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion SetTier
+        #endregion SetAccessTier
     }
 
     /// <summary>

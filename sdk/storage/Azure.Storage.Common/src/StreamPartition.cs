@@ -48,11 +48,11 @@ namespace Azure.Storage.Common
             _disposeAction = disposeAction;
             //this.disposalTaskCompletionSource = new ManualResetEventSlim(false);
             _disposalTaskCompletionSource = new SemaphoreSlim(0);
-            DisposalTask = DisposalTaskImpl(ct);
+            DisposalTask = DisposalTaskCore(ct);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task DisposalTaskImpl(CancellationToken ct)
+        private async Task DisposalTaskCore(CancellationToken ct)
         {
             //Console.WriteLine($"Waiting for partition {this.ParentPosition}");
 

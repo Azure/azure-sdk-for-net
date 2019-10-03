@@ -398,6 +398,59 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that refreshing authorization for an AMQP link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
+        /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        ///
+        [Event(21, Level = EventLevel.Informational, Message = "Beginning refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
+        public void AmqpLinkAuthorizationRefreshStart(string eventHubName,
+                                                      string endpoint)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(21, eventHubName ?? string.Empty, endpoint ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that refreshing authorization for an AMQP link has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
+        /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        ///
+        [Event(22, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
+        public void AmqpLinkAuthorizationRefreshComplete(string eventHubName,
+                                                         string endpoint)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(22, eventHubName ?? string.Empty, endpoint ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while refreshing authorization for an AMQP link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
+        /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(23, Level = EventLevel.Error, Message = "An exception occurred while refreshing AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}'). Error Message: '{2}'")]
+        public void AmqpLinkAuthorizationRefreshError(string eventHubName,
+                                                      string endpoint,
+                                                      string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(23, eventHubName ?? string.Empty, endpoint ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that an exception was encountered in an unexpected code path, not directly associated with
         ///   an Event Hubs operation.
         /// </summary>

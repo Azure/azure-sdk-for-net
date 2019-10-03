@@ -6,9 +6,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="Certificate"/>.
+    /// </summary>
     public class CertificateProperties : IJsonDeserializable
     {
         private const string IdPropertyName = "id";
@@ -18,6 +22,36 @@ namespace Azure.Security.KeyVault.Certificates
 
         private CertificateAttributes _attributes;
         private Dictionary<string, string> _tags;
+
+        internal CertificateProperties()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateProperties"/> class.
+        /// </summary>
+        /// <param name="name">The name of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        public CertificateProperties(string name)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateProperties"/> class.
+        /// </summary>
+        /// <param name="id">The Id of the certificate.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        public CertificateProperties(Uri id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
+            ParseId(id);
+        }
 
         /// <summary>
         /// The Id of the certificate.
@@ -84,6 +118,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// 'Recoverable+ProtectedSubscription'
         /// </summary>
         public string RecoveryLevel => _attributes.RecoveryLevel;
+
+        internal bool HasTags => _tags != null;
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
