@@ -63,7 +63,7 @@ namespace Azure.Identity
 
             _pipeline = HttpPipelineBuilder.Build(options);
 
-            _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithClientSecret(clientSecret).Build();
+            _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
         }
 
         /// <summary>

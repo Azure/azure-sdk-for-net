@@ -26,7 +26,7 @@ namespace Azure.Identity.Tests
 
             MockResponse response = CreateAuthorizationResponse(expectedToken);
 
-            var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedToken));
+            var mockTransport = new MockTransport(request => ProcessMockRequest(request, tenantId, expectedToken));
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken);
         }
 
-        private MockResponse ProcessMockRequest(MockRequest mockRequest, string token)
+        private MockResponse ProcessMockRequest(MockRequest mockRequest, string tenantId, string token)
         {
             string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
@@ -46,15 +46,14 @@ namespace Azure.Identity.Tests
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith($"https://login.microsoftonline.com/{tenantId}/v2.0/.well-known/openid-configuration"))
             {
-                return OpenIdConfigurationResponse;
+                return CreateOpenIdConfigurationResponse(tenantId);
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/oauth2/v2.0/token"))
+            if (requestUrl.StartsWith($"https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token"))
             {
                 return CreateAuthorizationResponse(token);
-
             }
 
             throw new InvalidOperationException();
@@ -131,19 +130,17 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private static MockResponse OpenIdConfigurationResponse
+        private MockResponse CreateOpenIdConfigurationResponse(string tenantId)
         {
-            get
-            {
-                return new MockResponse(200).WithContent(@"{
-    ""authorization_endpoint"": ""https://login.microsoftonline.com/common/oauth2/v2.0/authorize"",
-    ""token_endpoint"": ""https://login.microsoftonline.com/common/oauth2/v2.0/token"",
+                return new MockResponse(200).WithContent(@$"{{
+    ""authorization_endpoint"": ""https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/authorize"",
+    ""token_endpoint"": ""https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token"",
     ""token_endpoint_auth_methods_supported"": [
         ""client_secret_post"",
         ""private_key_jwt"",
         ""client_secret_basic""
     ],
-    ""jwks_uri"": ""https://login.microsoftonline.com/common/discovery/v2.0/keys"",
+    ""jwks_uri"": ""https://login.microsoftonline.com/{tenantId}/discovery/v2.0/keys"",
     ""response_modes_supported"": [
         ""query"",
         ""fragment"",
@@ -157,7 +154,7 @@ namespace Azure.Identity.Tests
     ],
     ""http_logout_supported"": true,
     ""frontchannel_logout_supported"": true,
-    ""end_session_endpoint"": ""https://login.microsoftonline.com/common/oauth2/v2.0/logout"",
+    ""end_session_endpoint"": ""https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/logout"",
     ""response_types_supported"": [
         ""code"",
         ""id_token"",
@@ -170,7 +167,7 @@ namespace Azure.Identity.Tests
         ""email"",
         ""offline_access""
     ],
-    ""issuer"": ""https://login.microsoftonline.com/{tenantid}/v2.0"",
+    ""issuer"": ""https://login.microsoftonline.com/{tenantId}/v2.0"",
     ""claims_supported"": [
         ""sub"",
         ""iss"",
@@ -199,8 +196,7 @@ namespace Azure.Identity.Tests
     ""cloud_graph_host_name"": ""graph.windows.net"",
     ""msgraph_host"": ""graph.microsoft.com"",
     ""rbac_url"": ""https://pas.windows.net""
-}");
-            }
+}}");
         }
     }
 }
