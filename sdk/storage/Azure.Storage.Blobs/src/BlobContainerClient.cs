@@ -1403,7 +1403,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
             string delimiter = default,
-            GetBlobOptions options = default,
+            GetBlobOptions options = GetBlobOptions.None,
             string prefix = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, prefix).ToSyncCollection(cancellationToken);

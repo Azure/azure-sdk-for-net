@@ -251,7 +251,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<BlobContainerItem> GetBlobContainers(
-            GetBlobContainerOptions options = default,
+            GetBlobContainerOptions options = GetBlobContainerOptions.None,
             string prefix = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobContainersAsyncCollection(this, options, prefix).ToSyncCollection(cancellationToken);
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
-            GetBlobContainerOptions options = default,
+            GetBlobContainerOptions options = GetBlobContainerOptions.None,
             string prefix = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobContainersAsyncCollection(this, options, prefix).ToAsyncCollection(cancellationToken);
