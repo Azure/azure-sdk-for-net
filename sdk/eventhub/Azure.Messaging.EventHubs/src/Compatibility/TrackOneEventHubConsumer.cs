@@ -22,11 +22,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
     ///
     internal sealed class TrackOneEventHubConsumer : TransportEventHubConsumer
     {
+        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
+        private readonly Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
+
         /// <summary>The active retry policy for the producer.</summary>
         private EventHubRetryPolicy _retryPolicy;
-
-        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
-        private Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
 
         /// <summary>
         ///   The track one <see cref="TrackOne.PartitionReceiver" /> for use with this transport producer.
