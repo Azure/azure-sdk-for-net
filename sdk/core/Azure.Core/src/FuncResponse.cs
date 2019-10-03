@@ -1,19 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure
 {
-    internal class ValueResponse<T> : Response<T>
+    internal class FuncResponse<T> : Response<T>
     {
         private readonly Response _response;
+        private readonly Func<T> _func;
 
-        public ValueResponse(Response response, T value)
+        public FuncResponse(Response response, Func<T> func)
         {
             _response = response;
-            Value = value;
+            _func = func;
         }
 
-        public override T Value { get; }
+        public override T Value { get { return _func(); } }
 
         public override Response GetRawResponse() => _response;
     }
