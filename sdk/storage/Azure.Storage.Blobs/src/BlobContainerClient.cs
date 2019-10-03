@@ -692,22 +692,23 @@ namespace Azure.Storage.Blobs
 
                     // Turn the flattened properties into a BlobContainerItem
                     var uri = new BlobUriBuilder(Uri);
-                    return Response.FromValue(response.GetRawResponse(), new BlobContainerItem(false)
-                    {
-                        Name = uri.BlobContainerName,
-                        Metadata = response.Value.Metadata,
-                        Properties = new BlobContainerProperties()
+                    return Response.FromValue(
+                        new BlobContainerItem(false)
                         {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag,
-                            LeaseStatus = response.Value.LeaseStatus,
-                            LeaseState = response.Value.LeaseState,
-                            LeaseDuration = response.Value.LeaseDuration,
-                            PublicAccess = response.Value.BlobPublicAccess,
-                            HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
-                            HasLegalHold = response.Value.HasLegalHold
-                        }
-                    });
+                            Name = uri.BlobContainerName,
+                            Metadata = response.Value.Metadata,
+                            Properties = new BlobContainerProperties()
+                            {
+                                LastModified = response.Value.LastModified,
+                                ETag = response.Value.ETag,
+                                LeaseStatus = response.Value.LeaseStatus,
+                                LeaseState = response.Value.LeaseState,
+                                LeaseDuration = response.Value.LeaseDuration,
+                                PublicAccess = response.Value.BlobPublicAccess,
+                                HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
+                                HasLegalHold = response.Value.HasLegalHold
+                            }
+                        }, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

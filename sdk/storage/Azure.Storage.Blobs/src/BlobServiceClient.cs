@@ -1002,7 +1002,7 @@ namespace Azure.Storage.Blobs
         {
             BlobContainerClient container = GetBlobContainerClient(blobContainerName);
             Response<BlobContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
-            return Response.FromValue(response.GetRawResponse(), container);
+            return Response.FromValue(container, response.GetRawResponse());
         }
 
         /// <summary>
@@ -1052,7 +1052,7 @@ namespace Azure.Storage.Blobs
         {
             BlobContainerClient container = GetBlobContainerClient(blobContainerName);
             Response<BlobContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.GetRawResponse(), container);
+            return Response.FromValue(container, response.GetRawResponse());
         }
         #endregion CreateBlobContainer
 
