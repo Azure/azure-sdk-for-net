@@ -1213,7 +1213,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeMetadata = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.Metadata).ToListAsync();
 
                 // Assert
                 AssertMetadataEquality(metadata, blobs.First().Metadata);
@@ -1234,7 +1234,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.DeletedBlobs).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.UncommittedBlobs).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1287,7 +1287,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
@@ -1304,7 +1304,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.None, "foo").ToListAsync();
 
                 // Assert
                 Assert.AreEqual(3, blobs.Count);
@@ -1418,7 +1418,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeMetadata = true }).FirstAsync();
+                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.Metadata).FirstAsync();
 
                 // Assert
                 AssertMetadataEquality(metadata, item.Blob.Metadata);
@@ -1439,7 +1439,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.DeletedBlobs).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1473,7 +1473,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.UncommittedBlobs).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1492,7 +1492,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
@@ -1509,7 +1509,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(prefix: "foo" ).ToListAsync();
 
 
                 // Assert

@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service, containerName: containerName))
             {
                 // Act
-                AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(new GetBlobContainersOptions { Prefix = prefix });
+                AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(prefix: prefix);
                 IList<BlobContainerItem> items = await containers.ToListAsync();
                 // Assert
                 Assert.AreNotEqual(0, items.Count());
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Act
-                BlobContainerItem first = await service.GetBlobContainersAsync(new GetBlobContainersOptions { IncludeMetadata = true }).FirstAsync();
+                BlobContainerItem first = await service.GetBlobContainersAsync(GetBlobContainerOptions.Metadata).FirstAsync();
 
                 // Assert
                 Assert.IsNotNull(first.Metadata);

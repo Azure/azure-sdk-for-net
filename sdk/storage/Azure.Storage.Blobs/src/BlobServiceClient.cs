@@ -237,6 +237,7 @@ namespace Azure.Storage.Blobs
         /// Specifies options for listing, filtering, and shaping the
         /// blob containers.
         /// </param>
+        /// <param name="prefix"></param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -250,9 +251,10 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<BlobContainerItem> GetBlobContainers(
-            GetBlobContainersOptions? options = default,
+            GetBlobContainerOptions options = default,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetBlobContainersAsyncCollection(this, options, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersAsync"/> operation returns an async
@@ -266,6 +268,7 @@ namespace Azure.Storage.Blobs
         /// Specifies options for listing, filtering, and shaping the
         /// blob containers.
         /// </param>
+        /// <param name="prefix"></param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -279,9 +282,10 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
-            GetBlobContainersOptions? options = default,
+            GetBlobContainerOptions options = default,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetBlobContainersAsyncCollection(this, options, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersInternal"/> operation returns a
@@ -308,6 +312,10 @@ namespace Azure.Storage.Blobs
         /// Specifies options for listing, filtering, and shaping the
         /// blob containers.
         /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only containers
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
@@ -329,7 +337,8 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContainersSegment>> GetBlobContainersInternal(
             string continuationToken,
-            GetBlobContainersOptions? options,
+            GetBlobContainerOptions options,
+            string prefix,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -348,9 +357,9 @@ namespace Azure.Storage.Blobs
                         Pipeline,
                         Uri,
                         marker: continuationToken,
-                        prefix: options?.Prefix,
+                        prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: options?.AsIncludeType(),
+                        include: options.AsIncludeType(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);

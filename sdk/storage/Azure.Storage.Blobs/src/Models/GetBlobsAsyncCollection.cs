@@ -10,14 +10,17 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsAsyncCollection : StorageCollectionEnumerator<BlobItem>
     {
         private readonly BlobContainerClient _client;
-        private readonly GetBlobsOptions? _options;
+        private readonly GetBlobOptions _options;
+        private readonly string _prefix;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
-            GetBlobsOptions? options)
+            GetBlobOptions options,
+            string prefix)
         {
             _client = client;
             _options = options;
+            _prefix = prefix;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
@@ -29,6 +32,7 @@ namespace Azure.Storage.Blobs.Models
             Task<Response<BlobsFlatSegment>> task = _client.GetBlobsInternal(
                 continuationToken,
                 _options,
+                _prefix,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);

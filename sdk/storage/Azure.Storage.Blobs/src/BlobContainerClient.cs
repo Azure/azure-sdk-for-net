@@ -1207,6 +1207,10 @@ namespace Azure.Storage.Blobs
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
         /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1220,9 +1224,10 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<BlobItem> GetBlobs(
-            GetBlobsOptions? options = default,
+            GetBlobOptions options = GetBlobOptions.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, options, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync"/> operation returns an async
@@ -1235,6 +1240,10 @@ namespace Azure.Storage.Blobs
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1249,9 +1258,10 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<BlobItem> GetBlobsAsync(
-            GetBlobsOptions? options = default,
+            GetBlobOptions options = GetBlobOptions.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, options, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -1278,6 +1288,10 @@ namespace Azure.Storage.Blobs
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
         /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
@@ -1299,7 +1313,8 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobsFlatSegment>> GetBlobsInternal(
             string marker,
-            GetBlobsOptions? options,
+            GetBlobOptions options,
+            string prefix,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -1318,9 +1333,9 @@ namespace Azure.Storage.Blobs
                         Pipeline,
                         Uri,
                         marker: marker,
-                        prefix: options?.Prefix,
+                        prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: options?.AsIncludeItems(),
+                        include: options.AsIncludeItems(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1361,7 +1376,7 @@ namespace Azure.Storage.Blobs
         /// value of <paramref name="delimiter"/>. You can use the value of
         /// prefix to make a subsequent call to list the blobs that begin with
         /// this prefix, by specifying the value of the prefix for the
-        /// <see cref="GetBlobsOptions.Prefix"/>.
+        /// <paramref name="prefix"/>.
         ///
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
@@ -1369,6 +1384,10 @@ namespace Azure.Storage.Blobs
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1384,9 +1403,10 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
             string delimiter = default,
-            GetBlobsOptions? options = default,
+            GetBlobOptions options = default,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options).ToSyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
@@ -1410,7 +1430,7 @@ namespace Azure.Storage.Blobs
         /// value of <paramref name="delimiter"/>. You can use the value of
         /// prefix to make a subsequent call to list the blobs that begin with
         /// this prefix, by specifying the value of the prefix for the
-        /// <see cref="GetBlobsOptions.Prefix"/>.
+        /// <paramref name="prefix"/>.
         ///
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
@@ -1418,6 +1438,10 @@ namespace Azure.Storage.Blobs
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1433,9 +1457,10 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
             string delimiter = default,
-            GetBlobsOptions? options = default,
+            GetBlobOptions options = GetBlobOptions.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options).ToAsyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
@@ -1472,7 +1497,7 @@ namespace Azure.Storage.Blobs
         /// value of <paramref name="delimiter"/>. You can use the value of
         /// prefix to make a subsequent call to list the blobs that begin with
         /// this prefix, by specifying the value of the prefix for the
-        /// <see cref="GetBlobsOptions.Prefix"/>.
+        /// <paramref name="prefix"/>.
         ///
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
@@ -1480,6 +1505,10 @@ namespace Azure.Storage.Blobs
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -1503,7 +1532,8 @@ namespace Azure.Storage.Blobs
         internal async Task<Response<BlobsHierarchySegment>> GetBlobsByHierarchyInternal(
             string marker,
             string delimiter,
-            GetBlobsOptions? options,
+            GetBlobOptions options,
+            string prefix,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -1523,9 +1553,9 @@ namespace Azure.Storage.Blobs
                         Pipeline,
                         Uri,
                         marker: marker,
-                        prefix: options?.Prefix,
+                        prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: options?.AsIncludeItems(),
+                        include: options.AsIncludeItems(),
                         delimiter: delimiter,
                         async: async,
                         cancellationToken: cancellationToken)
