@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 
-namespace Azure.Core.Http
+namespace Azure
 {
     public class DateConditionalRequestOptions : ConditionalRequestOptions
     {

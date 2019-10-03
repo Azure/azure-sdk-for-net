@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Core.Http
+using Azure.Core.Http;
+
+namespace Azure
 {
     /// <summary>
     /// Specifies HTTP options for conditional requests.

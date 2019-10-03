@@ -4,8 +4,10 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using Azure.Core;
+using Azure.Core.Http;
 
-namespace Azure.Core.Http
+namespace Azure
 {
     /// <summary>
     /// Defines a range of bytes within an HTTP resource, starting at an offset and
