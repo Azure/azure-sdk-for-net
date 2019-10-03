@@ -5,16 +5,12 @@ using System;
 
 namespace Azure
 {
-    public class ResourceModifiedException : Exception
+    // TODO: Derive from common ResponseException type.
+    public class ResponseBodyNotFoundException : Exception
     {
         public int Status { get; }
 
-        public ResourceModifiedException()
-            : this(304, "Resource was modified.", null)
-        {
-        }
-
-        public ResourceModifiedException(int status, string message, Exception? innerException)
+        public ResponseBodyNotFoundException(int status, string message, Exception? innerException = null)
             : base(message, innerException)
         {
             Status = status;
