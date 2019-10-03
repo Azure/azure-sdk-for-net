@@ -6995,7 +6995,7 @@ namespace Azure.Storage.Blobs
             }
             #endregion Blob.AbortCopyFromUriAsync
 
-            #region Blob.SetTierAsync
+            #region Blob.SetAccessTierAsync
             /// <summary>
             /// The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive storage type. This operation does not update the blob's ETag.
             /// </summary>
@@ -7010,7 +7010,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetTierAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetAccessTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7019,7 +7019,7 @@ namespace Azure.Storage.Blobs
                 string requestId = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Blobs.BlobClient.SetTier",
+                string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
@@ -7027,7 +7027,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetTierAsync_CreateMessage(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessTierAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         tier,
@@ -7049,7 +7049,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetTierAsync_CreateResponse(_response);
+                        return SetAccessTierAsync_CreateResponse(_response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7064,7 +7064,7 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Blob.SetTierAsync request.
+            /// Create the Blob.SetAccessTierAsync request.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
@@ -7073,8 +7073,8 @@ namespace Azure.Storage.Blobs
             /// <param name="rehydratePriority">Optional: Indicates the priority with which to rehydrate an archived blob.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <returns>The Blob.SetTierAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetTierAsync_CreateMessage(
+            /// <returns>The Blob.SetAccessTierAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessTierAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7110,11 +7110,11 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Blob.SetTierAsync response or throw a failure exception.
+            /// Create the Blob.SetAccessTierAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.SetTierAsync Azure.Response.</returns>
-            internal static Azure.Response SetTierAsync_CreateResponse(
+            /// <returns>The Blob.SetAccessTierAsync Azure.Response.</returns>
+            internal static Azure.Response SetAccessTierAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -7138,7 +7138,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
             }
-            #endregion Blob.SetTierAsync
+            #endregion Blob.SetAccessTierAsync
         }
         #endregion Blob operations
 

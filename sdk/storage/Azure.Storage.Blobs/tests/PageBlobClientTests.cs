@@ -1489,7 +1489,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
 
                 // Act
-                Response response = await blob.SetTierAsync(AccessTier.P20);
+                Response response = await blob.SetAccessTierAsync(AccessTier.P20);
 
                 // Assert
                 Response<BlobProperties> responseProperties = await blob.GetPropertiesAsync();
@@ -1508,7 +1508,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetTierAsync(AccessTier.Cool),
+                    blob.SetAccessTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
             }
         }
