@@ -8,12 +8,12 @@ using System.Text;
 namespace Azure.Storage.Sas
 {
     /// <summary>
-    /// <see cref="ContainerSasPermissions"/> supports reading and writing
-    /// permissions string for a containers's access policy.  Use <see cref="ToString"/>
+    /// <see cref="BlobContainerSasPermissions"/> supports reading and writing
+    /// permissions string for a blob containers's access policy.  Use <see cref="ToString"/>
     /// to generate a permissions string you can provide to
     /// <see cref="BlobSasBuilder.Permissions"/>.
     /// </summary>
-    public struct ContainerSasPermissions : IEquatable<ContainerSasPermissions>
+    public struct BlobContainerSasPermissions : IEquatable<BlobContainerSasPermissions>
     {
         /// <summary>
         /// Get or sets whether Read is permitted.
@@ -63,13 +63,13 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
-        /// Parse a permissions string into a new <see cref="ContainerSasPermissions"/>.
+        /// Parse a permissions string into a new <see cref="BlobContainerSasPermissions"/>.
         /// </summary>
         /// <param name="s">Permissions string to parse.</param>
-        /// <returns>The parsed <see cref="ContainerSasPermissions"/>.</returns>
-        public static ContainerSasPermissions Parse(string s)
+        /// <returns>The parsed <see cref="BlobContainerSasPermissions"/>.</returns>
+        public static BlobContainerSasPermissions Parse(string s)
         {
-            var p = new ContainerSasPermissions();
+            var p = new BlobContainerSasPermissions();
             foreach (var c in s)
             {
                 switch (c)
@@ -100,18 +100,18 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are equal.
+        /// Check if two BlobContainerSasPermissions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is ContainerSasPermissions other && Equals(other);
+            obj is BlobContainerSasPermissions other && Equals(other);
 
         /// <summary>
-        /// Get a hash code for the ContainerSasPermissions.
+        /// Get a hash code for the BlobContainerSasPermissions.
         /// </summary>
-        /// <returns>Hash code for the ContainerSasPermissions.</returns>
+        /// <returns>Hash code for the BlobContainerSasPermissions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             (Read ? 0b000001 : 0) +
@@ -122,29 +122,29 @@ namespace Azure.Storage.Sas
             (List ? 0b100000 : 0);
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are equal.
+        /// Check if two BlobContainerSasPermissions instances are equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(ContainerSasPermissions left, ContainerSasPermissions right) =>
+        public static bool operator ==(BlobContainerSasPermissions left, BlobContainerSasPermissions right) =>
             left.Equals(right);
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are not equal.
+        /// Check if two BlobContainerSasPermissions instances are not equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(ContainerSasPermissions left, ContainerSasPermissions right) =>
+        public static bool operator !=(BlobContainerSasPermissions left, BlobContainerSasPermissions right) =>
             !(left == right);
 
         /// <summary>
-        /// Check if two ContainerSasPermissions instances are equal.
+        /// Check if two BlobContainerSasPermissions instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(ContainerSasPermissions other) =>
+        public bool Equals(BlobContainerSasPermissions other) =>
             Read == other.Read &&
             Add == other.Add &&
             Create == other.Create &&

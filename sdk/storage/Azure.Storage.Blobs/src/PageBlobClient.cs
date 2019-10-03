@@ -65,14 +65,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this page blob.
         /// </param>
-        public PageBlobClient(string connectionString, string containerName, string blobName)
-            : base(connectionString, containerName, blobName)
+        public PageBlobClient(string connectionString, string blobContainerName, string blobName)
+            : base(connectionString, blobContainerName, blobName)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
         /// </param>
         /// <param name="blobName">
@@ -98,8 +98,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PageBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="options">
@@ -128,7 +128,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="credential">
@@ -150,7 +150,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="credential">
@@ -172,7 +172,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="pipeline">

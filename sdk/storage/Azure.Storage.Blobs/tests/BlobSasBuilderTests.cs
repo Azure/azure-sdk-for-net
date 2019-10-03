@@ -243,7 +243,7 @@ namespace Azure.Storage.Blobs.Test
                 Permissions = Permissions,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 BlobName = includeBlob ? blobName : null,
                 Snapshot = includeSnapshot ? Snapshot : null,
                 CacheControl = constants.Sas.CacheControl,

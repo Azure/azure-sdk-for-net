@@ -10,14 +10,17 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Specifies options for listing containers with the
-    /// <see cref="BlobServiceClient.GetContainersAsync"/> operation.
+    /// Specifies options for listing blob containers with the
+    /// <see cref="BlobServiceClient.GetBlobContainersAsync"/> operation.
     /// </summary>
-    public struct GetContainersOptions : IEquatable<GetContainersOptions>
+
+    // this can also be an enum just for parity with getblobsoptions
+
+    public struct GetBlobContainersOptions : IEquatable<GetBlobContainersOptions>
     {
         /// <summary>
         /// Gets or sets a string that filters the results to return only
-        /// containers whose name begins with the specified prefix.
+        /// blob containers whose name begins with the specified prefix.
         /// </summary>
         public string Prefix { get; set; }
 
@@ -28,56 +31,56 @@ namespace Azure.Storage.Blobs.Models
         public bool IncludeMetadata { get; set; }
 
         /// <summary>
-        /// Convert the details into a ListContainersIncludeType value.
+        /// Convert the details into a ListBlobContainersIncludeType value.
         /// </summary>
-        /// <returns>A ListContainersIncludeType value.</returns>
-        internal ListContainersIncludeType? AsIncludeType()
+        /// <returns>A ListBlobContainersIncludeType value.</returns>
+        internal ListBlobContainersIncludeType? AsIncludeType()
             => IncludeMetadata ?
-                ListContainersIncludeType.Metadata :
-                (ListContainersIncludeType?)null;
+                ListBlobContainersIncludeType.Metadata :
+                (ListBlobContainersIncludeType?)null;
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are equal.
+        /// Check if two GetBlobContainersOptions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is GetContainersOptions other && Equals(other);
+            obj is GetBlobContainersOptions other && Equals(other);
 
         /// <summary>
-        /// Get a hash code for the GetContainersOptions.
+        /// Get a hash code for the GetBlobContainersOptions.
         /// </summary>
-        /// <returns>Hash code for the GetContainersOptions.</returns>
+        /// <returns>Hash code for the GetBlobContainersOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             IncludeMetadata.GetHashCode() ^
             Prefix.GetHashCode();
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are equal.
+        /// Check if two GetBlobContainersOptions instances are equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(GetContainersOptions left, GetContainersOptions right) =>
+        public static bool operator ==(GetBlobContainersOptions left, GetBlobContainersOptions right) =>
             left.Equals(right);
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are not equal.
+        /// Check if two GetBlobContainersOptions instances are not equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(GetContainersOptions left, GetContainersOptions right) =>
+        public static bool operator !=(GetBlobContainersOptions left, GetBlobContainersOptions right) =>
             !(left == right);
 
         /// <summary>
-        /// Check if two GetContainersOptions instances are equal.
+        /// Check if two GetBlobContainersOptions instances are equal.
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(GetContainersOptions other) =>
+        public bool Equals(GetBlobContainersOptions other) =>
             IncludeMetadata == other.IncludeMetadata &&
             Prefix == other.Prefix;
     }

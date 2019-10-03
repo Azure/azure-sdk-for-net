@@ -59,11 +59,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// this azure firewall.</param>
         /// <param name="hubIpAddresses">IP addresses associated with
         /// AzureFirewall.</param>
+        /// <param name="sku">The Azure Firewall Resource SKU.</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string threatIntelMode = default(string), SubResource virtualHub = default(SubResource), SubResource firewallPolicy = default(SubResource), HubIPAddresses hubIpAddresses = default(HubIPAddresses), IList<string> zones = default(IList<string>), string etag = default(string))
+        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string threatIntelMode = default(string), SubResource virtualHub = default(SubResource), SubResource firewallPolicy = default(SubResource), HubIPAddresses hubIpAddresses = default(HubIPAddresses), AzureFirewallSku sku = default(AzureFirewallSku), IList<string> zones = default(IList<string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ApplicationRuleCollections = applicationRuleCollections;
@@ -75,6 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualHub = virtualHub;
             FirewallPolicy = firewallPolicy;
             HubIpAddresses = hubIpAddresses;
+            Sku = sku;
             Zones = zones;
             Etag = etag;
             CustomInit();
@@ -145,6 +147,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hubIpAddresses")]
         public HubIPAddresses HubIpAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Firewall Resource SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public AzureFirewallSku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting where the
