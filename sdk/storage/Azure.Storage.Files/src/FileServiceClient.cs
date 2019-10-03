@@ -40,7 +40,7 @@ namespace Azure.Storage.Files
         /// Gets tghe <see cref="HttpPipeline"/> transport pipeline used to
         /// send every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The Storage account name corresponding to the file service client.

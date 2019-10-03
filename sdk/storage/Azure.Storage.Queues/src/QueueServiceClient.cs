@@ -35,7 +35,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the HttpPipeline used to send REST requests.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
