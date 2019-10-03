@@ -170,8 +170,8 @@ namespace Azure.Data.AppConfiguration
             BuildUriForKvRoute(request.Uri, setting);
 
             ConditionalRequestOptions requestOptions = new ConditionalRequestOptions();
-            requestOptions.SetIfAbsentCondition();
-            requestOptions.ApplyHeaders(request);
+            requestOptions.SetIfNotExistsCondition();
+            ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
 
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -334,7 +334,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                requestOptions.ApplyHeaders(request);
+                ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
             }
 
             request.Content = HttpPipelineRequestContent.Create(content);
@@ -486,7 +486,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                requestOptions.ApplyHeaders(request);
+                ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
             }
 
             return request;
@@ -682,7 +682,7 @@ namespace Azure.Data.AppConfiguration
 
             if (requestOptions != default)
             {
-                requestOptions.ApplyHeaders(request);
+                ConditionalRequestHelpers.ApplyHeaders(request, requestOptions);
             }
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
