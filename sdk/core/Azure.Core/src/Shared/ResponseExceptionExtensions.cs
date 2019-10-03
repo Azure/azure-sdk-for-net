@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -9,16 +10,16 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    public static class ResponseExceptionExtensions
+    internal static class ResponseExceptionExtensions
     {
         private const string DefaultMessage = "Service request failed.";
 
-        public static Task<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response)
+        public static ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response)
         {
             return CreateRequestFailedExceptionAsync(response, DefaultMessage);
         }
 
-        public static Task<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response, string message)
+        public static ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response, string message)
         {
             return CreateRequestFailedExceptionAsync(message, response, true);
         }
@@ -30,16 +31,18 @@ namespace Azure.Core
 
         public static RequestFailedException CreateRequestFailedException(this Response response, string message)
         {
-            return CreateRequestFailedExceptionAsync(message, response, false).EnsureCompleted();
+            ValueTask<RequestFailedException> messageTask = CreateRequestFailedExceptionAsync(message, response, false);
+            Debug.Assert(messageTask.IsCompleted);
+            return messageTask.GetAwaiter().GetResult();
         }
 
-        public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
+        public static async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
             message = await CreateRequestFailedMessageAsync(message, response, async).ConfigureAwait(false);
             return new RequestFailedException(response.Status, message);
         }
 
-        public static async Task<string> CreateRequestFailedMessageAsync(string message, Response response, bool async)
+        public static async ValueTask<string> CreateRequestFailedMessageAsync(string message, Response response, bool async)
         {
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message)

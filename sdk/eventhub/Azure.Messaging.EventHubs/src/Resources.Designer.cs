@@ -338,5 +338,23 @@ namespace Azure.Messaging.EventHubs {
                 return ResourceManager.GetString("ValueOutOfRange", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event position is not valid for filtering.  It must have an offset, sequence number, or enqueued time available to filter against..
+        /// </summary>
+        internal static string InvalidEventPositionForFilter {
+            get {
+                return ResourceManager.GetString("InvalidEventPositionForFilter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to create the items needed to communicate with the Event Hubs service..
+        /// </summary>
+        internal static string CouldNotCreateLink {
+            get {
+                return ResourceManager.GetString("CouldNotCreateLink", resourceCulture);
+            }
+        }
     }
 }

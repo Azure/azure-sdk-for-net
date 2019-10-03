@@ -210,4 +210,10 @@
   <data name="InvalidMessageBody" xml:space="preserve">
     <value>An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}</value>
   </data>
+  <data name="InvalidEventPositionForFilter" xml:space="preserve">
+    <value>The event position is not valid for filtering.  It must have an offset, sequence number, or enqueued time available to filter against.</value>
+  </data>
+  <data name="CouldNotCreateLink" xml:space="preserve">
+    <value>Unable to create the items needed to communicate with the Event Hubs service.</value>
+  </data>
 </root>
