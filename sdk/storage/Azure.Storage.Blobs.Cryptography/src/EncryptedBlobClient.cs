@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipes;
 using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using Azure.Core;
