@@ -6,7 +6,9 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Minor improvements and bug fixes.
+      Console and trace logger listener.
+      More logging options.
+      Type and namespace refactorings.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>
