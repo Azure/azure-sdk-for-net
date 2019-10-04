@@ -35,7 +35,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the HttpPipeline used to send REST requests.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -619,7 +619,7 @@ namespace Azure.Storage.Queues
         {
             QueueClient queue = GetQueueClient(queueName);
             Response response = queue.Create(metadata, cancellationToken);
-            return Response.FromValue(response, queue);
+            return Response.FromValue(queue, response);
         }
 
         /// <summary>
@@ -647,7 +647,7 @@ namespace Azure.Storage.Queues
         {
             QueueClient queue = GetQueueClient(queueName);
             Response response = await queue.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response, queue);
+            return Response.FromValue(queue, response);
         }
         #endregion CreateQueue
 

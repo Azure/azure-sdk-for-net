@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(blob.Uri);
 
-            Assert.AreEqual(containerName, builder.ContainerName);
+            Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual("accountName", builder.AccountName);
         }
@@ -1221,7 +1221,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                 var data = GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
@@ -1291,7 +1291,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                     var data = GetRandomBuffer(Constants.KB);
                     var expectedData = new byte[4 * Constants.KB];
                     data.CopyTo(expectedData, 0);
@@ -1349,7 +1349,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                     var data = GetRandomBuffer(Constants.KB);
                     var expectedData = new byte[4 * Constants.KB];
                     data.CopyTo(expectedData, 0);
@@ -1489,7 +1489,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
 
                 // Act
-                Response response = await blob.SetTierAsync(AccessTier.P20);
+                Response response = await blob.SetAccessTierAsync(AccessTier.P20);
 
                 // Assert
                 Response<BlobProperties> responseProperties = await blob.GetPropertiesAsync();
@@ -1508,7 +1508,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetTierAsync(AccessTier.Cool),
+                    blob.SetAccessTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
             }
         }
@@ -1519,7 +1519,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1548,7 +1548,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1577,7 +1577,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1614,7 +1614,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(4 * Constants.KB);
 
@@ -1650,7 +1650,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1680,7 +1680,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1734,7 +1734,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                     var data = GetRandomBuffer(Constants.KB);
 
@@ -1797,7 +1797,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
                     var data = GetRandomBuffer(Constants.KB);
 
@@ -1863,6 +1863,60 @@ namespace Azure.Storage.Blobs.Test
             builder = new BlobUriBuilder(blob.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+
+                // Act
+                Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync(Constants.KB);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+                // Act
+                Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync(Constants.KB);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var invalidPageSize = 511;
+                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.CreateIfNotExistsAsync(invalidPageSize),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                        Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
+                            e.Message.Split('\n')[0]);
+                    });
+            }
         }
 
         private PageBlobAccessConditions BuildAccessConditions(

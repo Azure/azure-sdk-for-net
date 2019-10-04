@@ -35,6 +35,16 @@ namespace Azure.Messaging.EventHubs.Compatibility
         private TrackOne.PartitionReceiver TrackOneReceiver => _trackOneReceiver.Value;
 
         /// <summary>
+        ///   Indicates whether or not this consumer has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public override bool Closed => (_trackOneReceiver.IsValueCreated) ? _trackOneReceiver.Value.EventHubClient.CloseCalled : false;
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="TrackOneEventHubConsumer"/> class.
         /// </summary>
         ///

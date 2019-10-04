@@ -30,16 +30,6 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The Uri of the vault in which the certificate is stored.
-        /// </summary>
-        public Uri VaultUri => Properties.VaultUri;
-
-        /// <summary>
-        /// The version of the certificate.
-        /// </summary>
-        public string Version => Properties.Version;
-
-        /// <summary>
         /// The Id of the Key Vault Key backing the certifcate.
         /// </summary>
         public Uri KeyId => new Uri(_keyId);

@@ -51,8 +51,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             };
 
-            client.Set(bankSecret);
-            client.Set(storageSecret);
+            client.SetSecret(bankSecret);
+            client.SetSecret(storageSecret);
 
             // You need to check if any of the secrets are sharing same values. Let's list the secrets and print their values.
             // List operations don't return the secrets with value information.
@@ -61,13 +61,13 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secrets = client.GetSecrets();
             foreach (SecretProperties secret in secrets)
             {
-                Secret secretWithValue = client.Get(secret.Name);
+                Secret secretWithValue = client.GetSecret(secret.Name);
                 Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
             }
 
             // The bank account password got updated, so you want to update the secret in key vault to ensure it reflects the new password.
             // Calling Set on an existing secret creates a new version of the secret in the key vault with the new value.
-            client.Set(bankSecretName, "sskdjfsdasdjsd");
+            client.SetSecret(bankSecretName, "sskdjfsdasdjsd");
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
@@ -79,8 +79,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // The bank account was closed. You need to delete its credentials from the key vault.
             // You also want to delete the information of your storage account.
-            client.Delete(bankSecretName);
-            client.Delete(storageSecretName);
+            client.DeleteSecret(bankSecretName);
+            client.DeleteSecret(storageSecretName);
 
             // To ensure secrets are deleted on server side.
             Assert.IsTrue(WaitForDeletedSecret(client, bankSecretName));
@@ -94,8 +94,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeleted(bankSecretName);
-            client.PurgeDeleted(storageSecretName);
+            client.PurgeDeletedSecret(bankSecretName);
+            client.PurgeDeletedSecret(storageSecretName);
         }
 
         private bool WaitForDeletedSecret(SecretClient client, string secretName)
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    client.GetDeleted(secretName);
+                    client.GetDeletedSecret(secretName);
                     return true;
                 }
                 catch

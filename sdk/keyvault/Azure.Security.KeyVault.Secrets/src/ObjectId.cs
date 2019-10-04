@@ -16,9 +16,11 @@ namespace Azure.Security.KeyVault.Secrets
 
         public string Version { get; set; }
 
-        public void ParseId(string collection, string id)
+        public void ParseId(string collection, string id) => ParseId(collection, new Uri(id, UriKind.Absolute));
+
+        public void ParseId(string collection, Uri id)
         {
-            Id = new Uri(id, UriKind.Absolute);
+            Id = id;
 
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (Id.Segments.Length != 3 && Id.Segments.Length != 4)

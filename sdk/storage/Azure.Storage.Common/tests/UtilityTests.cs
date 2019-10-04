@@ -44,7 +44,7 @@ namespace Azure.Storage.Common.Test
             {
                 // Blobs
                 var blobs = new BlobServiceClient(config.ConnectionString);
-                await foreach (ContainerItem container in blobs.GetContainersAsync())
+                await foreach (BlobContainerItem container in blobs.GetBlobContainersAsync())
                 {
                     try
                     {

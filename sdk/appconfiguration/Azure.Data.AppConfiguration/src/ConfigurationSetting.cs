@@ -67,10 +67,10 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// A value indicating whether the configuration setting is locked.
-        /// A locked configuration setting may not be modified until it is unlocked.
+        /// A value indicating whether the configuration setting is read only.
+        /// A read only configuration setting may not be modified until it is made writable.
         /// </summary>
-        public bool? Locked { get; internal set; }
+        public bool? ReadOnly { get; internal set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
@@ -95,7 +95,7 @@ namespace Azure.Data.AppConfiguration
                     return false;
                 if (LastModified != other.LastModified)
                     return false;
-                if (Locked != other.Locked)
+                if (ReadOnly != other.ReadOnly)
                     return false;
             }
             if (!string.Equals(Key, other.Key, StringComparison.Ordinal))
@@ -158,7 +158,7 @@ namespace Azure.Data.AppConfiguration
             hashCode.Add(ContentType, StringComparer.Ordinal);
             hashCode.Add(LastModified);
             hashCode.Add(ETag);
-            hashCode.Add(Locked);
+            hashCode.Add(ReadOnly);
             hashCode.Add(Tags);
             return hashCode.ToHashCode();
         }

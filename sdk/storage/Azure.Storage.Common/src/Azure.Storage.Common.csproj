@@ -24,5 +24,6 @@
     -->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)"/>
   </ItemGroup>
 </Project>

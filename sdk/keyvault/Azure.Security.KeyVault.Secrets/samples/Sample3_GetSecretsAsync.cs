@@ -51,21 +51,21 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             };
 
-            await client.SetAsync(bankSecret);
-            await client.SetAsync(storageSecret);
+            await client.SetSecretAsync(bankSecret);
+            await client.SetSecretAsync(storageSecret);
 
             // You need to check if any of the secrets are sharing same values. Let's list the secrets and print their values.
             // List operations don't return the secrets with value information.
             // So, for each returned secret we call Get to get the secret with its value information.
             await foreach (SecretProperties secret in client.GetSecretsAsync())
             {
-                Secret secretWithValue = await client.GetAsync(secret.Name);
+                Secret secretWithValue = await client.GetSecretAsync(secret.Name);
                 Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
             }
 
             // The bank account password got updated, so you want to update the secret in key vault to ensure it reflects the new password.
             // Calling Set on an existing secret creates a new version of the secret in the key vault with the new value.
-            await client.SetAsync(bankSecretName, "sskdjfsdasdjsd");
+            await client.SetSecretAsync(bankSecretName, "sskdjfsdasdjsd");
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
@@ -76,8 +76,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // The bank account was closed. You need to delete its credentials from the key vault.
             // You also want to delete the information of your storage account.
-            await client.DeleteAsync(bankSecretName);
-            await client.DeleteAsync(storageSecretName);
+            await client.DeleteSecretAsync(bankSecretName);
+            await client.DeleteSecretAsync(storageSecretName);
 
             // To ensure secrets are deleted on server side.
             Assert.IsTrue(await WaitForDeletedSecretAsync(client, bankSecretName));
@@ -90,8 +90,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            await client.PurgeDeletedAsync(bankSecretName);
-            await client.PurgeDeletedAsync(storageSecretName);
+            await client.PurgeDeletedSecretAsync(bankSecretName);
+            await client.PurgeDeletedSecretAsync(storageSecretName);
         }
 
         private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    await client.GetDeletedAsync(secretName);
+                    await client.GetDeletedSecretAsync(secretName);
                     return true;
                 }
                 catch

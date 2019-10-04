@@ -13,6 +13,7 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 - `x-az-skip-path-components`: Whether to skip any path components and always assume a fully formed URL to the resource (this currently must be set to `true`).
 - `x-az-include-sync-methods`: Whether to generate support for sync methods.  The default value is `false` (this flag should go away soon and always be `true`).
 - `x-az-stream`: Whether to generate a non buffered request that takes owhership of the response stream. The default value is `false`.
+- `x-az-struct`: Indicates whether a model is struct or not. The default value is `false`.
 - `x-az-nullable-array`:  Allows list to be null. The default value is `false`.
 
 ### Autorest plugin configuration

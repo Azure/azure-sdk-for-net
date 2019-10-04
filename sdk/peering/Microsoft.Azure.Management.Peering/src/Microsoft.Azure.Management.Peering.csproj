@@ -12,10 +12,10 @@
     <PackageReleaseNotes>
 	<![CDATA[New features:   Adding Peering Service operations. ]]>
 </PackageReleaseNotes>
-		<PackageTags>Azure Peering;Peering_2019-08-01-preview</PackageTags>
+		<PackageTags>Azure Peering;Peering_2019-09-01-preview;Peering_2019-09-01-preview;</PackageTags>
     <PackageReleaseNotes>
-	<![CDATA[New features:   Adding Peering Service]]>
-    </PackageReleaseNotes>
+	<![CDATA[Added Prefix events]]>
+</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

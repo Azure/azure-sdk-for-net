@@ -27,6 +27,7 @@ namespace Azure.Storage
         public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
 
         public const string CloseAllHandles = "*";
+        public const string Wildcard = "*";
 
         /// <summary>
         /// The default format we use for block names.  There are 50,000
@@ -112,14 +113,28 @@ namespace Azure.Storage
             public const string Http = "http";
             public const int HttpsPort = 443;
 
+            /// <summary>
+            ///  Error code for blobs
+            /// </summary>
+            public const string AlreadyExists = "BlobAlreadyExists";
+            public const string NotFound = "BlobNotFound";
+
             internal static class Append
             {
                 public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
                 public const int MaxBlocks = 50000;
+                public const string CreateOperationName =
+                    "Azure.Storage.Blobs.Specialized.AppendBlobClient.Create";
+                public const string CreateIfNotExistsOperationName =
+                    "Azure.Storage.Blobs.Specialized.AppendBlobClient.CreateIfNotExists";
             }
 
             internal static class Base
             {
+                public const string Delete =
+                    "Azure.Storage.Blobs.Specialized.BlobBaseClient.Delete";
+                public const string DeleteIfExists =
+                    "Azure.Storage.Blobs.Specialized.BlobBaseClient.DeleteIfExists";
                 public const string SetTierOperationName =
                     "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier";
             }
@@ -160,12 +175,22 @@ namespace Azure.Storage
                 public const string LogsName = "$logs";
 
                 /// <summary>
+                /// The Azure Storage error codes for Blob Container Client.
+                /// </summary>
+                public const string AlreadyExists = "ContainerAlreadyExists";
+                public const string NotFound = "ContainerNotFound";
+
+                /// <summary>
                 /// The Azure Storage Operation Names for Blob Container Client.
                 /// </summary>
                 public const string CreateOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.Create";
+                public const string CreateIfNotExistsOperationName =
+                    "Azure.Storage.Blobs.BlobContainerClient.CreateIfNotExists";
                 public const string DeleteOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.Delete";
+                public const string DeleteIfExistsOperationName =
+                    "Azure.Storage.Blobs.BlobContainerClient.DeleteIfExists";
                 public const string GetPropertiesOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.GetProperties";
                 public const string SetMetaDataOperationName =
@@ -201,6 +226,8 @@ namespace Azure.Storage
             {
                 public const string CreateOperationName =
                     "Azure.Storage.Blobs.Specialized.PageBlobClient.Create";
+                public const string CreateIfNotExistsOperationName =
+                    "Azure.Storage.Blobs.Specialized.PageBlobClient.CreateIfNotExists";
                 public const string UploadOperationName =
                     "Azure.Storage.Blobs.Specialized.PageBlobClient.UploadPages";
                 public const string ClearOperationName =
@@ -424,7 +451,7 @@ namespace Azure.Storage
             internal static class AccountResources
             {
                 public const char Service = 's';
-                public const char Container = 'c';
+                public const char BlobContainer = 'c';
                 public const char Object = 'o';
             }
         }

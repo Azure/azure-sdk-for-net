@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test: needs debugging")]
+        [Ignore("Failing test: needs debugging (Tracked by: #7458)")]
         public async Task EventProcessorCanStartAgainAfterStopping()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -513,6 +513,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task EventProcessorCanReceiveFromCheckpointedEventPosition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -731,6 +732,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -1049,6 +1051,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task LoadBalancingIsEnforcedWhenDistributionIsUneven()
         {
             var partitions = 10;

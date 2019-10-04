@@ -3,7 +3,7 @@
 
 namespace Azure
 {
-    internal class ValueResponse<T>: Response<T>
+    internal class ValueResponse<T> : Response<T>
     {
         private readonly Response _response;
 

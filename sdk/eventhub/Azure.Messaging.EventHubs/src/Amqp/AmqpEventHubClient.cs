@@ -146,9 +146,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 EventHubsEventSource.Log.EventHubClientCreateStart(host, eventHubName);
 
-                _retryPolicy = defaultRetryPolicy;
-                _tryTimeout = _retryPolicy.CalculateTryTimeout(0);
-
                 EventHubName = eventHubName;
                 Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
@@ -166,6 +163,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 ConnectionScope = connectionScope;
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None), link => link.SafeClose());
+
+                _retryPolicy = defaultRetryPolicy;
+                _tryTimeout = _retryPolicy.CalculateTryTimeout(0);
             }
             finally
             {
@@ -211,7 +211,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                 using AmqpMessage request = MessageConverter.CreateEventHubPropertiesRequest(EventHubName, token);
-
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = Stopwatch.StartNew();
@@ -223,12 +222,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 using AmqpMessage response = await link.RequestAsync(request, _tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Process the response.
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 ThrowIfErrorResponse(response, EventHubName);
-
                 return MessageConverter.CreateEventHubPropertiesFromResponse(response);
             }
             catch (Exception ex)
@@ -269,7 +267,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                 using AmqpMessage request = MessageConverter.CreatePartitionPropertiesRequest(EventHubName, partitionId, token);
-
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = Stopwatch.StartNew();
@@ -281,12 +278,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 using AmqpMessage response = await link.RequestAsync(request, _tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Process the response.
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                ThrowIfErrorResponse(response, EventHubName);
 
+                ThrowIfErrorResponse(response, EventHubName);
                 return MessageConverter.CreatePartitionPropertiesFromResponse(response);
             }
             catch (Exception ex)

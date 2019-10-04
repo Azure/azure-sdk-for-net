@@ -39,17 +39,17 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             };
 
-            client.Set(secret);
+            client.SetSecret(secret);
 
             // Let's Get the bank secret from the key vault.
-            Secret bankSecret = client.Get(secretName);
+            Secret bankSecret = client.GetSecret(secretName);
             Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 
             // After one year, the bank account is still active, we need to update the expiry time of the secret.
             // The update method can be used to update the expiry attribute of the secret. It cannot be used to update
             // the value of the secret.
             bankSecret.Properties.Expires = bankSecret.Properties.Expires.Value.AddYears(1);
-            SecretProperties updatedSecret = client.UpdateProperties(bankSecret.Properties);
+            SecretProperties updatedSecret = client.UpdateSecretProperties(bankSecret.Properties);
             Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.Expires}");
 
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
@@ -63,16 +63,16 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             };
 
-            client.Set(secretNewValue);
+            client.SetSecret(secretNewValue);
 
             // The bank account was closed. You need to delete its credentials from the key vault.
-            client.Delete(secretName);
+            client.DeleteSecret(secretName);
 
             // To ensure secret is deleted on server side.
             Assert.IsTrue(WaitForDeletedSecret(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeleted(secretName);
+            client.PurgeDeletedSecret(secretName);
 
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    client.GetDeleted(secretName);
+                    client.GetDeletedSecret(secretName);
                     return true;
                 }
                 catch
