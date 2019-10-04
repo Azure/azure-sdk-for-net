@@ -144,8 +144,8 @@ The `EventProcessor` will delegate processing of events to a `BasePartitionProce
 
 public class SimplePartitionProcessor : BasePartitionProcessor
 {
-    public override Task ProcessEventsAsync(IEnumerable<EventData> events, CancellationToken cancellationToken) => Task.CompletedTask;
-    public override Task ProcessErrorAsync(Exception exception, CancellationToken cancellationToken) => Task.CompletedTask;
+    public override Task ProcessEventsAsync(PartitionContext partitionContext, IEnumerable<EventData> events, CancellationToken cancellationToken) => Task.CompletedTask;
+    public override Task ProcessErrorAsync(PartitionContext partitionContext, Exception exception, CancellationToken cancellationToken) => Task.CompletedTask;
 }
 
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
