@@ -13,7 +13,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetIntervaledMetrics()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var metricId = "requests/duration";
                 var timespan = "PT12H";
@@ -36,17 +36,17 @@ namespace Data.ApplicationInsights.Tests.Metrics
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetIntervaledMetrics_AllAggregations()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var metricId = "requests/duration";
                 var timespan = "PT12H";
                 var interval = new TimeSpan(1, 0, 0);
-                var aggregation = new List<string> { 
+                var aggregation = new List<string> {
                     MetricsAggregation.Avg,
                     MetricsAggregation.Count,
                     MetricsAggregation.Min,
                     MetricsAggregation.Max,
-                    MetricsAggregation.Sum 
+                    MetricsAggregation.Sum
                 };
 
                 var client = GetClient(ctx);

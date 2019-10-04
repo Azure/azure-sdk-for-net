@@ -47,7 +47,7 @@
       "RequestHeaders": {
         "Accept": "application\u002fjson",
         "Authorization": "Sanitized",
-        "Content-Length": "64",
+        "Content-Length": "98",
         "Content-Type": "application\u002fjson",
         "Request-Id": "|24a06f71-44aa1cc26dede9d6.",
         "User-Agent": [
@@ -60,7 +60,9 @@
       "RequestBody": {
         "kty": "EC",
         "attributes": {
-          "enabled": false
+          "enabled": false,
+          "nbf": 1564536012,
+          "exp": 1567128012
         },
         "key_ops": [
           "verify"
@@ -69,7 +71,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "365",
+        "Content-Length": "399",
         "Content-Type": "application\u002fjson; charset=utf-8",
         "Date": "Tue, 06 Aug 2019 17:48:45 GMT",
         "Expires": "-1",
@@ -96,9 +98,11 @@
           "y": "kOuyMhHZPiJzIOcsytFzQVZ8Bn1AdOosowKOsy2PILA"
         },
         "attributes": {
+          "nbf": 1564536012,
+          "exp": 1567128012,
           "enabled": false,
-          "created": 1565113726,
-          "updated": 1565113726,
+          "created": 1565113404,
+          "updated": 1565113404,
           "recoveryLevel": "Recoverable\u002bPurgeable"
         }
       }
@@ -122,7 +126,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "365",
+        "Content-Length": "399",
         "Content-Type": "application\u002fjson; charset=utf-8",
         "Date": "Tue, 06 Aug 2019 17:48:45 GMT",
         "Expires": "-1",
@@ -150,8 +154,10 @@
         },
         "attributes": {
           "enabled": false,
-          "created": 1565113726,
-          "updated": 1565113726,
+          "nbf": 1564536012,
+          "exp": 1567128012,
+          "created": 1565113404,
+          "updated": 1565113404,
           "recoveryLevel": "Recoverable\u002bPurgeable"
         }
       }
@@ -175,7 +181,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "500",
+        "Content-Length": "534",
         "Content-Type": "application\u002fjson; charset=utf-8",
         "Date": "Tue, 06 Aug 2019 17:48:45 GMT",
         "Expires": "-1",
@@ -206,8 +212,10 @@
         },
         "attributes": {
           "enabled": false,
-          "created": 1565113726,
-          "updated": 1565113726,
+          "nbf": 1564536012,
+          "exp": 1567128012,
+          "created": 1565113404,
+          "updated": 1565113404,
           "recoveryLevel": "Recoverable\u002bPurgeable"
         }
       }

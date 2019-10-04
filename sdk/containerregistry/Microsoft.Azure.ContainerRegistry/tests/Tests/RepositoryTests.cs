@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -16,7 +16,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task ListRepositoryCR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryCR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(ListRepositoryCR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
                 var repositories = await client.GetRepositoriesAsync();
@@ -30,7 +30,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task ListRepositoryMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(ListRepositoryMR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositories = await client.GetRepositoriesAsync();
@@ -44,7 +44,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrRepositoryDetailsMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrRepositoryDetailsMR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
@@ -65,7 +65,7 @@ namespace ContainerRegistry.Tests
         [Fact]
         public async Task GetAcrRepositoryDetailsCRThrowException()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsCRThrowException)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrRepositoryDetailsCRThrowException)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
                 await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository));
@@ -75,7 +75,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrRepositoriesMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrRepositoriesMR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositories = await client.GetAcrRepositoriesAsync();
@@ -89,7 +89,7 @@ namespace ContainerRegistry.Tests
         [Fact]
         public async Task GetAcrRepositoriesCRThrowException()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesCRThrowException)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrRepositoriesCRThrowException)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
                 await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrRepositoriesAsync());                
@@ -99,7 +99,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task DeleteAcrRepositoryMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(DeleteAcrRepositoryMR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForDeleting);
                 var deletedRepo = await client.DeleteAcrRepositoryAsync(ACRTestUtil.TestRepository);
@@ -115,7 +115,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task DeleteAcrRepositoryCRThrowException()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryCRThrowException)))
+            using (var context = MockContext.Start(this.GetType(), nameof(DeleteAcrRepositoryCRThrowException)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistryForDeleting);
                 await Assert.ThrowsAsync<AcrErrorsException>(() => client.DeleteAcrRepositoryAsync("prod/bash"));
@@ -125,7 +125,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task UpdateAcrRepositoryAttributesMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributesMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(UpdateAcrRepositoryAttributesMR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
@@ -149,3 +149,5 @@ namespace ContainerRegistry.Tests
         }
     }
 }
+
+

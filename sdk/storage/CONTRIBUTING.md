@@ -12,7 +12,7 @@ comments.
 
 ## Azure SDK Design Guidelines for .NET
 
-These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html)
+These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html)
 and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
@@ -34,7 +34,11 @@ PS C:\src\azure-sdk-for-net\sdk\storage> .\generate.ps1
 ```
 
 The generator uses [AutoRest](https://github.com/Azure/autorest) which requires
-node.js.  There's known flakiness that results in an `ERROR: Did not find any
+node.js. It is recommended to use the beta version as it increases the max usable memory:
+```
+npm install -g autorest@beta
+```
+There's known flakiness that results in an `ERROR: Did not find any
 input files to generate!` message that can be safely ignored -- just run the
 generator one more time.
 

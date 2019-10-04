@@ -49,6 +49,10 @@ namespace Microsoft.Azure.Search.Models
         /// 'ms', 'mt', 'nb', 'fa', 'pl', 'pt', 'otq', 'ro', 'ru', 'sm',
         /// 'sr-Cyrl', 'sr-Latn', 'sk', 'sl', 'es', 'sv', 'ty', 'ta', 'te',
         /// 'th', 'to', 'tr', 'uk', 'ur', 'vi', 'cy', 'yua'</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
@@ -74,8 +78,8 @@ namespace Microsoft.Azure.Search.Models
         /// 'pl', 'pt', 'otq', 'ro', 'ru', 'sm', 'sr-Cyrl', 'sr-Latn', 'sk',
         /// 'sl', 'es', 'sv', 'ty', 'ta', 'te', 'th', 'to', 'tr', 'uk', 'ur',
         /// 'vi', 'cy', 'yua'</param>
-        public TextTranslationSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, TextTranslationSkillLanguage defaultToLanguageCode, string description = default(string), string context = default(string), TextTranslationSkillLanguage? defaultFromLanguageCode = default(TextTranslationSkillLanguage?), TextTranslationSkillLanguage? suggestedFrom = default(TextTranslationSkillLanguage?))
-            : base(inputs, outputs, description, context)
+        public TextTranslationSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, TextTranslationSkillLanguage defaultToLanguageCode, string name = default(string), string description = default(string), string context = default(string), TextTranslationSkillLanguage? defaultFromLanguageCode = default(TextTranslationSkillLanguage?), TextTranslationSkillLanguage? suggestedFrom = default(TextTranslationSkillLanguage?))
+            : base(inputs, outputs, name, description, context)
         {
             DefaultToLanguageCode = defaultToLanguageCode;
             DefaultFromLanguageCode = defaultFromLanguageCode;

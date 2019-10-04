@@ -53,12 +53,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType boolean).</param>
         /// <param name="polyBaseSettings">Specifies PolyBase-related settings
         /// when allowPolyBase is true.</param>
-        public SqlDWSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object preCopyScript = default(object), object allowPolyBase = default(object), PolybaseSettings polyBaseSettings = default(PolybaseSettings))
+        /// <param name="tableOption">The option to handle sink table, such as
+        /// autoCreate. For now only 'autoCreate' value is supported. Type:
+        /// string (or Expression with resultType string).</param>
+        public SqlDWSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object preCopyScript = default(object), object allowPolyBase = default(object), PolybaseSettings polyBaseSettings = default(PolybaseSettings), object tableOption = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             PreCopyScript = preCopyScript;
             AllowPolyBase = allowPolyBase;
             PolyBaseSettings = polyBaseSettings;
+            TableOption = tableOption;
             CustomInit();
         }
 
@@ -88,6 +92,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "polyBaseSettings")]
         public PolybaseSettings PolyBaseSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the option to handle sink table, such as autoCreate.
+        /// For now only 'autoCreate' value is supported. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "tableOption")]
+        public object TableOption { get; set; }
 
     }
 }

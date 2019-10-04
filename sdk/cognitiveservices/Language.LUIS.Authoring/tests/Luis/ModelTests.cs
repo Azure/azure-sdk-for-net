@@ -7,6 +7,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelTests : BaseTest
     {
         [Fact]
@@ -83,6 +84,7 @@
                 var entity = new CompositeEntityModel(new List<string>() { childEntity.Single().Name }, name: "CompositeTest");
                 var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, entity);
                 await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
 
                 var entities = await client.Model.ListCompositeEntitiesAsync(GlobalAppId, GlobalVersionId);
                 Assert.DoesNotContain(entities, e => e.Id == entityId);

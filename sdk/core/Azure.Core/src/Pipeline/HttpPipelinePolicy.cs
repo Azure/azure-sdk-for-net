@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpPipelineMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         /// <returns></returns>
-        public abstract Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
+        public abstract ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
         public abstract void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpPipelineMessage"/> next policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
         /// <returns></returns>
-        protected static Task ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        protected static ValueTask ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
         }

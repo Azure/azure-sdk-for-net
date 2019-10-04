@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class BearerTokenAuthenticationPolicyTests: SyncAsyncPolicyTestBase
+    public class BearerTokenAuthenticationPolicyTests : SyncAsyncPolicyTestBase
     {
         public BearerTokenAuthenticationPolicyTests(bool isAsync) : base(isAsync) { }
 
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetTokenAsync(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .ReturnsAsync(new AccessToken("token", DateTimeOffset.MaxValue));
             }
@@ -33,12 +33,12 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetToken(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }
 
-            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
+            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new[] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200));
             await SendGetRequest(transport, policy);
 
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetTokenAsync(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .ReturnsAsync(() => currentToken);
             }
@@ -64,12 +64,12 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetToken(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .Returns(() => currentToken);
             }
 
-            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
+            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new[] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
 
             currentToken = new AccessToken("token1", DateTimeOffset.UtcNow);
@@ -93,7 +93,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetTokenAsync(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope" })),
                             It.IsAny<CancellationToken>()))
                     .ReturnsAsync(new AccessToken("token", DateTimeOffset.MaxValue));
             }
@@ -101,7 +101,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetToken(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope" })),
                             It.IsAny<CancellationToken>()))
                     .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }

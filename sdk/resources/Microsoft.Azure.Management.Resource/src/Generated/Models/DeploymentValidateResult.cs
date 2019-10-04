@@ -29,10 +29,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentValidateResult class.
         /// </summary>
+        /// <param name="error">The deployment validation error.</param>
         /// <param name="properties">The template deployment
         /// properties.</param>
-        public DeploymentValidateResult(DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
+        public DeploymentValidateResult(ErrorResponse error = default(ErrorResponse), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
         {
+            Error = error;
             Properties = properties;
             CustomInit();
         }
@@ -41,6 +43,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the deployment validation error.
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponse Error { get; set; }
 
         /// <summary>
         /// Gets or sets the template deployment properties.

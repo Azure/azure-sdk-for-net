@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.EventHubs.Tests.Client
 {
     using System;
-    using System.Threading.Tasks;
     using System.Text;
+    using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Core;
     using Xunit;
 

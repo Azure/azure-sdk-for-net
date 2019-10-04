@@ -110,6 +110,16 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IBlobContainersOperations BlobContainers { get; private set; }
 
         /// <summary>
+        /// Gets the IFileServicesOperations.
+        /// </summary>
+        public virtual IFileServicesOperations FileServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IFileSharesOperations.
+        /// </summary>
+        public virtual IFileSharesOperations FileShares { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -357,6 +367,8 @@ namespace Microsoft.Azure.Management.Storage
             ManagementPolicies = new ManagementPoliciesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
+            FileServices = new FileServicesOperations(this);
+            FileShares = new FileSharesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public static Filter ParseFromXElement(XElement xElement)
         {
-            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs));
+            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace));
             if (attribute == null)
             {
                 return null;

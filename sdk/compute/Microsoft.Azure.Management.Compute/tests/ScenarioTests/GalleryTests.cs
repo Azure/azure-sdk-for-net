@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -33,7 +33,7 @@ namespace Compute.Tests
         [Fact]
         public void Gallery_CRUD_Tests()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
@@ -85,7 +85,7 @@ namespace Compute.Tests
         [Fact]
         public void GalleryImage_CRUD_Tests()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
@@ -133,7 +133,7 @@ namespace Compute.Tests
         public void GalleryImageVersion_CRUD_Tests()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", galleryHomeLocation);
                 EnsureClientsInitialized(context);
@@ -227,7 +227,7 @@ namespace Compute.Tests
         [Fact]
         public void GalleryApplication_CRUD_Tests()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string location = ComputeManagementTestUtilities.DefaultLocation;
                 EnsureClientsInitialized(context);
@@ -272,7 +272,7 @@ namespace Compute.Tests
         public void GalleryApplicationVersion_CRUD_Tests()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string location = ComputeManagementTestUtilities.DefaultLocation;
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
@@ -606,3 +606,4 @@ namespace Compute.Tests
         }
     }
 }
+

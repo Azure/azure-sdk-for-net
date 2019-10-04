@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs
             get => _partitionId;
             set
             {
-                Guard.ArgumentNotEmptyOrWhitespace(nameof(PartitionId), value);
+                Argument.AssertNotEmptyOrWhiteSpace(value, nameof(PartitionId));
                 _partitionId = value;
             }
         }
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
-        ///   the associcated <see cref="EventHubClient" /> will be used.
+        ///   the associated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
         public RetryOptions RetryOptions { get; set; }
@@ -92,8 +92,8 @@ namespace Azure.Messaging.EventHubs
         internal EventHubProducerOptions Clone() =>
             new EventHubProducerOptions
             {
-                RetryOptions = this.RetryOptions?.Clone(),
-                _partitionId = this.PartitionId
+                RetryOptions = RetryOptions?.Clone(),
+                _partitionId = PartitionId
             };
     }
 }

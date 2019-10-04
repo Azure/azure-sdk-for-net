@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order 
+    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order
     /// until one of the getToken methods returns a non-default <see cref="AccessToken"/>.
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
-        private TokenCredential[] _sources;
+        private readonly TokenCredential[] _sources;
 
         /// <summary>
         /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
@@ -23,11 +23,17 @@ namespace Azure.Identity
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
         public ChainedTokenCredential(params TokenCredential[] sources)
         {
-            if (sources == null) throw new ArgumentNullException(nameof(sources));
+            if (sources == null)
+            {
+                throw new ArgumentNullException(nameof(sources));
+            }
 
-            if (sources.Length == 0) throw new ArgumentException("sources must not be empty", nameof(sources));
+            if (sources.Length == 0)
+            {
+                throw new ArgumentException("sources must not be empty", nameof(sources));
+            }
 
-            for(int i = 0; i < sources.Length; i++)
+            for (int i = 0; i < sources.Length; i++)
             {
                 if (sources[i] == null)
                 {
@@ -41,16 +47,16 @@ namespace Azure.Identity
         /// <summary>
         /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
             AccessToken token = new AccessToken();
 
             for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = _sources[i].GetToken(scopes, cancellationToken);
+                token = _sources[i].GetToken(request, cancellationToken);
             }
 
             return token;
@@ -59,16 +65,16 @@ namespace Azure.Identity
         /// <summary>
         /// Sequencially calls <see cref="TokenCredential.GetTokenAsync"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
             AccessToken token = new AccessToken();
 
-            for(int i = 0; i < _sources.Length && token.Token == null; i++)
+            for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = await _sources[i].GetTokenAsync(scopes, cancellationToken).ConfigureAwait(false);
+                token = await _sources[i].GetTokenAsync(request, cancellationToken).ConfigureAwait(false);
             }
 
             return token;

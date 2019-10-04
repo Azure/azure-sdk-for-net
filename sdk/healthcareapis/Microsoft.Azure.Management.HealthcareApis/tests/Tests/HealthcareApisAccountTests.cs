@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using HealthcareApis.Tests.Helpers;
@@ -19,7 +19,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -43,7 +43,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -67,7 +67,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -91,7 +91,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -116,7 +116,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -157,7 +157,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -186,7 +186,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -214,7 +214,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -244,7 +244,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -264,7 +264,7 @@ namespace HealthcareApis.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
@@ -279,3 +279,4 @@ namespace HealthcareApis.Tests
         }
     }
 }
+

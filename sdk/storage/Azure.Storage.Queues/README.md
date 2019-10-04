@@ -1,6 +1,6 @@
 # Azure Storage Queues client library for .NET
 
-> Server Version: 2018-11-09
+> Server Version: 2019-02-02
 
 Azure Queue storage is a service for storing large numbers of messages that 
 can be accessed from anywhere in the world via authenticated calls using
@@ -17,7 +17,7 @@ a storage account.
 Install the Azure Storage Queues client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.1
+dotnet add package Azure.Storage.Queues --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -176,7 +176,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Queues/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.Queues.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Queues.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction
 [nuget]: https://www.nuget.org/

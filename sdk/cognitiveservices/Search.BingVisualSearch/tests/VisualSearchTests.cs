@@ -18,9 +18,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VisualSearchWithBinary()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithBinary");
+                HttpMockServer.Initialize(this.GetType(), "VisualSearchWithBinary");
 
                 IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -47,9 +47,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VisualSearchWithInsightsToken()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithInsightsToken");
+                HttpMockServer.Initialize(this.GetType(), "VisualSearchWithInsightsToken");
 
                 IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -76,9 +76,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VisualSearchWithUrl()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithUrl");
+                HttpMockServer.Initialize(this.GetType(), "VisualSearchWithUrl");
 
                 IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -103,9 +103,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VisualSearchWithKnowledgeRequestObject()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithKnowledgeRequestObject");
+                HttpMockServer.Initialize(this.GetType(), "VisualSearchWithKnowledgeRequestObject");
 
                 IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

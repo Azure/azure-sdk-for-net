@@ -1,4 +1,4 @@
-﻿namespace StorSimple1200Series.Tests
+namespace StorSimple1200Series.Tests
 {
     using System;
     using System.Linq;
@@ -104,3 +104,4 @@
         #endregion Private method
     }
 }
+

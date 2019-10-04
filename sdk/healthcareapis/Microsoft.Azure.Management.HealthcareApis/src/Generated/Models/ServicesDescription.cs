@@ -31,9 +31,8 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <summary>
         /// Initializes a new instance of the ServicesDescription class.
         /// </summary>
-        /// <param name="kind">The kind of the service. Valid values are: fhir,
-        /// fhir-Stu3 and fhir-R4. Possible values include: 'fhir',
-        /// 'fhir-Stu3', 'fhir-R4'</param>
+        /// <param name="kind">The kind of the service. Possible values
+        /// include: 'fhir', 'fhir-Stu3', 'fhir-R4'</param>
         /// <param name="location">The resource location.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>

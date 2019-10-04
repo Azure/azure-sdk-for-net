@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag();
 
-            Assert.True(eTag.Equals(new ETag(null)));;
+            Assert.True(eTag.Equals(new ETag(null)));
 
             Assert.True(eTag.Equals((object)new ETag(null)));
         }

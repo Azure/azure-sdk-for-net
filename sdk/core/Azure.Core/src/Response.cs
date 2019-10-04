@@ -9,7 +9,7 @@ using Azure.Core.Http;
 
 namespace Azure
 {
-    public abstract class Response: IDisposable
+    public abstract class Response : IDisposable
     {
         public abstract int Status { get; }
 
@@ -31,5 +31,9 @@ namespace Azure
 
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
+        public static Response<T> FromValue<T>(T value, Response response)
+        {
+            return new ValueResponse<T>(response, value);
+        }
     }
 }

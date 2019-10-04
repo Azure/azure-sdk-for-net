@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             Assert.That(async () => await provider.GetTokenAsync(invalidResource, TimeSpan.FromHours(4)), Throws.InstanceOf<ArgumentException>());
@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             Assert.That(async () => await provider.GetTokenAsync(validResource, TimeSpan.FromHours(4)), Throws.Nothing);
@@ -131,10 +131,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
-            var token = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
+            TrackOne.SecurityToken token = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
 
             Assert.That(token, Is.Not.Null, "A token should have been produced.");
             Assert.That(token, Is.InstanceOf<TrackOneGenericToken>(), "The token should be a generic JWT token.");
@@ -157,10 +157,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
-            var token = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
+            TrackOne.SecurityToken token = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
 
             Assert.That(token, Is.Not.Null, "A token should have been produced.");
             Assert.That(token.TokenValue, Is.EqualTo(jwtToken), "The JWT token should match.");
@@ -185,11 +185,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
-            var first = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
-            var second = await provider.GetTokenAsync(resource, TimeSpan.FromHours(4));
+            TrackOne.SecurityToken first = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
+            TrackOne.SecurityToken second = await provider.GetTokenAsync(resource, TimeSpan.FromHours(4));
 
             Assert.That(first, Is.Not.SameAs(second), "A new token should be created for each request.");
             Assert.That(((TrackOneGenericToken)first).Credential, Is.SameAs(((TrackOneGenericToken)second).Credential), "The token should be based on the same source credential.");
@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static string GetTokenScope() =>
             ((string[])typeof(TrackOneGenericTokenProvider)
-                .GetField("EventHubsDefaultScopes", BindingFlags.Static | BindingFlags.NonPublic)
+                .GetField("s_eventHubsDefaultScopes", BindingFlags.Static | BindingFlags.NonPublic)
                 .GetValue(null))
                 .First();
 

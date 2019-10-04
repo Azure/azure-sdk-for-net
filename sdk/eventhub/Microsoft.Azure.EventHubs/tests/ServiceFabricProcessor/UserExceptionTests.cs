@@ -10,7 +10,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class UserExceptionTests
     {
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void OpenException()
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             }
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void CloseException()
         {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact(Skip="Test not reliable under macOS; to be investigated as art of issue #5451")]
+        [Fact(Skip = "Test not reliable under macOS; to be investigated as art of issue #5451")]
         [DisplayTestMethodName]
         public void EventException()
         {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact(Skip="Test not reliable under macOS; to be investigated as art of issue #5451")]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void ErrorException()
         {

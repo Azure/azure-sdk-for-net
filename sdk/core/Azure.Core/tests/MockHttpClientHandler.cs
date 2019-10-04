@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var response = await _onSend(request);
+            HttpResponseMessage response = await _onSend(request);
 
             return response ?? new HttpResponseMessage((HttpStatusCode)200);
         }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void CrudProfileFullCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void TrafficViewEnableDisableQuerySizeScope()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void EmptyHeatMapData()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void CrudProfileWithoutEndpoints_ThenUpdate()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void ListProfilesByResourceGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void ListAllProfiles()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void CrudProfileWithCustomHeaders()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void CrudProfileWithCustomSubnets()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void CrudProfileWithMultiValue()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -395,3 +395,4 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         }
     }
 }
+

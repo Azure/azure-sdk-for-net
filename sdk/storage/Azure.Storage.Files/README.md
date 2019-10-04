@@ -1,6 +1,6 @@
 # Azure Storage Files client library for .NET
 
-> Server Version: 2018-11-09
+> Server Version: 2019-02-02
 
 Azure Files offers fully managed file shares in the cloud that are accessible
 via the industry standard Server Message Block (SMB) protocol. Azure file
@@ -18,7 +18,7 @@ being used.
 Install the Azure Storage Files client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files --version 12.0.0-preview.2
+dotnet add package Azure.Storage.Files --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -205,7 +205,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.Files.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Files.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction
 [nuget]: https://www.nuget.org/

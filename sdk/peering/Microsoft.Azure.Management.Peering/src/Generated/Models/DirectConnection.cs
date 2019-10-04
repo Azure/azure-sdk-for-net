@@ -29,6 +29,11 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// connection.</param>
         /// <param name="provisionedBandwidthInMbps">The bandwidth that is
         /// actually provisioned.</param>
+        /// <param name="sessionAddressProvider">The field indicating if
+        /// Microsoft provides session ip addresses. Possible values include:
+        /// 'Microsoft', 'Peer'</param>
+        /// <param name="useForPeeringService">The flag that indicates whether
+        /// or not the connection is used for peering service.</param>
         /// <param name="peeringDBFacilityId">The PeeringDB.com ID of the
         /// facility at which the connection has to be set up.</param>
         /// <param name="connectionState">The state of the connection. Possible
@@ -39,10 +44,12 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// connection.</param>
         /// <param name="connectionIdentifier">The unique identifier (GUID) for
         /// the connection.</param>
-        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string))
+        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), string sessionAddressProvider = default(string), bool? useForPeeringService = default(bool?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string))
         {
             BandwidthInMbps = bandwidthInMbps;
             ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;
+            SessionAddressProvider = sessionAddressProvider;
+            UseForPeeringService = useForPeeringService;
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
             BgpSession = bgpSession;
@@ -66,6 +73,20 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisionedBandwidthInMbps")]
         public int? ProvisionedBandwidthInMbps { get; set; }
+
+        /// <summary>
+        /// Gets or sets the field indicating if Microsoft provides session ip
+        /// addresses. Possible values include: 'Microsoft', 'Peer'
+        /// </summary>
+        [JsonProperty(PropertyName = "sessionAddressProvider")]
+        public string SessionAddressProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the flag that indicates whether or not the connection
+        /// is used for peering service.
+        /// </summary>
+        [JsonProperty(PropertyName = "useForPeeringService")]
+        public bool? UseForPeeringService { get; set; }
 
         /// <summary>
         /// Gets or sets the PeeringDB.com ID of the facility at which the

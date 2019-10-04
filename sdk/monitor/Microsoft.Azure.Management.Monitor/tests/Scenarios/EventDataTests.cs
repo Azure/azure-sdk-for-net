@@ -59,7 +59,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void ListEventsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 List<EventData> expectedEventDataCollection = GetEventDataCollection();
 
@@ -87,7 +87,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void ListEventsNextTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 List<EventData> expectedEventDataCollection = GetEventDataCollection();
 

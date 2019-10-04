@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Threading;
 using Microsoft.Azure.Management.StorSimple8000Series;
@@ -33,7 +33,7 @@ namespace StorSimple8000Series.Tests
             var helper = (TestOutputHelper)testOutputHelper;
             ITest test = (ITest)helper.GetType().GetField("test", BindingFlags.NonPublic | BindingFlags.Instance)
                                   .GetValue(helper);
-            this.Context = MockContext.Start(this.GetType().FullName, test.TestCase.TestMethod.Method.Name);
+            this.Context = MockContext.Start(this.GetType(), test.TestCase.TestMethod.Method.Name);
 
             this.ResourceGroupName = TestConstants.DefaultResourceGroupName;
             this.ManagerName = TestConstants.DefaultManagerName;

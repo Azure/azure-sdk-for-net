@@ -33,8 +33,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             var nsInfo = new NamespaceInfo();
 
-            var nsInfoXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                .Element(XName.Get("NamespaceInfo", ManagementClientConstants.SbNs));
+            var nsInfoXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
+                .Element(XName.Get("NamespaceInfo", ManagementClientConstants.ServiceBusNamespace));
 
             if (nsInfoXml == null)
             {

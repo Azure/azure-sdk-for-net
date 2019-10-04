@@ -3,14 +3,40 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.2.0
+###  Feature Additions
+* Added support for Data Flow:
+    - Added data flow object model and CRUD APIs
+    - Added data flow debug session APIs
+    - Added support for execute data flow activity type
+    - Added support for data flow properties in managed integration runtime
+- Added property queryTimeout to tabular sources
+- Added support for Cosmos DB SQL API dataset and copy source/sink
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
+
+## Version 4.1.3
+###  Feature Additions
+- Added RunDimension to Pipeline
+- Added Chaining Trigger
+- Added Dependency Status property in Pipeline and Trigger Run
+- Added outputColumns property to Office365Source
+- Added support for ORC dataset in ADF
+- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
+- Added property blockSizeInMB to Blobsink and BlobFSsink
+- Added support for custom setup without script properties for a SSIS integration runtime
+- Added support for instance pools in Databricks linked service
+
 ## Version 4.1.2
 ###  Feature Additions
-- Add SapBwCube and Sybase dataset
+- Added SapBwCube and Sybase dataset
 - Added support for the follwoing new datasets in ADF - AvroDataset, along with source and sink for Copy activity
 - AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- Added support for Json dataset in ADF
 - Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
 - Split tableName to schema and table in multiple datasets
 - Added new API to rerun a trigger run
+- Added new API for subscribing and unsubscribing triggers to events, and getting a triggers event subscription status
 
 ## Version 4.1.1
 ###  Feature Additions

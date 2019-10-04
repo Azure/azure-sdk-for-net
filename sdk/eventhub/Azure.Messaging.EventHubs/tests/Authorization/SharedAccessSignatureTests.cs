@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
-namespace Azure.Messaging.EventHubs.Tests.Authorization
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of unit tests for the <see cref="SharedAccessSignature" />
@@ -42,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void ToStringReflectsTheValue()
         {
             var expected = "This is the value of the SAS";
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", expected, DateTimeOffset.UtcNow.AddHours(4));
+            var signature = new SharedAccessSignature(string.Empty, "keyName", "key", expected, DateTimeOffset.UtcNow.AddHours(4));
 
             Assert.That(signature.ToString(), Is.EqualTo(expected));
         }
@@ -56,7 +57,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("")]
         public void CompositeConstructorValidatesTheResource(string resource)
         {
-            Assert.That(() => new SharedAccessSignature(resource, "Yay", "OMG!", TimeSpan.FromMilliseconds(500)), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = resource is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(resource, "Yay", "OMG!", TimeSpan.FromMilliseconds(500)), typeConstraint);
         }
 
         /// <summary>
@@ -118,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void CompositeConstructorComputesTheExpirationWhenProvided()
         {
             var timeToLive = TimeSpan.FromMinutes(10);
-            var expectedExpiration = DateTimeOffset.UtcNow.Add(timeToLive);
+            DateTimeOffset expectedExpiration = DateTimeOffset.UtcNow.Add(timeToLive);
             var allowedVariance = TimeSpan.FromSeconds(5);
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey", timeToLive);
 
@@ -132,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [Test]
         public void CompositeConstructorComputesTheExpirationWhenTheDefaultIsUsed()
         {
-            var minimumExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromMinutes(1));
+            DateTimeOffset minimumExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromMinutes(1));
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey");
 
             Assert.That(signature.SignatureExpiration, Is.GreaterThan(minimumExpiration));
@@ -159,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [Test]
         public void CompositeConstructorCreatesTheSignatureValue()
         {
-            var longLegalString = new String('G', 250);
+            var longLegalString = new string('G', 250);
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", longLegalString, longLegalString, TimeSpan.FromDays(30));
             Assert.That(signature.Value, Is.Not.Null.Or.Empty);
         }
@@ -173,7 +176,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("")]
         public void SignatureKeyConstructorValidatesTheSignature(string signature)
         {
-            Assert.That(() => new SharedAccessSignature(signature, "key"), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = signature is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(signature, "key"), typeConstraint);
         }
 
         /// <summary>
@@ -208,7 +213,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("")]
         public void SignatureOnlyConstructorValidatesTheSignature(string signature)
         {
-            Assert.That(() => new SharedAccessSignature(signature), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = signature is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(signature), typeConstraint);
         }
 
         /// <summary>
@@ -248,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
-            var expiration = DateTimeOffset.UtcNow.Add(validFor);
+            DateTimeOffset expiration = DateTimeOffset.UtcNow.Add(validFor);
             var composedSignature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, key, validFor);
             var parsedSignature = constructor(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
@@ -353,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void ParseExtractsValues()
         {
             var signature = "SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey";
-            var parsed = ParseSignature(signature);
+            (string KeyName, string Resource, DateTimeOffset ExpirationTime) parsed = ParseSignature(signature);
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsed.Resource, Is.Not.Null.Or.Empty, "The resource should have been parsed.");
@@ -412,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
             var extendBy = TimeSpan.FromHours(1);
-            var expiration = DateTimeOffset.UtcNow.Add(extendBy);
+            DateTimeOffset expiration = DateTimeOffset.UtcNow.Add(extendBy);
             var composedSignature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, key, validFor);
             var parsedSignature = new SharedAccessSignature(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
@@ -432,9 +439,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
-            var expiration = DateTimeOffset.UtcNow.Add(validFor);
+            DateTimeOffset expiration = DateTimeOffset.UtcNow.Add(validFor);
             var signature = new SharedAccessSignature(resource, keyName, key, validFor);
-            var parsed = ParseSignature(signature.ToString());
+            (string KeyName, string Resource, DateTimeOffset ExpirationTime) parsed = ParseSignature(signature.ToString());
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsed.Resource, Is.EqualTo("amqps://some.namespace.com/hubName"), "The resource should match.");
@@ -455,7 +462,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
             var signature = new SharedAccessSignature(resource, keyName, key, validFor);
-            var clone = signature.Clone();
+            SharedAccessSignature clone = signature.Clone();
 
             Assert.That(clone, Is.Not.Null, "There should have been a copy produced.");
             Assert.That(clone, Is.Not.SameAs(signature), "The clone should be a unique instance.");

@@ -13,7 +13,7 @@ namespace Sql.Tests
         [Fact]
         public void TestCheckServerNameAvailable()
         {
-            string suiteName = this.GetType().FullName;
+            string suiteName = this.GetType().Name;
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {

@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Core.Http
 {
-    public readonly struct RequestHeaders: IEnumerable<HttpHeader>
+    public readonly struct RequestHeaders : IEnumerable<HttpHeader>
     {
         private readonly Request _request;
 

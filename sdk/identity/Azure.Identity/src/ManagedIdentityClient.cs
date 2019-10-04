@@ -15,14 +15,14 @@ namespace Azure.Identity
 {
     internal class ManagedIdentityClient
     {
-        private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient(null));
+        private static readonly Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient(null));
 
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
         private const string AuthenticationRequestFailedError = "The request to the identity service failed. See inner exception for details.";
 
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
-        private static readonly Uri ImdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         private const string ImdsApiVersion = "2018-02-01";
         private const int ImdsAvailableTimeoutMs = 500;
 
@@ -31,7 +31,7 @@ namespace Azure.Identity
         private const string MsiSecretEnvironemntVariable = "MSI_SECRET";
         private const string AppServiceMsiApiVersion = "2017-09-01";
 
-        private static SemaphoreSlim s_initLock = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim s_initLock = new SemaphoreSlim(1, 1);
         private static MsiType s_msiType;
         private static Uri s_endpoint;
 
@@ -110,7 +110,7 @@ namespace Azure.Identity
                 {
                     return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
                 }
-                catch(RequestFailedException ex)
+                catch (RequestFailedException ex)
                 {
                     throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
                 }
@@ -126,11 +126,11 @@ namespace Azure.Identity
         {
             using (Request request = CreateAuthRequest(msiType, scopes, clientId))
             {
-                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 if (response.Status == 200)
                 {
-                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
+                    AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
                     return result;
                 }
@@ -143,11 +143,11 @@ namespace Azure.Identity
         {
             using (Request request = CreateAuthRequest(msiType, scopes, clientId))
             {
-                var response = _pipeline.SendRequest(request, cancellationToken);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 if (response.Status == 200)
                 {
-                    var result = Deserialize(response.ContentStream);
+                    AccessToken result = Deserialize(response.ContentStream);
 
                     return result;
                 }
@@ -158,17 +158,13 @@ namespace Azure.Identity
 
         private Request CreateAuthRequest(MsiType msiType, string[] scopes, string clientId)
         {
-            switch (msiType)
+            return msiType switch
             {
-                case MsiType.Imds:
-                    return CreateImdsAuthRequest(scopes, clientId);
-                case MsiType.AppService:
-                    return CreateAppServiceAuthRequest(scopes, clientId);
-                case MsiType.CloudShell:
-                    return CreateCloudShellAuthRequest(scopes, clientId);
-                default:
-                    return default;
-            }
+                MsiType.Imds => CreateImdsAuthRequest(scopes, clientId),
+                MsiType.AppService => CreateAppServiceAuthRequest(scopes, clientId),
+                MsiType.CloudShell => CreateCloudShellAuthRequest(scopes, clientId),
+                _ => default,
+            };
         }
 
         private async ValueTask<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
@@ -213,7 +209,7 @@ namespace Azure.Identity
                         // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
                         else if (await ImdsAvailableAsync(cancellationToken).ConfigureAwait(false))
                         {
-                            s_endpoint = ImdsEndpoint;
+                            s_endpoint = s_imdsEndpoint;
                             s_msiType = MsiType.Imds;
                         }
                         // if MSI_ENDPOINT is NOT set and IMDS enpoint is not available ManagedIdentity is not available
@@ -257,7 +253,7 @@ namespace Azure.Identity
                             {
                                 s_endpoint = new Uri(endpointEnvVar);
                             }
-                            catch(FormatException ex)
+                            catch (FormatException ex)
                             {
                                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
                             }
@@ -276,7 +272,7 @@ namespace Azure.Identity
                         // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
                         else if (ImdsAvailable(cancellationToken))
                         {
-                            s_endpoint = ImdsEndpoint;
+                            s_endpoint = s_imdsEndpoint;
                             s_msiType = MsiType.Imds;
                         }
                         // if MSI_ENDPOINT is NOT set and IMDS enpoint is not available ManagedIdentity is not available
@@ -305,15 +301,15 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.UriBuilder.Uri = ImdsEndpoint;
+                request.Uri.Reset(s_imdsEndpoint);
 
-                request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+                request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-                var imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
+                CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
                 try
                 {
-                    var response = _pipeline.SendRequest(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token);
+                    Response response = _pipeline.SendRequest(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token);
 
                     return true;
                 }
@@ -337,15 +333,15 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.UriBuilder.Uri = ImdsEndpoint;
+                request.Uri.Reset(s_imdsEndpoint);
 
-                request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+                request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-                var imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
+                CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
                 try
                 {
-                    var response = await _pipeline.SendRequestAsync(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token).ConfigureAwait(false);
+                    Response response = await _pipeline.SendRequestAsync(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token).ConfigureAwait(false);
 
                     return true;
                 }
@@ -371,15 +367,15 @@ namespace Azure.Identity
 
             request.Headers.Add("Metadata", "true");
 
-            request.UriBuilder.Uri = s_endpoint;
+            request.Uri.Reset(s_endpoint);
 
-            request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+            request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
             }
 
             return request;
@@ -396,15 +392,15 @@ namespace Azure.Identity
 
             request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
-            request.UriBuilder.Uri = s_endpoint;
+            request.Uri.Reset(s_endpoint);
 
-            request.UriBuilder.AppendQuery("api-version", AppServiceMsiApiVersion);
+            request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
 
-            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
             }
 
             return request;
@@ -421,7 +417,7 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = s_endpoint;
+            request.Uri.Reset(s_endpoint);
 
             request.Headers.Add("Metadata", "true");
 
@@ -457,26 +453,22 @@ namespace Azure.Identity
 
         private static AccessToken Deserialize(JsonElement json)
         {
-            string accessToken = null;
-
-            DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
-
             if (!json.TryGetProperty("access_token", out JsonElement accessTokenProp))
             {
                 throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
             }
 
-            accessToken = accessTokenProp.GetString();
-
+            string accessToken = accessTokenProp.GetString();
             if (!json.TryGetProperty("expires_on", out JsonElement expiresOnProp))
             {
                 throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
             }
 
+            DateTimeOffset expiresOn;
             // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
             if (s_msiType == MsiType.AppService)
             {
-                if(!DateTimeOffset.TryParse(expiresOnProp.GetString(), out expiresOn))
+                if (!DateTimeOffset.TryParse(expiresOnProp.GetString(), out expiresOn))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

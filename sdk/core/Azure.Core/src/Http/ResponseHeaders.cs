@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace Azure.Core.Http
 {
-    public readonly struct ResponseHeaders: IEnumerable<HttpHeader>
+    public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     {
         private readonly Response _response;
 

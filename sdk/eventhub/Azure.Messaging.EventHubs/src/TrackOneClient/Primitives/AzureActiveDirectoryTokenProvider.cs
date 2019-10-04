@@ -1,29 +1,29 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading.Tasks;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace TrackOne
 {
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
-
     /// <summary>
     /// Represents the Azure Active Directory token provider for the Event Hubs.
     /// </summary>
     internal class AzureActiveDirectoryTokenProvider : TokenProvider
     {
-        readonly AuthenticationContext authContext;
+        private readonly AuthenticationContext _authContext;
 
 #if ALLOW_CERTIFICATE_IDENTITY
         readonly ClientCredential clientCredential;
         readonly ClientAssertionCertificate clientAssertionCertificate;
 #endif
-        readonly string clientId;
-        readonly Uri redirectUri;
-        readonly IPlatformParameters platformParameters;
-        readonly UserIdentifier userIdentifier;
+        private readonly string _clientId;
+        private readonly Uri _redirectUri;
+        private readonly IPlatformParameters _platformParameters;
+        private readonly UserIdentifier _userIdentifier;
 
-        enum AuthType
+        private enum AuthType
         {
             ClientCredential,
             UserPasswordCredential,
@@ -31,7 +31,7 @@ namespace TrackOne
             InteractiveUserLogin
         }
 
-        readonly AuthType authType;
+        private readonly AuthType _authType;
 
 #if ALLOW_CERTIFICATE_IDENTITY
         internal AzureActiveDirectoryTokenProvider(AuthenticationContext authContext, ClientCredential credential)
@@ -53,12 +53,12 @@ namespace TrackOne
 
         internal AzureActiveDirectoryTokenProvider(AuthenticationContext authContext, string clientId, Uri redirectUri, IPlatformParameters platformParameters, UserIdentifier userIdentifier)
         {
-            this.authContext = authContext;
-            this.clientId = clientId;
-            this.redirectUri = redirectUri;
-            this.platformParameters = platformParameters;
-            this.userIdentifier = userIdentifier;
-            this.authType = AuthType.InteractiveUserLogin;
+            _authContext = authContext;
+            _clientId = clientId;
+            _redirectUri = redirectUri;
+            _platformParameters = platformParameters;
+            _userIdentifier = userIdentifier;
+            _authType = AuthType.InteractiveUserLogin;
         }
 
         /// <summary>
@@ -69,9 +69,8 @@ namespace TrackOne
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            AuthenticationResult authResult;
 
-            switch (this.authType)
+            AuthenticationResult authResult = _authType switch
             {
 #if ALLOW_CERTIFICATE_IDENTITY
                 case AuthType.ClientCredential:
@@ -82,14 +81,10 @@ namespace TrackOne
                     authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientAssertionCertificate);
                     break;
 #endif
-                case AuthType.InteractiveUserLogin:
-                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientId, this.redirectUri, this.platformParameters, this.userIdentifier);
-                    break;
+                AuthType.InteractiveUserLogin => await _authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, _clientId, _redirectUri, _platformParameters, _userIdentifier),
 
-                default:
-                    throw new NotSupportedException();
-            }
-
+                _ => throw new NotSupportedException(),
+            };
             return new JsonSecurityToken(authResult.AccessToken, appliesTo);
         }
     }

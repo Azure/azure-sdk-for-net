@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void CrudZoneFullCycle()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CrudPrivateZoneFullCycle()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void ListZones()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void ListZonesInSubscription()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void ListZonesWithTopParameter()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void ListZonesWithListNext()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void UpdateZonePreconditionFailed()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -536,7 +536,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void GetNonExistingZoneFailsAsExpected()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
@@ -575,7 +575,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void CrudZoneSetsTheCurrentAndMaxRecordSetNumbersInResponse()
         {
             using (
-                MockContext context = MockContext.Start(this.GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType())
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler

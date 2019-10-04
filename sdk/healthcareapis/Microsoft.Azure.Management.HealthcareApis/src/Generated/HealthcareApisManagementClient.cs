@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The version of the API.
+        /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             Operations = new Operations(this);
             OperationResults = new OperationResultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-08-20-preview";
+            ApiVersion = "2019-09-16";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2018-05-01"),
-                new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2018-05-01"),
-                new Tuple<string, string, string>("Authorization", "PolicySetDefinitions", "2018-05-01"),
-                new Tuple<string, string, string>("Management", "PolicyDefinitions", "2018-05-01"),
-                new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2018-05-01"),
-                new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2018-05-01"),
+                new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2019-06-01"),
+                new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2019-06-01"),
+                new Tuple<string, string, string>("Authorization", "PolicySetDefinitions", "2019-06-01"),
+                new Tuple<string, string, string>("Management", "PolicyDefinitions", "2019-06-01"),
+                new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2019-06-01"),
+                new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2019-06-01"),
               }.AsEnumerable();
           }
       }

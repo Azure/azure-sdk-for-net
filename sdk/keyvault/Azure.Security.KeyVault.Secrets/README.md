@@ -126,10 +126,10 @@ Console.WriteLine(secret.Value);
 ```
 
 ### Update an existing Secret
-`Update` updates a secret previously stored in the Key Vault.
+`Update` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.Set` on a `Secret` with the same name.
 
 ```c#
-Secret secret = new Secret("secret-name");
+Secret secret = new Secret("secret-name", "secret-value");
 
 // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved
 secret.ContentType = "text/plain";
@@ -137,7 +137,7 @@ secret.ContentType = "text/plain";
 // You can specify additional application-specific metadata in the form of tags.
 secret.Tags["foo"] = "updated tag";
 
-SecretBase updatedSecret = client.Update(secret);
+SecretProperties updatedSecret = client.Update(secret);
 
 Console.WriteLine(updatedSecret.Name);
 Console.WriteLine(updatedSecret.Value);
@@ -156,15 +156,15 @@ Console.WriteLine(secret.Value);
 ```
 
 ### List secrets
-This example lists all the secrets in the specified Key Vault.
+This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.Get` to retrive the value.
 
 ```c#
-IEnumerable<Response<SecretBase>> allSecrets = client.GetSecrets();
+Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
-  foreach (Secret secret in allSecrets)
-  {
-    Console.WriteLine(secret.Name);
-  }
+foreach (SecretProperties secret in allSecrets)
+{
+  Console.WriteLine(secret.Name);
+}
 ```
 ### Async create a secret
 Async APIs are identical to their synchronous counterparts. Note that all methods end with `Async`.
@@ -255,7 +255,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://azure.github.io/azure-sdk-for-net/api/KeyVault/Azure.Security.KeyVault.Secrets.html
+[API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Secrets.html
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/

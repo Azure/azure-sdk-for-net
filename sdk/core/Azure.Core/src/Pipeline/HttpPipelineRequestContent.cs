@@ -33,13 +33,14 @@ namespace Azure.Core.Pipeline
         {
             private const int CopyToBufferSize = 81920;
 
-            private Stream _stream;
+            private readonly Stream _stream;
 
             private readonly long _origin;
 
             public StreamContent(Stream stream)
             {
-                if (!stream.CanSeek) throw new ArgumentException("stream must be seekable", nameof(stream));
+                if (!stream.CanSeek)
+                    throw new ArgumentException("stream must be seekable", nameof(stream));
                 _origin = stream.Position;
                 _stream = stream;
             }

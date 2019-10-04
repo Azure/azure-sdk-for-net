@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -13,6 +13,13 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public class PartitionOwnership
     {
+        /// <summary>
+        ///   The fully qualified Event Hubs namespace this partition ownership is associated with.  This
+        ///   is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        ///
+        public string FullyQualifiedNamespace { get; }
+
         /// <summary>
         ///   The name of the specific Event Hub this partition ownership is associated with, relative
         ///   to the Event Hubs namespace that contains it.
@@ -27,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The identifier of the associated <see cref="EventProcessor" /> instance.
+        ///   The identifier of the associated <see cref="EventProcessor{T}" /> instance.
         /// </summary>
         ///
         public string OwnerIdentifier { get; }
@@ -45,24 +52,24 @@ namespace Azure.Messaging.EventHubs.Processor
         internal long OwnerLevel { get; }
 
         /// <summary>
-        ///   The offset of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />
+        ///   The offset of the last <see cref="EventData" /> received by the associated partition processor
         ///   upon ownership update.
         /// </summary>
         ///
-        public long? Offset { get; }
+        public long? Offset { get; set; }
 
         /// <summary>
-        ///   The sequence number of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />
+        ///   The sequence number of the last <see cref="EventData" /> received by the associated partition processor
         ///   upon ownership update.
         /// </summary>
         ///
-        public long? SequenceNumber { get; }
+        public long? SequenceNumber { get; set; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last update was made to this ownership.
         /// </summary>
         ///
-        public DateTimeOffset? LastModifiedTime { get; }
+        public DateTimeOffset? LastModifiedTime { get; set; }
 
         /// <summary>
         ///   The entity tag needed to update this ownership.
@@ -74,39 +81,43 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionOwnership"/> class.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
+        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />.</param>
-        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />.</param>
+        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
+        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///
-        internal PartitionOwnership(string eventHubName,
-                                    string consumerGroup,
-                                    string ownerIdentifier,
-                                    string partitionId,
-                                    long? offset = null,
-                                    long? sequenceNumber = null,
-                                    DateTimeOffset? lastModifiedTime = null,
-                                    string eTag = null)
+        protected internal PartitionOwnership(string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              string consumerGroup,
+                                              string ownerIdentifier,
+                                              string partitionId,
+                                              long? offset = null,
+                                              long? sequenceNumber = null,
+                                              DateTimeOffset? lastModifiedTime = null,
+                                              string eTag = null)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             if (offset.HasValue)
             {
-                Guard.ArgumentInRange(nameof(offset), offset.Value, 0, Int64.MaxValue);
+                Argument.AssertAtLeast(offset.Value, 0, nameof(offset));
             }
 
             if (sequenceNumber.HasValue)
             {
-                Guard.ArgumentInRange(nameof(sequenceNumber), sequenceNumber.Value, 0, Int64.MaxValue);
+                Argument.AssertAtLeast(sequenceNumber.Value, 0, nameof(sequenceNumber));
             }
 
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             OwnerIdentifier = ownerIdentifier;

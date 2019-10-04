@@ -25,7 +25,7 @@ namespace Billing.Tests.ScenarioTests
         public void ListBillingPeriodsTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var billingPeriods = billingMgmtClient.BillingPeriods.List();
@@ -38,7 +38,7 @@ namespace Billing.Tests.ScenarioTests
         public void ListBillingPeriodsWithQueryParametersTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var billingPeriods = billingMgmtClient.BillingPeriods.List(RangeFilter, null, 1);
@@ -54,7 +54,7 @@ namespace Billing.Tests.ScenarioTests
         public void GetBillingPeriodWithName()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var billingPeriod = billingMgmtClient.BillingPeriods.Get(BillingPeriodName);
@@ -72,7 +72,7 @@ namespace Billing.Tests.ScenarioTests
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             string rangeFilter = "billingPeriodEndDate lt 2017-01-01";
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 try
                 {

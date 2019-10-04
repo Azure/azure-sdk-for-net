@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "sqlvirtualmachine/resource-manager" -AutoRestVersion "latest" -SdkRepoRootPath "."

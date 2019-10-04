@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpPipelineBuilderTest: PolicyTestBase
+    public class HttpPipelineBuilderTest : PolicyTestBase
     {
         [Theory]
         [TestCase(HttpPipelinePosition.PerCall, 1)]
@@ -23,14 +23,14 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
 
             var options = new TestOptions();
-            options.AddPolicy(position, policy);
+            options.AddPolicy(policy, position);
             options.Transport = transport;
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.Uri.Reset(new Uri("http://example.com"));
 
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -42,14 +42,16 @@ namespace Azure.Core.Tests
         public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettings()
         {
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
-            var options = new TestOptions();
-            options.Transport = transport;
+            var options = new TestOptions
+            {
+                Transport = transport
+            };
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.Uri.Reset(new Uri("http://example.com"));
 
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 

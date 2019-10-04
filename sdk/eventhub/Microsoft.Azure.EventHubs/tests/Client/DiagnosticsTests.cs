@@ -13,7 +13,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-    #pragma warning disable xUnit2002
+#pragma warning disable xUnit2002
 
     [CollectionDefinition(nameof(DiagnosticsTests), DisableParallelization = true)]
     [Collection(nameof(DiagnosticsTests))]

@@ -16,10 +16,10 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
+        private readonly IPublicClientApplication _pubApp = null;
         private IAccount _account = null;
-        private IdentityClientOptions _options;
-        private string _clientId;
+        private readonly IdentityClientOptions _options;
+        private readonly string _clientId;
 
         /// <summary>
         /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
@@ -34,7 +34,7 @@ namespace Azure.Identity
 
             _options = options ??= new IdentityClientOptions();
 
-            var pipeline = HttpPipelineBuilder.Build(_options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(_options);
 
             var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost");
 
@@ -49,38 +49,38 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(scopes, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
                 try
                 {
-                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                     return new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
                 catch (MsalUiRequiredException)
                 {
-                    return await GetTokenViaBrowserLoginAsync(scopes, cancellationToken).ConfigureAwait(false);
+                    return await GetTokenViaBrowserLoginAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
                 }
             }
             else
             {
-                return await GetTokenViaBrowserLoginAsync(scopes, cancellationToken).ConfigureAwait(false);
+                return await GetTokenViaBrowserLoginAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -94,4 +94,3 @@ namespace Azure.Identity
         }
     }
 }
-

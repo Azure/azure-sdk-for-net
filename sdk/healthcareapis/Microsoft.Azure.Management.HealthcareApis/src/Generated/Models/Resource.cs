@@ -33,9 +33,8 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="kind">The kind of the service. Valid values are: fhir,
-        /// fhir-Stu3 and fhir-R4. Possible values include: 'fhir',
-        /// 'fhir-Stu3', 'fhir-R4'</param>
+        /// <param name="kind">The kind of the service. Possible values
+        /// include: 'fhir', 'fhir-Stu3', 'fhir-R4'</param>
         /// <param name="location">The resource location.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
@@ -79,9 +78,8 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the kind of the service. Valid values are: fhir,
-        /// fhir-Stu3 and fhir-R4. Possible values include: 'fhir',
-        /// 'fhir-Stu3', 'fhir-R4'
+        /// Gets or sets the kind of the service. Possible values include:
+        /// 'fhir', 'fhir-Stu3', 'fhir-R4'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public Kind Kind { get; set; }

@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to publishing events, using aa Event Hub producer that is associated with a specific partition.";
+        public string Description { get; } = "An introduction to publishing events, using an Event Hub producer that is associated with a specific partition.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.

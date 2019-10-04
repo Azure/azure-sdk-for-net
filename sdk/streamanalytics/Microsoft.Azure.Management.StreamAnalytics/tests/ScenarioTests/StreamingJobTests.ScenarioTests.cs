@@ -21,7 +21,7 @@ namespace StreamAnalytics.Tests
         [Fact]
         public async Task StreamingJobOperationsTest_JobShell()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");
@@ -124,7 +124,7 @@ namespace StreamAnalytics.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public async Task StreamingJobOperationsTest_FullJob()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");

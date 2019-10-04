@@ -1,7 +1,11 @@
+# 4.1.0
+## Bug fixes
+- Fix bug from RBAC which points to the incorrect audience [PR 7303](https://github.com/Azure/azure-sdk-for-net/pull/7303)
+
 # 4.0.0
 ## Breaking Changes
 - Allow clients to report if they own or share the underlying connection string [PR 6037](https://github.com/Azure/azure-sdk-for-net/pull/6037)
-- RBAC support - Allow more flexible ways to provide authentication [PR 6393](https://github.com/Azure/azure-sdk-for-net/pull/6393)
+- RBAC support - Allow more flexible ways to provide authentication [PR 6393](https://github.com/Azure/azure-sdk-for-net/pull/6393) (broken)
 - Updating RBAC API signatures [PR 6578](https://github.com/Azure/azure-sdk-for-net/pull/6578)
 - RBAC and ManagedIdentity fixes [PR 6637](https://github.com/Azure/azure-sdk-for-net/pull/6637)
 

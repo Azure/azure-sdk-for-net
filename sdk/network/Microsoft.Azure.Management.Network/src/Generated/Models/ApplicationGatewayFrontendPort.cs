@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="port">Frontend port.</param>
-        /// <param name="provisioningState">Provisioning state of the frontend
-        /// port resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// frontend port resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">Name of the frontend port that is unique within
         /// an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -67,8 +67,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the frontend port resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the frontend port resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

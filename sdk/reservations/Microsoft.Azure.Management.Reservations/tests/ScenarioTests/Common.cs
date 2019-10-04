@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Microsoft.Azure.Management.Reservations.Models;
-
 namespace Reservations.Tests.ScenarioTests
 {
     public class Common
     {
-        public const string SubscriptionId = "796c84b3-7e3b-411a-a103-157a9ba99783";
+        public const string SubscriptionId = "d3ae48e5-dbb2-4618-afd4-fb1b8559cb80";
     }
 }
+

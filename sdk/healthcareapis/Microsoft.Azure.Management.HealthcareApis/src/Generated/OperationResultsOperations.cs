@@ -82,6 +82,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<object>> GetWithHttpMessagesAsync(string locationName, string operationResultId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
