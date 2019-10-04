@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="requestPath">The URI used for requesting health status
         /// from the VM. Path is required if a protocol is set to http.
         /// Otherwise, it is not allowed. There is no default value.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
-        /// <param name="name">Gets name of the resource that is unique within
+        /// <param name="provisioningState">The provisioning state of the probe
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'</param>
+        /// <param name="name">The name of the resource that is unique within
         /// the set of probes used by the load balancer. This name can be used
         /// to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -139,16 +139,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RequestPath { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the probe resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within the set of probes
-        /// used by the load balancer. This name can be used to access the
-        /// resource.
+        /// Gets or sets the name of the resource that is unique within the set
+        /// of probes used by the load balancer. This name can be used to
+        /// access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Azure.Storage.Queues.Samples
     /// <summary>
     /// Basic Azure Queue Storage samples
     /// </summary>
-    public class Sample01a_HelloWorldAsync : SampleTest
+    public class Sample01b_HelloWorldAsync : SampleTest
     {
         /// <summary>
         /// Create a queue and add a message.
@@ -30,9 +29,9 @@ namespace Azure.Storage.Queues.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
-            // 
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;

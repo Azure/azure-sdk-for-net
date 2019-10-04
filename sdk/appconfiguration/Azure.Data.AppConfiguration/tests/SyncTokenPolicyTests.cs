@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Threading.Tasks;
 using Azure.Core.Http;
@@ -27,7 +26,7 @@ namespace Azure.Data.AppConfiguration.Tests
             MockTransport transport = CreateMockTransport(syncTokenReponse, new MockResponse(200));
             var policy = new SyncTokenPolicy();
 
-            var response = await SendGetRequest(transport, policy);
+            Response response = await SendGetRequest(transport, policy);
 
             Assert.False(transport.Requests[0].Headers.TryGetValue(headerName, out _));
             Assert.True(response.Headers.TryGetValue(headerName, out string responseValue));

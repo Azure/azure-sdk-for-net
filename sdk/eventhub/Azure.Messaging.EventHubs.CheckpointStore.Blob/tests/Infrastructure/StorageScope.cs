@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.Infrastructure
         ///
         public static async Task<StorageScope> CreateAsync([CallerMemberName] string caller = "")
         {
-            caller = InvalidContainerCharactersExpression.Replace(caller.ToLowerInvariant(), String.Empty);
+            caller = InvalidContainerCharactersExpression.Replace(caller.ToLowerInvariant(), string.Empty);
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.Infrastructure
 
             using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription })
             {
-                var container = await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.CreateAsync(resourceGroup, storageAccount, CreateName(), PublicAccess.None));
+                BlobContainer container = await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.CreateAsync(resourceGroup, storageAccount, CreateName(), PublicAccess.None));
                 return new StorageScope(container.Name);
             }
         }
@@ -125,16 +125,16 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.Infrastructure
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var token = await ResourceManager.AquireManagementTokenAsync();
 
-            string CreateName() => $"neteventhubs{ Guid.NewGuid().ToString("N").Substring(0, 12) }";
+            static string CreateName() => $"neteventhubs{ Guid.NewGuid().ToString("N").Substring(0, 12) }";
 
             using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
                 var sku = new Sku(SkuName.StandardLRS, SkuTier.Standard);
                 var parameters = new StorageAccountCreateParameters(sku, Kind.BlobStorage, location: location, tags: ResourceManager.GenerateTags(), accessTier: AccessTier.Hot);
-                var storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
+                StorageAccount storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
-                var storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
+                StorageAccountListKeysResult storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
                 return new StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
             }
         }
@@ -187,4 +187,3 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.Infrastructure
         }
     }
 }
-

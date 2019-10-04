@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
@@ -8,9 +7,9 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyVerifyParameters : IJsonSerializable
     {
-        private static readonly JsonEncodedText AlgorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
-        private static readonly JsonEncodedText DigestPropertyNameBytes = JsonEncodedText.Encode("digest");
-        private static readonly JsonEncodedText SignaturePropertyNameBytes = JsonEncodedText.Encode("value");
+        private static readonly JsonEncodedText s_algorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
+        private static readonly JsonEncodedText s_digestPropertyNameBytes = JsonEncodedText.Encode("digest");
+        private static readonly JsonEncodedText s_signaturePropertyNameBytes = JsonEncodedText.Encode("value");
 
         public string Algorithm { get; set; }
 
@@ -22,15 +21,15 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (Algorithm != null)
             {
-                json.WriteString(AlgorithmPropertyNameBytes, Algorithm);
+                json.WriteString(s_algorithmPropertyNameBytes, Algorithm);
             }
             if (Digest != null)
             {
-                json.WriteString(DigestPropertyNameBytes, Base64Url.Encode(Digest));
+                json.WriteString(s_digestPropertyNameBytes, Base64Url.Encode(Digest));
             }
             if (Signature != null)
             {
-                json.WriteString(SignaturePropertyNameBytes, Base64Url.Encode(Signature));
+                json.WriteString(s_signaturePropertyNameBytes, Base64Url.Encode(Signature));
             }
         }
     }

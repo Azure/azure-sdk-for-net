@@ -44,7 +44,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityLocations_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var locations = securityCenterClient.Locations.List();
@@ -55,7 +55,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityLocations_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var location = securityCenterClient.Locations.Get();

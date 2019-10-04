@@ -1,4 +1,7 @@
-﻿using Azure.Core.Http;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
@@ -16,7 +19,7 @@ namespace Azure.Identity
     /// </summary>
     internal class HttpPipelineClientFactory : IMsalHttpClientFactory
     {
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
 
         public HttpPipelineClientFactory(HttpPipeline pipeline)
         {
@@ -33,7 +36,7 @@ namespace Azure.Identity
         /// </summary>
         private class PipelineHttpMessageHandler : HttpMessageHandler
         {
-            private HttpPipeline _pipeline;
+            private readonly HttpPipeline _pipeline;
 
             public PipelineHttpMessageHandler(HttpPipeline pipeline)
             {

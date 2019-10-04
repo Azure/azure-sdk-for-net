@@ -16,8 +16,11 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal sealed class ClientLibraryInformation
     {
-        /// <summary>The current set of information.</summary>
-        public static readonly ClientLibraryInformation Current = new ClientLibraryInformation();
+        /// <summary>
+        ///   The current set of information.
+        /// </summary>
+        ///
+        public static ClientLibraryInformation Current { get; } = new ClientLibraryInformation();
 
         /// <summary>
         ///   The name of the client library product.
@@ -50,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         private ClientLibraryInformation()
         {
-            var assembly = typeof(ClientLibraryInformation).Assembly;
+            Assembly assembly = typeof(ClientLibraryInformation).Assembly;
 
             Product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
             Version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;

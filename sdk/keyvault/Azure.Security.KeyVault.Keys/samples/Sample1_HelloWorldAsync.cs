@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -44,13 +43,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // After one year, the Cloud RSA Key is still required, we need to update the expiry time of the key.
             // The update method can be used to update the expiry attribute of the key.
-            cloudRsaKey.Expires.Value.AddYears(1);
-            KeyBase updatedKey = await client.UpdateKeyAsync(cloudRsaKey, cloudRsaKey.KeyMaterial.KeyOps);
-            Debug.WriteLine($"Key's updated expiry time is {updatedKey.Expires}");
+            cloudRsaKey.Properties.Expires.Value.AddYears(1);
+            Key updatedKey = await client.UpdateKeyPropertiesAsync(cloudRsaKey.Properties, cloudRsaKey.KeyMaterial.KeyOps);
+            Debug.WriteLine($"Key's updated expiry time is {updatedKey.Properties.Expires}");
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
             // it has the required size.
-            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault 
+            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault
             // with the new specified size.
             var newRsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 4096)
             {

@@ -10,6 +10,7 @@
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>

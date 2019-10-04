@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // Parse the command line arguments determine if help was explicitly requested or if the
             // needed information was passed.
 
-            var parsedArgs = ParseArguments(args);
+            CommandLineArguments parsedArgs = ParseArguments(args);
 
             if (parsedArgs.Help)
             {

@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests.Mock
 
             var cancellation = new CancellationTokenSource();
 
-            Task<AccessToken> getTokenComplete = credential.GetTokenAsync(MockScopes.Default, cancellation.Token);
+            Task<AccessToken> getTokenComplete = credential.GetTokenAsync(new TokenRequest(MockScopes.Default), cancellation.Token);
 
             cancellation.Cancel();
 
@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests.Mock
 
             await Task.CompletedTask;
         }
-        
+
         [Test]
         public async Task ScopesHonoredAsync()
         {
@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests.Mock
 
             credential._client(new MockManagedIdentityClient());
 
-            AccessToken defaultScopeToken = await credential.GetTokenAsync(MockScopes.Default);
+            AccessToken defaultScopeToken = await credential.GetTokenAsync(new TokenRequest(MockScopes.Default));
 
             Assert.IsTrue(new MockToken(defaultScopeToken.Token).HasField("scopes", MockScopes.Default.ToString()));
         }

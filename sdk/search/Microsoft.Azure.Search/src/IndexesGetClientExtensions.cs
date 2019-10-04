@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new index client for querying and managing documents in a given index.
         /// </summary>
+        /// <param name="operations">The operation group for indexes of the Search service.</param>
         /// <param name="indexName">The name of the index.</param>
         /// <returns>A new <c cref="Microsoft.Azure.Search.SearchIndexClient">SearchIndexClient</c> instance.</returns>
         /// <remarks>

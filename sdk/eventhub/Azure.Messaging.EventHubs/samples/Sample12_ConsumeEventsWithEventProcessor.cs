@@ -149,11 +149,9 @@ namespace Azure.Messaging.EventHubs.Samples
         /// <remarks>
         ///   All implemented methods are asynchronous, which means they're expected to return a Task.  This approach is
         ///   specially useful when the processing is done by thread-blocking services.
-        ///   
         ///   The implementations found in this sample are synchronous and simply return a <see cref="Task.CompletedTask" />
         ///   to match the return type.
         /// </remarks>
-        /// 
         private class SamplePartitionProcessor : BasePartitionProcessor
         {
             /// <summary>Keeps track of the amount of received events across all existing instances of this class.</summary>

@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CalculateRemainingWithNegativeTimeRemaining()
         {
             var time = TimeSpan.FromSeconds(1);
-            var elapsed = time.Add(TimeSpan.FromMilliseconds(50));
+            TimeSpan elapsed = time.Add(TimeSpan.FromMilliseconds(50));
 
             Assert.That(time.CalculateRemaining(elapsed), Is.EqualTo(TimeSpan.Zero));
         }

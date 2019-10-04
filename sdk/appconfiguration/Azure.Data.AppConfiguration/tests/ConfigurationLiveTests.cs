@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
@@ -62,7 +61,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var responseGet = await service.GetAsync(batchKey);
+                Response<ConfigurationSetting> responseGet = await service.GetAsync(batchKey);
                 key = responseGet.Value.Value;
             }
             catch
@@ -83,7 +82,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            var response = await service.DeleteAsync(testSetting.Key);
+            Response response = await service.DeleteAsync(testSetting.Key);
 
             Assert.AreEqual(204, response.Status);
             response.Dispose();
@@ -98,7 +97,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 // Prepare environment
-                var testSettingDiff = testSetting.Clone();
+                ConfigurationSetting testSettingDiff = testSetting.Clone();
                 testSettingDiff.Label = null;
                 await service.SetAsync(testSetting);
                 await service.SetAsync(testSettingDiff);
@@ -107,7 +106,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteAsync(testSettingDiff.Key);
 
                 //Try to get the non-existing setting
-                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.GetAsync(testSettingDiff.Key);
                 });
@@ -129,7 +128,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 // Prepare environment
-                var testSettingDiff = testSetting.Clone();
+                ConfigurationSetting testSettingDiff = testSetting.Clone();
                 testSettingDiff.Label = "test_label_diff";
                 await service.SetAsync(testSetting);
                 await service.SetAsync(testSettingDiff);
@@ -138,7 +137,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteAsync(testSettingDiff.Key, testSettingDiff.Label);
 
                 //Try to get the non-existing setting
-                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.GetAsync(testSettingDiff.Key, testSettingDiff.Label);
                 });
@@ -152,24 +151,71 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task DeleteSettingWithETag()
+        public async Task DeleteSettingReadOnly()
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            // Prepare environment
-            await service.SetAsync(testSetting);
-            ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label);
-
-            // Test
-            await service.DeleteAsync(setting.Key, setting.Label, setting.ETag, CancellationToken.None);
-            //Try to get the non-existing setting
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            try
             {
-                await service.GetAsync(testSetting.Key, testSetting.Label);
-            });
+                var setting = await service.AddAsync(testSetting);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
 
-            Assert.AreEqual(404, e.Status);
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.DeleteAsync(testSetting.Key, testSetting.Label)
+                );
+                Assert.AreEqual(409, exception.Status);
+            }
+            finally
+            {
+                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task DeleteIfUnchangedSettingUnmodified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(testSetting);
+
+                // Test
+                Response response = await service.DeleteAsync(setting, onlyIfUnchanged: true);
+                Assert.AreEqual(200, response.Status);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task DeleteIfUnchangedSettingModified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(testSetting);
+                ConfigurationSetting modifiedSetting = setting.Clone();
+                modifiedSetting.Value = "new_value";
+                modifiedSetting = await service.SetAsync(modifiedSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.DeleteAsync(setting, onlyIfUnchanged: true));
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
         }
 
         [Test]
@@ -201,6 +247,78 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting setting = await service.SetAsync(testSetting);
                 Assert.AreEqual(testSetting, setting);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetSettingReadOnly()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+
+                testSetting.Value = "new_value";
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.SetAsync(testSetting.Key, "new_value", testSetting.Label));
+                Assert.AreEqual(409, exception.Status);
+            }
+            finally
+            {
+                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetIfUnchangedSettingUnmodified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(testSetting);
+                setting.Value = "new_value";
+
+                // Test
+                Response<ConfigurationSetting> response = await service.SetAsync(setting, onlyIfUnchanged: true);
+                Assert.AreEqual(200, response.GetRawResponse().Status);
+                Assert.AreEqual(setting.Value, response.Value.Value);
+                Assert.AreNotEqual(setting.ETag, response.Value.ETag);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetIfUnchangedSettingModified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(testSetting);
+                ConfigurationSetting modifiedSetting = setting.Clone();
+                modifiedSetting.Value = "new_value";
+                modifiedSetting = await service.SetAsync(modifiedSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.SetAsync(setting, onlyIfUnchanged: true));
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -280,7 +398,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddAsync(testSetting);
 
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.AddAsync(testSetting);
                 });
@@ -377,127 +495,6 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task UpdateKeyValue()
-        {
-            ConfigurationClient service = GetClient();
-
-            string key = GenerateKeyId("key-");
-            await service.SetAsync(key, "my_value");
-
-            try
-            {
-                string value = "my_value2";
-                ConfigurationSetting responseSetting = await service.UpdateAsync(key, value);
-
-                Assert.AreEqual(key, responseSetting.Key);
-                Assert.AreEqual(value, responseSetting.Value);
-            }
-            finally
-            {
-                await service.DeleteAsync(key);
-            }
-        }
-
-        [Test]
-        public async Task UpdateSetting()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting();
-
-            var testSettingDiff = testSetting.Clone();
-            testSettingDiff.Label = "test_label_diff";
-
-            var testSettingUpdate = testSetting.Clone();
-            testSettingUpdate.Value = "test_value_update";
-
-            try
-            {
-                await service.SetAsync(testSetting);
-                await service.SetAsync(testSettingDiff);
-
-                ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingUpdate, CancellationToken.None);
-
-                Assert.AreEqual(testSettingUpdate, responseSetting);
-            }
-            finally
-            {
-                await service.DeleteAsync(testSettingUpdate.Key, testSettingUpdate.Label);
-                await service.DeleteAsync(testSettingDiff.Key, testSettingDiff.Label);
-            }
-        }
-
-        [Test]
-        public void UpdateNoExistingSetting()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting();
-
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await service.UpdateAsync(testSetting);
-            });
-            Assert.AreEqual(412, exception.Status);
-        }
-
-        [Test]
-        public async Task UpdateSettingIfETag()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting();
-
-            await service.SetAsync(testSetting);
-            ConfigurationSetting responseGet = await service.GetAsync(testSetting.Key, testSetting.Label);
-
-            try
-            {
-                responseGet.Value = "test_value_diff";
-                ConfigurationSetting responseSetting = await service.UpdateAsync(responseGet, CancellationToken.None);
-
-                Assert.AreNotEqual(responseGet, responseSetting);
-            }
-            finally
-            {
-                await service.DeleteAsync(responseGet.Key, responseGet.Label);
-            }
-        }
-
-        [Test]
-        public async Task UpdateSettingTags()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting();
-
-            await service.SetAsync(testSetting);
-            ConfigurationSetting responseGet = await service.GetAsync(testSetting.Key, testSetting.Label);
-
-
-            try
-            {
-                // Different tags
-                var testSettingDiff = responseGet.Clone();
-                var settingTags = testSettingDiff.Tags;
-                if (settingTags.ContainsKey("tag1"))
-                    settingTags["tag1"] = "value-updated";
-                settingTags.Add("tag3", "test_value3");
-                testSettingDiff.Tags = settingTags;
-
-                ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, CancellationToken.None);
-                Assert.AreEqual(testSettingDiff, responseSetting);
-
-                // No tags
-                var testSettingNoTags = responseGet.Clone();
-                testSettingNoTags.Tags = null;
-
-                responseSetting = await service.UpdateAsync(testSettingNoTags, CancellationToken.None);
-                Assert.AreEqual(testSettingNoTags, responseSetting);
-            }
-            finally
-            {
-                await service.DeleteAsync(testSetting.Key, testSetting.Label);
-            }
-        }
-
-        [Test]
         public async Task GetRevisions()
         {
             // The service keeps revision history even after the key was removed
@@ -511,7 +508,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = testSetting;
 
             setting.Key = GenerateKeyId("key-");
-            var testSettingUpdate = setting.Clone();
+            ConfigurationSetting testSettingUpdate = setting.Clone();
             testSettingUpdate.Label = "test_label_update";
             int expectedEvents = 2;
 
@@ -521,19 +518,21 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSettingUpdate);
 
                 // Test
-                var selector = new SettingSelector(setting.Key);
-                selector.AsOf = DateTimeOffset.MaxValue;
+                var selector = new SettingSelector(setting.Key)
+                {
+                    AsOf = DateTimeOffset.MaxValue
+                };
 
                 int resultsReturned = 0;
-                await foreach (var value in service.GetRevisionsAsync(selector, CancellationToken.None))
+                await foreach (ConfigurationSetting value in service.GetRevisionsAsync(selector, CancellationToken.None))
                 {
-                    if (value.Value.Label.Contains("update"))
+                    if (value.Label.Contains("update"))
                     {
-                        Assert.AreEqual(value.Value, testSettingUpdate);
+                        Assert.AreEqual(value, testSettingUpdate);
                     }
                     else
                     {
-                        Assert.AreEqual(value.Value, setting);
+                        Assert.AreEqual(value, setting);
                     }
                     resultsReturned++;
                 }
@@ -554,7 +553,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting testSetting = CreateSetting();
 
             // Prepare environment
-            var testSettingNoLabel = testSetting.Clone();
+            ConfigurationSetting testSettingNoLabel = testSetting.Clone();
             testSettingNoLabel.Label = null;
 
             try
@@ -576,7 +575,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(testSetting.Key);
             });
@@ -591,7 +590,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting testSetting = CreateSetting();
 
             // Prepare environment
-            var testSettingNoLabel = testSetting.Clone();
+            ConfigurationSetting testSettingNoLabel = testSetting.Clone();
             testSettingNoLabel.Label = null;
 
             try
@@ -621,8 +620,57 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSetting);
 
                 // Test
-                ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue);
+                // TODO: add a test with a more granular timestamp.
+                ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
                 Assert.AreEqual(testSetting, responseSetting);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task GetIfChangedSettingModified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(testSetting);
+                ConfigurationSetting modifiedSetting = setting.Clone();
+                modifiedSetting.Value = "new_value";
+                modifiedSetting = await service.SetAsync(modifiedSetting);
+
+                Response<ConfigurationSetting> response = await service.GetAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
+                Assert.AreEqual(200, response.GetRawResponse().Status);
+                Assert.AreEqual(modifiedSetting, response.Value);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task GetIfChangedSettingUnmodified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(testSetting);
+
+                // Test
+                Response<ConfigurationSetting> response = await service.GetAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
+                Assert.AreEqual(304, response.GetRawResponse().Status);
+                var exception = Assert.Throws<ResponseBodyNotFoundException>(() =>
+                {
+                    ConfigurationSetting value = response.Value;
+                });
+                Assert.AreEqual(304, exception.Status);
             }
             finally
             {
@@ -688,12 +736,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key, testSetting.Label);
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
                 Assert.AreEqual(1, batch.Length);
-                Assert.AreEqual(testSetting.Key, batch[0].Value.Key);
-                Assert.AreEqual(testSetting.Label, batch[0].Value.Label);
+                Assert.AreEqual(testSetting.Key, batch[0].Key);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
@@ -712,11 +760,11 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key);
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
                 Assert.AreEqual(1, batch.Length);
-                Assert.AreEqual(testSetting.Key, batch[0].Value.Key);
+                Assert.AreEqual(testSetting.Key, batch[0].Key);
             }
             finally
             {
@@ -738,12 +786,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Assert.AreEqual("*", selector.Keys.First());
 
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
                 //At least there should be one key available
                 Assert.GreaterOrEqual(batch.Length, 1);
-                Assert.AreEqual(testSetting.Label, batch[0].Value.Label);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
@@ -766,18 +814,18 @@ namespace Azure.Data.AppConfiguration.Tests
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
                 };
 
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
                 Assert.AreEqual(1, batch.Length);
 
-                Assert.IsNotNull(batch[0].Value.Key);
-                Assert.IsNotNull(batch[0].Value.Label);
-                Assert.IsNotNull(batch[0].Value.ETag);
-                Assert.IsNull(batch[0].Value.Value);
-                Assert.IsNull(batch[0].Value.ContentType);
-                Assert.IsNull(batch[0].Value.LastModified);
-                Assert.IsNull(batch[0].Value.Locked);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].ETag);
+                Assert.IsNull(batch[0].Value);
+                Assert.IsNull(batch[0].ContentType);
+                Assert.IsNull(batch[0].LastModified);
+                Assert.IsNull(batch[0].ReadOnly);
             }
             finally
             {
@@ -790,7 +838,10 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             ConfigurationClient service = GetClient();
             string key = GenerateKeyId("keyFields-");
-            ConfigurationSetting setting = await service.AddAsync(key, "my_value", "my_label");
+            ConfigurationSetting setting = await service.AddAsync(new ConfigurationSetting(key, "my_value", "my_label")
+            {
+                ContentType = "content-type"
+            });
 
             try
             {
@@ -799,42 +850,196 @@ namespace Azure.Data.AppConfiguration.Tests
                     Fields = SettingFields.All
                 };
 
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
                 Assert.AreEqual(1, batch.Length);
 
-                Assert.IsNotNull(batch[0].Value.Key);
-                Assert.IsNotNull(batch[0].Value.Label);
-                Assert.IsNotNull(batch[0].Value.Value);
-                Assert.IsNotNull(batch[0].Value.ContentType);
-                Assert.IsNotNull(batch[0].Value.ETag);
-                Assert.IsNotNull(batch[0].Value.LastModified);
-                Assert.IsNotNull(batch[0].Value.Locked);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.IsNotNull(batch[0].ETag);
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].ReadOnly);
             }
             finally
             {
                 await service.DeleteAsync(setting.Key, setting.Label);
             }
         }
-    }
 
-    public static class ConfigurationSettingExtensions
-    {
-        public static ConfigurationSetting Clone(this ConfigurationSetting setting)
+        [Test]
+        public async Task HasChangedNoValueNotFound()
         {
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            foreach (string key in setting.Tags.Keys)
-            {
-                tags.Add(key, setting.Tags[key]);
-            }
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
 
-            return new ConfigurationSetting(setting.Key, setting.Value)
+            bool hasChanged = await service.HasChangedAsync(setting0);
+
+            Assert.IsFalse(hasChanged);
+        }
+
+        [Test]
+        public async Task HasChangedNoValueNewValue()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
             {
-                Label = setting.Label,
-                ContentType = setting.ContentType,
-                Tags = tags
-            };
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting0);
+
+                Assert.IsTrue(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task HasChangedValuesMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting1);
+
+                Assert.IsFalse(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task HasChangedValuesDontMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+                setting0.Value = "test_value2";
+                ConfigurationSetting setting2 = await service.SetAsync(setting0);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting1);
+
+                Assert.IsTrue(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task HasChangedValueNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting setting0 = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting1 = await service.SetAsync(setting0);
+                var response = await service.DeleteAsync(setting1.Key, setting1.Label);
+
+                // Test
+                bool hasChanged = await service.HasChangedAsync(setting1);
+
+                Assert.IsTrue(hasChanged);
+            }
+            finally
+            {
+                await service.DeleteAsync(setting0.Key, setting0.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetReadOnlyOnSetting()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsTrue(readOnly.Value.ReadOnly);
+            }
+            finally
+            {
+                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task SetReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.SetReadOnlyAsync(testSetting.Key);
+                });
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task ClearReadOnlyFromSetting()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var setting = await service.AddAsync(testSetting);
+                var readOnly = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                Assert.IsFalse(readOnly.Value.ReadOnly);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task ClearReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.SetReadOnlyAsync(testSetting.Key);
+                });
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
         }
     }
 }

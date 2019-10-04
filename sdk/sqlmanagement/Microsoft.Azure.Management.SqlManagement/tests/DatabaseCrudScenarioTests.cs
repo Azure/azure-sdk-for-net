@@ -88,10 +88,36 @@ namespace Sql.Tests
                 Assert.NotNull(db5);
                 SqlManagementTestUtilities.ValidateDatabase(db5Input, db5, dbName);
 
+                // ReadScale properties
+                //
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db6Input = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1),
+                    ReadScale = "Enabled",
+                };
+                var db6 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db6Input);
+                Assert.NotNull(db6);
+                SqlManagementTestUtilities.ValidateDatabase(db6Input, db6, dbName);
+
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db7Input = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", DatabaseEdition.Hyperscale),
+                    ReadReplicaCount = 4,
+                };
+                var db7 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db7Input);
+                Assert.NotNull(db7);
+                SqlManagementTestUtilities.ValidateDatabase(db7Input, db7, dbName);
+
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db5.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db6.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db7.Name);
             }
         }
 

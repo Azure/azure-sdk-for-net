@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
     public static class StorageTestEnvironment
     {
         /// <summary>The active Azure storage connection for this test run, lazily created.</summary>
-        private static readonly Lazy<StorageScope.StorageProperties> ActiveStorageAccount =
+        private static readonly Lazy<StorageScope.StorageProperties> s_activeStorageAccount =
             new Lazy<StorageScope.StorageProperties>(CreateStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         ///
         /// <value><c>true</c> if an Azure storage account was created; otherwise, <c>false</c>.</value>
         ///
-        public static bool WasStorageAccountCreated => ActiveStorageAccount.IsValueCreated;
+        public static bool WasStorageAccountCreated => s_activeStorageAccount.IsValueCreated;
 
         /// <summary>
         ///   The name of the Azure storage account to be used for Live tests.
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         ///
         /// <value>The name will be determined by creating an ephemeral Azure storage account for the test execution.</value>
         ///
-        public static string StorageAccountName => ActiveStorageAccount.Value.Name;
+        public static string StorageAccountName => s_activeStorageAccount.Value.Name;
 
         /// <summary>
         ///   The connection string for the Azure storage instance to be used for Live tests.
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         ///
         /// <value>The connection string will be determined by creating an ephemeral Azure storage account for the test execution.</value>
         ///
-        public static string StorageConnectionString => ActiveStorageAccount.Value.ConnectionString;
+        public static string StorageConnectionString => s_activeStorageAccount.Value.ConnectionString;
 
         /// <summary>
         ///   Requests creation of an Azure storage account to use for a specific test run,

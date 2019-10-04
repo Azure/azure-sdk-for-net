@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -42,8 +41,8 @@ namespace Azure.Storage.Sas
         /// Creates a new instance of the <see cref="SasProtocol"/> type.
         /// </summary>
         /// <param name="name">A string representation of the protocol.</param>
-        SasProtocol(string name) =>
-            this.Value = name;
+        private SasProtocol(string name) =>
+            Value = name;
 
         /// <summary>
         /// Gets a string representation of the protocol.
@@ -51,7 +50,7 @@ namespace Azure.Storage.Sas
         /// <returns>A string representation of the protocol.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() =>
-            this.Value ?? "";
+            Value ?? "";
 
         /// <summary>
         /// Check if two <see cref="SasProtocol"/> instances are equal.
@@ -77,7 +76,7 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="SasProtocol"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            this.Value?.GetHashCode() ?? 0;
+            Value?.GetHashCode() ?? 0;
 
         /// <summary>
         /// Check if two <see cref="SasProtocol"/> instances are equal.
@@ -85,7 +84,7 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SasProtocol other && this.Equals(other);
+        public override bool Equals(object obj) => obj is SasProtocol other && Equals(other);
 
         /// <summary>
         /// Check if two <see cref="SasProtocol"/> instances are equal.
@@ -93,7 +92,7 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(SasProtocol other)
-            => this.Value == other.Value;
+            => Value == other.Value;
 
         /// <summary>
         /// Parse a string representation of a protocol.

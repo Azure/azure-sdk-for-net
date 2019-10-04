@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace TrackOne
 {
-    using System;
-    using System.IdentityModel.Tokens.Jwt;
-
     /// <summary>
     /// Extends SecurityToken for JWT specific properties
     /// </summary>
@@ -21,7 +21,7 @@ namespace TrackOne
         {
         }
 
-        static DateTime GetExpirationDateTimeUtcFromToken(string token)
+        private static DateTime GetExpirationDateTimeUtcFromToken(string token)
         {
             var jwtSecurityToken = new JwtSecurityToken(token);
             return jwtSecurityToken.ValidTo;
