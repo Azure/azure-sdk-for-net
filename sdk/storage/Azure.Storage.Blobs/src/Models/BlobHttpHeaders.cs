@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 
@@ -11,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// These properties are represented as standard HTTP headers use standard
     /// names, as specified in the Header Field Definitions section 14 of the
     /// HTTP/1.1 protocol specification.
-    /// 
+    ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources" />.
     /// </summary>
     public struct BlobHttpHeaders : IEquatable<BlobHttpHeaders>
@@ -25,8 +24,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An MD5 hash of the blob content. This hash is used to verify the
         /// integrity of the blob during transport.  When this header is
-        /// specified, the storage service checks the hash that has arrived 
-        /// with the one that was sent. If the two hashes do not match, the 
+        /// specified, the storage service checks the hash that has arrived
+        /// with the one that was sent. If the two hashes do not match, the
         /// operation will fail with error code 400 (Bad Request).
         /// </summary>
         public byte[] ContentHash { get; set; }
@@ -34,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Specifies which content encodings have been applied to the blob.
         /// This value is returned to the client when the Get Blob operation
-        /// is performed on the blob resource. The client can use this value 
+        /// is performed on the blob resource. The client can use this value
         /// when returned to decode the blob content.
         /// </summary>
         public string[] ContentEncoding { get; set; }
@@ -65,19 +64,19 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is BlobHttpHeaders other && this.Equals(other);
+            => obj is BlobHttpHeaders other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the BlobHttpHeaders.
         /// </summary>
         /// <returns>Hash code for the BlobHttpHeaders.</returns>
         public override int GetHashCode()
-            => this.CacheControl.GetHashCode()
-            ^ this.ContentDisposition.GetHashCode()
-            ^ this.ContentEncoding.GetHashCode()
-            ^ this.ContentLanguage.GetHashCode()
-            ^ this.ContentHash.GetHashCode()
-            ^ this.ContentType.GetHashCode()
+            => CacheControl.GetHashCode()
+            ^ ContentDisposition.GetHashCode()
+            ^ ContentEncoding.GetHashCode()
+            ^ ContentLanguage.GetHashCode()
+            ^ ContentHash.GetHashCode()
+            ^ ContentType.GetHashCode()
             ;
 
         /// <summary>
@@ -101,12 +100,12 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         public bool Equals(BlobHttpHeaders other)
-            => this.CacheControl == other.CacheControl
-            && this.ContentDisposition == other.ContentDisposition
-            && this.ContentEncoding == other.ContentEncoding
-            && this.ContentLanguage == other.ContentLanguage
-            && this.ContentHash == other.ContentHash
-            && this.ContentType == other.ContentType
+            => CacheControl == other.CacheControl
+            && ContentDisposition == other.ContentDisposition
+            && ContentEncoding == other.ContentEncoding
+            && ContentLanguage == other.ContentLanguage
+            && ContentHash == other.ContentHash
+            && ContentType == other.ContentType
             ;
     }
 }

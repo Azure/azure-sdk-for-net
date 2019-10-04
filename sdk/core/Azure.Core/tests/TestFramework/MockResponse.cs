@@ -29,6 +29,8 @@ namespace Azure.Core.Testing
 
         public override string ClientRequestId { get; set; }
 
+        public bool IsDisposed { get; private set; }
+
         public override string ToString() => $"{Status}";
 
         public void SetContent(byte[] content)
@@ -96,6 +98,7 @@ namespace Azure.Core.Testing
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }

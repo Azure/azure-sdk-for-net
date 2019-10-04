@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -77,19 +76,19 @@ namespace Azure.Storage
                   innerException)
         {
             // Get the error code, if it wasn't provided
-            if (String.IsNullOrEmpty(errorCode))
+            if (string.IsNullOrEmpty(errorCode))
             {
                 response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
             }
-            this.ErrorCode = errorCode;
+            ErrorCode = errorCode;
 
             if (additionalInfo != null)
             {
-                this.AdditionalInformation = additionalInfo;
+                AdditionalInformation = additionalInfo;
             }
 
             // Include the RequestId
-            this.RequestId = response.Headers.TryGetValue(Constants.HeaderNames.RequestId, out var value) ? value : null;
+            RequestId = response.Headers.TryGetValue(Constants.HeaderNames.RequestId, out var value) ? value : null;
         }
 
         /// <summary>
@@ -107,7 +106,7 @@ namespace Azure.Storage
             IDictionary<string, string> additionalInfo)
         {
             // Start with the message, status, and reason
-            var messageBuilder = new StringBuilder()
+            StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message)
                 .Append("Status: ")
                 .Append(response.Status.ToString(CultureInfo.InvariantCulture))
@@ -116,7 +115,7 @@ namespace Azure.Storage
                 .AppendLine(")");
 
             // Make the Storage ErrorCode especially prominent
-            if (!String.IsNullOrEmpty(errorCode) ||
+            if (!string.IsNullOrEmpty(errorCode) ||
                 response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode))
             {
                 messageBuilder
@@ -132,7 +131,7 @@ namespace Azure.Storage
                 messageBuilder
                     .AppendLine()
                     .AppendLine("Additional Information:");
-                foreach (var info in additionalInfo)
+                foreach (KeyValuePair<string, string> info in additionalInfo)
                 {
                     messageBuilder
                         .Append(info.Key)
@@ -145,7 +144,7 @@ namespace Azure.Storage
             messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
-            foreach (var responseHeader in response.Headers)
+            foreach (Core.Http.HttpHeader responseHeader in response.Headers)
             {
                 messageBuilder
                     .Append(responseHeader.Name)

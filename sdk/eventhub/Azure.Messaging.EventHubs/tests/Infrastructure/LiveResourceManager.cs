@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
@@ -27,10 +28,10 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         private const int RetryMaximumAttemps = 15;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
-        private const double RetryExponentialBackoffSeconds = 2.0;
+        private const double RetryExponentialBackoffSeconds = 2.5;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
-        private const double RetryBaseJitterSeconds = 10.0;
+        private const double RetryBaseJitterSeconds = 15.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
@@ -60,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         {
             using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
-                var resourceGroup = await CreateRetryPolicy<Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
+                ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
                 return resourceGroup.Location;
             }
         }
@@ -73,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         ///
         public async Task<string> AquireManagementTokenAsync()
         {
-            var token = s_managementToken;
+            ManagementToken token = s_managementToken;
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
@@ -84,9 +85,9 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
             {
                 var credential = new ClientCredential(TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var context = new AuthenticationContext($"https://login.windows.net/{ TestEnvironment.EventHubsTenant }");
-                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
+                AuthenticationResult result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
 
-                if ((String.IsNullOrEmpty(result?.AccessToken)))
+                if ((string.IsNullOrEmpty(result?.AccessToken)))
                 {
                     throw new AuthenticationException("Unable to acquire an Active Directory token for the Event Hubs management client.");
                 }
@@ -213,4 +214,3 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         }
     }
 }
-

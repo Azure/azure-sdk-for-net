@@ -1,41 +1,41 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace TrackOne.Amqp
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Framing;
-
-    class AmqpEventDataSender : EventDataSender
+    internal class AmqpEventDataSender : EventDataSender
     {
-        int deliveryCount;
-        bool linkCreated;
-        readonly ActiveClientLinkManager clientLinkManager;
+        private int _deliveryCount;
+        private bool _linkCreated;
+        private readonly ActiveClientLinkManager _clientLinkManager;
 
         internal AmqpEventDataSender(AmqpEventHubClient eventHubClient, string partitionId)
             : base(eventHubClient, partitionId)
         {
-            this.Path = !string.IsNullOrEmpty(partitionId)
+            Path = !string.IsNullOrEmpty(partitionId)
                 ? $"{eventHubClient.EventHubName}/Partitions/{partitionId}"
                 : eventHubClient.EventHubName;
 
-            this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
-            this.clientLinkManager = new ActiveClientLinkManager((AmqpEventHubClient)this.EventHubClient);
-            this.MaxMessageSize = 256 * 1024;   // Default. Updated when link is opened
+            SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(CreateLinkAsync, CloseSession);
+            _clientLinkManager = new ActiveClientLinkManager((AmqpEventHubClient)EventHubClient);
+            MaxMessageSize = 256 * 1024;   // Default. Updated when link is opened
         }
 
-        string Path { get; }
+        private string Path { get; }
 
-        FaultTolerantAmqpObject<SendingAmqpLink> SendLinkManager { get; }
+        private FaultTolerantAmqpObject<SendingAmqpLink> SendLinkManager { get; }
 
         public override Task CloseAsync()
         {
-            this.clientLinkManager.Close();
-            return this.SendLinkManager.CloseAsync();
+            _clientLinkManager.Close();
+            return SendLinkManager.CloseAsync();
         }
 
         protected override async Task OnSendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
@@ -43,7 +43,7 @@ namespace TrackOne.Amqp
             bool shouldRetry;
             int retryCount = 0;
 
-            var timeoutHelper = new TimeoutHelper(this.EventHubClient.ConnectionStringBuilder.OperationTimeout, startTimeout: true);
+            var timeoutHelper = new TimeoutHelper(EventHubClient.ConnectionStringBuilder.OperationTimeout, startTimeout: true);
 
             do
             {
@@ -56,7 +56,7 @@ namespace TrackOne.Amqp
                         try
                         {
                             // Always use default timeout for AMQP sesssion.
-                            var amqpLink = await this.SendLinkManager.GetOrCreateAsync(
+                            SendingAmqpLink amqpLink = await SendLinkManager.GetOrCreateAsync(
                                 TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
                             if (amqpLink.Settings.MaxMessageSize.HasValue)
                             {
@@ -69,7 +69,7 @@ namespace TrackOne.Amqp
 
                             Outcome outcome = await amqpLink.SendMessageAsync(
                                 amqpMessage,
-                                this.GetNextDeliveryTag(),
+                                GetNextDeliveryTag(),
                                 AmqpConstants.NullBinary,
                                 timeoutHelper.RemainingTime()).ConfigureAwait(false);
                             if (outcome.DescriptorCode != Accepted.Code)
@@ -86,8 +86,8 @@ namespace TrackOne.Amqp
                     catch (Exception ex)
                     {
                         // Evaluate retry condition?
-                        TimeSpan? retryInterval = this.RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
-                        if (retryInterval != null && !this.EventHubClient.CloseCalled)
+                        TimeSpan? retryInterval = RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
+                        if (retryInterval != null && !EventHubClient.CloseCalled)
                         {
                             await Task.Delay(retryInterval.Value).ConfigureAwait(false);
                             shouldRetry = true;
@@ -103,37 +103,37 @@ namespace TrackOne.Amqp
 
         internal override async ValueTask EnsureLinkAsync()
         {
-            if (this.linkCreated)
+            if (_linkCreated)
             {
                 return;
             }
 
-            await this.SendLinkManager.GetOrCreateAsync(TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
+            await SendLinkManager.GetOrCreateAsync(TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
             await Task.Delay(TimeSpan.FromMilliseconds(15)).ConfigureAwait(false);
 
         }
 
-        ArraySegment<byte> GetNextDeliveryTag()
+        private ArraySegment<byte> GetNextDeliveryTag()
         {
-            int deliveryId = Interlocked.Increment(ref this.deliveryCount);
+            int deliveryId = Interlocked.Increment(ref _deliveryCount);
             return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));
         }
 
-        async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
+        private async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
-            var amqpEventHubClient = ((AmqpEventHubClient)this.EventHubClient);
+            var amqpEventHubClient = ((AmqpEventHubClient)EventHubClient);
 
             var timeoutHelper = new TimeoutHelper(timeout);
             AmqpConnection connection = await amqpEventHubClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Authenticate over CBS
-            var cbsLink = connection.Extensions.Find<AmqpCbsLink>();
+            AmqpCbsLink cbsLink = connection.Extensions.Find<AmqpCbsLink>();
 
             ICbsTokenProvider cbsTokenProvider = amqpEventHubClient.CbsTokenProvider;
-            Uri address = new Uri(amqpEventHubClient.ConnectionStringBuilder.Endpoint, this.Path);
+            Uri address = new Uri(amqpEventHubClient.ConnectionStringBuilder.Endpoint, Path);
             string audience = address.AbsoluteUri;
             string resource = address.AbsoluteUri;
-            var expiresAt = await cbsLink.SendTokenAsync(
+            DateTime expiresAt = await cbsLink.SendTokenAsync(
                 cbsTokenProvider,
                 address,
                 audience,
@@ -156,7 +156,7 @@ namespace TrackOne.Amqp
                 linkSettings.Role = false;
                 linkSettings.InitialDeliveryCount = 0;
                 linkSettings.Target = new Target { Address = address.AbsolutePath };
-                linkSettings.Source = new Source { Address = this.ClientId };
+                linkSettings.Source = new Source { Address = ClientId };
 
                 var link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{amqpEventHubClient.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
@@ -167,14 +167,14 @@ namespace TrackOne.Amqp
                 var activeClientLink = new ActiveClientLink(
                     link,
                     audience, // audience
-                    this.EventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // endpointUri
+                    EventHubClient.ConnectionStringBuilder.Endpoint.AbsoluteUri, // endpointUri
                     new[] { ClaimConstants.Send },
                     true,
                     expiresAt);
 
-                this.MaxMessageSize = (long)activeClientLink.Link.Settings.MaxMessageSize();
-                this.clientLinkManager.SetActiveLink(activeClientLink);
-                this.linkCreated = true;
+                MaxMessageSize = (long)activeClientLink.Link.Settings.MaxMessageSize();
+                _clientLinkManager.SetActiveLink(activeClientLink);
+                _linkCreated = true;
                 return link;
             }
             catch
@@ -185,7 +185,7 @@ namespace TrackOne.Amqp
             }
         }
 
-        void CloseSession(SendingAmqpLink link)
+        private void CloseSession(SendingAmqpLink link)
         {
             // Note we close the session (which includes the link).
             link.Session.SafeClose();

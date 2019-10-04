@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
             OnReceivedResponse(message);
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             OnSendingRequest(message);
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);

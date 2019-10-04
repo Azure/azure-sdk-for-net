@@ -5,11 +5,11 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataShare</PackageId>
     <Description>Azure Data Share is a first party resource provider that enables customers to easily and securely share big data with other organizations in Azure, with centralized management, monitoring and governance. </Description>
-    <Version>0.9.0-preview</Version>
+    <Version>1.0.0-preview.1</Version>
     <AssemblyName>Microsoft.Azure.Management.DataShare</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Share;ADS;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-- Added support for ADS
+- Added support for SQL
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

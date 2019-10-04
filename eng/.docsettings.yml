@@ -67,6 +67,7 @@ known_content_issues:
   - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Blobs/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Files/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Queues/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']

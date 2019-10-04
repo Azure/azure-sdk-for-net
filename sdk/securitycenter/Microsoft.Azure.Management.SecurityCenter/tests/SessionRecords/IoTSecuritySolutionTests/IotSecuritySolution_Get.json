@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/IotHub-CUS?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDc1NDIzZTktN2QzMy00MTY2LThiZGYtMzkyMGIwNGUzNzM1L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXAtQ1VTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvaW90U2VjdXJpdHlTb2x1dGlvbnMvSW90SHViLUNVUz9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "63fef52b-b964-41c0-802e-305e460630d8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 15 Sep 2019 09:10:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "5c06b27b-b15a-44bf-b465-2b21e76a0f26"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c06b27b-b15a-44bf-b465-2b21e76a0f26"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190915T091004Z:5c06b27b-b15a-44bf-b465-2b21e76a0f26"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "3120"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/ResourceGroup-CUS/providers/Microsoft.Security/IoTSecuritySolutions/IotHub-CUS\",\r\n  \"name\": \"IotHub-CUS\",\r\n  \"type\": \"Microsoft.Security/IoTSecuritySolutions\",\r\n  \"location\": \"Central US\",\r\n  \"properties\": {\r\n    \"displayName\": \"IotHub-CUS-LogAnalytics-CUS\",\r\n    \"status\": \"Enabled\",\r\n    \"export\": [],\r\n    \"disabledDataSources\": [],\r\n    \"workspace\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.operationalinsights/workspaces/loganalytics-cus\",\r\n    \"iotHubs\": [\r\n      \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus\"\r\n    ],\r\n    \"userDefinedResources\": {\r\n      \"query\": \"where type != \\\"microsoft.devices/iothubs\\\" | where name contains \\\"v2\\\"\",\r\n      \"querySubscriptions\": [\r\n        \"075423e9-7d33-4166-8bdf-3920b04e3735\"\r\n      ]\r\n    },\r\n    \"recommendationsConfiguration\": [\r\n      {\r\n        \"recommendationType\": \"IoT_ACRAuthentication\",\r\n        \"name\": \"Service prinicpal not used with ACR repository\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_AgentSendsUnutilizedMessages\",\r\n        \"name\": \"Agent sending underutilized messages\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_Baseline\",\r\n        \"name\": \"Operating system (OS) baseline validation failure\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_EdgeHubMemOptimize\",\r\n        \"name\": \"IoT Edge Hub memory can be optimized\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_EdgeLoggingOptions\",\r\n        \"name\": \"No logging configured for IoT Edge module\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_InconsistentModuleSettings\",\r\n        \"name\": \"SecurityGroup has inconsistent module settings\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_InstallAgent\",\r\n        \"name\": \"Install the Azure IoT Security agent\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_IPFilter_DenyAll\",\r\n        \"name\": \"Default IP filter policy should be deny\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_IPFilter_PermissiveRule\",\r\n        \"name\": \"IP filter rule includes a large IP range\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_OpenPorts\",\r\n        \"name\": \"Device has open ports\",\r\n        \"status\": \"Disabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_PermissiveFirewallPolicy\",\r\n        \"name\": \"Permissive firewall policy in one of the chains\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_PermissiveInputFirewallRules\",\r\n        \"name\": \"Permissive firewall rule in the input chain\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_PermissiveOutputFirewallRules\",\r\n        \"name\": \"Permissive firewall rule in the output chain\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_PrivilegedDockerOptions\",\r\n        \"name\": \"High level permissions configured in IoT Edge model twin for IoT Edge module\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_RecommendedIpRulesByBaseLine\",\r\n        \"name\": \"Recommended Rules for ip filter\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_SharedCredentials\",\r\n        \"name\": \"Same authentication credentials used by multiple devices\",\r\n        \"status\": \"Enabled\"\r\n      },\r\n      {\r\n        \"recommendationType\": \"IoT_VulnerableTLSCipherSuite\",\r\n        \"name\": \"TLS cipher suite upgrade needed\",\r\n        \"status\": \"Enabled\"\r\n      }\r\n    ],\r\n    \"autoDiscoveredResources\": [\r\n      \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus\"\r\n    ]\r\n  },\r\n  \"tags\": {}\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": { "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735" }
+}

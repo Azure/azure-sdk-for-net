@@ -26,6 +26,26 @@
               "description": "A selfhosted integration runtime"
             },
             "etag": "0400f1a1-0000-0000-0000-5b2188640000"
+          },
+          {
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime2",
+            "name": "exampleIntegrationRuntime2",
+            "type": "Microsoft.DataFactory/factories/integrationruntimes",
+            "properties": {
+              "type": "Managed",
+              "description": "A managed integration runtime",
+              "typeProperties": {
+                "computeProperties": {
+                  "location": "AutoResolve",
+                  "dataFlowProperties": {
+                    "computeType": "General",
+                    "coreCount": 8,
+                    "timeToLive": 30
+                  }
+                }
+              }
+            },
+            "etag": "0400f1a1-0000-0000-0000-5b2188640000"
           }
         ]
       }

@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -17,10 +19,10 @@ namespace Azure.Messaging.EventHubs.Processor
     internal class PartitionPump
     {
         /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
-        private static readonly BasicRetryPolicy RetryPolicy = new BasicRetryPolicy(new RetryOptions());
+        private static readonly BasicRetryPolicy s_retryPolicy = new BasicRetryPolicy(new RetryOptions());
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
         ///   A boolean value indicating whether this partition pump is currently running or not.
@@ -117,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask == null)
             {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -144,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    RunningTaskSemaphore.Release();
+                    _runningTaskSemaphore.Release();
                 }
             }
         }
@@ -161,7 +163,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask != null)
             {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -203,7 +205,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    RunningTaskSemaphore.Release();
+                    _runningTaskSemaphore.Release();
                 }
             }
         }
@@ -231,12 +233,29 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
 
+                    using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+                    diagnosticScope.AddAttribute("kind", "server");
+
+                    if (diagnosticScope.IsEnabled)
+                    {
+                        foreach (var eventData in receivedEvents)
+                        {
+                            if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                            {
+                                diagnosticScope.AddLink(diagnosticId);
+                            }
+                        }
+                    }
+
+                    diagnosticScope.Start();
+
                     try
                     {
                         await PartitionProcessor.ProcessEventsAsync(Context, receivedEvents, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception partitionProcessorException)
                     {
+                        diagnosticScope.Failed(partitionProcessorException);
                         unrecoverableException = partitionProcessorException;
                         CloseReason = PartitionProcessorCloseReason.PartitionProcessorException;
 
@@ -247,7 +266,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     // Stop running only if it's not a retriable exception.
 
-                    if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
+                    if (s_retryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
                     {
                         unrecoverableException = eventHubException;
                         CloseReason = PartitionProcessorCloseReason.EventHubException;

@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -17,16 +17,49 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
-        private static readonly KeyOperation[] AesKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
-        private static readonly KeyOperation[] RSAPublicKeyOperation = { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey };
-        private static readonly KeyOperation[] RSAPrivateKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.Sign, KeyOperation.Verify, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
-        private static readonly KeyOperation[] ECPublicKeyOperation = { KeyOperation.Sign };
-        private static readonly KeyOperation[] ECPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
+        private const string KeyIdPropertyName = "kid";
+        private const string KeyTypePropertyName = "kty";
+        private const string KeyOpsPropertyName = "key_ops";
+        private const string CurveNamePropertyName = "crv";
+        private const string NPropertyName = "n";
+        private const string EPropertyName = "e";
+        private const string DPPropertyName = "dp";
+        private const string DQPropertyName = "dq";
+        private const string QIPropertyName = "qi";
+        private const string PPropertyName = "p";
+        private const string QPropertyName = "q";
+        private const string XPropertyName = "x";
+        private const string YPropertyName = "y";
+        private const string DPropertyName = "d";
+        private const string KPropertyName = "k";
+        private const string TPropertyName = "key_hsm";
+
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
+        private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private static readonly JsonEncodedText s_nPropertyNameBytes = JsonEncodedText.Encode(NPropertyName);
+        private static readonly JsonEncodedText s_ePropertyNameBytes = JsonEncodedText.Encode(EPropertyName);
+        private static readonly JsonEncodedText s_dPPropertyNameBytes = JsonEncodedText.Encode(DPPropertyName);
+        private static readonly JsonEncodedText s_dQPropertyNameBytes = JsonEncodedText.Encode(DQPropertyName);
+        private static readonly JsonEncodedText s_qIPropertyNameBytes = JsonEncodedText.Encode(QIPropertyName);
+        private static readonly JsonEncodedText s_pPropertyNameBytes = JsonEncodedText.Encode(PPropertyName);
+        private static readonly JsonEncodedText s_qPropertyNameBytes = JsonEncodedText.Encode(QPropertyName);
+        private static readonly JsonEncodedText s_xPropertyNameBytes = JsonEncodedText.Encode(XPropertyName);
+        private static readonly JsonEncodedText s_yPropertyNameBytes = JsonEncodedText.Encode(YPropertyName);
+        private static readonly JsonEncodedText s_dPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
+        private static readonly JsonEncodedText s_kPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
+        private static readonly JsonEncodedText s_tPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
+
+        private static readonly KeyOperation[] s_aesKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
+        private static readonly KeyOperation[] s_rSAPublicKeyOperation = { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey };
+        private static readonly KeyOperation[] s_rSAPrivateKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.Sign, KeyOperation.Verify, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
+        private static readonly KeyOperation[] s_eCPublicKeyOperation = { KeyOperation.Sign };
+        private static readonly KeyOperation[] s_eCPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
 
         /// <summary>
-        /// The identifier of the key.
+        /// The identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
-        public string KeyId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
@@ -54,10 +87,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
         public JsonWebKey(Aes aesProvider)
         {
-            Argument.NotNull(aesProvider, nameof(aesProvider));
+            Argument.AssertNotNull(aesProvider, nameof(aesProvider));
 
             KeyType = KeyType.Oct;
-            KeyOps = new List<KeyOperation>(AesKeyOperation);
+            KeyOps = new List<KeyOperation>(s_aesKeyOperation);
 
             K = aesProvider.Key;
         }
@@ -71,7 +104,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
         public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
         {
-            Argument.NotNull(ecdsa, nameof(ecdsa));
+            Argument.AssertNotNull(ecdsa, nameof(ecdsa));
 
             Initialize(ecdsa, includePrivateParameters);
         }
@@ -84,10 +117,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
         public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
         {
-            Argument.NotNull(rsaProvider, nameof(rsaProvider));
+            Argument.AssertNotNull(rsaProvider, nameof(rsaProvider));
 
             KeyType = KeyType.Rsa;
-            KeyOps = new List<KeyOperation>(includePrivateParameters ? RSAPrivateKeyOperation : RSAPublicKeyOperation);
+            KeyOps = new List<KeyOperation>(includePrivateParameters ? s_rSAPrivateKeyOperation : s_rSAPublicKeyOperation);
 
             RSAParameters rsaParameters = rsaProvider.ExportParameters(includePrivateParameters);
 
@@ -150,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
-        public string CurveName { get; set; }
+        public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
@@ -187,6 +220,24 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public byte[] T { get; set; }
 
+        internal bool HasPrivateKey
+        {
+            get
+            {
+                if (KeyType == KeyType.Rsa || KeyType == KeyType.Ec || KeyType == KeyType.RsaHsm || KeyType == KeyType.EcHsm)
+                {
+                    return D != null;
+                }
+
+                if (KeyType == KeyType.Oct)
+                {
+                    return K != null;
+                }
+
+                return false;
+            }
+        }
+
         /// <summary>
         /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
         /// </summary>
@@ -216,7 +267,9 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <returns>An <see cref="ECDsa"/> object.</returns>
         /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/>, or one or more key parameters are invalid.</exception>
-        public ECDsa ToECDsa(bool includePrivateParameters = false)
+        public ECDsa ToECDsa(bool includePrivateParameters = false) => ToECDsa(includePrivateParameters, true);
+
+        internal ECDsa ToECDsa(bool includePrivateParameters, bool throwIfNotSupported)
         {
             if (KeyType != KeyType.Ec && KeyType != KeyType.EcHsm)
             {
@@ -226,7 +279,7 @@ namespace Azure.Security.KeyVault.Keys
             ValidateKeyParameter(nameof(X), X);
             ValidateKeyParameter(nameof(Y), Y);
 
-            return Convert(includePrivateParameters);
+            return Convert(includePrivateParameters, throwIfNotSupported);
         }
 
         /// <summary>
@@ -252,16 +305,17 @@ namespace Azure.Security.KeyVault.Keys
                 Modulus = TrimBuffer(N),
             };
 
-            if (includePrivateParameters)
+            if (includePrivateParameters && HasPrivateKey)
             {
-                var bitLength = rsaParameters.Modulus.Length * 8;
+                int byteLength = rsaParameters.Modulus.Length;
+                rsaParameters.D = ForceBufferLength(nameof(D), D, byteLength);
 
-                rsaParameters.D = ForceBufferLength(nameof(D), D, bitLength / 8);
-                rsaParameters.DP = ForceBufferLength(nameof(DP), DP, bitLength / 16);
-                rsaParameters.DQ = ForceBufferLength(nameof(DQ), DQ, bitLength / 16);
-                rsaParameters.P = ForceBufferLength(nameof(P), P, bitLength / 16);
-                rsaParameters.Q = ForceBufferLength(nameof(Q), Q, bitLength / 16);
-                rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, bitLength / 16);
+                byteLength >>= 1;
+                rsaParameters.DP = ForceBufferLength(nameof(DP), DP, byteLength);
+                rsaParameters.DQ = ForceBufferLength(nameof(DQ), DQ, byteLength);
+                rsaParameters.P = ForceBufferLength(nameof(P), P, byteLength);
+                rsaParameters.Q = ForceBufferLength(nameof(Q), Q, byteLength);
+                rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, byteLength);
             }
 
             RSA rsa = RSA.Create();
@@ -270,37 +324,21 @@ namespace Azure.Security.KeyVault.Keys
             return rsa;
         }
 
-        private const string KeyIdPropertyName = "kid";
-        private const string KeyTypePropertyName = "kty";
-        private static readonly JsonEncodedText KeyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
-        private const string KeyOpsPropertyName = "key_ops";
-        private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "curveName";
-        private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
-        private const string NPropertyName = "n";
-        private static readonly JsonEncodedText NPropertyNameBytes = JsonEncodedText.Encode(NPropertyName);
-        private const string EPropertyName = "e";
-        private static readonly JsonEncodedText EPropertyNameBytes = JsonEncodedText.Encode(EPropertyName);
-        private const string DPPropertyName = "dp";
-        private static readonly JsonEncodedText DPPropertyNameBytes = JsonEncodedText.Encode(DPPropertyName);
-        private const string DQPropertyName = "dq";
-        private static readonly JsonEncodedText DQPropertyNameBytes = JsonEncodedText.Encode(DQPropertyName);
-        private const string QIPropertyName = "qi";
-        private static readonly JsonEncodedText QIPropertyNameBytes = JsonEncodedText.Encode(QIPropertyName);
-        private const string PPropertyName = "p";
-        private static readonly JsonEncodedText PPropertyNameBytes = JsonEncodedText.Encode(PPropertyName);
-        private const string QPropertyName = "q";
-        private static readonly JsonEncodedText QPropertyNameBytes = JsonEncodedText.Encode(QPropertyName);
-        private const string XPropertyName = "x";
-        private static readonly JsonEncodedText XPropertyNameBytes = JsonEncodedText.Encode(XPropertyName);
-        private const string YPropertyName = "y";
-        private static readonly JsonEncodedText YPropertyNameBytes = JsonEncodedText.Encode(YPropertyName);
-        private const string DPropertyName = "d";
-        private static readonly JsonEncodedText DPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
-        private const string KPropertyName = "k";
-        private static readonly JsonEncodedText KPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
-        private const string TPropertyName = "t";
-        private static readonly JsonEncodedText TPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
+        internal bool SupportsOperation(KeyOperation operation)
+        {
+            if (KeyOps != null)
+            {
+                for (int i = 0; i < KeyOps.Count; ++i)
+                {
+                    if (KeyOps[i] == operation)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         internal void ReadProperties(JsonElement json)
         {
@@ -309,13 +347,13 @@ namespace Azure.Security.KeyVault.Keys
                 switch (prop.Name)
                 {
                     case KeyIdPropertyName:
-                        KeyId = prop.Value.GetString();
+                        Id = prop.Value.GetString();
                         break;
                     case KeyTypePropertyName:
                         KeyType = prop.Value.GetString();
                         break;
                     case KeyOpsPropertyName:
-                        foreach (var element in prop.Value.EnumerateArray())
+                        foreach (JsonElement element in prop.Value.EnumerateArray())
                         {
                             KeyOps.Add(element.ToString());
                         }
@@ -367,68 +405,68 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyType);
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
             }
             if (KeyOps != null)
             {
-                json.WriteStartArray(KeyOpsPropertyNameBytes);
-                foreach (var operation in KeyOps)
+                json.WriteStartArray(s_keyOpsPropertyNameBytes);
+                foreach (KeyOperation operation in KeyOps)
                 {
-                    json.WriteStringValue(operation);
+                    json.WriteStringValue(operation.ToString());
                 }
                 json.WriteEndArray();
             }
-            if (!string.IsNullOrEmpty(CurveName))
+            if (CurveName.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, CurveName);
+                json.WriteString(s_curveNamePropertyNameBytes, CurveName.Value.ToString());
             }
             if (N != null)
             {
-                json.WriteString(NPropertyNameBytes, Base64Url.Encode(N));
+                json.WriteString(s_nPropertyNameBytes, Base64Url.Encode(N));
             }
             if (E != null)
             {
-                json.WriteString(EPropertyNameBytes, Base64Url.Encode(E));
+                json.WriteString(s_ePropertyNameBytes, Base64Url.Encode(E));
             }
             if (DP != null)
             {
-                json.WriteString(DPPropertyNameBytes, Base64Url.Encode(DP));
+                json.WriteString(s_dPPropertyNameBytes, Base64Url.Encode(DP));
             }
             if (DQ != null)
             {
-                json.WriteString(DQPropertyNameBytes, Base64Url.Encode(DQ));
+                json.WriteString(s_dQPropertyNameBytes, Base64Url.Encode(DQ));
             }
             if (QI != null)
             {
-                json.WriteString(QIPropertyNameBytes, Base64Url.Encode(QI));
+                json.WriteString(s_qIPropertyNameBytes, Base64Url.Encode(QI));
             }
             if (P != null)
             {
-                json.WriteString(PPropertyNameBytes, Base64Url.Encode(P));
+                json.WriteString(s_pPropertyNameBytes, Base64Url.Encode(P));
             }
             if (Q != null)
             {
-                json.WriteString(QPropertyNameBytes, Base64Url.Encode(Q));
+                json.WriteString(s_qPropertyNameBytes, Base64Url.Encode(Q));
             }
             if (X != null)
             {
-                json.WriteString(XPropertyNameBytes, Base64Url.Encode(X));
+                json.WriteString(s_xPropertyNameBytes, Base64Url.Encode(X));
             }
             if (Y != null)
             {
-                json.WriteString(YPropertyNameBytes, Base64Url.Encode(Y));
+                json.WriteString(s_yPropertyNameBytes, Base64Url.Encode(Y));
             }
             if (D != null)
             {
-                json.WriteString(DPropertyNameBytes, Base64Url.Encode(D));
+                json.WriteString(s_dPropertyNameBytes, Base64Url.Encode(D));
             }
             if (K != null)
             {
-                json.WriteString(KPropertyNameBytes, Base64Url.Encode(K));
+                json.WriteString(s_kPropertyNameBytes, Base64Url.Encode(K));
             }
             if (T != null)
             {
-                json.WriteString(TPropertyNameBytes, Base64Url.Encode(T));
+                json.WriteString(s_tPropertyNameBytes, Base64Url.Encode(T));
             }
         }
 
@@ -436,43 +474,43 @@ namespace Azure.Security.KeyVault.Keys
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
-        private static byte[] ForceBufferLength(string name, byte[] value, int requiredLength)
+        private static byte[] ForceBufferLength(string name, byte[] value, int requiredLengthInBytes)
         {
             if (value is null || value.Length == 0)
             {
                 throw new InvalidOperationException($"key parameter {name} is null or empty");
             }
 
-            if (value.Length == requiredLength)
+            if (value.Length == requiredLengthInBytes)
             {
                 return value;
             }
 
-            if (value.Length < requiredLength)
+            if (value.Length < requiredLengthInBytes)
             {
-                byte[] padded = new byte[requiredLength];
-                Array.Copy(value, 0, padded, requiredLength - value.Length, value.Length);
+                byte[] padded = new byte[requiredLengthInBytes];
+                Array.Copy(value, 0, padded, requiredLengthInBytes - value.Length, value.Length);
 
                 return padded;
             }
 
             // Throw if any extra bytes are non-zero.
-            var extraLength = value.Length - requiredLength;
+            var extraLength = value.Length - requiredLengthInBytes;
             for (int i = 0; i < extraLength; ++i)
             {
                 if (value[i] != 0)
                 {
-                    throw new InvalidOperationException($"key parameter {name} is too long: expected at most {requiredLength} bytes, but found {value.Length - i} bytes");
+                    throw new InvalidOperationException($"key parameter {name} is too long: expected at most {requiredLengthInBytes} bytes, but found {value.Length - i} bytes");
                 }
             }
 
-            byte[] trimmed = new byte[requiredLength];
-            Array.Copy(value, value.Length - requiredLength, trimmed, 0, requiredLength);
+            byte[] trimmed = new byte[requiredLengthInBytes];
+            Array.Copy(value, value.Length - requiredLengthInBytes, trimmed, 0, requiredLengthInBytes);
 
             return trimmed;
         }
 
-        private static readonly byte[] ZeroBuffer = new byte[] { 0 };
+        private static readonly byte[] s_zeroBuffer = new byte[] { 0 };
         private static byte[] TrimBuffer(byte[] value)
         {
             if (value is null || value.Length <= 1 || value[0] != 0)
@@ -491,7 +529,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
 
-            return ZeroBuffer;
+            return s_zeroBuffer;
         }
 
         private static void ValidateKeyParameter(string name, byte[] value)
@@ -515,24 +553,39 @@ namespace Azure.Security.KeyVault.Keys
         private void Initialize(ECDsa ecdsa, bool includePrivateParameters)
         {
             KeyType = KeyType.Ec;
-            KeyOps = new List<KeyOperation>(includePrivateParameters ? ECPrivateKeyOperation : ECPublicKeyOperation);
+            KeyOps = new List<KeyOperation>(includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
-            CurveName = KeyCurveName.Find(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
+            CurveName = KeyCurveName.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
             D = ecParameters.D;
             X = ecParameters.Q.X;
             Y = ecParameters.Q.Y;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private ECDsa Convert(bool includePrivateParameters)
+        private ECDsa Convert(bool includePrivateParameters, bool throwIfNotSupported)
         {
-            ref readonly KeyCurveName curveName = ref KeyCurveName.Find(CurveName);
+            if (!CurveName.HasValue)
+            {
+                if (throwIfNotSupported)
+                {
+                    throw new InvalidOperationException("missing required curve name");
+                }
+
+                return null;
+            }
+
+            KeyCurveName curveName = CurveName.Value;
 
             int requiredParameterSize = curveName.KeyParameterSize;
             if (requiredParameterSize <= 0)
             {
-                throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+                if (throwIfNotSupported)
+                {
+                    throw new InvalidOperationException($"invalid curve name: {CurveName.ToString()}");
+                }
+
+                return null;
             }
 
             ECParameters ecParameters = new ECParameters
@@ -545,13 +598,22 @@ namespace Azure.Security.KeyVault.Keys
                 },
             };
 
-            if (includePrivateParameters)
+            if (includePrivateParameters && HasPrivateKey)
             {
                 ecParameters.D = ForceBufferLength(nameof(D), D, requiredParameterSize);
             }
 
             ECDsa ecdsa = ECDsa.Create();
-            ecdsa.ImportParameters(ecParameters);
+            try
+            {
+                ecdsa.ImportParameters(ecParameters);
+            }
+            catch when (!throwIfNotSupported)
+            {
+                ecdsa.Dispose();
+
+                return null;
+            }
 
             return ecdsa;
         }

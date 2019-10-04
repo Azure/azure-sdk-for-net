@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,10 @@ using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
+using Azure.Storage.Sas;
 using NUnit.Framework;
+using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -20,14 +22,14 @@ namespace Azure.Storage.Test.Shared
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
-            this.Sanitizer = new StorageRecordedTestSanitizer();
-            this.Matcher = new StorageRecordMatcher(this.Sanitizer);
+            Sanitizer = new StorageRecordedTestSanitizer();
+            Matcher = new StorageRecordMatcher(Sanitizer);
         }
 
         /// <summary>
         /// Gets the tenant to use by default for our tests.
         /// </summary>
-        public TenantConfiguration TestConfigDefault => this.GetTestConfig(
+        public TenantConfiguration TestConfigDefault => GetTestConfig(
                 "Storage_TestConfigDefault",
                 () => TestConfigurations.DefaultTargetTenant);
 
@@ -35,21 +37,21 @@ namespace Azure.Storage.Test.Shared
         /// Gets the tenant to use for any tests that require Read Access
         /// Geo-Redundant Storage to be setup.
         /// </summary>
-        public TenantConfiguration TestConfigSecondary => this.GetTestConfig(
+        public TenantConfiguration TestConfigSecondary => GetTestConfig(
                 "Storage_TestConfigSecondary",
                 () => TestConfigurations.DefaultSecondaryTargetTenant);
 
         /// <summary>
         /// Gets the tenant to use for any tests that require Premium SSDs.
         /// </summary>
-        public TenantConfiguration TestConfigPremiumBlob => this.GetTestConfig(
+        public TenantConfiguration TestConfigPremiumBlob => GetTestConfig(
                 "Storage_TestConfigPremiumBlob",
                 () => TestConfigurations.DefaultTargetPremiumBlobTenant);
 
         /// <summary>
         /// Gets the tenant to use for any tests that require preview features.
         /// </summary>
-        public TenantConfiguration TestConfigPreviewBlob => this.GetTestConfig(
+        public TenantConfiguration TestConfigPreviewBlob => GetTestConfig(
                 "Storage_TestConfigPreviewBlob",
                 () => TestConfigurations.DefaultTargetPreviewBlobTenant);
 
@@ -57,7 +59,7 @@ namespace Azure.Storage.Test.Shared
         /// Gets the tenant to use for any tests that require authentication
         /// with Azure AD.
         /// </summary>
-        public TenantConfiguration TestConfigOAuth => this.GetTestConfig(
+        public TenantConfiguration TestConfigOAuth => GetTestConfig(
                 "Storage_TestConfigOAuth",
                 () => TestConfigurations.DefaultTargetOAuthTenant);
 
@@ -81,7 +83,7 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         [SetUp]
         public virtual void ClearCaches() =>
-            this._playbackConfigCache.Clear();
+            _playbackConfigCache.Clear();
 
         /// <summary>
         /// Get or create a test configuration tenant to use with our tests.
@@ -103,26 +105,26 @@ namespace Azure.Storage.Test.Shared
         /// <returns>A test tenant to use with our tests.</returns>
         private TenantConfiguration GetTestConfig(string name, Func<TenantConfiguration> getTenant)
         {
-            TenantConfiguration config = null;
-            string text = null;
-            switch (this.Mode)
+            TenantConfiguration config;
+            string text;
+            switch (Mode)
             {
                 case RecordedTestMode.Playback:
-                    if (!this._playbackConfigCache.TryGetValue(name, out config))
+                    if (!_playbackConfigCache.TryGetValue(name, out config))
                     {
-                        text = this.Recording.GetVariable(name, null);
+                        text = Recording.GetVariable(name, null);
                         config = TenantConfiguration.Parse(text);
-                        this._playbackConfigCache[name] = config;
+                        _playbackConfigCache[name] = config;
                     }
                     break;
                 case RecordedTestMode.Record:
                     config = getTenant();
-                    if (!this._recordingConfigCache.TryGetValue(name, out text))
+                    if (!_recordingConfigCache.TryGetValue(name, out text))
                     {
                         text = TenantConfiguration.Serialize(config, true);
-                        this._recordingConfigCache[name] = text;
+                        _recordingConfigCache[name] = text;
                     }
-                    this.Recording.GetVariable(name, text);
+                    Recording.GetVariable(name, text);
                     break;
                 case RecordedTestMode.Live:
                 default:
@@ -132,25 +134,25 @@ namespace Azure.Storage.Test.Shared
             return config;
         }
 
-        public DateTimeOffset GetUtcNow() => this.Recording.UtcNow;
+        public DateTimeOffset GetUtcNow() => Recording.UtcNow;
 
         public byte[] GetRandomBuffer(long size)
-            => TestHelper.GetRandomBuffer(size, this.Recording.Random);
+            => TestHelper.GetRandomBuffer(size, Recording.Random);
 
         public string GetNewString(int length = 20)
         {
             var buffer = new char[length];
             for (var i = 0; i < length; i++)
             {
-                buffer[i] = (char)('a' + this.Recording.Random.Next(0, 25));
+                buffer[i] = (char)('a' + Recording.Random.Next(0, 25));
             }
             return new string(buffer);
         }
 
-        public string GetNewMetadataName() => $"test_metadata_{this.Recording.Random.NewGuid().ToString().Replace("-", "_")}";
+        public string GetNewMetadataName() => $"test_metadata_{Recording.Random.NewGuid().ToString().Replace("-", "_")}";
 
         public IDictionary<string, string> BuildMetadata()
-            =>  new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
                     { "foo", "bar" },
                     { "meta", "data" }
@@ -158,19 +160,19 @@ namespace Azure.Storage.Test.Shared
 
         public IPAddress GetIPAddress()
         {
-            var a = this.Recording.Random.Next(0, 256);
-            var b = this.Recording.Random.Next(0, 256);
-            var c = this.Recording.Random.Next(0, 256);
-            var d = this.Recording.Random.Next(0, 256);
+            var a = Recording.Random.Next(0, 256);
+            var b = Recording.Random.Next(0, 256);
+            var c = Recording.Random.Next(0, 256);
+            var d = Recording.Random.Next(0, 256);
             var ipString = $"{a}.{b}.{c}.{d}";
             return IPAddress.Parse(ipString);
         }
 
         public TokenCredential GetOAuthCredential() =>
-            this.GetOAuthCredential(this.TestConfigOAuth);
+            GetOAuthCredential(TestConfigOAuth);
 
         public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
-            this.GetOAuthCredential(
+            GetOAuthCredential(
                 config.ActiveDirectoryTenantId,
                 config.ActiveDirectoryApplicationId,
                 config.ActiveDirectoryApplicationSecret,
@@ -181,7 +183,7 @@ namespace Azure.Storage.Test.Shared
                 tenantId,
                 appId,
                 secret,
-                this.Recording.InstrumentClientOptions(
+                Recording.InstrumentClientOptions(
                     new IdentityClientOptions() { AuthorityHost = authorityHost }));
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
@@ -191,10 +193,10 @@ namespace Azure.Storage.Test.Shared
 
             Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
 
-            foreach (var kvp in expected)
+            foreach (KeyValuePair<string, string> kvp in expected)
             {
                 if (!actual.TryGetValue(kvp.Key, out var value) ||
-                    String.Compare(kvp.Value, value, StringComparison.OrdinalIgnoreCase) != 0)
+                    string.Compare(kvp.Value, value, StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }
@@ -209,7 +211,7 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         public void WarnCopyCompletedTooQuickly()
         {
-            if (this.Mode == RecordedTestMode.Record)
+            if (Mode == RecordedTestMode.Record)
             {
                 Assert.Fail("Copy may have completed too quickly to abort.  Please record again.");
             }
@@ -234,7 +236,7 @@ namespace Azure.Storage.Test.Shared
         /// <returns>A task that will (optionally) delay.</returns>
         public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null)
         {
-            if (this.Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(milliseconds);
             }
@@ -262,11 +264,73 @@ namespace Azure.Storage.Test.Shared
                 }
 
                 // Wait for lingering progress events
-                await this.Delay(500, 100).ConfigureAwait(false);
+                await Delay(500, 100).ConfigureAwait(false);
             }
 
             // TODO: #7077 - These are too flaky/noisy so I'm changing to Warn
             Assert.Warn("Progress notifications never completed!");
+        }
+
+        protected void AssertSecondaryStorageFirstRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+        }
+
+        protected void AssertSecondaryStorageSecondRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+        }
+
+        protected void AssertSecondaryStorageThirdRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+        }
+
+        protected void AssertSecondaryStorage404OnSecondary(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+        }
+
+        protected async Task<T> EnsurePropagatedAsync<T>(
+            Func<Task<T>> getResponse,
+            Func<T,bool> hasResponse)
+        {
+            int delayDuration = 10000;
+            bool responseReceived = false;
+            T response = default;
+            // end time of 16 minutes from now to allow for propagation to secondary host
+            DateTimeOffset endTime = DateTimeOffset.Now.AddMinutes(16);
+            while (!responseReceived && DateTimeOffset.Now < endTime)
+            {
+                response = await getResponse();
+                if (!hasResponse(response))
+                {
+                    await this.Delay(delayDuration);
+                }
+                else
+                {
+                    responseReceived = true;
+                }
+            }
+            return response;
+        }
+
+        internal void AssertResponseHeaders(TestConstants constants, SasQueryParameters sasQueryParameters)
+        {
+            Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
+            Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);
+            Assert.AreEqual(constants.Sas.ContentEncoding, sasQueryParameters.ContentEncoding);
+            Assert.AreEqual(constants.Sas.ContentLanguage, sasQueryParameters.ContentLanguage);
+            Assert.AreEqual(constants.Sas.ContentType, sasQueryParameters.ContentType);
         }
     }
 }

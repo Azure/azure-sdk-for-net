@@ -267,7 +267,7 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var listener = new TestEventListener();
-            listener.EnableEvents(HttpPipelineEventSource.Singleton, EventLevel.Informational);
+            listener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Informational);
 
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 2);
             MockTransport mockTransport = CreateMockTransport();

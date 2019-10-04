@@ -347,6 +347,54 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets the sas url to get the connection health detail of P2S clients of the
+            /// virtual wan P2SVpnGateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the P2SVpnGateway.
+            /// </param>
+            /// <param name='request'>
+            /// Request parameters supplied to get p2s vpn connections detailed health.
+            /// </param>
+            public static P2SVpnConnectionHealth GetP2sVpnConnectionHealthDetailed(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request)
+            {
+                return operations.GetP2sVpnConnectionHealthDetailedAsync(resourceGroupName, gatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the sas url to get the connection health detail of P2S clients of the
+            /// virtual wan P2SVpnGateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the P2SVpnGateway.
+            /// </param>
+            /// <param name='request'>
+            /// Request parameters supplied to get p2s vpn connections detailed health.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<P2SVpnConnectionHealth> GetP2sVpnConnectionHealthDetailedAsync(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetP2sVpnConnectionHealthDetailedWithHttpMessagesAsync(resourceGroupName, gatewayName, request, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the
             /// existing gateway.
             /// </summary>
@@ -564,6 +612,54 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<P2SVpnGateway> BeginGetP2sVpnConnectionHealthAsync(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginGetP2sVpnConnectionHealthWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the sas url to get the connection health detail of P2S clients of the
+            /// virtual wan P2SVpnGateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the P2SVpnGateway.
+            /// </param>
+            /// <param name='request'>
+            /// Request parameters supplied to get p2s vpn connections detailed health.
+            /// </param>
+            public static P2SVpnConnectionHealth BeginGetP2sVpnConnectionHealthDetailed(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request)
+            {
+                return operations.BeginGetP2sVpnConnectionHealthDetailedAsync(resourceGroupName, gatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the sas url to get the connection health detail of P2S clients of the
+            /// virtual wan P2SVpnGateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the P2SVpnGateway.
+            /// </param>
+            /// <param name='request'>
+            /// Request parameters supplied to get p2s vpn connections detailed health.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<P2SVpnConnectionHealth> BeginGetP2sVpnConnectionHealthDetailedAsync(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetP2sVpnConnectionHealthDetailedWithHttpMessagesAsync(resourceGroupName, gatewayName, request, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

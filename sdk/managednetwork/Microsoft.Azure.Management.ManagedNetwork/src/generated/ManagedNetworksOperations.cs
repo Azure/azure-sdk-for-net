@@ -282,10 +282,6 @@ namespace Microsoft.Azure.Management.ManagedNetwork
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managedNetwork");
             }
-            if (managedNetwork != null)
-            {
-                managedNetwork.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");

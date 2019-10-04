@@ -261,14 +261,14 @@ namespace Azure.Core.Testing
 
         private class TestCredential : TokenCredential
         {
-            public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            public override Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken)
             {
-                return Task.FromResult(GetToken(scopes, cancellationToken));
+                return Task.FromResult(GetToken(request, cancellationToken));
             }
 
-            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+            public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken)
             {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", scopes), DateTimeOffset.MaxValue);
+                return new AccessToken("TEST TOKEN " + string.Join(" ", request.Scopes), DateTimeOffset.MaxValue);
             }
         }
 

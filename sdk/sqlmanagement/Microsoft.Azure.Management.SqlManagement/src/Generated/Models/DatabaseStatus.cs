@@ -36,5 +36,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Scaling = "Scaling";
         public const string OfflineChangingDwPerformanceTiers = "OfflineChangingDwPerformanceTiers";
         public const string OnlineChangingDwPerformanceTiers = "OnlineChangingDwPerformanceTiers";
+        public const string Disabled = "Disabled";
     }
 }

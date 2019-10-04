@@ -23,14 +23,14 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
 
             var options = new TestOptions();
-            options.AddPolicy(position, policy);
+            options.AddPolicy(policy, position);
             options.Transport = transport;
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.Uri.Reset(new Uri("http://example.com"));
 
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.Uri.Reset(new Uri("http://example.com"));
 
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 

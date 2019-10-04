@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="provisioningState">Provisioning state of the
         /// ManagedNetwork resource. Possible values are: 'Updating',
         /// 'Deleting', and 'Failed'. Possible values include: 'Updating',
@@ -46,8 +48,8 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// the resource is updated.</param>
         /// <param name="assignedManagedNetwork">The managed network ID with
         /// scope will be assigned to.</param>
-        public ScopeAssignment(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string etag = default(string), string assignedManagedNetwork = default(string))
-            : base(id, name, type)
+        public ScopeAssignment(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), string etag = default(string), string assignedManagedNetwork = default(string))
+            : base(id, name, type, location)
         {
             ProvisioningState = provisioningState;
             Etag = etag;

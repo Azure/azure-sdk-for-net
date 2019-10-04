@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -44,10 +43,10 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
-            if (this.Add) { sb.Append(Constants.Sas.Permissions.Add); }
-            if (this.Update) { sb.Append(Constants.Sas.Permissions.Update); }
-            if (this.Process) { sb.Append(Constants.Sas.Permissions.Process); }
+            if (Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (Add) { sb.Append(Constants.Sas.Permissions.Add); }
+            if (Update) { sb.Append(Constants.Sas.Permissions.Update); }
+            if (Process) { sb.Append(Constants.Sas.Permissions.Process); }
             return sb.ToString();
         }
 
@@ -63,10 +62,18 @@ namespace Azure.Storage.Sas
             {
                 switch (c)
                 {
-                    case Constants.Sas.Permissions.Read: p.Read = true; break;
-                    case Constants.Sas.Permissions.Add: p.Add = true; break;
-                    case Constants.Sas.Permissions.Update: p.Update = true; break;
-                    case Constants.Sas.Permissions.Process: p.Process = true; break;
+                    case Constants.Sas.Permissions.Read:
+                        p.Read = true;
+                        break;
+                    case Constants.Sas.Permissions.Add:
+                        p.Add = true;
+                        break;
+                    case Constants.Sas.Permissions.Update:
+                        p.Update = true;
+                        break;
+                    case Constants.Sas.Permissions.Process:
+                        p.Process = true;
+                        break;
                     default:
                         throw Errors.InvalidPermission(c);
                 }
@@ -81,7 +88,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is QueueSasPermissions other && this.Equals(other);
+            obj is QueueSasPermissions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the QueueSasPermissions.
@@ -89,10 +96,10 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the QueueSasPermissions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Add     ? 0b0001 : 0) +
-            (this.Process ? 0b0010 : 0) +
-            (this.Read    ? 0b0100 : 0) +
-            (this.Update  ? 0b1000 : 0);
+            (Add ? 0b0001 : 0) +
+            (Process ? 0b0010 : 0) +
+            (Read ? 0b0100 : 0) +
+            (Update ? 0b1000 : 0);
 
         /// <summary>
         /// Check if two QueueSasPermissions instances are equal.
@@ -100,10 +107,10 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(QueueSasPermissions other) =>
-            other.Add == this.Add &&
-            other.Process == this.Process &&
-            other.Read == this.Read &&
-            other.Update == this.Update;
+            other.Add == Add &&
+            other.Process == Process &&
+            other.Read == Read &&
+            other.Update == Update;
 
         /// <summary>
         /// Check if two QueueSasPermissions instances are equal.

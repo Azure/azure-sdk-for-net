@@ -1,4 +1,4 @@
-﻿using NetApp.Tests.Helpers;
+using NetApp.Tests.Helpers;
 using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;

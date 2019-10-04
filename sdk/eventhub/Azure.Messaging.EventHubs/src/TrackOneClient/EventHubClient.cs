@@ -1,33 +1,33 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using TrackOne.Amqp;
+using TrackOne.Primitives;
 
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Threading.Tasks;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
-    using TrackOne.Amqp;
-    using TrackOne.Primitives;
-
     /// <summary>
     /// Anchor class - all EventHub client operations start here.
     /// See <see cref="EventHubClient.CreateFromConnectionString(string)"/>
     /// </summary>
     internal abstract class EventHubClient : ClientEntity
     {
-        readonly Lazy<EventDataSender> innerSender;
-        bool closeCalled = false;
+        private readonly Lazy<EventDataSender> innerSender;
+        private bool closeCalled = false;
 
         internal EventHubClient(EventHubsConnectionStringBuilder csb)
             : base($"{nameof(EventHubClient)}{ClientEntity.GetNextId()}({csb.EntityPath})")
         {
-            this.innerSender = new Lazy<EventDataSender>(() => this.CreateEventSender());
+            innerSender = new Lazy<EventDataSender>(() => CreateEventSender());
 
-            this.ConnectionStringBuilder = csb;
-            this.EventHubName = csb.EntityPath;
-            this.RetryPolicy = RetryPolicy.Default;
+            ConnectionStringBuilder = csb;
+            EventHubName = csb.EntityPath;
+            RetryPolicy = RetryPolicy.Default;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace TrackOne
 
         internal EventHubsConnectionStringBuilder ConnectionStringBuilder { get; }
 
-        EventDataSender InnerSender => this.innerSender.Value;
+        private EventDataSender InnerSender => innerSender.Value;
 
         /// <summary>
         /// Creates a new instance of the Event Hubs client using the specified connection string. You can populate the EntityPath property with the name of the Event Hub.
@@ -215,16 +215,16 @@ namespace TrackOne
         /// <returns></returns>
         public sealed override async Task CloseAsync()
         {
-            this.closeCalled = true;
+            closeCalled = true;
 
-            EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
+            EventHubsEventSource.Log.ClientCloseStart(ClientId);
             try
             {
-                await this.OnCloseAsync().ConfigureAwait(false);
+                await OnCloseAsync().ConfigureAwait(false);
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseStop(this.ClientId);
+                EventHubsEventSource.Log.ClientCloseStop(ClientId);
             }
         }
 
@@ -249,7 +249,7 @@ namespace TrackOne
         public Task SendAsync(EventData eventData)
         {
             Guard.ArgumentNotNull(nameof(eventData), eventData);
-            return this.SendAsync(new[] { eventData }, null);
+            return SendAsync(new[] { eventData }, null);
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace TrackOne
         public Task SendAsync(IEnumerable<EventData> eventDatas)
         {
             // eventDatas null is check inside the following call:
-            return this.SendAsync(eventDatas, null);
+            return SendAsync(eventDatas, null);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace TrackOne
             Guard.ArgumentNotNull(nameof(eventData), eventData);
             Guard.ArgumentNotNullOrWhiteSpace(nameof(partitionKey), partitionKey);
 
-            return this.SendAsync(new[] { eventData }, partitionKey);
+            return SendAsync(new[] { eventData }, partitionKey);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace TrackOne
         /// <see cref="PartitionSender.SendAsync(EventData)"/>
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
-            await this.InnerSender.SendAsync(eventDatas, partitionKey).ConfigureAwait(false);
+            await InnerSender.SendAsync(eventDatas, partitionKey).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace TrackOne
                 throw Fx.Exception.Argument(nameof(eventDataBatch), Resources.EventDataListIsNullOrEmpty);
             }
 
-            await this.SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey);
+            await SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey);
         }
 
         /// <summary>
@@ -388,7 +388,7 @@ namespace TrackOne
         public PartitionReceiver CreateReceiver(string consumerGroupName, string partitionId, EventPosition eventPosition, ReceiverOptions receiverOptions = null)
         {
             Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
-            return this.OnCreateReceiver(consumerGroupName, partitionId, eventPosition, null, receiverOptions);
+            return OnCreateReceiver(consumerGroupName, partitionId, eventPosition, null, receiverOptions);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace TrackOne
         public PartitionReceiver CreateEpochReceiver(string consumerGroupName, string partitionId, EventPosition eventPosition, long epoch, ReceiverOptions receiverOptions = null)
         {
             Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
-            return this.OnCreateReceiver(consumerGroupName, partitionId, eventPosition, epoch, receiverOptions);
+            return OnCreateReceiver(consumerGroupName, partitionId, eventPosition, epoch, receiverOptions);
         }
 
         /// <summary>
@@ -417,20 +417,20 @@ namespace TrackOne
         /// </summary>
         public async Task<EventHubRuntimeInformation> GetRuntimeInformationAsync()
         {
-            EventHubsEventSource.Log.GetEventHubRuntimeInformationStart(this.ClientId);
+            EventHubsEventSource.Log.GetEventHubRuntimeInformationStart(ClientId);
 
             try
             {
-                return await this.OnGetRuntimeInformationAsync().ConfigureAwait(false);
+                return await OnGetRuntimeInformationAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                EventHubsEventSource.Log.GetEventHubRuntimeInformationException(this.ClientId, e.ToString());
+                EventHubsEventSource.Log.GetEventHubRuntimeInformationException(ClientId, e.ToString());
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.GetEventHubRuntimeInformationStop(this.ClientId);
+                EventHubsEventSource.Log.GetEventHubRuntimeInformationStop(ClientId);
             }
         }
 
@@ -440,20 +440,20 @@ namespace TrackOne
         public async Task<EventHubPartitionRuntimeInformation> GetPartitionRuntimeInformationAsync(string partitionId)
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(partitionId), partitionId);
-            EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationStart(this.ClientId, partitionId);
+            EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationStart(ClientId, partitionId);
 
             try
             {
-                return await this.OnGetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
+                return await OnGetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationException(this.ClientId, partitionId, e.ToString());
+                EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationException(ClientId, partitionId, e.ToString());
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationStop(this.ClientId, partitionId);
+                EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationStop(ClientId, partitionId);
             }
         }
 
@@ -461,7 +461,7 @@ namespace TrackOne
         /// <returns>Returns <see cref="EventDataBatch" />.</returns>
         public EventDataBatch CreateBatch()
         {
-            return this.CreateBatch(new BatchOptions());
+            return CreateBatch(new BatchOptions());
         }
 
         /// <summary>Creates a batch where event data objects can be added for later SendAsync call.</summary>
@@ -470,7 +470,7 @@ namespace TrackOne
         public EventDataBatch CreateBatch(BatchOptions options)
         {
             return new EventDataBatch(options.MaxMessageSize > 0 ?
-                options.MaxMessageSize : this.InnerSender.MaxMessageSize, options.PartitionKey);
+                options.MaxMessageSize : InnerSender.MaxMessageSize, options.PartitionKey);
         }
 
         /// <summary> Gets or sets a value indicating whether the runtime metric of a receiver is enabled. </summary>
@@ -484,11 +484,11 @@ namespace TrackOne
         /// </summary>
         public IWebProxy WebProxy { get; set; }
 
-        internal bool CloseCalled => this.closeCalled;
+        internal bool CloseCalled => closeCalled;
 
         internal EventDataSender CreateEventSender(string partitionId = null)
         {
-            return this.OnCreateEventSender(partitionId);
+            return OnCreateEventSender(partitionId);
         }
 
         internal abstract EventDataSender OnCreateEventSender(string partitionId);
@@ -520,9 +520,9 @@ namespace TrackOne
         /// </summary>
         protected override void OnRetryPolicyUpdate()
         {
-            if (this.innerSender.IsValueCreated)
+            if (innerSender.IsValueCreated)
             {
-                this.innerSender.Value.RetryPolicy = this.RetryPolicy.Clone();
+                innerSender.Value.RetryPolicy = RetryPolicy.Clone();
             }
         }
     }

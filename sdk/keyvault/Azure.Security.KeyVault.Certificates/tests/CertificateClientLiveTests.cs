@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,9 +105,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.AreEqual(certificateWithPolicy.Name, certName);
 
-            Assert.NotNull(certificateWithPolicy.Version);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Version);
+            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -128,9 +131,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.AreEqual(certificateWithPolicy.Name, certName);
 
-            Assert.NotNull(certificateWithPolicy.Version);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Version);
+            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -148,18 +151,22 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanup(certName);
 
             CertificateWithPolicy original = await WaitForCompletion(operation);
+            CertificateProperties originalProperties = original.Properties;
+            Assert.IsTrue(originalProperties.Enabled);
+            Assert.IsEmpty(originalProperties.Tags);
 
             IDictionary<string, string> expTags = new Dictionary<string, string>() { { "key1", "value1" } };
+            originalProperties.Tags.Add("key1", "value1");
 
-            Certificate updated = await Client.UpdateCertificateAsync(certName, original.Version, tags: expTags);
+            Certificate updated = await Client.UpdateCertificatePropertiesAsync(originalProperties);
+            Assert.IsTrue(updated.Properties.Enabled);
+            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
 
-            Assert.IsNull(original.Tags);
-
-            CollectionAssert.AreEqual(expTags, updated.Tags);
-
-            updated = await Client.UpdateCertificateAsync(certName, original.Version, enabled: false);
-
-            Assert.IsFalse(updated.Enabled);
+            originalProperties.Enabled = false;
+            originalProperties.Tags.Clear();
+            updated = await Client.UpdateCertificatePropertiesAsync(originalProperties);
+            Assert.IsFalse(updated.Properties.Enabled);
+            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
         }
 
         [Test]
@@ -181,7 +188,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            CertificateWithPolicy recovered = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.RecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 

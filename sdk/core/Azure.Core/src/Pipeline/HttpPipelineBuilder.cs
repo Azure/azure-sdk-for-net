@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Azure.Core.Pipeline
@@ -28,13 +29,16 @@ namespace Azure.Core.Pipeline
 
             var policies = new List<HttpPipelinePolicy>();
 
+            bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
+
             policies.AddRange(perCallClientPolicies);
 
             policies.AddRange(options.PerCallPolicies);
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            if (options.Diagnostics.IsTelemetryEnabled)
+            DiagnosticsOptions diagnostics = options.Diagnostics;
+            if (diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
             }
@@ -46,18 +50,22 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerRetryPolicies);
 
-            if (options.Diagnostics.IsLoggingEnabled)
+            if (diagnostics.IsLoggingEnabled)
             {
-                policies.Add(LoggingPolicy.Shared);
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggingContentSizeLimit,
+                    diagnostics.LoggingAllowedHeaderNames.ToArray(), diagnostics.LoggingAllowedQueryParameters.ToArray()));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
 
-            policies.Add(new RequestActivityPolicy());
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled));
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), responseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
+            return new HttpPipeline(options.Transport,
+                policies.ToArray(),
+                responseClassifier,
+                new ClientDiagnostics(isDistributedTracingEnabled));
         }
 
         // internal for testing

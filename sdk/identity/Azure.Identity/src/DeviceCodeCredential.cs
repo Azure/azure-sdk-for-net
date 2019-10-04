@@ -68,10 +68,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token for a user account, authenticating them through the device code authentication flow.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
 
@@ -83,19 +83,19 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = _pubApp.AcquireTokenSilent(scopes, _account).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                        AuthenticationResult result = _pubApp.AcquireTokenSilent(request.Scopes, _account).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
 
                         return new AccessToken(result.AccessToken, result.ExpiresOn);
                     }
                     catch (MsalUiRequiredException)
                     {
                         // TODO: logging for exception here?
-                        return GetTokenViaDeviceCodeAsync(scopes, cancellationToken).GetAwaiter().GetResult();
+                        return GetTokenViaDeviceCodeAsync(request.Scopes, cancellationToken).GetAwaiter().GetResult();
                     }
                 }
                 else
                 {
-                    return GetTokenViaDeviceCodeAsync(scopes, cancellationToken).GetAwaiter().GetResult();
+                    return GetTokenViaDeviceCodeAsync(request.Scopes, cancellationToken).GetAwaiter().GetResult();
                 }
             }
             catch (Exception e)
@@ -109,10 +109,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token for a user account, authenticating them through the device code authentication flow.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
 
@@ -124,19 +124,19 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await _pubApp.AcquireTokenSilent(scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                         return new AccessToken(result.AccessToken, result.ExpiresOn);
                     }
                     catch (MsalUiRequiredException)
                     {
                         // TODO: logging for exception here?
-                        return await GetTokenViaDeviceCodeAsync(scopes, cancellationToken).ConfigureAwait(false);
+                        return await GetTokenViaDeviceCodeAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return await GetTokenViaDeviceCodeAsync(scopes, cancellationToken).ConfigureAwait(false);
+                    return await GetTokenViaDeviceCodeAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)

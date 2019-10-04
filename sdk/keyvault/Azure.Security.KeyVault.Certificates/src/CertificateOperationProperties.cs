@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Globalization;
 using System.Text.Json;
 
@@ -86,27 +89,35 @@ namespace Azure.Security.KeyVault.Certificates
                         Id = new Uri(id);
                         ParseId(id);
                         break;
+
                     case IssuerProperyName:
                         IssuerName = prop.Value.GetProperty(IssuerNamePropertyName).GetString();
                         break;
+
                     case CsrPropertyName:
                         CertificateSigningRequest = prop.Value.GetString();
                         break;
+
                     case CancellationRequestedPropertyName:
                         CancellationRequested = prop.Value.GetBoolean();
                         break;
+
                     case RequestIdPropertyName:
                         RequestId = prop.Value.GetString();
                         break;
+
                     case StatusPropertyName:
                         Status = prop.Value.GetString();
                         break;
+
                     case StatusDetailsPropertyName:
                         StatusDetails = prop.Value.GetString();
                         break;
+
                     case TargetPropertyName:
                         Target = prop.Value.GetString();
                         break;
+
                     case ErrorPropertyName:
                         Error = new Error();
                         ((IJsonDeserializable)Error).ReadProperties(prop.Value);

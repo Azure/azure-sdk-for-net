@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,9 @@ namespace Azure.Data.AppConfiguration
     {
         private IDictionary<string, string> _tags;
 
-        // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
-        internal ConfigurationSetting() { }
+        internal ConfigurationSetting()
+        {
+        }
 
         /// <summary>
         /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
@@ -59,7 +59,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
-        public ETag ETag { get; set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The last time a modifying operation was performed on the given configuration setting.
@@ -67,10 +67,10 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// A value indicating whether the configuration setting is locked.
-        /// A locked configuration setting may not be modified until it is unlocked.
+        /// A value indicating whether the configuration setting is read only.
+        /// A read only configuration setting may not be modified until it is made writable.
         /// </summary>
-        public bool? Locked { get; internal set; }
+        public bool? ReadOnly { get; internal set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
@@ -78,7 +78,7 @@ namespace Azure.Data.AppConfiguration
         public IDictionary<string, string> Tags
         {
             get => _tags ?? (_tags = new Dictionary<string, string>());
-            set => _tags = value;
+            internal set => _tags = value;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.Data.AppConfiguration
                     return false;
                 if (LastModified != other.LastModified)
                     return false;
-                if (Locked != other.Locked)
+                if (ReadOnly != other.ReadOnly)
                     return false;
             }
             if (!string.Equals(Key, other.Key, StringComparison.Ordinal))
@@ -158,7 +158,7 @@ namespace Azure.Data.AppConfiguration
             hashCode.Add(ContentType, StringComparer.Ordinal);
             hashCode.Add(LastModified);
             hashCode.Add(ETag);
-            hashCode.Add(Locked);
+            hashCode.Add(ReadOnly);
             hashCode.Add(Tags);
             return hashCode.ToHashCode();
         }

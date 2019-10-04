@@ -84,6 +84,7 @@ namespace ManagedNetwork.Tests
                 string managedNetworkGroupName = TestUtilities.GenerateName("myGroup");
                 ManagedNetworkGroup managedNetworkGroup = new ManagedNetworkGroup()
                 {
+                    Location = location,
                     VirtualNetworks = new List<ResourceId>()
                     {
                             new ResourceId()
@@ -124,6 +125,7 @@ namespace ManagedNetwork.Tests
 
                 ManagedNetworkPeeringPolicy peeringPolicy = new ManagedNetworkPeeringPolicy
                 {
+                    Location = location,
                     Properties = managedNetworkPeeringPolicyProperties
                 };
                 #endregion

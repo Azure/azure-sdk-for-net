@@ -95,7 +95,7 @@
       "RequestHeaders": {
         "Accept": "application\u002fjson",
         "Authorization": "Sanitized",
-        "Content-Length": "58",
+        "Content-Length": "32",
         "Content-Type": "application\u002fjson",
         "Request-Id": "|42981d4-4c61899ebaa789f5.",
         "User-Agent": [
@@ -106,7 +106,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "value": "CrudBasicValue1",
         "attributes": {
           "enabled": false
         }
@@ -189,7 +188,7 @@
       "RequestHeaders": {
         "Accept": "application\u002fjson",
         "Authorization": "Sanitized",
-        "Content-Length": "57",
+        "Content-Length": "31",
         "Content-Type": "application\u002fjson",
         "Request-Id": "|42981d6-4c61899ebaa789f5.",
         "User-Agent": [
@@ -200,7 +199,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "value": "CrudBasicValue1",
         "attributes": {
           "enabled": true
         }

@@ -105,13 +105,13 @@
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
     <PackageReference Update="System.Memory" Version="4.5.3" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview7.19362.9" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-rc1.19456.4" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
-    <PackageReference Update="System.Threading.Channels" Version="4.6.0-preview7.19362.9" />
-    <PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Update="System.Threading.Channels" Version="4.6.0-rc1.19456.4" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0-rc1.19456.4" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-rc1.19456.4" />
   </ItemGroup>
 </Project>

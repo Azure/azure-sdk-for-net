@@ -31,5 +31,9 @@ namespace Azure
 
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
+        public static Response<T> FromValue<T>(T value, Response response)
+        {
+            return new ValueResponse<T>(response, value);
+        }
     }
 }
