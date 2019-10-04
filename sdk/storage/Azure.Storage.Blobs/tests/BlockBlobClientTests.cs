@@ -279,7 +279,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListType.All);
+                Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListOptions.All);
                 Assert.AreEqual(0, blobList.Value.CommittedBlocks.Count());
                 Assert.AreEqual(1, blobList.Value.UncommittedBlocks.Count());
                 Assert.AreEqual(ToBase64(blockName), blobList.Value.UncommittedBlocks.First().Name);
@@ -409,7 +409,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await destBlob.StageBlockFromUriAsync(sourceBlob.Uri, ToBase64(GetNewBlockName()), new HttpRange(256, 256));
-                Response<BlockList> getBlockListResult = await destBlob.GetBlockListAsync(BlockListType.All);
+                Response<BlockList> getBlockListResult = await destBlob.GetBlockListAsync(BlockListOptions.All);
 
                 // Assert
                 Assert.AreEqual(256, getBlockListResult.Value.UncommittedBlocks.First().Size);
@@ -641,7 +641,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListType.All);
+                Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListOptions.All);
                 Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
                 Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
                 Assert.AreEqual(ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
@@ -941,7 +941,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListType.All);
+                Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListOptions.All);
                 Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
                 Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
                 Assert.AreEqual(ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
@@ -1032,9 +1032,10 @@ namespace Azure.Storage.Blobs.Test
         {
             GetBlockListParameters[] testCases = new[]
             {
-                new GetBlockListParameters { BlockListType = BlockListType.All, CommittedCount = 1, UncommittedCount = 1 },
-                new GetBlockListParameters { BlockListType = BlockListType.Committed, CommittedCount = 1, UncommittedCount = 0 },
-                new GetBlockListParameters { BlockListType = BlockListType.Uncommitted, CommittedCount = 0, UncommittedCount = 1 }
+                new GetBlockListParameters { BlockListOptions = BlockListOptions.All, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListOptions = default, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListOptions = BlockListOptions.Committed, CommittedCount = 1, UncommittedCount = 0 },
+                new GetBlockListParameters { BlockListOptions = BlockListOptions.Uncommitted, CommittedCount = 0, UncommittedCount = 1 }
             };
             foreach (GetBlockListParameters parameters in testCases)
             {
@@ -1064,7 +1065,7 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     // Act
-                    Response<BlockList> response = await blob.GetBlockListAsync(parameters.BlockListType);
+                    Response<BlockList> response = await blob.GetBlockListAsync(parameters.BlockListOptions);
 
                     // Assert
                     // CommitedBlocks and UncommittedBlocks are null if empty
@@ -1139,7 +1140,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.GetBlockListAsync(BlockListType.All, "invalidSnapshot"),
+                    blob.GetBlockListAsync(BlockListOptions.All, "invalidSnapshot"),
                     e =>
                     {
                         Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode);
@@ -1472,7 +1473,7 @@ namespace Azure.Storage.Blobs.Test
 
         public struct GetBlockListParameters
         {
-            public BlockListType BlockListType { get; set; }
+            public BlockListOptions BlockListOptions { get; set; }
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
         }

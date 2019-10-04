@@ -1219,3 +1219,12 @@ directive:
     $.StaticWebsite.xml = { "name": "StaticWebsite"};
     $.BlobServiceProperties.properties.StaticWebsite.xml = { "name": "StaticWebsite"};
  ```
+
+### Hide BlockListType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlockListType
+  transform: >
+    $["x-az-public"] = false;
+```
