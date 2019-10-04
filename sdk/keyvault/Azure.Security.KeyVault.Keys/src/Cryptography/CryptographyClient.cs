@@ -72,14 +72,16 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 _provider = remoteClient;
             }
         }
-        internal CryptographyClient(JsonWebKey keyMaterial, TokenCredential credential, CryptographyClientOptions options)
+
+        internal CryptographyClient(Key key, TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+            Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (string.IsNullOrEmpty(keyMaterial.Id))
+            JsonWebKey keyMaterial = key.KeyMaterial;
+            if (string.IsNullOrEmpty(keyMaterial?.Id))
             {
-                throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
+                throw new ArgumentException($"{nameof(key.Id)} is required", nameof(key));
             }
 
             _keyId = new Uri(keyMaterial.Id);
@@ -89,16 +91,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = remoteClient.Pipeline;
             _remoteProvider = remoteClient;
-            _provider = LocalCryptographyProviderFactory.Create(keyMaterial);
+            _provider = LocalCryptographyProviderFactory.Create(key);
         }
 
-        internal CryptographyClient(JsonWebKey keyMaterial, KeyVaultPipeline pipeline)
+        internal CryptographyClient(Key key, KeyVaultPipeline pipeline)
         {
-            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+            Argument.AssertNotNull(key, nameof(key));
 
-            if (keyMaterial.Id == null)
+            JsonWebKey keyMaterial = key.KeyMaterial;
+            if (string.IsNullOrEmpty(keyMaterial?.Id))
             {
-                throw new ArgumentException($"{nameof(keyMaterial.Id)} is required", nameof(keyMaterial));
+                throw new ArgumentException($"{nameof(key.Id)} is required", nameof(key));
             }
 
             _keyId = new Uri(keyMaterial.Id);
@@ -107,7 +110,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = pipeline;
             _remoteProvider = remoteClient;
-            _provider = LocalCryptographyProviderFactory.Create(keyMaterial);
+            _provider = LocalCryptographyProviderFactory.Create(key);
         }
 
         internal CryptographyClient(Uri keyId, KeyVaultPipeline pipeline)
@@ -1326,7 +1329,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Response<Key> key = await _remoteProvider.GetKeyAsync(cancellationToken).ConfigureAwait(false);
-                _provider = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
+                _provider = LocalCryptographyProviderFactory.Create(key.Value);
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
@@ -1355,8 +1358,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Response<Key> key = _remoteProvider.GetKey(cancellationToken);
-                _provider = LocalCryptographyProviderFactory.Create(key.Value.KeyMaterial);
-                ;
+
+                _provider = LocalCryptographyProviderFactory.Create(key.Value);
+                if (_provider is null)
+                {
+                    // TODO: Log that the key type is unsupported locally.
+
+                    _provider = _remoteProvider;
+                    return;
+                }
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
