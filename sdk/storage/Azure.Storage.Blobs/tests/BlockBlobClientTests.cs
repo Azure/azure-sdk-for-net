@@ -1032,12 +1032,12 @@ namespace Azure.Storage.Blobs.Test
         {
             GetBlockListParameters[] testCases = new[]
             {
-                new GetBlockListParameters { BlockListOptions = BlockListTypes.All, CommittedCount = 1, UncommittedCount = 1 },
-                new GetBlockListParameters { BlockListOptions = default, CommittedCount = 1, UncommittedCount = 1 },
-                new GetBlockListParameters { BlockListOptions = BlockListTypes.Committed | BlockListTypes.Uncommitted, CommittedCount = 1, UncommittedCount = 1 },
-                new GetBlockListParameters { BlockListOptions = (BlockListTypes)7, CommittedCount = 1, UncommittedCount = 1 },
-                new GetBlockListParameters { BlockListOptions = BlockListTypes.Committed, CommittedCount = 1, UncommittedCount = 0 },
-                new GetBlockListParameters { BlockListOptions = BlockListTypes.Uncommitted, CommittedCount = 0, UncommittedCount = 1 }
+                new GetBlockListParameters { BlockListTypes = BlockListTypes.All, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListTypes = default, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListTypes = BlockListTypes.Committed | BlockListTypes.Uncommitted, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListTypes = (BlockListTypes)7, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListTypes = BlockListTypes.Committed, CommittedCount = 1, UncommittedCount = 0 },
+                new GetBlockListParameters { BlockListTypes = BlockListTypes.Uncommitted, CommittedCount = 0, UncommittedCount = 1 }
             };
             foreach (GetBlockListParameters parameters in testCases)
             {
@@ -1067,7 +1067,7 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     // Act
-                    Response<BlockList> response = await blob.GetBlockListAsync(parameters.BlockListOptions);
+                    Response<BlockList> response = await blob.GetBlockListAsync(parameters.BlockListTypes);
 
                     // Assert
                     // CommitedBlocks and UncommittedBlocks are null if empty
@@ -1475,7 +1475,7 @@ namespace Azure.Storage.Blobs.Test
 
         public struct GetBlockListParameters
         {
-            public BlockListTypes BlockListOptions { get; set; }
+            public BlockListTypes BlockListTypes { get; set; }
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
         }
