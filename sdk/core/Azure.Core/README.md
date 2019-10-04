@@ -134,7 +134,7 @@ Assert.AreEqual("Value", setting.Value);
 
 ### Setting up console logging
 
-``` C# ConsoleLogging
+```C# ConsoleLogging
 // Setup a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
 ```

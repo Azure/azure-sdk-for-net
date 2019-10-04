@@ -8,6 +8,7 @@ namespace SnippetGenerator
 {
     public class MarkdownProcessor
     {
+        private static readonly string _snippetFormat = "```C# {0}{1}{2}```";
         private static Regex _snippetRegex = new Regex("```\\s*?C#[ ]*?(?<name>\\w+).*?```",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
@@ -18,7 +19,7 @@ namespace SnippetGenerator
                 var matchGroup = match.Groups["name"];
                 if (matchGroup.Success)
                 {
-                    return $"``` C# {matchGroup.Value}{Environment.NewLine}{snippetProvider(matchGroup.Value)}```";
+                    return string.Format(_snippetFormat, matchGroup.Value, Environment.NewLine, snippetProvider(matchGroup.Value));
                 }
 
                 return match.Value;
