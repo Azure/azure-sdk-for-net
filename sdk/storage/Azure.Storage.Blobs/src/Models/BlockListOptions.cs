@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Flag to specify returning both committed and uncommitted blocks.
         /// </summary>
-        All = ~0,
+        All = Committed | Uncommitted,
 
         /// <summary>
         /// Flag to specify returning the list of committed blocks.

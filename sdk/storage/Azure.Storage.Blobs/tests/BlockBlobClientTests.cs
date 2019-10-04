@@ -1034,6 +1034,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 new GetBlockListParameters { BlockListOptions = BlockListOptions.All, CommittedCount = 1, UncommittedCount = 1 },
                 new GetBlockListParameters { BlockListOptions = default, CommittedCount = 1, UncommittedCount = 1 },
+                new GetBlockListParameters { BlockListOptions = BlockListOptions.Committed | BlockListOptions.Uncommitted, CommittedCount = 1, UncommittedCount = 1 },
                 new GetBlockListParameters { BlockListOptions = BlockListOptions.Committed, CommittedCount = 1, UncommittedCount = 0 },
                 new GetBlockListParameters { BlockListOptions = BlockListOptions.Uncommitted, CommittedCount = 0, UncommittedCount = 1 }
             };
