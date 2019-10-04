@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+  <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.InkRecognizer.WPF.Stroke\**\*.csproj" />
+<ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.InkRecognizer.UWP.Stroke\**\*.csproj" />
+
+  </ItemGroup>
+</Project>
