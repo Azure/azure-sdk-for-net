@@ -38,7 +38,7 @@ namespace Azure.Identity
 
             var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost");
 
-            if(!string.IsNullOrEmpty(tenantId))
+            if (!string.IsNullOrEmpty(tenantId))
             {
                 pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
             }

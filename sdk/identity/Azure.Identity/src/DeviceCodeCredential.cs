@@ -53,7 +53,7 @@ namespace Azure.Identity
 
             var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient");
 
-            if(!string.IsNullOrEmpty(tenantId))
+            if (!string.IsNullOrEmpty(tenantId))
             {
                 pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
             }

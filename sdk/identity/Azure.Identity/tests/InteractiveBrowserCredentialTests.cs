@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests
         {
             var cred = new InteractiveBrowserCredential(SingleTenantClientId, TenantId);
 
-            AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }).ConfigureAwait(false);
+            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
         }
