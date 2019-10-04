@@ -159,8 +159,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
             Assert.AreEqual(304, response.GetRawResponse().Status);
-            ResponseBodyNotFoundException exception = Assert.Throws<ResponseBodyNotFoundException>(() => { ConfigurationSetting setting = response.Value; });
-            Assert.AreEqual(304, exception.Status);
+            Assert.Throws<Exception>(() => { ConfigurationSetting setting = response.Value; });
         }
 
         [Test]

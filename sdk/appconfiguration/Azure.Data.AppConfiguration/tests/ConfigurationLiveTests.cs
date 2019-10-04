@@ -666,11 +666,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 Response<ConfigurationSetting> response = await service.GetAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
                 Assert.AreEqual(304, response.GetRawResponse().Status);
-                var exception = Assert.Throws<ResponseBodyNotFoundException>(() =>
+                var exception = Assert.Throws<Exception>(() =>
                 {
                     ConfigurationSetting value = response.Value;
                 });
-                Assert.AreEqual(304, exception.Status);
             }
             finally
             {
