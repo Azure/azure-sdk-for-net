@@ -7,7 +7,7 @@
     <PackageReleaseNotes>
       <![CDATA[
       Console and trace logger listener.
-      More logging options.
+      Additional content and header logging options.
       Type and namespace refactorings.
       ]]>
     </PackageReleaseNotes>
