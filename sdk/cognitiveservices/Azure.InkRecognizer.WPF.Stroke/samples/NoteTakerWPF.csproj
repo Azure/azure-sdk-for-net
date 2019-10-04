@@ -101,11 +101,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Azure.AI.InkRecognizer\Azure.AI.InkRecognizer.csproj">
+    <ProjectReference Include="..\..\InkRecognizer\Azure.AI.InkRecognizer.csproj">
       <Project>{c302e788-b3af-4dd2-9cc4-bd495bfbc5bf}</Project>
       <Name>Azure.AI.InkRecognizer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Azure.AI.WPF.Stroke\Azure.AI.InkRecognizer.WPF.Stroke.csproj">
+    <ProjectReference Include="..\src\Azure.AI.InkRecognizer.WPF.Stroke.csproj">
       <Project>{205a62e4-93bc-414c-8344-2e7a46e1252a}</Project>
       <Name>Azure.AI.InkRecognizer.WPF.Stroke</Name>
     </ProjectReference>

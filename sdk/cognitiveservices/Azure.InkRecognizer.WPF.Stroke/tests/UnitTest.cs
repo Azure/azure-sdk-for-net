@@ -1,14 +1,19 @@
-﻿using Azure.AI.InkRecognizer;
-using Azure.AI.InkRecognizer.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Azure.AI.InkRecognizer.WPF.Stroke;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
+#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace InkRecognizerTestWPF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using Azure.AI.InkRecognizer;
+    using Azure.AI.InkRecognizer.Models;
+    using Azure.AI.InkRecognizer.WPF.Stroke;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class UnitTest
     {
@@ -24,7 +29,10 @@ namespace InkRecognizerTestWPF
             Assert.IsNotNull(inkRecognizerClient);
         }
 
-        [TestMethod]
+        /// <summary>
+        /// This is to test the store functionlaity.
+        /// </summary>
+        //[TestMethod]
         public void TestInkStrokeStrore()
         {
             var inkStrokeStore = new InkStrokeStore();

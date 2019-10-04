@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.AI.InkRecognizer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace NoteTakerWPF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Azure.AI.InkRecognizer.Models;
+
     public class OutputWriter
     {
         public static string PrintWords(RecognitionRoot root)
