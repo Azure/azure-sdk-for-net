@@ -39,8 +39,8 @@ namespace SnippetGenerator
             foreach (var snippet in snippets)
             {
                 Console.WriteLine($" {snippet.Name}");
-
             }
+
             text = MarkdownProcessor.Process(text, s => {
                 var selectedSnippets = snippets.Where(snip => snip.Name == s).ToArray();
                 if (selectedSnippets.Length > 1)
@@ -68,12 +68,12 @@ namespace SnippetGenerator
 
             int lastLine = lines.Length - 1;
 
-            while (string.IsNullOrWhiteSpace(lines[firstLine].ToString()))
+            while (string.IsNullOrWhiteSpace(lines[firstLine]))
             {
                 firstLine++;
             }
 
-            while (string.IsNullOrWhiteSpace(lines[lastLine].ToString()))
+            while (string.IsNullOrWhiteSpace(lines[lastLine]))
             {
                 lastLine--;
             }

@@ -14,8 +14,7 @@ namespace Azure.Core.Samples
         [Test]
         public void Logging()
         {
-            #region ConsoleLogging
-
+            #region Snippet:ConsoleLogging
             // Setup a listener to monitor logged events.
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
             #endregion
