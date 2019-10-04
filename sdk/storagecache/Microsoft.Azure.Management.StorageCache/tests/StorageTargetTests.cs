@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection.Metadata;
     using Microsoft.Azure.Management.Storage;
     using Microsoft.Azure.Management.StorageCache.Models;
     using Microsoft.Azure.Management.StorageCache.Tests.Fixtures;
@@ -147,8 +148,259 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 var storageTarget = this.AddClfsStorageAccount(context, "4");
                 this.fixture.CacheHelper.DeleteStorageTarget(this.fixture.Cache.Name, storageTarget.Name);
                 TestUtilities.Wait(new TimeSpan(0, 0, 60));
-                Exception ex = Assert.Throws<CloudErrorException>(() => this.fixture.CacheHelper.GetstorageTarget(this.fixture.Cache.Name, storageTarget.Name, true));
-                Assert.Contains("NotFound", ex.Message);
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.fixture.CacheHelper.GetstorageTarget(this.fixture.Cache.Name, storageTarget.Name, true));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                Assert.Contains("NotFound", ex.Body.Error.Code);
+            }
+        }
+
+        /// <summary>
+        /// Test clfs target with invalid subscription.
+        /// </summary>
+        [Fact]
+        public void TestClfsTargetInvalidSubscription()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
+                StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
+                var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
+                var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, this.fixture.ResourceGroup.Name);
+
+                string invalidSubscription = Guid.NewGuid().ToString();
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    storageAccount.Name,
+                    blobContainer.Name,
+                    "/junction",
+                    invalidSubscription);
+
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// Test clfs target with invalid storage account.
+        /// </summary>
+        [Fact]
+        public void TestClfsTargetInvalidStorageAccount()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    "invalidsa",
+                    "invalidsc",
+                    "/junction");
+
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// Test clfs target with invalid storage container.
+        /// </summary>
+        [Fact]
+        public void TestClfsTargetInvalidStorageContainer()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
+                StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
+                var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    storageAccount.Name,
+                    "invalidsc",
+                    "/junction");
+
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// Test clfs target with invalid resourcegroup.
+        /// </summary>
+        [Fact]
+        public void TestClfsTargetInvalidResourceGroup()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
+                StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
+                var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
+                var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, this.fixture.ResourceGroup.Name);
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    storageAccount.Name,
+                    blobContainer.Name,
+                    "/junction",
+                    resourceGroupName: "invalidrs");
+
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// Test clfs target with empty namespace.
+        /// </summary>
+        [Fact]
+        public void TestClfsTargetEmptyNameSpace()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
+                StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
+                var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
+                var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, this.fixture.ResourceGroup.Name);
+
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    storageAccount.Name,
+                    blobContainer.Name,
+                    "");
+                storageTargetParameters.Junctions = new List<NamespaceJunction>() { };
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// Test storage target with invalid target type.
+        /// </summary>
+        [Fact]
+        public void TestStorageTargetInvalidTargetType()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    "storageAccount",
+                    "blobContainer",
+                    "junction");
+                storageTargetParameters.TargetType = "invalid";
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.targetType", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// Test clfs target with invalid namespace.
+        /// </summary>
+        [Fact]
+        public void TestClfsTargetInvalidNameSpace()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
+                StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
+                var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
+                var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, this.fixture.ResourceGroup.Name);
+
+                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                    storageAccount.Name,
+                    blobContainer.Name,
+                    "Invalid#$%1");
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.CreateStorageTarget(
+                        this.fixture.Cache.Name,
+                        "invalidst",
+                        storageTargetParameters,
+                        this.testOutputHelper));
+
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
             }
         }
 
@@ -164,7 +416,15 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             string junction = prefix;
             var storageAccount = storageAccountsHelper.CreateStorageAccount(storageAccountName);
             var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, blobContainerName);
-            StorageTarget storageTarget = this.fixture.CacheHelper.CreateStorageTarget(this.fixture.Cache.Name, storageTargetName, storageAccount.Name, blobContainer.Name, junction, this.testOutputHelper);
+            StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
+                storageAccount.Name,
+                blobContainer.Name,
+                junction);
+            StorageTarget storageTarget = this.fixture.CacheHelper.CreateStorageTarget(
+                this.fixture.Cache.Name,
+                storageTargetName,
+                storageTargetParameters,
+                this.testOutputHelper);
 
             this.testOutputHelper.WriteLine($"Storage target Name {storageTarget.Name}");
             this.testOutputHelper.WriteLine($"Storage target NamespacePath {storageTarget.Junctions[0].NamespacePath}");

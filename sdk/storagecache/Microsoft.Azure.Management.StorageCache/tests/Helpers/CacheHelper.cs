@@ -90,33 +90,38 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         /// <param name="name">Name of the cache.</param>
         /// <param name="sku">Name of the SKU.</param>
-        /// <param name="cache_size">Size of cache.</param>
+        /// <param name="cacheSize">Size of cache.</param>
+        /// <param name="skipGet">Skip get cache before creating it.</param>
         /// <returns>Cache object.</returns>
-        public Cache Create(string name, string sku, int cache_size)
+        public Cache Create(string name, string sku, int cacheSize, bool skipGet = false)
         {
             Cache cache;
-            try
+            if (!skipGet)
             {
-                cache = this.Get(name);
-            }
-            catch (CloudErrorException ex)
-            {
-                if (ex.Body.Error.Code == "ResourceNotFound")
+                try
                 {
-                    cache = null;
+                    cache = this.Get(name);
                 }
-                else
+                catch (CloudErrorException ex)
                 {
-                    throw;
+                    if (ex.Body.Error.Code == "ResourceNotFound")
+                    {
+                        cache = null;
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
+            else {cache = null; }
 
             if (cache == null)
             {
-                var cache_sku = new CacheSku() { Name = sku };
-                var subnet_uri = $"/subscriptions/{this.subscriptionId}/resourcegroups/{this.resourceGroup.Name}/providers/Microsoft.Network/virtualNetworks/{this.virtualNetwork.Name}/subnets/{this.subNet.Name}";
-                var cache_parameters = new Cache() { CacheSizeGB = cache_size, Location = this.resourceGroup.Location, Sku = cache_sku, Subnet = subnet_uri };
-                cache = this.StoragecacheManagementClient.Caches.Create(this.resourceGroup.Name, name, cache_parameters);
+                var cacheSku = new CacheSku() { Name = sku };
+                var subnetUri = $"/subscriptions/{this.subscriptionId}/resourcegroups/{this.resourceGroup.Name}/providers/Microsoft.Network/virtualNetworks/{this.virtualNetwork.Name}/subnets/{this.subNet.Name}";
+                var cacheParameters = new Cache() { CacheSizeGB = cacheSize, Location = this.resourceGroup.Location, Sku = cacheSku, Subnet = subnetUri };
+                cache = this.StoragecacheManagementClient.Caches.Create(this.resourceGroup.Name, name, cacheParameters);
             }
 
             return cache;
@@ -168,7 +173,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="state">Expected sate of the cache.</param>
         /// <param name="timeout">Timeout for polling.</param>
         /// <param name="polling_delay">Delay between polling.</param>
-        public void Wait_for_cache_state(Func<string, string> operation, string name, string state, int timeout = 900, int polling_delay = 60)
+        public void WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = 900, int polling_delay = 60)
         {
             int elapsed = 0;
             bool reached_state = false;
@@ -218,8 +223,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="name">Name of the cache.</param>
         public void CheckCacheState(string name)
         {
-            this.Wait_for_cache_state(this.GetCacheProvisioningState, name, "Succeeded");
-            this.Wait_for_cache_state(this.GetCacheHealthgState, name, "Healthy");
+            this.WaitForCacheState(this.GetCacheProvisioningState, name, "Succeeded");
+            this.WaitForCacheState(this.GetCacheHealthgState, name, "Healthy");
         }
 
         /// <summary>
@@ -267,30 +272,35 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         }
 
         /// <summary>
-        /// Create CLFS storage target.
+        /// Create CLFS storage target parameters.
         /// </summary>
-        /// <param name="cacheName">Storage cache name.</param>
-        /// <param name="storageTargetName">Storage target name.</param>
         /// <param name="storageAccountName">Storage account name.</param>
         /// <param name="containerName"> Storage container name.</param>
         /// <param name="namepacePath"> namepace path.</param>
-        /// <param name="testOutputHelper">test output helper.</param>
-        /// <returns>CLFS storage target.</returns>
-        public StorageTarget CreateStorageTarget(string cacheName, string storageTargetName, string storageAccountName, string containerName, string namepacePath, ITestOutputHelper testOutputHelper = null)
+        /// <param name="subscriptionId">Subscription id.</param>
+        /// <param name="resourceGroupName">Resource group name.</param>
+        /// <returns>CLFS storage target parameters.</returns>
+        public StorageTarget CreateClfsStorageTargetParameters(
+            string storageAccountName,
+            string containerName,
+            string namepacePath,
+            string subscriptionId = null,
+            string resourceGroupName = null)
         {
-            StorageTarget storageTarget;
+            var subscriptionID = string.IsNullOrEmpty(subscriptionId) ? this.subscriptionId : subscriptionId;
+            var resourceGroup = string.IsNullOrEmpty(resourceGroupName) ? this.resourceGroup.Name : resourceGroupName;
             ClfsTarget clfsTarget = new ClfsTarget()
             {
                 Target =
-                $"/subscriptions/{this.subscriptionId}/" +
-                $"resourceGroups/{this.resourceGroup.Name}/" +
+                $"/subscriptions/{subscriptionID}/" +
+                $"resourceGroups/{resourceGroup}/" +
                 $"providers/Microsoft.Storage/storageAccounts/{storageAccountName}/" +
                 $"blobServices/default/containers/{containerName}",
             };
 
             NamespaceJunction namespaceJunction = new NamespaceJunction()
             {
-                NamespacePath = "/" + namepacePath,
+                NamespacePath = namepacePath,
                 TargetPath = "/",
             };
 
@@ -301,6 +311,24 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 Junctions = new List<NamespaceJunction>() { namespaceJunction },
             };
 
+            return storageTargetParameters;
+        }
+
+        /// <summary>
+        /// Create CLFS storage target.
+        /// </summary>
+        /// <param name="cacheName">Storage cache name.</param>
+        /// <param name="storageTargetName">Storage target name.</param>
+        /// <param name="storageTargetParameters">Storage target parameters.</param>
+        /// <param name="testOutputHelper">test output helper.</param>
+        /// <returns>CLFS storage target.</returns>
+        public StorageTarget CreateStorageTarget(
+            string cacheName,
+            string storageTargetName,
+            StorageTarget storageTargetParameters,
+            ITestOutputHelper testOutputHelper = null)
+        {
+            StorageTarget storageTarget;
             this.StoragecacheManagementClient.StorageTargets.Create(
                 this.resourceGroup.Name,
                 cacheName,

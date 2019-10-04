@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.Management.StorageCache.Tests
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Storage;
     using Microsoft.Azure.Management.StorageCache.Models;
@@ -139,8 +140,75 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 client.Caches.Flush(this.fixture.ResourceGroup.Name, this.fixture.Cache.Name);
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                this.fixture.CacheHelper.Wait_for_cache_state(this.fixture.CacheHelper.GetCacheHealthgState, this.fixture.Cache.Name, "Healthy");
+                this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthgState, this.fixture.Cache.Name, "Healthy");
             }
         }
+
+        /// <summary>
+        /// The test invalid cache size.
+        /// </summary>
+        [Fact]
+        public void TestInvalidCacheSize()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.Create("InvalidCache", this.fixture.Cache.Sku.Name, 10));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                Assert.Equal("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("cacheSizeGB", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// The test invalid sku.
+        /// </summary>
+        [Fact]
+        public void TestInvalidSku()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.Create("InvalidCacheSku", "InvalidSku", 3072));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                Assert.Equal("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("sku", ex.Body.Error.Target);
+            }
+        }
+
+        /// <summary>
+        /// The test invalid subscription.
+        /// </summary>
+        [Fact]
+        public void TestInvalidSubscription()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.SubscriptionId = Guid.NewGuid().ToString();
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(
+                    () =>
+                    this.fixture.CacheHelper.Create("InvalidSubscriptionId", this.fixture.Cache.Sku.Name, 3072, true));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                Assert.Equal("SubscriptionNotFound", ex.Body.Error.Code);
+                client.SubscriptionId = this.fixture.SubscriptionID;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+            }
+        }
+
     }
 }
