@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.InkRecognizer", "Azure.AI.InkRecognizer.csproj", "{C302E788-B3AF-4DD2-9CC4-BD495BFBC5BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.InkRecognizer", "src\Azure.AI.InkRecognizer.csproj", "{C302E788-B3AF-4DD2-9CC4-BD495BFBC5BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.InkRecognizer.WPF.Stroke", "..\Azure.InkRecognizer.WPF.Stroke\src\Azure.AI.InkRecognizer.WPF.Stroke.csproj", "{205A62E4-93BC-414C-8344-2E7A46E1252A}"
 EndProject

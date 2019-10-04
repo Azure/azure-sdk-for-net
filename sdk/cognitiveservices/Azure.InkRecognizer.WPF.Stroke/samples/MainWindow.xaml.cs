@@ -1,4 +1,4 @@
-﻿using Azure.Data.InkRecognizer;
+﻿using Azure.AI.InkRecognizer;
 using Azure.AI.InkRecognizer.Models;
 using Azure.AI.InkRecognizer.WPF.Stroke;
 using System;
@@ -30,6 +30,7 @@ namespace NoteTakerWPF
         // Time to wait before triggering ink recognition operation
         const double IDLE_WAITING_TIME = 1000;
 
+        // <MainWindow>
         public MainWindow()
         {
             InitializeComponent();
@@ -51,27 +52,37 @@ namespace NoteTakerWPF
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(IDLE_WAITING_TIME);
         }
+        // </MainWindow>
 
+        // <TouchInkingButton_Checked>
         void TouchInkingButton_Checked(object sender, RoutedEventArgs e)
         {
             inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
         }
+        // </TouchInkingButton_Checked>
 
+        // <TouchInkingButton_Unchecked>
         void TouchInkingButton_Unchecked(object sender, RoutedEventArgs e)
         {
             inkCanvas.EditingMode = InkCanvasEditingMode.None;
         }
+        // </TouchInkingButton_Unchecked>
 
+        // <EraseInkingButton_Checked>
         void EraseInkingButton_Checked(object sender, RoutedEventArgs e)
         {
             inkCanvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
         }
+        // </EraseInkingButton_Checked>
 
+        // <EraseInkingButton_Unchecked>
         void EraseInkingButton_Unchecked(object sender, RoutedEventArgs e)
         {
             inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
         }
+        // </EraseInkingButton_Unchecked>
 
+        // <ClearButton_Tapped>
         private void ClearButton_Tapped(object sender, RoutedEventArgs e)
         {
             canvas.Children.Clear();
@@ -85,7 +96,9 @@ namespace NoteTakerWPF
             idToStrokeMap.Clear();
             output.Text = "";
         }
+        // </ClearButton_Tapped>
 
+        // <SearchQuery_Submitted>
         private async void SearchQuery_Submitted(object sender, RoutedEventArgs args)
         {
             try
@@ -110,7 +123,9 @@ namespace NoteTakerWPF
                 output.Text = OutputWriter.PrintError(e.Message);
             }
         }
+        // </SearchQuery_Submitted>
 
+        // <InkCanvas_StrokeErased>
         private void InkCanvas_StrokeErased(object sender, InkCanvasStrokeErasingEventArgs e)
         {
             StopTimer();
@@ -121,7 +136,9 @@ namespace NoteTakerWPF
 
             StartTimer();
         }
+        // </InkCanvas_StrokeErased>
 
+        // <InkCanvas_StrokeCollected>
         private void InkCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
         {
             StopTimer();
@@ -132,6 +149,7 @@ namespace NoteTakerWPF
 
             StartTimer();
         }
+        // </InkCanvas_StrokeCollected>
 
         private async void DispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -162,13 +180,14 @@ namespace NoteTakerWPF
             }
         }
 
+        // <AnalyzeInk>
         private async Task<RecognitionRoot> AnalyzeInk()
         {
             try
             {
                 var selectedLanguage = (ComboBoxItem)LanguageComboBox.SelectedValue;
                 var selectedApplicationKind = (ComboBoxItem)ApplicationKindComboBox.SelectedValue;
-                var inkRecognizerClientOptions = new InkRecognizerClientOptions(InkRecognizerClientOptions.ServiceVersion.Preview_1_0_0)
+                var inkRecognizerClientOptions = new InkRecognizerClientOptions(InkRecognizerClientOptions.ServiceVersion.Preview1)
                 {
                     Language = selectedLanguage.Content.ToString(),
                     ApplicationKind = GetApplicationKind(selectedApplicationKind.Content.ToString())
@@ -187,6 +206,7 @@ namespace NoteTakerWPF
                 throw e;
             }
         }
+        // </AnalyzeInk>
 
         public void StartTimer() => dispatcherTimer.Start();
         public void StopTimer() => dispatcherTimer.Stop();

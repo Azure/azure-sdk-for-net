@@ -32,6 +32,7 @@ namespace NoteTakerUWP
         // Time to wait before triggering ink recognition operation
         const double IDLE_WAITING_TIME = 1000;
 
+        // <MainPage>
         public MainPage()
         {
             this.InitializeComponent();
@@ -54,31 +55,41 @@ namespace NoteTakerUWP
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(IDLE_WAITING_TIME);
         }
+        // </MainPage>
 
+        // <TouchInkingButton_Checked>
         private void TouchInkingButton_Checked(object sender, RoutedEventArgs args)
         {
             var inkPresenter = inkCanvas.InkPresenter;
             inkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen | Windows.UI.Core.CoreInputDeviceTypes.Mouse;
         }
+        // </TouchInkingButton_Checked>
 
+        // <TouchInkingButton_Unchecked>
         private void TouchInkingButton_Unchecked(object sender, RoutedEventArgs args)
         {
             var inkPresenter = inkCanvas.InkPresenter;
             inkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
+        // </TouchInkingButton_Unchecked>
 
+        // <EraseInkingButton_Checked>
         private void EraseInkingButton_Checked(object sender, RoutedEventArgs args)
         {
             var inkPresenter = inkCanvas.InkPresenter;
             inkPresenter.InputProcessingConfiguration.Mode = Windows.UI.Input.Inking.InkInputProcessingMode.Erasing;
         }
+        // </EraseInkingButton_Checked>
 
+        // <EraseInkingButton_Unchecked>
         private void EraseInkingButton_Unchecked(object sender, RoutedEventArgs args)
         {
             var inkPresenter = inkCanvas.InkPresenter;
             inkPresenter.InputProcessingConfiguration.Mode = Windows.UI.Input.Inking.InkInputProcessingMode.Inking;
         }
+        // </EraseInkingButton_Unchecked>
 
+        // <ClearButton_Tapped>
         private void ClearButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             canvas.Children.Clear();
@@ -93,7 +104,9 @@ namespace NoteTakerUWP
             idToStrokeMap.Clear();
             output.Text = "";
         }
+        // </ClearButton_Tapped>
 
+        // <Search_QuerySubmitted>
         private async void Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             try
@@ -118,17 +131,23 @@ namespace NoteTakerUWP
                 output.Text = OutputWriter.PrintError(e.Message);
             }
         }
+        // </Search_QuerySubmitted>
 
+        // <InkPresenter_StrokeInputStarted>
         private void InkPresenter_StrokeInputStarted(Windows.UI.Input.Inking.InkStrokeInput sender, PointerEventArgs args)
         {
             StopTimer();
         }
+        // </InkPresenter_StrokeInputStarted>
 
+        // <InkPresenter_StrokeInputEnded>
         private void InkPresenter_StrokeInputEnded(Windows.UI.Input.Inking.InkStrokeInput sender, PointerEventArgs args)
         {
             StartTimer();
         }
+        // </InkPresenter_StrokeInputEnded>
 
+        // <InkPresenter_StrokesCollected>
         private void InkPresenter_StrokesCollected(Windows.UI.Input.Inking.InkPresenter sender, Windows.UI.Input.Inking.InkStrokesCollectedEventArgs args)
         {
             StopTimer();
@@ -142,7 +161,9 @@ namespace NoteTakerUWP
 
             StartTimer();
         }
+        // </InkPresenter_StrokesCollected>
 
+        // <InkPresenter_StrokesErased>
         private void InkPresenter_StrokesErased(Windows.UI.Input.Inking.InkPresenter sender, Windows.UI.Input.Inking.InkStrokesErasedEventArgs args)
         {
             StopTimer();
@@ -156,7 +177,9 @@ namespace NoteTakerUWP
 
             StartTimer();
         }
+        // </InkPresenter_StrokesErased>
 
+        // <DispatcherTimer_Tick>
         private async void DispatcherTimer_Tick(object sender, object e)
         {
             StopTimer();
@@ -170,7 +193,9 @@ namespace NoteTakerUWP
                 output.Text = OutputWriter.PrintError(ex.Message);
             }
         }
+        // </DispatcherTimer_Tick>
 
+        // <GetApplicationKind>
         private ApplicationKind GetApplicationKind(string appKindString)
         {
             switch (appKindString)
@@ -184,7 +209,9 @@ namespace NoteTakerUWP
                     return ApplicationKind.Mixed;
             }
         }
+        // </GetApplicationKind>
 
+        // <AnalyzeInk>
         private async Task<RecognitionRoot> AnalyzeInk()
         {
             try
@@ -210,6 +237,7 @@ namespace NoteTakerUWP
                 throw e;
             }
         }
+        // </AnalyzeInk>
 
         public void StartTimer() => dispatcherTimer.Start();
         public void StopTimer() => dispatcherTimer.Stop();

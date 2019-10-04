@@ -9,20 +9,26 @@ using System.Text;
 
 namespace NoteTakerUWP
 {
+    // <OutputWriterImplementations>
     public class OutputWriter
     {
+        // <PrintWords>
         public static string PrintWords(RecognitionRoot root)
         {
             var words = root.GetWords();
             return PrintRecoUnits(root, words);
         }
+        // </PrintWords>
 
+        // <PrintShapes>
         public static string PrintShapes(RecognitionRoot root)
         {
             var shapes = root.GetDrawings();
             return PrintRecoUnits(root, shapes);
         }
+        // </PrintShapes>
 
+        // <Print>
         public static string Print(RecognitionRoot root)
         {
             var output = new StringBuilder();
@@ -30,12 +36,16 @@ namespace NoteTakerUWP
             output.Append(PrintShapes(root));
             return output.ToString();
         }
+        // </Print>
 
+        // <PrintError>
         public static string PrintError(string errMsg)
         {
             return String.Format("ERROR: {0}", errMsg);
         }
+        // </PrintError>
 
+        // <PrintRecoUnits>
         private static string PrintRecoUnits(RecognitionRoot root, IEnumerable<InkRecognitionUnit> recoUnits)
         {
             var recognizedText = new StringBuilder();
@@ -62,5 +72,7 @@ namespace NoteTakerUWP
             }
             return recognizedText.ToString();
         }
+        // </PrintRecoUnits>
     }
+    // </OutputWriterImplementations>
 }
