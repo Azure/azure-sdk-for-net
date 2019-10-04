@@ -5,6 +5,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -92,7 +93,7 @@
                     if (cancellationException.CancellationToken == tokenSource.Token)
                     {
                         throw new TimeoutException(
-                            string.Format(BatchErrorMessages.ODataMonitorTimedOut, timeout),
+                            string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.ODataMonitorTimedOut, timeout),
                             cancellationException);
                     }
 

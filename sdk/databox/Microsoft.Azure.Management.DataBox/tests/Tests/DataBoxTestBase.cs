@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit.Abstractions;
@@ -32,7 +32,7 @@ namespace DataBox.Tests
             var helper = (TestOutputHelper)testOutputHelper;
             ITest test = (ITest)helper.GetType().GetField("test", BindingFlags.NonPublic | BindingFlags.Instance)
                                   .GetValue(helper);
-            this.Context = MockContext.Start(this.GetType().FullName, test.TestCase.TestMethod.Method.Name);
+            this.Context = MockContext.Start(this.GetType(), test.TestCase.TestMethod.Method.Name);
 
             this.Client = this.Context.GetServiceClient<DataBoxManagementClient>();
             this.RMClient = this.Context.GetServiceClient<ResourceManagementClient>();
@@ -154,3 +154,4 @@ namespace DataBox.Tests
         }
     }
 }
+

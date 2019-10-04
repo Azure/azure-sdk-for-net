@@ -33,10 +33,22 @@ namespace Microsoft.Azure.Search.Models
         /// warning.</param>
         /// <param name="message">The message describing the warning that
         /// occurred while processing the item.</param>
-        public ItemWarning(string key = default(string), string message = default(string))
+        /// <param name="name">The name of the source at which the warning
+        /// originated. For example, this could refer to a particular skill in
+        /// the attached skillset. This may not be always available.</param>
+        /// <param name="details">Additional, verbose details about the warning
+        /// to assist in debugging the indexer. This may not be always
+        /// available.</param>
+        /// <param name="documentationLink">A link to a troubleshooting guide
+        /// for these classes of warnings. This may not be always
+        /// available.</param>
+        public ItemWarning(string key = default(string), string message = default(string), string name = default(string), string details = default(string), string documentationLink = default(string))
         {
             Key = key;
             Message = message;
+            Name = name;
+            Details = details;
+            DocumentationLink = documentationLink;
             CustomInit();
         }
 
@@ -57,6 +69,28 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the source at which the warning originated. For
+        /// example, this could refer to a particular skill in the attached
+        /// skillset. This may not be always available.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets additional, verbose details about the warning to assist in
+        /// debugging the indexer. This may not be always available.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public string Details { get; private set; }
+
+        /// <summary>
+        /// Gets a link to a troubleshooting guide for these classes of
+        /// warnings. This may not be always available.
+        /// </summary>
+        [JsonProperty(PropertyName = "documentationLink")]
+        public string DocumentationLink { get; private set; }
 
     }
 }

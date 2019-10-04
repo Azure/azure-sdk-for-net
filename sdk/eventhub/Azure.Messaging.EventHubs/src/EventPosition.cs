@@ -3,7 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -30,14 +30,14 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="EventHubConsumer"/>
+        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumer"/>
         ///   is created with this position.
         /// </summary>
         ///
         public static EventPosition Latest => FromOffset(EndOfStreamOffset, false);
 
         /// <summary>
-        ///   The offset of the eventidentified by this position.
+        ///   The offset of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Indicates if the specified offset is inclusive of the event which it identifies.  This
-        ///   information is only relevent if the event position was identified by an offset or sequence number.
+        ///   information is only relevant if the event position was identified by an offset or sequence number.
         /// </summary>
         ///
         /// <value><c>true</c> if the offset is inclusive; otherwise, <c>false</c>.</value>
@@ -68,10 +68,10 @@ namespace Azure.Messaging.EventHubs
         internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   The sequence number of the event identified by this poistion;
+        ///   The sequence number of the event identified by this position.
         /// </summary>
         ///
-        /// <value>Excpected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
+        /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
         ///
         internal long? SequenceNumber { get; set; }
 
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs
         private static EventPosition FromOffset(string offset,
                                                 bool isInclusive = false)
         {
-            Guard.ArgumentNotNullOrWhitespace(nameof(offset), offset);
+            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
 
             return new EventPosition
             {
@@ -183,6 +183,4 @@ namespace Azure.Messaging.EventHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
     }
-
-    //TODO: Implement the AMQP-specific methods from track 1 to a new abstraction. (They were not brought forward)
 }

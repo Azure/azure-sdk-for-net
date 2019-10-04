@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="enabledState">Describes if the custom rule is in
         /// enabled or disabled state. Defaults to Enabled if not specified.
         /// Possible values include: 'Disabled', 'Enabled'</param>
-        /// <param name="rateLimitDurationInMinutes">Defines rate limit
-        /// duration. Default is 1 minute.</param>
-        /// <param name="rateLimitThreshold">Defines rate limit
-        /// threshold.</param>
+        /// <param name="rateLimitDurationInMinutes">Time window for resetting
+        /// the rate limit count. Default is 1 minute.</param>
+        /// <param name="rateLimitThreshold">Number of allowed requests per
+        /// client within the time window.</param>
         public CustomRule(int priority, string ruleType, IList<MatchCondition> matchConditions, string action, string name = default(string), string enabledState = default(string), int? rateLimitDurationInMinutes = default(int?), int? rateLimitThreshold = default(int?))
         {
             Name = name;
@@ -96,13 +96,15 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string RuleType { get; set; }
 
         /// <summary>
-        /// Gets or sets defines rate limit duration. Default is 1 minute.
+        /// Gets or sets time window for resetting the rate limit count.
+        /// Default is 1 minute.
         /// </summary>
         [JsonProperty(PropertyName = "rateLimitDurationInMinutes")]
         public int? RateLimitDurationInMinutes { get; set; }
 
         /// <summary>
-        /// Gets or sets defines rate limit threshold.
+        /// Gets or sets number of allowed requests per client within the time
+        /// window.
         /// </summary>
         [JsonProperty(PropertyName = "rateLimitThreshold")]
         public int? RateLimitThreshold { get; set; }
@@ -146,6 +148,18 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "Name", 128);
                 }
+            }
+            if (RateLimitDurationInMinutes > 5)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RateLimitDurationInMinutes", 5);
+            }
+            if (RateLimitDurationInMinutes < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitDurationInMinutes", 0);
+            }
+            if (RateLimitThreshold < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitThreshold", 0);
             }
             if (MatchConditions != null)
             {

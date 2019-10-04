@@ -102,7 +102,6 @@ TestResults
 [Tt]est[Rr]esult*
 *.Cache
 ClientBin
-[Ss]tyle[Cc]op.*
 ~$*
 *.dbmdl
 
@@ -150,3 +149,6 @@ pingme.txt
 # TS/Node files
 dist/
 node_modules/
+
+# MSBuild binary log files
+msbuild.binlog

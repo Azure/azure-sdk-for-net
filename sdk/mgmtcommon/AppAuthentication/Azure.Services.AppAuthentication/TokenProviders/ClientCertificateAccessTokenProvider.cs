@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     // Get certificate for the given Key Vault secret identifier
                     try
                     {
-                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier, cancellationToken);
+                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier, cancellationToken).ConfigureAwait(false);
                         certs = new List<X509Certificate2>() { keyVaultCert };
 
                         // If authority is still not specified, create it using azureAdInstance and tenantId. Tenant ID comes from Key Vault access token.

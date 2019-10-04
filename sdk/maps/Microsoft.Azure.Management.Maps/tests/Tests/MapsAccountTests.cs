@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Maps.Tests.Helpers;
@@ -30,7 +30,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
@@ -60,7 +60,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
@@ -99,7 +99,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
@@ -130,7 +130,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
@@ -158,7 +158,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
@@ -190,7 +190,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
@@ -218,7 +218,7 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);

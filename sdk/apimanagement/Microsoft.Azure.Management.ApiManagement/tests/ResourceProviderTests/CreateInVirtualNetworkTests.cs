@@ -24,7 +24,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         public async Task CreateInVirtualNetworkTests()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
 

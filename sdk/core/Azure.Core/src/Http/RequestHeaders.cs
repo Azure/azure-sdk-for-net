@@ -3,14 +3,15 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Core.Http
 {
-    public readonly struct RequestHeaders: IEnumerable<HttpHeader>
+    public readonly struct RequestHeaders : IEnumerable<HttpHeader>
     {
         private readonly Request _request;
 
-        public RequestHeaders(Request request)
+        internal RequestHeaders(Request request)
         {
             _request = request;
         }
@@ -35,7 +36,7 @@ namespace Azure.Core.Http
             _request.AddHeader(name, value);
         }
 
-        public bool TryGetValue(string name, out string value)
+        public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
             return _request.TryGetHeader(name, out value);
         }

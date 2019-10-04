@@ -22,33 +22,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum ComputeNodeState
     {
         /// <summary>
-        /// The node is not currently running a task.
+        /// The Compute Node is not currently running a Task.
         /// </summary>
         [EnumMember(Value = "idle")]
         Idle,
         /// <summary>
-        /// The node is rebooting.
+        /// The Compute Node is rebooting.
         /// </summary>
         [EnumMember(Value = "rebooting")]
         Rebooting,
         /// <summary>
-        /// The node is reimaging.
+        /// The Compute Node is reimaging.
         /// </summary>
         [EnumMember(Value = "reimaging")]
         Reimaging,
         /// <summary>
-        /// The node is running one or more tasks (other than a start task).
+        /// The Compute Node is running one or more Tasks (other than a
+        /// StartTask).
         /// </summary>
         [EnumMember(Value = "running")]
         Running,
         /// <summary>
-        /// The node cannot be used for task execution due to errors.
+        /// The Compute Node cannot be used for Task execution due to errors.
         /// </summary>
         [EnumMember(Value = "unusable")]
         Unusable,
         /// <summary>
         /// The Batch service has obtained the underlying virtual machine from
-        /// Azure Compute, but it has not yet started to join the pool.
+        /// Azure Compute, but it has not yet started to join the Pool.
         /// </summary>
         [EnumMember(Value = "creating")]
         Creating,
@@ -58,40 +59,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [EnumMember(Value = "starting")]
         Starting,
         /// <summary>
-        /// The start task has started running on the compute node, but
-        /// waitForSuccess is set and the start task has not yet completed.
+        /// The StartTask has started running on the Compute Node, but
+        /// waitForSuccess is set and the StartTask has not yet completed.
         /// </summary>
         [EnumMember(Value = "waitingforstarttask")]
         WaitingForStartTask,
         /// <summary>
-        /// The start task has failed on the compute node (and exhausted all
-        /// retries), and waitForSuccess is set. The node is not usable for
-        /// running tasks.
+        /// The StartTask has failed on the Compute Node (and exhausted all
+        /// retries), and waitForSuccess is set. The Compute Node is not usable
+        /// for running Tasks.
         /// </summary>
         [EnumMember(Value = "starttaskfailed")]
         StartTaskFailed,
         /// <summary>
-        /// The Batch service has lost contact with the node, and does not know
-        /// its true state.
+        /// The Batch service has lost contact with the Compute Node, and does
+        /// not know its true state.
         /// </summary>
         [EnumMember(Value = "unknown")]
         Unknown,
         /// <summary>
-        /// The node is leaving the pool, either because the user explicitly
-        /// removed it or because the pool is resizing or autoscaling down.
+        /// The Compute Node is leaving the Pool, either because the user
+        /// explicitly removed it or because the Pool is resizing or
+        /// autoscaling down.
         /// </summary>
         [EnumMember(Value = "leavingpool")]
         LeavingPool,
         /// <summary>
-        /// The node is not currently running a task, and scheduling of new
-        /// tasks to the node is disabled.
+        /// The Compute Node is not currently running a Task, and scheduling of
+        /// new Tasks to the Compute Node is disabled.
         /// </summary>
         [EnumMember(Value = "offline")]
         Offline,
         /// <summary>
-        /// The low-priority node has been preempted. Tasks which were running
-        /// on the node when it was preempted will be rescheduled when another
-        /// node becomes available.
+        /// The low-priority Compute Node has been preempted. Tasks which were
+        /// running on the Compute Node when it was preempted will be
+        /// rescheduled when another Compute Node becomes available.
         /// </summary>
         [EnumMember(Value = "preempted")]
         Preempted

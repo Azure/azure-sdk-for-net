@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.Amqp;
+
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
@@ -18,5 +20,17 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>The annotation that identifies an error response.</summary>
         public const string ErrorCondition = "error-condition";
+
+        /// <summary>
+        ///   Determines whether the given AMQP status code value should be considered a successful
+        ///   request.
+        /// </summary>
+        ///
+        /// <param name="statusCode">The status code value to consider.</param>
+        ///
+        /// <returns><c>true</c> if the request should be considered successful; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool IsSuccessStatus(AmqpResponseStatusCode statusCode) =>
+            ((statusCode == AmqpResponseStatusCode.OK) || (statusCode == AmqpResponseStatusCode.Accepted));
     }
 }

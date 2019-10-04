@@ -15,7 +15,7 @@ namespace Data.ApplicationInsights.Tests.Events
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetAllEvents()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var client = GetClient(ctx);
                 var events = await client.Events.GetByTypeAsync(DefaultAppId, EventType.All, timespan: Timespan, top: TopCount);
@@ -46,7 +46,7 @@ namespace Data.ApplicationInsights.Tests.Events
         [InlineData(EventType.CustomMetrics)]
         public async Task GetEventsByType(string eventType)
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetByType.{eventType}"))
+            using (var ctx = MockContext.Start(this.GetType(), $"GetByType.{eventType}"))
             {
                 var client = GetClient(ctx);
                 var traces = await client.Events.GetByTypeAsync(DefaultAppId, eventType, timespan: Timespan, top: TopCount);

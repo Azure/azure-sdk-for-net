@@ -18,7 +18,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact]
         public void TopicCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 

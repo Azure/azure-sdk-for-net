@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using ManagedServices.Tests.Helpers;
@@ -16,7 +16,7 @@ namespace ManagedServices.Tests.ScenarioTests
         [Fact]
         public async void RegistrationDefintionTests_CRUD()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new ManagedServicesTestBase(context))
                 {

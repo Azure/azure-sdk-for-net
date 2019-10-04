@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    internal class BufferResponsePolicy: HttpPipelinePolicy
+    internal class BufferResponsePolicy : HttpPipelinePolicy
     {
         protected BufferResponsePolicy()
         {
@@ -15,19 +15,27 @@ namespace Azure.Core.Pipeline
 
         public static HttpPipelinePolicy Shared { get; set; } = new BufferResponsePolicy();
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            await BufferResponse(message, true).ConfigureAwait(false);
+
+            if (message.BufferResponse)
+            {
+                await BufferResponse(message, true).ConfigureAwait(false);
+            }
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
-            BufferResponse(message, false).EnsureCompleted();
+
+            if (message.BufferResponse)
+            {
+                BufferResponse(message, false).EnsureCompleted();
+            }
         }
 
-        private static async Task BufferResponse(HttpPipelineMessage message, bool async)
+        private static async ValueTask BufferResponse(HttpPipelineMessage message, bool async)
         {
             if (message.Response.ContentStream != null && !message.Response.ContentStream.CanSeek)
             {

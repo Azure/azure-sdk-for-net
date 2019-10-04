@@ -22,7 +22,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -32,7 +32,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName,
                     null);
-                Assert.NotNull(listResponse);                                
+                Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
                 Assert.Null(listResponse.NextPageLink);
 
@@ -52,7 +52,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     echoApi.Name);
 
-                Assert.NotNull(getResponse);                
+                Assert.NotNull(getResponse);
 
                 Assert.Equal("Echo API", getResponse.Body.DisplayName);
                 Assert.Null(getResponse.Body.Description);
@@ -105,7 +105,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         {
                             AuthorizationServerId = newApiAuthorizationServerId,
                             Scope = newApiAuthorizationScope
-                        }                        
+                        }
                     };
 
                     var createdApiContract = testBase.client.Api.CreateOrUpdate(
@@ -124,9 +124,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                                 Header = subscriptionKeyParametersHeader,
                                 Query = subscriptionKeyQueryStringParamName
                             },
-                            AuthenticationSettings = newApiAuthenticationSettings                            
+                            AuthenticationSettings = newApiAuthenticationSettings
                         });
-                    
+
                     // get new api to check it was added
                     var apiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newApiId);
 
@@ -211,7 +211,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string newOpenIdApiName = TestUtilities.GenerateName("apiname");
                     string newOpenIdApiDescription = TestUtilities.GenerateName("apidescription");
                     string newOpenIdApiPath = "newOpenapiPath";
-                    string newOpenIdApiServiceUrl = "http://newechoapi2.cloudapp.net/api";                    
+                    string newOpenIdApiServiceUrl = "http://newechoapi2.cloudapp.net/api";
                     string newOpenIdAuthorizationScope = TestUtilities.GenerateName("oauth2scope");
                     var newnewOpenIdAuthenticationSettings = new AuthenticationSettingsContract
                     {
@@ -344,7 +344,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CloneApiUsingSourceApiId()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -494,7 +494,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiAuthorizationServerId,
                         "*");
                 }
-            }            
+            }
         }
     }
 }

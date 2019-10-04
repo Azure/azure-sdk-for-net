@@ -10,15 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public static class TestAccessibilityExtensions
-    {
-        public static TokenCredential _credential(this EnvironmentCredential provider)
-        {
-            return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
-        }
-    }
-
-
     public class EnvironmentCredentialProviderTests
     {
         [NonParallelizable]
@@ -39,7 +30,7 @@ namespace Azure.Identity.Tests
 
                 var provider = new EnvironmentCredential();
 
-                ClientSecretCredential cred = provider._credential() as ClientSecretCredential;
+                ClientSecretCredential cred =_credential(provider) as ClientSecretCredential;
 
                 Assert.NotNull(cred);
 
@@ -56,6 +47,11 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecretBackup);
 
             }
+        }
+
+        public static TokenCredential _credential(EnvironmentCredential provider)
+        {
+            return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
         }
     }
 }

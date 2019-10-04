@@ -22,14 +22,14 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class ApplicationOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the applications available in the specified account.
+            /// Lists all of the applications available in the specified Account.
             /// </summary>
             /// <remarks>
-            /// This operation returns only applications and versions that are available
-            /// for use on compute nodes; that is, that can be used in an application
-            /// package reference. For administrator information about applications and
-            /// versions that are not yet available to compute nodes, use the Azure portal
-            /// or the Azure Resource Manager API.
+            /// This operation returns only Applications and versions that are available
+            /// for use on Compute Nodes; that is, that can be used in an Package
+            /// reference. For administrator information about applications and versions
+            /// that are not yet available to Compute Nodes, use the Azure portal or the
+            /// Azure Resource Manager API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,14 +43,14 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the applications available in the specified account.
+            /// Lists all of the applications available in the specified Account.
             /// </summary>
             /// <remarks>
-            /// This operation returns only applications and versions that are available
-            /// for use on compute nodes; that is, that can be used in an application
-            /// package reference. For administrator information about applications and
-            /// versions that are not yet available to compute nodes, use the Azure portal
-            /// or the Azure Resource Manager API.
+            /// This operation returns only Applications and versions that are available
+            /// for use on Compute Nodes; that is, that can be used in an Package
+            /// reference. For administrator information about applications and versions
+            /// that are not yet available to Compute Nodes, use the Azure portal or the
+            /// Azure Resource Manager API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,20 +70,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified application.
+            /// Gets information about the specified Application.
             /// </summary>
             /// <remarks>
-            /// This operation returns only applications and versions that are available
-            /// for use on compute nodes; that is, that can be used in an application
-            /// package reference. For administrator information about applications and
-            /// versions that are not yet available to compute nodes, use the Azure portal
-            /// or the Azure Resource Manager API.
+            /// This operation returns only Applications and versions that are available
+            /// for use on Compute Nodes; that is, that can be used in an Package
+            /// reference. For administrator information about Applications and versions
+            /// that are not yet available to Compute Nodes, use the Azure portal or the
+            /// Azure Resource Manager API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='applicationId'>
-            /// The ID of the application.
+            /// The ID of the Application.
             /// </param>
             /// <param name='applicationGetOptions'>
             /// Additional parameters for the operation
@@ -94,20 +94,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified application.
+            /// Gets information about the specified Application.
             /// </summary>
             /// <remarks>
-            /// This operation returns only applications and versions that are available
-            /// for use on compute nodes; that is, that can be used in an application
-            /// package reference. For administrator information about applications and
-            /// versions that are not yet available to compute nodes, use the Azure portal
-            /// or the Azure Resource Manager API.
+            /// This operation returns only Applications and versions that are available
+            /// for use on Compute Nodes; that is, that can be used in an Package
+            /// reference. For administrator information about Applications and versions
+            /// that are not yet available to Compute Nodes, use the Azure portal or the
+            /// Azure Resource Manager API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='applicationId'>
-            /// The ID of the application.
+            /// The ID of the Application.
             /// </param>
             /// <param name='applicationGetOptions'>
             /// Additional parameters for the operation
@@ -124,14 +124,14 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the applications available in the specified account.
+            /// Lists all of the applications available in the specified Account.
             /// </summary>
             /// <remarks>
-            /// This operation returns only applications and versions that are available
-            /// for use on compute nodes; that is, that can be used in an application
-            /// package reference. For administrator information about applications and
-            /// versions that are not yet available to compute nodes, use the Azure portal
-            /// or the Azure Resource Manager API.
+            /// This operation returns only Applications and versions that are available
+            /// for use on Compute Nodes; that is, that can be used in an Package
+            /// reference. For administrator information about applications and versions
+            /// that are not yet available to Compute Nodes, use the Azure portal or the
+            /// Azure Resource Manager API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -148,14 +148,14 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the applications available in the specified account.
+            /// Lists all of the applications available in the specified Account.
             /// </summary>
             /// <remarks>
-            /// This operation returns only applications and versions that are available
-            /// for use on compute nodes; that is, that can be used in an application
-            /// package reference. For administrator information about applications and
-            /// versions that are not yet available to compute nodes, use the Azure portal
-            /// or the Azure Resource Manager API.
+            /// This operation returns only Applications and versions that are available
+            /// for use on Compute Nodes; that is, that can be used in an Package
+            /// reference. For administrator information about applications and versions
+            /// that are not yet available to Compute Nodes, use the Azure portal or the
+            /// Azure Resource Manager API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

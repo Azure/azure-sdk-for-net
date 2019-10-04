@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
@@ -11,7 +14,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class EventDataBatchTests
     {
         /// <summary>
@@ -89,8 +91,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, new SendOptions());
 
-            batch.AsEnumerable<String>();
-            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(String)), "The enumerable should delegated the requested type parameter.");
+            batch.AsEnumerable<string>();
+            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Retrieves the inner transport batch from an <see cref="EventDataBatch" />
-        ///   using its private accessor.
+        ///   using its private accessors.
         /// </summary>
         ///
         /// <param name="batch">The batch to retrieve the inner transport batch from.</param>

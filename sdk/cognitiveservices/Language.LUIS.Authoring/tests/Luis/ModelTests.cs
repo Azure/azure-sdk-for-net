@@ -7,9 +7,10 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCompositeEntities()
         {
             UseClientFor(async client =>
@@ -24,7 +25,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCompositeEntity()
         {
             UseClientFor(async client =>
@@ -39,7 +40,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCompositeEntity()
         {
             UseClientFor(async client =>
@@ -55,7 +56,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateCompositeEntity()
         {
             UseClientFor(async client =>
@@ -74,7 +75,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCompositeEntity()
         {
             UseClientFor(async client =>
@@ -83,13 +84,14 @@
                 var entity = new CompositeEntityModel(new List<string>() { childEntity.Single().Name }, name: "CompositeTest");
                 var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, entity);
                 await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
 
                 var entities = await client.Model.ListCompositeEntitiesAsync(GlobalAppId, GlobalVersionId);
                 Assert.DoesNotContain(entities, e => e.Id == entityId);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCompositeEntityChild()
         {
             UseClientFor(async client =>
@@ -110,7 +112,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCompositeEntityChild()
         {
             UseClientFor(async client =>
@@ -132,7 +134,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListHierarchicalEntities()
         {
             UseClientFor(async client =>
@@ -146,7 +148,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddHierarchicalEntity()
         {
             UseClientFor(async client =>
@@ -158,7 +160,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetHierarchicalEntity()
         {
             UseClientFor(async client =>
@@ -171,7 +173,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateHierarchicalEntity()
         {
             UseClientFor(async client =>
@@ -185,7 +187,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteHierarchicalEntity()
         {
             UseClientFor(async client =>
@@ -199,7 +201,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetHierarchicalEntityChild()
         {
             UseClientFor(async client =>
@@ -213,7 +215,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteHierarchicalEntityChild()
         {
             UseClientFor(async client =>
@@ -230,7 +232,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateHierarchicalEntityChild()
         {
             UseClientFor(async client =>
@@ -251,7 +253,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddHierarchicalEntityChild()
         {
             UseClientFor(async client =>
@@ -269,7 +271,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListModels()
         {
             UseClientFor(async client =>

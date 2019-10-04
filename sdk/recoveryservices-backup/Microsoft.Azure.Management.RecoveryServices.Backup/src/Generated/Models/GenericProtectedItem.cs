@@ -52,6 +52,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="createMode">Create mode to indicate recovery of
         /// existing soft deleted data source or creation of new data source.
         /// Possible values include: 'Invalid', 'Default', 'Recover'</param>
+        /// <param name="deferredDeleteTimeInUTC">Time for deferred deletion in
+        /// UTC</param>
+        /// <param name="isScheduledForDeferredDelete">Flag to identify whether
+        /// the DS is scheduled for deferred delete</param>
+        /// <param name="deferredDeleteTimeRemaining">Time remaining before the
+        /// DS marked for deferred delete is permanently deleted</param>
+        /// <param name="isDeferredDeleteScheduleUpcoming">Flag to identify
+        /// whether the deferred deleted DS is to be purged soon</param>
+        /// <param name="isRehydrate">Flag to identify that deferred deleted DS
+        /// is to be moved into Pause state</param>
         /// <param name="friendlyName">Friendly name of the container.</param>
         /// <param name="policyState">Indicates consistency of policy object
         /// and policy applied to this backup item.</param>
@@ -63,8 +73,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="sourceAssociations">Loosely coupled (type, value)
         /// associations (example - parent of a protected item)</param>
         /// <param name="fabricName">Name of this backup item's fabric.</param>
-        public GenericProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string policyState = default(string), string protectionState = default(string), long? protectedItemId = default(long?), IDictionary<string, string> sourceAssociations = default(IDictionary<string, string>), string fabricName = default(string))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
+        public GenericProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string policyState = default(string), string protectionState = default(string), long? protectedItemId = default(long?), IDictionary<string, string> sourceAssociations = default(IDictionary<string, string>), string fabricName = default(string))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
         {
             FriendlyName = friendlyName;
             PolicyState = policyState;

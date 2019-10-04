@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
             _transport = transport;
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             Debug.Assert(pipeline.IsEmpty);
 

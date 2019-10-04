@@ -22,19 +22,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum OutputFileUploadCondition
     {
         /// <summary>
-        /// Upload the file(s) only after the task process exits with an exit
+        /// Upload the file(s) only after the Task process exits with an exit
         /// code of 0.
         /// </summary>
         [EnumMember(Value = "tasksuccess")]
         TaskSuccess,
         /// <summary>
-        /// Upload the file(s) only after the task process exits with a nonzero
+        /// Upload the file(s) only after the Task process exits with a nonzero
         /// exit code.
         /// </summary>
         [EnumMember(Value = "taskfailure")]
         TaskFailure,
         /// <summary>
-        /// Upload the file(s) after the task process exits, no matter what the
+        /// Upload the file(s) after the Task process exits, no matter what the
         /// exit code was.
         /// </summary>
         [EnumMember(Value = "taskcompletion")]

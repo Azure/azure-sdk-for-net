@@ -16,7 +16,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         internal EventProcessorRuntimeException(string message, string action, Exception innerException)
-            : base(true, message, innerException)
+            : base(true, message, innerException, ErrorSourceType.UserError)
         {
             this.Action = action;
         }

@@ -17,7 +17,7 @@ namespace StreamAnalytics.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public async Task InputOperationsTest_Stream_Blob()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");
@@ -137,7 +137,7 @@ namespace StreamAnalytics.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public async Task InputOperationsTest_Stream_EventHub()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");
@@ -247,7 +247,7 @@ namespace StreamAnalytics.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public async Task InputOperationsTest_Stream_IoTHub()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");
@@ -358,7 +358,7 @@ namespace StreamAnalytics.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public async Task InputOperationsTest_Reference_Blob()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");

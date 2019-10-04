@@ -20,7 +20,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -30,7 +30,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName,
                     null);
-                
+
                 Assert.NotEmpty(groupsList);
                 Assert.Equal(3, groupsList.GetEnumerator().ToIEnumerable().Count());
                 Assert.Null(groupsList.NextPageLink);
@@ -71,7 +71,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(GroupType.Custom, groupContract.GroupContractType);
 
                     // get the group tag
-                    var groupTag= await testBase.client.Group.GetEntityTagAsync(
+                    var groupTag = await testBase.client.Group.GetEntityTagAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newGroupId);

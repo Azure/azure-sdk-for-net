@@ -119,19 +119,19 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             throw new NotImplementedException();
         }
 
-        public Task<IAsyncEnumerable<KeyValuePair<X, Y>>> CreateEnumerableAsync(ITransaction txn)
+        public Task<ServiceFabric.Data.IAsyncEnumerable<KeyValuePair<X, Y>>> CreateEnumerableAsync(ITransaction txn)
         {
             // Unused
             throw new NotImplementedException();
         }
 
-        public Task<IAsyncEnumerable<KeyValuePair<X, Y>>> CreateEnumerableAsync(ITransaction txn, EnumerationMode enumerationMode)
+        public Task<ServiceFabric.Data.IAsyncEnumerable<KeyValuePair<X, Y>>> CreateEnumerableAsync(ITransaction txn, EnumerationMode enumerationMode)
         {
             // Unused
             throw new NotImplementedException();
         }
 
-        public Task<IAsyncEnumerable<KeyValuePair<X, Y>>> CreateEnumerableAsync(ITransaction txn, Func<X, bool> filter, EnumerationMode enumerationMode)
+        public Task<ServiceFabric.Data.IAsyncEnumerable<KeyValuePair<X, Y>>> CreateEnumerableAsync(ITransaction txn, Func<X, bool> filter, EnumerationMode enumerationMode)
         {
             // Unused
             throw new NotImplementedException();
@@ -224,6 +224,21 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         public Task<bool> TryUpdateAsync(ITransaction tx, X key, Y newValue, Y comparisonValue, TimeSpan timeout, CancellationToken cancellationToken)
         {
             // Unused
+            throw new NotImplementedException();
+        }
+
+        Task<ServiceFabric.Data.IAsyncEnumerable<KeyValuePair<X, Y>>> IReliableDictionary<X, Y>.CreateEnumerableAsync(ITransaction txn)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ServiceFabric.Data.IAsyncEnumerable<KeyValuePair<X, Y>>> IReliableDictionary<X, Y>.CreateEnumerableAsync(ITransaction txn, EnumerationMode enumerationMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ServiceFabric.Data.IAsyncEnumerable<KeyValuePair<X, Y>>> IReliableDictionary<X, Y>.CreateEnumerableAsync(ITransaction txn, Func<X, bool> filter, EnumerationMode enumerationMode)
+        {
             throw new NotImplementedException();
         }
         #endregion

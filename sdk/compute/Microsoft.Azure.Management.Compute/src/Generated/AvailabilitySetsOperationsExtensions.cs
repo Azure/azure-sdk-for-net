@@ -198,9 +198,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<AvailabilitySet> ListBySubscription(this IAvailabilitySetsOperations operations)
+            /// <param name='expand'>
+            /// The expand expression to apply to the operation.
+            /// </param>
+            public static IPage<AvailabilitySet> ListBySubscription(this IAvailabilitySetsOperations operations, string expand = default(string))
             {
-                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync(expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,12 +212,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply to the operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AvailabilitySet>> ListBySubscriptionAsync(this IAvailabilitySetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AvailabilitySet>> ListBySubscriptionAsync(this IAvailabilitySetsOperations operations, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

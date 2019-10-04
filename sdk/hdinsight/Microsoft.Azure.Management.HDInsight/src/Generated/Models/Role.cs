@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// cluster.</param>
         /// <param name="targetInstanceCount">The instance count of the
         /// cluster.</param>
+        /// <param name="autoscaleConfiguration">The autoscale
+        /// configurations.</param>
         /// <param name="hardwareProfile">The hardware profile.</param>
         /// <param name="osProfile">The operating system profile.</param>
         /// <param name="virtualNetworkProfile">The virtual network
@@ -44,11 +46,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// role.</param>
         /// <param name="scriptActions">The list of script actions on the
         /// role.</param>
-        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>))
+        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), Autoscale autoscaleConfiguration = default(Autoscale), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>))
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
             TargetInstanceCount = targetInstanceCount;
+            AutoscaleConfiguration = autoscaleConfiguration;
             HardwareProfile = hardwareProfile;
             OsProfile = osProfile;
             VirtualNetworkProfile = virtualNetworkProfile;
@@ -79,6 +82,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetInstanceCount")]
         public int? TargetInstanceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the autoscale configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "autoscale")]
+        public Autoscale AutoscaleConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the hardware profile.

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -32,7 +32,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetOperationsInternal(context);
             }
@@ -55,7 +55,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetOperations_ManagedDisks()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetOperationsInternal(context, hasManagedDisks: true);
             }
@@ -113,7 +113,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetOperations_Redeploy()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -163,7 +163,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetOperations_PowerOffWithSkipShutdown()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
                 string vmssName = TestUtilities.GenerateName("vmss");
@@ -202,7 +202,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetOperations_PerformMaintenance()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -268,7 +268,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetBatchOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
 
@@ -326,7 +326,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetBatchOperations_Redeploy()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -370,7 +370,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetBatchOperations_PerformMaintenance()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 

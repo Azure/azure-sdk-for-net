@@ -141,6 +141,12 @@ namespace Sql.Tests
                         Name = SqlManagementTestUtilities.GenerateName(),
                         AddressPrefix = "0.0.0.0/0",
                         NextHopType = "Internet"
+                    },
+                    new Route()
+                    {
+                        Name = SqlManagementTestUtilities.GenerateName(),
+                        AddressPrefix = "10.0.0.0/26",
+                        NextHopType = "VnetLocal"
                     }
                 }
             };

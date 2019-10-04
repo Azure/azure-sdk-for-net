@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="select">An OData $select clause.</param>
         /// <param name="expand">An OData $expand clause.</param>
         /// <param name="maxResults">The maximum number of items to return in
-        /// the response. A maximum of 1000 jobs can be returned.</param>
+        /// the response. A maximum of 1000 Jobs can be returned.</param>
         /// <param name="timeout">The maximum time that the server can spend
         /// processing the request, in seconds. The default is 30
         /// seconds.</param>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
-        /// A maximum of 1000 jobs can be returned.
+        /// A maximum of 1000 Jobs can be returned.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public int? MaxResults { get; set; }

@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Peering/operations?api-version=2019-09-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "155f9674-1be7-4815-adf7-d097229f3221"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "75d6269c-ae3f-4c40-9ed6-445dd2e4862f"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "fd25c7af-0c30-4f12-ad6f-40e99dbbbd55"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20191002T194019Z:fd25c7af-0c30-4f12-ad6f-40e99dbbbd55"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 02 Oct 2019 19:40:18 GMT"
+        ],
+        "Content-Length": [
+          "6408"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Peering/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"Peering Resource Provider\",\r\n        \"operation\": \"Registers the Peering Resource Provider\",\r\n        \"description\": \"Registers the subscription for the Peering Resource Provider and enables the creation of peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerAsns/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerAsns\",\r\n        \"operation\": \"Write PeerAsn\",\r\n        \"description\": \"Write any peerAsns\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerAsns/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerAsns\",\r\n        \"operation\": \"Read PeerAsn\",\r\n        \"description\": \"Read any peerAsns\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerAsns/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerAsns\",\r\n        \"operation\": \"Delete PeerAsn\",\r\n        \"description\": \"Delete any peerAsns\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringLocations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringLocations\",\r\n        \"operation\": \"Read PeeringLocation\",\r\n        \"description\": \"Read any peeringLocations\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/legacyPeerings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"legacyPeerings\",\r\n        \"operation\": \"Read LegacyPeering\",\r\n        \"description\": \"Read any legacyPeerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Write Peering\",\r\n        \"description\": \"Write any peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Read Peering\",\r\n        \"description\": \"Read any peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Delete Peering\",\r\n        \"description\": \"Delete any peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServiceLocations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringServiceLocations\",\r\n        \"operation\": \"Read PeeringServiceLocations\",\r\n        \"description\": \"Read any peeringServiceLocations\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServiceProviders/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringServiceProviders\",\r\n        \"operation\": \"Read PeeringServiceProviders\",\r\n        \"description\": \"Read any peeringServiceProviders\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringServices\",\r\n        \"operation\": \"Read PeeringServices\",\r\n        \"description\": \"Read any peeringServices\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringServices\",\r\n        \"operation\": \"Write PeeringService\",\r\n        \"description\": \"Write any peeringServices\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringServices\",\r\n        \"operation\": \"Delete PeeringServices\",\r\n        \"description\": \"Delete any peeringServices\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/prefixes/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"prefixes\",\r\n        \"operation\": \"Read PeeringServicePrefixes\",\r\n        \"description\": \"Read any prefixes\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/prefixes/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"prefixes\",\r\n        \"operation\": \"Write PeeringServicePrefixes\",\r\n        \"description\": \"Write any prefixes\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/prefixes/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"prefixes\",\r\n        \"operation\": \"Delete PeeringServicePrefixes\",\r\n        \"description\": \"Delete any prefixes\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringServices/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringServices\",\r\n        \"operation\": \"Read peering service metric definitions\",\r\n        \"description\": \"Gets the available metric definitions for peering service\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"origin\": \"system\",\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"PrefixLatency\",\r\n              \"displayName\": \"Prefix Latency\",\r\n              \"displayDescription\": \"Median prefix latency\",\r\n              \"unit\": \"Milliseconds\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedTimeGrainTypes\": [\r\n                \"PT1H\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"PrefixName\",\r\n                  \"displayName\": \"Prefix Name\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3e919f9a-4e26-4736-aa8d-d596d9a49239"
+  }
+}

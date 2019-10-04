@@ -31,11 +31,11 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         private static SubscriptionRuntimeInfo ParseFromEntryElement(string topicName, XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
             var subscriptionRuntimeInfo = new SubscriptionRuntimeInfo(topicName, name);
 
-            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.SbNs));
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
+                .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.ServiceBusNamespace));
 
             if (qdXml == null)
             {

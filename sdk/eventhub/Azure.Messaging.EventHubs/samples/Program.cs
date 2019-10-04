@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // Parse the command line arguments determine if help was explicitly requested or if the
             // needed information was passed.
 
-            var parsedArgs = ParseArguments(args);
+            CommandLineArguments parsedArgs = ParseArguments(args);
 
             if (parsedArgs.Help)
             {
@@ -76,13 +76,10 @@ namespace Azure.Messaging.EventHubs.Samples
             }
 
             Console.WriteLine();
-            Console.Write("Please enter the number of a sample to run or press \"X\" to exit: ");
+            var choice = ReadSelection(samples.Count);
 
-            var key = ReadSelection(samples.Count);
-
-            if ((key == 'x') || (key == 'X'))
+            if (choice == null)
             {
-                Console.Write(key);
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("Quitting...");
@@ -91,18 +88,15 @@ namespace Azure.Messaging.EventHubs.Samples
             }
             else
             {
-                var choice = ((int)key);
-
-                Console.Write(key);
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("-------------------------------------------------------------------------");
-                Console.WriteLine($"Running: { samples[choice].Name }");
+                Console.WriteLine($"Running: { samples[choice.Value].Name }");
                 Console.WriteLine("-------------------------------------------------------------------------");
                 Console.WriteLine();
 
-                await samples[choice].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
+                await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
                 return;
             }
         }
@@ -114,31 +108,33 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private static void DisplayHelp()
         {
-           Console.WriteLine();
-           Console.WriteLine($"{ typeof(Program).Namespace }");
-           Console.WriteLine();
-           Console.WriteLine("This executable allows for running the Azure Event Hubs client library samples.  Because");
-           Console.WriteLine("the samples run against live Azure services, they require an Event Hubs namespace and an");
-           Console.WriteLine("Event Hub under it in order to run.");
-           Console.WriteLine();
-           Console.WriteLine();
-           Console.WriteLine("Arguments:");
-           Console.WriteLine($"\t{ nameof(CommandLineArguments.Help) }:");
-           Console.WriteLine("\t\tDisplays this message.");
-           Console.WriteLine();
-           Console.WriteLine($"\t{ nameof(CommandLineArguments.ConnectionString) }:");
-           Console.WriteLine("\t\tThe connection string to the Event Hubs namespace to use for the samples.");
-           Console.WriteLine();
-           Console.WriteLine($"\t{ nameof(CommandLineArguments.EventHub) }:");
-           Console.WriteLine("\t\tThe name of the Event Hub under the namespace to use.");
-           Console.WriteLine();
-           Console.WriteLine("Usage:");
-           Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.ConnectionString) } \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"");
-           Console.WriteLine();
-           Console.WriteLine("\tAzure.Messaging.EventHubs.Samples.exe \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" \"SomeHub\"");
-           Console.WriteLine();
-           Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
-           Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine($"{ typeof(Program).Namespace }");
+            Console.WriteLine();
+            Console.WriteLine("This executable allows for running the Azure Event Hubs client library samples.  Because");
+            Console.WriteLine("the samples run against live Azure services, they require an Event Hubs namespace and an");
+            Console.WriteLine("Event Hub under it in order to run.");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Arguments:");
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.Help) }:");
+            Console.WriteLine("\t\tDisplays this message.");
+            Console.WriteLine();
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.ConnectionString) }:");
+            Console.WriteLine("\t\tThe connection string to the Event Hubs namespace to use for the samples.");
+            Console.WriteLine();
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.EventHub) }:");
+            Console.WriteLine("\t\tThe name of the Event Hub under the namespace to use.");
+            Console.WriteLine();
+            Console.WriteLine("Usage:");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe");
+            Console.WriteLine();
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.ConnectionString) } \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"");
+            Console.WriteLine();
+            Console.WriteLine("\tAzure.Messaging.EventHubs.Samples.exe \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" \"SomeHub\"");
+            Console.WriteLine();
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -150,24 +146,26 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         /// <returns>The validated selection that was made.</returns>
         ///
-        private static char ReadSelection(int sampleCount)
+        private static int? ReadSelection(int sampleCount)
         {
-            while(true)
+            while (true)
             {
-                var key = Console.ReadKey(true);
+                Console.Write("Please enter the number of a sample to run or press \"X\" to exit: ");
 
-                if ((key.KeyChar == 'x') || (key.KeyChar == 'X'))
+                var value = Console.ReadLine();
+
+                if (String.Equals(value, "X", StringComparison.OrdinalIgnoreCase))
                 {
-                    return key.KeyChar;
+                    return null;
                 }
 
-                if (Char.IsDigit(key.KeyChar))
+                if (Int32.TryParse(value, out var choice))
                 {
-                    var choice = ((int)Char.GetNumericValue(key.KeyChar) - 1);
+                    --choice;
 
                     if ((choice >= 0) && (choice < sampleCount))
                     {
-                        return (char)choice;
+                        return choice;
                     }
                 }
             }
@@ -185,7 +183,8 @@ namespace Azure.Messaging.EventHubs.Samples
         {
 
             // If at least two arguments were passed with no argument designator, then assume they're values and
-            // accept them positionally
+            // accept them positionally.
+
             if ((args.Length >= 2) && (!args[0].StartsWith(CommandLineArguments.ArgumentPrefix)) && (!args[1].StartsWith(CommandLineArguments.ArgumentPrefix)))
             {
                 return new CommandLineArguments { ConnectionString = args[0], EventHub = args[1] };
@@ -198,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // command was passed in the last position, there was no accompanying value,
             // so it isn't useful.
 
-            for (var index = 0; index < args.Length -1; ++index)
+            for (var index = 0; index < args.Length - 1; ++index)
             {
                 // Remove any excess spaces to comparison purposes.
 

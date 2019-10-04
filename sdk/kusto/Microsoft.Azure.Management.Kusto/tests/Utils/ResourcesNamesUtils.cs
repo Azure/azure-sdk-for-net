@@ -6,7 +6,7 @@ namespace Kusto.Tests.Utils
 {
     public static class ResourcesNamesUtils
     {
-        public static string GetFullEventHubName(string clusterName, string databaseName, string eventhubConnectionName)
+        public static string GetDataConnectionFullName(string clusterName, string databaseName, string eventhubConnectionName)
         {
             return $"{clusterName}/{databaseName}/{eventhubConnectionName}";
         }

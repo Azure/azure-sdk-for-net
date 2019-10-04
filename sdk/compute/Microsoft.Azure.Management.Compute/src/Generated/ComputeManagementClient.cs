@@ -192,6 +192,16 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IGalleryImageVersionsOperations GalleryImageVersions { get; private set; }
 
         /// <summary>
+        /// Gets the IGalleryApplicationsOperations.
+        /// </summary>
+        public virtual IGalleryApplicationsOperations GalleryApplications { get; private set; }
+
+        /// <summary>
+        /// Gets the IGalleryApplicationVersionsOperations.
+        /// </summary>
+        public virtual IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; private set; }
+
+        /// <summary>
         /// Gets the IContainerServicesOperations.
         /// </summary>
         public virtual IContainerServicesOperations ContainerServices { get; private set; }
@@ -461,6 +471,8 @@ namespace Microsoft.Azure.Management.Compute
             Galleries = new GalleriesOperations(this);
             GalleryImages = new GalleryImagesOperations(this);
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
+            GalleryApplications = new GalleryApplicationsOperations(this);
+            GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
             ContainerServices = new ContainerServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

@@ -23,7 +23,7 @@ namespace Azure
         /// <see cref="Page{T}"/>.  The continuation token may be null or
         /// empty when there are no more pages.
         /// </summary>
-        public string ContinuationToken { get; }
+        public string? ContinuationToken { get; }
 
         /// <summary>
         /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
@@ -34,7 +34,7 @@ namespace Azure
         /// Gets the <see cref="Response"/> that provided this
         /// <see cref="Page{T}"/>.
         /// </summary>
-        public Response GetRawResponse() => this._response;
+        public Response GetRawResponse() => _response;
 
         /// <summary>
         /// Creates a new <see cref="Page{T}"/>.
@@ -48,11 +48,11 @@ namespace Azure
         /// <param name="response">
         /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
         /// </param>
-        public Page(IReadOnlyList<T> values, string continuationToken, Response response)
+        public Page(IReadOnlyList<T> values, string? continuationToken, Response response)
         {
-            this.Values = values;
-            this.ContinuationToken = continuationToken;
-            this._response = response;
+            Values = values;
+            ContinuationToken = continuationToken;
+            _response = response;
         }
 
         /// <summary>

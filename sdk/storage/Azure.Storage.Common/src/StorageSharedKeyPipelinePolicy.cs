@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -19,7 +18,7 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Whether to always add the x-ms-date header.
         /// </summary>
-        const bool IncludeXMsDate = true;
+        private const bool IncludeXMsDate = true;
 
         /// <summary>
         /// Shared key credentials used to sign requests
@@ -31,7 +30,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="credentials">SharedKeyCredentials to authenticate requests.</param>
         public StorageSharedKeyPipelinePolicy(StorageSharedKeyCredential credentials)
-            => this._credentials = credentials;
+            => _credentials = credentials;
 
         /// <summary>
         /// Sign the request using the shared key credentials.
@@ -42,35 +41,35 @@ namespace Azure.Storage.Common
             base.OnSendingRequest(message);
 
             // Add a x-ms-date header if it doesn't already exist
-            if (IncludeXMsDate && !message.Request.Headers.Contains("x-ms-date"))
+            if (IncludeXMsDate && !message.Request.Headers.Contains(Constants.HeaderNames.Date))
             {
                 var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-                message.Request.Headers.Add("x-ms-date", date);
+                message.Request.Headers.Add(Constants.HeaderNames.Date, date);
             }
 
-            var stringToSign = this.BuildStringToSign(message);
-            var signature = this._credentials.ComputeHMACSHA256(stringToSign);
+            var stringToSign = BuildStringToSign(message);
+            var signature = _credentials.ComputeHMACSHA256(stringToSign);
 
-            var key = new AuthenticationHeaderValue("SharedKey", this._credentials.AccountName + ":" + signature).ToString();
-            message.Request.Headers.SetValue("Authorization", key);
+            var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
+            message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
         private string BuildStringToSign(HttpPipelineMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
 
-            message.Request.Headers.TryGetValue("Content-Encoding", out var contentEncoding);
-            message.Request.Headers.TryGetValue("Content-Language", out var contentLanguage);
-            message.Request.Headers.TryGetValue("Content-Length", out var contentLength);
-            message.Request.Headers.TryGetValue("Content-MD5", out var contentMD5);
-            message.Request.Headers.TryGetValue("Content-Type", out var contentType);
-            message.Request.Headers.TryGetValue("If-Modified-Since", out var ifModifiedSince);
-            message.Request.Headers.TryGetValue("If-Match", out var ifMatch);
-            message.Request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch);
-            message.Request.Headers.TryGetValue("If-Unmodified-Since", out var ifUnmodifiedSince);
-            message.Request.Headers.TryGetValue("Range", out var range);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out var contentEncoding);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out var contentLanguage);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out var contentMD5);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentType, out var contentType);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfModifiedSince, out var ifModifiedSince);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfMatch, out var ifMatch);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfNoneMatch, out var ifNoneMatch);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
-            var stringToSign = String.Join("\n",
+            var stringToSign = string.Join("\n",
                 message.Request.Method.ToString().ToUpperInvariant(),
                 contentEncoding ?? "",
                 contentLanguage ?? "",
@@ -84,7 +83,7 @@ namespace Azure.Storage.Common
                 ifUnmodifiedSince ?? "",
                 range ?? "",
                 BuildCanonicalizedHeaders(message),
-                this.BuildCanonicalizedResource(message.Request.UriBuilder.Uri));
+                BuildCanonicalizedResource(message.Request.Uri.ToUri()));
             return stringToSign;
         }
 
@@ -96,7 +95,7 @@ namespace Azure.Storage.Common
             foreach (var headerName in
                 message.Request.Headers
                 .Select(h => h.Name)
-                .Where(name => name.StartsWith("x-ms-", StringComparison.OrdinalIgnoreCase))
+                .Where(name => name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
 #pragma warning disable CA1308 // Normalize strings to uppercase
                 .OrderBy(name => name.Trim().ToLowerInvariant()))
 #pragma warning restore CA1308 // Normalize strings to uppercase
@@ -114,7 +113,7 @@ namespace Azure.Storage.Common
         private string BuildCanonicalizedResource(Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services
-            var cr = new StringBuilder("/").Append(this._credentials.AccountName);
+            StringBuilder cr = new StringBuilder("/").Append(_credentials.AccountName);
             if (resource.AbsolutePath.Length > 0)
             {
                 // Any portion of the CanonicalizedResource string that is derived from
@@ -128,7 +127,7 @@ namespace Azure.Storage.Common
                 cr.Append('/');
             }
 
-            var parameters = resource.GetQueryParameters(); // Returns URL decoded values
+            System.Collections.Generic.IDictionary<string, string> parameters = resource.GetQueryParameters(); // Returns URL decoded values
             if (parameters.Count > 0)
             {
                 foreach (var name in parameters.Keys.OrderBy(key => key, StringComparer.Ordinal))

@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Kusto
             DataConnections = new DataConnectionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-21";
+            ApiVersion = "2019-05-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

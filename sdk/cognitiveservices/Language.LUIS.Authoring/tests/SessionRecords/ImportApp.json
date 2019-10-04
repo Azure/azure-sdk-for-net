@@ -33,7 +33,7 @@
   "closedLists": [],
   "bing_entities": [
     "datetimeV2",
-    "geography"
+    "geographyV2"
   ],
   "model_features": [
     {

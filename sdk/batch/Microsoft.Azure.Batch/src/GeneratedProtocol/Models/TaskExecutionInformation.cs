@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the execution of a task.
+    /// Information about the execution of a Task.
     /// </summary>
     public partial class TaskExecutionInformation
     {
@@ -29,26 +29,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskExecutionInformation class.
         /// </summary>
-        /// <param name="retryCount">The number of times the task has been
+        /// <param name="retryCount">The number of times the Task has been
         /// retried by the Batch service.</param>
-        /// <param name="requeueCount">The number of times the task has been
+        /// <param name="requeueCount">The number of times the Task has been
         /// requeued by the Batch service as the result of a user
         /// request.</param>
-        /// <param name="startTime">The time at which the task started
+        /// <param name="startTime">The time at which the Task started
         /// running.</param>
-        /// <param name="endTime">The time at which the task completed.</param>
+        /// <param name="endTime">The time at which the Task completed.</param>
         /// <param name="exitCode">The exit code of the program specified on
-        /// the task command line.</param>
+        /// the Task command line.</param>
         /// <param name="containerInfo">Information about the container under
-        /// which the task is executing.</param>
-        /// <param name="failureInfo">Information describing the task failure,
+        /// which the Task is executing.</param>
+        /// <param name="failureInfo">Information describing the Task failure,
         /// if any.</param>
         /// <param name="lastRetryTime">The most recent time at which a retry
-        /// of the task started running.</param>
+        /// of the Task started running.</param>
         /// <param name="lastRequeueTime">The most recent time at which the
-        /// task has been requeued by the Batch service as the result of a user
+        /// Task has been requeued by the Batch service as the result of a user
         /// request.</param>
-        /// <param name="result">The result of the task execution.</param>
+        /// <param name="result">The result of the Task execution.</param>
         public TaskExecutionInformation(int retryCount, int requeueCount, System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskContainerExecutionInformation containerInfo = default(TaskContainerExecutionInformation), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), System.DateTime? lastRequeueTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             StartTime = startTime;
@@ -70,88 +70,87 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the time at which the task started running.
+        /// Gets or sets the time at which the Task started running.
         /// </summary>
         /// <remarks>
-        /// 'Running' corresponds to the running state, so if the task
-        /// specifies resource files or application packages, then the start
-        /// time reflects the time at which the task started downloading or
-        /// deploying these. If the task has been restarted or retried, this is
-        /// the most recent time at which the task started running. This
-        /// property is present only for tasks that are in the running or
-        /// completed state.
+        /// 'Running' corresponds to the running state, so if the Task
+        /// specifies resource files or Packages, then the start time reflects
+        /// the time at which the Task started downloading or deploying these.
+        /// If the Task has been restarted or retried, this is the most recent
+        /// time at which the Task started running. This property is present
+        /// only for Tasks that are in the running or completed state.
         /// </remarks>
         [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the task completed.
+        /// Gets or sets the time at which the Task completed.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task is in the Completed state.
+        /// This property is set only if the Task is in the Completed state.
         /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the program specified on the task
+        /// Gets or sets the exit code of the program specified on the Task
         /// command line.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task is in the completed state. In
+        /// This property is set only if the Task is in the completed state. In
         /// general, the exit code for a process reflects the specific
         /// convention implemented by the application developer for that
         /// process. If you use the exit code value to make decisions in your
         /// code, be sure that you know the exit code convention used by the
         /// application process. However, if the Batch service terminates the
-        /// task (due to timeout, or user termination via the API) you may see
+        /// Task (due to timeout, or user termination via the API) you may see
         /// an operating system-defined exit code.
         /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the container under which the task
+        /// Gets or sets information about the container under which the Task
         /// is executing.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task runs in a container context.
+        /// This property is set only if the Task runs in a container context.
         /// </remarks>
         [JsonProperty(PropertyName = "containerInfo")]
         public TaskContainerExecutionInformation ContainerInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets information describing the task failure, if any.
+        /// Gets or sets information describing the Task failure, if any.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task is in the completed state and
+        /// This property is set only if the Task is in the completed state and
         /// encountered a failure.
         /// </remarks>
         [JsonProperty(PropertyName = "failureInfo")]
         public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of times the task has been retried by the
+        /// Gets or sets the number of times the Task has been retried by the
         /// Batch service.
         /// </summary>
         /// <remarks>
         /// Task application failures (non-zero exit code) are retried,
-        /// pre-processing errors (the task could not be run) and file upload
-        /// errors are not retried. The Batch service will retry the task up to
+        /// pre-processing errors (the Task could not be run) and file upload
+        /// errors are not retried. The Batch service will retry the Task up to
         /// the limit specified by the constraints.
         /// </remarks>
         [JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the most recent time at which a retry of the task
+        /// Gets or sets the most recent time at which a retry of the Task
         /// started running.
         /// </summary>
         /// <remarks>
-        /// This element is present only if the task was retried (i.e.
+        /// This element is present only if the Task was retried (i.e.
         /// retryCount is nonzero). If present, this is typically the same as
-        /// startTime, but may be different if the task has been restarted for
-        /// reasons other than retry; for example, if the compute node was
+        /// startTime, but may be different if the Task has been restarted for
+        /// reasons other than retry; for example, if the Compute Node was
         /// rebooted during a retry, then the startTime is updated but the
         /// lastRetryTime is not.
         /// </remarks>
@@ -159,20 +158,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? LastRetryTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of times the task has been requeued by the
+        /// Gets or sets the number of times the Task has been requeued by the
         /// Batch service as the result of a user request.
         /// </summary>
         /// <remarks>
-        /// When the user removes nodes from a pool (by resizing/shrinking the
-        /// pool) or when the job is being disabled, the user can specify that
-        /// running tasks on the nodes be requeued for execution. This count
-        /// tracks how many times the task has been requeued for these reasons.
+        /// When the user removes Compute Nodes from a Pool (by
+        /// resizing/shrinking the pool) or when the Job is being disabled, the
+        /// user can specify that running Tasks on the Compute Nodes be
+        /// requeued for execution. This count tracks how many times the Task
+        /// has been requeued for these reasons.
         /// </remarks>
         [JsonProperty(PropertyName = "requeueCount")]
         public int RequeueCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the most recent time at which the task has been
+        /// Gets or sets the most recent time at which the Task has been
         /// requeued by the Batch service as the result of a user request.
         /// </summary>
         /// <remarks>
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? LastRequeueTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the result of the task execution.
+        /// Gets or sets the result of the Task execution.
         /// </summary>
         /// <remarks>
         /// If the value is 'failed', then the details of the failure can be

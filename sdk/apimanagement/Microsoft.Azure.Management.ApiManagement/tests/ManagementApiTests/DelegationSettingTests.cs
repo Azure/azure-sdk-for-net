@@ -18,7 +18,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateUpdateReset()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -26,12 +26,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var intialPortalDelegationSettings = await testBase.client.DelegationSettings.GetAsync(
                     testBase.rgName,
                     testBase.serviceName);
-                                
+
                 try
                 {
                     string delegationServer = TestUtilities.GenerateName("delegationServer");
                     string urlParameter = new UriBuilder("https", delegationServer, 443).Uri.ToString();
-                    
+
                     var portalDelegationSettingsParams = new PortalDelegationSettings()
                     {
                         Subscriptions = new SubscriptionsDelegationSettingsProperties(true),
@@ -61,7 +61,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     portalDelegationSettings.Subscriptions.Enabled = false;
                     portalDelegationSettings.UserRegistration.Enabled = false;
                     portalDelegationSettings.Url = null;
-                    portalDelegationSettings.ValidationKey = null;                    
+                    portalDelegationSettings.ValidationKey = null;
 
                     await testBase.client.DelegationSettings.UpdateAsync(
                         testBase.rgName,
@@ -77,7 +77,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Null(portalDelegationSettings.Url);
                     Assert.Null(portalDelegationSettings.ValidationKey);
                     Assert.False(portalDelegationSettings.UserRegistration.Enabled);
-                    Assert.False(portalDelegationSettings.Subscriptions.Enabled);                    
+                    Assert.False(portalDelegationSettings.Subscriptions.Enabled);
                 }
                 finally
                 {

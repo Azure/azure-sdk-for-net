@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// application gateway.</param>
         /// <param name="requireServerNameIndication">Applicable only if
         /// protocol is https. Enables SNI for multi-hosting.</param>
-        /// <param name="provisioningState">Provisioning state of the HTTP
-        /// listener resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the HTTP
+        /// listener resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="customErrorConfigurations">Custom error configurations
         /// of the HTTP listener.</param>
         /// <param name="name">Name of the HTTP listener that is unique within
@@ -120,8 +120,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? RequireServerNameIndication { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the HTTP listener resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the HTTP listener resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using DeviceProvisioningServices.Tests.Helpers;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -11,7 +11,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var testName = "unitTestingUpdateAllocationPolicyGet";
                 this.Initialize(context);
@@ -25,7 +25,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void Update()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var testName = "unitTestingDPSAllocationPolicyUpdate";
                 this.Initialize(context);

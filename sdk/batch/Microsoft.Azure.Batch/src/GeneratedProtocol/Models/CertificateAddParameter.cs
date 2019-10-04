@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A certificate that can be installed on compute nodes and can be used to
+    /// A Certificate that can be installed on Compute Nodes and can be used to
     /// authenticate operations on the machine.
     /// </summary>
     public partial class CertificateAddParameter
@@ -30,16 +30,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CertificateAddParameter class.
         /// </summary>
-        /// <param name="thumbprint">The X.509 thumbprint of the certificate.
+        /// <param name="thumbprint">The X.509 thumbprint of the Certificate.
         /// This is a sequence of up to 40 hex digits (it may include spaces
         /// but these are removed).</param>
         /// <param name="thumbprintAlgorithm">The algorithm used to derive the
         /// thumbprint. This must be sha1.</param>
-        /// <param name="data">The base64-encoded contents of the certificate.
+        /// <param name="data">The base64-encoded contents of the Certificate.
         /// The maximum size is 10KB.</param>
-        /// <param name="certificateFormat">The format of the certificate
+        /// <param name="certificateFormat">The format of the Certificate
         /// data.</param>
-        /// <param name="password">The password to access the certificate's
+        /// <param name="password">The password to access the Certificate's
         /// private key.</param>
         public CertificateAddParameter(string thumbprint, string thumbprintAlgorithm, string data, CertificateFormat? certificateFormat = default(CertificateFormat?), string password = default(string))
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the X.509 thumbprint of the certificate. This is a
+        /// Gets or sets the X.509 thumbprint of the Certificate. This is a
         /// sequence of up to 40 hex digits (it may include spaces but these
         /// are removed).
         /// </summary>
@@ -72,14 +72,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the base64-encoded contents of the certificate. The
+        /// Gets or sets the base64-encoded contents of the Certificate. The
         /// maximum size is 10KB.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
         public string Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the format of the certificate data.
+        /// Gets or sets the format of the Certificate data.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'pfx', 'cer'
@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public CertificateFormat? CertificateFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets the password to access the certificate's private key.
+        /// Gets or sets the password to access the Certificate's private key.
         /// </summary>
         /// <remarks>
-        /// This is required if the certificate format is pfx. It should be
-        /// omitted if the certificate format is cer.
+        /// This is required if the Certificate format is pfx. It should be
+        /// omitted if the Certificate format is cer.
         /// </remarks>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

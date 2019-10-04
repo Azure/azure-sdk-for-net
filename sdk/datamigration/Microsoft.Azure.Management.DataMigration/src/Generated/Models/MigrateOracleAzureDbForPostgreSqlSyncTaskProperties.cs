@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Properties for the task that migrates Oracle to Azure Database for
     /// PostgreSQL for online migrations
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Migrate.Oracle.Sql.Sync")]
+    [Newtonsoft.Json.JsonObject("Migrate.Oracle.AzureDbForPostgreSql.Sync")]
     public partial class MigrateOracleAzureDbForPostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
         /// <summary>

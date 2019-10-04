@@ -1,6 +1,4 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.36" />
-
   <Target Name="ValidateTargetFrameworks" BeforeTargets="Build">
     <ItemGroup>
       <RequiredTargetFrameworks Include="$(RequiredTargetFrameworks)" />
@@ -12,10 +10,21 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
+  <!-- Set PackageProjectUrl to the package README for Client Libraries -->
+  <Target Name="SetPackageProjectUrl" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and
+   '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' != ''">
+    <PropertyGroup>
+      <CurrentCsprojPath>$(MSBuildProjectDirectory)</CurrentCsprojPath>
+      <DirectoryPartofPath>$(CurrentCsprojPath.Substring($(CurrentCsprojPath.LastIndexOf("\sdk\"))))</DirectoryPartofPath>
+      <DirectoryPartofPath>$(DirectoryPartofPath.Remove($(DirectoryPartofPath.LastIndexOf("\src"))))</DirectoryPartofPath>
+      <PackageProjectUrl>$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/README.md</PackageProjectUrl>
+    </PropertyGroup>
+  </Target>
+
   <!-- This allows us to build .NET Framework targets on non-windows
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
@@ -27,6 +36,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <!-- Add StyleCop Analyzers -->
+  <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
+    <PackageReference Include="StyleCop.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <AdditionalFiles Include="$(RepoEngPath)\stylecop.json">
+      <Visible>false</Visible>
+    </AdditionalFiles>
   </ItemGroup>
 
   <!-- Enable SourceLink  -->
@@ -46,4 +66,13 @@
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
 
   <Import Project="Versioning.targets" />
+
+
+  <!-- CentralPackageVersions properties -->
+  <PropertyGroup>
+    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
+    <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
+  </PropertyGroup>
+
+  <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
 </Project>

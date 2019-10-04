@@ -6,11 +6,12 @@
     using Newtonsoft.Json;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ImportExportTests : BaseTest
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ExportVersion()
         {
             UseClientFor(async client =>
@@ -33,7 +34,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ImportVersion()
         {
             var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportApp.json"));
@@ -58,7 +59,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ImportApp()
         {
             var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportApp.json"));

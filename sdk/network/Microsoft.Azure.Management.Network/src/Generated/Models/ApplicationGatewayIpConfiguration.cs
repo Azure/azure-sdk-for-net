@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="subnet">Reference of the subnet resource. A subnet
         /// from where application gateway gets its private address.</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// application gateway subnet resource. Possible values are:
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// application gateway IP configuration resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">Name of the IP configuration that is unique
         /// within an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the application gateway subnet
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets or sets the provisioning state of the application gateway IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
@@ -18,7 +18,7 @@ namespace Azure.Storage
         /// <summary>
         /// The default scope used for token authentication with Storage.
         /// </summary>
-        const string StorageScope = "https://storage.azure.com/.default";
+        private const string StorageScope = "https://storage.azure.com/.default";
 
         /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
@@ -43,7 +43,7 @@ namespace Azure.Storage
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
             new StorageSharedKeyPipelinePolicy(
-                credential ?? throw new ArgumentNullException(nameof(credential)));
+                credential ?? throw Errors.ArgumentNull(nameof(credential)));
 
         /// <summary>
         /// Get an authentication policy to sign Storage requests.
@@ -52,7 +52,7 @@ namespace Azure.Storage
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
             new BearerTokenAuthenticationPolicy(
-                credential ?? throw new ArgumentNullException(nameof(credential)),
+                credential ?? throw Errors.ArgumentNull(nameof(credential)),
                 StorageScope);
 
         /// <summary>
@@ -73,9 +73,7 @@ namespace Azure.Storage
                 case TokenCredential token:
                     return token.AsPolicy();
                 default:
-                    throw new ArgumentException(
-                        $"Cannot authenticate with ${credentials.GetType().FullName}",
-                        nameof(credentials));
+                    throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
         }
 
@@ -84,23 +82,36 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
+        /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null) =>
-            HttpPipelineBuilder.Build(
-                options,
-                // TODO: PageBlob's UploadPagesAsync test currently fails
-                // without buffered responses, so I'm leaving this on for now.
-                // It'd be a great perf win to remove it soon.
-                bufferResponse: true,
-                authentication);
+        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        {
+            StorageResponseClassifier classifier = null;
+            List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
+            if (geoRedundantSecondaryStorageUri != null)
+            {
+                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
+                // we use a custom response classifier so that we can retry in case of a 404 that occurs against the secondary host. The retry will happen on the primary host.
+                classifier = new StorageResponseClassifier(geoRedundantSecondaryStorageUri);
+            }
+
+            perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);
+            perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
+            return HttpPipelineBuilder.Build(
+               options,
+               Array.Empty<HttpPipelinePolicy>(),
+               perRetryClientPolicies.ToArray(),
+               classifier);
+        }
 
         /// <summary>
         /// Create an HttpPipeline from Storage ClientOptions.
         /// </summary>
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
+        /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials) =>
-            Build(options, GetAuthenticationPolicy(credentials));
+        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Media.Tests.Helpers;
@@ -22,7 +22,7 @@ namespace Media.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var mediaMgmtClient = MediaManagementTestUtilities.GetMediaManagementClient(context, handler1);
@@ -88,7 +88,7 @@ namespace Media.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var mediaMgmtClient = MediaManagementTestUtilities.GetMediaManagementClient(context, handler1);
@@ -144,7 +144,7 @@ namespace Media.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var mediaMgmtClient = MediaManagementTestUtilities.GetMediaManagementClient(context, handler1);
@@ -204,7 +204,7 @@ namespace Media.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var mediaMgmtClient = MediaManagementTestUtilities.GetMediaManagementClient(context, handler1);
@@ -264,7 +264,7 @@ namespace Media.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var mediaMgmtClient = MediaManagementTestUtilities.GetMediaManagementClient(context, handler1);
@@ -333,7 +333,7 @@ namespace Media.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var mediaMgmtClient = MediaManagementTestUtilities.GetMediaManagementClient(context, handler1);
@@ -382,3 +382,4 @@ namespace Media.Tests.ScenarioTests
         }
     }
 }
+

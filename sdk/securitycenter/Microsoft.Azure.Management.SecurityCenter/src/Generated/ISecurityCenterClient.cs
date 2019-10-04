@@ -92,6 +92,31 @@ namespace Microsoft.Azure.Management.Security
         ISettingsOperations Settings { get; }
 
         /// <summary>
+        /// Gets the IDeviceSecurityGroupsOperations.
+        /// </summary>
+        IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionOperations.
+        /// </summary>
+        IIotSecuritySolutionOperations IotSecuritySolution { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionAnalyticsOperations.
+        /// </summary>
+        IIotSecuritySolutionAnalyticsOperations IotSecuritySolutionAnalytics { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionsAnalyticsAggregatedAlertOperations.
+        /// </summary>
+        IIotSecuritySolutionsAnalyticsAggregatedAlertOperations IotSecuritySolutionsAnalyticsAggregatedAlert { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionsAnalyticsRecommendationOperations.
+        /// </summary>
+        IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
+
+        /// <summary>
         /// Gets the IAllowedConnectionsOperations.
         /// </summary>
         IAllowedConnectionsOperations AllowedConnections { get; }
@@ -110,6 +135,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IJitNetworkAccessPoliciesOperations.
         /// </summary>
         IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// </summary>
+        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
@@ -175,6 +205,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IRegulatoryComplianceAssessmentsOperations.
         /// </summary>
         IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
+
+        /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentOperations.
+        /// </summary>
+        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
 
     }
 }

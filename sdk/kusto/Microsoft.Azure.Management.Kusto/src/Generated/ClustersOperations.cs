@@ -751,7 +751,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<AzureSku>>> ListSkusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<SkuDescription>>> ListSkusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<AzureSku>>();
+            var _result = new AzureOperationResponse<IEnumerable<SkuDescription>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -886,7 +886,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AzureSku>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SkuDescription>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

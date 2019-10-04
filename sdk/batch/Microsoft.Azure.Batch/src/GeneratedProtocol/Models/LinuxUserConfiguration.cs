@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties used to create a user account on a Linux node.
+    /// Properties used to create a user Account on a Linux Compute Node.
     /// </summary>
     public partial class LinuxUserConfiguration
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the LinuxUserConfiguration class.
         /// </summary>
-        /// <param name="uid">The user ID of the user account.</param>
-        /// <param name="gid">The group ID for the user account.</param>
+        /// <param name="uid">The user ID of the user Account.</param>
+        /// <param name="gid">The group ID for the user Account.</param>
         /// <param name="sshPrivateKey">The SSH private key for the user
-        /// account.</param>
+        /// Account.</param>
         public LinuxUserConfiguration(int? uid = default(int?), int? gid = default(int?), string sshPrivateKey = default(string))
         {
             Uid = uid;
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the user ID of the user account.
+        /// Gets or sets the user ID of the user Account.
         /// </summary>
         /// <remarks>
         /// The uid and gid properties must be specified together or not at
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Uid { get; set; }
 
         /// <summary>
-        /// Gets or sets the group ID for the user account.
+        /// Gets or sets the group ID for the user Account.
         /// </summary>
         /// <remarks>
         /// The uid and gid properties must be specified together or not at
@@ -69,17 +69,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Gid { get; set; }
 
         /// <summary>
-        /// Gets or sets the SSH private key for the user account.
+        /// Gets or sets the SSH private key for the user Account.
         /// </summary>
         /// <remarks>
         /// The private key must not be password protected. The private key is
         /// used to automatically configure asymmetric-key based authentication
-        /// for SSH between nodes in a Linux pool when the pool's
+        /// for SSH between Compute Nodes in a Linux Pool when the Pool's
         /// enableInterNodeCommunication property is true (it is ignored if
         /// enableInterNodeCommunication is false). It does this by placing the
         /// key pair into the user's .ssh directory. If not specified,
-        /// password-less SSH is not configured between nodes (no modification
-        /// of the user's .ssh directory is done).
+        /// password-less SSH is not configured between Compute Nodes (no
+        /// modification of the user's .ssh directory is done).
         /// </remarks>
         [JsonProperty(PropertyName = "sshPrivateKey")]
         public string SshPrivateKey { get; set; }

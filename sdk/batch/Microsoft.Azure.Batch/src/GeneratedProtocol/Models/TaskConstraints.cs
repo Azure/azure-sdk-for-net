@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Execution constraints to apply to a task.
+    /// Execution constraints to apply to a Task.
     /// </summary>
     public partial class TaskConstraints
     {
@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the TaskConstraints class.
         /// </summary>
         /// <param name="maxWallClockTime">The maximum elapsed time that the
-        /// task may run, measured from the time the task starts. If the task
+        /// Task may run, measured from the time the Task starts. If the Task
         /// does not complete within the time limit, the Batch service
         /// terminates it.</param>
-        /// <param name="retentionTime">The minimum time to retain the task
-        /// directory on the compute node where it ran, from the time it
+        /// <param name="retentionTime">The minimum time to retain the Task
+        /// directory on the Compute Node where it ran, from the time it
         /// completes execution. After this time, the Batch service may delete
-        /// the task directory and all its contents.</param>
+        /// the Task directory and all its contents.</param>
         /// <param name="maxTaskRetryCount">The maximum number of times the
-        /// task may be retried. The Batch service retries a task if its exit
+        /// Task may be retried. The Batch service retries a Task if its exit
         /// code is nonzero.</param>
         public TaskConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), int? maxTaskRetryCount = default(int?))
         {
@@ -54,43 +54,43 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the maximum elapsed time that the task may run,
-        /// measured from the time the task starts. If the task does not
+        /// Gets or sets the maximum elapsed time that the Task may run,
+        /// measured from the time the Task starts. If the Task does not
         /// complete within the time limit, the Batch service terminates it.
         /// </summary>
         /// <remarks>
         /// If this is not specified, there is no time limit on how long the
-        /// task may run.
+        /// Task may run.
         /// </remarks>
         [JsonProperty(PropertyName = "maxWallClockTime")]
         public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum time to retain the task directory on the
-        /// compute node where it ran, from the time it completes execution.
-        /// After this time, the Batch service may delete the task directory
+        /// Gets or sets the minimum time to retain the Task directory on the
+        /// Compute Node where it ran, from the time it completes execution.
+        /// After this time, the Batch service may delete the Task directory
         /// and all its contents.
         /// </summary>
         /// <remarks>
-        /// The default is 7 days, i.e. the task directory will be retained for
-        /// 7 days unless the compute node is removed or the job is deleted.
+        /// The default is 7 days, i.e. the Task directory will be retained for
+        /// 7 days unless the Compute Node is removed or the Job is deleted.
         /// </remarks>
         [JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of times the task may be retried.
-        /// The Batch service retries a task if its exit code is nonzero.
+        /// Gets or sets the maximum number of times the Task may be retried.
+        /// The Batch service retries a Task if its exit code is nonzero.
         /// </summary>
         /// <remarks>
         /// Note that this value specifically controls the number of retries
-        /// for the task executable due to a nonzero exit code. The Batch
-        /// service will try the task once, and may then retry up to this
+        /// for the Task executable due to a nonzero exit code. The Batch
+        /// service will try the Task once, and may then retry up to this
         /// limit. For example, if the maximum retry count is 3, Batch tries
-        /// the task up to 4 times (one initial try and 3 retries). If the
-        /// maximum retry count is 0, the Batch service does not retry the task
+        /// the Task up to 4 times (one initial try and 3 retries). If the
+        /// maximum retry count is 0, the Batch service does not retry the Task
         /// after the first attempt. If the maximum retry count is -1, the
-        /// Batch service retries the task without limit.
+        /// Batch service retries the Task without limit.
         /// </remarks>
         [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }

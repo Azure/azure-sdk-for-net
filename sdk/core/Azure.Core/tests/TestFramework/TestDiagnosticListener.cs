@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
 
         public Queue<KeyValuePair<string, object>> Events { get; } = new Queue<KeyValuePair<string, object>>();
 
-        public Queue<(string, object,  object)> IsEnabledCalls { get; } = new Queue<(string, object,  object)>();
+        public Queue<(string, object, object)> IsEnabledCalls { get; } = new Queue<(string, object, object)>();
 
         public TestDiagnosticListener(string diagnosticSourceName)
         {

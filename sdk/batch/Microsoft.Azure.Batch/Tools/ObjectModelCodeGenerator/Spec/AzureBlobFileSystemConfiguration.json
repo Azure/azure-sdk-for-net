@@ -1,0 +1,84 @@
+{
+  "Name": "AzureBlobFileSystemConfiguration",
+  "ProtocolName": "Models.AzureBlobFileSystemConfiguration",
+  "SummaryComment": "Information used to connect to an Azure Storage Container using Blobfuse.",
+  "IsConstructorPublic":  false,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "AccountName",
+        "SummaryComment": "The Azure Storage account name.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "ContainerName",
+        "SummaryComment": "The Azure Blob Storage Container name.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "RelativeMountPath",
+        "SummaryComment": "The relative path on the compute node where the file system will be mounted.",
+        "RemarksComment": "All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "AccountKey",
+        "SummaryComment": "The Azure Storage Account key. This property is mutually exclusive with <see cref=\"SasKey\"/>.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "SasKey",
+        "SummaryComment": "The Azure Storage SAS token. This property is mutually exclusive with <see cref=\"AccountKey\"/>.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "BlobfuseOptions",
+        "SummaryComment": "Additional command line options to pass to the mount command.",
+        "RemarksComment": "These are 'net use' options in Windows and 'mount' options in Linux.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": null
+    }
+  ]
+}

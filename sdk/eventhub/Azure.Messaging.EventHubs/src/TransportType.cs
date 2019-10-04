@@ -10,10 +10,10 @@ namespace Azure.Messaging.EventHubs
     ///
     public enum TransportType
     {
-        /// <summary>The connection uses the AMQP prototcol over TCP.</summary>
+        /// <summary>The connection uses the AMQP protocol over TCP.</summary>
         AmqpTcp,
 
-        /// <summary>The connection uses the AMQP prototcol over web sockets.</summary>
+        /// <summary>The connection uses the AMQP protocol over web sockets.</summary>
         AmqpWebSockets
     }
 }

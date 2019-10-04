@@ -1,4 +1,4 @@
-﻿namespace DataShare.Tests.ScenarioTests
+namespace DataShare.Tests.ScenarioTests
 {
     using System;
     using System.Net;

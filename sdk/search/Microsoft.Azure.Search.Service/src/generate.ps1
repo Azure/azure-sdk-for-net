@@ -54,12 +54,10 @@ Remove-Item -Force "$generateFolder\Models\CharFilterName.cs"
 Remove-Item -Force "$generateFolder\Models\RegexFlags.cs"
 Remove-Item -Force "$generateFolder\Models\DataType.cs"
 Remove-Item -Force "$generateFolder\Models\DataSourceType.cs"
-Remove-Item -Force "$generateFolder\Models\SentimentSkillLanguage.cs"
-Remove-Item -Force "$generateFolder\Models\KeyPhraseExtractionSkillLanguage.cs"
-Remove-Item -Force "$generateFolder\Models\OcrSkillLanguage.cs"
-Remove-Item -Force "$generateFolder\Models\SplitSkillLanguage.cs"
-Remove-Item -Force "$generateFolder\Models\EntityRecognitionSkillLanguage.cs"
+
+# NOTE: THE FOLLOWING LINE SHOULD NOT BE REMOVED
+# This is because NamedEntityRecognitionSkillLanguage is an obsolete type and we have customization in place
+# to indicate as such. This can only be removed if the SDK version decides to get rid of the type altogether.
 Remove-Item -Force "$generateFolder\Models\NamedEntityRecognitionSkillLanguage.cs"
-Remove-Item -Force "$generateFolder\Models\ImageAnalysisSkillLanguage.cs"
 
 Write-Output "Finished cleanup."

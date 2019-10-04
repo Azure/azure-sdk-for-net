@@ -20,7 +20,7 @@ namespace Azure.Core.Testing
         {
             SortedDictionary<string, string> pairs = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var pair in connectionString.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var pair in connectionString.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var indexOfEquals = pair.IndexOf('=');
                 if (indexOfEquals == -1)
@@ -50,7 +50,7 @@ namespace Azure.Core.Testing
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            foreach (var pair in Pairs)
+            foreach (KeyValuePair<string, string> pair in Pairs)
             {
                 stringBuilder.Append(pair.Key).Append('=').Append(pair.Value).Append(';');
             }

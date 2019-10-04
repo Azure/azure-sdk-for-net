@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Core.Pipeline
 {
-    internal class ThreadSafeRandom: Random
+    internal class ThreadSafeRandom : Random
     {
         private readonly Random _random = new Random();
 

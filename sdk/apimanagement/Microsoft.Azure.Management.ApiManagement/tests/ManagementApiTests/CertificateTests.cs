@@ -19,7 +19,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -53,7 +53,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         null);
 
                     Assert.NotNull(createResponse);
-                    Assert.Equal(certificateId, createResponse.Name);                    
+                    Assert.Equal(certificateId, createResponse.Name);
 
                     // get the certificate to check is was created
                     var getResponse = await testBase.client.Certificate.GetWithHttpMessagesAsync(
@@ -64,7 +64,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponse);
                     Assert.Equal(certificateId, getResponse.Body.Name);
                     Assert.Equal(cert.Subject, getResponse.Body.Subject, StringComparer.OrdinalIgnoreCase);
-                    Assert.Equal(cert.Thumbprint, getResponse.Body.Thumbprint, StringComparer.OrdinalIgnoreCase);                    
+                    Assert.Equal(cert.Thumbprint, getResponse.Body.Thumbprint, StringComparer.OrdinalIgnoreCase);
 
                     // list certificates
                     listResponse = testBase.client.Certificate.ListByService(

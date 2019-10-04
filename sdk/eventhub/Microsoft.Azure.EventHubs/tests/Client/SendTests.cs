@@ -7,7 +7,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -19,21 +18,26 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task SendAndReceiveZeroLengthBody()
         {
             var targetPartition = "0";
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
 
-            try
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                using (var zeroBodyEventData = new EventData(new byte[0]))
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+
+                try
                 {
-                    var edReceived = await SendAndReceiveEventAsync(targetPartition, zeroBodyEventData, ehClient);
+                    using (var zeroBodyEventData = new EventData(new byte[0]))
+                    {
+                        var edReceived = await SendAndReceiveEventAsync(targetPartition, zeroBodyEventData, ehClient);
 
-                    // Validate body.
-                    Assert.True(edReceived.Body.Count == 0, $"Received event's body isn't zero byte long.");
+                        // Validate body.
+                        Assert.True(edReceived.Body.Count == 0, $"Received event's body isn't zero byte long.");
+                    }
                 }
-            }
-            finally
-            {
-                await ehClient.CloseAsync();
+                finally
+                {
+                    await ehClient.CloseAsync();
+                }
             }
         }
 
@@ -44,18 +48,22 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending single Event via EventHubClient.SendAsync(EventData, string)");
 
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
 
-            try
-            {
-                using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub by partitionKey!")))
+                try
                 {
-                    await ehClient.SendAsync(eventData, "SomePartitionKeyHere");
+                    using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub by partitionKey!")))
+                    {
+                        await ehClient.SendAsync(eventData, "SomePartitionKeyHere");
+                    }
                 }
-            }
-            finally
-            {
-                await ehClient.CloseAsync();
+                finally
+                {
+                    await ehClient.CloseAsync();
+                }
             }
         }
 
@@ -66,20 +74,24 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending multiple Events via EventHubClient.SendAsync(IEnumerable<EventData>)");
 
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
 
-            try
-            {
-                using (var eventData1 = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
-                using (var eventData2 = new EventData(Encoding.UTF8.GetBytes("This is another message in the batch!")))
+                try
                 {
-                    eventData2.Properties["ContosoEventType"] = "some value here";
-                    await ehClient.SendAsync(new[] { eventData1, eventData2 });
+                    using (var eventData1 = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
+                    using (var eventData2 = new EventData(Encoding.UTF8.GetBytes("This is another message in the batch!")))
+                    {
+                        eventData2.Properties["ContosoEventType"] = "some value here";
+                        await ehClient.SendAsync(new[] { eventData1, eventData2 });
+                    }
                 }
-            }
-            finally
-            {
-                await ehClient.CloseAsync();
+                finally
+                {
+                    await ehClient.CloseAsync();
+                }
             }
         }
 
@@ -90,21 +102,25 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending single Event via PartitionSender.SendAsync(EventData)");
 
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var partitionSender1 = ehClient.CreatePartitionSender("1");
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var partitionSender1 = ehClient.CreatePartitionSender("1");
 
-            try
-            {
-                using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello again EventHub Partition 1!")))
+                try
                 {
-                    await partitionSender1.SendAsync(eventData);
+                    using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello again EventHub Partition 1!")))
+                    {
+                        await partitionSender1.SendAsync(eventData);
+                    }
                 }
-            }
-            finally
-            {
-                await Task.WhenAll(
-                    partitionSender1?.CloseAsync(),
-                    ehClient.CloseAsync());
+                finally
+                {
+                    await Task.WhenAll(
+                        partitionSender1?.CloseAsync(),
+                        ehClient.CloseAsync());
+                }
             }
         }
 
@@ -115,23 +131,27 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending single Event via PartitionSender.SendAsync(IEnumerable<EventData>)");
 
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var partitionSender1 = ehClient.CreatePartitionSender("1");
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var partitionSender1 = ehClient.CreatePartitionSender("0");
 
-            try
-            {
-                using (var eventData1 = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
-                using (var eventData2 = new EventData(Encoding.UTF8.GetBytes("This is another message in the batch!")))
+                try
                 {
-                    eventData2.Properties["ContosoEventType"] = "some value here";
-                    await partitionSender1.SendAsync(new[] { eventData1, eventData2 });
+                    using (var eventData1 = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
+                    using (var eventData2 = new EventData(Encoding.UTF8.GetBytes("This is another message in the batch!")))
+                    {
+                        eventData2.Properties["ContosoEventType"] = "some value here";
+                        await partitionSender1.SendAsync(new[] { eventData1, eventData2 });
+                    }
                 }
-            }
-            finally
-            {
-                await Task.WhenAll(
-                    partitionSender1?.CloseAsync(),
-                    ehClient.CloseAsync());
+                finally
+                {
+                    await Task.WhenAll(
+                        partitionSender1?.CloseAsync(),
+                        ehClient.CloseAsync());
+                }
             }
         }
 
@@ -142,21 +162,26 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var targetPartition = "0";
             var byteArr = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
 
-            try
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                using (var edToSend = new EventData(new ArraySegment<byte>(byteArr)))
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+
+                try
                 {
-                    var edReceived = await SendAndReceiveEventAsync(targetPartition, edToSend, ehClient);
+                    using (var edToSend = new EventData(new ArraySegment<byte>(byteArr)))
+                    {
+                        var edReceived = await SendAndReceiveEventAsync(targetPartition, edToSend, ehClient);
 
-                    // Validate array segment count.
-                    Assert.True(edReceived.Body.Count == byteArr.Count(), $"Sent {byteArr.Count()} bytes and received {edReceived.Body.Count}");
+                        // Validate array segment count.
+                        Assert.True(edReceived.Body.Count == byteArr.Count(), $"Sent {byteArr.Count()} bytes and received {edReceived.Body.Count}");
+                    }
                 }
-            }
-            finally
-            {
-                await ehClient.CloseAsync();
+                finally
+                {
+                    await ehClient.CloseAsync();
+                }
             }
         }
 
@@ -170,30 +195,35 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
             TestUtility.Log($"Starting {maxNumberOfClients} SendAsync tasks in parallel.");
 
-            var tasks = new List<Task>();
-            for (var i = 0; i < maxNumberOfClients; i++)
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                var task = Task.Run(async () =>
+                var tasks = new List<Task>();
+
+                for (var i = 0; i < maxNumberOfClients; i++)
                 {
-                    await startGate.Task;
-                    var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-
-                    try
+                    var task = Task.Run(async () =>
                     {
-                        await ehClient.SendAsync(new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")));
-                    }
-                    finally
-                    {
-                        await ehClient.CloseAsync();
-                    }
-                });
+                        await startGate.Task;
+                        var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                        var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
 
-                tasks.Add(task);
+                        try
+                        {
+                            await ehClient.SendAsync(new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")));
+                        }
+                        finally
+                        {
+                            await ehClient.CloseAsync();
+                        }
+                    });
+
+                    tasks.Add(task);
+                }
+
+                await Task.Delay(10000);
+                startGate.TrySetResult(true);
+                await Task.WhenAll(tasks);
             }
-
-            await Task.Delay(10000);
-            startGate.TrySetResult(true);
-            await Task.WhenAll(tasks);
 
             TestUtility.Log("All Send tasks have completed.");
         }
@@ -203,34 +233,39 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CloseSenderClient()
         {
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var pSender = ehClient.CreatePartitionSender("0");
-            var pReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
 
-            try
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                TestUtility.Log("Sending single event to partition 0");
-                using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
-                {
-                    await pSender.SendAsync(eventData);
-                    TestUtility.Log("Closing partition sender");
-                    await pSender.CloseAsync();
-                }
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var pSender = ehClient.CreatePartitionSender("0");
+                var pReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
 
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                try
                 {
-                    TestUtility.Log("Sending another event to partition 0 on the closed sender, this should fail");
+                    TestUtility.Log("Sending single event to partition 0");
                     using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
                     {
                         await pSender.SendAsync(eventData);
+                        TestUtility.Log("Closing partition sender");
+                        await pSender.CloseAsync();
                     }
-                });
-            }
-            finally
-            {
-                await Task.WhenAll(
-                    pReceiver.CloseAsync(),
-                    ehClient.CloseAsync());
+
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                    {
+                        TestUtility.Log("Sending another event to partition 0 on the closed sender, this should fail");
+                        using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
+                        {
+                            await pSender.SendAsync(eventData);
+                        }
+                    });
+                }
+                finally
+                {
+                    await Task.WhenAll(
+                        pReceiver.CloseAsync(),
+                        ehClient.CloseAsync());
+                }
             }
         }
 
@@ -241,55 +276,59 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             string targetPartitionKey = "this is the partition key";
 
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var receiver = default(PartitionReceiver);
-
-            try
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                // Mark end of each partition so that we can start reading from there.
-                var partitionIds = await this.GetPartitionsAsync(ehClient);
-                var partitions = await TestUtility.DiscoverEndOfStreamForPartitionsAsync(ehClient, partitionIds);
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var receiver = default(PartitionReceiver);
 
-                // Send a batch of 2 messages.
-                using (var eventData1 = new EventData(Guid.NewGuid().ToByteArray()))
-                using (var eventData2 = new EventData(Guid.NewGuid().ToByteArray()))
+                try
                 {
-                    await ehClient.SendAsync(new[] { eventData1, eventData2 }, targetPartitionKey);
-                }
+                    // Mark end of each partition so that we can start reading from there.
+                    var partitionIds = await this.GetPartitionsAsync(ehClient);
+                    var partitions = await TestUtility.DiscoverEndOfStreamForPartitionsAsync(ehClient, partitionIds);
 
-                // Now find out the partition where our messages landed.
-                var targetPartition = "";
-                foreach (var pId in partitionIds)
-                {
-                    var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(pId);
-                    if (pInfo.LastEnqueuedOffset != partitions[pId])
+                    // Send a batch of 2 messages.
+                    using (var eventData1 = new EventData(Guid.NewGuid().ToByteArray()))
+                    using (var eventData2 = new EventData(Guid.NewGuid().ToByteArray()))
                     {
-                        targetPartition = pId;
-                        TestUtility.Log($"Batch landed on partition {targetPartition}");
+                        await ehClient.SendAsync(new[] { eventData1, eventData2 }, targetPartitionKey);
                     }
+
+                    // Now find out the partition where our messages landed.
+                    var targetPartition = "";
+                    foreach (var pId in partitionIds)
+                    {
+                        var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(pId);
+                        if (pInfo.LastEnqueuedOffset != partitions[pId])
+                        {
+                            targetPartition = pId;
+                            TestUtility.Log($"Batch landed on partition {targetPartition}");
+                        }
+                    }
+
+                    // Confirm that we identified the partition with our messages.
+                    Assert.True(targetPartition != "", "None of the partition offsets moved.");
+
+                    // Receive all messages from target partition.
+                    receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartition, EventPosition.FromOffset(partitions[targetPartition]));
+                    var messages = await ReceiveAllMessagesAsync(receiver);
+
+                    // Validate 2 messages received.
+                    Assert.True(messages.Count == 2, $"Received {messages.Count} messages instead of 2.");
+
+                    // Validate both messages carry correct partition id.
+                    Assert.True(messages[0].SystemProperties.PartitionKey == targetPartitionKey,
+                        $"First message returned partition key value '{messages[0].SystemProperties.PartitionKey}'");
+                    Assert.True(messages[1].SystemProperties.PartitionKey == targetPartitionKey,
+                        $"Second message returned partition key value '{messages[1].SystemProperties.PartitionKey}'");
                 }
-
-                // Confirm that we identified the partition with our messages.
-                Assert.True(targetPartition != "", "None of the partition offsets moved.");
-
-                // Receive all messages from target partition.
-                receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartition, EventPosition.FromOffset(partitions[targetPartition]));
-                var messages = await ReceiveAllMessagesAsync(receiver);
-
-                // Validate 2 messages received.
-                Assert.True(messages.Count == 2, $"Received {messages.Count} messages instead of 2.");
-
-                // Validate both messages carry correct partition id.
-                Assert.True(messages[0].SystemProperties.PartitionKey == targetPartitionKey,
-                    $"First message returned partition key value '{messages[0].SystemProperties.PartitionKey}'");
-                Assert.True(messages[1].SystemProperties.PartitionKey == targetPartitionKey,
-                    $"Second message returned partition key value '{messages[1].SystemProperties.PartitionKey}'");
-            }
-            finally
-            {
-                await Task.WhenAll(
-                    receiver?.CloseAsync(),
-                    ehClient.CloseAsync());
+                finally
+                {
+                    await Task.WhenAll(
+                        receiver?.CloseAsync(),
+                        ehClient.CloseAsync());
+                }
             }
         }
     }

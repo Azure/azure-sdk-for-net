@@ -5,9 +5,10 @@
     using System.Threading.Tasks;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class TrainTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetStatus()
         {
             UseClientFor(async client =>
@@ -43,7 +44,7 @@
         }
 
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void TrainVersion()
         {
             UseClientFor(async client =>

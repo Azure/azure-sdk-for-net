@@ -18,7 +18,7 @@ namespace Advisor.Tests.BasicTests
         [Fact]
         public void ConfigureSubscriptionTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var config = new ConfigData
                 {
@@ -44,7 +44,7 @@ namespace Advisor.Tests.BasicTests
         [Fact]
         public void ConfigureResourceGroupTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var config = new ConfigData {Properties = new ConfigDataProperties {Exclude = true}};
 

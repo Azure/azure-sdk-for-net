@@ -34,11 +34,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// base image dependency updates. Possible values include: 'All',
         /// 'Runtime'</param>
         /// <param name="name">The name of the trigger.</param>
+        /// <param name="updateTriggerEndpoint">The endpoint URL for receiving
+        /// update triggers.</param>
+        /// <param name="updateTriggerPayloadType">Type of Payload body for
+        /// Base image update triggers. Possible values include: 'Default',
+        /// 'Token'</param>
         /// <param name="status">The current status of trigger. Possible values
         /// include: 'Disabled', 'Enabled'</param>
-        public BaseImageTrigger(string baseImageTriggerType, string name, string status = default(string))
+        public BaseImageTrigger(string baseImageTriggerType, string name, string updateTriggerEndpoint = default(string), string updateTriggerPayloadType = default(string), string status = default(string))
         {
             BaseImageTriggerType = baseImageTriggerType;
+            UpdateTriggerEndpoint = updateTriggerEndpoint;
+            UpdateTriggerPayloadType = updateTriggerPayloadType;
             Status = status;
             Name = name;
             CustomInit();
@@ -55,6 +62,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "baseImageTriggerType")]
         public string BaseImageTriggerType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the endpoint URL for receiving update triggers.
+        /// </summary>
+        [JsonProperty(PropertyName = "updateTriggerEndpoint")]
+        public string UpdateTriggerEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of Payload body for Base image update triggers.
+        /// Possible values include: 'Default', 'Token'
+        /// </summary>
+        [JsonProperty(PropertyName = "updateTriggerPayloadType")]
+        public string UpdateTriggerPayloadType { get; set; }
 
         /// <summary>
         /// Gets or sets the current status of trigger. Possible values

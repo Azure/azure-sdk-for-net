@@ -20,14 +20,14 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                
+
                 var userId = TestUtilities.GenerateName("sdkUserId");
                 var newGroupId = TestUtilities.GenerateName("sdkGroupId");
-                
+
                 try
                 {
                     // create a new group
@@ -67,7 +67,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         State = UserState.Active,
                         Note = "dummy note"
                     };
-                    
+
                     var userContract = testBase.client.User.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,

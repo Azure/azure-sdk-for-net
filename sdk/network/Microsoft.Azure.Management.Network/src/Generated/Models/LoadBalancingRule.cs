@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="disableOutboundSnat">Configures SNAT for the VMs in
         /// the backend pool to use the publicIP address specified in the
         /// frontend of the load balancing rule.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the load
+        /// balancing rule resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within
         /// the set of load balancing rules used by the load balancer. This
         /// name can be used to access the resource.</param>
@@ -189,8 +189,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? DisableOutboundSnat { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the PublicIP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the load balancing rule
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

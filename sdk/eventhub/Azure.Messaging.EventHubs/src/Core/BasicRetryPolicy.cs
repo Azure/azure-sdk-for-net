@@ -1,8 +1,12 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Globalization;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Core
@@ -20,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Core
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> s_random = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> s_randomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>
         ///   The set of options responsible for configuring the retry
@@ -45,12 +49,12 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public BasicRetryPolicy(RetryOptions retryOptions)
         {
-            Guard.ArgumentNotNull(nameof(retryOptions), retryOptions);
+            Argument.AssertNotNull(retryOptions, nameof(retryOptions));
             Options = retryOptions;
         }
 
         /// <summary>
-        ///   Calculates the amount of time to allow the curent attempt for an operation to
+        ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
         ///
@@ -82,21 +86,15 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             var baseJitterSeconds = (Options.Delay.TotalSeconds * JitterFactor);
-            TimeSpan retryDelay;
 
-            switch (Options.Mode)
+            TimeSpan retryDelay = Options.Mode switch
             {
-                case RetryMode.Fixed:
-                    retryDelay = CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, s_random.Value);
-                    break;
+                RetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, s_randomNumberGenerator.Value),
 
-                case RetryMode.Exponential:
-                    retryDelay = CalculateExponentiayDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, s_random.Value);
-                    break;
+                RetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, s_randomNumberGenerator.Value),
 
-                default:
-                    throw new NotSupportedException(String.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString()));
-            }
+                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
+            };
 
             // Adjust the delay, if needed, to keep within the maximum
             // duration.
@@ -137,7 +135,6 @@ namespace Azure.Messaging.EventHubs.Core
                     return ex.IsTransient;
 
                 case TimeoutException _:
-                case OperationCanceledException _:
                 case SocketException _:
                     return true;
 
@@ -157,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The recommended duration to delay before retrying; this value does not take the maximum delay or eligibility for retry into account.</returns>
         ///
-        private static TimeSpan CalculateExponentiayDelay(int attemptCount,
+        private static TimeSpan CalculateExponentialDelay(int attemptCount,
                                                           double baseDelaySeconds,
                                                           double baseJitterSeconds,
                                                           Random random) =>

@@ -58,6 +58,10 @@ namespace Azure.Core.Http
             public static string Accept => "Accept";
             public static string Authorization => "Authorization";
             public static string Range => "Range";
+            public static string IfMatch => "If-Match";
+            public static string IfNoneMatch => "If-None-Match";
+            public static string IfModifiedSince => "If-Modified-Since";
+            public static string IfUnmodifiedSince => "If-Unmodified-Since";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible
@@ -66,9 +70,9 @@ namespace Azure.Core.Http
 #pragma warning restore CA1034 // Nested types should not be visible
 #pragma warning restore CA1724 // Type name conflicts with standard namespace
         {
-            const string ApplicationJson = "application/json";
-            const string ApplicationOctetStream = "application/octet-stream";
-            const string ApplicationFormUrlEncoded = "application/x-www-form-urlencoded";
+            private const string ApplicationJson = "application/json";
+            private const string ApplicationOctetStream = "application/octet-stream";
+            private const string ApplicationFormUrlEncoded = "application/x-www-form-urlencoded";
 
             public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, ApplicationJson);
             public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, ApplicationJson);

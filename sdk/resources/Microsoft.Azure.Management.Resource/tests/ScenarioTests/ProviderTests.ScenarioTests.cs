@@ -27,7 +27,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ProviderGetValidateMessage()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -57,7 +57,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ProviderListValidateMessage()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -89,7 +89,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void GetProviderWithAliases()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var computeNamespace = "Microsoft.Compute";
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -134,7 +134,7 @@ namespace ResourceGroups.Tests
         public void VerifyProviderRegister()
         {
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -150,7 +150,7 @@ namespace ResourceGroups.Tests
         public void VerifyProviderUnregister()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -171,3 +171,4 @@ namespace ResourceGroups.Tests
         }
     }
 }
+
