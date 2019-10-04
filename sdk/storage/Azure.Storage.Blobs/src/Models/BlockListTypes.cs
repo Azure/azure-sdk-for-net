@@ -41,20 +41,12 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="options"></param>
         /// <returns>The BlockList response.</returns>
-        internal static BlockListType ToBlockListType(this BlockListTypes options)
-        {
-            if (options >= BlockListTypes.All || options == default)
+        internal static BlockListType ToBlockListType(this BlockListTypes options) =>
+            options switch
             {
-                return BlockListType.All;
-            }
-            else if (options.HasFlag(BlockListTypes.Committed))
-            {
-                return BlockListType.Committed;
-            }
-            else
-            {
-                return BlockListType.Uncommitted;
-            }
-        }
+                BlockListTypes.Committed => BlockListType.Committed,
+                BlockListTypes.Uncommitted => BlockListType.Uncommitted,
+                _ => BlockListType.All,
+            };
     }
 }
