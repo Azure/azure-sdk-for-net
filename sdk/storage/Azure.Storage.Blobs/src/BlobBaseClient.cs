@@ -2021,12 +2021,12 @@ namespace Azure.Storage.Blobs.Specialized
                     cancellationToken,
                     Constants.Blob.Base.DeleteIfExists)
                     .ConfigureAwait(false);
-                return Response.FromValue(response, true);
+                return Response.FromValue(true, response);
             }
             catch (StorageRequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
             {
-                return Response.FromValue(default, false);
+                return Response.FromValue(false, default);
             }
         }
 

@@ -764,12 +764,12 @@ namespace Azure.Storage.Blobs
                     cancellationToken,
                     Constants.Blob.Container.DeleteIfExistsOperationName)
                     .ConfigureAwait(false);
-                return Response.FromValue(response, true);
+                return Response.FromValue(true, response);
             }
             catch (StorageRequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
             {
-                return Response.FromValue(default, false);
+                return Response.FromValue(false, default);
             }
         }
 
