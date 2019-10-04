@@ -117,6 +117,16 @@ directive:
     }
 ```
 
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.FileServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
+```
+
 ### /?comp=list
 ``` yaml
 directive:
@@ -647,4 +657,19 @@ directive:
     $.type = "string";
     delete $.required;
     delete $.properties;
+```
+
+### Prepend File prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Metrics["x-ms-client-name"] = "FileMetrics";
+    $.Metrics.xml = { "name": "Metrics" };
+    $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "FileCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.FileServiceProperties.properties.Cors.xml.name = "Cors";
 ```

@@ -108,9 +108,9 @@ string connectionString = "<connection_string>";
 BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
 
 // List all of its blobs
-foreach (Response<BlobItem> blob in container.GetBlobs())
+foreach (BlobItem blob in container.GetBlobs())
 {
-    Console.WriteLine(blob.Value.Name);
+    Console.WriteLine(blob.Name);
 }
 ```
 

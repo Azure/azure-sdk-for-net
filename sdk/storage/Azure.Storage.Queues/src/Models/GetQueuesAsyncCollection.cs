@@ -7,22 +7,20 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal class GetQueuesAsyncCollection : StorageAsyncCollection<QueueItem>
+    internal class GetQueuesAsyncCollection : StorageCollectionEnumerator<QueueItem>
     {
         private readonly QueueServiceClient _client;
         private readonly GetQueuesOptions? _options;
 
         public GetQueuesAsyncCollection(
             QueueServiceClient client,
-            GetQueuesOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetQueuesOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<QueueItem>> GetNextPageAsync(
+        public override async ValueTask<Page<QueueItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,

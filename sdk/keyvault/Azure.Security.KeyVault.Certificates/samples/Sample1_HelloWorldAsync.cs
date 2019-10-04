@@ -46,7 +46,10 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
-            Certificate updatedCert = await client.UpdateCertificateAsync(certName, certificate.Version, enabled: false);
+            CertificateProperties certificateProperties = certificate.Properties;
+            certificateProperties.Enabled = false;
+
+            Certificate updatedCert = await client.UpdateCertificatePropertiesAsync(certificateProperties);
 
             Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 

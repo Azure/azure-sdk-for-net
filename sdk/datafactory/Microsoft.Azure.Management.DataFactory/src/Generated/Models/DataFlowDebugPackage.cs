@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServices">List of linked services.</param>
         /// <param name="staging">Staging info for debug session.</param>
         /// <param name="debugSettings">Data flow debug settings.</param>
-        public DataFlowDebugPackage(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string sessionId = default(string), DataFlowResource dataFlow = default(DataFlowResource), IList<DatasetResource> datasets = default(IList<DatasetResource>), IList<LinkedServiceResource> linkedServices = default(IList<LinkedServiceResource>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), DataFlowDebugPackageDebugSettings debugSettings = default(DataFlowDebugPackageDebugSettings))
+        public DataFlowDebugPackage(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string sessionId = default(string), DataFlowDebugResource dataFlow = default(DataFlowDebugResource), IList<DatasetDebugResource> datasets = default(IList<DatasetDebugResource>), IList<LinkedServiceDebugResource> linkedServices = default(IList<LinkedServiceDebugResource>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), DataFlowDebugPackageDebugSettings debugSettings = default(DataFlowDebugPackageDebugSettings))
         {
             AdditionalProperties = additionalProperties;
             SessionId = sessionId;
@@ -73,19 +73,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets data flow instance.
         /// </summary>
         [JsonProperty(PropertyName = "dataFlow")]
-        public DataFlowResource DataFlow { get; set; }
+        public DataFlowDebugResource DataFlow { get; set; }
 
         /// <summary>
         /// Gets or sets list of datasets.
         /// </summary>
         [JsonProperty(PropertyName = "datasets")]
-        public IList<DatasetResource> Datasets { get; set; }
+        public IList<DatasetDebugResource> Datasets { get; set; }
 
         /// <summary>
         /// Gets or sets list of linked services.
         /// </summary>
         [JsonProperty(PropertyName = "linkedServices")]
-        public IList<LinkedServiceResource> LinkedServices { get; set; }
+        public IList<LinkedServiceDebugResource> LinkedServices { get; set; }
 
         /// <summary>
         /// Gets or sets staging info for debug session.

@@ -30,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Azure.Messaging.EventHubs.Reference.props" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />

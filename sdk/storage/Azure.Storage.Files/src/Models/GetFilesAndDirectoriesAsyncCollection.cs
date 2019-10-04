@@ -8,22 +8,20 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Files.Models
 {
-    internal class GetFilesAndDirectoriesAsyncCollection : StorageAsyncCollection<StorageFileItem>
+    internal class GetFilesAndDirectoriesAsyncCollection : StorageCollectionEnumerator<StorageFileItem>
     {
         private readonly DirectoryClient _client;
         private readonly GetFilesAndDirectoriesOptions? _options;
 
         public GetFilesAndDirectoriesAsyncCollection(
             DirectoryClient client,
-            GetFilesAndDirectoriesOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetFilesAndDirectoriesOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<StorageFileItem>> GetNextPageAsync(
+        public override async ValueTask<Page<StorageFileItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,

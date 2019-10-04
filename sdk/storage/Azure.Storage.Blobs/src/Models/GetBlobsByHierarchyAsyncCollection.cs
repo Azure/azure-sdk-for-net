@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class GetBlobsByHierarchyAsyncCollection : StorageAsyncCollection<BlobHierarchyItem>
+    internal class GetBlobsByHierarchyAsyncCollection : StorageCollectionEnumerator<BlobHierarchyItem>
     {
         private readonly BlobContainerClient _client;
         private readonly GetBlobsOptions? _options;
@@ -17,18 +17,16 @@ namespace Azure.Storage.Blobs.Models
         public GetBlobsByHierarchyAsyncCollection(
             BlobContainerClient client,
             string delimiter,
-            GetBlobsOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetBlobsOptions? options)
         {
             _client = client;
             _delimiter = delimiter;
             _options = options;
         }
 
-        protected override async Task<Page<BlobHierarchyItem>> GetNextPageAsync(
+        public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
             string continuationToken,
-            int? pageHintSize,
+            int? pageSizeHint,
             bool isAsync,
             CancellationToken cancellationToken)
         {
@@ -36,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
                 continuationToken,
                 _delimiter,
                 _options,
-                pageHintSize,
+                pageSizeHint,
                 isAsync,
                 cancellationToken);
             Response<BlobsHierarchySegment> response = isAsync ?

@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs
         /// defaults to <see cref="String.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
         /// </summary>
-        public string ContainerName
+        public string BlobContainerName
         {
             get => _containerName;
             set { ResetUri(); _containerName = value; }
@@ -153,7 +153,7 @@ namespace Azure.Storage.Blobs
             Port = uri.Port;
 
             AccountName = "";
-            ContainerName = "";
+            BlobContainerName = "";
             BlobName = "";
 
             Snapshot = "";
@@ -193,11 +193,11 @@ namespace Azure.Storage.Blobs
                 var containerEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (containerEndIndex == -1)
                 {
-                    ContainerName = path.Substring(startIndex); // Slash not found; path has container name & no blob name
+                    BlobContainerName = path.Substring(startIndex); // Slash not found; path has container name & no blob name
                 }
                 else
                 {
-                    ContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
+                    BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
                     BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
                 }
             }
@@ -274,9 +274,9 @@ namespace Azure.Storage.Blobs
             {
                 path.Append("/").Append(AccountName);
             }
-            if (!String.IsNullOrWhiteSpace(ContainerName))
+            if (!String.IsNullOrWhiteSpace(BlobContainerName))
             {
-                path.Append("/").Append(ContainerName);
+                path.Append("/").Append(BlobContainerName);
                 if (!String.IsNullOrWhiteSpace(BlobName))
                 {
                     path.Append("/").Append(BlobName);

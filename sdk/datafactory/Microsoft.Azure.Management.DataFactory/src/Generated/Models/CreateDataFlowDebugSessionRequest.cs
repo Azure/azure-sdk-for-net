@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// minutes.</param>
         /// <param name="integrationRuntime">Set to use integration runtime
         /// setting for data flow debug session.</param>
-        public CreateDataFlowDebugSessionRequest(string computeType = default(string), int? coreCount = default(int?), int? timeToLive = default(int?), IntegrationRuntimeResource integrationRuntime = default(IntegrationRuntimeResource))
+        public CreateDataFlowDebugSessionRequest(string computeType = default(string), int? coreCount = default(int?), int? timeToLive = default(int?), IntegrationRuntimeDebugResource integrationRuntime = default(IntegrationRuntimeDebugResource))
         {
             ComputeType = computeType;
             CoreCount = coreCount;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// debug session.
         /// </summary>
         [JsonProperty(PropertyName = "integrationRuntime")]
-        public IntegrationRuntimeResource IntegrationRuntime { get; set; }
+        public IntegrationRuntimeDebugResource IntegrationRuntime { get; set; }
 
         /// <summary>
         /// Validate the object.

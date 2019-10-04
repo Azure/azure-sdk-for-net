@@ -79,9 +79,9 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
-            string requestId;
+            string requestId = null;
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io/api-version=5"));
@@ -89,9 +89,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -132,9 +130,9 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
-            string requestId;
+            string requestId = null;
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
@@ -142,9 +140,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             EventWrittenEventArgs e = _listener.SingleEventById(ErrorResponseEvent);
             Assert.AreEqual(EventLevel.Error, e.Level);
@@ -167,18 +163,16 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
-            string requestId;
+            string requestId = null;
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
@@ -200,15 +194,13 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             AssertNoContentLogged();
         }
@@ -223,14 +215,12 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             AssertNoContentLogged();
         }
@@ -246,14 +236,12 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             AssertNoContentLogged();
         }
@@ -436,18 +424,16 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, s_allowedHeaders, s_allowedQueryParameters) });
-            string requestId;
+            string requestId = null;
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
@@ -492,9 +478,51 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
-            string requestId;
+            string requestId = null;
 
-            using (Request request = pipeline.CreateRequest())
+            await SendRequestAsync(pipeline, request => {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
+                request.Headers.Add("Date", "3/26/2019");
+                request.Headers.Add("Custom-Header", "Value");
+                request.Headers.Add("Secret-Custom-Header", "Value");
+                request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                requestId = request.ClientRequestId;
+            });
+
+            EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
+            Assert.AreEqual(EventLevel.Informational, e.Level);
+            Assert.AreEqual("Request", e.EventName);
+            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
+            Assert.AreEqual("GET", e.GetProperty<string>("method"));
+            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
+
+            e = _listener.SingleEventById(ResponseEvent);
+            Assert.AreEqual(EventLevel.Informational, e.Level);
+            Assert.AreEqual("Response", e.EventName);
+            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual(e.GetProperty<int>("status"), 200);
+            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
+        }
+
+        [Test]
+        public async Task HeadersAndQueryParametersAreNotSanitizedWhenStars()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
+            response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
+            response.AddHeader(new HttpHeader("Secret-Response-Header", "Very secret"));
+
+            MockTransport mockTransport = CreateMockTransport(response);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, new[] {"*"}, new[] {"*"}) });
+            string requestId = null;
+
+            await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
@@ -503,18 +531,17 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Secret-Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
-
-                await SendRequestAsync(pipeline, request);
-            }
+            });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://contoso.a.io/?api-version=5&", e.GetProperty<string>("uri"));
+            Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -522,6 +549,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", e.GetProperty<string>("headers"));
         }
 
         private async Task<Response> SendRequest(bool isSeekable, bool isError, Action<MockResponse> setupRequest = null, int maxLength = int.MaxValue)
@@ -541,30 +569,28 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, s_allowedHeaders, s_allowedQueryParameters) });
 
-            using (Request request = pipeline.CreateRequest())
+            Response response = await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
+            });
 
-                Response response = await SendRequestAsync(pipeline, request);
+            var buffer = new byte[11];
 
-                var buffer = new byte[11];
-
-                if (IsAsync)
-                {
-                    Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
-                    Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
-                    Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
-                }
-                else
-                {
-                    Assert.AreEqual(6, response.ContentStream.Read(buffer, 5, 6));
-                    Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
-                    Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
-                }
-
-                return mockResponse;
+            if (IsAsync)
+            {
+                Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
+                Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
+                Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
             }
+            else
+            {
+                Assert.AreEqual(6, response.ContentStream.Read(buffer, 5, 6));
+                Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
+                Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
+            }
+
+            return mockResponse;
         }
 
     }

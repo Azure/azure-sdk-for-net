@@ -7,6 +7,7 @@
       "timeToLive": 60,
       "integrationRuntime": {
         "properties": {
+          "name": "ir1",
           "type": "Managed",
           "typeProperties": {
             "computeProperties": {

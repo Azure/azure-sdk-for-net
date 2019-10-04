@@ -3,11 +3,6 @@
 ## Current version
 ###  Feature Additions
 
-## Version 4.2.1
-###  Feature Additions
-- Add dedicated linkedservice/dataset/source for Azure File Storage;
-- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
-
 ## Version 4.2.0
 ###  Feature Additions
 * Added support for Data Flow:
@@ -17,6 +12,8 @@
     - Added support for data flow properties in managed integration runtime
 - Added property queryTimeout to tabular sources
 - Added support for Cosmos DB SQL API dataset and copy source/sink
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
 
 ## Version 4.1.3
 ###  Feature Additions

@@ -8,6 +8,7 @@
 - `Secret` and `DeletedSecret` no longer extend `SecretProperties`, but instead contain a `SecretProperties` property named `Properties`.
 - `SecretClient.Update` has been renamed to `SecretClient.UpdateProperties`.
 - `SecretProperties.Vault` has been renamed to `SecretProperties.VaultUri`.
+- All methods in `SecretClient` now include "Secret" consistent with `KeyClient` and `CertificateClient`.
 
 ## 4.0.0-preview.1 (2019-06-28)
 Version 4.0.0-preview.1 is the first preview of our efforts to create a user-friendly client library for Azure Key Vault. For more information about

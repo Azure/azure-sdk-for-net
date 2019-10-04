@@ -14,7 +14,7 @@ namespace Azure.Storage.Sas
     /// A <see cref="SasQueryParameters"/> object represents the components
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  It includes components used by all Azure Storage resources
-    /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
+    /// (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
@@ -132,7 +132,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
-        /// correlates to an access policy specified for the container, queue,
+        /// correlates to an access policy specified for the blob container, queue,
         /// or share.
         /// </summary>
         public string Identifier => _identifier ?? string.Empty;

@@ -28,16 +28,16 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         private const int RetryMaximumAttemps = 15;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
-        private const double RetryExponentialBackoffSeconds = 2.0;
+        private const double RetryExponentialBackoffSeconds = 2.5;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
-        private const double RetryBaseJitterSeconds = 10.0;
+        private const double RetryBaseJitterSeconds = 15.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
-        private static readonly TimeSpan s_credentialRefreshBuffer = TimeSpan.FromMinutes(5);
+        private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
 
         /// <summary>The random number generator to use for each requesting thread.</summary>
-        private static readonly ThreadLocal<Random> s_randomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>The seed to use for random number generation.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         {
             using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
-                ResourceGroup resourceGroup = await CreateRetryPolicy<Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
+                ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
                 return resourceGroup.Location;
             }
         }
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
             // this is test infrastructure, just allow the acquired token to replace the current one without attempting to
             // coordinate or ensure that the most recent is kept.
 
-            if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(s_credentialRefreshBuffer)))
+            if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var context = new AuthenticationContext($"https://login.windows.net/{ TestEnvironment.EventHubsTenant }");
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         private static TimeSpan CalculateRetryDelay(int attempt,
                                                     double exponentialBackoffSeconds,
                                                     double baseJitterSeconds) =>
-            TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (s_randomNumberGenerator.Value.NextDouble() * baseJitterSeconds));
+            TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));
 
         /// <summary>
         ///   An internal type for tracking the management access token and

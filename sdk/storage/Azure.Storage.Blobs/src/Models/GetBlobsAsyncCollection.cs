@@ -7,22 +7,20 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class GetBlobsAsyncCollection : StorageAsyncCollection<BlobItem>
+    internal class GetBlobsAsyncCollection : StorageCollectionEnumerator<BlobItem>
     {
         private readonly BlobContainerClient _client;
         private readonly GetBlobsOptions? _options;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
-            GetBlobsOptions? options,
-            CancellationToken cancellationToken)
-            : base(cancellationToken)
+            GetBlobsOptions? options)
         {
             _client = client;
             _options = options;
         }
 
-        protected override async Task<Page<BlobItem>> GetNextPageAsync(
+        public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,
@@ -37,6 +35,7 @@ namespace Azure.Storage.Blobs.Models
             Response<BlobsFlatSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
+
             return new Page<BlobItem>(
                 response.Value.BlobItems.ToArray(),
                 response.Value.NextMarker,

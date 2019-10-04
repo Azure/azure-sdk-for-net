@@ -6,6 +6,7 @@
     "request": {
       "dataFlow": {
         "properties": {
+          "name": "dataflow1",
           "type": "MappingDataFlow",
           "typeProperties": {
             "sources": [
@@ -26,6 +27,7 @@
       },
       "datasets": [
         {
+          "name": "dataset1",
           "properties": {
             "linkedServiceName": {
               "referenceName": "linkedService5",
@@ -54,6 +56,7 @@
       ],
       "linkedServices": [
         {
+          "name": "linkedService1",
           "properties": {
             "type": "AzureBlobStorage",
             "typeProperties": {

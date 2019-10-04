@@ -22,10 +22,16 @@ namespace Azure.Core.Pipeline
             _logContent = logContent;
             _maxLength = maxLength;
             _allowedHeaderNames = new HashSet<string>(allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
+            _logAllHeaders = _allowedHeaderNames.Contains(LogAllValue);
             _allowedQueryParameters = allowedQueryParameters;
+            _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
         }
 
         private const long DelayWarningThreshold = 3000; // 3000ms
+
+        private const string LogAllValue = "*";
+        private const string RedactedPlaceholder = "REDACTED";
+
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
@@ -34,6 +40,9 @@ namespace Azure.Core.Pipeline
 
         private readonly HashSet<string> _allowedHeaderNames;
         private readonly string[] _allowedQueryParameters;
+
+        private bool _logAllHeaders;
+        private bool _logFullQueries;
 
         public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -119,7 +128,7 @@ namespace Azure.Core.Pipeline
 
         private string FormatUri(RequestUriBuilder requestUri)
         {
-            return requestUri.ToString(_allowedQueryParameters);
+            return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters, RedactedPlaceholder);
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -132,9 +141,15 @@ namespace Azure.Core.Pipeline
             var stringBuilder = new StringBuilder();
             foreach (HttpHeader header in headers)
             {
-                if (_allowedHeaderNames.Contains(header.Name))
+                stringBuilder.Append(header.Name);
+                stringBuilder.Append(':');
+                if (_logAllHeaders || _allowedHeaderNames.Contains(header.Name))
                 {
-                    stringBuilder.AppendLine(header.ToString());
+                    stringBuilder.AppendLine(header.Value);
+                }
+                else
+                {
+                    stringBuilder.AppendLine(RedactedPlaceholder);
                 }
             }
             return stringBuilder.ToString();

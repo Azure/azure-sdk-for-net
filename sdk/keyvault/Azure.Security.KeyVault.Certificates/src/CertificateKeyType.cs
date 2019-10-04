@@ -11,11 +11,11 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public readonly struct CertificateKeyType : IEquatable<CertificateKeyType>
     {
-        internal const string EC_KTY = "EC";
-        internal const string EC_HSM_KTY = "EC-HSM";
-        internal const string RSA_KTY = "RSA";
-        internal const string RSA_HSM_KTY = "RSA-HSM";
-        internal const string OCT_KTY = "oct";
+        internal const string EcValue = "EC";
+        internal const string EcHsmValue = "EC-HSM";
+        internal const string RsaValue = "RSA";
+        internal const string RsaHsmValue = "RSA-HSM";
+        internal const string OctValue = "oct";
 
         private readonly string _value;
 
@@ -31,27 +31,27 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// An EC (EllipticCurve) key
         /// </summary>
-        public static readonly CertificateKeyType EllipticCurve = new CertificateKeyType(EC_KTY);
+        public static readonly CertificateKeyType Ec = new CertificateKeyType(EcValue);
 
         /// <summary>
         /// An HSM protected EC (EllipticCurve) key
         /// </summary>
-        public static readonly CertificateKeyType EllipticCurveHsm = new CertificateKeyType(EC_HSM_KTY);
+        public static readonly CertificateKeyType EcHsm = new CertificateKeyType(EcHsmValue);
 
         /// <summary>
         /// A RSA key
         /// </summary>
-        public static readonly CertificateKeyType Rsa = new CertificateKeyType(RSA_KTY);
+        public static readonly CertificateKeyType Rsa = new CertificateKeyType(RsaValue);
 
         /// <summary>
         /// An HSM protected RSA key
         /// </summary>
-        public static readonly CertificateKeyType RsaHsm = new CertificateKeyType(RSA_HSM_KTY);
+        public static readonly CertificateKeyType RsaHsm = new CertificateKeyType(RsaHsmValue);
 
         /// <summary>
         /// A octal (Symmetric) key
         /// </summary>
-        public static readonly CertificateKeyType Oct = new CertificateKeyType(OCT_KTY);
+        public static readonly CertificateKeyType Oct = new CertificateKeyType(OctValue);
 
         /// <summary>
         /// Determines if two <see cref="CertificateKeyType"/> values are the same.

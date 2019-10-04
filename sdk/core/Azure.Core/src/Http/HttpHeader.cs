@@ -59,6 +59,10 @@ namespace Azure.Core.Http
             public static string Authorization => "Authorization";
             public static string Range => "Range";
             public static string XMsRange => "x-ms-range";
+            public static string IfMatch => "If-Match";
+            public static string IfNoneMatch => "If-None-Match";
+            public static string IfModifiedSince => "If-Modified-Since";
+            public static string IfUnmodifiedSince => "If-Unmodified-Since";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible

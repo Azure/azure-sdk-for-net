@@ -390,13 +390,19 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         unsupported(() => def[`x-ms-client-flatten`], `${location}.properties['${name}']`);
         unsupported(() => def[`x-ms-mutability`], `${location}.properties['${name}']`);
 
+        let isNullable: boolean|undefined = def[`x-az-nullable-array`];
+        if (isNullable === undefined) {
+            isNullable = false;
+        }
+
         properties[name] = {
             name,
             clientName: optional(() => def[`x-ms-client-name`], name),
             description: def.description,
             readonly: true,
             xml: def.xml || { },
-            model: createType(project, name, def, `${location}.properties['${name}']`)
+            model: createType(project, name, def, `${location}.properties['${name}']`),
+            isNullable: isNullable
         };
     }
 
@@ -428,6 +434,11 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         isPublic = true;
     }
 
+    let isStruct: boolean|undefined = swagger[`x-az-struct`];
+    if (isStruct === undefined) {
+        isStruct = false;
+    }
+
     const info = <IServiceInfo>required(() => project.cache.info);
     return {
         type: `object`,
@@ -441,7 +452,8 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         deserialize: false,
         disableWarnings: swagger[`x-az-disable-warnings`],
         public: isPublic,
-        extendedHeaders: []
+        extendedHeaders: [],
+        struct: isStruct
     };
 }
 
@@ -602,6 +614,11 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         isPublic = true;
     }
 
+    let isStruct: boolean|undefined = swagger[`x-az-struct`];
+    if (isStruct === undefined) {
+        isStruct = false;
+    }
+
     return {
         code,
         description: swagger.description,
@@ -611,7 +628,8 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         headers,
         exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
         public: isPublic,
-        returnStream: <boolean>optional(() => swagger[`x-az-stream`])
+        returnStream: <boolean>optional(() => swagger[`x-az-stream`]),
+        struct: isStruct
     };
 }
 
@@ -947,7 +965,8 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             properties: { },
             serialize: false,
             deserialize: false,
-            extendedHeaders: ignoredHeaders
+            extendedHeaders: ignoredHeaders,
+            struct: response.struct
         };
         registerCustomType(project, model);
 
@@ -996,7 +1015,8 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             body: a.body || b.body,
             bodyClientName: a.bodyClientName || b.bodyClientName,
             headers: { ...b.headers, ...a.headers },
-            public: a.public && b.public
+            public: a.public && b.public,
+            struct: a.struct && b.struct
         };
     }
 }

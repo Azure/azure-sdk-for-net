@@ -33,15 +33,15 @@ namespace Azure.Storage.Common
             {
                 if (async)
                 {
-                    await copyImpl(partition).ConfigureAwait(false);
+                    await copyCore(partition).ConfigureAwait(false);
                 }
                 else
                 {
-                    copyImpl(partition).EnsureCompleted();
+                    copyCore(partition).EnsureCompleted();
                 }
             }
 
-            async Task copyImpl(StreamPartition partition)
+            async Task copyCore(StreamPartition partition)
             {
                 // if the destination is seekable, ensure we position it correctly,
                 // else we trust the partitions are received in order and just write
