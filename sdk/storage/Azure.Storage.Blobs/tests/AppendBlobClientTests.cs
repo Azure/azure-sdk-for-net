@@ -257,6 +257,65 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CreateIfNotExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var blobName = GetNewBlobName();
+                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
+
+                // Act
+                Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Name);
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var blobName = GetNewBlobName();
+                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
+                Response<BlobContentInfo> response = await blob.CreateAsync();
+
+                // Act
+                Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync();
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Name);
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.CreateIfNotExistsAsync(),
+                    actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                    );
+            }
+        }
+
+        [Test]
         public async Task AppendBlockAsync()
         {
             using (GetNewContainer(out BlobContainerClient container))
