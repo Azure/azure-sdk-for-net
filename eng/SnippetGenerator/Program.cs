@@ -42,12 +42,17 @@ namespace SnippetGenerator
 
             }
             text = MarkdownProcessor.Process(text, s => {
-                var selectedSnippet = snippets.FirstOrDefault(snip=>snip.Name == s);
-                if (selectedSnippet == null)
+                var selectedSnippets = snippets.Where(snip => snip.Name == s).ToArray();
+                if (selectedSnippets.Length > 1)
+                {
+                    throw new InvalidOperationException($"Multiple snippets with the name '{s}' defined '{Snippets}'");
+                }
+                if (selectedSnippets.Length == 0)
                 {
                     throw new InvalidOperationException($"Snippet '{s}' not found in directory '{Snippets}'");
                 }
 
+                var selectedSnippet = selectedSnippets.Single();
                 Console.WriteLine($"Replaced {selectedSnippet.Name}");
                 return FormatSnippet(selectedSnippet.Text);
             });
