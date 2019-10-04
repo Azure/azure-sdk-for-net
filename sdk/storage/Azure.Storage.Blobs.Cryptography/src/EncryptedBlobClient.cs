@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Pipes;
 using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using Azure.Core;
@@ -21,15 +20,16 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
     /// </summary>
     public class EncryptedBlobClient : BlobClient
     {
-        /// <summary>
-        /// Resolver used to find the correct key wrapper to unwrap the content encryption key for decryption.
-        /// </summary>
-        private IKeyEncryptionKeyResolver KeyResolver { get; }
 
         /// <summary>
         /// The wrapper used to wrap the content encryption key.
         /// </summary>
         private IKeyEncryptionKey KeyWrapper { get; }
+
+        /// <summary>
+        /// The algorithm identifier to use with <see cref="KeyWrapper"/>.
+        /// </summary>
+        private string KeyWrapAlgorithm { get; }
 
         #region ctors
         /// <summary>
@@ -65,6 +65,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
         /// the envelope technique.
         /// </param>
+        /// <param name="encryptionKeyWrapAlgorithm">
+        /// Required for uploads. String identifier of the key wrapping algorithm the client should use with
+        /// <paramref name="keyEncryptionKey"/>.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -76,11 +80,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             string blobName,
             IKeyEncryptionKey keyEncryptionKey = default,
             IKeyEncryptionKeyResolver keyResolver = default,
+            string encryptionKeyWrapAlgorithm = default,
             BlobClientOptions options = default)
             : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
         {
             this.KeyWrapper = keyEncryptionKey;
-            this.KeyResolver = keyResolver;
+            this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
         }
 
         ///// <summary>
@@ -127,6 +132,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
         /// the envelope technique.
         /// </param>
+        /// <param name="encryptionKeyWrapAlgorithm">
+        /// Required for uploads. String identifier of the key wrapping algorithm the client should use with
+        /// <paramref name="keyEncryptionKey"/>.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -137,11 +146,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             StorageSharedKeyCredential credential,
             IKeyEncryptionKey keyEncryptionKey = default,
             IKeyEncryptionKeyResolver keyResolver = default,
+            string encryptionKeyWrapAlgorithm = default,
             BlobClientOptions options = default)
             : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
         {
             this.KeyWrapper = keyEncryptionKey;
-            this.KeyResolver = keyResolver;
+            this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -164,6 +174,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
         /// the envelope technique.
         /// </param>
+        /// <param name="encryptionKeyWrapAlgorithm">
+        /// Required for uploads. String identifier of the key wrapping algorithm the client should use with
+        /// <paramref name="keyEncryptionKey"/>.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -174,11 +188,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             TokenCredential credential,
             IKeyEncryptionKey keyEncryptionKey = default,
             IKeyEncryptionKeyResolver keyResolver = default,
+            string encryptionKeyWrapAlgorithm = default,
             BlobClientOptions options = default)
             : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
         {
             this.KeyWrapper = keyEncryptionKey;
-            this.KeyResolver = keyResolver;
+            this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -229,6 +244,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             {
                 var serializer = new DataContractJsonSerializer(typeof(EncryptionData));
                 serializer.WriteObject(stream, encryptionData);
+                stream.Position = 0;
                 metadata.Add(EncryptionConstants.ENCRYPTION_DATA_KEY, new StreamReader(stream).ReadToEnd());
             }
 
@@ -248,7 +264,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     ContentEncryptionIV = aesProvider.IV,
                     EncryptionAgent = new EncryptionAgent()
                     {
-                        Algorithm = ClientsideEncryptionAlgorithm.AES_CBC_256,
+                        EncryptionAlgorithm = ClientsideEncryptionAlgorithm.AES_CBC_256,
                         Protocol = EncryptionConstants.ENCRYPTION_PROTOCOL_V1
                     },
                     KeyWrappingMetadata = new Dictionary<string, string>()
@@ -258,12 +274,16 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     WrappedContentKey = new WrappedKey()
                     {
                         Algorithm = null, // TODO
-                        EncryptedKey = this.KeyWrapper.WrapKey(null /*algorithm*/, generatedKey).ToArray(), // TODO what algorithm?
+                        EncryptedKey = this.KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey).ToArray(),
                         KeyId = this.KeyWrapper.KeyId
                     }
                 };
 
-                return (new CryptoStreamWrapper(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Write), encryptionData);
+                return (
+                    new RollingBufferStream(
+                        new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read), 10 * Constants.MB,
+                        plaintext.Length + (16 - plaintext.Length % 16)),
+                    encryptionData);
             }
         }
 
@@ -279,36 +299,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 var buff = new byte[numBits / 8];
                 rng.GetBytes(buff);
                 return buff;
-            }
-        }
-
-        // TODO: remove pending issue #7871
-        // This class temporarily hacks around issue #7871
-        private class CryptoStreamWrapper : CryptoStream
-        {
-            private Stream _innerStream;
-
-            public override long Length => _innerStream.Length;
-
-            public CryptoStreamWrapper(Stream stream, ICryptoTransform transform, CryptoStreamMode mode)
-                : base(stream, transform, mode)
-            {
-                _innerStream = stream;
-            }
-
-            public override long Seek(long offset, SeekOrigin origin)
-            {
-                // no-op
-                switch (origin)
-                {
-                    case SeekOrigin.Begin:
-                        return offset;
-                    case SeekOrigin.Current:
-                        return Position + offset;
-                    case SeekOrigin.End:
-                        return Length + offset;
-                }
-                return 0;
             }
         }
     }

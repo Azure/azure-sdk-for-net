@@ -8,7 +8,6 @@ using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Azure.Core.Cryptography;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
@@ -73,14 +72,22 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
                 message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
             }
+            else if (message.Request.Headers.TryGetValue(HttpHeader.Names.XMsRange, out range))
+            {
+                encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
+                message.Request.Headers.Remove(HttpHeader.Names.XMsRange); // the next line puts "Range", not "x-ms-range"
+                message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
+            }
 
             ProcessNext(message, pipeline);
 
-            if (message.Response.ContentStream != null)
+            if (message.Request.Method != RequestMethod.Head &&
+                message.Response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength) &&
+                long.Parse(contentLength, System.Globalization.CultureInfo.InvariantCulture) > 0)
             {
                 message.Response.ContentStream = DecryptBlob(
                     message.Response.ContentStream,
-                    ExtractMetadata(message.Request.Headers),
+                    ExtractMetadata(message.Response.Headers),
                     encryptedRange,
                     IgnorePadding(message.Response.Headers));
             }
@@ -95,16 +102,28 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <returns></returns>
         public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range);
-            var encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
+            EncryptedBlobRange encryptedRange = default;
+            if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
+            {
+                encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
+                message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
+            }
+            else if (message.Request.Headers.TryGetValue(HttpHeader.Names.XMsRange, out range))
+            {
+                encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
+                message.Request.Headers.Remove(HttpHeader.Names.XMsRange); // the next line puts "Range", not "x-ms-range"
+                message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
+            }
 
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
 
-            if (message.Response.ContentStream != null)
+            if (message.Request.Method != RequestMethod.Head &&
+                message.Response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength) &&
+                long.Parse(contentLength, System.Globalization.CultureInfo.InvariantCulture) > 0)
             {
                 message.Response.ContentStream = await DecryptBlobAsync(
                     message.Response.ContentStream,
-                    ExtractMetadata(message.Request.Headers),
+                    ExtractMetadata(message.Response.Headers),
                     encryptedRange,
                     IgnorePadding(message.Response.Headers)).ConfigureAwait(false);
             }
@@ -171,7 +190,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 read = IV.Length;
             }
 
-            CryptoStream plaintext = WrapStream(ciphertext, GetContentEncryptionKey(encryptionData).ToArray(), encryptionData, IV, noPadding);
+            var plaintext = WrapStream(ciphertext, GetContentEncryptionKey(encryptionData).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -201,7 +220,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 read = IV.Length;
             }
 
-            CryptoStream plaintext = WrapStream(ciphertext, (await GetContentEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, noPadding);
+            var plaintext = WrapStream(ciphertext, (await GetContentEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -214,7 +233,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         #endregion
 
-        private static Metadata ExtractMetadata(RequestHeaders headers)
+        private static Metadata ExtractMetadata(ResponseHeaders headers)
         {
             const string metadataPrefix = "x-ms-meta-";
 
@@ -326,10 +345,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         #endregion
 
-        private static CryptoStream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
+        private static Stream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
             EncryptionData encryptionData, byte[] iv, bool noPadding)
         {
-            switch (encryptionData.EncryptionAgent.Algorithm)
+            switch (encryptionData.EncryptionAgent.EncryptionAlgorithm)
             {
                 case ClientsideEncryptionAlgorithm.AES_CBC_256:
                     using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())
@@ -342,7 +361,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                             aesProvider.Padding = PaddingMode.None;
                         }
 
-                        return new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Write);
+                        return new RollingBufferStream(new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read), 10 * Constants.MB);
                     }
                 default:
                     throw new ArgumentException(
@@ -353,7 +372,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         private static HttpRange ParseHttpRange(string serializedRange)
         {
-            var rangeValues = serializedRange.Split('=')[1].Split('-');
+            var rangeValues = serializedRange.Split('=')[1].Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
 
             switch (rangeValues.Length)
             {
@@ -362,9 +381,9 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                         long.Parse(rangeValues[0], System.Globalization.CultureInfo.InvariantCulture));
 
                 case 2:
-                    return new HttpRange(
-                        long.Parse(rangeValues[0], System.Globalization.CultureInfo.InvariantCulture),
-                        long.Parse(rangeValues[1], System.Globalization.CultureInfo.InvariantCulture));
+                    var firstByte = long.Parse(rangeValues[0], System.Globalization.CultureInfo.InvariantCulture);
+                    var lastByteInclusive = long.Parse(rangeValues[1], System.Globalization.CultureInfo.InvariantCulture);
+                    return new HttpRange(firstByte, lastByteInclusive - firstByte + 1);
 
                 default:
                     throw new ArgumentException("Could not parse the serialized range.", nameof(serializedRange));

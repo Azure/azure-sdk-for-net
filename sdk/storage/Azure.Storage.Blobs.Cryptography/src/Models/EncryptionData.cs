@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Buffers.Text;
 using System.Runtime.Serialization;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -34,8 +36,18 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <summary>
         /// The content encryption IV.
         /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         public byte[] ContentEncryptionIV { get; set; }
+
+        /// <summary>
+        /// Base64-encoded content encryption IV.
+        /// </summary>
+        [DataMember(Name = "ContentEncryptionIV")]
+        public string Base64ContentEncryptionIV
+        {
+            get => Convert.ToBase64String(ContentEncryptionIV);
+            set => ContentEncryptionIV = Convert.FromBase64String(value);
+        }
 
 #pragma warning disable CA2227 // Collection properties should be read only
         /// <summary>

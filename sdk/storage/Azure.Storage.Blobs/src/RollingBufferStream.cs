@@ -54,7 +54,14 @@ namespace Azure.Storage.Blobs
 
         public override bool CanWrite => false;
 
-        public override long Length => _underlyingStreamBytesRead;
+        /// <summary>
+        /// Expected length of the underlying stream.
+        /// </summary>
+        /// <remarks>
+        /// This class is to wrap unseekable streams, which, by nature, do not have a length to read.
+        /// </remarks>
+        private long? _expectedLength;
+        public override long Length => _expectedLength ?? _underlyingStreamBytesRead;
 
         public override long Position
         {
@@ -80,10 +87,11 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        public RollingBufferStream(Stream stream, int bufferSize)
+        public RollingBufferStream(Stream stream, int bufferSize, long? expectedLength = default)
         {
             this._underlyingStream = stream;
             this._rollingBuffer = new byte[bufferSize];
+            this._expectedLength = expectedLength;
         }
 
         public override void Flush()

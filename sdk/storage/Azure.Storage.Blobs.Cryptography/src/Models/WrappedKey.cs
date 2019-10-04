@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Runtime.Serialization;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
@@ -20,8 +21,18 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <summary>
         /// The encrypted content encryption key.
         /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         public byte[] EncryptedKey { get; set; }
+
+        /// <summary>
+        /// Base64-encoded content encryption IV.
+        /// </summary>
+        [DataMember(Name = "EncryptedKey")]
+        public string Base64ContentEncryptionIV
+        {
+            get => Convert.ToBase64String(EncryptedKey);
+            set => EncryptedKey = Convert.FromBase64String(value);
+        }
 
         /// <summary>
         /// The algorithm used for wrapping.

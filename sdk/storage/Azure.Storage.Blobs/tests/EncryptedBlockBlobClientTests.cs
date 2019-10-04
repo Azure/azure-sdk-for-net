@@ -4,10 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using Azure.Core.Cryptography;
+using Azure.Core.Http;
+using Azure.Core.Testing;
 using Azure.Storage.Blobs.Specialized.Cryptography;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
@@ -33,7 +36,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var disposable = this.GetNewContainer(out var container);
             blob = new EncryptedBlobClient(
-                    new Uri(container.Uri, this.GetNewBlobName()), this.GetNewSharedKeyCredentials(),
+                    new Uri(Path.Combine(container.Uri.ToString(), this.GetNewBlobName())), this.GetNewSharedKeyCredentials(),
                     keyEncryptionKey: mock,
                     keyResolver: mock);
 
@@ -53,10 +56,10 @@ namespace Azure.Storage.Blobs.Test
             EncryptionData encryptionData;
             if (metadata.TryGetValue(EncryptionConstants.ENCRYPTION_DATA_KEY, out string encryptedDataString))
             {
-                using (var reader = new StringReader(encryptedDataString))
+                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(encryptedDataString)))
                 {
-                    var serializer = new XmlSerializer(typeof(EncryptionData));
-                    encryptionData = (EncryptionData)serializer.Deserialize(reader);
+                    var serializer = new DataContractJsonSerializer(typeof(EncryptionData));
+                    encryptionData = (EncryptionData)serializer.ReadObject(stream);
                 }
             }
             else
@@ -88,38 +91,18 @@ namespace Azure.Storage.Blobs.Test
             using (var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
             {
                 cryptoStream.Write(data, 0, data.Length);
+                cryptoStream.FlushFinalBlock();
                 return memStream.ToArray();
             }
         }
 
         #endregion
 
-        //// Placeholder test to verify things work end-to-end
-        //[Test]
-        //public async Task DeleteAsync()
-        //{
-        //    using (this.GetNewContainer(out var container))
-        //    {
-        //        // First upload a regular block blob
-        //        var blobName = this.GetNewBlobName();
-        //        var blob = this.InstrumentClient(container.GetBlockBlobClient(blobName));
-        //        var data = this.GetRandomBuffer(Constants.KB);
-        //        using var stream = new MemoryStream(data);
-        //        await blob.UploadAsync(stream);
-
-        //        // Create an EncryptedBlockBlobClient pointing at the same blob
-        //        var encryptedBlob = this.InstrumentClient(container.GetEncryptedBlockBlobClient(blobName));
-
-        //        // Delete the blob
-        //        var response = await encryptedBlob.DeleteAsync();
-        //        Assert.IsNotNull(response.Headers.RequestId);
-        //    }
-        //}
-
         [TestCase(16)] // a single cipher block
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks
         [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [LiveOnly]
         public void Upload(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
@@ -138,7 +121,7 @@ namespace Azure.Storage.Blobs.Test
                 var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
                 byte[] expectedEncryptedData = LocalManualEncryption(
                     data,
-                    key.UnwrapKey(null, key.UnwrapKey(null, encryptionMetadata.WrappedContentKey.EncryptedKey)).ToArray(),
+                    key.UnwrapKey(null, encryptionMetadata.WrappedContentKey.EncryptedKey).ToArray(),
                     encryptionMetadata.ContentEncryptionIV);
 
                 // compare data
@@ -150,6 +133,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks
         [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [LiveOnly]
         public async Task UploadAsync(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
@@ -168,12 +152,154 @@ namespace Azure.Storage.Blobs.Test
                 var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
                 byte[] expectedEncryptedData = LocalManualEncryption(
                     data,
-                    (await key.UnwrapKeyAsync(null, key.UnwrapKey(null, encryptionMetadata.WrappedContentKey.EncryptedKey))
+                    (await key.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)
                         .ConfigureAwait(false)).ToArray(),
                     encryptionMetadata.ContentEncryptionIV);
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+            }
+        }
+
+        [TestCase(16)] // a single cipher block
+        [TestCase(14)] // a single unalligned cipher block
+        [TestCase(Constants.KB)] // multiple blocks
+        [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [LiveOnly]
+        public void Roundtrip(long dataSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            var key = new MockKeyEncryptionKey();
+            using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            {
+                // upload with encryption
+                blob.Upload(new MemoryStream(data));
+
+                // download with decryption
+                byte[] downloadData;
+                using (var stream = new MemoryStream())
+                {
+                    blob.Download(stream);
+                    downloadData = stream.ToArray();
+                }
+
+                // compare data
+                Assert.AreEqual(data, downloadData);
+            }
+        }
+
+        [TestCase(16)] // a single cipher block
+        [TestCase(14)] // a single unalligned cipher block
+        [TestCase(Constants.KB)] // multiple blocks
+        [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [LiveOnly]
+        public async Task RoundtripAsync(long dataSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            var key = new MockKeyEncryptionKey();
+            using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            {
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(data));
+
+                // download with decryption
+                byte[] downloadData;
+                using (var stream = new MemoryStream())
+                {
+                    await blob.DownloadAsync(stream);
+                    downloadData = stream.ToArray();
+                }
+
+                // compare data
+                Assert.AreEqual(data, downloadData);
+            }
+        }
+
+        [TestCase(0, 16)]  // first block
+        [TestCase(16, 16)] // not first block
+        [TestCase(32, 32)] // multiple blocks; IV not at blob start
+        [TestCase(16, 17)] // overlap end of block
+        [TestCase(32, 17)] // overlap end of block; IV not at blob start
+        [TestCase(15, 17)] // overlap beginning of block
+        [TestCase(31, 17)] // overlap beginning of block; IV not at blob start
+        [TestCase(15, 18)] // overlap both sides
+        [TestCase(31, 18)] // overlap both sides; IV not at blob start
+        [TestCase(16, null)]
+        [LiveOnly]
+        public void PartialDownload(int offset, int? count)
+        {
+            var data = GetRandomBuffer(offset + count ?? 16 + 32); // ensure we have enough room in original data
+            var key = new MockKeyEncryptionKey();
+            using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            {
+                // upload with encryption
+                blob.Upload(new MemoryStream(data));
+
+                // download range with decryption
+                byte[] downloadData; // no overload that takes Stream and HttpRange; we must buffer read
+                var downloadStream = blob.Download(new HttpRange(offset, count)).Value.Content;
+                byte[] buffer = new byte[Constants.KB];
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    int read;
+                    while ((read = downloadStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        stream.Write(buffer, 0, read);
+                    }
+                    downloadData = stream.ToArray();
+                }
+
+                // compare range of original data to downloaded data
+                var slice = data.Skip(offset);
+                slice = count.HasValue
+                    ? slice.Take(count.Value)
+                    : slice;
+                var sliceArray = slice.ToArray();
+                Assert.AreEqual(sliceArray, downloadData);
+            }
+        }
+
+        [TestCase(0, 16)]  // first block
+        [TestCase(16, 16)] // not first block
+        [TestCase(32, 32)] // multiple blocks; IV not at blob start
+        [TestCase(16, 17)] // overlap end of block
+        [TestCase(32, 17)] // overlap end of block; IV not at blob start
+        [TestCase(15, 17)] // overlap beginning of block
+        [TestCase(31, 17)] // overlap beginning of block; IV not at blob start
+        [TestCase(15, 18)] // overlap both sides
+        [TestCase(31, 18)] // overlap both sides; IV not at blob start
+        [TestCase(16, null)]
+        [LiveOnly]
+        public async Task PartialDownloadAsync(int offset, int? count)
+        {
+            var data = GetRandomBuffer(offset + count ?? 16 + 32); // ensure we have enough room in original data
+            var key = new MockKeyEncryptionKey();
+            using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            {
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(data));
+
+                // download range with decryption
+                byte[] downloadData; // no overload that takes Stream and HttpRange; we must buffer read
+                var downloadStream = (await blob.DownloadAsync(new HttpRange(offset, count))).Value.Content;
+                byte[] buffer = new byte[Constants.KB];
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    int read;
+                    while ((read = downloadStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        stream.Write(buffer, 0, read);
+                    }
+                    downloadData = stream.ToArray();
+                }
+
+                // compare range of original data to downloaded data
+                var slice = data.Skip(offset);
+                slice = count.HasValue
+                    ? slice.Take(count.Value)
+                    : slice;
+                var sliceArray = slice.ToArray();
+                Assert.AreEqual(sliceArray, downloadData);
             }
         }
     }

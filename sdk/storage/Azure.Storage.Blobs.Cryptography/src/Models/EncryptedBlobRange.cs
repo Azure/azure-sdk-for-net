@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             this.OriginalRange = originalRange;
 
             int offsetAdjustment = 0;
-            long? adjustedDownloadCount = default;
+            long? adjustedDownloadCount = originalRange.Count;
 
             // Calculate offsetAdjustment.
             if (this.OriginalRange.Offset != 0)
@@ -41,7 +41,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 if ((diff = (int)(this.OriginalRange.Offset % ENCRYPTION_BLOCK_SIZE)) != 0)
                 {
                     offsetAdjustment += diff;
-                    if (adjustedDownloadCount != null)
+                    if (adjustedDownloadCount != default)
                     {
                         adjustedDownloadCount += diff;
                     }
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 {
                     offsetAdjustment += ENCRYPTION_BLOCK_SIZE;
                     // Increment adjustedDownloadCount if necessary.
-                    if (adjustedDownloadCount != null)
+                    if (adjustedDownloadCount != default)
                     {
                         adjustedDownloadCount += ENCRYPTION_BLOCK_SIZE;
                     }
@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             // to adjust past the end of the blob as an encrypted blob was padded to align to an encryption block boundary.
             if (adjustedDownloadCount != null)
             {
-                adjustedDownloadCount += ENCRYPTION_BLOCK_SIZE - (int)(adjustedDownloadCount % ENCRYPTION_BLOCK_SIZE);
+                adjustedDownloadCount += (ENCRYPTION_BLOCK_SIZE - (int)(adjustedDownloadCount % ENCRYPTION_BLOCK_SIZE)) % ENCRYPTION_BLOCK_SIZE;
             }
 
             this.AdjustedRange = new HttpRange(this.OriginalRange.Offset - offsetAdjustment, adjustedDownloadCount);

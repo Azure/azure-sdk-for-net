@@ -2,20 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using Azure.Core.Testing;
-using Azure.Storage.Test.Shared;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public class RollingBufferStreamTests : BlobTestBase
+    public class RollingBufferStreamTests // pure local tests; don't inherit recording bulk
     {
-        public RollingBufferStreamTests(bool async) : base(async, null)
+        public RollingBufferStreamTests()
         { }
 
         private Stream GetBufferStream(int bufferSize) => new RollingBufferStream(new MockStream(), bufferSize);

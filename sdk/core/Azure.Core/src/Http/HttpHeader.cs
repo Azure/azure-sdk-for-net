@@ -58,6 +58,7 @@ namespace Azure.Core.Http
             public static string Accept => "Accept";
             public static string Authorization => "Authorization";
             public static string Range => "Range";
+            public static string XMsRange => "x-ms-range";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible
