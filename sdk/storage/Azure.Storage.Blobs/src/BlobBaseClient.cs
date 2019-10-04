@@ -1820,13 +1820,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// snapshots. You can delete both at the same time by passing includeSnapshots
+        /// as true.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
+        /// <param name="includeSnapshots">
+        /// Specify true or false for deleting blob snapshots:
+        /// true: Delete the base blob and all of its snapshots.
+        /// false: Delete only the blob's snapshots and not the blob itself.
+        /// Default is true.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
@@ -1844,11 +1847,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            DeleteSnapshotsOption? deleteOptions = default,
+            bool? includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                deleteOptions,
+                includeSnapshots,
                 accessConditions,
                 false, // async
                 cancellationToken)
@@ -1860,13 +1863,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// snapshots. You can delete both at the same time by passing includeSnapshots
+        /// as true.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
+        /// <param name="includeSnapshots">
+        /// Specify true or false for deleting blob snapshots:
+        /// true: Delete the base blob and all of its snapshots.
+        /// false: Delete only the blob's snapshots and not the blob itself.
+        /// Default is true.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
@@ -1884,11 +1890,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            DeleteSnapshotsOption? deleteOptions = default,
+            bool? includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
-                deleteOptions,
+                includeSnapshots,
                 accessConditions,
                 true, // async
                 cancellationToken)
@@ -1900,13 +1906,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// snapshots. You can delete both at the same time by passing includeSnapshots
+        /// as true.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
+        /// <param name="includeSnapshots">
+        /// Specify true or false for deleting blob snapshots:
+        /// true: Delete the base blob and all of its snapshots.
+        /// false: Delete only the blob's snapshots and not the blob itself.
+        /// Default is true.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
@@ -1924,11 +1933,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
-            DeleteSnapshotsOption? deleteOptions = default,
+            bool? includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
-                deleteOptions,
+                includeSnapshots,
                 accessConditions ?? default,
                 false, // async
                 cancellationToken)
@@ -1940,13 +1949,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// snapshots. You can delete both at the same time by passing includeSnapshots
+        /// as true.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
+        /// <param name="includeSnapshots">
+        /// Specify true or false for deleting blob snapshots:
+        /// true: Delete the base blob and all of its snapshots.
+        /// false: Delete only the blob's snapshots and not the blob itself.
+        /// Default is true.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
@@ -1964,11 +1976,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
-            DeleteSnapshotsOption? deleteOptions = default,
+            bool? includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
-                deleteOptions,
+                includeSnapshots,
                 accessConditions ?? default,
                 true, // async
                 cancellationToken)
@@ -1980,13 +1992,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// snapshots. You can delete both at the same time by passing includeSnapshots
+        /// as true.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
+        /// <param name="includeSnapshots">
+        /// Specify true or false for deleting blob snapshots:
+        /// true: Delete the base blob and all of its snapshots.
+        /// false: Delete only the blob's snapshots and not the blob itself.
+        /// Default is true.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
@@ -2007,7 +2022,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
-            DeleteSnapshotsOption? deleteOptions,
+            bool? includeSnapshots,
             BlobAccessConditions accessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -2015,7 +2030,7 @@ namespace Azure.Storage.Blobs.Specialized
             try
             {
                 Response response = await DeleteInternal(
-                    deleteOptions,
+                    includeSnapshots,
                     accessConditions,
                     async,
                     cancellationToken,
@@ -2036,13 +2051,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// snapshots. You can delete both at the same time by passing includeSnapshots
+        /// as true.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
+        /// <param name="includeSnapshots">
+        /// Specify true or false for deleting blob snapshots:
+        /// true: Delete the base blob and all of its snapshots.
+        /// false: Delete only the blob's snapshots and not the blob itself.
+        /// Default is true.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
@@ -2066,7 +2084,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
-            DeleteSnapshotsOption? deleteOptions,
+            bool? includeSnapshots,
             BlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken,
@@ -2078,7 +2096,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(deleteOptions)}: {deleteOptions}\n" +
+                    $"{nameof(includeSnapshots)}: {includeSnapshots}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
@@ -2086,7 +2104,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        deleteSnapshots: deleteOptions,
+                        deleteSnapshots: includeSnapshots == true ? DeleteSnapshotsOption.Include : DeleteSnapshotsOption.Only,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,

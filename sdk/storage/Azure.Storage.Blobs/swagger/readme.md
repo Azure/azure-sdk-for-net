@@ -524,6 +524,7 @@ directive:
   where: $.parameters.DeleteSnapshots
   transform: >
     $["x-ms-enum"].name = "DeleteSnapshotsOption";
+    $["x-az-public"] = false;
 - from: swagger-document
   where: $.parameters.SequenceNumberAction
   transform: >

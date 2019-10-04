@@ -956,7 +956,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobBaseClient blob = await GetNewBlobClient(container);
 
                 // Act
-                Response response = await blob.DeleteAsync();
+                Response response = await blob.DeleteAsync(includeSnapshots: true);
 
                 // Assert
                 Assert.IsNotNull(response.Headers.RequestId);
@@ -973,7 +973,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateSnapshotAsync();
 
                 // Act
-                await blob.DeleteAsync(deleteOptions: DeleteSnapshotsOption.Only);
+                await blob.DeleteAsync(includeSnapshots: false);
 
                 // Assert
                 Response<BlobProperties> response = await blob.GetPropertiesAsync();

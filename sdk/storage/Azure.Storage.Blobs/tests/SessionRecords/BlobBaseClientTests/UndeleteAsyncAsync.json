@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002ftest-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5?restype=container",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/test-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15d3-4ab760ee6ec061a4.",
+        "traceparent": "00-e963280562c45243b0f85c367683ac6a-6cbd9cd9a12bd64b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "327ff90f-affa-5803-28c5-fcc5c5b20353",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:21 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -20,162 +20,163 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 23:57:21 GMT",
-        "ETag": "\u00220x8D737DCF389FF5B\u0022",
-        "Last-Modified": "Thu, 12 Sep 2019 23:57:21 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:09 GMT",
+        "ETag": "\u00220x8D749249D70D72D\u0022",
+        "Last-Modified": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "327ff90f-affa-5803-28c5-fcc5c5b20353",
-        "x-ms-request-id": "c1ac4f02-c01e-0009-4cc5-69d7e8000000",
+        "x-ms-request-id": "d891ea25-501e-0059-1f0d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15d4-4ab760ee6ec061a4.",
+        "traceparent": "00-bde46c220925b841a5e6ffd9c762c33e-453ac0eb78cb8a48-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "574fe4e5-2929-1acb-4c7c-bd7e64cbfbc1",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:21 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application\u002fxml",
-        "Date": "Thu, 12 Sep 2019 23:57:21 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Fri, 04 Oct 2019 23:43:09 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "574fe4e5-2929-1acb-4c7c-bd7e64cbfbc1",
-        "x-ms-request-id": "c1ac4f05-c01e-0009-4ec5-69d7e8000000",
+        "x-ms-request-id": "d891ea32-501e-0059-2a0d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cLogging\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cRead\u003efalse\u003c\u002fRead\u003e\u003cWrite\u003efalse\u003c\u002fWrite\u003e\u003cDelete\u003efalse\u003c\u002fDelete\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fLogging\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors \u002f\u003e\u003cDeleteRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fDeleteRetentionPolicy\u003e\u003cStaticWebsite\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fStaticWebsite\u003e\u003cDefaultServiceVersion\u003e2018-03-28\u003c\u002fDefaultServiceVersion\u003e\u003c\u002fStorageServiceProperties\u003e"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "685",
-        "Content-Type": "application\u002fxml",
-        "Request-Id": "|49ef15d5-4ab760ee6ec061a4.",
+        "Content-Length": "671",
+        "Content-Type": "application/xml",
+        "traceparent": "00-6da95e71191cba46b33c18643864f6a2-de3175c021f95d47-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "e1df6d1a-ac63-cb29-720b-b42cba34c11c",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:21 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
-      "RequestBody": "\u003cStorageServiceProperties\u003e\u003cLogging\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cDelete\u003efalse\u003c\u002fDelete\u003e\u003cRead\u003efalse\u003c\u002fRead\u003e\u003cWrite\u003efalse\u003c\u002fWrite\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fLogging\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors \u002f\u003e\u003cDefaultServiceVersion\u003e2018-03-28\u003c\u002fDefaultServiceVersion\u003e\u003cDeleteRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e2\u003c\u002fDays\u003e\u003c\u002fDeleteRetentionPolicy\u003e\u003cStaticWebsite\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fStaticWebsite\u003e\u003c\u002fStorageServiceProperties\u003e",
+      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 23:57:21 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:09 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "e1df6d1a-ac63-cb29-720b-b42cba34c11c",
-        "x-ms-request-id": "c1ac4f0d-c01e-0009-56c5-69d7e8000000",
+        "x-ms-request-id": "d891ea3c-501e-0059-310d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15d6-4ab760ee6ec061a4.",
+        "traceparent": "00-4f3f57f027e5d04e8b928419b9948d6f-3df82165faa55442-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "f664f63e-19eb-e35d-b42d-488e8b45dc12",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application\u002fxml",
-        "Date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Fri, 04 Oct 2019 23:43:09 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f664f63e-19eb-e35d-b42d-488e8b45dc12",
-        "x-ms-request-id": "c1ac4f1e-c01e-0009-61c5-69d7e8000000",
+        "x-ms-request-id": "d891eac3-501e-0059-330d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cLogging\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cRead\u003efalse\u003c\u002fRead\u003e\u003cWrite\u003efalse\u003c\u002fWrite\u003e\u003cDelete\u003efalse\u003c\u002fDelete\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fLogging\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors \u002f\u003e\u003cDeleteRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e2\u003c\u002fDays\u003e\u003c\u002fDeleteRetentionPolicy\u003e\u003cStaticWebsite\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fStaticWebsite\u003e\u003cDefaultServiceVersion\u003e2018-03-28\u003c\u002fDefaultServiceVersion\u003e\u003c\u002fStorageServiceProperties\u003e"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002ftest-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5\u002ftest-blob-95ca2d97-0263-295e-783a-6fab9c59ec0c",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/test-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5/test-blob-95ca2d97-0263-295e-783a-6fab9c59ec0c",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|49ef15d7-4ab760ee6ec061a4.",
+        "traceparent": "00-878a3c171bbc1245b8c681c76150eb14-9479337aded32c46-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "daaa09c3-c604-050a-a4e2-cd94097787e1",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
-      "RequestBody": "stPtxM\u002fKMIDOJIY6qGYZLNr9OLCbw308lzt9saqxR1tBO9y4VxhDzP1Jxz97JIASIUPRniA8cO9VsSyTTH\u002fWHNwr\u002bGyKYNTCumuzUfs\u002bwXO7a49n4Kk6BcvtY6bsr4B9c6tjTysTiMFuDuS1iB7zF\u002fC42OHwbjsz8POhnf0u1grrNt1Q2nFHp\u002bPO\u002bNLEhXys\u002bUu1M9aejQRvL143curEQDjZylJAozx\u002fcDH\u002bInZpbmt29aSxeKIzTKjZ4KoSEDT4CbeZ6rsqa1UPNsKloGqOBsHzwH1GEsiVpn2pZ8ORbGD8BRi\u002fz4OwTIlOokLgjqw9StrpH0\u002b3sffvBEQ9gAOSfcphqJpSzzY9QnTz\u002bHCGtBjQaxzpqEwRRVQhz8s\u002fcsuGvCR3fuUR63ujrN3aw7mGaU8sbBXmqNV9UGNFMf9r\u002fs\u002bobTtMDjUyv4ChRftvNoKbm2Z7EgW2nxNO\u002bi6By7p8N60NMlV9OloZ\u002ba2VRWPZDhnhqpaY7\u002bvJ8s4o\u002fRQHsfPFJQ1OYQQsHmELYRhYIFmwdewVoCEj40fCRD\u002bGVDxGEki6zyBVi6wVtIs1jI7ScdF0eIgo8RDRoUHFix3EpckkxU\u002fQnVE5Wuk\u002fAOuV7la579JtEty0HiE36S3ej\u002f\u002bOUA7CEMc\u002bAtOAOx2e6PElO7PrC5xLVpPtcKcumbQjWsvpsK\u002fc096Oe\u002b3\u002b7Na\u002fFTUvEq1684NjQ\u002fp71KAgEGkfXeBStTdBSGjUXJCvTGm8Lltx\u002focHqWdHhm21Yf4\u002bbmqE34\u002f2bF\u002f\u002b7clFpZfzs\u002feQvqZFrxHhF7R5Ci7KjOZplu4lK2zaxsH7chC9wgPQVNJ1JaNX\u002bL5YosjbfGIxM2Hj2w\u002bozYiLtfflSTwBJFWwqbZbVWdDEZ0vzYmk\u002f0leyj\u002bv2ub0J4dK6W\u002brcq\u002bCV31yKtOr1d75n8pxef\u002f\u002b57auhn\u002f9UUpvvIEvEWv3l5\u002furHULMdR1svRgtTocg62HSwK5\u002fesvhQYzAm1RfMRzAggrgs2K87XhONOLnZsPUznUp8VoPpmzvydv2C5nIzYw7LMx8QDg\u002fVhM18QXpOdrI680fdX\u002fCsNud8KlGhqHehSdWrDn3WI49KpsG2fVmxs\u002fBLR\u002fMqZgMeHww3k9OuI\u002bxVyvekk3g0ZN\u002b4kqku9cmdynZRZmB0duPCnO9xro\u002brnILlYKJSHRB4BuMTccNp7ykymdltTL170VQT0faYwrZADQYmSYUXS61V2V\u002bNYPUQaL22PxS2Tk\u002fFaY9ePksZ70Qs03TNM5WUG04sB3Nd\u002fnBe82lI0oOhib62YOAFyQ1iO\u002fobUI2AQzUYEiPGmkbcZ2sO\u002f0rR0QzAi0m2FtK1nkJAuct5Qq3izqA0MLBf6v936fl09snCkGrg==",
+      "RequestBody": "stPtxM/KMIDOJIY6qGYZLNr9OLCbw308lzt9saqxR1tBO9y4VxhDzP1Jxz97JIASIUPRniA8cO9VsSyTTH/WHNwr\u002BGyKYNTCumuzUfs\u002BwXO7a49n4Kk6BcvtY6bsr4B9c6tjTysTiMFuDuS1iB7zF/C42OHwbjsz8POhnf0u1grrNt1Q2nFHp\u002BPO\u002BNLEhXys\u002BUu1M9aejQRvL143curEQDjZylJAozx/cDH\u002BInZpbmt29aSxeKIzTKjZ4KoSEDT4CbeZ6rsqa1UPNsKloGqOBsHzwH1GEsiVpn2pZ8ORbGD8BRi/z4OwTIlOokLgjqw9StrpH0\u002B3sffvBEQ9gAOSfcphqJpSzzY9QnTz\u002BHCGtBjQaxzpqEwRRVQhz8s/csuGvCR3fuUR63ujrN3aw7mGaU8sbBXmqNV9UGNFMf9r/s\u002BobTtMDjUyv4ChRftvNoKbm2Z7EgW2nxNO\u002Bi6By7p8N60NMlV9OloZ\u002Ba2VRWPZDhnhqpaY7\u002BvJ8s4o/RQHsfPFJQ1OYQQsHmELYRhYIFmwdewVoCEj40fCRD\u002BGVDxGEki6zyBVi6wVtIs1jI7ScdF0eIgo8RDRoUHFix3EpckkxU/QnVE5Wuk/AOuV7la579JtEty0HiE36S3ej/\u002BOUA7CEMc\u002BAtOAOx2e6PElO7PrC5xLVpPtcKcumbQjWsvpsK/c096Oe\u002B3\u002B7Na/FTUvEq1684NjQ/p71KAgEGkfXeBStTdBSGjUXJCvTGm8Lltx/ocHqWdHhm21Yf4\u002BbmqE34/2bF/\u002B7clFpZfzs/eQvqZFrxHhF7R5Ci7KjOZplu4lK2zaxsH7chC9wgPQVNJ1JaNX\u002BL5YosjbfGIxM2Hj2w\u002BozYiLtfflSTwBJFWwqbZbVWdDEZ0vzYmk/0leyj\u002Bv2ub0J4dK6W\u002Brcq\u002BCV31yKtOr1d75n8pxef/\u002B57auhn/9UUpvvIEvEWv3l5/urHULMdR1svRgtTocg62HSwK5/esvhQYzAm1RfMRzAggrgs2K87XhONOLnZsPUznUp8VoPpmzvydv2C5nIzYw7LMx8QDg/VhM18QXpOdrI680fdX/CsNud8KlGhqHehSdWrDn3WI49KpsG2fVmxs/BLR/MqZgMeHww3k9OuI\u002BxVyvekk3g0ZN\u002B4kqku9cmdynZRZmB0duPCnO9xro\u002BrnILlYKJSHRB4BuMTccNp7ykymdltTL170VQT0faYwrZADQYmSYUXS61V2V\u002BNYPUQaL22PxS2Tk/FaY9ePksZ70Qs03TNM5WUG04sB3Nd/nBe82lI0oOhib62YOAFyQ1iO/obUI2AQzUYEiPGmkbcZ2sO/0rR0QzAi0m2FtK1nkJAuct5Qq3izqA0MLBf6v936fl09snCkGrg==",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "9tjnKiWieQeFnZKEDqVTpA==",
-        "Date": "Thu, 12 Sep 2019 23:57:22 GMT",
-        "ETag": "\u00220x8D737DCF40A94B7\u0022",
-        "Last-Modified": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
+        "ETag": "\u00220x8D749249DACC415\u0022",
+        "Last-Modified": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "daaa09c3-c604-050a-a4e2-cd94097787e1",
         "x-ms-content-crc64": "vkvmPUA68V0=",
-        "x-ms-request-id": "c1ac4f22-c01e-0009-64c5-69d7e8000000",
+        "x-ms-request-id": "d891ead5-501e-0059-450d-7bf429000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002ftest-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5\u002ftest-blob-95ca2d97-0263-295e-783a-6fab9c59ec0c",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/test-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5/test-blob-95ca2d97-0263-295e-783a-6fab9c59ec0c",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15d8-4ab760ee6ec061a4.",
+        "traceparent": "00-af9a873eb1a71b49971bba35941463d7-f33cec9c28fda243-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "93a97d4b-2c7f-0ea9-a24e-99c1f8921fc5",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
+        "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -183,30 +184,30 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "93a97d4b-2c7f-0ea9-a24e-99c1f8921fc5",
         "x-ms-delete-type-permanent": "false",
-        "x-ms-request-id": "c1ac4f24-c01e-0009-66c5-69d7e8000000",
+        "x-ms-request-id": "d891eae7-501e-0059-570d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002ftest-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5\u002ftest-blob-95ca2d97-0263-295e-783a-6fab9c59ec0c?comp=undelete",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/test-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5/test-blob-95ca2d97-0263-295e-783a-6fab9c59ec0c?comp=undelete",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15d9-4ab760ee6ec061a4.",
+        "traceparent": "00-e2eca9b149d0564b83ee705485dcb3b6-7566e0e91298d843-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "8b485f19-f4ce-6962-5fb1-db3b5685458a",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -214,123 +215,123 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "8b485f19-f4ce-6962-5fb1-db3b5685458a",
-        "x-ms-request-id": "c1ac4f2a-c01e-0009-6ac5-69d7e8000000",
+        "x-ms-request-id": "d891eaee-501e-0059-5e0d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15da-4ab760ee6ec061a4.",
+        "traceparent": "00-b70731e4287c384ca7f5f53ccefc2240-775961eb860bb242-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "98a7e499-9349-9cf6-1907-4cc1f30b7d3d",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application\u002fxml",
-        "Date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "98a7e499-9349-9cf6-1907-4cc1f30b7d3d",
-        "x-ms-request-id": "c1ac4f30-c01e-0009-70c5-69d7e8000000",
+        "x-ms-request-id": "d891eaf6-501e-0059-650d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cLogging\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cRead\u003efalse\u003c\u002fRead\u003e\u003cWrite\u003efalse\u003c\u002fWrite\u003e\u003cDelete\u003efalse\u003c\u002fDelete\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fLogging\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors \u002f\u003e\u003cDeleteRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e2\u003c\u002fDays\u003e\u003c\u002fDeleteRetentionPolicy\u003e\u003cStaticWebsite\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fStaticWebsite\u003e\u003cDefaultServiceVersion\u003e2018-03-28\u003c\u002fDefaultServiceVersion\u003e\u003c\u002fStorageServiceProperties\u003e"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "672",
-        "Content-Type": "application\u002fxml",
-        "Request-Id": "|49ef15db-4ab760ee6ec061a4.",
+        "Content-Length": "658",
+        "Content-Type": "application/xml",
+        "traceparent": "00-63cfb590f2c17845a240a7cfb6e19a83-6feee83c637cb545-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "71a25da1-acde-3041-0cb8-ba76d039882a",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
-      "RequestBody": "\u003cStorageServiceProperties\u003e\u003cLogging\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cDelete\u003efalse\u003c\u002fDelete\u003e\u003cRead\u003efalse\u003c\u002fRead\u003e\u003cWrite\u003efalse\u003c\u002fWrite\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fLogging\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors \u002f\u003e\u003cDefaultServiceVersion\u003e2018-03-28\u003c\u002fDefaultServiceVersion\u003e\u003cDeleteRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fDeleteRetentionPolicy\u003e\u003cStaticWebsite\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fStaticWebsite\u003e\u003c\u002fStorageServiceProperties\u003e",
+      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 23:57:22 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "71a25da1-acde-3041-0cb8-ba76d039882a",
-        "x-ms-request-id": "c1ac4f32-c01e-0009-72c5-69d7e8000000",
+        "x-ms-request-id": "d891eb04-501e-0059-6b0d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15dc-4ab760ee6ec061a4.",
+        "traceparent": "00-4a8ed7518b403a4fb6a9952b0ed67d43-2fc49c14bb492d44-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "9620740d-0b69-7a5e-f12d-ee1726c02c2a",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:23 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application\u002fxml",
-        "Date": "Thu, 12 Sep 2019 23:57:23 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "9620740d-0b69-7a5e-f12d-ee1726c02c2a",
-        "x-ms-request-id": "c1ac4f39-c01e-0009-76c5-69d7e8000000",
+        "x-ms-request-id": "d891eb53-501e-0059-370d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cLogging\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cRead\u003efalse\u003c\u002fRead\u003e\u003cWrite\u003efalse\u003c\u002fWrite\u003e\u003cDelete\u003efalse\u003c\u002fDelete\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fLogging\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors \u002f\u003e\u003cDeleteRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fDeleteRetentionPolicy\u003e\u003cStaticWebsite\u003e\u003cEnabled\u003efalse\u003c\u002fEnabled\u003e\u003c\u002fStaticWebsite\u003e\u003cDefaultServiceVersion\u003e2018-03-28\u003c\u002fDefaultServiceVersion\u003e\u003c\u002fStorageServiceProperties\u003e"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002ftest-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5?restype=container",
+      "RequestUri": "http://jolovstorage.blob.core.windows.net/test-container-61567987-4b2b-a34e-4d27-fe5e50a95bc5?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|49ef15dd-4ab760ee6ec061a4.",
+        "traceparent": "00-854deac4da3e1e4694e2c4cf996b37e6-3720f2a5ef2ff64b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191004.1\u002Bc467128b5b1c199529fb0f0098877822633b36e6",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "5b69ef3f-f219-4bc1-3471-4bfd269592ed",
-        "x-ms-date": "Thu, 12 Sep 2019 23:57:23 GMT",
+        "x-ms-date": "Fri, 04 Oct 2019 23:43:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -338,13 +339,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 23:57:23 GMT",
+        "Date": "Fri, 04 Oct 2019 23:43:10 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "5b69ef3f-f219-4bc1-3471-4bfd269592ed",
-        "x-ms-request-id": "c1ac4f3b-c01e-0009-77c5-69d7e8000000",
+        "x-ms-request-id": "d891eb67-501e-0059-4a0d-7bf429000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -352,6 +353,6 @@
   ],
   "Variables": {
     "RandomSeed": "1201241800",
-    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp:\u002f\u002fgapradev.blob.core.windows.net\nhttp:\u002f\u002fgapradev.file.core.windows.net\nhttp:\u002f\u002fgapradev.queue.core.windows.net\nhttp:\u002f\u002fgapradev.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fgapradev-secondary.blob.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.file.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.queue.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fgapradev.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fgapradev.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fgapradev.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fgapradev.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.file.core.windows.net\u002f;AccountName=gapradev;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttp://jolovstorage.blob.core.windows.net\nhttp://jolovstorage.file.core.windows.net\nhttp://jolovstorage.queue.core.windows.net\nhttp://jolovstorage.table.core.windows.net\n\n\n\n\nhttp://jolovstorage-secondary.blob.core.windows.net\n\nhttp://jolovstorage-secondary.queue.core.windows.net\nhttp://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://jolovstorage.blob.core.windows.net/;QueueEndpoint=http://jolovstorage.queue.core.windows.net/;TableEndpoint=http://jolovstorage.table.core.windows.net/;FileEndpoint=http://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=http://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://jolovstorage-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://jolovstorage-secondary.table.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized"
   }
 }
