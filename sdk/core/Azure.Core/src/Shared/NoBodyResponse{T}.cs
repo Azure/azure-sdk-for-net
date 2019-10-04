@@ -30,8 +30,8 @@ namespace Azure
         {
             public int Status { get; }
 
-            public ResponseBodyNotFoundException(int status, string message, Exception? innerException = null)
-                : base(message, innerException)
+            public ResponseBodyNotFoundException(int status, string message)
+                : base(message)
             {
                 Status = status;
             }
