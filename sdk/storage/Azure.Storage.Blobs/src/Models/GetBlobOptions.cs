@@ -20,21 +20,25 @@ namespace Azure.Storage.Blobs.Models
         /// Default flag specifying that no flags are set in <see cref="GetBlobOptions"/>.
         /// </summary>
         None = 0,
+
         /// <summary>
         /// Flag specifying that metadata related to any current
         /// or previous copy operation should be included.
         /// </summary>
         CopyOperationStatus = 1,
+
         /// <summary>
         /// Flag specifying that the blob's metadata should be
         /// included.
         /// </summary>
         Metadata = 2,
+
         /// <summary>
         /// Flag specifying that the blob's snapshots should be
         /// included.  Snapshots are listed from oldest to newest.
         /// </summary>
         Snapshots = 4,
+
         /// <summary>
         /// Flag specifying that blobs for which blocks have
         /// been uploaded, but which have not been committed using
@@ -42,6 +46,7 @@ namespace Azure.Storage.Blobs.Models
         /// included.
         /// </summary>
         UncommittedBlobs = 8,
+
         /// <summary>
         /// Flag specifying that soft deleted blobs should be
         /// included in the response.
@@ -66,16 +71,26 @@ namespace Azure.Storage.Blobs
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation.
             var items = new List<ListBlobsIncludeItem>();
-            if (options.HasFlag(GetBlobOptions.CopyOperationStatus))
-            { items.Add(ListBlobsIncludeItem.Copy); }
-            if (options.HasFlag(GetBlobOptions.DeletedBlobs))
-            { items.Add(ListBlobsIncludeItem.Deleted); }
-            if (options.HasFlag(GetBlobOptions.Metadata))
-            { items.Add(ListBlobsIncludeItem.Metadata); }
-            if (options.HasFlag(GetBlobOptions.Snapshots))
-            { items.Add(ListBlobsIncludeItem.Snapshots); }
-            if (options.HasFlag(GetBlobOptions.UncommittedBlobs))
-            { items.Add(ListBlobsIncludeItem.Uncommittedblobs); }
+            if ((options & GetBlobOptions.CopyOperationStatus) == GetBlobOptions.CopyOperationStatus)
+            {
+                items.Add(ListBlobsIncludeItem.Copy);
+            }
+            if ((options & GetBlobOptions.DeletedBlobs) == GetBlobOptions.DeletedBlobs)
+            {
+                items.Add(ListBlobsIncludeItem.Deleted);
+            }
+            if ((options & GetBlobOptions.Metadata) == GetBlobOptions.Metadata)
+            {
+                items.Add(ListBlobsIncludeItem.Metadata);
+            }
+            if ((options & GetBlobOptions.Snapshots) == GetBlobOptions.Snapshots)
+            {
+                items.Add(ListBlobsIncludeItem.Snapshots);
+            }
+            if ((options & GetBlobOptions.UncommittedBlobs) == GetBlobOptions.UncommittedBlobs)
+            {
+                items.Add(ListBlobsIncludeItem.Uncommittedblobs);
+            }
             return items.Count > 0 ? items : null;
         }
     }

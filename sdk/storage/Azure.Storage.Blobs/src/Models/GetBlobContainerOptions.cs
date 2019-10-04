@@ -17,6 +17,7 @@ namespace Azure.Storage.Blobs.Models
         /// Default flag specifying that no flags are set in <see cref="GetBlobContainerOptions"/>.
         /// </summary>
         None = 0,
+
         /// <summary>
         /// Flag specifying that the container's metadata should
         /// be included.
@@ -37,7 +38,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <returns>A ListBlobContainersIncludeType value.</returns>
         internal static ListBlobContainersIncludeType? AsIncludeType(this GetBlobContainerOptions options)
-            => options.HasFlag(GetBlobContainerOptions.Metadata) ?
+            => (options & GetBlobContainerOptions.Metadata) == GetBlobContainerOptions.Metadata ?
                 ListBlobContainersIncludeType.Metadata :
                 (ListBlobContainersIncludeType?)null;
     }

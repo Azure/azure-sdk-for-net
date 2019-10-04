@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common.Tests.Shared;
-using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
@@ -24,30 +22,30 @@ namespace Azure.Storage.Blobs.Tests
         [Test]
         public void GetBlobOptions_VariousFlagCombos()
         {
-            GetBlobOptions options = GetBlobOptions.Metadata | GetBlobOptions.DeletedBlobs;
-            Assert.AreEqual(
+            AssertOptions(
                 "deleted,metadata",
-                string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
+                GetBlobOptions.Metadata | GetBlobOptions.DeletedBlobs);
 
-            options = GetBlobOptions.Metadata | GetBlobOptions.DeletedBlobs | GetBlobOptions.None;
-            Assert.AreEqual(
+            AssertOptions(
                 "deleted,metadata",
-                string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
+                GetBlobOptions.Metadata | GetBlobOptions.DeletedBlobs | GetBlobOptions.None);
 
-            options = GetBlobOptions.CopyOperationStatus | GetBlobOptions.Metadata | GetBlobOptions.Snapshots;
-            Assert.AreEqual(
+            AssertOptions(
                 "copy,metadata,snapshots",
-                string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
+                GetBlobOptions.CopyOperationStatus | GetBlobOptions.Metadata | GetBlobOptions.Snapshots);
 
-            options = GetBlobOptions.Metadata | GetBlobOptions.CopyOperationStatus | GetBlobOptions.Snapshots | GetBlobOptions.UncommittedBlobs | GetBlobOptions.DeletedBlobs;
-            Assert.AreEqual(
+            AssertOptions(
                 "copy,deleted,metadata,snapshots,uncommittedblobs",
-                string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
+                GetBlobOptions.Metadata | GetBlobOptions.CopyOperationStatus | GetBlobOptions.Snapshots | GetBlobOptions.UncommittedBlobs | GetBlobOptions.DeletedBlobs);
 
-            options = GetBlobOptions.Metadata | GetBlobOptions.Metadata | GetBlobOptions.Snapshots | GetBlobOptions.UncommittedBlobs | GetBlobOptions.DeletedBlobs;
-            Assert.AreEqual(
+            AssertOptions(
                 "deleted,metadata,snapshots,uncommittedblobs",
-                string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
+                GetBlobOptions.Metadata | GetBlobOptions.Metadata | GetBlobOptions.Snapshots | GetBlobOptions.UncommittedBlobs | GetBlobOptions.DeletedBlobs);
+
+            static void AssertOptions(string expected, GetBlobOptions options) => Assert.AreEqual(
+                    expected,
+                    string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
         }
+
     }
 }
