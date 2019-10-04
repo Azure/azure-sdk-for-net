@@ -609,7 +609,7 @@ namespace Azure.Storage.Files
         {
             ShareClient share = GetShareClient(shareName);
             Response<ShareInfo> response = share.Create(metadata, quotaInBytes, cancellationToken);
-            return Response.FromValue(response.GetRawResponse(), share);
+            return Response.FromValue(share, response.GetRawResponse());
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Azure.Storage.Files
         {
             ShareClient share = GetShareClient(shareName);
             Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.GetRawResponse(), share);
+            return Response.FromValue(share, response.GetRawResponse());
         }
         #endregion CreateShare
 

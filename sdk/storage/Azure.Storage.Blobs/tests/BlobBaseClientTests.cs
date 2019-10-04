@@ -1065,6 +1065,42 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task DeleteIfExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                BlobBaseClient blob = await GetNewBlobClient(container);
+
+                // Act
+                Response<bool> response = await blob.DeleteIfExistsAsync();
+
+                // Assert
+                Assert.IsTrue(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+                // Act
+                Response<bool> response = await blob.DeleteIfExistsAsync();
+
+                // Assert
+                Assert.IsFalse(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
         //[Test]
         //public async Task DeleteAsync_Batch()
         //{

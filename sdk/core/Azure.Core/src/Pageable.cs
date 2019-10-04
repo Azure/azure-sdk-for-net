@@ -49,7 +49,7 @@ namespace Azure
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
-        public abstract IEnumerable<Page<T>> ByPage(
+        public abstract IEnumerable<Page<T>> AsPages(
             string? continuationToken = default,
             int? pageSizeHint = default);
 
@@ -72,7 +72,7 @@ namespace Azure
         /// </summary>
         public virtual IEnumerator<T> GetEnumerator()
         {
-            foreach (Page<T> page in ByPage())
+            foreach (Page<T> page in AsPages())
             {
                 foreach (T value in page.Values)
                 {

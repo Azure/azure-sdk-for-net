@@ -121,7 +121,7 @@ namespace Azure.Core.Testing
             public override async IAsyncEnumerable<Page<T>> AsPages(string continuationToken = default, int? pageSizeHint = default)
 #pragma warning restore 1998
             {
-                foreach (Page<T> page in _enumerable.ByPage())
+                foreach (Page<T> page in _enumerable.AsPages())
                 {
                     yield return page;
                 }
