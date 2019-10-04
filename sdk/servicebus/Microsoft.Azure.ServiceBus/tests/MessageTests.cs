@@ -260,5 +260,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.IsType<TimeSpan>(receivedMsg.UserProperties["TimeSpan"]);            
             });
         }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public void MessageCloneShouldCreateIndependentUserProperty()
+        {
+            var messageBody = Encoding.UTF8.GetBytes("test");
+
+            var originalMessage = new Message(messageBody);
+            originalMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
+
+            var clonedMessage = originalMessage.Clone();
+            
+            Assert.Equal("SomeUserProperty", clonedMessage.UserProperties["UserProperty"]);
+
+            originalMessage.UserProperties["UserProperty"] = "SomeOtherUserProperty";
+            originalMessage.Body = Encoding.UTF8.GetBytes("test2");
+
+            Assert.Equal("SomeUserProperty", clonedMessage.UserProperties["UserProperty"]);
+            Assert.Equal(Encoding.UTF8.GetBytes("test"), clonedMessage.Body);
+        }
     }
 }

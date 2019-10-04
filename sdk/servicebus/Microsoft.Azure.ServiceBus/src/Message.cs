@@ -295,11 +295,11 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>Clones a message, so that it is possible to send a clone of an already received
         /// message as a new message. The system properties of original message
         /// are not copied.</summary>
+        /// <remarks>The <see cref="UserProperties"/> is a new dictionary containing references to the original entries.</remarks>
         /// <returns>A cloned <see cref="Message" />.</returns>
         public Message Clone()
         {
             var clone = (Message)this.MemberwiseClone();
-            clone.SystemProperties = new SystemPropertiesCollection();
 
             if (this.Body != null)
             {
@@ -307,6 +307,14 @@ namespace Microsoft.Azure.ServiceBus
                 Array.Copy(this.Body, clonedBody, this.Body.Length);
                 clone.Body = clonedBody;
             }
+
+            clone.SystemProperties = new SystemPropertiesCollection();
+            clone.UserProperties = new Dictionary<string, object>(this.UserProperties.Count);
+            foreach (var userProperty in this.UserProperties)
+            {
+                clone.UserProperties.Add(userProperty);
+            }
+
             return clone;
         }
 
