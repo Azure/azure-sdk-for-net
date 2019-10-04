@@ -35,6 +35,10 @@ namespace Azure.Identity.Tests
             AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.AreEqual(token.Token, expectedToken);
+
+            AccessToken token2 = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://managemnt.azure.com/.default" }));
+
+            Assert.AreEqual(token.Token, expectedToken);
         }
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string tenantId, string token)
