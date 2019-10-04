@@ -32,12 +32,12 @@ namespace Azure.Storage.Blobs.Models
 namespace Azure.Storage.Blobs
 {
     /// <summary>
-    /// BlockListOptions extensions
+    /// BlockListTypes extensions
     /// </summary>
     internal static partial class BlobExtensions
     {
         /// <summary>
-        /// Convert the BlockListOptions into a BlockListType.
+        /// Convert the BlockListTypes into a BlockListType.
         /// </summary>
         /// <param name="options"></param>
         /// <returns>The BlockList response.</returns>
