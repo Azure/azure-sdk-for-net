@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
     /// </summary>
     [Flags]
-    public enum BlockListOptions
+    public enum BlockListTypes
     {
         /// <summary>
         /// Flag to specify returning both committed and uncommitted blocks.
@@ -41,14 +41,20 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="options"></param>
         /// <returns>The BlockList response.</returns>
-        internal static BlockListType ToBlockListType(this BlockListOptions options)
+        internal static BlockListType ToBlockListType(this BlockListTypes options)
         {
-            if (options.HasFlag(BlockListOptions.All) || options == default)
-            { return BlockListType.All;  }
-            else if (options.HasFlag(BlockListOptions.Committed))
-            { return BlockListType.Committed; }
+            if (options >= BlockListTypes.All || options == default)
+            {
+                return BlockListType.All;
+            }
+            else if (options.HasFlag(BlockListTypes.Committed))
+            {
+                return BlockListType.Committed;
+            }
             else
-            { return BlockListType.Uncommitted; }
+            {
+                return BlockListType.Uncommitted;
+            }
         }
     }
 }

@@ -1380,7 +1380,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlockList> GetBlockList(
-            BlockListOptions listOptions = BlockListOptions.All,
+            BlockListTypes listOptions = BlockListTypes.All,
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -1430,7 +1430,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
-            BlockListOptions listOptions = BlockListOptions.All,
+            BlockListTypes listOptions = BlockListTypes.All,
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -1483,7 +1483,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlockList>> GetBlockListInternal(
-            BlockListOptions listOptions,
+            BlockListTypes listOptions,
             string snapshot,
             LeaseAccessConditions? leaseAccessConditions,
             bool async,
