@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    public class GuardTests
+    public class ArgumentTests
     {
         /// <summary>
         ///   Provides the invalid test cases for the <see cref="Argument.AssertNotNegative" /> tests.

@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
-            return Response.FromValue(response, result);
+            return Response.FromValue(result, response);
         }
 
         public DiagnosticScope CreateScope(string name)

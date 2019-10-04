@@ -11,7 +11,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ValueIsAccessible()
         {
-            var response = Response.FromValue(response: null, new TestPayload("test_name"));
+            var response = Response.FromValue(new TestPayload("test_name"), response: null);
             TestPayload value = response.Value;
 
             Assert.IsNotNull(value);
@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ValueObtainedFromCast()
         {
-            var response = Response.FromValue(response: null, new TestPayload("test_name"));
+            var response = Response.FromValue(new TestPayload("test_name"), response: null);
             TestPayload value = response;
 
             Assert.IsNotNull(value);

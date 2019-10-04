@@ -401,7 +401,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = new RetentionPolicy
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy
             {
                 Enabled = true,
                 Days = 2
@@ -419,7 +419,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = new RetentionPolicy
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy
             {
                 Enabled = false
             };

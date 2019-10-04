@@ -974,30 +974,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Expected behavior currently under discussion")]
-        public async Task ProducerCanSendWhenClientIsClosed()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                await using (EventHubProducer producer = client.CreateProducer())
-                {
-                    client.Close();
-
-                    var events = new EventData(Encoding.UTF8.GetBytes("Do not delete me!"));
-                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubProducer" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
         public async Task ProducerCannotSendWhenProxyIsInvalid()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
