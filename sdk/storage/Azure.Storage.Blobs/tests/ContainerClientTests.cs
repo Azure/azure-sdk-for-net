@@ -219,6 +219,43 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CreateIfNotExistsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await container.CreateIfNotExistsAsync();
+
+            // Assert
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.Properties.ETag);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            await container.CreateIfNotExistsAsync();
+
+            // Assert
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.Properties.ETag);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -291,6 +328,35 @@ namespace Azure.Storage.Blobs.Test
                         e => { });
                 }
             }
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            Response<bool> response = await container.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            Response<bool> response = await container.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
         }
 
         [Test]
@@ -1560,6 +1626,66 @@ namespace Azure.Storage.Blobs.Test
                 Assert.ThrowsAsync<StorageRequestFailedException>(
                     async () => await blob.GetPropertiesAsync());
             }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var name = GetNewBlobName();
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+                using (var stream = new MemoryStream(GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                // Act
+                Response<bool> response= await container.DeleteBlobIfExistsAsync(name);
+
+                // Assert
+                Assert.IsTrue(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var name = GetNewBlobName();
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+                using (var stream = new MemoryStream(GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+                await container.DeleteBlobAsync(name);
+
+                //Act
+                Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
+
+                // Assert
+                Assert.IsFalse(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
         #region Secondary Storage
