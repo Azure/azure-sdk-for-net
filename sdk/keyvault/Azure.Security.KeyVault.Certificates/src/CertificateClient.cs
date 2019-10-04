@@ -1448,7 +1448,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, certificateMergeOptions.Name, "/pending/merge");
 
-                return Response.FromValue(certificate.GetRawResponse(), certificate.Value);
+                return Response.FromValue(certificate.Value, certificate.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1475,7 +1475,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateWithPolicy(), cancellationToken, CertificatesPath, certificateMergeOptions.Name, "/pending/merge").ConfigureAwait(false);
 
-                return Response.FromValue(certificate.GetRawResponse(), certificate.Value);
+                return Response.FromValue(certificate.Value, certificate.GetRawResponse());
             }
             catch (Exception e)
             {
