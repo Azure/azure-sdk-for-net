@@ -22,7 +22,7 @@ namespace Azure.Identity
         private readonly IPublicClientApplication _pubApp = null;
         private readonly HttpPipeline _pipeline = null;
         private IAccount _account = null;
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly string _clientId;
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
@@ -52,13 +52,13 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, IdentityClientOptions options)
+        public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, AzureCredentialOptions options)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
 

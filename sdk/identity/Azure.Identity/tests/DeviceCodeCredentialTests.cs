@@ -67,7 +67,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
@@ -105,7 +105,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), options));
 
@@ -121,7 +121,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             var cancelSource = new CancellationTokenSource(1000);
 
@@ -152,7 +152,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, ThrowingDeviceCodeCallback, options));
 

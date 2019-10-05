@@ -17,7 +17,7 @@ namespace Azure.Identity.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrowserAsync()
         {
-            var cred = new InteractiveBrowserCredential(ClientId);
+            var cred = new InteractiveBrowserCredential();
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public void AuthenticateBrowserCancellationAsync()
         {
-            var cred = new InteractiveBrowserCredential(ClientId);
+            var cred = new InteractiveBrowserCredential();
 
             var cancelSource = new CancellationTokenSource();
 
