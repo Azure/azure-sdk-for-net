@@ -16301,7 +16301,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
     /// </summary>
-    public enum BlockListType
+    internal enum BlockListType
     {
         /// <summary>
         /// committed
