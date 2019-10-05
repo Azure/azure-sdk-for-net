@@ -1234,7 +1234,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.DeletedBlobs).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.UncommittedBlobs).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Uncommitted).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1304,7 +1304,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.None, prefix: "foo").ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(prefix: "foo").ToListAsync();
 
                 // Assert
                 Assert.AreEqual(3, blobs.Count);
@@ -1356,7 +1356,7 @@ namespace Azure.Storage.Blobs.Test
                 var prefixes = new List<string>();
                 var delimiter = "/";
 
-                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter).AsPages())
+                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter: delimiter).AsPages())
                 {
                     blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
                     prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
@@ -1439,7 +1439,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.DeletedBlobs).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1473,7 +1473,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.UncommittedBlobs).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Uncommitted).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);

@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         /// Flag specifying that metadata related to any current
         /// or previous copy operation should be included.
         /// </summary>
-        CopyOperationStatus = 1,
+        CopyStatus = 1,
 
         /// <summary>
         /// Flag specifying that the blob's metadata should be

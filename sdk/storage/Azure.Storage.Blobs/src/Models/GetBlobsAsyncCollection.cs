@@ -72,11 +72,11 @@ namespace Azure.Storage.Blobs
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation.
             var items = new List<ListBlobsIncludeItem>();
-            if ((traits & BlobTraits.CopyOperationStatus) == BlobTraits.CopyOperationStatus)
+            if ((traits & BlobTraits.CopyStatus) == BlobTraits.CopyStatus)
             {
                 items.Add(ListBlobsIncludeItem.Copy);
             }
-            if ((states & BlobStates.DeletedBlobs) == BlobStates.DeletedBlobs)
+            if ((states & BlobStates.Deleted) == BlobStates.Deleted)
             {
                 items.Add(ListBlobsIncludeItem.Deleted);
             }
@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListBlobsIncludeItem.Snapshots);
             }
-            if ((states & BlobStates.UncommittedBlobs) == BlobStates.UncommittedBlobs)
+            if ((states & BlobStates.Uncommitted) == BlobStates.Uncommitted)
             {
                 items.Add(ListBlobsIncludeItem.Uncommittedblobs);
             }

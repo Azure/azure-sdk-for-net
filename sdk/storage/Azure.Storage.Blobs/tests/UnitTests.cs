@@ -25,27 +25,27 @@ namespace Azure.Storage.Blobs.Tests
             AssertOptions(
                 "deleted,metadata",
                 BlobTraits.Metadata,
-                BlobStates.DeletedBlobs);
+                BlobStates.Deleted);
 
             AssertOptions(
                 "deleted,metadata",
                 BlobTraits.Metadata,
-                BlobStates.DeletedBlobs | BlobStates.None);
+                BlobStates.Deleted | BlobStates.None);
 
             AssertOptions(
                 "copy,metadata,snapshots",
-                BlobTraits.CopyOperationStatus | BlobTraits.Metadata,
+                BlobTraits.CopyStatus | BlobTraits.Metadata,
                 BlobStates.Snapshots);
 
             AssertOptions(
                 "copy,deleted,metadata,snapshots,uncommittedblobs",
-                BlobTraits.Metadata | BlobTraits.CopyOperationStatus,
-                BlobStates.Snapshots | BlobStates.UncommittedBlobs | BlobStates.DeletedBlobs);
+                BlobTraits.Metadata | BlobTraits.CopyStatus,
+                BlobStates.Snapshots | BlobStates.Uncommitted | BlobStates.Deleted);
 
             AssertOptions(
                 "deleted,metadata,snapshots,uncommittedblobs",
                 BlobTraits.Metadata | BlobTraits.Metadata,
-                BlobStates.Snapshots | BlobStates.UncommittedBlobs | BlobStates.DeletedBlobs);
+                BlobStates.Snapshots | BlobStates.Uncommitted | BlobStates.Deleted);
 
             static void AssertOptions(string expected, BlobTraits traits, BlobStates states) => Assert.AreEqual(
                     expected,

@@ -1375,6 +1375,12 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
         /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
         /// <param name="delimiter">
         /// A <paramref name="delimiter"/> that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
@@ -1391,12 +1397,6 @@ namespace Azure.Storage.Blobs
         ///
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
-        /// </param>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blobs.
-        /// </param>
-        /// <param name="states">
-        /// Specifies state options for filtering the blobs.
         /// </param>
         /// <param name="prefix">
         /// Specifies a string that filters the results to return only blobs
@@ -1415,9 +1415,9 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
-            string delimiter = default,
             BlobTraits traits = BlobTraits.None,
             BlobStates states = BlobStates.None,
+            string delimiter = default,
             string prefix = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix).ToSyncCollection(cancellationToken);
@@ -1432,6 +1432,12 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
         /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
         /// <param name="delimiter">
         /// A <paramref name="delimiter"/> that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
@@ -1448,12 +1454,6 @@ namespace Azure.Storage.Blobs
         ///
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
-        /// </param>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blobs.
-        /// </param>
-        /// <param name="states">
-        /// Specifies state options for filtering the blobs.
         /// </param>
         /// <param name="prefix">
         /// Specifies a string that filters the results to return only blobs
@@ -1472,9 +1472,9 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
-            string delimiter = default,
             BlobTraits traits = BlobTraits.None,
             BlobStates states = BlobStates.None,
+            string delimiter = default,
             string prefix = default,
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix).ToAsyncCollection(cancellationToken);

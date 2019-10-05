@@ -31,13 +31,13 @@ namespace Azure.Storage.Blobs.Models
         /// <see cref="Specialized.BlockBlobClient.CommitBlockListAsync"/> should be
         /// included.
         /// </summary>
-        UncommittedBlobs = 2,
+        Uncommitted = 2,
 
         /// <summary>
         /// Flag specifying that soft deleted blobs should be
         /// included in the response.
         /// </summary>
-        DeletedBlobs = 4,
+        Deleted = 4,
 
         /// <summary>
         /// Flag specifying that blobs of all states should be included.
