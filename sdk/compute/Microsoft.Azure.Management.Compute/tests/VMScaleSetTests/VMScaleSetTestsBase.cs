@@ -394,7 +394,6 @@ namespace Compute.Tests
             return createOrUpdateResponse;
         }
 
-
         protected void ValidateVMScaleSetInstanceView(VirtualMachineScaleSet vmScaleSet,
             VirtualMachineScaleSetInstanceView vmScaleSetInstanceView)
         {
@@ -403,8 +402,11 @@ namespace Compute.Tests
             if (vmScaleSet.VirtualMachineProfile.ExtensionProfile != null)
             {
                 Assert.NotNull(vmScaleSetInstanceView.Extensions);
-                int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-                Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+                foreach (var ext in vmScaleSetInstanceView.Extensions)
+                {
+                    int instancesCount = ext.StatusesSummary.Sum(t => t.Count.Value);
+                    Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+                }
             }
         }
 
@@ -614,7 +616,6 @@ namespace Compute.Tests
             {
                 Assert.Null(vmScaleSetOut.Zones);
                 Assert.Null(vmScaleSetOut.ZoneBalance);
-                Assert.Null(vmScaleSetOut.PlatformFaultDomainCount);
             }
 
             if(ppgId != null)

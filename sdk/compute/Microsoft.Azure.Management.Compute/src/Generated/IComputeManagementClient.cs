@@ -172,6 +172,11 @@ namespace Microsoft.Azure.Management.Compute
         ISnapshotsOperations Snapshots { get; }
 
         /// <summary>
+        /// Gets the IDiskEncryptionSetsOperations.
+        /// </summary>
+        IDiskEncryptionSetsOperations DiskEncryptionSets { get; }
+
+        /// <summary>
         /// Gets the IGalleriesOperations.
         /// </summary>
         IGalleriesOperations Galleries { get; }
