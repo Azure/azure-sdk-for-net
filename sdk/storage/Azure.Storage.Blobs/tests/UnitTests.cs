@@ -24,28 +24,32 @@ namespace Azure.Storage.Blobs.Tests
         {
             AssertOptions(
                 "deleted,metadata",
-                GetBlobOptions.Metadata | GetBlobOptions.DeletedBlobs);
+                BlobTraits.Metadata,
+                BlobStates.DeletedBlobs);
 
             AssertOptions(
                 "deleted,metadata",
-                GetBlobOptions.Metadata | GetBlobOptions.DeletedBlobs | GetBlobOptions.None);
+                BlobTraits.Metadata,
+                BlobStates.DeletedBlobs | BlobStates.None);
 
             AssertOptions(
                 "copy,metadata,snapshots",
-                GetBlobOptions.CopyOperationStatus | GetBlobOptions.Metadata | GetBlobOptions.Snapshots);
+                BlobTraits.CopyOperationStatus | BlobTraits.Metadata,
+                BlobStates.Snapshots);
 
             AssertOptions(
                 "copy,deleted,metadata,snapshots,uncommittedblobs",
-                GetBlobOptions.Metadata | GetBlobOptions.CopyOperationStatus | GetBlobOptions.Snapshots | GetBlobOptions.UncommittedBlobs | GetBlobOptions.DeletedBlobs);
+                BlobTraits.Metadata | BlobTraits.CopyOperationStatus,
+                BlobStates.Snapshots | BlobStates.UncommittedBlobs | BlobStates.DeletedBlobs);
 
             AssertOptions(
                 "deleted,metadata,snapshots,uncommittedblobs",
-                GetBlobOptions.Metadata | GetBlobOptions.Metadata | GetBlobOptions.Snapshots | GetBlobOptions.UncommittedBlobs | GetBlobOptions.DeletedBlobs);
+                BlobTraits.Metadata | BlobTraits.Metadata,
+                BlobStates.Snapshots | BlobStates.UncommittedBlobs | BlobStates.DeletedBlobs);
 
-            static void AssertOptions(string expected, GetBlobOptions options) => Assert.AreEqual(
+            static void AssertOptions(string expected, BlobTraits traits, BlobStates states) => Assert.AreEqual(
                     expected,
-                    string.Join(",", System.Linq.Enumerable.Select(options.AsIncludeItems(), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
+                    string.Join(",", System.Linq.Enumerable.Select(BlobExtensions.AsIncludeItems(traits, states), item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))));
         }
-
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Storage.Blobs.Models
     /// <see cref="BlobServiceClient.GetBlobContainersAsync"/> operation.
     /// </summary>
     [Flags]
-    public enum GetBlobContainerOptions
+    public enum BlobContainerTraits
     {
         /// <summary>
-        /// Default flag specifying that no flags are set in <see cref="GetBlobContainerOptions"/>.
+        /// Default flag specifying that no flags are set in <see cref="BlobContainerTraits"/>.
         /// </summary>
         None = 0,
 
@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Models
 namespace Azure.Storage.Blobs
 {
     /// <summary>
-    /// GetBlobOptions enum extensions
+    /// BlobContainerTraits enum extensions
     /// </summary>
     internal static partial class BlobExtensions
     {
@@ -37,8 +37,8 @@ namespace Azure.Storage.Blobs
         /// Convert the details into a ListBlobContainersIncludeType value.
         /// </summary>
         /// <returns>A ListBlobContainersIncludeType value.</returns>
-        internal static ListBlobContainersIncludeType? AsIncludeType(this GetBlobContainerOptions options)
-            => (options & GetBlobContainerOptions.Metadata) == GetBlobContainerOptions.Metadata ?
+        internal static ListBlobContainersIncludeType? AsIncludeType(this BlobContainerTraits traits)
+            => (traits & BlobContainerTraits.Metadata) == BlobContainerTraits.Metadata ?
                 ListBlobContainersIncludeType.Metadata :
                 (ListBlobContainersIncludeType?)null;
     }

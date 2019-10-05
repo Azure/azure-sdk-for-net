@@ -1213,7 +1213,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.Metadata).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
 
                 // Assert
                 AssertMetadataEquality(metadata, blobs.First().Metadata);
@@ -1234,7 +1234,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.DeletedBlobs).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.DeletedBlobs).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.UncommittedBlobs).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.UncommittedBlobs).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1287,7 +1287,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.Snapshots).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
@@ -1304,7 +1304,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(GetBlobOptions.None, "foo").ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.None, prefix: "foo").ToListAsync();
 
                 // Assert
                 Assert.AreEqual(3, blobs.Count);
@@ -1418,7 +1418,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.Metadata).FirstAsync();
+                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
 
                 // Assert
                 AssertMetadataEquality(metadata, item.Blob.Metadata);
@@ -1439,7 +1439,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.DeletedBlobs).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.DeletedBlobs).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1473,7 +1473,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.UncommittedBlobs).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.UncommittedBlobs).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1492,7 +1492,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: GetBlobOptions.Snapshots).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
