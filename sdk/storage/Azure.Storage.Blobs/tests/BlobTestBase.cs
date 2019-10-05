@@ -286,7 +286,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
+                Permissions = BlobSasPermissions.All.ToPermissionsString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
@@ -298,7 +298,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
+                Permissions = BlobSasPermissions.All.ToPermissionsString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 

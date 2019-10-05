@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Sas
@@ -322,7 +323,7 @@ namespace Azure.Storage.Sas
                 if (String.IsNullOrEmpty(Snapshot))
                 {
                     // Make sure the permission characters are in the correct order
-                    Permissions = BlobSasPermissions.Parse(Permissions).ToString();
+                    Permissions = BlobExtensions.Parse(Permissions).ToPermissionsString();
                     Resource = Constants.Sas.Resource.Blob;
                 }
                 // Snapshot
