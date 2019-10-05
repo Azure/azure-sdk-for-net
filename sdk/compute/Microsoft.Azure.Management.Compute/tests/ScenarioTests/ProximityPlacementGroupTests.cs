@@ -155,8 +155,19 @@ namespace Compute.Tests
             }
             catch (CloudException ex)
             {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.Conflict, $"Expecting HttpStatusCode {HttpStatusCode.Conflict}, while actual HttpStatusCode is {ex.Response.StatusCode}.");
-                Assert.Equal("Changing property 'proximityPlacementGroup.properties.proximityPlacementGroupType' is not allowed.", ex.Message, StringComparer.OrdinalIgnoreCase);
+                if (ex.Response.StatusCode == HttpStatusCode.Conflict)
+                {
+                    Assert.Equal("Changing property 'proximityPlacementGroup.properties.proximityPlacementGroupType' is not allowed.", ex.Message, StringComparer.OrdinalIgnoreCase);
+                }
+                else if (ex.Response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    Assert.Equal("The subscription is not registered for private preview of Ultra Proximity Placement Groups.", ex.Message, StringComparer.OrdinalIgnoreCase);
+                }
+                else
+                {
+                    Console.WriteLine($"Expecting HttpStatusCode { HttpStatusCode.Conflict} or { HttpStatusCode.BadRequest}, while actual HttpStatusCode is { ex.Response.StatusCode}.");
+                    throw; 
+                }
             }
             Assert.True(outProximityPlacementGroup == null, "ProximityPlacementGroup in response should be null.");
 

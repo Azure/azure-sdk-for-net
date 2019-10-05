@@ -116,7 +116,8 @@ namespace Compute.Tests
                                 }
                             },
                             ZoneResilient = true
-                        }
+                        },
+                        HyperVGeneration  = HyperVGenerationType.V1
                     };
 
                     var image = m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
