@@ -1847,7 +1847,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
@@ -1890,7 +1890,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
@@ -1933,7 +1933,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
@@ -1976,7 +1976,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
@@ -2022,7 +2022,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
-            bool? includeSnapshots,
+            bool includeSnapshots,
             BlobAccessConditions accessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -2084,7 +2084,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
-            bool? includeSnapshots,
+            bool includeSnapshots,
             BlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken,

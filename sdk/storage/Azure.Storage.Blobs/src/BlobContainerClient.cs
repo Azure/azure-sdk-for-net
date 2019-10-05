@@ -1938,7 +1938,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response DeleteBlob(
             string blobName,
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlobClient(blobName)
@@ -1983,7 +1983,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobAsync(
             string blobName,
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await GetBlobClient(blobName)
@@ -2029,7 +2029,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<bool> DeleteBlobIfExists(
             string blobName,
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
                 GetBlobClient(blobName).
@@ -2074,7 +2074,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response<bool>> DeleteBlobIfExistsAsync(
             string blobName,
-            bool? includeSnapshots = true,
+            bool includeSnapshots = true,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await GetBlobClient(blobName).DeleteIfExistsAsync(
