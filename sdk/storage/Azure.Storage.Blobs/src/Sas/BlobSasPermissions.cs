@@ -16,6 +16,52 @@ namespace Azure.Storage.Sas
     public struct BlobSasPermissions : IEquatable<BlobSasPermissions>
     {
         /// <summary>
+        /// CreatePermissions
+        /// </summary>
+        /// <param name="read"></param>
+        /// <param name="add"></param>
+        /// <param name="create"></param>
+        /// <param name="write"></param>
+        /// <param name="delete"></param>
+        /// <returns></returns>
+        public static BlobSasPermissions CreatePermissions(
+            bool read = false,
+            bool add = false,
+            bool create = false,
+            bool write = false,
+            bool delete = false)
+        {
+            BlobSasPermissions permissions = new BlobSasPermissions
+            {
+                Read = read,
+                Add = add,
+                Create = create,
+                Write = write,
+                Delete = delete
+            };
+            return permissions;
+        }
+
+        /// <summary>
+        /// GeneratePermissionsString
+        /// </summary>
+        /// <param name="read"></param>
+        /// <param name="add"></param>
+        /// <param name="create"></param>
+        /// <param name="write"></param>
+        /// <param name="delete"></param>
+        /// <returns></returns>
+        public static string GeneratePermissionsString(
+            bool read = false,
+            bool add = false,
+            bool create = false,
+            bool write = false,
+            bool delete = false)
+        {
+            return CreatePermissions(read, add, create, write, delete).ToString();
+        }
+
+        /// <summary>
         /// Get or sets whether Read is permitted.
         /// </summary>
         public bool Read { get; set; }
