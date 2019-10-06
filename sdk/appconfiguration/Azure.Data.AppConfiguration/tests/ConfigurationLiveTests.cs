@@ -666,10 +666,18 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 Response<ConfigurationSetting> response = await service.GetAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
                 Assert.AreEqual(304, response.GetRawResponse().Status);
-                var exception = Assert.Throws<Exception>(() =>
+
+                bool throws = false;
+                try
                 {
                     ConfigurationSetting value = response.Value;
-                });
+                }
+                catch
+                {
+                    throws = true;
+                }
+
+                Assert.IsTrue(throws);
             }
             finally
             {

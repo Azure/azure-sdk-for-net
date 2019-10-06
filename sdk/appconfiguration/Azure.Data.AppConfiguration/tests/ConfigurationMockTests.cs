@@ -159,7 +159,17 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
             Assert.AreEqual(304, response.GetRawResponse().Status);
-            Assert.Throws<Exception>(() => { ConfigurationSetting setting = response.Value; });
+            bool throws = false;
+            try
+            {
+                ConfigurationSetting setting = response.Value;
+            }
+            catch
+            {
+                throws = true;
+            }
+
+            Assert.True(throws);
         }
 
         [Test]
