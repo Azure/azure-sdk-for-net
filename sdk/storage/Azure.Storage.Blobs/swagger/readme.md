@@ -570,6 +570,24 @@ directive:
     $.items = { "type": "string" };
 ```
 
+### RehydratePriority
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.RehydratePriority
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+```
+
+### ArchiveStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ArchiveStatus
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+```
+
 ### /{containerName}/{blob}?comp=metadata
 ``` yaml
 directive:
@@ -1219,3 +1237,12 @@ directive:
     $.StaticWebsite.xml = { "name": "StaticWebsite"};
     $.BlobServiceProperties.properties.StaticWebsite.xml = { "name": "StaticWebsite"};
  ```
+
+### Hide BlockListType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlockListType
+  transform: >
+    $["x-az-public"] = false;
+```

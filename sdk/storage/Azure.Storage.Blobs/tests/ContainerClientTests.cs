@@ -219,6 +219,43 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CreateIfNotExistsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await container.CreateIfNotExistsAsync();
+
+            // Assert
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.Properties.ETag);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            await container.CreateIfNotExistsAsync();
+
+            // Assert
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.Properties.ETag);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -291,6 +328,35 @@ namespace Azure.Storage.Blobs.Test
                         e => { });
                 }
             }
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            Response<bool> response = await container.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            Response<bool> response = await container.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
         }
 
         [Test]
@@ -1213,7 +1279,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeMetadata = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
 
                 // Assert
                 AssertMetadataEquality(metadata, blobs.First().Metadata);
@@ -1234,7 +1300,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1268,7 +1334,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Uncommitted).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1287,7 +1353,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
@@ -1304,7 +1370,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(prefix: "foo").ToListAsync();
 
                 // Assert
                 Assert.AreEqual(3, blobs.Count);
@@ -1356,7 +1422,7 @@ namespace Azure.Storage.Blobs.Test
                 var prefixes = new List<string>();
                 var delimiter = "/";
 
-                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter).AsPages())
+                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter: delimiter).AsPages())
                 {
                     blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
                     prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
@@ -1418,7 +1484,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeMetadata = true }).FirstAsync();
+                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
 
                 // Assert
                 AssertMetadataEquality(metadata, item.Blob.Metadata);
@@ -1439,7 +1505,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1473,7 +1539,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Uncommitted).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
@@ -1492,7 +1558,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
@@ -1509,7 +1575,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(prefix: "foo" ).ToListAsync();
 
 
                 // Assert
@@ -1560,6 +1626,66 @@ namespace Azure.Storage.Blobs.Test
                 Assert.ThrowsAsync<StorageRequestFailedException>(
                     async () => await blob.GetPropertiesAsync());
             }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var name = GetNewBlobName();
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+                using (var stream = new MemoryStream(GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                // Act
+                Response<bool> response= await container.DeleteBlobIfExistsAsync(name);
+
+                // Assert
+                Assert.IsTrue(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var name = GetNewBlobName();
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+                using (var stream = new MemoryStream(GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+                await container.DeleteBlobAsync(name);
+
+                //Act
+                Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
+
+                // Assert
+                Assert.IsFalse(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
         #region Secondary Storage

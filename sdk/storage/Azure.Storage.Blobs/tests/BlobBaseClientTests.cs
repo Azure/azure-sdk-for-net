@@ -758,25 +758,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task StartCopyFromUriAsync_RehydratePriorityFail()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                BlobBaseClient srcBlob = await GetNewBlobClient(container);
-                BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    destBlob.StartCopyFromUriAsync(
-                        srcBlob.Uri,
-                        accessTier: AccessTier.Archive,
-                        rehydratePriority: "None"),
-                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
-            }
-        }
-
-        [Test]
         public async Task StartCopyFromUriAsync_AccessTierFail()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1062,6 +1043,42 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.DeleteAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                BlobBaseClient blob = await GetNewBlobClient(container);
+
+                // Act
+                Response<bool> response = await blob.DeleteIfExistsAsync();
+
+                // Assert
+                Assert.IsTrue(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+                // Act
+                Response<bool> response = await blob.DeleteIfExistsAsync();
+
+                // Assert
+                Assert.IsFalse(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
             }
         }
 
@@ -2394,22 +2411,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
-            }
-        }
-
-        [Test]
-        public async Task SetTierAsync_RehydrateFail()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-
-                // arrange
-                BlobBaseClient blob = await GetNewBlobClient(container);
-                await blob.SetAccessTierAsync(AccessTier.Archive);
-
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetAccessTierAsync(accessTier: AccessTier.Cool, rehydratePriority: "None"),
-                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
 

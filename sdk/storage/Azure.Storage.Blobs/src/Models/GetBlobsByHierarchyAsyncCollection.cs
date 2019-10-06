@@ -11,17 +11,23 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsByHierarchyAsyncCollection : StorageCollectionEnumerator<BlobHierarchyItem>
     {
         private readonly BlobContainerClient _client;
-        private readonly GetBlobsOptions? _options;
+        private readonly BlobTraits _traits;
+        private readonly BlobStates _states;
         private readonly string _delimiter;
+        private readonly string _prefix;
 
         public GetBlobsByHierarchyAsyncCollection(
             BlobContainerClient client,
             string delimiter,
-            GetBlobsOptions? options)
+            BlobTraits traits,
+            BlobStates states,
+            string prefix)
         {
             _client = client;
             _delimiter = delimiter;
-            _options = options;
+            _traits = traits;
+            _states = states;
+            _prefix = prefix;
         }
 
         public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
@@ -33,7 +39,9 @@ namespace Azure.Storage.Blobs.Models
             Task<Response<BlobsHierarchySegment>> task = _client.GetBlobsByHierarchyInternal(
                 continuationToken,
                 _delimiter,
-                _options,
+                _traits,
+                _states,
+                _prefix,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);

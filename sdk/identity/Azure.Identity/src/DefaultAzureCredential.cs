@@ -67,7 +67,7 @@ namespace Azure.Identity
 
             if (options.IncludeInteractiveBrowserCredential)
             {
-                chain[i++] = new InteractiveBrowserCredential(null, options);
+                chain[i++] = new InteractiveBrowserCredential(null, null, options);
             }
 
             chain[i++] = new CredentialNotFoundGuard();

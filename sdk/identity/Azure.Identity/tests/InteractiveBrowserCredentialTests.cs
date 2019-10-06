@@ -11,7 +11,9 @@ namespace Azure.Identity.Tests
 {
     public class InteractiveBrowserCredentialTests
     {
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
+        private const string MultiTenantClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
+        private const string SingleTenantClientId = "9985250a-c1c3-4caf-a039-9d98f2a0707a";
+        private const string TenantId = "a7fc734e-9961-43ce-b4de-21b8b38403ba";
 
         [Test]
         [Ignore("This test is an integration test which can only be run with user interaction")]
@@ -37,6 +39,17 @@ namespace Azure.Identity.Tests
             cancelSource.Cancel();
 
             Assert.ThrowsAsync<OperationCanceledException>(async () => await getTokenTask.ConfigureAwait(false));
+        }
+
+        [Test]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task AuthenticateWithBrowserSingleTenantAsync()
+        {
+            var cred = new InteractiveBrowserCredential(SingleTenantClientId, TenantId);
+
+            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+
+            Assert.NotNull(token.Token);
         }
     }
 
