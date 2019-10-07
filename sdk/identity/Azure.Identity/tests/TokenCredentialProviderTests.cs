@@ -56,7 +56,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void CtorInvalidInput()
         {
-            Assert.Throws<ArgumentNullException>(() => new ChainedTokenCredential(null));
+            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential(null));
 
             Assert.Throws<ArgumentException>(() => new ChainedTokenCredential((TokenCredential)null));
 

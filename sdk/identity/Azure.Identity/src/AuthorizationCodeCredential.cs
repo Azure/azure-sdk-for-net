@@ -51,7 +51,7 @@ namespace Azure.Identity
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
         /// See https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, IdentityClientOptions options)
+        public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, AzureCredentialOptions options)
         {
             if (tenantId is null) throw new ArgumentNullException(nameof(tenantId));
             if (clientId is null) throw new ArgumentNullException(nameof(clientId));
@@ -59,7 +59,7 @@ namespace Azure.Identity
 
             _authCode = authorizationCode ?? throw new ArgumentNullException(nameof(authorizationCode));
 
-            options ??= new IdentityClientOptions();
+            options ??= new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(options);
 

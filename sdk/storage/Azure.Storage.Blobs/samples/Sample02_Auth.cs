@@ -198,7 +198,7 @@ namespace Azure.Storage.Blobs.Samples
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,
                     ActiveDirectoryApplicationSecret,
-                    new IdentityClientOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    new AzureCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
