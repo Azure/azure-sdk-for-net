@@ -4,10 +4,8 @@
     <PackageReference Update="Microsoft.AspNetCore.WebUtilities" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard1.4' ">
-  <PackageReference Update="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Update="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
-
- 
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
@@ -101,7 +99,7 @@
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />     
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
