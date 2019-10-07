@@ -12907,12 +12907,33 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.BlobAnalyticsLogging FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobAnalyticsLogging _value = new Azure.Storage.Blobs.Models.BlobAnalyticsLogging(true);
-            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
-            _value.Delete = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Delete", "")).Value);
-            _value.Read = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Read", "")).Value);
-            _value.Write = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Write", "")).Value);
-            _value.RetentionPolicy = Azure.Storage.Blobs.Models.BlobRetentionPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", "")));
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Delete", ""));
+            if (_child != null)
+            {
+                _value.Delete = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Read", ""));
+            if (_child != null)
+            {
+                _value.Read = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Write", ""));
+            if (_child != null)
+            {
+                _value.Write = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
+            if (_child != null)
+            {
+                _value.RetentionPolicy = Azure.Storage.Blobs.Models.BlobRetentionPolicy.FromXml(_child);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -13696,12 +13717,33 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.BlobCorsRule FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobCorsRule _value = new Azure.Storage.Blobs.Models.BlobCorsRule();
-            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
-            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
-            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
-            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
-            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", ""));
+            if (_child != null)
+            {
+                _value.AllowedOrigins = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", ""));
+            if (_child != null)
+            {
+                _value.AllowedMethods = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", ""));
+            if (_child != null)
+            {
+                _value.AllowedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", ""));
+            if (_child != null)
+            {
+                _value.ExposedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""));
+            if (_child != null)
+            {
+                _value.MaxAgeInSeconds = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -15041,7 +15083,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Version = _child.Value;
             }
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
             if (_child != null)
             {
@@ -15088,8 +15134,13 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.BlobPrefix FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobPrefix _value = new Azure.Storage.Blobs.Models.BlobPrefix();
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -15421,7 +15472,11 @@ namespace Azure.Storage.Blobs.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobRetentionPolicy _value = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
             if (_child != null)
             {
@@ -15819,7 +15874,11 @@ namespace Azure.Storage.Blobs.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobStaticWebsite _value = new Azure.Storage.Blobs.Models.BlobStaticWebsite();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("IndexDocument", ""));
             if (_child != null)
             {

@@ -2862,12 +2862,33 @@ namespace Azure.Storage.Queues.Models
         internal static Azure.Storage.Queues.Models.PeekedMessage FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.PeekedMessage _value = new Azure.Storage.Queues.Models.PeekedMessage();
-            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
-            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.DequeueCount = long.Parse(element.Element(System.Xml.Linq.XName.Get("DequeueCount", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.MessageText = element.Element(System.Xml.Linq.XName.Get("MessageText", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
+            if (_child != null)
+            {
+                _value.MessageId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
+            if (_child != null)
+            {
+                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
+            if (_child != null)
+            {
+                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
+            if (_child != null)
+            {
+                _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
+            if (_child != null)
+            {
+                _value.MessageText = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -2997,12 +3018,33 @@ namespace Azure.Storage.Queues.Models
         internal static Azure.Storage.Queues.Models.QueueAnalyticsLogging FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.QueueAnalyticsLogging _value = new Azure.Storage.Queues.Models.QueueAnalyticsLogging(true);
-            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
-            _value.Delete = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Delete", "")).Value);
-            _value.Read = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Read", "")).Value);
-            _value.Write = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Write", "")).Value);
-            _value.RetentionPolicy = Azure.Storage.Queues.Models.RetentionPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", "")));
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Delete", ""));
+            if (_child != null)
+            {
+                _value.Delete = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Read", ""));
+            if (_child != null)
+            {
+                _value.Read = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Write", ""));
+            if (_child != null)
+            {
+                _value.Write = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
+            if (_child != null)
+            {
+                _value.RetentionPolicy = Azure.Storage.Queues.Models.RetentionPolicy.FromXml(_child);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -3088,12 +3130,33 @@ namespace Azure.Storage.Queues.Models
         internal static Azure.Storage.Queues.Models.QueueCorsRule FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.QueueCorsRule _value = new Azure.Storage.Queues.Models.QueueCorsRule();
-            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
-            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
-            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
-            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
-            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", ""));
+            if (_child != null)
+            {
+                _value.AllowedOrigins = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", ""));
+            if (_child != null)
+            {
+                _value.AllowedMethods = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", ""));
+            if (_child != null)
+            {
+                _value.AllowedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", ""));
+            if (_child != null)
+            {
+                _value.ExposedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""));
+            if (_child != null)
+            {
+                _value.MaxAgeInSeconds = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -3700,7 +3763,11 @@ namespace Azure.Storage.Queues.Models
             {
                 _value.Version = _child.Value;
             }
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
             if (_child != null)
             {
