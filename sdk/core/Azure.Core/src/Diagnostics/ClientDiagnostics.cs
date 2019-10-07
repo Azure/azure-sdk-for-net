@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Diagnostics
 {
     public sealed class ClientDiagnostics
     {

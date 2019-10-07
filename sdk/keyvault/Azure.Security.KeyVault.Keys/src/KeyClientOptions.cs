@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {

@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     public abstract class ClientOptions
     {

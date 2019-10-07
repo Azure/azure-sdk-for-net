@@ -4,6 +4,7 @@
 // This file was automatically generated.  Do not edit.
 
 using Azure.Core;
+using Azure.Core.Diagnostics;
 
 #pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
@@ -45,7 +46,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -177,7 +178,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -308,7 +309,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ServiceClient.ListSharesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -458,7 +459,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -562,7 +563,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -605,7 +606,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -708,7 +709,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -757,7 +758,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -884,7 +885,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -989,7 +990,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1032,7 +1033,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.CreatePermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1176,7 +1177,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetPermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1312,7 +1313,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1408,7 +1409,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1451,7 +1452,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1552,7 +1553,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1593,7 +1594,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1722,7 +1723,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1831,7 +1832,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1872,7 +1873,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2015,7 +2016,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2147,7 +2148,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2218,7 +2219,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2321,7 +2322,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2394,7 +2395,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2521,7 +2522,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2645,7 +2646,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2716,7 +2717,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2817,7 +2818,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2866,7 +2867,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3013,7 +3014,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3163,7 +3164,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3353,7 +3354,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3523,7 +3524,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -3600,7 +3601,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3729,7 +3730,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3853,7 +3854,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3976,7 +3977,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4094,7 +4095,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -4213,7 +4214,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4353,7 +4354,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4514,7 +4515,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4589,7 +4590,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4689,7 +4690,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
@@ -4744,7 +4745,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.UploadRange",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4861,7 +4862,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4924,7 +4925,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.UploadRangeFromURL",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5052,7 +5053,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5105,7 +5106,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.GetRangeList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5214,7 +5215,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-content-length", out _header))
                         {
@@ -5259,7 +5260,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.StartCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5366,7 +5367,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5417,7 +5418,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.AbortCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5549,7 +5550,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5689,7 +5690,7 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -6099,7 +6100,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the directory was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -7188,7 +7189,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the file has an MD5 hash and the request is to read the full file, this response header is returned so that the client can check for message content integrity. If the request is to read a specified range and the 'x-ms-range-get-content-md5' is set to true, then the request returns an MD5 hash for the range, as long as the range size is less than or equal to 4 MB. If neither of these sets of conditions is true, then no value is returned for the 'Content-MD5' header.
@@ -7482,7 +7483,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
@@ -7549,7 +7550,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the Directory was last modified. Operations on files within the directory do not affect the last modified time of the directory.
@@ -7618,7 +7619,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
@@ -7710,7 +7711,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the Content-MD5 header has been set for the file, the Content-MD5 response header is returned so that the client can check for message content integrity.
@@ -7907,7 +7908,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the share, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -7930,7 +7931,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new ShareInfo instance for mocking.
         /// </summary>
         public static ShareInfo ShareInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified)
         {
             return new ShareInfo()
@@ -8067,7 +8068,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Etag
         /// </summary>
-        public Azure.Core.Http.ETag? Etag { get; internal set; }
+        public ETag? Etag { get; internal set; }
 
         /// <summary>
         /// Quota
@@ -8098,7 +8099,7 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
-                _value.Etag = new Azure.Core.Http.ETag(_child.Value);
+                _value.Etag = new ETag(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
@@ -8122,7 +8123,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareItemProperties ShareItemProperties(
             System.DateTimeOffset? lastModified = default,
-            Azure.Core.Http.ETag? etag = default,
+            ETag? etag = default,
             int? quota = default)
         {
             return new ShareItemProperties()
@@ -8152,7 +8153,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -8183,7 +8184,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareProperties ShareProperties(
             System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             int quota)
         {
@@ -8215,7 +8216,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the share snapshot, in quotes. A share snapshot cannot be modified, so the ETag of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the ETag of the share snapshot differs from that of the base share. If no metadata was specified with the request, the ETag of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. A share snapshot cannot be modified, so the last modified time of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the last modified time of the share snapshot differs from that of the base share. If no metadata was specified with the request, the last modified time of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
@@ -8239,7 +8240,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareSnapshotInfo ShareSnapshotInfo(
             string snapshot,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified)
         {
             return new ShareSnapshotInfo()
@@ -8610,7 +8611,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// If the copy is completed, contains the ETag of the destination file. If the copy is not complete, contains the ETag of the empty file created at the start of the copy.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date/time that the copy operation to the destination file completed.
@@ -8643,7 +8644,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new StorageFileCopyInfo instance for mocking.
         /// </summary>
         public static StorageFileCopyInfo StorageFileCopyInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             string copyId,
             Azure.Storage.Files.Models.CopyStatus copyStatus)
@@ -8676,7 +8677,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The size of the file in bytes.
@@ -8707,7 +8708,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageFileRangeInfo StorageFileRangeInfo(
             System.DateTimeOffset lastModified,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             long fileContentLength,
             System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> ranges)
         {
@@ -8734,7 +8735,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the directory was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -8769,7 +8770,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new StorageFileUploadInfo instance for mocking.
         /// </summary>
         public static StorageFileUploadInfo StorageFileUploadInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             bool isServerEncrypted)

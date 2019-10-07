@@ -4,6 +4,7 @@
 // This file was automatically generated.  Do not edit.
 
 using Azure.Core;
+using Azure.Core.Diagnostics;
 
 #pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
@@ -47,7 +48,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -185,7 +186,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -314,7 +315,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -451,7 +452,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.ListBlobContainersSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -597,7 +598,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetUserDelegationKey",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -736,7 +737,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetAccountInfo",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -875,7 +876,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SubmitBatch",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1044,7 +1045,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1152,7 +1153,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1197,7 +1198,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1304,7 +1305,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1377,7 +1378,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1518,7 +1519,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1631,7 +1632,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1676,7 +1677,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1786,7 +1787,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1839,7 +1840,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1968,7 +1969,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2019,7 +2020,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2132,7 +2133,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2185,7 +2186,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2298,7 +2299,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2347,7 +2348,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2460,7 +2461,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2513,7 +2514,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2622,7 +2623,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2677,7 +2678,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2798,7 +2799,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2853,7 +2854,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsFlatSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3008,7 +3009,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsHierarchySegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3182,14 +3183,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3275,8 +3276,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -3366,7 +3367,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3490,7 +3491,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3642,14 +3643,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3724,8 +3725,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -3851,7 +3852,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3973,14 +3974,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.DeleteSnapshotsOption? deleteSnapshots = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4049,8 +4050,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.DeleteSnapshotsOption? deleteSnapshots = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4139,8 +4140,8 @@ namespace Azure.Storage.Blobs
                 string group = default,
                 string posixPermissions = default,
                 string posixAcl = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
@@ -4148,7 +4149,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4221,8 +4222,8 @@ namespace Azure.Storage.Blobs
                 string group = default,
                 string posixPermissions = default,
                 string posixAcl = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -4279,7 +4280,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4325,8 +4326,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 bool? upn = default,
                 string leaseId = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
@@ -4334,7 +4335,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4398,8 +4399,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 bool? upn = default,
                 string leaseId = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -4457,7 +4458,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4545,18 +4546,18 @@ namespace Azure.Storage.Blobs
                 string sourceLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4660,12 +4661,12 @@ namespace Azure.Storage.Blobs
                 string sourceLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4734,7 +4735,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4781,7 +4782,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.Undelete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4918,15 +4919,15 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string blobContentDisposition = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetHttpHeaders",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5006,8 +5007,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string blobContentDisposition = default,
                 string requestId = default)
             {
@@ -5075,7 +5076,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5133,14 +5134,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5215,8 +5216,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -5276,7 +5277,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5332,14 +5333,14 @@ namespace Azure.Storage.Blobs
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5405,8 +5406,8 @@ namespace Azure.Storage.Blobs
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -5459,7 +5460,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5509,14 +5510,14 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5579,8 +5580,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -5636,7 +5637,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5682,14 +5683,14 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5752,8 +5753,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -5809,7 +5810,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5861,14 +5862,14 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5934,8 +5935,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -5996,7 +5997,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6046,14 +6047,14 @@ namespace Azure.Storage.Blobs
                 long? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -6116,8 +6117,8 @@ namespace Azure.Storage.Blobs
                 long? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -6169,7 +6170,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6226,15 +6227,15 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -6308,8 +6309,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -6374,7 +6375,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6435,19 +6436,19 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.StartCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -6529,12 +6530,12 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -6602,7 +6603,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6665,19 +6666,19 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.CopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -6756,12 +6757,12 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -6829,7 +6830,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6884,7 +6885,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.AbortCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -7026,7 +7027,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -7203,15 +7204,15 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -7315,8 +7316,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default)
             {
@@ -7397,7 +7398,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7477,14 +7478,14 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -7580,8 +7581,8 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -7646,7 +7647,7 @@ namespace Azure.Storage.Blobs
 
                         // Get response headers
                         string _header;
-                        Azure.Core.Http.ETag eTag = default;
+                        ETag eTag = default;
                         System.DateTimeOffset lastModified = default;
                         byte[] contentHash = default;
                         byte[] contentCrc64 = default;
@@ -7654,7 +7655,7 @@ namespace Azure.Storage.Blobs
                         string encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            eTag = new Azure.Core.Http.ETag(_header);
+                            eTag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7734,14 +7735,14 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.ClearPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -7828,8 +7829,8 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -7885,7 +7886,7 @@ namespace Azure.Storage.Blobs
 
                         // Get response headers
                         string _header;
-                        Azure.Core.Http.ETag eTag = default;
+                        ETag eTag = default;
                         System.DateTimeOffset lastModified = default;
                         byte[] contentHash = default;
                         byte[] contentCrc64 = default;
@@ -7893,7 +7894,7 @@ namespace Azure.Storage.Blobs
                         string encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            eTag = new Azure.Core.Http.ETag(_header);
+                            eTag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7985,18 +7986,18 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPagesFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -8103,12 +8104,12 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8184,7 +8185,7 @@ namespace Azure.Storage.Blobs
 
                         // Get response headers
                         string _header;
-                        Azure.Core.Http.ETag eTag = default;
+                        ETag eTag = default;
                         System.DateTimeOffset lastModified = default;
                         byte[] contentHash = default;
                         byte[] contentCrc64 = default;
@@ -8192,7 +8193,7 @@ namespace Azure.Storage.Blobs
                         string encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            eTag = new Azure.Core.Http.ETag(_header);
+                            eTag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -8274,14 +8275,14 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRanges",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -8350,8 +8351,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8410,7 +8411,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-content-length", out _header))
                         {
@@ -8476,14 +8477,14 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRangesDiff",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -8555,8 +8556,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8616,7 +8617,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-content-length", out _header))
                         {
@@ -8684,14 +8685,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Resize",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -8766,8 +8767,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8822,7 +8823,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -8875,15 +8876,15 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UpdateSequenceNumber",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -8951,8 +8952,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default)
             {
@@ -9006,7 +9007,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -9056,14 +9057,14 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.CopyIncremental",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -9126,8 +9127,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -9182,7 +9183,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -9266,14 +9267,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -9369,8 +9370,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -9447,7 +9448,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -9523,14 +9524,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -9620,8 +9621,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -9687,7 +9688,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -9783,18 +9784,18 @@ namespace Azure.Storage.Blobs
                 long? appendPosition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -9898,12 +9899,12 @@ namespace Azure.Storage.Blobs
                 long? appendPosition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -9973,7 +9974,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -10091,14 +10092,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.Upload",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -10200,8 +10201,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -10286,7 +10287,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -10359,7 +10360,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -10568,14 +10569,14 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -10665,8 +10666,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -10826,14 +10827,14 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.CommitBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -10938,8 +10939,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -11029,7 +11030,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -11090,7 +11091,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.GetBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -11203,7 +11204,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-Type", out _header))
                         {
@@ -11277,14 +11278,14 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -11371,8 +11372,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -11431,7 +11432,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -11509,18 +11510,18 @@ namespace Azure.Storage.Blobs
                 string sourceLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -11627,12 +11628,12 @@ namespace Azure.Storage.Blobs
                 string sourceLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.Core.Http.ETag? sourceIfMatch = default,
-                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
+                ETag? sourceIfMatch = default,
+                ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -11706,7 +11707,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -11760,14 +11761,14 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -11836,8 +11837,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -11941,8 +11942,8 @@ namespace Azure.Storage.Blobs
                 string group = default,
                 string posixPermissions = default,
                 string posixAcl = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
@@ -11950,7 +11951,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -12023,8 +12024,8 @@ namespace Azure.Storage.Blobs
                 string group = default,
                 string posixPermissions = default,
                 string posixAcl = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -12081,7 +12082,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -12127,8 +12128,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 bool? upn = default,
                 string leaseId = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
@@ -12136,7 +12137,7 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -12200,8 +12201,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 bool? upn = default,
                 string leaseId = default,
-                Azure.Core.Http.ETag? ifMatch = default,
-                Azure.Core.Http.ETag? ifNoneMatch = default,
+                ETag? ifMatch = default,
+                ETag? ifNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -12259,7 +12260,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            _value.ETag = new ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -12707,7 +12708,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
@@ -12754,7 +12755,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified.  Write operations on the file or directory update the last modified time.
@@ -12786,7 +12787,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
@@ -12922,7 +12923,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -12979,7 +12980,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobAppendInfo instance for mocking.
         /// </summary>
         public static BlobAppendInfo BlobAppendInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             byte[] contentCrc64,
@@ -13020,7 +13021,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13051,7 +13052,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobContainerAccessPolicy BlobContainerAccessPolicy(
             Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
         {
@@ -13078,7 +13079,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13101,7 +13102,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerInfo instance for mocking.
         /// </summary>
         public static BlobContainerInfo BlobContainerInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified)
         {
             return new BlobContainerInfo()
@@ -13256,7 +13257,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// ETag
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of BlobContainerProperties instances.
@@ -13305,7 +13306,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.HasLegalHold = bool.Parse(_child.Value);
             }
-            _value.ETag = new Azure.Core.Http.ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
+            _value.ETag = new ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -13323,7 +13324,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobContainerProperties BlobContainerProperties(
             System.DateTimeOffset lastModified,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
@@ -13464,7 +13465,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13504,7 +13505,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
         public static BlobContentInfo BlobContentInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             string encryptionKeySha256,
@@ -13534,7 +13535,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13567,7 +13568,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobCopyInfo instance for mocking.
         /// </summary>
         public static BlobCopyInfo BlobCopyInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             string copyId,
             Azure.Storage.Blobs.Models.CopyStatus copyStatus)
@@ -14318,7 +14319,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14341,7 +14342,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobInfo instance for mocking.
         /// </summary>
         public static BlobInfo BlobInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified)
         {
             return new BlobInfo()
@@ -14637,7 +14638,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// ETag
         /// </summary>
-        public Azure.Core.Http.ETag? ETag { get; internal set; }
+        public ETag? ETag { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of BlobItemProperties instances.
@@ -14808,7 +14809,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
-                _value.ETag = new Azure.Core.Http.ETag(_child.Value);
+                _value.ETag = new ETag(_child.Value);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -14856,7 +14857,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             System.DateTimeOffset? accessTierChangeTime = default,
-            Azure.Core.Http.ETag? eTag = default)
+            ETag? eTag = default)
         {
             return new BlobItemProperties()
             {
@@ -15151,7 +15152,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
@@ -15251,7 +15252,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
             string destinationSnapshot,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             byte[] contentHash,
             System.Collections.Generic.IEnumerable<string> contentEncoding,
             string contentDisposition,
@@ -15660,7 +15661,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -15689,7 +15690,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobSnapshotInfo BlobSnapshotInfo(
             string snapshot,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             bool isServerEncrypted)
         {
@@ -16436,7 +16437,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -16727,7 +16728,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
@@ -16781,7 +16782,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
@@ -16833,7 +16834,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
@@ -16865,7 +16866,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
@@ -16913,7 +16914,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -16997,7 +16998,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
@@ -17270,7 +17271,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The media type of the body of the response. For Get Block List this is 'application/xml'
@@ -17359,7 +17360,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -17387,7 +17388,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new Lease instance for mocking.
         /// </summary>
         public static Lease Lease(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             string leaseId)
         {
@@ -17700,7 +17701,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -17728,7 +17729,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageBlobInfo instance for mocking.
         /// </summary>
         public static PageBlobInfo PageBlobInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             long blobSequenceNumber)
         {
@@ -17754,7 +17755,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; }
+        public ETag ETag { get; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -17790,7 +17791,7 @@ namespace Azure.Storage.Blobs.Models
         /// You can use BlobsModelFactory.PageInfo instead.
         /// </summary>
         internal PageInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             byte[] contentCrc64,
@@ -17879,7 +17880,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageInfo instance for mocking.
         /// </summary>
         public static PageInfo PageInfo(
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             byte[] contentCrc64,
@@ -18100,7 +18101,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The size of the blob in bytes.
@@ -18131,7 +18132,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static PageRangesInfo PageRangesInfo(
             System.DateTimeOffset lastModified,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             long blobContentLength,
             Azure.Storage.Blobs.Models.PageList body)
         {
@@ -18390,7 +18391,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -18422,7 +18423,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.

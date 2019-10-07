@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// The <see cref="Core.Http.ETag"/> contains a value that you can use to
+        /// The <see cref="Azure.ETag"/> contains a value that you can use to
         /// perform operations conditionally. If the request version is
         /// 2011-08-18 or newer, the  ETag value will be in quotes.
         /// </summary>
