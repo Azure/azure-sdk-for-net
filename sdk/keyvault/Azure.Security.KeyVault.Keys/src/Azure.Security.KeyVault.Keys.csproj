@@ -7,7 +7,13 @@
     <PackageTags>Microsoft Azure Key Vault Keys</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Minor updates and bug fixes
+      Several classes have been refactored based on feedback, including:
+      * KeyBase is now KeyProperties.
+      * Key contains a Properties property of type KeyProperties.
+      * Enumeration members have been renamed to reflect general naming guidelines consistent with .NET.
+      * Enumerations have been changed to structures to allow additions by the server to support new algorithms.
+
+      See https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/ChangeLog.md for more details.
       ]]>
     </PackageReleaseNotes>
 
