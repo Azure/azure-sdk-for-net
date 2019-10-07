@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.4
+## 4.0.0-preview.5 (2019-10-07)
 
 ### Breaking changes
 
