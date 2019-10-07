@@ -11,7 +11,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies the preferred authentication account in the case multiple accounts are found.
         /// </summary>
-        public string Username { get; set; }
+        public string PreferredAccountUsername { get; set; }
 
         /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
@@ -36,6 +36,6 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies whether the InteractiveBrowserCredential will be included to potentially get tokens by launching the system default browser to enable a user to log in.
         /// </summary>
-        public bool IncludeInteractiveBrowserCredential { get; set; } = true;
+        public bool IncludeInteractiveBrowserCredential { get; set; } = false;
     }
 }
