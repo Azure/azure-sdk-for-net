@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     public sealed class HttpPipelineMessage: IDisposable
     {

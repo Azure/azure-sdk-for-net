@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blobServiceProperties,
@@ -96,7 +96,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
+            internal static HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -232,7 +232,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -320,7 +320,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -361,7 +361,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetStatisticsAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
+            internal static HttpPipelineMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -457,7 +457,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListBlobContainersSegmentAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ListBlobContainersSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -506,7 +506,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.ListBlobContainersSegmentAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ListBlobContainersSegmentAsync_CreateMessage(
+            internal static HttpPipelineMessage ListBlobContainersSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -523,7 +523,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -603,7 +603,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetUserDelegationKeyAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetUserDelegationKeyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         keyInfo,
@@ -646,7 +646,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetUserDelegationKeyAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetUserDelegationKeyAsync_CreateMessage(
+            internal static HttpPipelineMessage GetUserDelegationKeyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
@@ -664,7 +664,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -742,7 +742,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccountInfoAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetAccountInfoAsync_CreateMessage(
                         pipeline,
                         resourceUri))
                     {
@@ -779,7 +779,7 @@ namespace Azure.Storage.Blobs
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <returns>The Service.GetAccountInfoAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccountInfoAsync_CreateMessage(
+            internal static HttpPipelineMessage GetAccountInfoAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri)
             {
@@ -790,7 +790,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -881,7 +881,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SubmitBatchAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SubmitBatchAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -928,7 +928,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SubmitBatchAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SubmitBatchAsync_CreateMessage(
+            internal static HttpPipelineMessage SubmitBatchAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -952,7 +952,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1050,7 +1050,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         access,
@@ -1095,7 +1095,7 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.CreateAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1110,7 +1110,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1203,7 +1203,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1246,7 +1246,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1260,7 +1260,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1383,7 +1383,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1430,7 +1430,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.DeleteAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1446,7 +1446,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1524,7 +1524,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1571,7 +1571,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1587,7 +1587,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1682,7 +1682,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1725,7 +1725,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.GetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
+            internal static HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1739,7 +1739,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1845,7 +1845,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         access,
@@ -1896,7 +1896,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.SetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
+            internal static HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1914,7 +1914,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2025,7 +2025,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = AcquireLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = AcquireLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -2074,7 +2074,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.AcquireLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage AcquireLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage AcquireLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2091,7 +2091,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2191,7 +2191,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ReleaseLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ReleaseLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -2238,7 +2238,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ReleaseLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ReleaseLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage ReleaseLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2258,7 +2258,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2353,7 +2353,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = RenewLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = RenewLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -2400,7 +2400,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.RenewLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage RenewLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage RenewLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2420,7 +2420,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2519,7 +2519,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = BreakLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = BreakLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -2566,7 +2566,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.BreakLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage BreakLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage BreakLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2582,7 +2582,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2683,7 +2683,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ChangeLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ChangeLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -2732,7 +2732,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ChangeLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ChangeLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage ChangeLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2757,7 +2757,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2859,7 +2859,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListBlobsFlatSegmentAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ListBlobsFlatSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -2908,7 +2908,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ListBlobsFlatSegmentAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ListBlobsFlatSegmentAsync_CreateMessage(
+            internal static HttpPipelineMessage ListBlobsFlatSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2925,7 +2925,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3014,7 +3014,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListBlobsHierarchySegmentAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ListBlobsHierarchySegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -3065,7 +3065,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ListBlobsHierarchySegmentAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ListBlobsHierarchySegmentAsync_CreateMessage(
+            internal static HttpPipelineMessage ListBlobsHierarchySegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -3083,7 +3083,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3195,7 +3195,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DownloadAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = DownloadAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -3262,7 +3262,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.DownloadAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DownloadAsync_CreateMessage(
+            internal static HttpPipelineMessage DownloadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3287,7 +3287,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3655,7 +3655,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -3714,7 +3714,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3736,7 +3736,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3986,7 +3986,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -4041,7 +4041,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.DeleteAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -4061,7 +4061,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4154,7 +4154,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessControlAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4213,7 +4213,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetAccessControlAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessControlAsync_CreateMessage(
+            internal static HttpPipelineMessage SetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4235,7 +4235,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4340,7 +4340,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessControlAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4393,7 +4393,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.GetAccessControlAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessControlAsync_CreateMessage(
+            internal static HttpPipelineMessage GetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4412,7 +4412,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4562,7 +4562,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = RenameAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = RenameAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         renameSource,
@@ -4643,7 +4643,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.RenameAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage RenameAsync_CreateMessage(
+            internal static HttpPipelineMessage RenameAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -4680,7 +4680,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4787,7 +4787,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UndeleteAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = UndeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4828,7 +4828,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.UndeleteAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage UndeleteAsync_CreateMessage(
+            internal static HttpPipelineMessage UndeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4841,7 +4841,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4932,7 +4932,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetHttpHeadersAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetHttpHeadersAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4995,7 +4995,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetHttpHeadersAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetHttpHeadersAsync_CreateMessage(
+            internal static HttpPipelineMessage SetHttpHeadersAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5019,7 +5019,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5146,7 +5146,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -5205,7 +5205,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5227,7 +5227,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5345,7 +5345,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = AcquireLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = AcquireLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -5398,7 +5398,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.AcquireLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage AcquireLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage AcquireLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5417,7 +5417,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5522,7 +5522,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ReleaseLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ReleaseLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -5573,7 +5573,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.ReleaseLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ReleaseLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage ReleaseLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5595,7 +5595,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5695,7 +5695,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = RenewLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = RenewLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -5746,7 +5746,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.RenewLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage RenewLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage RenewLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5768,7 +5768,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5874,7 +5874,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ChangeLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ChangeLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -5927,7 +5927,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.ChangeLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ChangeLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage ChangeLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5954,7 +5954,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6059,7 +6059,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = BreakLeaseAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = BreakLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -6110,7 +6110,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.BreakLeaseAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage BreakLeaseAsync_CreateMessage(
+            internal static HttpPipelineMessage BreakLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6128,7 +6128,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6240,7 +6240,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateSnapshotAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CreateSnapshotAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -6299,7 +6299,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.CreateSnapshotAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateSnapshotAsync_CreateMessage(
+            internal static HttpPipelineMessage CreateSnapshotAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6321,7 +6321,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6453,7 +6453,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = StartCopyFromUriAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = StartCopyFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -6520,7 +6520,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage StartCopyFromUriAsync_CreateMessage(
+            internal static HttpPipelineMessage StartCopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6550,7 +6550,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6683,7 +6683,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CopyFromUriAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CopyFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -6748,7 +6748,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.CopyFromUriAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CopyFromUriAsync_CreateMessage(
+            internal static HttpPipelineMessage CopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6777,7 +6777,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6890,7 +6890,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = AbortCopyFromUriAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = AbortCopyFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copyId,
@@ -6935,7 +6935,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.AbortCopyFromUriAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage AbortCopyFromUriAsync_CreateMessage(
+            internal static HttpPipelineMessage AbortCopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -6954,7 +6954,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7032,7 +7032,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessTierAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetAccessTierAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         tier,
@@ -7079,7 +7079,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Blob.SetAccessTierAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessTierAsync_CreateMessage(
+            internal static HttpPipelineMessage SetAccessTierAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7095,7 +7095,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7217,7 +7217,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         contentLength,
@@ -7296,7 +7296,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CreateAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7328,7 +7328,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7490,7 +7490,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UploadPagesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = UploadPagesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -7563,7 +7563,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UploadPagesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage UploadPagesAsync_CreateMessage(
+            internal static HttpPipelineMessage UploadPagesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -7596,7 +7596,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7747,7 +7747,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ClearPagesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ClearPagesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         contentLength,
@@ -7814,7 +7814,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ClearPagesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ClearPagesAsync_CreateMessage(
+            internal static HttpPipelineMessage ClearPagesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7840,7 +7840,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8002,7 +8002,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UploadPagesFromUriAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = UploadPagesFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sourceUri,
@@ -8085,7 +8085,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UploadPagesFromUriAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage UploadPagesFromUriAsync_CreateMessage(
+            internal static HttpPipelineMessage UploadPagesFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -8131,7 +8131,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8287,7 +8287,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPageRangesAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetPageRangesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -8342,7 +8342,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.GetPageRangesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPageRangesAsync_CreateMessage(
+            internal static HttpPipelineMessage GetPageRangesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8362,7 +8362,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8489,7 +8489,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPageRangesDiffAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetPageRangesDiffAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -8546,7 +8546,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.GetPageRangesDiffAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPageRangesDiffAsync_CreateMessage(
+            internal static HttpPipelineMessage GetPageRangesDiffAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8567,7 +8567,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8697,7 +8697,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ResizeAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = ResizeAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blobContentLength,
@@ -8756,7 +8756,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ResizeAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ResizeAsync_CreateMessage(
+            internal static HttpPipelineMessage ResizeAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -8778,7 +8778,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8889,7 +8889,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UpdateSequenceNumberAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = UpdateSequenceNumberAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sequenceNumberAction,
@@ -8944,7 +8944,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage UpdateSequenceNumberAsync_CreateMessage(
+            internal static HttpPipelineMessage UpdateSequenceNumberAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -8964,7 +8964,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9069,7 +9069,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CopyIncrementalAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CopyIncrementalAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -9120,7 +9120,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CopyIncrementalAsync_CreateMessage(
+            internal static HttpPipelineMessage CopyIncrementalAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -9142,7 +9142,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9279,7 +9279,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         contentLength,
@@ -9352,7 +9352,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.CreateAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -9381,7 +9381,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9536,7 +9536,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = AppendBlockAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = AppendBlockAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -9605,7 +9605,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.AppendBlockAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage AppendBlockAsync_CreateMessage(
+            internal static HttpPipelineMessage AppendBlockAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -9636,7 +9636,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9800,7 +9800,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = AppendBlockFromUriAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = AppendBlockFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sourceUri,
@@ -9881,7 +9881,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.AppendBlockFromUriAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage AppendBlockFromUriAsync_CreateMessage(
+            internal static HttpPipelineMessage AppendBlockFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -9918,7 +9918,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10104,7 +10104,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UploadAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = UploadAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -10181,7 +10181,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.UploadAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage UploadAsync_CreateMessage(
+            internal static HttpPipelineMessage UploadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -10216,7 +10216,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10365,7 +10365,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = StageBlockAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = StageBlockAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blockId,
@@ -10424,7 +10424,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage StageBlockAsync_CreateMessage(
+            internal static HttpPipelineMessage StageBlockAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10454,7 +10454,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10581,7 +10581,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = StageBlockFromUriAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = StageBlockFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blockId,
@@ -10650,7 +10650,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockFromUriAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage StageBlockFromUriAsync_CreateMessage(
+            internal static HttpPipelineMessage StageBlockFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10685,7 +10685,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10839,7 +10839,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CommitBlockListAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CommitBlockListAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blocks,
@@ -10918,7 +10918,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CommitBlockListAsync_CreateMessage(
+            internal static HttpPipelineMessage CommitBlockListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockLookupList blocks,
@@ -10954,7 +10954,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11096,7 +11096,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetBlockListAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetBlockListAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         listType,
@@ -11143,7 +11143,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.GetBlockListAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetBlockListAsync_CreateMessage(
+            internal static HttpPipelineMessage GetBlockListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockListType listType,
@@ -11159,7 +11159,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11290,7 +11290,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -11357,7 +11357,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.CreateAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11383,7 +11383,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11526,7 +11526,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = RenameAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = RenameAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         renameSource,
@@ -11609,7 +11609,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.RenameAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage RenameAsync_CreateMessage(
+            internal static HttpPipelineMessage RenameAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -11647,7 +11647,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11773,7 +11773,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         recursiveDirectoryDelete,
@@ -11828,7 +11828,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.DeleteAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool recursiveDirectoryDelete,
@@ -11848,7 +11848,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11956,7 +11956,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessControlAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = SetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -12015,7 +12015,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.SetAccessControlAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessControlAsync_CreateMessage(
+            internal static HttpPipelineMessage SetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -12037,7 +12037,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
@@ -12142,7 +12142,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessControlAsync_CreateMessage(
+                    using (HttpPipelineMessage _message = GetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -12195,7 +12195,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.GetAccessControlAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessControlAsync_CreateMessage(
+            internal static HttpPipelineMessage GetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -12214,7 +12214,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
+                HttpPipelineMessage _message = pipeline.CreateMessage();
                 Request _request = _message.Request;
 
                 // Set the endpoint
