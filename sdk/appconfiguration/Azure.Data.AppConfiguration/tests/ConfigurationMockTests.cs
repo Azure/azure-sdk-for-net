@@ -208,7 +208,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions { IfMatch = new ETag("v1") };
+            var requestOptions = new MatchConditions { IfMatch = new ETag("v1") };
 
             ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label, default, requestOptions);
 
@@ -361,7 +361,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions
+            var requestOptions = new MatchConditions
             {
                 IfNoneMatch = new ETag("v1"),
                 IfMatch = new ETag("v2")
@@ -510,7 +510,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions
+            var requestOptions = new MatchConditions
             {
                 IfNoneMatch = new ETag("v1"),
                 IfMatch = new ETag("v2")

@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core.Http
+namespace Azure.Core
 {
     public abstract class Request : IDisposable
     {

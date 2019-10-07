@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     public readonly struct RequestMethod : IEquatable<RequestMethod>
     {

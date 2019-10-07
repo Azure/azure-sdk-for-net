@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
@@ -132,7 +133,7 @@ namespace Azure.Storage.Blobs.Test
                 1,
                 out TestExceptionPolicy testExceptionPolicy,
                 false,
-                new List<Core.Pipeline.RequestMethod>(new Core.Pipeline.RequestMethod[] { RequestMethod.Put }));
+                new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }));
 
             using (GetNewContainer(out BlobContainerClient container, serviceClient))
             {

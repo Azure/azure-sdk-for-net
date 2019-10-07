@@ -8,7 +8,7 @@ namespace Azure.Core.Http
 {
     internal static class ConditionalRequestOptionsExtensions
     {
-        public static void ApplyHeaders(Request request, ConditionalRequestOptions options)
+        public static void ApplyHeaders(Request request, MatchConditions options)
         {
             if (options.IfMatch.HasValue)
             {
@@ -24,7 +24,7 @@ namespace Azure.Core.Http
                 request.Headers.Add(HttpHeader.Names.IfNoneMatch, value);
             }
 
-            if (options is DateConditionalRequestOptions dateOptions)
+            if (options is ModifiedSinceConditions dateOptions)
             {
                 if (dateOptions.IfModifiedSince.HasValue)
                 {

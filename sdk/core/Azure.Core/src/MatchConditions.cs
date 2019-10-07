@@ -8,7 +8,7 @@ namespace Azure
     /// <summary>
     /// Specifies HTTP options for conditional requests.
     /// </summary>
-    public class ConditionalRequestOptions
+    public class MatchConditions
     {
         /// <summary>
         /// Optionally limit requests to resources that have a matching ETag.

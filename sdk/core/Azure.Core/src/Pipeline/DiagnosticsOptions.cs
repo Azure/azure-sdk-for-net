@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     public class DiagnosticsOptions
     {

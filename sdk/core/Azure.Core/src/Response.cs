@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Azure.Core;
 using Azure.Core.Http;
 
 namespace Azure

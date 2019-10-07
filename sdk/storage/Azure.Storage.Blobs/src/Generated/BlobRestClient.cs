@@ -3,6 +3,8 @@
 
 // This file was automatically generated.  Do not edit.
 
+using Azure.Core;
+
 #pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
 #pragma warning disable IDE0018 // Object initialization can be simplified
@@ -112,10 +114,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -130,7 +132,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -243,10 +245,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -372,10 +374,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "stats");
@@ -521,10 +523,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "list");
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
@@ -662,10 +664,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
+                _request.Method = RequestMethod.Post;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "userdelegationkey");
@@ -680,7 +682,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -788,10 +790,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "account");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -950,10 +952,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
+                _request.Method = RequestMethod.Post;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "batch");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -965,7 +967,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(body);
+                _request.Content = HttpPipelineRequestContent.Create(body);
 
                 return _message;
             }
@@ -1108,10 +1110,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1258,10 +1260,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1293,7 +1295,7 @@ namespace Azure.Storage.Blobs
                         // Get response headers
                         string _header;
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
+                        foreach (HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -1444,10 +1446,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1585,10 +1587,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 _request.Uri.AppendQuery("comp", "metadata");
@@ -1737,10 +1739,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 _request.Uri.AppendQuery("comp", "acl");
@@ -1912,10 +1914,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 _request.Uri.AppendQuery("comp", "acl");
@@ -1941,7 +1943,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -2089,10 +2091,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 _request.Uri.AppendQuery("restype", "container");
@@ -2256,10 +2258,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 _request.Uri.AppendQuery("restype", "container");
@@ -2418,10 +2420,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 _request.Uri.AppendQuery("restype", "container");
@@ -2580,10 +2582,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 _request.Uri.AppendQuery("restype", "container");
@@ -2755,10 +2757,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 _request.Uri.AppendQuery("restype", "container");
@@ -2923,10 +2925,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 _request.Uri.AppendQuery("comp", "list");
@@ -3081,10 +3083,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container");
                 _request.Uri.AppendQuery("comp", "list");
@@ -3285,10 +3287,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3343,7 +3345,7 @@ namespace Azure.Storage.Blobs
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
+                        foreach (HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -3467,7 +3469,7 @@ namespace Azure.Storage.Blobs
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
+                        foreach (HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -3734,10 +3736,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
+                _request.Method = RequestMethod.Head;
                 _request.Uri.Reset(resourceUri);
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3784,7 +3786,7 @@ namespace Azure.Storage.Blobs
                             _value.CreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
+                        foreach (HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -4059,10 +4061,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -4233,10 +4235,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
+                _request.Method = RequestMethod.Patch;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("action", "setAccessControl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -4410,10 +4412,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
+                _request.Method = RequestMethod.Head;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("action", "getAccessControl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -4678,10 +4680,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (pathRenameMode != null) { _request.Uri.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
@@ -4839,10 +4841,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "undelete");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -5017,10 +5019,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -5225,10 +5227,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -5415,10 +5417,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -5593,10 +5595,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -5766,10 +5768,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -5952,10 +5954,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -6126,10 +6128,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "lease");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -6319,10 +6321,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "snapshot");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -6548,10 +6550,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -6775,10 +6777,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -6952,10 +6954,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "copy");
                 _request.Uri.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
@@ -7093,10 +7095,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "tier");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -7326,10 +7328,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -7594,10 +7596,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "page");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -7623,7 +7625,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(body);
+                _request.Content = HttpPipelineRequestContent.Create(body);
 
                 return _message;
             }
@@ -7838,10 +7840,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "page");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -8129,10 +8131,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "page");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -8360,10 +8362,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "pagelist");
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
@@ -8565,10 +8567,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "pagelist");
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
@@ -8776,10 +8778,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -8962,10 +8964,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -9140,10 +9142,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "incrementalcopy");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -9379,10 +9381,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -9634,10 +9636,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "appendblock");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -9660,7 +9662,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(body);
+                _request.Content = HttpPipelineRequestContent.Create(body);
 
                 return _message;
             }
@@ -9916,10 +9918,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "appendblock");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -10214,10 +10216,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -10259,7 +10261,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(body);
+                _request.Content = HttpPipelineRequestContent.Create(body);
 
                 return _message;
             }
@@ -10452,10 +10454,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "block");
                 _request.Uri.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
@@ -10473,7 +10475,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(body);
+                _request.Content = HttpPipelineRequestContent.Create(body);
 
                 return _message;
             }
@@ -10683,10 +10685,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "block");
                 _request.Uri.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
@@ -10952,10 +10954,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "blocklist");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -11002,7 +11004,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -11157,10 +11159,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "blocklist");
                 _request.Uri.AppendQuery("blocklisttype", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(listType)));
@@ -11381,10 +11383,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("resource", "directory");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -11645,10 +11647,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (marker != null) { _request.Uri.AppendQuery("continuation", System.Uri.EscapeDataString(marker)); }
@@ -11846,10 +11848,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
 
                 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -12035,10 +12037,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
+                _request.Method = RequestMethod.Patch;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("action", "setAccessControl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -12212,10 +12214,10 @@ namespace Azure.Storage.Blobs
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
+                _request.Method = RequestMethod.Head;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("action", "getAccessControl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }

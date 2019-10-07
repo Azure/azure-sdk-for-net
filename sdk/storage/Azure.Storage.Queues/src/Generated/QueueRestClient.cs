@@ -3,6 +3,8 @@
 
 // This file was automatically generated.  Do not edit.
 
+using Azure.Core;
+
 #pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
 #pragma warning disable IDE0018 // Object initialization can be simplified
@@ -112,10 +114,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -130,7 +132,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -243,10 +245,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -372,10 +374,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "stats");
@@ -521,10 +523,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "list");
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
@@ -666,10 +668,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -798,10 +800,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -920,10 +922,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -954,7 +956,7 @@ namespace Azure.Storage.Queues
                         // Get response headers
                         string _header;
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
+                        foreach (HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -1067,10 +1069,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1196,10 +1198,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "acl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1333,10 +1335,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "acl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1357,7 +1359,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -1488,10 +1490,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (visibilitytimeout != null) { _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1621,10 +1623,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -1762,10 +1764,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
+                _request.Method = RequestMethod.Post;
                 _request.Uri.Reset(resourceUri);
                 if (visibilitytimeout != null) { _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (messageTimeToLive != null) { _request.Uri.AppendQuery("messagettl", System.Uri.EscapeDataString(messageTimeToLive.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1780,7 +1782,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -1907,10 +1909,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("peekonly", "true");
                 if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2071,10 +2073,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
                 _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.ToString(System.Globalization.CultureInfo.InvariantCulture)));
@@ -2089,7 +2091,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -2226,10 +2228,10 @@ namespace Azure.Storage.Queues
 
                 // Create the request
                 Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }

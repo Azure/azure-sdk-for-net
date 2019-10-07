@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
+using Azure.Core;
 using Azure.Core.Http;
 
 namespace Azure.Identity

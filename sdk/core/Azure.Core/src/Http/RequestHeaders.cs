@@ -4,8 +4,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core.Http;
 
-namespace Azure.Core.Http
+namespace Azure.Core
 {
     public readonly struct RequestHeaders : IEnumerable<HttpHeader>
     {
