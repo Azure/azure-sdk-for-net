@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common

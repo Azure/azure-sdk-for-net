@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {

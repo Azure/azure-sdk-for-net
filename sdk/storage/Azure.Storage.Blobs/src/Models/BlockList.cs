@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Http;
 using Azure.Storage.Blobs.Models;
 
 #pragma warning disable SA1402  // File may only contain a single type

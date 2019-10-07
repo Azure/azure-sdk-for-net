@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;

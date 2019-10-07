@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files

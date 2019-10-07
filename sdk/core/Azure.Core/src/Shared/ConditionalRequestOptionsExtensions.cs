@@ -4,7 +4,7 @@
 using System.Globalization;
 using Azure;
 
-namespace Azure.Core.Http
+namespace Azure.Core
 {
     internal static class ConditionalRequestOptionsExtensions
     {

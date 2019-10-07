@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {

@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core.Http;
 
 namespace Azure.Storage.Blobs.Models
 {
