@@ -22,15 +22,15 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
+- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionalities won't be available.  In order to enable C# 8.0 features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks) or [specify the language version](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version) you want to use.
+
+  It's worth mentioning that you'll need Visual Studio 2019 to build C# 8.0 projects.  You can download it by clicking [here](https://visualstudio.microsoft.com/vs/).
+
+  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) below.
+
 To quickly create the needed Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
 [![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
-
-- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionalities won't be available.  In order to enable C# 8.0 features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks) or [specify the language version you want to use](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version).
-
-It's worth mentioning that you'll need Visual Studio 2019 to build C# 8.0 projects.  You can download it by clicking [here](https://visualstudio.microsoft.com/vs/).
-
-**Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) below.
 
 ### Install the package
 
