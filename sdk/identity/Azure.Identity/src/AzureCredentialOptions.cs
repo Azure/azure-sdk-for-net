@@ -19,7 +19,7 @@ namespace Azure.Identity
         public Uri AuthorityHost { get; set; }
 
         /// <summary>
-        /// Creates an instance of IdentityClientOptions with default settings.
+        /// Creates an instance of AzureCredentialOptions with default settings.
         /// </summary>
         public AzureCredentialOptions()
         {
