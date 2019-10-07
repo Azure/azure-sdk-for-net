@@ -44,7 +44,7 @@ namespace Azure.Identity
         /// <param name="options">The client options for the newly created SharedTokenCacheCredential</param>
         public SharedTokenCacheCredential(string clientId, string username, SharedTokenCacheCredentialOptions options)
         {
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            _clientId = clientId ?? Constants.DeveloperSignOnClientId;
 
             options ??= new SharedTokenCacheCredentialOptions();
 
@@ -80,11 +80,11 @@ namespace Azure.Identity
         {
             try
             {
-                if (_account != null)
-                {
-                    IAccount account = await _account.Value.ConfigureAwait(false);
+                IAccount account = await _account.Value.ConfigureAwait(false);
 
-                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, _username).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                if (account != null)
+                {
+                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                     return new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
