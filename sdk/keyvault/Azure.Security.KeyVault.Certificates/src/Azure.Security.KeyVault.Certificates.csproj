@@ -13,7 +13,7 @@
       * IssuerBase is now IssuerProperties.
       * Issuer contains a Properties property of type IssuerProperties.
 
-      See https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more details.
+      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more details.
       ]]>
     </PackageReleaseNotes>
 
