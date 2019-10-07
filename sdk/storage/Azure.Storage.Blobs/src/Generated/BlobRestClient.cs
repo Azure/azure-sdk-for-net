@@ -18657,12 +18657,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string SignedOid { get; internal set; }
+        public string SignedObjectId { get; internal set; }
 
         /// <summary>
         /// The Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string SignedTid { get; internal set; }
+        public string SignedTenantId { get; internal set; }
 
         /// <summary>
         /// The date-time the key is active
@@ -18704,8 +18704,8 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             Azure.Storage.Blobs.Models.UserDelegationKey _value = new Azure.Storage.Blobs.Models.UserDelegationKey();
-            _value.SignedOid = element.Element(System.Xml.Linq.XName.Get("SignedOid", "")).Value;
-            _value.SignedTid = element.Element(System.Xml.Linq.XName.Get("SignedTid", "")).Value;
+            _value.SignedObjectId = element.Element(System.Xml.Linq.XName.Get("SignedOid", "")).Value;
+            _value.SignedTenantId = element.Element(System.Xml.Linq.XName.Get("SignedTid", "")).Value;
             _value.SignedStart = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("SignedStart", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
             _value.SignedExpiry = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("SignedExpiry", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
             _value.SignedService = element.Element(System.Xml.Linq.XName.Get("SignedService", "")).Value;
@@ -18727,8 +18727,8 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new UserDelegationKey instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
-            string signedOid,
-            string signedTid,
+            string signedObjectId,
+            string signedTenantId,
             System.DateTimeOffset signedStart,
             System.DateTimeOffset signedExpiry,
             string signedService,
@@ -18737,8 +18737,8 @@ namespace Azure.Storage.Blobs.Models
         {
             return new UserDelegationKey()
             {
-                SignedOid = signedOid,
-                SignedTid = signedTid,
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
                 SignedStart = signedStart,
                 SignedExpiry = signedExpiry,
                 SignedService = signedService,
