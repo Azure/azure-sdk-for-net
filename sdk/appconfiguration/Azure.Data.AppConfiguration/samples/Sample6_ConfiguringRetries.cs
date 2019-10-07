@@ -5,7 +5,6 @@ using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
