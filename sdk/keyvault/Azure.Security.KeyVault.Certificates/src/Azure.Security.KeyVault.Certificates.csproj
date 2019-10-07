@@ -7,7 +7,7 @@
     <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Several classes have been refactored based on feedback, including:
+      Refactored several classes based on feedback, including:
       * CertificateBase is now CertificateProperties.
       * Certificate contains a Properties property of type CertificateProperties.
       * IssuerBase is now IssuerProperties.

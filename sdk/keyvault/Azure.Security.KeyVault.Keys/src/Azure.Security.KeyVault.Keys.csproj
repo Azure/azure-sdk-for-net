@@ -7,7 +7,7 @@
     <PackageTags>Microsoft Azure Key Vault Keys</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Several classes have been refactored based on feedback, including:
+      Refactored several classes based on feedback, including:
       * KeyBase is now KeyProperties.
       * Key contains a Properties property of type KeyProperties.
       * Enumeration members have been renamed to reflect general naming guidelines consistent with .NET.
