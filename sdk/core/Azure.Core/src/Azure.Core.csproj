@@ -29,9 +29,4 @@
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Buffers\" />
-    <Folder Include="Http\" />
-  </ItemGroup>
 </Project>
