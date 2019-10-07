@@ -669,7 +669,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await blob.CommitBlockListAsync(
                     base64BlockIds: new string[] { ToBase64(blockName) },
-                    blobHttpHeaders: new BlobHttpHeaders
+                    httpHeaders: new BlobHttpHeaders
                     {
                         CacheControl = constants.CacheControl,
                         ContentDisposition = constants.ContentDisposition,
@@ -741,7 +741,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 Response<BlobContentInfo> response = await blob.CommitBlockListAsync(
                     base64BlockIds: new string[] { ToBase64(blockName) },
-                    blobAccessConditions: new BlobAccessConditions
+                    accessConditions: new BlobAccessConditions
                     {
                         LeaseAccessConditions = new LeaseAccessConditions
                         {
@@ -775,7 +775,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.CommitBlockListAsync(
                         base64BlockIds: new string[] { ToBase64(GetNewBlockName()) },
-                        blobAccessConditions: new BlobAccessConditions
+                        accessConditions: new BlobAccessConditions
                         {
                             LeaseAccessConditions = new LeaseAccessConditions
                             {
@@ -820,7 +820,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     Response<BlobContentInfo> response = await blob.CommitBlockListAsync(
                         base64BlockIds: new string[] { ToBase64(blockName) },
-                        blobAccessConditions: new BlobAccessConditions
+                        accessConditions: new BlobAccessConditions
                         {
                             HttpAccessConditions = accessConditions
                         });
@@ -868,7 +868,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.CommitBlockListAsync(
                             base64BlockIds: new string[] { ToBase64(blockName) },
-                            blobAccessConditions: new BlobAccessConditions
+                            accessConditions: new BlobAccessConditions
                             {
                                 HttpAccessConditions = accessConditions
                             }),
@@ -1266,7 +1266,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blob.UploadAsync(
                         content: stream,
-                        blobHttpHeaders: new BlobHttpHeaders
+                        httpHeaders: new BlobHttpHeaders
                         {
                             CacheControl = constants.CacheControl,
                             ContentDisposition = constants.ContentDisposition,
@@ -1311,7 +1311,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         Response<BlobContentInfo> response = await blob.UploadAsync(
                             content: stream,
-                            blobAccessConditions: new BlobAccessConditions
+                            accessConditions: new BlobAccessConditions
                             {
                                 HttpAccessConditions = accessConditions
                             });
@@ -1349,7 +1349,7 @@ namespace Azure.Storage.Blobs.Test
                         await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                             blob.UploadAsync(
                                 content: stream,
-                                blobAccessConditions: new BlobAccessConditions
+                                accessConditions: new BlobAccessConditions
                                 {
                                     HttpAccessConditions = accessConditions
                                 }),
@@ -1375,7 +1375,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.UploadAsync(
                             content: stream,
-                            blobAccessConditions: new BlobAccessConditions
+                            accessConditions: new BlobAccessConditions
                             {
                                 LeaseAccessConditions = new LeaseAccessConditions
                                 {
