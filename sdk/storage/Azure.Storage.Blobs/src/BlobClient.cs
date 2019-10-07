@@ -784,14 +784,16 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
-            long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
+            long? singleBlockThreshold = default,
             ParallelTransferOptions parallelTransferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
 
             var client = new BlockBlobClient(Uri, Pipeline);
+            singleBlockThreshold ??= client.BlockBlobMaxUploadBlobBytes;
+            Debug.Assert(singleBlockThreshold <= client.BlockBlobMaxUploadBlobBytes);
+
             var blockMap = new ConcurrentDictionary<long, string>();
             var blockName = 0;
             Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
@@ -800,7 +802,7 @@ namespace Azure.Storage.Blobs
                 CommitBlockListAsync,
                 threshold => TryGetStreamLength(content, out var length) && length < threshold,
                 memoryPool => new StreamPartitioner(content, memoryPool),
-                singleBlockThreshold,
+                singleBlockThreshold.Value,
                 parallelTransferOptions,
                 async,
                 cancellationToken);
@@ -956,14 +958,15 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
-            long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
+            long? singleBlockThreshold = default,
             ParallelTransferOptions parallelTransferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
-
             var client = new BlockBlobClient(Uri, Pipeline);
+            singleBlockThreshold ??= client.BlockBlobMaxUploadBlobBytes;
+            Debug.Assert(singleBlockThreshold <= client.BlockBlobMaxUploadBlobBytes);
+
             var blockMap = new ConcurrentDictionary<long, string>();
             var blockName = 0;
             Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
@@ -972,7 +975,7 @@ namespace Azure.Storage.Blobs
                 CommitBlockListAsync,
                 threshold => file.Length < threshold,
                 memoryPool => new StreamPartitioner(file, memoryPool),
-                singleBlockThreshold,
+                singleBlockThreshold.Value,
                 parallelTransferOptions,
                 async,
                 cancellationToken);

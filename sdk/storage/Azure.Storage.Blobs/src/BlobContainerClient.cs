@@ -25,12 +25,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Azure Storage name used to identify a storage account's root container.
         /// </summary>
-        public const string RootBlobContainerName = Constants.Blob.Container.RootName;
+        public static readonly string RootBlobContainerName = Constants.Blob.Container.RootName;
 
         /// <summary>
         /// The Azure Storage name used to identify a storage account's logs container.
         /// </summary>
-        public const string LogsBlobContainerName = Constants.Blob.Container.LogsName;
+        public static readonly string LogsBlobContainerName = Constants.Blob.Container.LogsName;
+
+        /// <summary>
+        /// The Azure Storage name used to identify a storage account's web content container.
+        /// </summary>
+        public static readonly string WebBlobContainerName = Constants.Blob.Container.WebName;
 
 #pragma warning disable IDE0032 // Use auto property
         /// <summary>

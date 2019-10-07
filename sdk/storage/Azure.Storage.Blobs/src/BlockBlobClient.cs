@@ -81,22 +81,21 @@ namespace Azure.Storage.Blobs.Specialized
     public class BlockBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// <see cref="BlockBlobMaxUploadBlobBytes"/> indicates the maximum number of bytes
-        /// that can be sent in a call to <see cref="UploadAsync"/>.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync"/>.
         /// </summary>
-        public const int BlockBlobMaxUploadBlobBytes = Constants.Blob.Block.MaxUploadBytes;
+        public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
 
         /// <summary>
-        /// <see cref="BlockBlobMaxStageBlockBytes"/> indicates the maximum
-        /// number of bytes that can be sent in a call to <see cref="StageBlockAsync"/>.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public const int BlockBlobMaxStageBlockBytes = Constants.Blob.Block.MaxStageBytes;
+        public virtual int BlockBlobMaxStageBlockBytes => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
-        /// <see cref="BlockBlobMaxBlocks"/> indicates the maximum number of
-        /// blocks allowed in a block blob.
+        /// Gets the maximum number of blocks allowed in a block blob.
         /// </summary>
-        public const int BlockBlobMaxBlocks = Constants.Blob.Block.MaxBlocks;
+        public virtual int BlockBlobMaxBlocks => Constants.Blob.Block.MaxBlocks;
 
         #region ctors
         /// <summary>

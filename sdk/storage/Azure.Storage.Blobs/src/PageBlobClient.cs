@@ -32,17 +32,15 @@ namespace Azure.Storage.Blobs.Specialized
     public class PageBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// <see cref="PageBlobPageBytes"/> indicates the number of bytes in a
-        /// page (512).
+        /// Gets the number of bytes in a page (512).
         /// </summary>
-		public const int PageBlobPageBytes = 512;
+		public virtual int PageBlobPageBytes => 512;
 
         /// <summary>
-        /// <see cref="PageBlobMaxUploadPagesBytes"/> indicates the maximum
-        /// number of bytes that can be sent in a call to the
-        /// <see cref="UploadPagesAsync"/> operation.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to the <see cref="UploadPagesAsync"/> operation.
         /// </summary>
-        public const int PageBlobMaxUploadPagesBytes = 4 * Constants.MB; // 4MB
+        public virtual int PageBlobMaxUploadPagesBytes => 4 * Constants.MB; // 4MB
 
         #region ctors
         /// <summary>
