@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Diagnostics
 {

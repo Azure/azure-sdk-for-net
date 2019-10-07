@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Globalization;
-using Azure;
 
 namespace Azure.Core
 {
