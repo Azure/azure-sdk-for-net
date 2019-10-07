@@ -9,19 +9,19 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure requests made to Azure Identity Services
     /// </summary>
-    public class IdentityClientOptions : ClientOptions
+    public class AzureCredentialOptions : ClientOptions
     {
         private static readonly Uri s_defaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
 
         /// <summary>
-        /// The host of the Azure Active Directory authority.   The default is https://login.microsoft.com
+        /// The host of the Azure Active Directory authority.   The default is https://login.microsoft.com/
         /// </summary>
         public Uri AuthorityHost { get; set; }
 
         /// <summary>
         /// Creates an instance of IdentityClientOptions with default settings.
         /// </summary>
-        public IdentityClientOptions()
+        public AzureCredentialOptions()
         {
             AuthorityHost = s_defaultAuthorityHost;
         }
