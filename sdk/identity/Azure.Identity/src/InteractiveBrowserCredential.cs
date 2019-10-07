@@ -18,21 +18,30 @@ namespace Azure.Identity
     {
         private readonly IPublicClientApplication _pubApp = null;
         private IAccount _account = null;
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly string _clientId;
+
+        /// <summary>
+        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users.
+        /// </summary>
+        public InteractiveBrowserCredential()
+            : this(Constants.DeveloperSignOnClientId, null, null)
+        {
+
+        }
 
         /// <summary>
         /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be unspecified for multi-tenanted applications.</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple tenant applications
+        /// <param name="tenantId">The tenant id of the application and the users to authentiacte</param>
+        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
-        public InteractiveBrowserCredential(string clientId, string tenantId = default, IdentityClientOptions options = default)
+        public InteractiveBrowserCredential(string clientId, string tenantId = default, AzureCredentialOptions options = default)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            _options = options ??= new IdentityClientOptions();
+            _options = options ??= new AzureCredentialOptions();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(_options);
 

@@ -52,7 +52,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, IdentityClientOptions options)
+        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, AzureCredentialOptions options)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
