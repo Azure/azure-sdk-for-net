@@ -61,7 +61,7 @@ namespace Azure.Core
                 _pageFunc = pageFunc;
             }
 
-            public override IEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
+            public override IEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
                 do
                 {

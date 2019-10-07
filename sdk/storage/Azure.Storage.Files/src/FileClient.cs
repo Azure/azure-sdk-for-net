@@ -478,7 +478,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return Response.FromValue(response.GetRawResponse(), new StorageFileInfo(response.Value));
+                    return Response.FromValue(new StorageFileInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -908,7 +908,7 @@ namespace Azure.Storage.Files
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
                     // to make the Content easier to find
-                    return Response.FromValue(response.GetRawResponse(), new StorageFileDownloadInfo(response.Value));
+                    return Response.FromValue(new StorageFileDownloadInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1191,7 +1191,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return Response.FromValue(response.GetRawResponse(), new StorageFileProperties(response.Value));
+                    return Response.FromValue(new StorageFileProperties(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1385,7 +1385,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return Response.FromValue(response.GetRawResponse(), new StorageFileInfo(response.Value));
+                    return Response.FromValue(new StorageFileInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1505,7 +1505,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return Response.FromValue(response.GetRawResponse(), new StorageFileInfo(response.Value));
+                    return Response.FromValue(new StorageFileInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1871,13 +1871,14 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return Response.FromValue(response.GetRawResponse(), new StorageFileUploadInfo
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified,
-                        ContentHash = response.Value.XMSContentCrc64,
-                        IsServerEncrypted = response.Value.IsServerEncrypted
-                    });
+                    return Response.FromValue(
+                        new StorageFileUploadInfo
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified,
+                            ContentHash = response.Value.XMSContentCrc64,
+                            IsServerEncrypted = response.Value.IsServerEncrypted
+                        }, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

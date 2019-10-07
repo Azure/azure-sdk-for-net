@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
             BufferResponse = true;
         }
 
-        public Request Request { get; set; }
+        public Request Request { get; }
 
         public Response Response
         {

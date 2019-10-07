@@ -1353,7 +1353,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
         /// </summary>
-        /// <param name="listType">
+        /// <param name="blockListTypes">
         /// Specifies whether to return the list of committed blocks, the
         /// list of uncommitted blocks, or both lists together.  If you omit
         /// this parameter, Get Block List returns the list of committed blocks.
@@ -1380,12 +1380,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlockList> GetBlockList(
-            BlockListType? listType = default,
+            BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlockListInternal(
-                listType,
+                blockListTypes,
                 snapshot,
                 leaseAccessConditions,
                 false, // async
@@ -1403,7 +1403,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
         /// </summary>
-        /// <param name="listType">
+        /// <param name="blockListTypes">
         /// Specifies whether to return the list of committed blocks, the
         /// list of uncommitted blocks, or both lists together.  If you omit
         /// this parameter, Get Block List returns the list of committed blocks.
@@ -1430,12 +1430,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
-            BlockListType? listType = default,
+            BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             await GetBlockListInternal(
-                listType,
+                blockListTypes,
                 snapshot,
                 leaseAccessConditions,
                 true, // async
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
         /// </summary>
-        /// <param name="listType">
+        /// <param name="blockListTypes">
         /// Specifies whether to return the list of committed blocks, the
         /// list of uncommitted blocks, or both lists together.  If you omit
         /// this parameter, Get Block List returns the list of committed blocks.
@@ -1483,7 +1483,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlockList>> GetBlockListInternal(
-            BlockListType? listType,
+            BlockListTypes blockListTypes,
             string snapshot,
             LeaseAccessConditions? leaseAccessConditions,
             bool async,
@@ -1495,7 +1495,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(listType)}: {listType}\n" +
+                    $"{nameof(blockListTypes)}: {blockListTypes}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
@@ -1503,7 +1503,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return (await BlobRestClient.BlockBlob.GetBlockListAsync(
                         Pipeline,
                         Uri,
-                        listType: listType ?? BlockListType.All,
+                        listType: blockListTypes.ToBlockListType(),
                         snapshot: snapshot,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,

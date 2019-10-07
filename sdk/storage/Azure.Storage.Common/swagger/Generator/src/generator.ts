@@ -467,7 +467,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         processResponse(response);
 
                         w.line(`// Create the response`);
-                        w.line(`return Response.FromValue(${responseName}, ${valueName});`);
+                        w.line(`return Response.FromValue(${valueName}, ${responseName});`);
                     }
                 });
             }

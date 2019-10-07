@@ -4,11 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
-using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -23,7 +19,7 @@ namespace Azure.Identity
     {
         private static readonly Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
 
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
 
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
@@ -34,9 +30,9 @@ namespace Azure.Identity
         {
         }
 
-        public AadIdentityClient(IdentityClientOptions options = null)
+        public AadIdentityClient(AzureCredentialOptions options = null)
         {
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
         }
@@ -148,7 +144,7 @@ namespace Azure.Identity
             {
                 AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(response, result);
+                return Response.FromValue(result, response);
             }
 
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -162,7 +158,7 @@ namespace Azure.Identity
             {
                 AccessToken result = Deserialize(response.ContentStream);
 
-                return Response.FromValue(response, result);
+                return Response.FromValue(result, response);
             }
 
             throw response.CreateRequestFailedException();

@@ -15,19 +15,22 @@ namespace Azure.Identity
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
-        private readonly TokenCredential[] _sources;
+        private readonly ReadOnlyMemory<TokenCredential> _sources;
 
         /// <summary>
         /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
         /// </summary>
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
-        public ChainedTokenCredential(params TokenCredential[] sources)
+        public ChainedTokenCredential(params TokenCredential[] sources) : this(new ReadOnlyMemory<TokenCredential>(sources))
         {
-            if (sources == null)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
+        }
 
+        /// <summary>
+        /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
+        /// </summary>
+        /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
+        internal ChainedTokenCredential(ReadOnlyMemory<TokenCredential> sources)
+        {
             if (sources.Length == 0)
             {
                 throw new ArgumentException("sources must not be empty", nameof(sources));
@@ -35,7 +38,7 @@ namespace Azure.Identity
 
             for (int i = 0; i < sources.Length; i++)
             {
-                if (sources[i] == null)
+                if (sources.Span[i] == null)
                 {
                     throw new ArgumentException("sources must not contain null", nameof(sources));
                 }
@@ -56,7 +59,7 @@ namespace Azure.Identity
 
             for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = _sources[i].GetToken(request, cancellationToken);
+                token = _sources.Span[i].GetToken(request, cancellationToken);
             }
 
             return token;
@@ -74,7 +77,7 @@ namespace Azure.Identity
 
             for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = await _sources[i].GetTokenAsync(request, cancellationToken).ConfigureAwait(false);
+                token = await _sources.Span[i].GetTokenAsync(request, cancellationToken).ConfigureAwait(false);
             }
 
             return token;

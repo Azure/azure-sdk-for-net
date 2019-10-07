@@ -277,7 +277,7 @@ namespace Azure.Storage.Queues
                         Azure.Storage.Queues.Models.QueueServiceProperties _value = Azure.Storage.Queues.Models.QueueServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -406,7 +406,7 @@ namespace Azure.Storage.Queues
                         Azure.Storage.Queues.Models.QueueServiceStatistics _value = Azure.Storage.Queues.Models.QueueServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -558,7 +558,7 @@ namespace Azure.Storage.Queues
                         Azure.Storage.Queues.Models.QueuesSegment _value = Azure.Storage.Queues.Models.QueuesSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -967,7 +967,7 @@ namespace Azure.Storage.Queues
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1233,7 +1233,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.SignedIdentifier.FromXml));
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1526,7 +1526,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.DequeuedMessage.FromXml));
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1807,7 +1807,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.EnqueuedMessage.FromXml));
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1945,7 +1945,7 @@ namespace Azure.Storage.Queues
                                     Azure.Storage.Queues.Models.PeekedMessage.FromXml));
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2122,7 +2122,7 @@ namespace Azure.Storage.Queues
                         }
 
                         // Create the response
-                        return Response.FromValue(response, _value);
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2359,118 +2359,6 @@ namespace Azure.Storage.Queues.Models
     }
 }
 #endregion class AccessPolicy
-
-#region class CorsRule
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
-    /// </summary>
-    public partial class CorsRule
-    {
-        /// <summary>
-        /// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
-        /// </summary>
-        public string AllowedOrigins { get; set; }
-
-        /// <summary>
-        /// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
-        /// </summary>
-        public string AllowedMethods { get; set; }
-
-        /// <summary>
-        /// the request headers that the origin domain may specify on the CORS request.
-        /// </summary>
-        public string AllowedHeaders { get; set; }
-
-        /// <summary>
-        /// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
-        /// </summary>
-        public string ExposedHeaders { get; set; }
-
-        /// <summary>
-        /// The maximum amount time that a browser should cache the preflight OPTIONS request.
-        /// </summary>
-        public int MaxAgeInSeconds { get; set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of CorsRule instances.
-        /// You can use QueuesModelFactory.CorsRule instead.
-        /// </summary>
-        internal CorsRule() { }
-
-        /// <summary>
-        /// Serialize a CorsRule instance as XML.
-        /// </summary>
-        /// <param name="value">The CorsRule instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "CorsRule".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.CorsRule value, string name = "CorsRule", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedOrigins", ""),
-                value.AllowedOrigins));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedMethods", ""),
-                value.AllowedMethods));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedHeaders", ""),
-                value.AllowedHeaders));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("ExposedHeaders", ""),
-                value.ExposedHeaders));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""),
-                value.MaxAgeInSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new CorsRule instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized CorsRule instance.</returns>
-        internal static Azure.Storage.Queues.Models.CorsRule FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.CorsRule _value = new Azure.Storage.Queues.Models.CorsRule();
-            _child = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", ""));
-            if (_child != null)
-            {
-                _value.AllowedOrigins = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", ""));
-            if (_child != null)
-            {
-                _value.AllowedMethods = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", ""));
-            if (_child != null)
-            {
-                _value.AllowedHeaders = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", ""));
-            if (_child != null)
-            {
-                _value.ExposedHeaders = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""));
-            if (_child != null)
-            {
-                _value.MaxAgeInSeconds = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.CorsRule value);
-    }
-}
-#endregion class CorsRule
 
 #region class DequeuedMessage
 namespace Azure.Storage.Queues.Models
@@ -2927,262 +2815,6 @@ namespace Azure.Storage.Queues
 }
 #endregion enum ListQueuesIncludeType
 
-#region class Logging
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// Azure Analytics Logging settings.
-    /// </summary>
-    #pragma warning disable CA1724
-    public partial class Logging
-    #pragma warning restore CA1724
-    {
-        /// <summary>
-        /// The version of Storage Analytics to configure.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Indicates whether all delete requests should be logged.
-        /// </summary>
-        public bool Delete { get; set; }
-
-        /// <summary>
-        /// Indicates whether all read requests should be logged.
-        /// </summary>
-        public bool Read { get; set; }
-
-        /// <summary>
-        /// Indicates whether all write requests should be logged.
-        /// </summary>
-        public bool Write { get; set; }
-
-        /// <summary>
-        /// the retention policy
-        /// </summary>
-        public Azure.Storage.Queues.Models.RetentionPolicy RetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new Logging instance
-        /// </summary>
-        public Logging()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new Logging instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal Logging(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a Logging instance as XML.
-        /// </summary>
-        /// <param name="value">The Logging instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "Logging".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.Logging value, string name = "Logging", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Version", ""),
-                value.Version));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Delete", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Delete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Read", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Read.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Write", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Write.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            _element.Add(Azure.Storage.Queues.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new Logging instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Logging instance.</returns>
-        internal static Azure.Storage.Queues.Models.Logging FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.Logging _value = new Azure.Storage.Queues.Models.Logging(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
-            if (_child != null)
-            {
-                _value.Version = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Delete", ""));
-            if (_child != null)
-            {
-                _value.Delete = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Read", ""));
-            if (_child != null)
-            {
-                _value.Read = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Write", ""));
-            if (_child != null)
-            {
-                _value.Write = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
-            if (_child != null)
-            {
-                _value.RetentionPolicy = Azure.Storage.Queues.Models.RetentionPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.Logging value);
-    }
-}
-#endregion class Logging
-
-#region class Metrics
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// Metrics
-    /// </summary>
-    public partial class Metrics
-    {
-        /// <summary>
-        /// The version of Storage Analytics to configure.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Indicates whether metrics are enabled for the Queue service.
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates whether metrics should generate summary statistics for called API operations.
-        /// </summary>
-        public bool? IncludeAPIs { get; set; }
-
-        /// <summary>
-        /// the retention policy
-        /// </summary>
-        public Azure.Storage.Queues.Models.RetentionPolicy RetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new Metrics instance
-        /// </summary>
-        public Metrics()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new Metrics instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal Metrics(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a Metrics instance as XML.
-        /// </summary>
-        /// <param name="value">The Metrics instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "Metrics".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.Metrics value, string name = "Metrics", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.Version != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Version", ""),
-                    value.Version));
-            }
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.IncludeAPIs != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("IncludeAPIs", ""),
-                    #pragma warning disable CA1308 // Normalize strings to uppercase
-                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                    #pragma warning restore CA1308 // Normalize strings to uppercase
-            }
-            if (value.RetentionPolicy != null)
-            {
-                _element.Add(Azure.Storage.Queues.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new Metrics instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Metrics instance.</returns>
-        internal static Azure.Storage.Queues.Models.Metrics FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.Metrics _value = new Azure.Storage.Queues.Models.Metrics(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
-            if (_child != null)
-            {
-                _value.Version = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
-            if (_child != null)
-            {
-                _value.Enabled = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
-            if (_child != null)
-            {
-                _value.IncludeAPIs = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
-            if (_child != null)
-            {
-                _value.RetentionPolicy = Azure.Storage.Queues.Models.RetentionPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.Metrics value);
-    }
-}
-#endregion class Metrics
-
 #region class PeekedMessage
 namespace Azure.Storage.Queues.Models
 {
@@ -3230,33 +2862,12 @@ namespace Azure.Storage.Queues.Models
         internal static Azure.Storage.Queues.Models.PeekedMessage FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.PeekedMessage _value = new Azure.Storage.Queues.Models.PeekedMessage();
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
-            if (_child != null)
-            {
-                _value.MessageId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
-            if (_child != null)
-            {
-                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
-            if (_child != null)
-            {
-                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
-            if (_child != null)
-            {
-                _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
-            if (_child != null)
-            {
-                _value.MessageText = _child.Value;
-            }
+            _value.MessageId = element.Element(System.Xml.Linq.XName.Get("MessageId", "")).Value;
+            _value.InsertionTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("InsertionTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.ExpirationTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("ExpirationTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.DequeueCount = long.Parse(element.Element(System.Xml.Linq.XName.Get("DequeueCount", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.MessageText = element.Element(System.Xml.Linq.XName.Get("MessageText", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -3291,6 +2902,206 @@ namespace Azure.Storage.Queues.Models
     }
 }
 #endregion class PeekedMessage
+
+#region class QueueAnalyticsLogging
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// Azure Analytics Logging settings.
+    /// </summary>
+    public partial class QueueAnalyticsLogging
+    {
+        /// <summary>
+        /// The version of Storage Analytics to configure.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Indicates whether all delete requests should be logged.
+        /// </summary>
+        public bool Delete { get; set; }
+
+        /// <summary>
+        /// Indicates whether all read requests should be logged.
+        /// </summary>
+        public bool Read { get; set; }
+
+        /// <summary>
+        /// Indicates whether all write requests should be logged.
+        /// </summary>
+        public bool Write { get; set; }
+
+        /// <summary>
+        /// the retention policy
+        /// </summary>
+        public Azure.Storage.Queues.Models.RetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new QueueAnalyticsLogging instance
+        /// </summary>
+        public QueueAnalyticsLogging()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new QueueAnalyticsLogging instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal QueueAnalyticsLogging(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a QueueAnalyticsLogging instance as XML.
+        /// </summary>
+        /// <param name="value">The QueueAnalyticsLogging instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Logging".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueAnalyticsLogging value, string name = "Logging", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Version", ""),
+                value.Version));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Delete", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Delete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Read", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Read.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Write", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Write.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            _element.Add(Azure.Storage.Queues.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new QueueAnalyticsLogging instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized QueueAnalyticsLogging instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueAnalyticsLogging FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Queues.Models.QueueAnalyticsLogging _value = new Azure.Storage.Queues.Models.QueueAnalyticsLogging(true);
+            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
+            _value.Delete = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Delete", "")).Value);
+            _value.Read = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Read", "")).Value);
+            _value.Write = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Write", "")).Value);
+            _value.RetentionPolicy = Azure.Storage.Queues.Models.RetentionPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", "")));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueAnalyticsLogging value);
+    }
+}
+#endregion class QueueAnalyticsLogging
+
+#region class QueueCorsRule
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
+    /// </summary>
+    public partial class QueueCorsRule
+    {
+        /// <summary>
+        /// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
+        /// </summary>
+        public string AllowedOrigins { get; set; }
+
+        /// <summary>
+        /// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+        /// </summary>
+        public string AllowedMethods { get; set; }
+
+        /// <summary>
+        /// the request headers that the origin domain may specify on the CORS request.
+        /// </summary>
+        public string AllowedHeaders { get; set; }
+
+        /// <summary>
+        /// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+        /// </summary>
+        public string ExposedHeaders { get; set; }
+
+        /// <summary>
+        /// The maximum amount time that a browser should cache the preflight OPTIONS request.
+        /// </summary>
+        public int MaxAgeInSeconds { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of QueueCorsRule instances.
+        /// You can use QueuesModelFactory.QueueCorsRule instead.
+        /// </summary>
+        internal QueueCorsRule() { }
+
+        /// <summary>
+        /// Serialize a QueueCorsRule instance as XML.
+        /// </summary>
+        /// <param name="value">The QueueCorsRule instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "CorsRule".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueCorsRule value, string name = "CorsRule", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedOrigins", ""),
+                value.AllowedOrigins));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedMethods", ""),
+                value.AllowedMethods));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedHeaders", ""),
+                value.AllowedHeaders));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("ExposedHeaders", ""),
+                value.ExposedHeaders));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""),
+                value.MaxAgeInSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new QueueCorsRule instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized QueueCorsRule instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueCorsRule FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Queues.Models.QueueCorsRule _value = new Azure.Storage.Queues.Models.QueueCorsRule();
+            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
+            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
+            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
+            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
+            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueCorsRule value);
+    }
+}
+#endregion class QueueCorsRule
 
 #region enum strings QueueErrorCode
 namespace Azure.Storage.Queues.Models
@@ -3789,6 +3600,126 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class QueueMessage
 
+#region class QueueMetrics
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// QueueMetrics
+    /// </summary>
+    public partial class QueueMetrics
+    {
+        /// <summary>
+        /// The version of Storage Analytics to configure.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics are enabled for the Queue service.
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics should generate summary statistics for called API operations.
+        /// </summary>
+        public bool? IncludeAPIs { get; set; }
+
+        /// <summary>
+        /// the retention policy
+        /// </summary>
+        public Azure.Storage.Queues.Models.RetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new QueueMetrics instance
+        /// </summary>
+        public QueueMetrics()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new QueueMetrics instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal QueueMetrics(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Queues.Models.RetentionPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a QueueMetrics instance as XML.
+        /// </summary>
+        /// <param name="value">The QueueMetrics instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Metrics".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueMetrics value, string name = "Metrics", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Version != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Version", ""),
+                    value.Version));
+            }
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.IncludeAPIs != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("IncludeAPIs", ""),
+                    #pragma warning disable CA1308 // Normalize strings to uppercase
+                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    #pragma warning restore CA1308 // Normalize strings to uppercase
+            }
+            if (value.RetentionPolicy != null)
+            {
+                _element.Add(Azure.Storage.Queues.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new QueueMetrics instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized QueueMetrics instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueMetrics FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.QueueMetrics _value = new Azure.Storage.Queues.Models.QueueMetrics(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
+            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
+            if (_child != null)
+            {
+                _value.IncludeAPIs = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
+            if (_child != null)
+            {
+                _value.RetentionPolicy = Azure.Storage.Queues.Models.RetentionPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueMetrics value);
+    }
+}
+#endregion class QueueMetrics
+
 #region class QueueProperties
 namespace Azure.Storage.Queues.Models
 {
@@ -3849,22 +3780,22 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Azure Analytics Logging settings
         /// </summary>
-        public Azure.Storage.Queues.Models.Logging Logging { get; set; }
+        public Azure.Storage.Queues.Models.QueueAnalyticsLogging Logging { get; set; }
 
         /// <summary>
         /// A summary of request statistics grouped by API in hourly aggregates for queues
         /// </summary>
-        public Azure.Storage.Queues.Models.Metrics HourMetrics { get; set; }
+        public Azure.Storage.Queues.Models.QueueMetrics HourMetrics { get; set; }
 
         /// <summary>
         /// a summary of request statistics grouped by API in minute aggregates for queues
         /// </summary>
-        public Azure.Storage.Queues.Models.Metrics MinuteMetrics { get; set; }
+        public Azure.Storage.Queues.Models.QueueMetrics MinuteMetrics { get; set; }
 
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Queues.Models.CorsRule> Cors { get; set; }
+        public System.Collections.Generic.IList<Azure.Storage.Queues.Models.QueueCorsRule> Cors { get; set; }
 
         /// <summary>
         /// Creates a new QueueServiceProperties instance
@@ -3882,9 +3813,9 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                Logging = new Azure.Storage.Queues.Models.Logging();
-                HourMetrics = new Azure.Storage.Queues.Models.Metrics();
-                MinuteMetrics = new Azure.Storage.Queues.Models.Metrics();
+                Logging = new Azure.Storage.Queues.Models.QueueAnalyticsLogging();
+                HourMetrics = new Azure.Storage.Queues.Models.QueueMetrics();
+                MinuteMetrics = new Azure.Storage.Queues.Models.QueueMetrics();
             }
         }
 
@@ -3901,22 +3832,22 @@ namespace Azure.Storage.Queues.Models
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             if (value.Logging != null)
             {
-                _element.Add(Azure.Storage.Queues.Models.Logging.ToXml(value.Logging, "Logging", ""));
+                _element.Add(Azure.Storage.Queues.Models.QueueAnalyticsLogging.ToXml(value.Logging, "Logging", ""));
             }
             if (value.HourMetrics != null)
             {
-                _element.Add(Azure.Storage.Queues.Models.Metrics.ToXml(value.HourMetrics, "HourMetrics", ""));
+                _element.Add(Azure.Storage.Queues.Models.QueueMetrics.ToXml(value.HourMetrics, "HourMetrics", ""));
             }
             if (value.MinuteMetrics != null)
             {
-                _element.Add(Azure.Storage.Queues.Models.Metrics.ToXml(value.MinuteMetrics, "MinuteMetrics", ""));
+                _element.Add(Azure.Storage.Queues.Models.QueueMetrics.ToXml(value.MinuteMetrics, "MinuteMetrics", ""));
             }
             if (value.Cors != null)
             {
-                System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Cors", ""));
-                foreach (Azure.Storage.Queues.Models.CorsRule _child in value.Cors)
+                System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("CorsRule", ""));
+                foreach (Azure.Storage.Queues.Models.QueueCorsRule _child in value.Cors)
                 {
-                    _elements.Add(Azure.Storage.Queues.Models.CorsRule.ToXml(_child));
+                    _elements.Add(Azure.Storage.Queues.Models.QueueCorsRule.ToXml(_child));
                 }
                 _element.Add(_elements);
             }
@@ -3936,29 +3867,29 @@ namespace Azure.Storage.Queues.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Logging", ""));
             if (_child != null)
             {
-                _value.Logging = Azure.Storage.Queues.Models.Logging.FromXml(_child);
+                _value.Logging = Azure.Storage.Queues.Models.QueueAnalyticsLogging.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("HourMetrics", ""));
             if (_child != null)
             {
-                _value.HourMetrics = Azure.Storage.Queues.Models.Metrics.FromXml(_child);
+                _value.HourMetrics = Azure.Storage.Queues.Models.QueueMetrics.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("MinuteMetrics", ""));
             if (_child != null)
             {
-                _value.MinuteMetrics = Azure.Storage.Queues.Models.Metrics.FromXml(_child);
+                _value.MinuteMetrics = Azure.Storage.Queues.Models.QueueMetrics.FromXml(_child);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("Cors", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("CorsRule", ""));
             if (_child != null)
             {
                 _value.Cors = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("CorsRule", "")),
-                        e => Azure.Storage.Queues.Models.CorsRule.FromXml(e)));
+                        e => Azure.Storage.Queues.Models.QueueCorsRule.FromXml(e)));
             }
             else
             {
-                _value.Cors = new System.Collections.Generic.List<Azure.Storage.Queues.Models.CorsRule>();
+                _value.Cors = new System.Collections.Generic.List<Azure.Storage.Queues.Models.QueueCorsRule>();
             }
             CustomizeFromXml(element, _value);
             return _value;
