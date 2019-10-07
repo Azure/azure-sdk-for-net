@@ -18,7 +18,7 @@ Use the client library for App Configuration to:
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.ApplicationModel.Configuration -Version 1.0.0-preview.2
+Install-Package Azure.Data.AppConfiguration -Version 1.0.0-preview.2
 ```
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a [Configuration Store][configuration_store] to use this package.
@@ -85,7 +85,7 @@ Properties of a Configuration Setting:
 
     DateTimeOffset LastModified { get; }
 
-    bool Locked { get; }
+    bool ReadOnly { get; }
 
     IDictionary<string, string> Tags { get; set; }
 ```
