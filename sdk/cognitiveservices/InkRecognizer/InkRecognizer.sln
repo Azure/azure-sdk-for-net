@@ -5,17 +5,17 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.InkRecognizer", "src\Azure.AI.InkRecognizer.csproj", "{C302E788-B3AF-4DD2-9CC4-BD495BFBC5BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.InkRecognizer.WPF.Stroke", "..\Azure.InkRecognizer.WPF.Stroke\src\Azure.AI.InkRecognizer.WPF.Stroke.csproj", "{205A62E4-93BC-414C-8344-2E7A46E1252A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.InkRecognizer.WPF.Stroke", "..\InkRecognizer.WPF.Stroke\src\Azure.AI.InkRecognizer.WPF.Stroke.csproj", "{205A62E4-93BC-414C-8344-2E7A46E1252A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InkRecognizerTestWPF", "..\Azure.InkRecognizer.WPF.Stroke\tests\InkRecognizerTestWPF.csproj", "{09E35FE4-618F-4084-8D1F-E25F52DFEC92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InkRecognizerTestWPF", "..\InkRecognizer.WPF.Stroke\tests\InkRecognizerTestWPF.csproj", "{09E35FE4-618F-4084-8D1F-E25F52DFEC92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerWPF", "..\Azure.InkRecognizer.WPF.Stroke\samples\NoteTakerWPF.csproj", "{23CE5DEB-AD13-4214-8CC9-EDB912F12F90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerWPF", "..\InkRecognizer.WPF.Stroke\samples\NoteTakerWPF.csproj", "{23CE5DEB-AD13-4214-8CC9-EDB912F12F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.InkRecognizer.UWP.Stroke", "..\Azure.InkRecognizer.UWP.Stroke\src\Azure.AI.InkRecognizer.UWP.Stroke.csproj", "{6D9F048D-D48F-4E49-B3F8-8EDF40F744C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.InkRecognizer.UWP.Stroke", "..\InkRecognizer.UWP.Stroke\src\Azure.AI.InkRecognizer.UWP.Stroke.csproj", "{6D9F048D-D48F-4E49-B3F8-8EDF40F744C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InkRecognizerTestUWP", "..\Azure.InkRecognizer.UWP.Stroke\tests\InkRecognizerTestUWP.csproj", "{D0A44635-A585-4930-9296-206D5775B91C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InkRecognizerTestUWP", "..\InkRecognizer.UWP.Stroke\tests\InkRecognizerTestUWP.csproj", "{D0A44635-A585-4930-9296-206D5775B91C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerUWP", "..\Azure.InkRecognizer.UWP.Stroke\samples\NoteTakerUWP.csproj", "{05970B9F-6C19-46EF-B961-4E7B62BC0345}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerUWP", "..\InkRecognizer.UWP.Stroke\samples\NoteTakerUWP.csproj", "{05970B9F-6C19-46EF-B961-4E7B62BC0345}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
