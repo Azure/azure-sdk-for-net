@@ -412,7 +412,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -447,7 +447,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response Delete(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response Delete(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -564,7 +564,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute("key", key);
@@ -597,7 +597,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute(nameof(key), key);
@@ -849,86 +849,6 @@ namespace Azure.Data.AppConfiguration
             }
 
             return request;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="setting"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response<bool>> HasChangedAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.HasChanged");
-            scope.AddAttribute("key", setting.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateHeadRequest(setting.Key, setting.Label);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                    case 404:
-                        string etag = default;
-                        if (response.Headers.TryGetValue(ETag, out etag))
-                        {
-                            etag = etag.Trim('\"');
-                        }
-
-                        return Response.FromValue(setting.ETag != new ETag(etag), response);
-
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="setting"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response<bool> HasChanged(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.HasChanged");
-            scope.AddAttribute(nameof(setting.Key), setting.Key);
-            scope.Start();
-
-            try
-            {
-                using (Request request = CreateHeadRequest(setting.Key, setting.Label))
-                {
-                    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                    switch (response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            string etag = default;
-                            if (response.Headers.TryGetValue(ETag, out etag))
-                            {
-                                etag = etag.Trim('\"');
-                            }
-
-                            return Response.FromValue(setting.ETag != new ETag(etag), response);
-
-                        default:
-                            throw response.CreateRequestFailedException();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         private Request CreateHeadRequest(string key, string label)
