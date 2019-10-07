@@ -62,7 +62,7 @@ namespace Azure.Identity
 
             if (options.IncludeSharedTokenCacheCredential)
             {
-                chain[i++] = new SharedTokenCacheCredential(null, options.Username);
+                chain[i++] = new SharedTokenCacheCredential(null, options.PreferredAccountUsername);
             }
 
             if (options.IncludeInteractiveBrowserCredential)
