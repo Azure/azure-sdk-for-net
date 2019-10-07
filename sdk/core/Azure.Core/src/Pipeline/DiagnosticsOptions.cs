@@ -8,7 +8,7 @@ namespace Azure.Core.Pipeline
 {
     public class DiagnosticsOptions
     {
-        public DiagnosticsOptions()
+        internal DiagnosticsOptions()
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             ApplicationId = DefaultApplicationId;

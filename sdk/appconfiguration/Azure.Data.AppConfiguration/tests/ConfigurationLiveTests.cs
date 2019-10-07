@@ -666,11 +666,18 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 Response<ConfigurationSetting> response = await service.GetAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
                 Assert.AreEqual(304, response.GetRawResponse().Status);
-                var exception = Assert.Throws<ResponseBodyNotFoundException>(() =>
+
+                bool throws = false;
+                try
                 {
                     ConfigurationSetting value = response.Value;
-                });
-                Assert.AreEqual(304, exception.Status);
+                }
+                catch
+                {
+                    throws = true;
+                }
+
+                Assert.IsTrue(throws);
             }
             finally
             {
@@ -869,103 +876,6 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [Test]
-        public async Task HasChangedNoValueNotFound()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting setting0 = CreateSetting();
-
-            bool hasChanged = await service.HasChangedAsync(setting0);
-
-            Assert.IsFalse(hasChanged);
-        }
-
-        [Test]
-        public async Task HasChangedNoValueNewValue()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting setting0 = CreateSetting();
-
-            try
-            {
-                ConfigurationSetting setting1 = await service.SetAsync(setting0);
-
-                // Test
-                bool hasChanged = await service.HasChangedAsync(setting0);
-
-                Assert.IsTrue(hasChanged);
-            }
-            finally
-            {
-                await service.DeleteAsync(setting0.Key, setting0.Label);
-            }
-        }
-
-        [Test]
-        public async Task HasChangedValuesMatch()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting setting0 = CreateSetting();
-
-            try
-            {
-                ConfigurationSetting setting1 = await service.SetAsync(setting0);
-
-                // Test
-                bool hasChanged = await service.HasChangedAsync(setting1);
-
-                Assert.IsFalse(hasChanged);
-            }
-            finally
-            {
-                await service.DeleteAsync(setting0.Key, setting0.Label);
-            }
-        }
-
-        [Test]
-        public async Task HasChangedValuesDontMatch()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting setting0 = CreateSetting();
-
-            try
-            {
-                ConfigurationSetting setting1 = await service.SetAsync(setting0);
-                setting0.Value = "test_value2";
-                ConfigurationSetting setting2 = await service.SetAsync(setting0);
-
-                // Test
-                bool hasChanged = await service.HasChangedAsync(setting1);
-
-                Assert.IsTrue(hasChanged);
-            }
-            finally
-            {
-                await service.DeleteAsync(setting0.Key, setting0.Label);
-            }
-        }
-
-        [Test]
-        public async Task HasChangedValueNotFound()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting setting0 = CreateSetting();
-
-            try
-            {
-                ConfigurationSetting setting1 = await service.SetAsync(setting0);
-                var response = await service.DeleteAsync(setting1.Key, setting1.Label);
-
-                // Test
-                bool hasChanged = await service.HasChangedAsync(setting1);
-
-                Assert.IsTrue(hasChanged);
-            }
-            finally
-            {
-                await service.DeleteAsync(setting0.Key, setting0.Label);
-            }
-        }
 
         [Test]
         public async Task SetReadOnlyOnSetting()

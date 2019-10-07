@@ -11,7 +11,7 @@ namespace Azure.Core.Http
     {
         private readonly Request _request;
 
-        public RequestHeaders(Request request)
+        internal RequestHeaders(Request request)
         {
             _request = request;
         }
