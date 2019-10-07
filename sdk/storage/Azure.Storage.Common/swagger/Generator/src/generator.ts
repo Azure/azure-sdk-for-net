@@ -1184,13 +1184,13 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
         const properties = <IProperty[]>Object.values(type.properties);
         const childName = '_child';
         if (properties.some(p =>
-            /* required */(!p.required && (!isPrimitiveType(p.model) || !p.model.itemType || !p.xml || !!p.xml.wrapped)) &&
+            ((!isPrimitiveType(p.model) || !p.model.itemType || !p.xml || !!p.xml.wrapped)) &&
             /* not attr */ (!p.xml || (p.xml.attribute !== true)) ||
             /* dictionary */ p.model.type === `dictionary`)) {
             w.line(`System.Xml.Linq.XElement ${childName};`);
         }
         const attributeName = '_attribute';
-        if (properties.some(p => !p.required && (p.xml !== undefined) && (p.xml.attribute === true))) {
+        if (properties.some(p => (p.xml !== undefined) && (p.xml.attribute === true))) {
             w.line(`System.Xml.Linq.XAttribute ${attributeName};`);
         }
 
@@ -1198,6 +1198,12 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
         const valueName = '_value';
         const skipInit = (<IProperty[]>Object.values(type.properties)).some(p => isObjectType(p.model) || (isPrimitiveType(p.model) && (!!p.model.itemType || p.model.type === `dictionary`)));
         if (!type.struct) { w.line(`${types.getName(type)} ${valueName} = new ${types.getName(type)}(${skipInit ? 'true' : ''});`); }
+
+        if (type.struct) {
+            for (const property of properties) {
+                w.line(`${types.getDeclarationType(property.model, true, false, true)} ${naming.parameter(property.clientName)} = default;`);
+            }
+        }
 
         // Deserialize each of its properties
         for (const property of properties) {
@@ -1222,7 +1228,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
             element = `${element}.${accessor}(${xname})`;
 
             // Decide if we have to put it in the _child/_attribute temporaries or can use it directly
-            const target = property.required && !wrapped ? element : (isAttribute ? attributeName : childName);
+            const target = isAttribute ? attributeName : childName;
 
             // Read and parse the content of an indiviual element or attribute
             const parse = (text: string, model: IModelType): string => {
@@ -1233,7 +1239,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     // Change fromName if it ever stops being universal to the format
                     return `${types.getName(model)}.${fromName}(${text})`;
                 } else {
-                    if (isEnumType(model) && model.skipValue) { 
+                    if (isEnumType(model) && model.skipValue) {
                         // If skipValue is set on the enum, that means that the service would return a null for that value.
                         // Hence, we add the null conditional for this case. 
                         return types.convertFromString(`${text}?.Value`, model, service);
@@ -1293,21 +1299,16 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                 }
             } else {
                 // Assign the value
-                const assignment = type.struct ? `${types.getDeclarationType(property.model, true, false, true)} ${naming.parameter(property.clientName)} = ${parse(target, property.model)};`
+                const assignment = type.struct ? `${naming.parameter(property.clientName)} = ${parse(target, property.model)};`
                     : `${valueName}.${naming.property(property.clientName)} = ${parse(target, property.model)};`;
-                if (property.required) {
-                    // If a property is required, the XML element will always be there so we can just use it
-                    w.line(assignment);
-                } else {
-                    // Otherwise we'll check if the element is there beforehand
-                    w.line(`${target} = ${element};`);
-                    w.write(`if (${target} != null`);
-                    if (isEnumType(property.model)) {
-                        w.write(` && !string.IsNullOrEmpty(${target}.Value)`);
-                    }
-                    w.line(`)`);
-                    w.scope('{', '}', () => w.line(assignment));
+                // we'll check if the element is there beforehand
+                w.line(`${target} = ${element};`);
+                w.write(`if (${target} != null`);
+                if (isEnumType(property.model)) {
+                    w.write(` && !string.IsNullOrEmpty(${target}.Value)`);
                 }
+                w.line(`)`);
+                w.scope('{', '}', () => w.line(assignment));
             }
         }
         if (type.struct) {
