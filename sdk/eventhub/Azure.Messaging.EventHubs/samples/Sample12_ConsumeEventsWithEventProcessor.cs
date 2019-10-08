@@ -180,13 +180,13 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Keeps track of the amount of active SamplePartitionProcessors.
             /// </summary>
             ///
-            public static int ActiveInstancesCount { get => s_activeInstancesCount; }
+            public static int ActiveInstancesCount  => s_activeInstancesCount;
 
             /// <summary>
             ///   Keeps track of the amount of received events across all existing instances of this class.
             /// </summary>
             ///
-            public static int TotalEventsCount { get => s_totalEventsCount; }
+            public static int TotalEventsCount => s_totalEventsCount;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
