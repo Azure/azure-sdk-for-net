@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             // Read through the batch body one section at a time until the
             // reader returns null
-            MultipartReader reader = new MultipartReader(batchBoundary, batchContent) { HeadersCountLimit = 64 };
+            MultipartReader reader = new MultipartReader(batchBoundary, batchContent);
             for (MultipartSection section = await reader.GetNextSectionAsync(async, cancellationToken).ConfigureAwait(false);
                 section != null;
                 section = await reader.GetNextSectionAsync(async, cancellationToken).ConfigureAwait(false))
@@ -252,6 +252,6 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             async ?
                 await reader.ReadNextSectionAsync(cancellationToken).ConfigureAwait(false) :
-                reader.ReadNextSectionAsync(cancellationToken).GetAwaiter().GetResult(); // TODO: Decide if we need a proper sync API here
+                reader.ReadNextSectionAsync(cancellationToken).GetAwaiter().GetResult(); // #7972: Decide if we need a proper sync API here
     }
 }
