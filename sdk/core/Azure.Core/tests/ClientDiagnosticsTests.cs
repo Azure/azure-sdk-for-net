@@ -27,13 +27,13 @@ namespace Azure.Core.Tests
 
             scope.Start();
 
-            KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
 
             Activity activity = Activity.Current;
 
             scope.Dispose();
 
-            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
@@ -57,13 +57,13 @@ namespace Azure.Core.Tests
             scope.AddLink("id2");
             scope.Start();
 
-            KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
 
             Activity activity = Activity.Current;
 
             scope.Dispose();
 
-            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests
 
             scope.Start();
 
-            KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
 
             Activity activity = Activity.Current;
 
@@ -107,8 +107,8 @@ namespace Azure.Core.Tests
             scope.Failed(exception);
             scope.Dispose();
 
-            KeyValuePair<string, object> exceptionEvent = testListener.Events.Dequeue();
-            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) exceptionEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
