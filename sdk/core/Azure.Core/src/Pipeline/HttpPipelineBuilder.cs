@@ -64,8 +64,7 @@ namespace Azure.Core.Pipeline
 
             return new HttpPipeline(options.Transport,
                 policies.ToArray(),
-                responseClassifier,
-                new ClientDiagnostics(isDistributedTracingEnabled));
+                responseClassifier);
         }
 
         // internal for testing

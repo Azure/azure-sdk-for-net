@@ -525,6 +525,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
@@ -749,6 +750,7 @@ namespace Azure.Storage.Blobs.Specialized
                             {
                                 Pipeline.LogTrace($"Append attempt {++appendAttempt}");
                                 return BlobRestClient.AppendBlob.AppendBlockAsync(
+                                    ClientDiagnostics,
                                     Pipeline,
                                     Uri,
                                     body: content,
@@ -1000,6 +1002,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sourceUri: sourceUri,

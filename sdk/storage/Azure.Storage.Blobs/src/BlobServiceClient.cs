@@ -45,6 +45,18 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
         private string _accountName;
@@ -111,6 +123,7 @@ namespace Azure.Storage.Blobs
             _uri = conn.BlobEndpoint;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -190,6 +203,7 @@ namespace Azure.Storage.Blobs
             _uri = serviceUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -202,10 +216,12 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = serviceUri;
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -222,7 +238,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline);
+            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics);
 
         #region GetBlobContainers
         /// <summary>
@@ -357,6 +373,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.ListBlobContainersSegmentAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: continuationToken,
@@ -459,6 +476,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.GetAccountInfoAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -564,6 +582,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -690,6 +709,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.SetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         properties,
@@ -802,6 +822,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.GetStatisticsAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -945,6 +966,7 @@ namespace Azure.Storage.Blobs
                     var keyInfo = new KeyInfo { Start = start, Expiry = expiry };
 
                     return await BlobRestClient.Service.GetUserDelegationKeyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         keyInfo: keyInfo,

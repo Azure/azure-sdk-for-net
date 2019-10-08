@@ -138,6 +138,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const pairName = `_headerPair`;
     let responseName = "_response";
     const scopeName = "_scope";
+    const clientDiagnostics = "clientDiagnostics";
     const operationName = "operationName";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
@@ -169,11 +170,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${clientDiagnostics}">The ClientDiagnostics instance used for operation reporting.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
+        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
@@ -191,7 +194,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope(${operationName});`)
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${clientDiagnostics}.CreateScope(${operationName});`)
         w.line(`try`);
         w.scope('{', '}', () => {
             for (const arg of operation.request.arguments) {

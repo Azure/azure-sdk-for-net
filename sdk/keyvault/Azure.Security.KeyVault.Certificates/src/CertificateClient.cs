@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             _defaultPolicy = options.DefaultPolicy ?? CreateDefaultPolicy();
 
-            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline);
+            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, new ClientDiagnostics(options));
         }
 
         // Certificates API

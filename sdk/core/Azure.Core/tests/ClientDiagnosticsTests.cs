@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         {
 
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests
         public void AddLinkCallsPassesLinksAsPartOfStartPayload()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -90,7 +90,7 @@ namespace Azure.Core.Tests
         public void FailedStopsActivityAndWritesExceptionEvent()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -124,7 +124,7 @@ namespace Azure.Core.Tests
         [Test]
         public void NoopsWhenDisabled()
         {
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(false);
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", false);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");
 
             scope.AddAttribute("Attribute1", "Value1");
