@@ -9,7 +9,6 @@
 // </auto-generated>
 
 using Azure.AI.InkRecognizer.Models;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Http;
 using System;
@@ -130,19 +129,18 @@ namespace Azure.AI.InkRecognizer
                 if (response.Status == 200)
                 {
                     var root = InkRecognitionResponse.Parse(responseText);
-                    return new Response<RecognitionRoot>(response, root);
+                    return Response.FromValue<RecognitionRoot>(root, response);
                 }
                 // For bad requests and internal server errors
                 else if (response.Status >= 400 && response.Status < 600)
                 {
                     var serverError = new HttpErrorDetails(responseText);
-                    var responseFailedException = response.CreateRequestFailedException(serverError.ToString());
-                    throw responseFailedException;
+                    throw new RequestFailedException(serverError.ToString());
+
                 }
-                // For all other http errors
+                else
                 {
-                    var responseFailedException = response.CreateRequestFailedException(responseText);
-                    throw responseFailedException;
+                    throw new RequestFailedException(responseText);
                 }
             }
             catch (Exception)
@@ -210,20 +208,18 @@ namespace Azure.AI.InkRecognizer
                 if (response.Status == 200)
                 {
                     var root = InkRecognitionResponse.Parse(responseText);
-                    return new Response<RecognitionRoot>(response, root);
+                    return Response.FromValue<RecognitionRoot>(root, response);
                 }
                 // For bad requests and internal server errors
                 else if (response.Status >= 400 && response.Status < 600)
                 {
                     var serverError = new HttpErrorDetails(responseText);
-                    var responseFailedException = await response.CreateRequestFailedExceptionAsync(serverError.ToString()).ConfigureAwait(false);
-                    throw responseFailedException;
+                    throw new RequestFailedException(serverError.ToString());
                 }
                 else
                 {
-                    // For all other http errors
-                    var responseFailedException = await response.CreateRequestFailedExceptionAsync(responseText).ConfigureAwait(false);
-                    throw responseFailedException;
+                    // For all other http errors                    
+                    throw new RequestFailedException(responseText);
                 }
             }
             catch (Exception)
@@ -251,8 +247,14 @@ namespace Azure.AI.InkRecognizer
             request.Content = HttpPipelineRequestContent.Create(content);
 
             // specify HTTP request line
-            //request.SetRequestLine(HttpPipelineMethod.Put, _endpoint);
-            request.SetRequestLine(RequestMethod.Put, _endpoint);
+            request.Method = RequestMethod.Put;
+            var requestUri = new RequestUriBuilder();
+            requestUri.Reset(_endpoint);
+            request.Uri.Scheme= requestUri.Scheme;
+            request.Uri.Host= requestUri.Host;
+            request.Uri.Port = requestUri.Port;
+            request.Uri.Path= requestUri.Path;
+            request.Uri.Query= requestUri.Query;
 
             // add headers for authentication
             _credential.SetRequestCredentials(request);

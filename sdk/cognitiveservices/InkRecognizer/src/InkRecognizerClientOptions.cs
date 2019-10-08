@@ -73,13 +73,15 @@ namespace Azure.AI.InkRecognizer
             Preview1 = 0,
         }
 
-        private  void CreatePolicies()
+        private void CreatePolicies()
         {
-            RetryOps = new RetryOptions()
+            var option = new InkRecognizerClientOptions()
             {
+                Retry ={
                 Mode = RetryMode.Exponential,
                 MaxDelay = TimeSpan.FromSeconds(0.8),
                 MaxRetries = 3
+            }
             };
 
             //LoggingPolicy = new LoggingPolicy();
