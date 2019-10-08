@@ -430,6 +430,23 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventHubClient.CreateProducer" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateProducerValidatesClosed()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var mockRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), mockRetryPolicy);
+            await client.CloseAsync(cancellationSource.Token);
+
+            Assert.That(() => client.CreateProducer(new EventHubProducerOptions(), mockRetryPolicy), Throws.InstanceOf<EventHubsObjectClosedException>());
+        }
+
+        /// <summary>
         ///   Gets the active retry policy for the given client, using the
         ///   private field.
         /// </summary>

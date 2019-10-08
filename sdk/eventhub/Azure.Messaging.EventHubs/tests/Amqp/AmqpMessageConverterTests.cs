@@ -337,7 +337,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using AmqpMessage message = converter.CreateBatchFromEvents(new[] { eventData }, partitionKey);
             Assert.That(message, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(message.Batchable, Is.True, "The batch envelope should be set to batchable.");
-            Assert.That(message.MessageFormat, Is.EqualTo(AmqpConstants.AmqpBatchedMessageFormat), "The batch envelope should have a batchable format.");
+            Assert.That(message.MessageFormat, Is.Null, "The batch envelope should be not be marked with a batchable format when created from one event.");
             Assert.That(message.DataBody, Is.Not.Null, "The batch envelope should a body.");
             Assert.That(message.DataBody.ToList().Count, Is.EqualTo(1), "The batch envelope should contain a single event in the body.");
             Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpAnnotation.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
@@ -538,7 +538,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(new[] { source }, partitionKey);
             Assert.That(batchEnvelope, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(batchEnvelope.Batchable, Is.True, "The batch envelope should be set to batchable.");
-            Assert.That(batchEnvelope.MessageFormat, Is.EqualTo(AmqpConstants.AmqpBatchedMessageFormat), "The batch envelope should have a batchable format.");
+            Assert.That(batchEnvelope.MessageFormat, Is.Null, "The batch envelope should be not be marked with a batchable format when created from one event.");
             Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
             Assert.That(batchEnvelope.DataBody.ToList().Count, Is.EqualTo(1), "The batch envelope should contain a single event in the body.");
             Assert.That(batchEnvelope.MessageAnnotations.Map.TryGetValue(AmqpAnnotation.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");

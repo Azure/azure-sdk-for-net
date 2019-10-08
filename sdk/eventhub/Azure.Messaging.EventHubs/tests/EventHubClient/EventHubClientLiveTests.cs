@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
@@ -253,9 +254,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
-                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<ObjectDisposedException>());
-                    Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<ObjectDisposedException>());
-                    Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
                 }
             }
         }
