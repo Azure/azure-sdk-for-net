@@ -287,7 +287,7 @@ directive:
     $.name = "permissions";
 ```
 
-### ShareItemProperties
+### Set Start/Expiry nullable in AccessPolicy 
 ``` yaml
 directive:
 - from: swagger-document
