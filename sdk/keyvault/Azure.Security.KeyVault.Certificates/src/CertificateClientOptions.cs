@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Version = version;
 
-            Diagnostics.LoggingAllowedQueryParameters.Add("api-version");
+            this.ConfigureLogging();
         }
 
         /// <summary>

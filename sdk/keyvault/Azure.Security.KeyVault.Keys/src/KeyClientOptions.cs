@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Version = version;
 
-            Diagnostics.LoggingAllowedQueryParameters.Add("api-version");
+            this.ConfigureLogging();
         }
 
         internal string GetVersionString()
