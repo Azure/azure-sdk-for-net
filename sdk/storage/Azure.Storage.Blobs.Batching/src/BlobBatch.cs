@@ -79,12 +79,12 @@ namespace Azure.Storage.Blobs.Specialized
             _client == client;
 
         /// <summary>
-        /// Verify that the desired operation is allowed.
+        /// Set the batch operation type or throw if not allowed.
         /// </summary>
         /// <param name="operationType">
         /// The type of operation to perform.
         /// </param>
-        private void EnsureAllowed(BlobBatchOperationType operationType)
+        private void SetBatchOperationType(BlobBatchOperationType operationType)
         {
             if (Submitted)
             {
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing the blob to delete.
         /// </param>
         /// <param name="blobName">
@@ -129,14 +129,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
         public virtual Response DeleteBlob(
-            string containerName,
+            string blobContainerName,
             string blobName,
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default)
         {
             var blobUri = new BlobUriBuilder(_client.Uri)
             {
-                BlobContainerName = containerName,
+                BlobContainerName = blobContainerName,
                 BlobName = blobName
             };
             return DeleteBlob(
@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default)
         {
-            EnsureAllowed(BlobBatchOperationType.Delete);
+            SetBatchOperationType(BlobBatchOperationType.Delete);
             HttpPipelineMessage message = BlobRestClient.Blob.DeleteAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// information about block blob level tiering
         /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
         /// </summary>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing the blob to set the tier of.
         /// </param>
         /// <param name="blobName">
@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
         public virtual Response SetBlobAccessTier(
-            string containerName,
+            string blobContainerName,
             string blobName,
             AccessTier accessTier,
             RehydratePriority? rehydratePriority = default,
@@ -234,7 +234,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var blobUri = new BlobUriBuilder(_client.Uri)
             {
-                BlobContainerName = containerName,
+                BlobContainerName = blobContainerName,
                 BlobName = blobName
             };
             return SetBlobAccessTier(
@@ -260,13 +260,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
-        /// setting the access tier.
-        /// </param>
         /// <param name="rehydratePriority">
         /// Optional <see cref="RehydratePriority"/>
         /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
+        /// <param name="leaseAccessConditions">
+        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
+        /// setting the access tier.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> on successfully deleting.  The response
@@ -279,7 +279,7 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             LeaseAccessConditions? leaseAccessConditions = default)
         {
-            EnsureAllowed(BlobBatchOperationType.SetAccessTier);
+            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
             HttpPipelineMessage message = BlobRestClient.Blob.SetAccessTierAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,

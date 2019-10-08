@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Test
         {
             TestDiagnostics = false;
 
-            using var scenario = Scenario();
+            using TestScenario scenario = Scenario();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Batch_Limit()
         {
-            using var scenario = Scenario();
+            using TestScenario scenario = Scenario();
             Uri[] blobs = await scenario.CreateBlobUrisAsync(257);
             BlobBatchClient client = scenario.GetBlobBatchClient();
 
@@ -73,8 +73,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void Batch_Homogenous_Delete()
         {
-            using var scenario = Scenario();
-            var uris = scenario.GetInvalidBlobUris(2);
+            using TestScenario scenario = Scenario();
+            Uri[] uris = scenario.GetInvalidBlobUris(2);
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
 
@@ -88,8 +88,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void Batch_Homogenous_SetTier()
         {
-            using var scenario = Scenario();
-            var uris = scenario.GetInvalidBlobUris(2);
+            using TestScenario scenario = Scenario();
+            Uri[] uris = scenario.GetInvalidBlobUris(2);
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
 
@@ -103,8 +103,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void Batch_CannotReadBeforeSubmit()
         {
-            using var scenario = Scenario();
-            var uri = scenario.GetInvalidBlobUris(1)[0];
+            using TestScenario scenario = Scenario();
+            Uri uri = scenario.GetInvalidBlobUris(1)[0];
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -112,13 +112,13 @@ namespace Azure.Storage.Blobs.Test
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => { int status = response.Status; });
 
-            StringAssert.Contains("", ex.Message);
+            StringAssert.Contains("Cannot use the Response before calling BlobBatchClient.SubmitBatch", ex.Message);
         }
 
         [Test]
         public async Task Batch_CanUseResponseAfterException()
         {
-            using var scenario = Scenario();
+            using TestScenario scenario = Scenario();
             Uri[] good = await scenario.CreateBlobUrisAsync(1);
             Uri[] bad = scenario.GetInvalidBlobUris(1);
 
@@ -144,13 +144,13 @@ namespace Azure.Storage.Blobs.Test
         {
             TestDiagnostics = false;
 
-            using var scenario1 = Scenario();
+            using TestScenario scenario1 = Scenario();
             BlobBatchClient client1 = scenario1.GetBlobBatchClient();
-            var uri = scenario1.GetInvalidBlobUris(1)[0];
+            Uri uri = scenario1.GetInvalidBlobUris(1)[0];
             BlobBatch batch1 = client1.CreateBatch();
             Response response = batch1.DeleteBlob(uri);
 
-            using var scenario2 = Scenario();
+            using TestScenario scenario2 = Scenario();
             BlobBatchClient client2 = scenario2.GetBlobBatchClient();
 
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Batch_AcrossContainers()
         {
-            using var scenario = Scenario();
+            using TestScenario scenario = Scenario();
             BlobContainerClient container1 = scenario.CreateContainer();
             Uri[] blobs1 = await scenario.CreateBlobUrisAsync(container1, 2);
             BlobContainerClient container2 = scenario.CreateContainer();
@@ -180,9 +180,9 @@ namespace Azure.Storage.Blobs.Test
         {
             // Create a container using SAS for Auth
             string containerName = GetNewContainerName();
-            using var _ = GetNewContainer(out BlobContainerClient container);
+            using IDisposable _ = GetNewContainer(out BlobContainerClient container);
 
-            using var scenario = Scenario(GetServiceClient_BlobServiceSas_Container(containerName));
+            using TestScenario scenario = Scenario(GetServiceClient_BlobServiceSas_Container(containerName));
             Uri[] blobs = await scenario.CreateBlobUrisAsync(container, 2);
             BlobBatchClient client = scenario.GetBlobBatchClient();
             StorageRequestFailedException ex = Assert.ThrowsAsync<StorageRequestFailedException>(
@@ -201,8 +201,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_Basic()
         {
-            using var scenario = Scenario();
-            var blobs = await scenario.CreateBlobsAsync(3);
+            using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -222,9 +222,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_Basic_Convenience()
         {
-            using var scenario = Scenario();
-            var blobs = await scenario.CreateBlobsAsync(3);
-            var uris = blobs.Select(b => b.Uri).ToArray();
+            using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             Response[] responses = await client.DeleteBlobsAsync(uris);
@@ -236,9 +236,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_OneFails()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(2);
-            var bad = scenario.GetInvalidBlobUris(1);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(2);
+            Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -258,10 +258,10 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_OneFails_Convenience()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(2);
-            var bad = scenario.GetInvalidBlobUris(1);
-            var uris = good.Select(b => b.Uri).Concat(bad).ToArray();
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(2);
+            Uri[] bad = scenario.GetInvalidBlobUris(1);
+            Uri[] uris = good.Select(b => b.Uri).Concat(bad).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
@@ -278,9 +278,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_OneFails_NoThrow()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(2);
-            var bad = scenario.GetInvalidBlobUris(1);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(2);
+            Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -297,9 +297,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_MultipleFail()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(1);
-            var bad = scenario.GetInvalidBlobUris(2);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(1);
+            Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -318,10 +318,10 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_MultipleFail_Convenience()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(1);
-            var bad = scenario.GetInvalidBlobUris(2);
-            var uris = good.Select(b => b.Uri).Concat(bad).ToArray();
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(1);
+            Uri[] bad = scenario.GetInvalidBlobUris(2);
+            Uri[] uris = good.Select(b => b.Uri).Concat(bad).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
@@ -336,9 +336,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Delete_MultipleFail_NoThrow()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(1);
-            var bad = scenario.GetInvalidBlobUris(2);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(1);
+            Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -357,8 +357,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_Basic()
         {
-            using var scenario = Scenario();
-            var blobs = await scenario.CreateBlobsAsync(3);
+            using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -378,12 +378,12 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_Basic_Convenience()
         {
-            using var scenario = Scenario();
-            var blobs = await scenario.CreateBlobsAsync(3);
-            var uris = blobs.Select(b => b.Uri).ToArray();
+            using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            Response[] responses = await client.SetBlobsAccessTierAsync(AccessTier.Cool, uris);
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
 
             scenario.AssertStatus(200, responses);
             await scenario.AssertTiers(AccessTier.Cool, blobs);
@@ -392,9 +392,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_OneFails()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(2);
-            var bad = scenario.GetInvalidBlobUris(1);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(2);
+            Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -414,14 +414,14 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_OneFails_Convenience()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(2);
-            var bad = scenario.GetInvalidBlobUris(1);
-            var uris = good.Select(b => b.Uri).Concat(bad).ToArray();
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(2);
+            Uri[] bad = scenario.GetInvalidBlobUris(1);
+            Uri[] uris = good.Select(b => b.Uri).Concat(bad).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
-                async () => await client.SetBlobsAccessTierAsync(AccessTier.Cool, uris));
+                async () => await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool));
 
             StorageRequestFailedException ex = exes.InnerException as StorageRequestFailedException;
             Assert.IsNotNull(ex);
@@ -434,9 +434,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_OneFails_NoThrow()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(2);
-            var bad = scenario.GetInvalidBlobUris(1);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(2);
+            Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -454,9 +454,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_MultipleFail()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(1);
-            var bad = scenario.GetInvalidBlobUris(2);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(1);
+            Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -475,14 +475,14 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_MultipleFail_Convenience()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(1);
-            var bad = scenario.GetInvalidBlobUris(2);
-            var uris = good.Select(b => b.Uri).Concat(bad).ToArray();
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(1);
+            Uri[] bad = scenario.GetInvalidBlobUris(2);
+            Uri[] uris = good.Select(b => b.Uri).Concat(bad).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
-                async () => await client.SetBlobsAccessTierAsync(AccessTier.Cool, uris));
+                async () => await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool));
 
             Assert.AreEqual(2, exes.InnerExceptions.Count);
             Assert.AreEqual(404, (exes.InnerExceptions[0] as StorageRequestFailedException)?.Status);
@@ -493,9 +493,9 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetBlobAccessTier_MultipleFail_NoThrow()
         {
-            using var scenario = Scenario();
-            var good = await scenario.CreateBlobsAsync(1);
-            var bad = scenario.GetInvalidBlobUris(2);
+            using TestScenario scenario = Scenario();
+            BlobClient[] good = await scenario.CreateBlobsAsync(1);
+            Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             BlobBatch batch = client.CreateBatch();
@@ -512,7 +512,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion SetBlobAccessTier
 
         #region Scenario helper
-        private TestScenario Scenario() => Scenario(this.GetServiceClient_SharedKey());
+        private TestScenario Scenario() => Scenario(GetServiceClient_SharedKey());
         private TestScenario Scenario(BlobServiceClient client) => new TestScenario(this, client);
 
         /// <summary>
@@ -521,9 +521,9 @@ namespace Azure.Storage.Blobs.Test
         private class TestScenario : IDisposable
         {
             public BlobServiceClient Service { get; }
-            private BlobBatchClientTests _test = null;
+            private readonly BlobBatchClientTests _test = null;
             private int _blobId = 0;
-            private List<IDisposable> _containers = new List<IDisposable>();
+            private readonly List<IDisposable> _containers = new List<IDisposable>();
 
             public TestScenario(BlobBatchClientTests test, BlobServiceClient service)
             {

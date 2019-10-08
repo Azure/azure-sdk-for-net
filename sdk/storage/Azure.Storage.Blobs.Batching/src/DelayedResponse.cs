@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// BlobRestClient.Group.OperationName_CreateResponse methods which
         /// correctly throw when necessary.
         /// </summary>
-        private Func<Response, Response> _processResponse = null;
+        private readonly Func<Response, Response> _processResponse = null;
 
         /// <summary>
         /// Gets the live Response or throws an InvalidOperationException if
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public DelayedResponse(HttpPipelineMessage message, Func<Response, Response> processResponse = null)
         {
-            // Have the BatchPipelineTransport associate this repsonse with the
+            // Have the BatchPipelineTransport associate this response with the
             // message when it's sent.
             message.SetProperty(BatchConstants.DelayedResponsePropertyName, this);
             _processResponse = processResponse;

@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Response.Headers"/>.
         /// </summary>
-        private IDictionary<string, List<string>> _headers =
+        private readonly IDictionary<string, List<string>> _headers =
             new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
         /// <inheritdoc />

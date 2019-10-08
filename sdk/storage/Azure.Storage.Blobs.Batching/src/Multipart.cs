@@ -16,6 +16,10 @@ namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
     /// Provides support for creating and parsing multipart/mixed content.
+    /// This is implementing a couple of layered standards as mentioned at
+    /// https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch
+    /// including https://www.odata.org/documentation/odata-version-3-0/batch-processing/
+    /// and https://www.ietf.org/rfc/rfc2046.txt.
     /// </summary>
     internal static class Multipart
     {
@@ -61,8 +65,14 @@ namespace Azure.Storage.Blobs.Specialized
             var contentType = BatchConstants.MultipartContentTypePrefix + boundary;
 
             // TODO: Investigate whether to use a StreamWriter instead of a
-            // StringBuilder we turn into a MemoryStream
+            // StringBuilder we turn into a MemoryStream (this will have to
+            // happen once we support binary content anyway).
             var content = new StringBuilder(1024);
+
+            // We're implementing the limited subset of
+            // https://www.ietf.org/rfc/rfc2046.txt required for Storage
+            // batching.  The format needs to be followed precisely for the
+            // service to correctly parse the request.
 
             const string newline = "\r\n";
             var operationId = 0;
@@ -101,7 +111,7 @@ namespace Azure.Storage.Blobs.Specialized
             // Write the final boundary
             content.Append(BatchConstants.BatchSeparator).Append(boundary).Append(BatchConstants.BatchSeparator).Append(newline);
 
-            // Convert the content into a response stream
+            // Convert the content into a request stream
             Stream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(content.ToString()));
 
             // Return the content and type

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -424,29 +423,6 @@ namespace Azure.Storage.Blobs.Specialized
         #endregion Create/SubmitBatch
 
         #region DeleteBlobs
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        /// <summary>
-        /// The DeleteBlobs operation marks the specified blobs for deletion.
-        /// The blobs are later deleted during garbage collection.  All of the
-        /// deletions are sent as a single batched request.
-        /// </summary>
-        /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <returns>
-        /// The <see cref="Response"/>s for the individual Delete operations.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will be wrapped in an <see cref="AggregateException"/>.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Response[] DeleteBlobs(params Uri[] blobUris) =>
-            DeleteBlobsInteral(
-                blobUris,
-                false, // async
-                CancellationToken.None)
-                .EnsureCompleted();
-
         /// <summary>
         /// The DeleteBlobs operation marks the specified blobs for deletion.
         /// The blobs are later deleted during garbage collection.  All of the
@@ -457,6 +433,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
         /// <returns>
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
@@ -467,35 +446,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response[] DeleteBlobs(
-            CancellationToken cancellationToken,
-            params Uri[] blobUris) =>
+            IEnumerable<Uri> blobUris,
+            DeleteSnapshotsOption? deleteOptions = default,
+            CancellationToken cancellationToken = default) =>
             DeleteBlobsInteral(
                 blobUris,
+                deleteOptions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
-
-        /// <summary>
-        /// The DeleteBlobsAsync operation marks the specified blobs for
-        /// deletion. The blobs are later deleted during garbage collection.
-        /// All of the deletions are sent as a single batched request.
-        /// </summary>
-        /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <returns>
-        /// The <see cref="Response"/>s for the individual Delete operations.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will be wrapped in an <see cref="AggregateException"/>.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual async Task<Response[]> DeleteBlobsAsync(params Uri[] blobUris) =>
-            await DeleteBlobsInteral(
-                blobUris,
-                true, // async
-                CancellationToken.None)
-                .ConfigureAwait(false);
 
         /// <summary>
         /// The DeleteBlobsAsync operation marks the specified blobs for
@@ -507,6 +466,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
         /// <returns>
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
@@ -517,14 +479,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response[]> DeleteBlobsAsync(
-            CancellationToken cancellationToken,
-            params Uri[] blobUris) =>
+            IEnumerable<Uri> blobUris,
+            DeleteSnapshotsOption? deleteOptions = default,
+            CancellationToken cancellationToken = default) =>
             await DeleteBlobsInteral(
                 blobUris,
+                deleteOptions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The DeleteBlobsAsync operation marks the specified blobs for
@@ -532,6 +495,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -548,18 +514,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
         internal async Task<Response[]> DeleteBlobsInteral(
-            Uri[] blobUris,
+            IEnumerable<Uri> blobUris,
+            DeleteSnapshotsOption? deleteOptions,
             bool async,
             CancellationToken cancellationToken)
         {
             blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
-            Response[] responses = new Response[blobUris.Length];
+            var responses = new List<Response>();
 
             // Create the batch
             BlobBatch batch = CreateBatch();
-            for (int i = 0; i < blobUris.Length; i++)
+            foreach (Uri uri in blobUris)
             {
-                responses[i] = batch.DeleteBlob(blobUris[i]);
+                responses.Add(batch.DeleteBlob(uri, deleteOptions));
             }
 
             // Submit the batch
@@ -570,53 +537,28 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken)
                 .ConfigureAwait(false);
 
-            return responses;
+            return responses.ToArray();
         }
         #endregion DeleteBlobs
 
         #region SetBlobsAccessTier
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         /// <summary>
         /// The SetBlobsAccessTier operation sets the tier on blobs.  The
         /// operation is allowed on block blobs in a blob storage or general
         /// purpose v2 account.
         /// </summary>
+        /// <param name="blobUris">URIs of the blobs to set the tiers of.</param>
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blobs.
         /// </param>
-        /// <param name="blobUris">URIs of the blobs to set the tiers of.</param>
-        /// <returns>
-        /// The <see cref="Response"/>s for the individual Set Tier operations.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will be wrapped in an <see cref="AggregateException"/>.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Response[] SetBlobsAccessTier(
-            AccessTier accessTier,
-            params Uri[] blobUris) =>
-            SetBlobsAccessTierInteral(
-                blobUris,
-                accessTier,
-                false, // async
-                CancellationToken.None)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The SetBlobsAccessTier operation sets the tier on blobs.  The
-        /// operation is allowed on block blobs in a blob storage or general
-        /// purpose v2 account.
-        /// </summary>
-        /// <param name="accessTier">
-        /// Indicates the tier to be set on the blobs.
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be cancelled.
         /// </param>
-        /// <param name="blobUris">URIs of the blobs to set the tiers of.</param>
         /// <returns>
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
@@ -627,12 +569,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response[] SetBlobsAccessTier(
+            IEnumerable<Uri> blobUris,
             AccessTier accessTier,
-            CancellationToken cancellationToken,
-            params Uri[] blobUris) =>
+            RehydratePriority? rehydratePriority = default,
+            CancellationToken cancellationToken = default) =>
             SetBlobsAccessTierInteral(
                 blobUris,
                 accessTier,
+                rehydratePriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -642,42 +586,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation is allowed on block blobs in a blob storage or general
         /// purpose v2 account.
         /// </summary>
+        /// <param name="blobUris">URIs of the blobs to set the tiers of.</param>
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blobs.
         /// </param>
-        /// <param name="blobUris">URIs of the blobs to set the tiers of.</param>
-        /// <returns>
-        /// The <see cref="Response"/>s for the individual Set Tier operations.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will be wrapped in an <see cref="AggregateException"/>.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual async Task<Response[]> SetBlobsAccessTierAsync(
-            AccessTier accessTier,
-            params Uri[] blobUris) =>
-            await SetBlobsAccessTierInteral(
-                blobUris,
-                accessTier,
-                true, // async
-                CancellationToken.None)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The SetBlobsAccessTierAsync operation sets the tier on blobs.  The
-        /// operation is allowed on block blobs in a blob storage or general
-        /// purpose v2 account.
-        /// </summary>
-        /// <param name="accessTier">
-        /// Indicates the tier to be set on the blobs.
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be cancelled.
         /// </param>
-        /// <param name="blobUris">URIs of the blobs to set the tiers of.</param>
         /// <returns>
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
@@ -688,12 +608,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response[]> SetBlobsAccessTierAsync(
+            IEnumerable<Uri> blobUris,
             AccessTier accessTier,
-            CancellationToken cancellationToken,
-            params Uri[] blobUris) =>
+            RehydratePriority? rehydratePriority = default,
+            CancellationToken cancellationToken = default) =>
             await SetBlobsAccessTierInteral(
                 blobUris,
                 accessTier,
+                rehydratePriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -709,6 +631,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blobs.
+        /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -726,19 +652,20 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
         internal async Task<Response[]> SetBlobsAccessTierInteral(
-            Uri[] blobUris,
+            IEnumerable<Uri> blobUris,
             AccessTier accessTier,
+            RehydratePriority? rehydratePriority,
             bool async,
             CancellationToken cancellationToken)
         {
             blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
-            Response[] responses = new Response[blobUris.Length];
+            var responses = new List<Response>();
 
             // Create the batch
             BlobBatch batch = CreateBatch();
-            for (int i = 0; i < blobUris.Length; i++)
+            foreach (Uri uri in blobUris)
             {
-                responses[i] = batch.SetBlobAccessTier(blobUris[i], accessTier);
+                responses.Add(batch.SetBlobAccessTier(uri, accessTier, rehydratePriority));
             }
 
             // Submit the batch
@@ -749,7 +676,7 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken)
                 .ConfigureAwait(false);
 
-            return responses;
+            return responses.ToArray();
         }
         #endregion SetBlobsAccessTier
     }
