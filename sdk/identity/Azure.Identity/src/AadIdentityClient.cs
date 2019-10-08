@@ -36,7 +36,7 @@ namespace Azure.Identity
             _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(_options);
         }
 
         public static AadIdentityClient SharedClient { get { return s_sharedClient.Value; } }

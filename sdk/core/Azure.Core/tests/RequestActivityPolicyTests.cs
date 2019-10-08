@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
         {
             Activity activity = null;
             (string Key, object Value, DiagnosticListener) startEvent = default;
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             MockTransport mockTransport = CreateMockTransport(_ =>
             {
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task PassesMessageIntoIsEnabledStartAndStopEvents()
         {
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             var transport = new MockTransport(new MockResponse(200));
 
@@ -176,7 +176,7 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task ActivityIsNotCreatedWhenDisabled()
         {
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             var transport = new MockTransport(new MockResponse(200));
 
