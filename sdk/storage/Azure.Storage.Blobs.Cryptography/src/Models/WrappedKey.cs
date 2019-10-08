@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
 {
     /// <summary>
     /// Represents the envelope key details stored on the service.

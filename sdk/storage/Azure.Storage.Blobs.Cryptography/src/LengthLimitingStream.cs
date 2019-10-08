@@ -68,6 +68,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             _wrappedStream.Dispose();
         }
 
+        /// <summary>
+        /// If this stream has a max length set, ensure that the number of bytes to read is never greated than the
+        /// remaining bytes to read before max length is hit.
+        /// </summary>
+        /// <param name="count">Number of desired bytes to read.</param>
+        /// <returns>The adjusted number of bytes to read.</returns>
         private int Clamp(int count)
         {
             if (this._maxLength.HasValue)

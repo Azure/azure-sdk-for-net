@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Specialized.Cryptography.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
@@ -135,7 +136,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         {
             if (this.LocalKey == default && this.KeyResolver == default)
             {
-                throw new InvalidOperationException("Key and KeyResolver cannot both be null");
+                throw EncryptionErrors.NoKeyAccessor();
             }
         }
 
@@ -161,7 +162,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
             // did we request the last block?
             if (long.Parse(tokens[3], System.Globalization.CultureInfo.InvariantCulture) -
-                long.Parse(tokens[2], System.Globalization.CultureInfo.InvariantCulture) < 16)
+                long.Parse(tokens[2], System.Globalization.CultureInfo.InvariantCulture) < EncryptionConstants.ENCRYPTION_BLOCK_SIZE)
             {
                 return false;
             }
@@ -177,20 +178,33 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             AssertKeyAccessPresent();
             var encryptionData = GetAndValidateEncryptionData(metadata);
 
-            byte[] IV;
+            Stream plaintext;
             int read = 0;
-            if (encryptedBlobRange.AdjustedRange.Offset == 0)
+            if (encryptionData.HasValue)
             {
-                IV = encryptionData.ContentEncryptionIV;
+                byte[] IV;
+                if (encryptedBlobRange.AdjustedRange.Offset == 0)
+                {
+                    IV = encryptionData.Value.ContentEncryptionIV;
+                }
+                else
+                {
+                    IV = new byte[EncryptionConstants.ENCRYPTION_BLOCK_SIZE];
+                    ciphertext.Read(IV, 0, IV.Length);
+                    read = IV.Length;
+                }
+
+                plaintext = WrapStream(
+                    ciphertext,
+                    GetContentEncryptionKey(encryptionData.Value).ToArray(),
+                    encryptionData.Value,
+                    IV,
+                    noPadding);
             }
             else
             {
-                IV = new byte[EncryptionConstants.ENCRYPTION_BLOCK_SIZE];
-                ciphertext.Read(IV, 0, IV.Length);
-                read = IV.Length;
+                plaintext = ciphertext;
             }
-
-            var plaintext = WrapStream(ciphertext, GetContentEncryptionKey(encryptionData).ToArray(), encryptionData, IV, noPadding);
 
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
@@ -207,21 +221,35 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             AssertKeyAccessPresent();
             var encryptionData = GetAndValidateEncryptionData(metadata);
 
-            byte[] IV;
+            Stream plaintext;
             int read = 0;
-            if (encryptedBlobRange.AdjustedRange.Offset == 0)
+            if (encryptionData.HasValue)
             {
-                IV = encryptionData.ContentEncryptionIV;
+                byte[] IV;
+                if (encryptedBlobRange.AdjustedRange.Offset == 0)
+                {
+                    IV = encryptionData.Value.ContentEncryptionIV;
+                }
+                else
+                {
+                    IV = new byte[EncryptionConstants.ENCRYPTION_BLOCK_SIZE];
+                    await ciphertext.ReadAsync(IV, 0, IV.Length).ConfigureAwait(false);
+                    read = IV.Length;
+                }
+
+                plaintext = WrapStream(
+                    ciphertext,
+                    (await GetContentEncryptionKeyAsync(encryptionData.Value).ConfigureAwait(false)).ToArray(),
+                    encryptionData.Value,
+                    IV,
+                    noPadding);
             }
             else
             {
-                IV = new byte[EncryptionConstants.ENCRYPTION_BLOCK_SIZE];
-                await ciphertext.ReadAsync(IV, 0, IV.Length).ConfigureAwait(false);
-                read = IV.Length;
+                plaintext = ciphertext;
             }
 
-            var plaintext = WrapStream(ciphertext, (await GetContentEncryptionKeyAsync(encryptionData).ConfigureAwait(false)).ToArray(), encryptionData, IV, noPadding);
-
+            // still need to readjust ranges even if we didn't decrypt anything, so keep this out of branch
             int gap;
             if ((gap = (int)(encryptedBlobRange.OriginalRange.Offset - encryptedBlobRange.AdjustedRange.Offset) - read) > 0)
             {
@@ -235,14 +263,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         private static Metadata ExtractMetadata(ResponseHeaders headers)
         {
-            const string metadataPrefix = "x-ms-meta-";
-
             Metadata metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (HttpHeader header in headers)
             {
-                if (header.Name.StartsWith(metadataPrefix, StringComparison.InvariantCulture))
+                if (header.Name.StartsWith(Constants.HeaderNames.MetadataPrefix, StringComparison.InvariantCulture))
                 {
-                    metadata[header.Name.Substring(metadataPrefix.Length)] = header.Value;
+                    metadata[header.Name.Substring(Constants.HeaderNames.MetadataPrefix.Length)] = header.Value;
                 }
             }
 
@@ -254,14 +280,14 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// </summary>
         /// <param name="metadata">The blob's metadata</param>
         /// <returns>The relevant metadata.</returns>
-        private static EncryptionData GetAndValidateEncryptionData(Metadata metadata)
+        private static EncryptionData? GetAndValidateEncryptionData(Metadata metadata)
         {
             _ = metadata ?? throw new InvalidOperationException();
 
             EncryptionData encryptionData;
             if (!metadata.TryGetValue(EncryptionConstants.ENCRYPTION_DATA_KEY, out string encryptedDataString))
             {
-                throw new InvalidOperationException("Encryption data does not exist.");
+                return default;
             }
 
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(encryptedDataString)))
@@ -274,12 +300,9 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw new NullReferenceException();
 
             // Throw if the encryption protocol on the message doesn't match the version that this client library
-            // understands
-            // and is able to decrypt.
+            // understands and is able to decrypt.
             if (EncryptionConstants.ENCRYPTION_PROTOCOL_V1 != encryptionData.EncryptionAgent.Protocol) {
-                throw new ArgumentException(
-                    "Invalid Encryption Agent. This version of the client library does not understand the " +
-                        $"Encryption Agent set on the queue message: {encryptionData.EncryptionAgent}");
+                throw EncryptionErrors.BadEncryptionAgent(encryptionData.EncryptionAgent.Protocol);
             }
 
             return encryptionData;
@@ -305,8 +328,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             // Otherwise, use the resolver.
             else
             {
-                key = this.KeyResolver?.Resolve(encryptionData.WrappedContentKey.KeyId) ?? throw new ArgumentException(
-                    "Key mismatch. The resolver could not match the key specified by the service.");
+                key = this.KeyResolver?.Resolve(encryptionData.WrappedContentKey.KeyId)
+                    ?? throw EncryptionErrors.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
             }
 
             return key.UnwrapKey(
@@ -333,9 +356,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             else
             {
                 key = await (this.KeyResolver?.ResolveAsync(encryptionData.WrappedContentKey.KeyId) ??
-                    throw new ArgumentException(
-                        "Key mismatch. The resolver could not match the key specified by the service.")
-                    ).ConfigureAwait(false);
+                    throw EncryptionErrors.KeyNotFound(encryptionData.WrappedContentKey.KeyId)).ConfigureAwait(false);
             }
 
             return await key.UnwrapKeyAsync(
@@ -364,9 +385,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                         return new RollingBufferStream(new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read), 10 * Constants.MB);
                     }
                 default:
-                    throw new ArgumentException(
-                        "Invalid Encryption Algorithm found on the resource. This version of the client library " +
-                            "does not support the specified encryption algorithm.");
+                    throw EncryptionErrors.BadEncryptionAlgorithm();
             }
         }
 
@@ -386,7 +405,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     return new HttpRange(firstByte, lastByteInclusive - firstByte + 1);
 
                 default:
-                    throw new ArgumentException("Could not parse the serialized range.", nameof(serializedRange));
+                    throw Errors.ParsingHttpRangeFailed();
             }
         }
     }

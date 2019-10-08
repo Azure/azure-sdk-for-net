@@ -65,9 +65,12 @@ namespace Azure.Storage.Blobs
 
         public override long Position
         {
+            // easy to calculate position of stream if we haven't rolled over buffer
+            // otherwise, math based on buffer position and counter on underlying stream
             get => _hasFilled
                 ? _underlyingStreamBytesRead - ((_reservedBytePos - _nextBufferBytePos + BufferSize) % BufferSize)
                 : _nextBufferBytePos;
+            // set read position within rolling buffer
             set
             {
                 if (value < 0)

@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Specialized.Cryptography.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
@@ -82,35 +83,15 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKeyResolver keyResolver = default,
             string encryptionKeyWrapAlgorithm = default,
             BlobClientOptions options = default)
-            : base(connectionString, containerName, blobName, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+            : base(
+                  connectionString,
+                  containerName,
+                  blobName,
+                  options.WithPolicy(new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
         {
             this.KeyWrapper = keyEncryptionKey;
             this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
         }
-
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="BlockBlobClient"/>
-        ///// class.
-        ///// </summary>
-        ///// <param name="blobUri">
-        ///// A <see cref="Uri"/> referencing the encrypted block blob that includes the
-        ///// name of the account, the name of the container, and the name of
-        ///// the blob.
-        ///// </param>
-        ///// <param name="key"></param>
-        ///// <param name="options">
-        ///// Optional client options that define the transport pipeline
-        ///// policies for authentication, retries, etc., that are applied to
-        ///// every request.
-        ///// </param>
-        //public EncryptedBlockBlobClient(
-        //    Uri blobUri,
-        //    ClientSideEncryptionKey key,
-        //    BlobClientOptions options = default)
-        //    : base(blobUri, FluentAddPolicy(options, new ClientSideBlobDecryptionPolicy(key)))
-        //{
-        //    _blockBlobClient = new BlobClient(blobUri, options);
-        //}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
@@ -148,7 +129,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKeyResolver keyResolver = default,
             string encryptionKeyWrapAlgorithm = default,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+            : base(
+                  blobUri,
+                  credential,
+                  options.WithPolicy(new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
         {
             this.KeyWrapper = keyEncryptionKey;
             this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
@@ -190,7 +174,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             IKeyEncryptionKeyResolver keyResolver = default,
             string encryptionKeyWrapAlgorithm = default,
             BlobClientOptions options = default)
-            : base(blobUri, credential, FluentAddPolicy(options, new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+            : base(
+                  blobUri,
+                  credential,
+                  options.WithPolicy(new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
         {
             this.KeyWrapper = keyEncryptionKey;
             this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
@@ -212,19 +199,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             : base(blobUri, pipeline)
         {
             //TODO make new pipeline for this one
-        }
-
-        private static BlobClientOptions FluentAddPolicy(
-           BlobClientOptions options,
-           HttpPipelinePolicy policy,
-           HttpPipelinePosition position = HttpPipelinePosition.PerCall)
-        {
-            if (options == default)
-            {
-                options = new BlobClientOptions();
-            }
-            options.AddPolicy(policy, position);
-            return options;
         }
         #endregion ctors
 
@@ -260,7 +234,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
                 var encryptionData = new EncryptionData()
                 {
-                    EncryptionMode = "FullBlob",
+                    EncryptionMode = EncryptionConstants.ENCRYPTION_MODE,
                     ContentEncryptionIV = aesProvider.IV,
                     EncryptionAgent = new EncryptionAgent()
                     {
@@ -281,8 +255,9 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
                 return (
                     new RollingBufferStream(
-                        new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read), 10 * Constants.MB,
-                        plaintext.Length + (16 - plaintext.Length % 16)),
+                        new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read),
+                        EncryptionConstants.DEFAULT_ROLLING_BUFFER_SIZE,
+                        plaintext.Length + (EncryptionConstants.ENCRYPTION_BLOCK_SIZE - plaintext.Length % EncryptionConstants.ENCRYPTION_BLOCK_SIZE)),
                     encryptionData);
             }
         }
@@ -300,6 +275,24 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 rng.GetBytes(buff);
                 return buff;
             }
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal static class BlobClientOptionsExtensions
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public static BlobClientOptions WithPolicy(
+           this BlobClientOptions options,
+           HttpPipelinePolicy policy,
+           HttpPipelinePosition position = HttpPipelinePosition.PerCall)
+        {
+            if (options == default)
+            {
+                options = new BlobClientOptions();
+            }
+            options.AddPolicy(policy, position);
+            return options;
         }
     }
 

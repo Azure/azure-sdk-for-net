@@ -86,6 +86,7 @@ namespace Azure.Storage
         internal static class HeaderNames
         {
             public const string XMsPrefix = "x-ms-";
+            public const string MetadataPrefix = "x-ms-meta";
             public const string ErrorCode = "x-ms-error-code";
             public const string RequestId = "x-ms-request-id";
             public const string ClientRequestId = "x-ms-client-request-id";

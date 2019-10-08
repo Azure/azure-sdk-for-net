@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
 {
     /// <summary>
     /// Represents the encryption agent stored on the service.

@@ -6,7 +6,7 @@ using System.Buffers.Text;
 using System.Runtime.Serialization;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
 {
     /// <summary>
     /// Represents the encryption data that is stored on the service.
