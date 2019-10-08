@@ -11,28 +11,27 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    public partial class Price
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the Price class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public Price()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the Price class.
         /// </summary>
-        public SubscriptionScopeProperties(ScopeProperties scopes = default(ScopeProperties))
+        /// <param name="currencyCode">The ISO 4217 3-letter currency code for
+        /// the currency used by this purchase record.</param>
+        public Price(string currencyCode = default(string), double? amount = default(double?))
         {
-            Scopes = scopes;
+            CurrencyCode = currencyCode;
+            Amount = amount;
             CustomInit();
         }
 
@@ -42,9 +41,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the ISO 4217 3-letter currency code for the currency
+        /// used by this purchase record.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ScopeProperties Scopes { get; set; }
+        [JsonProperty(PropertyName = "currencyCode")]
+        public string CurrencyCode { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "amount")]
+        public double? Amount { get; set; }
 
     }
 }
