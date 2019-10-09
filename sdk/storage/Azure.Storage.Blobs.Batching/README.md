@@ -15,7 +15,7 @@ library allows you to batch multiple Azure Blob Storage operations in a single r
 Install the Azure Storage Blobs Batching client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs.Batching --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Blobs.Batching --version 12.0.0-preview.4
 ```
 
 ### Prerequisites
@@ -62,7 +62,7 @@ using Azure.Storage.Blobs.Models;
 string connectionString = "<connection_string>";
 BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
 
-// Get URIs for a couple of our blobs
+// Get URIs for a couple of existing blobs
 Uri a = serviceClient.GetBlobContainerClient("letters").GetBlobClient("a").Uri;
 Uri b = serviceClient.GetBlobContainerClient("letters").GetBlobClient("b").Uri;
 Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
@@ -71,7 +71,7 @@ Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
 BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
 
 // Delete several blobs in one batched request
-batchClient.DeleteBlobs(a, b, c);
+batchClient.DeleteBlobs(new Uri[] { a, b, c });
 ```
 
 ### Setting Access Tiers
@@ -79,7 +79,7 @@ batchClient.DeleteBlobs(a, b, c);
 string connectionString = "<connection_string>";
 BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
 
-// Get URIs for a couple of our blobs
+// Get URIs for a couple of existing blobs
 Uri a = serviceClient.GetBlobContainerClient("letters").GetBlobClient("a").Uri;
 Uri b = serviceClient.GetBlobContainerClient("letters").GetBlobClient("b").Uri;
 Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
@@ -88,7 +88,7 @@ Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
 BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
 
 // Set the access tier for several blobs in one batched request
-batchClient.SetBlobsAccessTier(AccessTier.Hot, a, b, c);
+batchClient.SetBlobsAccessTier(new Uri[] { a, b, c }, AccessTier.Hot);
 ```
 
 ### Fine-grained control
@@ -103,8 +103,8 @@ BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
 BlobBatch batch = batchClient.GetBlobBatchClient();
 
 // Add a few deletions to the batch
-batch.Delete("letters", "a");
-batch.Delete("letters", "b", DeleteSnapshotsOption.Include);
+batch.DeleteBlob("letters", "a");
+batch.DeleteBlob("letters", "b", DeleteSnapshotsOption.Include);
 
 // Submit the batch
 batchClient.SubmitBatch(batch);
@@ -120,27 +120,26 @@ helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.  Sub
 string connectionString = "<connection_string>";
 BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
 
-// Get both valid and invalid URIs
+// Get URIs for a blob that exists and a blob that doesn't exist
 Uri valid = serviceClient.GetBlobContainerClient("valid").GetBlobClient("a").Uri;
 Uri invalid = serviceClient.GetBlobContainerClient("invalid").GetBlobClient("b").Uri;
 
 // Create a batch client
 BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
-
 try
 {
     // Delete several blobs in a single request
-    batchClient.DeleteBlobs(valid, invalid);
+    batchClient.DeleteBlobs(new Uri[] { valid, invalid });
 }
 catch (AggregateException ex)
 {
-    // Check ex.InnerExceptions for StorageRequestFailedException
+    // Check ex.InnerExceptions for StorageRequestFailedException instances
 }
 ```
 
 ## Next steps
 
-Check out our samples for more code examples.
+Check out our [sync](../Azure.Storage.Blobs/samples/Sample03a_Batching.cs) and [async](../Azure.Storage.Blobs/samples/Sample03b_BatchingAsync.cs) samples for more.
 
 ## Contributing
 
