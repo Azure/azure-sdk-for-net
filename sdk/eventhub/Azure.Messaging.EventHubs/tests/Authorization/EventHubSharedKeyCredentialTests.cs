@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
 
@@ -66,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetTokenIsNotPermitted()
         {
-            Assert.That(() => new EventHubSharedKeyCredential("key", "value").GetToken(new[] { "test" }, default), Throws.InvalidOperationException);
+            Assert.That(() => new EventHubSharedKeyCredential("key", "value").GetToken(new TokenRequest(new[] { "test" }), default), Throws.InvalidOperationException);
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetTokenAsyncIsNotPermitted()
         {
-            Assert.That(async () => await (new EventHubSharedKeyCredential("key", "value").GetTokenAsync(new[] { "thing" }, default)), Throws.InvalidOperationException);
+            Assert.That(async () => await (new EventHubSharedKeyCredential("key", "value").GetTokenAsync(new TokenRequest(new[] { "thing" }), default)), Throws.InvalidOperationException);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var validSpan = TimeSpan.FromHours(4);
             var signature = new SharedAccessSignature(resource, keyName, keyValue, validSpan);
             var keyCredential = new EventHubSharedKeyCredential(keyName, keyValue);
-            var sasCredential = keyCredential.ConvertToSharedAccessSignatureCredential(resource, validSpan);
+            SharedAccessSignatureCredential sasCredential = keyCredential.ConvertToSharedAccessSignatureCredential(resource, validSpan);
 
             Assert.That(sasCredential, Is.Not.Null, "A shared access signature credential should have been created.");
             Assert.That(sasCredential.SharedAccessSignature, Is.Not.Null, "The SAS credential should contain a shared access signature.");

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -57,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var selector = new SettingSelector(null, "production");
 
             Debug.WriteLine("Settings for Production environmnet");
-            await foreach (Response<ConfigurationSetting> setting in client.GetSettingsAsync(selector))
+            await foreach (ConfigurationSetting setting in client.GetSettingsAsync(selector))
             {
                 Debug.WriteLine(setting);
             }

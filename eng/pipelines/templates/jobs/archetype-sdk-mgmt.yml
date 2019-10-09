@@ -23,7 +23,7 @@ jobs:
           pathtoPublish: $(msBuildLogDir)
           artifactName: MsBuildLogs
       - task: PublishPipelineArtifact@0
-        condition: succeededOrFailed()
+        condition: succeeded()
         inputs:
           artifactName: packages
           targetPath: $(Build.ArtifactStagingDirectory)

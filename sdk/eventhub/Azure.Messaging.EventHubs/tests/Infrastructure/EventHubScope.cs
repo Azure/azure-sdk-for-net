@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
                 var eventHub = new Eventhub(partitionCount: partitionCount);
                 eventHub = await ResourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
 
-                var consumerPolicy = ResourceManager.CreateRetryPolicy<ConsumerGroup>();
+                Polly.IAsyncPolicy<ConsumerGroup> consumerPolicy = ResourceManager.CreateRetryPolicy<ConsumerGroup>();
 
                 await Task.WhenAll
                 (
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
                 var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: ResourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
                 eventHubsNamespace = await ResourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
-                var accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
+                AccessKeys accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
                 return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
             }
         }

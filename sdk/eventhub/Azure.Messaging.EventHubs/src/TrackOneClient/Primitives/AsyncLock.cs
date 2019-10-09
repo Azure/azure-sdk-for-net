@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TrackOne
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     // Code based on http://blogs.msdn.com/b/pfxteam/archive/2012/02/12/10266988.aspx
 
     /// <summary>
@@ -14,16 +14,16 @@ namespace TrackOne
     /// </summary>
     internal class AsyncLock : IDisposable
     {
-        readonly SemaphoreSlim asyncSemaphore = new SemaphoreSlim(1);
-        readonly Task<LockRelease> lockRelease;
-        bool disposed;
+        private readonly SemaphoreSlim _asyncSemaphore = new SemaphoreSlim(1);
+        private readonly Task<LockRelease> _lockRelease;
+        private bool _disposed;
 
         /// <summary>
         /// Returns a new AsyncLock.
         /// </summary>
         public AsyncLock()
         {
-            lockRelease = Task.FromResult(new LockRelease(this));
+            _lockRelease = Task.FromResult(new LockRelease(this));
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace TrackOne
         /// <returns>An asynchronous operation</returns>
         public Task<LockRelease> LockAsync()
         {
-            return this.LockAsync(CancellationToken.None);
+            return LockAsync(CancellationToken.None);
         }
 
         /// <summary>
@@ -42,11 +42,11 @@ namespace TrackOne
         /// <returns>An asynchronous operation</returns>
         public Task<LockRelease> LockAsync(CancellationToken cancellationToken)
         {
-            var waitTask = asyncSemaphore.WaitAsync(cancellationToken);
+            Task waitTask = _asyncSemaphore.WaitAsync(cancellationToken);
             if (waitTask.IsCompleted)
             {
                 // Avoid an allocation in the non-contention case.
-                return lockRelease;
+                return _lockRelease;
             }
 
             return waitTask.ContinueWith(
@@ -62,20 +62,20 @@ namespace TrackOne
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
-                    this.asyncSemaphore.Dispose();
-                    (this.lockRelease as IDisposable)?.Dispose();
+                    _asyncSemaphore.Dispose();
+                    (_lockRelease as IDisposable)?.Dispose();
                 }
 
-                this.disposed = true;
+                _disposed = true;
             }
         }
 
@@ -84,20 +84,19 @@ namespace TrackOne
         /// </summary>
         public struct LockRelease : IDisposable
         {
-            readonly AsyncLock asyncLockRelease;
+            private readonly AsyncLock _asyncLockRelease;
 
             internal LockRelease(AsyncLock release)
             {
-                this.asyncLockRelease = release;
+                _asyncLockRelease = release;
             }
 
             /// <summary>
             /// Closes and releases resources associated with <see cref="LockRelease"/>.
             /// </summary>
-            /// <returns>An asynchronous operation</returns>
             public void Dispose()
             {
-                asyncLockRelease?.asyncSemaphore.Release();
+                _asyncLockRelease?._asyncSemaphore.Release();
             }
         }
     }

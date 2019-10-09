@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using NUnit.Framework;
 using System.Security.Cryptography;
@@ -40,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FindsOidValue(string oidValue, string expectedName)
         {
             Oid oid = new Oid(oidValue);
-            ref readonly KeyCurveName actual = ref KeyCurveName.Find(oid, 0);
+            ref readonly KeyCurveName actual = ref KeyCurveName.FromOid(oid, 0);
 
             Assert.AreEqual(expectedName, actual.ToString());
         }
@@ -62,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FindsOidFriendName(string oidFriendlyName, int keySize, string expectedName)
         {
             Oid oid = new Oid(null, oidFriendlyName);
-            ref readonly KeyCurveName actual = ref KeyCurveName.Find(oid, keySize);
+            ref readonly KeyCurveName actual = ref KeyCurveName.FromOid(oid, keySize);
 
             Assert.AreEqual(expectedName, actual.ToString());
         }

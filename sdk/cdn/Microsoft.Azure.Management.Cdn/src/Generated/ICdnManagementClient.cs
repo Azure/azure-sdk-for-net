@@ -20,9 +20,7 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Use these APIs to manage Azure CDN resources through the Azure Resource
-    /// Manager. You must make sure that requests made to these resources are
-    /// secure.
+    /// Cdn Management Client
     /// </summary>
     public partial interface ICdnManagementClient : System.IDisposable
     {

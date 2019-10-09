@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Tests
         public RollingBufferStreamTests()
         { }
 
-        private Stream GetBufferStream(int bufferSize) => new RollingBufferStream(new MockStream(), bufferSize);
+        private Stream GetBufferStream(int bufferSize) => new RollingBufferStream(new RollingBufferMockStream(), bufferSize);
 
         [Test]
         public void ReadNormalTest()
@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Tests
     /// <summary>
     /// Read-only, unseekable Stream where the 0-indexed nth byte read will have the value n.
     /// </summary>
-    internal class MockStream : Stream
+    internal class RollingBufferMockStream : Stream
 #pragma warning restore SA1402 // File may only contain a single type
     {
         private byte _next = 0;

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -15,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common
 {
-    static class LoggingExtensions
+    internal static class LoggingExtensions
     {
         // The Azure.Core logging plan is still being settled, so we're adding
         // [Condtional] extensions we can implement later to light up logging

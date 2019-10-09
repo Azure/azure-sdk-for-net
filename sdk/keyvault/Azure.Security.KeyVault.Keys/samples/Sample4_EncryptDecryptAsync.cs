@@ -1,4 +1,7 @@
-﻿using Azure.Core.Testing;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -34,12 +37,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Key cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
             Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
-            // Then we create the CryptographyClient which can perform cryptographic operations with the key we just created. 
+            // Then we create the CryptographyClient which can perform cryptographic operations with the key we just created.
             // Again we are using the default Azure credential as above.
             var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
 
-            // Next we'll encrypt some arbitrary plain text with the key using the CryptographyClient. Note that RSA encryption 
-            // algorithms have no chaining so they can only encrypt a single block of plaintext securely. For RSAOAEP this can be 
+            // Next we'll encrypt some arbitrary plain text with the key using the CryptographyClient. Note that RSA encryption
+            // algorithms have no chaining so they can only encrypt a single block of plaintext securely. For RSAOAEP this can be
             // calculated as (keysize / 8) - 42, or in our case (2048 / 8) - 42 = 214 bytes.
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 

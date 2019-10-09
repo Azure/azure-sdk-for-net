@@ -13,7 +13,7 @@ namespace Azure.Core.Http
     {
         private readonly Response _response;
 
-        public ResponseHeaders(Response response)
+        internal ResponseHeaders(Response response)
         {
             _response = response;
         }

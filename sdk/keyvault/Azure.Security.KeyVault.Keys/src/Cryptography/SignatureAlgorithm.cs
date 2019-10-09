@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -8,98 +7,98 @@ using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-
     /// <summary>
     /// A digital signature algorithm
     /// </summary>
     public readonly struct SignatureAlgorithm : IEquatable<SignatureAlgorithm>
     {
+        internal const string RS256Value = "RS256";
+        internal const string RS384Value = "RS384";
+        internal const string RS512Value = "RS512";
+        internal const string PS256Value = "PS256";
+        internal const string PS384Value = "PS384";
+        internal const string PS512Value = "PS512";
+        internal const string ES256Value = "ES256";
+        internal const string ES384Value = "ES384";
+        internal const string ES512Value = "ES512";
+        internal const string ES256KValue = "ES256K";
+
         private readonly string _value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignatureAlgorithm"/> structure.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The string value of the instance.</param>
         public SignatureAlgorithm(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
-        internal const string RS256 = "RS256";
-        internal const string RS384 = "RS384";
-        internal const string RS512 = "RS512";
-        internal const string PS256 = "PS256";
-        internal const string PS384 = "PS384";
-        internal const string PS512 = "PS512";
-        internal const string ES256 = "ES256";
-        internal const string ES384 = "ES384";
-        internal const string ES512 = "ES512";
-        internal const string ES256K = "ES256K";
 
         /// <summary>
-        /// RSA SHA-256 signature algorithim.
+        /// RSA SHA-256 signature algorithm.
         /// </summary>
-        public static readonly SignatureAlgorithm Rs256 = new SignatureAlgorithm(RS256);
+        public static readonly SignatureAlgorithm RS256 = new SignatureAlgorithm(RS256Value);
 
         /// <summary>
-        /// RSA SHA-384 signature algorithim.
+        /// RSA SHA-384 signature algorithm.
         /// </summary>
-        public static readonly SignatureAlgorithm Rs384 = new SignatureAlgorithm(RS384);
+        public static readonly SignatureAlgorithm RS384 = new SignatureAlgorithm(RS384Value);
 
         /// <summary>
-        /// RSA SHA-512 Signature algorithim.
+        /// RSA SHA-512 Signature algorithm.
         /// </summary>
-        public static readonly SignatureAlgorithm Rs512 = new SignatureAlgorithm(RS512);
+        public static readonly SignatureAlgorithm RS512 = new SignatureAlgorithm(RS512Value);
 
         /// <summary>
         /// RSASSA-PSS using SHA-256 and MGF1 with SHA-256.
         /// </summary>
-        public static readonly SignatureAlgorithm Ps256 = new SignatureAlgorithm(PS256);
+        public static readonly SignatureAlgorithm PS256 = new SignatureAlgorithm(PS256Value);
 
         /// <summary>
         /// RSASSA-PSS using SHA-384 and MGF1 with SHA-384.
         /// </summary>
-        public static readonly SignatureAlgorithm Ps384 = new SignatureAlgorithm(PS384);
+        public static readonly SignatureAlgorithm PS384 = new SignatureAlgorithm(PS384Value);
 
         /// <summary>
         /// RSASSA-PSS using SHA-512 and MGF1 with SHA-512.
         /// </summary>
-        public static readonly SignatureAlgorithm Ps512 = new SignatureAlgorithm(PS512);
+        public static readonly SignatureAlgorithm PS512 = new SignatureAlgorithm(PS512Value);
 
         /// <summary>
         /// ECDSA with a P-256 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm Es256 = new SignatureAlgorithm(ES256);
+        public static readonly SignatureAlgorithm ES256 = new SignatureAlgorithm(ES256Value);
 
         /// <summary>
         /// ECDSA with a P-384 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm Es384 = new SignatureAlgorithm(ES384);
+        public static readonly SignatureAlgorithm ES384 = new SignatureAlgorithm(ES384Value);
 
         /// <summary>
         /// ECDSA with a P-521 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm Es512 = new SignatureAlgorithm(ES512);
+        public static readonly SignatureAlgorithm ES512 = new SignatureAlgorithm(ES512Value);
 
         /// <summary>
         /// ECDSA with a secp256k1 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm Es256K = new SignatureAlgorithm(ES256K);
+        public static readonly SignatureAlgorithm ES256K = new SignatureAlgorithm(ES256KValue);
 
         /// <summary>
         /// Determines if two <see cref="SignatureAlgorithm"/> values are the same.
         /// </summary>
-        /// <param name="a">The first <see cref="SignatureAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="SignatureAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(SignatureAlgorithm a, SignatureAlgorithm b) => a.Equals(b);
+        /// <param name="left">The first <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(SignatureAlgorithm left, SignatureAlgorithm right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two <see cref="SignatureAlgorithm"/> values are different.
         /// </summary>
-        /// <param name="a">The first <see cref="SignatureAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="SignatureAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
-        public static bool operator !=(SignatureAlgorithm a, SignatureAlgorithm b) => !a.Equals(b);
+        /// <param name="left">The first <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(SignatureAlgorithm left, SignatureAlgorithm right) => !left.Equals(right);
 
         /// <summary>
         /// Converts a string to a <see cref="SignatureAlgorithm"/>.
@@ -107,18 +106,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="value">The string value to convert.</param>
         public static implicit operator SignatureAlgorithm(string value) => new SignatureAlgorithm(value);
 
-        /// <summary>
-        /// Converts a <see cref="SignatureAlgorithm"/> to a string.
-        /// </summary>
-        /// <param name="value">The <see cref="SignatureAlgorithm"/> to convert.</param>
-        public static implicit operator string(SignatureAlgorithm value) => value._value;
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignatureAlgorithm other && Equals(other);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(SignatureAlgorithm other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         /// <inheritdoc/>
@@ -126,30 +118,96 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
 
         internal HashAlgorithm GetHashAlgorithm()
         {
             switch (_value)
             {
-                case SignatureAlgorithm.RS256:
-                case SignatureAlgorithm.PS256:
-                case SignatureAlgorithm.ES256:
-                case SignatureAlgorithm.ES256K:
+                case RS256Value:
+                case PS256Value:
+                case ES256Value:
+                case ES256KValue:
                     return SHA256.Create();
-                case SignatureAlgorithm.RS384:
-                case SignatureAlgorithm.PS384:
-                case SignatureAlgorithm.ES384:
+
+                case RS384Value:
+                case PS384Value:
+                case ES384Value:
                     return SHA384.Create();
-                case SignatureAlgorithm.RS512:
-                case SignatureAlgorithm.PS512:
-                case SignatureAlgorithm.ES512:
+
+                case RS512Value:
+                case PS512Value:
+                case ES512Value:
                     return SHA512.Create();
+
                 default:
                     throw new InvalidOperationException("Invalid Algorithm");
             }
         }
 
+        internal HashAlgorithmName GetHashAlgorithmName()
+        {
+            switch (_value)
+            {
+                case RS256Value:
+                case PS256Value:
+                case ES256Value:
+                case ES256KValue:
+                    return HashAlgorithmName.SHA256;
+
+                case RS384Value:
+                case PS384Value:
+                case ES384Value:
+                    return HashAlgorithmName.SHA384;
+
+                case RS512Value:
+                case PS512Value:
+                case ES512Value:
+                    return HashAlgorithmName.SHA512;
+                default:
+
+                    return default;
+            }
+        }
+
+        internal ref readonly KeyCurveName GetEcKeyCurveName()
+        {
+            switch (_value)
+            {
+                case ES256Value:
+                    return ref KeyCurveName.P256;
+
+                case ES256KValue:
+                    return ref KeyCurveName.P256K;
+
+                case ES384Value:
+                    return ref KeyCurveName.P384;
+
+                case ES512Value:
+                    return ref KeyCurveName.P521;
+
+                default:
+                    return ref KeyCurveName.s_default;
+            }
+        }
+
+        internal RSASignaturePadding GetRsaSignaturePadding()
+        {
+            switch (_value)
+            {
+                case RS256Value:
+                case RS384Value:
+                case RS512Value:
+                    return RSASignaturePadding.Pkcs1;
+
+                case PS256Value:
+                case PS384Value:
+                case PS512Value:
+                    return RSASignaturePadding.Pss;
+
+                default:
+                    return null;
+            }
+        }
     }
 }

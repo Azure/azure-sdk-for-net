@@ -24,4 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" />
+  </ItemGroup>
 </Project>

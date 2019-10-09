@@ -5,8 +5,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
     internal sealed class TrackOneGenericTokenProvider : TokenProvider
     {
         /// <summary>The default scope to use for token acquisition with the Event Hubs service.</summary>
-        private static readonly string[] EventHubsDefaultScopes = new[] { "https://eventhubs.azure.net/.default" };
+        private static readonly string[] s_eventHubsDefaultScopes = new[] { "https://eventhubs.azure.net/.default" };
 
         /// <summary>
         ///   The <see cref="EventHubTokenCredential" /> that forms the basis of this security token.
@@ -38,8 +38,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneGenericTokenProvider(EventHubTokenCredential credential)
         {
-            Guard.ArgumentNotNull(nameof(credential), credential);
-            Guard.ArgumentNotNullOrEmpty(nameof(credential.Resource), credential.Resource);
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNullOrEmpty(credential.Resource, nameof(credential.Resource));
 
             Credential = credential;
         }
@@ -54,11 +54,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <returns>The security token.</returns>
         ///
-        public async override Task<SecurityToken> GetTokenAsync(string resource,
+        public override async Task<SecurityToken> GetTokenAsync(string resource,
                                                                 TimeSpan tokenValidityDuration)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(resource), resource);
-            Guard.ArgumentNotNegative(nameof(tokenValidityDuration), tokenValidityDuration);
+            Argument.AssertNotNullOrEmpty(resource, nameof(resource));
+            Argument.AssertNotNegative(tokenValidityDuration, nameof(tokenValidityDuration));
 
             // The resource of a token is assigned at the Event Hub level.  The resource being requested may be a child
             // of the Event Hub, such as a partition.  Ensure that the resource being requested is the same Event Hub associated
@@ -81,10 +81,10 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             if (resource.IndexOf(Credential.Resource, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, Credential.Resource), nameof(resource));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, Credential.Resource), nameof(resource));
             }
 
-            var accessToken = await Credential.GetTokenAsync(EventHubsDefaultScopes, CancellationToken.None).ConfigureAwait(false);
+            AccessToken accessToken = await Credential.GetTokenAsync(new TokenRequest(s_eventHubsDefaultScopes), CancellationToken.None).ConfigureAwait(false);
 
             return new TrackOneGenericToken
             (

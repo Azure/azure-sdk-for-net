@@ -4,11 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
-using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -23,7 +19,7 @@ namespace Azure.Identity
     {
         private static readonly Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
 
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
 
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
@@ -34,9 +30,9 @@ namespace Azure.Identity
         {
         }
 
-        public AadIdentityClient(IdentityClientOptions options = null)
+        public AadIdentityClient(AzureCredentialOptions options = null)
         {
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
         }
@@ -148,7 +144,7 @@ namespace Azure.Identity
             {
                 AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return new Response<AccessToken>(response, result);
+                return Response.FromValue(result, response);
             }
 
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
@@ -162,7 +158,7 @@ namespace Azure.Identity
             {
                 AccessToken result = Deserialize(response.ContentStream);
 
-                return new Response<AccessToken>(response, result);
+                return Response.FromValue(result, response);
             }
 
             throw response.CreateRequestFailedException();
@@ -176,11 +172,11 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.Uri.Reset(_options.AuthorityHost);
 
-            request.UriBuilder.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token");
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 
@@ -199,13 +195,13 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = _options.AuthorityHost;
+            request.Uri.Reset(_options.AuthorityHost);
 
-            request.UriBuilder.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token");
 
-            string clientAssertion = CreateClientAssertionJWT(clientId, request.UriBuilder.ToString(), clientCertficate);
+            string clientAssertion = CreateClientAssertionJWT(clientId, request.Uri.ToString(), clientCertficate);
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_assertion_type={Uri.EscapeDataString(ClientAssertionType)}&client_assertion={Uri.EscapeDataString(clientAssertion)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 

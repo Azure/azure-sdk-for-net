@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the WebApplicationFirewallPolicy
         /// class.
         /// </summary>
+        /// <param name="managedRules">Describes the managedRules
+        /// structure</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public WebApplicationFirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        public WebApplicationFirewallPolicy(ManagedRulesDefinition managedRules, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             PolicySettings = policySettings;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ApplicationGateways = applicationGateways;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
+            ManagedRules = managedRules;
             Etag = etag;
             CustomInit();
         }
@@ -107,11 +110,58 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
+        /// Gets or sets describes the managedRules structure
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedRules")]
+        public ManagedRulesDefinition ManagedRules { get; set; }
+
+        /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ManagedRules == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ManagedRules");
+            }
+            if (PolicySettings != null)
+            {
+                PolicySettings.Validate();
+            }
+            if (CustomRules != null)
+            {
+                foreach (var element in CustomRules)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (ApplicationGateways != null)
+            {
+                foreach (var element1 in ApplicationGateways)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (ManagedRules != null)
+            {
+                ManagedRules.Validate();
+            }
+        }
     }
 }

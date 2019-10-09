@@ -5,6 +5,7 @@ using Azure.Core.Testing;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Reflection;
+using Azure.Core;
 
 namespace Azure.Identity.Tests
 {
@@ -27,7 +28,7 @@ namespace Azure.Identity.Tests
         {
             var credential = new ManagedIdentityCredential();
 
-            Core.AccessToken token = await credential.GetTokenAsync(new string[] { "https://management.azure.com//.default" });
+            AccessToken token = await credential.GetTokenAsync(new TokenRequest(new string[] { "https://management.azure.com//.default" }));
 
             Assert.IsNotNull(token.Token);
         }

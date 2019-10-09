@@ -18,18 +18,14 @@ namespace Azure.Core.Pipeline
 
         public RequestMethod(string method)
         {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method));
+            Argument.AssertNotNull(method, nameof(method));
 
             Method = method.ToUpperInvariant();
         }
 
         public static RequestMethod Parse(string method)
         {
-            if (method == null)
-            {
-                throw new ArgumentNullException(nameof(method));
-            }
+            Argument.AssertNotNull(method, nameof(method));
 
             // Fast-path common values
             if (method.Length == 3)
@@ -75,7 +71,7 @@ namespace Azure.Core.Pipeline
             return string.Equals(Method, other.Method, StringComparison.Ordinal);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is RequestMethod other && Equals(other);
         }

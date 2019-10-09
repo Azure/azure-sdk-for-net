@@ -27,24 +27,22 @@ namespace Azure.Identity
         private const int ImdsAvailableTimeoutMs = 500;
 
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
-        private const string MsiEndpointEnvironemntVariable = "MSI_ENDPOINT";
-        private const string MsiSecretEnvironemntVariable = "MSI_SECRET";
         private const string AppServiceMsiApiVersion = "2017-09-01";
 
         private static readonly SemaphoreSlim s_initLock = new SemaphoreSlim(1, 1);
         private static MsiType s_msiType;
         private static Uri s_endpoint;
 
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
 
         protected ManagedIdentityClient()
         {
         }
 
-        public ManagedIdentityClient(IdentityClientOptions options = null)
+        public ManagedIdentityClient(AzureCredentialOptions options = null)
         {
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
         }
@@ -180,8 +178,8 @@ namespace Azure.Identity
                     // check again if the we already determined the msiType now that we hold the lock
                     if (s_msiType == MsiType.Unknown)
                     {
-                        string endpointEnvVar = Environment.GetEnvironmentVariable(MsiEndpointEnvironemntVariable);
-                        string secretEnvVar = Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable);
+                        string endpointEnvVar = EnvironmentVariables.MsiEndpoint;
+                        string secretEnvVar = EnvironmentVariables.MsiSecret;
 
                         // if the env var MSI_ENDPOINT is set
                         if (!string.IsNullOrEmpty(endpointEnvVar))
@@ -243,8 +241,8 @@ namespace Azure.Identity
                     // check again if the we already determined the msiType now that we hold the lock
                     if (s_msiType == MsiType.Unknown)
                     {
-                        string endpointEnvVar = Environment.GetEnvironmentVariable(MsiEndpointEnvironemntVariable);
-                        string secretEnvVar = Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable);
+                        string endpointEnvVar = EnvironmentVariables.MsiEndpoint;
+                        string secretEnvVar = EnvironmentVariables.MsiSecret;
 
                         // if the env var MSI_ENDPOINT is set
                         if (!string.IsNullOrEmpty(endpointEnvVar))
@@ -301,9 +299,9 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.UriBuilder.Uri = s_imdsEndpoint;
+                request.Uri.Reset(s_imdsEndpoint);
 
-                request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+                request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
                 CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
@@ -333,9 +331,9 @@ namespace Azure.Identity
             {
                 request.Method = RequestMethod.Get;
 
-                request.UriBuilder.Uri = s_imdsEndpoint;
+                request.Uri.Reset(s_imdsEndpoint);
 
-                request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+                request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
                 CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
@@ -367,15 +365,15 @@ namespace Azure.Identity
 
             request.Headers.Add("Metadata", "true");
 
-            request.UriBuilder.Uri = s_endpoint;
+            request.Uri.Reset(s_endpoint);
 
-            request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
+            request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
             }
 
             return request;
@@ -390,17 +388,17 @@ namespace Azure.Identity
 
             request.Method = RequestMethod.Get;
 
-            request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
+            request.Headers.Add("secret", EnvironmentVariables.MsiSecret);
 
-            request.UriBuilder.Uri = s_endpoint;
+            request.Uri.Reset(s_endpoint);
 
-            request.UriBuilder.AppendQuery("api-version", AppServiceMsiApiVersion);
+            request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
 
-            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
             }
 
             return request;
@@ -417,7 +415,7 @@ namespace Azure.Identity
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.UriBuilder.Uri = s_endpoint;
+            request.Uri.Reset(s_endpoint);
 
             request.Headers.Add("Metadata", "true");
 

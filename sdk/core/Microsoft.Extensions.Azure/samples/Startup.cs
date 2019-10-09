@@ -68,7 +68,7 @@ namespace Microsoft.Extensions.Azure.Samples
 
                 await foreach (var response in blobServiceClient.GetBlobContainerClient("myblobcontainer").GetBlobsAsync())
                 {
-                    await context.Response.WriteAsync(response.Value.Name + Environment.NewLine);
+                    await context.Response.WriteAsync(response.Name + Environment.NewLine);
                 }
             });
         }

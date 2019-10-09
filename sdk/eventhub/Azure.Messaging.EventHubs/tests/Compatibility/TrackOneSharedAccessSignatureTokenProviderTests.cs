@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
             var provider = new TrackOneSharedAccessTokenProvider(signature);
-            var token = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromHours(1));
+            TrackOne.SecurityToken token = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromHours(1));
 
             Assert.That(token, Is.Not.Null, "A token should have been produced.");
             Assert.That(token, Is.InstanceOf<TrackOneSharedAccessSignatureToken>(), "The token should be a SAS token.");
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
             var provider = new TrackOneSharedAccessTokenProvider(signature);
-            var token = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromHours(1));
+            TrackOne.SecurityToken token = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromHours(1));
 
             Assert.That(token, Is.Not.Null, "A token should have been produced.");
             Assert.That(token.Audience, Is.EqualTo(signature.Resource), "The audience of the token should match the signature.");
@@ -167,8 +167,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
             var provider = new TrackOneSharedAccessTokenProvider(signature);
             var duration = TimeSpan.FromHours(1.5);
-            var expiration = DateTime.UtcNow.Add(duration);
-            var token = await provider.GetTokenAsync(signature.Resource, duration);
+            DateTime expiration = DateTime.UtcNow.Add(duration);
+            TrackOne.SecurityToken token = await provider.GetTokenAsync(signature.Resource, duration);
 
             Assert.That(token, Is.Not.Null, "A token should have been produced.");
             Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration of the token should match the requested duration.");
@@ -184,8 +184,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
             var provider = new TrackOneSharedAccessTokenProvider(signature);
-            var first = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromHours(1));
-            var second = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromMinutes(10));
+            TrackOne.SecurityToken first = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromHours(1));
+            TrackOne.SecurityToken second = await provider.GetTokenAsync(signature.Resource, TimeSpan.FromMinutes(10));
 
             Assert.That(first.TokenValue, Is.Not.EqualTo(second.TokenValue));
         }

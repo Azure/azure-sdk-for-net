@@ -1,13 +1,13 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using Microsoft.Azure.Amqp;
+using TrackOne.Amqp;
+using TrackOne.Primitives;
 
 namespace TrackOne
 {
-    using System;
-    using Microsoft.Azure.Amqp;
-    using TrackOne.Amqp;
-    using TrackOne.Primitives;
-
     /// <summary>
     /// Represents options can be set during the creation of a event hub receiver.
     /// </summary>
@@ -18,8 +18,8 @@ namespace TrackOne
     /// </summary>
     internal class EventPosition
     {
-        const string StartOfStream = "-1";
-        const string EndOfStream = "@latest";
+        private const string StartOfStream = "-1";
+        private const string EndOfStream = "@latest";
 
         internal EventPosition() { }
 
@@ -102,23 +102,23 @@ namespace TrackOne
         internal string GetExpression()
         {
             // order of preference
-            if (this.Offset != null)
+            if (Offset != null)
             {
-                return this.IsInclusive ?
-                    $"{AmqpClientConstants.FilterOffsetPartName} >= {this.Offset}" :
-                    $"{AmqpClientConstants.FilterOffsetPartName} > {this.Offset}";
+                return IsInclusive ?
+                    $"{AmqpClientConstants.FilterOffsetPartName} >= {Offset}" :
+                    $"{AmqpClientConstants.FilterOffsetPartName} > {Offset}";
             }
 
-            if (this.SequenceNumber.HasValue)
+            if (SequenceNumber.HasValue)
             {
-                return this.IsInclusive ?
-                    $"{AmqpClientConstants.FilterSeqNumberName} >= {this.SequenceNumber.Value}" :
-                    $"{AmqpClientConstants.FilterSeqNumberName} > {this.SequenceNumber.Value}";
+                return IsInclusive ?
+                    $"{AmqpClientConstants.FilterSeqNumberName} >= {SequenceNumber.Value}" :
+                    $"{AmqpClientConstants.FilterSeqNumberName} > {SequenceNumber.Value}";
             }
 
-            if (this.EnqueuedTimeUtc.HasValue)
+            if (EnqueuedTimeUtc.HasValue)
             {
-                long ms = TimeStampEncodingGetMilliseconds(this.EnqueuedTimeUtc.Value);
+                long ms = TimeStampEncodingGetMilliseconds(EnqueuedTimeUtc.Value);
                 return $"{AmqpClientConstants.FilterReceivedAtPartNameV2} > {ms}";
             }
 
@@ -126,7 +126,7 @@ namespace TrackOne
         }
 
         // This is equivalent to Microsoft.Azure.Amqp's internal API TimeStampEncoding.GetMilliseconds
-        static long TimeStampEncodingGetMilliseconds(DateTime value)
+        private static long TimeStampEncodingGetMilliseconds(DateTime value)
         {
             DateTime utcValue = value.ToUniversalTime();
             double milliseconds = (utcValue - AmqpConstants.StartOfEpoch).TotalMilliseconds;

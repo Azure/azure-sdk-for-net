@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests.Mock
 
             var mockTransport = new MockTransport(response);
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             var expectedTenantId = Guid.NewGuid().ToString();
 
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests.Mock
 
             var mockTransport = new MockTransport(response);
 
-            var options = new IdentityClientOptions() { Transport = mockTransport };
+            var options = new AzureCredentialOptions() { Transport = mockTransport };
 
             var expectedTenantId = Guid.NewGuid().ToString();
 

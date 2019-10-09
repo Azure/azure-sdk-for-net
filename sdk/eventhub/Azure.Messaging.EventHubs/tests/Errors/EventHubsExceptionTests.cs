@@ -54,6 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new EventHubsResourceNotFoundException("resource", "message"), false };
             yield return new object[] { new QuotaExceededException("resource", "message"), false };
             yield return new object[] { new ConsumerDisconnectedException("resource", "message"), false };
+            yield return new object[] { new EventHubsObjectClosedException("resource", "message"), false };
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                     string expectedResourceName,
                                                     string constructorDescription)
         {
-            var instance = constructor();
+            EventHubsException instance = constructor();
             Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the { constructorDescription }");
             Assert.That(instance.ResourceName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
         }
@@ -125,14 +126,14 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void DerrivedExceptionsAreWellKnown()
         {
-            var allDerrivedTypes = typeof(EventHubsException)
+            IOrderedEnumerable<string> allDerrivedTypes = typeof(EventHubsException)
                .Assembly
                .GetTypes()
                .Where(type => (type != typeof(EventHubsException) && typeof(EventHubsException).IsAssignableFrom(type)))
                .Select(type => type.Name)
                .OrderBy(name => name);
 
-            var knownDerrivedTypes = DerrivedExceptionTransientTestCases()
+            IOrderedEnumerable<string> knownDerrivedTypes = DerrivedExceptionTransientTestCases()
                 .Select(testCase => testCase[0].GetType().Name)
                 .OrderBy(name => name);
 

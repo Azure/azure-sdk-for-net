@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 
 using System;
@@ -38,7 +37,7 @@ namespace Azure.Storage.Test
             }
 
             var category = args.EventName;
-            var payload = GetPayload(args);
+            IDictionary<string, string> payload = GetPayload(args);
 
             // If there's a request ID, use it after the category
             var message = new StringBuilder();
@@ -50,7 +49,7 @@ namespace Azure.Storage.Test
             message.AppendLine();
 
             // Add the rest of the payload
-            foreach (var arg in payload)
+            foreach (KeyValuePair<string, string> arg in payload)
             {
                 message.AppendFormat("  {0}: ", arg.Key);
 
@@ -105,7 +104,7 @@ namespace Azure.Storage.Test
                         value = Encoding.UTF8.GetString(content);
                         // Control characters mess up copy/pasting so we'll
                         // swap them with the SUB character
-                        value = new string(value.Select(ch => !Char.IsControl(ch) ? ch : '�').ToArray());
+                        value = new string(value.Select(ch => !char.IsControl(ch) ? ch : '�').ToArray());
                         break;
                     default:
                         value = args.Payload[i].ToString();

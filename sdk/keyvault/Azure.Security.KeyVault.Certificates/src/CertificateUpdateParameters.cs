@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Text.Json;
@@ -9,39 +8,39 @@ namespace Azure.Security.KeyVault.Certificates
 {
     internal class CertificateUpdateParameters : IJsonSerializable
     {
-        public CertificateUpdateParameters(bool? enabled, IDictionary<string, string> tags)
+        private const string AttributesPropertyName = "attributes";
+        private const string EnabledPropertyName = "enabled";
+        private const string TagsPropertyName = "tags";
+
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+
+        private readonly CertificateProperties _properties;
+
+        public CertificateUpdateParameters(CertificateProperties properties)
         {
-            Enabled = enabled;
-            Tags = tags;
+            _properties = properties;
         }
 
-        public bool? Enabled { get; private set; }
-
-        public IDictionary<string, string> Tags { get; private set; }
-
-        private const string AttributesPropertyName = "attributes";
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
-        private const string EnabledPropertyName = "enabled";
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
-        private const string TagsPropertyName = "tags";
-        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        public CertificateProperties Properties => _properties;
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(Enabled.HasValue)
+            if (Properties.Enabled.HasValue)
             {
-                json.WriteStartObject(AttributesPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
-                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Properties.Enabled.Value);
 
                 json.WriteEndObject();
             }
 
-            if(Tags != null)
+            if (Properties.HasTags && Properties.Tags.Count > 0)
             {
-                json.WriteStartObject(TagsPropertyNameBytes);
+                json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Properties.Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -52,58 +51,58 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
         {
-            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageFileInfo.FileAttributes);
-            this.FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
-            this.FileCreationTime = rawStorageFileInfo.FileCreationTime;
-            this.FileLastWriteTime = rawStorageFileInfo.FileLastWriteTime;
-            this.FileChangeTime = rawStorageFileInfo.FileChangeTime;
-            this.FileId = rawStorageFileInfo.FileId;
-            this.ParentId = rawStorageFileInfo.FileParentId;
+            FileAttributes = NtfsFileAttributes.Parse(rawStorageFileInfo.FileAttributes);
+            FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
+            FileCreationTime = rawStorageFileInfo.FileCreationTime;
+            FileLastWriteTime = rawStorageFileInfo.FileLastWriteTime;
+            FileChangeTime = rawStorageFileInfo.FileChangeTime;
+            FileId = rawStorageFileInfo.FileId;
+            ParentId = rawStorageFileInfo.FileParentId;
 
         }
 
         internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)
         {
-            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageFileProperties.FileAttributes);
-            this.FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
-            this.FileCreationTime = rawStorageFileProperties.FileCreationTime;
-            this.FileLastWriteTime = rawStorageFileProperties.FileLastWriteTime;
-            this.FileChangeTime = rawStorageFileProperties.FileChangeTime;
-            this.FileId = rawStorageFileProperties.FileId;
-            this.ParentId = rawStorageFileProperties.FileParentId;
+            FileAttributes = NtfsFileAttributes.Parse(rawStorageFileProperties.FileAttributes);
+            FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
+            FileCreationTime = rawStorageFileProperties.FileCreationTime;
+            FileLastWriteTime = rawStorageFileProperties.FileLastWriteTime;
+            FileChangeTime = rawStorageFileProperties.FileChangeTime;
+            FileId = rawStorageFileProperties.FileId;
+            ParentId = rawStorageFileProperties.FileParentId;
         }
 
         internal FileSmbProperties(FlattenedStorageFileProperties flattenedStorageFileProperties)
         {
-            this.FileAttributes = NtfsFileAttributes.Parse(flattenedStorageFileProperties.FileAttributes);
-            this.FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
-            this.FileCreationTime = flattenedStorageFileProperties.FileCreationTime;
-            this.FileLastWriteTime = flattenedStorageFileProperties.FileLastWriteTime;
-            this.FileChangeTime = flattenedStorageFileProperties.FileChangeTime;
-            this.FileId = flattenedStorageFileProperties.FileId;
-            this.ParentId = flattenedStorageFileProperties.FileParentId;
+            FileAttributes = NtfsFileAttributes.Parse(flattenedStorageFileProperties.FileAttributes);
+            FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
+            FileCreationTime = flattenedStorageFileProperties.FileCreationTime;
+            FileLastWriteTime = flattenedStorageFileProperties.FileLastWriteTime;
+            FileChangeTime = flattenedStorageFileProperties.FileChangeTime;
+            FileId = flattenedStorageFileProperties.FileId;
+            ParentId = flattenedStorageFileProperties.FileParentId;
         }
 
         internal FileSmbProperties(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {
-            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryInfo.FileAttributes);
-            this.FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
-            this.FileCreationTime = rawStorageDirectoryInfo.FileCreationTime;
-            this.FileLastWriteTime = rawStorageDirectoryInfo.FileLastWriteTime;
-            this.FileChangeTime = rawStorageDirectoryInfo.FileChangeTime;
-            this.FileId = rawStorageDirectoryInfo.FileId;
-            this.ParentId = rawStorageDirectoryInfo.FileParentId;
+            FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryInfo.FileAttributes);
+            FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
+            FileCreationTime = rawStorageDirectoryInfo.FileCreationTime;
+            FileLastWriteTime = rawStorageDirectoryInfo.FileLastWriteTime;
+            FileChangeTime = rawStorageDirectoryInfo.FileChangeTime;
+            FileId = rawStorageDirectoryInfo.FileId;
+            ParentId = rawStorageDirectoryInfo.FileParentId;
         }
 
         internal FileSmbProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
         {
-            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryProperties.FileAttributes);
-            this.FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
-            this.FileCreationTime = rawStorageDirectoryProperties.FileCreationTime;
-            this.FileLastWriteTime = rawStorageDirectoryProperties.FileLastWriteTime;
-            this.FileChangeTime = rawStorageDirectoryProperties.FileChangeTime;
-            this.FileId = rawStorageDirectoryProperties.FileId;
-            this.ParentId = rawStorageDirectoryProperties.FileParentId;
+            FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryProperties.FileAttributes);
+            FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
+            FileCreationTime = rawStorageDirectoryProperties.FileCreationTime;
+            FileLastWriteTime = rawStorageDirectoryProperties.FileLastWriteTime;
+            FileChangeTime = rawStorageDirectoryProperties.FileChangeTime;
+            FileId = rawStorageDirectoryProperties.FileId;
+            ParentId = rawStorageDirectoryProperties.FileParentId;
         }
 
         /// <summary>
@@ -112,20 +111,20 @@ namespace Azure.Storage.Files.Models
         /// <param name="other">The other instance to compare to.</param>
         /// <returns></returns>
         public override bool Equals(object other)
-            => other is FileSmbProperties props && this.Equals(props);
+            => other is FileSmbProperties props && Equals(props);
 
         /// <summary>
         /// Gets the hash code for the FileSmbProperties.
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
-            => this.FileAttributes.GetHashCode()
-            ^ this.FilePermissionKey.GetHashCode()
-            ^ this.FileCreationTime.GetHashCode()
-            ^ this.FileLastWriteTime.GetHashCode()
-            ^ this.FileChangeTime.GetHashCode()
-            ^ this.FileId.GetHashCode()
-            ^ this.ParentId.GetHashCode();
+            => FileAttributes.GetHashCode()
+            ^ FilePermissionKey.GetHashCode()
+            ^ FileCreationTime.GetHashCode()
+            ^ FileLastWriteTime.GetHashCode()
+            ^ FileChangeTime.GetHashCode()
+            ^ FileId.GetHashCode()
+            ^ ParentId.GetHashCode();
 
         /// <summary>
         /// Check if two FileSmbProperties instances are equal.
@@ -148,19 +147,19 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="other">The other instance to compare to.</param>
         public bool Equals(FileSmbProperties other)
-            => this.FileAttributes == other.FileAttributes
-            && this.FilePermissionKey == other.FilePermissionKey
-            && this.FileCreationTime == other.FileCreationTime
-            && this.FileLastWriteTime == other.FileLastWriteTime
-            && this.FileChangeTime == other.FileChangeTime
-            && this.FileId == other.FileId
-            && this.ParentId == other.ParentId;
+            => FileAttributes == other.FileAttributes
+            && FilePermissionKey == other.FilePermissionKey
+            && FileCreationTime == other.FileCreationTime
+            && FileLastWriteTime == other.FileLastWriteTime
+            && FileChangeTime == other.FileChangeTime
+            && FileId == other.FileId
+            && ParentId == other.ParentId;
 
         internal string FileCreationTimeToString()
-            => NullableDateTimeOffsetToString(this.FileCreationTime);
+            => NullableDateTimeOffsetToString(FileCreationTime);
 
         internal string FileLastWriteTimeToString()
-            => NullableDateTimeOffsetToString(this.FileLastWriteTime);
+            => NullableDateTimeOffsetToString(FileLastWriteTime);
 
         private static string NullableDateTimeOffsetToString(DateTimeOffset? dateTimeOffset)
             => dateTimeOffset.HasValue ? DateTimeOffSetToString(dateTimeOffset.Value) : null;

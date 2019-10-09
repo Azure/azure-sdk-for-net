@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Azure.Core;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
         }
 
         [Test]
@@ -104,13 +104,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
             }
-            catch (PlatformNotSupportedException)
+            catch (NotSupportedException)
             {
                 Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
             }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
-            Assert.AreEqual(friendlyName, jwk.CurveName);
+            Assert.AreEqual(friendlyName, jwk.CurveName?.ToString());
 
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
             Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
@@ -119,7 +119,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
 #endif
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [TestCaseSource(nameof(GetECDSaInvalidTestData))]
-        public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name)
+        public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name, bool nullOnError)
         {
 #if NET461
             Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
@@ -159,12 +159,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = new JsonWebKey
             {
                 KeyType = KeyType.Ec,
-                CurveName = curveName,
                 X = x,
                 Y = y,
             };
 
+            if (curveName is { })
+            {
+                jwk.CurveName = curveName;
+            }
+
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
+            if (nullOnError)
+            {
+                Assert.IsNull(jwk.ToECDsa(false, false), "Expected null result for data named '{0}'", name);
+            }
 #endif
         }
 
@@ -198,7 +206,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
         }
 
         [TestCase(false)]
@@ -248,7 +256,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ("1.3.132.0.35", "P-521"),
             };
 
-            foreach (var oid in oids)
+            foreach ((string Oid, string FriendlyName) oid in oids)
             {
                 yield return new object[] { oid.Oid, oid.FriendlyName, false };
                 yield return new object[] { oid.Oid, oid.FriendlyName, true };
@@ -270,18 +278,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return result;
             }
 
-            yield return new object[] { null, x, y, "nullCurveName" };
-            yield return new object[] { "invalid", x, y, "invalidCurveName" };
+            yield return new object[] { null, x, y, "nullCurveName", false };
+            yield return new object[] { "invalid", x, y, "invalidCurveName", true };
 
-            yield return new object[] { curveName, null, y, "nullX" };
-            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX" };
-            yield return new object[] { curveName, new byte[x.Length], y, "zeroX" };
-            yield return new object[] { curveName, Resize(x), y, "longerX" };
+            yield return new object[] { curveName, null, y, "nullX", false };
+            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX", false };
+            yield return new object[] { curveName, new byte[x.Length], y, "zeroX", false };
+            yield return new object[] { curveName, Resize(x), y, "longerX", false };
 
-            yield return new object[] { curveName, x, null, "nullY" };
-            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY" };
-            yield return new object[] { curveName, x, new byte[x.Length], "zeroY" };
-            yield return new object[] { curveName, x, Resize(y), "longerY" };
+            yield return new object[] { curveName, x, null, "nullY", false };
+            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY", false };
+            yield return new object[] { curveName, x, new byte[x.Length], "zeroY", false };
+            yield return new object[] { curveName, x, Resize(y), "longerY", false };
         }
 
         private static IEnumerable<object> GetRSAInvalidKeyData()
@@ -340,14 +348,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private class JsonWebKeyComparer : IEqualityComparer<JsonWebKey>
         {
-            internal static readonly IEqualityComparer<JsonWebKey> Instance = new JsonWebKeyComparer();
+            internal static readonly IEqualityComparer<JsonWebKey> s_instance = new JsonWebKeyComparer();
 
             public bool Equals(JsonWebKey x, JsonWebKey y)
             {
                 if (ReferenceEquals(x, y)) return true;
                 if (x is null || y is null) return false;
 
-                if (!string.Equals(x.KeyId, y.KeyId)) return false;
+                if (!string.Equals(x.Id, y.Id)) return false;
                 if (x.KeyType != y.KeyType) return false;
                 if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
 

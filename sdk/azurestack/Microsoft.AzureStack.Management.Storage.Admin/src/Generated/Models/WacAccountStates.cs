@@ -22,5 +22,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public const string AboveQuota = "AboveQuota";
         public const string Suspended = "Suspended";
         public const string All = "All";
+        public const string GcReadyState = "GcReadyState";
     }
 }

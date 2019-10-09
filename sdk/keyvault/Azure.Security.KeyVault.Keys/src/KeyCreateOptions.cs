@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represent the key specific attributes needed in order to create a key.
+    /// The key-specific properties needed to create a key using the <see cref="KeyClient"/>.
     /// </summary>
     public class KeyCreateOptions
     {
@@ -35,6 +34,6 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// A dictionary of tags with specific metadata about the key.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string> ();
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
     }
 }

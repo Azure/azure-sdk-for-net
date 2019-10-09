@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
 
@@ -21,17 +22,27 @@ namespace Azure.Messaging.EventHubs.Compatibility
     ///
     internal sealed class TrackOneEventHubConsumer : TransportEventHubConsumer
     {
+        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
+        private readonly Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
+
         /// <summary>The active retry policy for the producer.</summary>
         private EventHubRetryPolicy _retryPolicy;
-
-        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
-        private Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
 
         /// <summary>
         ///   The track one <see cref="TrackOne.PartitionReceiver" /> for use with this transport producer.
         /// </summary>
         ///
         private TrackOne.PartitionReceiver TrackOneReceiver => _trackOneReceiver.Value;
+
+        /// <summary>
+        ///   Indicates whether or not this consumer has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public override bool Closed => (_trackOneReceiver.IsValueCreated) ? _trackOneReceiver.Value.EventHubClient.CloseCalled : false;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TrackOneEventHubConsumer"/> class.
@@ -54,8 +65,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                         EventHubRetryPolicy retryPolicy,
                                         LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(lastEnqueuedEventProperties)
         {
-            Guard.ArgumentNotNull(nameof(trackOneReceiverFactory), trackOneReceiverFactory);
-            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+            Argument.AssertNotNull(trackOneReceiverFactory, nameof(trackOneReceiverFactory));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _retryPolicy = retryPolicy;
             _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(() => trackOneReceiverFactory(_retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -93,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         {
             static EventData TransformEvent(TrackOne.EventData eventData)
             {
-                if (!Int64.TryParse(eventData.LastEnqueuedOffset, out var parsedLastOffset))
+                if (!long.TryParse(eventData.LastEnqueuedOffset, out var parsedLastOffset))
                 {
                     parsedLastOffset = -1;
                 }
@@ -102,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                      eventData.Properties,
                                      eventData.SystemProperties.WithoutTypedMembers(),
                                      eventData.SystemProperties.SequenceNumber,
-                                     Int64.Parse(eventData.SystemProperties.Offset),
+                                     long.Parse(eventData.SystemProperties.Offset),
                                      new DateTimeOffset(eventData.SystemProperties.EnqueuedTimeUtc),
                                      eventData.SystemProperties.PartitionKey,
                                      (eventData.LastSequenceNumber != default ? eventData.LastSequenceNumber : default(long?)),
@@ -112,13 +123,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             try
             {
-                var events = ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
+                IEnumerable<EventData> events = ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
                         ?? Enumerable.Empty<TrackOne.EventData>())
                     .Select(TransformEvent);
 
                 if ((TrackOneReceiver.ReceiverRuntimeMetricEnabled) && (LastEnqueuedEventInformation != null))
                 {
-                    if (!Int64.TryParse(TrackOneReceiver.RuntimeInfo.LastEnqueuedOffset, out var parsedOffset))
+                    if (!long.TryParse(TrackOneReceiver.RuntimeInfo.LastEnqueuedOffset, out var parsedOffset))
                     {
                         parsedOffset = -1;
                     }
@@ -126,8 +137,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     LastEnqueuedEventInformation.UpdateMetrics(
                         TrackOneReceiver.RuntimeInfo.LastSequenceNumber,
                         ((parsedOffset >= 0) ? parsedOffset : default(long?)),
-                        TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc,
-                        TrackOneReceiver.RuntimeInfo.RetrievalTime);
+                        ((TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc)),
+                        ((TrackOneReceiver.RuntimeInfo.RetrievalTime == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.RetrievalTime)));
                 }
 
                 return events;

@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represents the attributes to assign to an Elliptic Curve key at creation.
+    /// The properties needed to create an Elliptic Curve key using the <see cref="KeyClient"/>.
     /// </summary>
     public class EcKeyCreateOptions : KeyCreateOptions
     {
@@ -26,7 +25,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public KeyCurveName? Curve { get; set; }
 
-        /// <summary> 
+        /// <summary>
         /// Determines whether or not a hardware key (HSM) is used for creation.
         /// </summary>
         ///
@@ -43,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Name = name;
             Hsm = hsm;
-            if(hsm)
+            if (hsm)
             {
                 KeyType = KeyType.EcHsm;
             }

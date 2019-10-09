@@ -6,10 +6,13 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Minor improvements and bug fixes.
+      Added console and trace logger listener.
+      Added additional content and header logging options.
+      Moved commonly used types to Azure namespace.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>

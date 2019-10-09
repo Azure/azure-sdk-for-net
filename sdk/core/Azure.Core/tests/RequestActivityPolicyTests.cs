@@ -37,12 +37,14 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            using Request request = mockTransport.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
-            request.Headers.Add("User-Agent", "agent");
-
-            Task<Response> requestTask = SendRequestAsync(mockTransport, request, s_enabledPolicy);
+            string clientRequestId = null;
+            Task<Response> requestTask = SendRequestAsync(mockTransport, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+                request.Headers.Add("User-Agent", "agent");
+                clientRequestId = request.ClientRequestId;
+            }, s_enabledPolicy);
 
             await requestTask;
 
@@ -57,7 +59,7 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", request.ClientRequestId));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
         }
 
@@ -80,11 +82,11 @@ namespace Azure.Core.Tests
                     return new MockResponse(201);
                 });
 
-                using Request request = mockTransport.CreateRequest();
-                request.Method = RequestMethod.Get;
-                request.UriBuilder.Uri = new Uri("http://example.com");
-
-                Task<Response> requestTask = SendRequestAsync(mockTransport, request, s_enabledPolicy);
+                Task<Response> requestTask = SendRequestAsync(mockTransport, request =>
+                {
+                    request.Method = RequestMethod.Get;
+                    request.Uri.Reset(new Uri("http://example.com"));
+                }, s_enabledPolicy);
 
                 await requestTask;
 

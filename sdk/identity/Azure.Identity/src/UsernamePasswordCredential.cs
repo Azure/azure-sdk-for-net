@@ -22,7 +22,7 @@ namespace Azure.Identity
     {
         private readonly IPublicClientApplication _pubApp = null;
         private readonly HttpPipeline _pipeline = null;
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly string _username = null;
         private readonly SecureString _password;
 
@@ -43,7 +43,7 @@ namespace Azure.Identity
         /// <param name="password">The user account's user name, UPN.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
-        public UsernamePasswordCredential(string username, SecureString password, string clientId, string tenantId)
+        public UsernamePasswordCredential(string username, string password, string clientId, string tenantId)
             : this(username, password, clientId, tenantId, null)
         {
 
@@ -58,13 +58,13 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
-        public UsernamePasswordCredential(string username, SecureString password, string clientId, string tenantId, IdentityClientOptions options)
+        public UsernamePasswordCredential(string username, string password, string clientId, string tenantId, AzureCredentialOptions options)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
-            _password = password ?? throw new ArgumentNullException(nameof(password));
+            _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
 
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
 
@@ -75,22 +75,22 @@ namespace Azure.Identity
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
         /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(scopes, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
         /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.UsernamePasswordCredential.GetToken");
 
@@ -98,7 +98,7 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(request.Scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }

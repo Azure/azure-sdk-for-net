@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetTokenAsync(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .ReturnsAsync(new AccessToken("token", DateTimeOffset.MaxValue));
             }
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetToken(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetTokenAsync(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .ReturnsAsync(() => currentToken);
             }
@@ -64,7 +64,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetToken(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
                     .Returns(() => currentToken);
             }
@@ -93,7 +93,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetTokenAsync(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope" })),
                             It.IsAny<CancellationToken>()))
                     .ReturnsAsync(new AccessToken("token", DateTimeOffset.MaxValue));
             }
@@ -101,7 +101,7 @@ namespace Azure.Core.Tests
             {
                 credentialsMock.Setup(
                         credential => credential.GetToken(
-                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
+                            It.Is<TokenRequest>(request => request.Scopes.SequenceEqual(new[] { "scope" })),
                             It.IsAny<CancellationToken>()))
                     .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }

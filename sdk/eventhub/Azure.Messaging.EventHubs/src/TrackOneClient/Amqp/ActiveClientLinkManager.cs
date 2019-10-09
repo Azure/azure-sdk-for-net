@@ -1,50 +1,48 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading;
+using Microsoft.Azure.Amqp;
 
 namespace TrackOne.Amqp
 {
-    using System;
-    using System.Threading;
-    using Microsoft.Azure.Amqp;
-
-    sealed class ActiveClientLinkManager
+    internal sealed class ActiveClientLinkManager
     {
-        static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
-        static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
-
-        readonly Timer validityTimer;
-        readonly AmqpEventHubClient eventHubClient;
-        readonly object syncRoot;
-
-        ActiveClientLinkObject activeClientLink;
+        private static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
+        private static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
+        private readonly Timer validityTimer;
+        private readonly AmqpEventHubClient eventHubClient;
+        private readonly object syncRoot;
+        private ActiveClientLinkObject activeClientLink;
 
         public ActiveClientLinkManager(AmqpEventHubClient eventHubClient)
         {
             this.eventHubClient = eventHubClient;
-            this.validityTimer = new Timer(OnLinkExpiration, this, Timeout.Infinite, Timeout.Infinite);
-            this.syncRoot = new object();
+            validityTimer = new Timer(OnLinkExpiration, this, Timeout.Infinite, Timeout.Infinite);
+            syncRoot = new object();
         }
 
         public void SetActiveLink(ActiveClientLinkObject activeClientLink)
         {
-            lock (this.syncRoot)
+            lock (syncRoot)
             {
                 this.activeClientLink = activeClientLink;
-                this.activeClientLink.LinkObject.Closed += this.OnLinkClosed;
+                this.activeClientLink.LinkObject.Closed += OnLinkClosed;
                 if (this.activeClientLink.LinkObject.State == AmqpObjectState.Opened &&
                     this.activeClientLink.IsClientToken)
                 {
-                    this.ScheduleValidityTimer();
+                    ScheduleValidityTimer();
                 }
             }
         }
 
         public void Close()
         {
-            this.CancelValidityTimer();
+            CancelValidityTimer();
         }
 
-        static async void OnLinkExpiration(object state)
+        private static async void OnLinkExpiration(object state)
         {
             ActiveClientLinkManager thisPtr = (ActiveClientLinkManager)state;
             Fx.Assert(thisPtr.activeClientLink != null, "activeClientLink cant be null");
@@ -60,7 +58,7 @@ namespace TrackOne.Amqp
                     cbsLink = new AmqpCbsLink(thisPtr.activeClientLink.Connection);
                 }
 
-                var validTo = await cbsLink.SendTokenAsync(
+                DateTime validTo = await cbsLink.SendTokenAsync(
                     thisPtr.eventHubClient.CbsTokenProvider,
                     thisPtr.eventHubClient.ConnectionStringBuilder.Endpoint,
                     thisPtr.activeClientLink.Audience, thisPtr.activeClientLink.EndpointUri,
@@ -76,7 +74,7 @@ namespace TrackOne.Amqp
             }
             catch
             {
-                //DNX_TODO: 
+                //DNX_TODO:
                 //if (Fx.IsFatal(exception))
                 //{
                 //    throw;
@@ -89,30 +87,30 @@ namespace TrackOne.Amqp
             }
         }
 
-        void ScheduleValidityTimer()
+        private void ScheduleValidityTimer()
         {
-            if (this.activeClientLink.AuthorizationValidToUtc < DateTime.UtcNow)
+            if (activeClientLink.AuthorizationValidToUtc < DateTime.UtcNow)
             {
                 return;
             }
 
-            TimeSpan interval = this.activeClientLink.AuthorizationValidToUtc.Subtract(DateTime.UtcNow);
+            TimeSpan interval = activeClientLink.AuthorizationValidToUtc.Subtract(DateTime.UtcNow);
             interval += TokenRefreshBuffer;   // Avoid getting a token that expires right away
             interval = interval < AmqpClientConstants.ClientMinimumTokenRefreshInterval ? AmqpClientConstants.ClientMinimumTokenRefreshInterval : interval;
 
-            this.validityTimer.Change(interval, Timeout.InfiniteTimeSpan);
+            validityTimer.Change(interval, Timeout.InfiniteTimeSpan);
 
             //DNX_TODO: MessagingClientEtwProvider.Provider.EventWriteAmqpManageLink("SetTimer", this.activeClientLink.LinkObject, interval.ToString("c", CultureInfo.InvariantCulture));
         }
 
-        void OnLinkClosed(object sender, EventArgs e)
+        private void OnLinkClosed(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
-        void CancelValidityTimer()
+        private void CancelValidityTimer()
         {
-            this.validityTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            validityTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
     }
 }
