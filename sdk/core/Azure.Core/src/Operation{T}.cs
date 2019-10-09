@@ -81,7 +81,7 @@ namespace Azure
         /// <summary>
         /// Gets or sets the value indicating default polling interval used by WaitForCompletion method.
         /// </summary>
-        protected virtual TimeSpan DefaultPollingInterval { get; }
+        protected virtual TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
         /// Periodically calls the server till the LRO completes.
