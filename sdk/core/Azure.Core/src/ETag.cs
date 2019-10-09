@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Data;
 
 namespace Azure.Core.Http
 {
     public readonly struct ETag : IEquatable<ETag>
     {
+        private const char QuoteCharacter = '"';
+        private const string QuoteString = "\"";
+
         private readonly string _value;
 
         public ETag(string etag) => _value = etag;
@@ -40,6 +44,25 @@ namespace Azure.Core.Http
         public override string ToString()
         {
             return _value ?? "<null>";
+        }
+
+        internal static ETag Parse(string stringValue)
+        {
+            if (stringValue == All._value)
+            {
+                return All;
+            }
+            else if (stringValue.StartsWith("W/", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotSupportedException("Weak ETags are not supported.");
+            }
+            else if (!stringValue.StartsWith(QuoteString, StringComparison.OrdinalIgnoreCase) ||
+                     !stringValue.EndsWith(QuoteString, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("The value should be equal to * or be wrapped in quotes", nameof(stringValue));
+            }
+
+            return new ETag(stringValue.Trim(QuoteCharacter));
         }
     }
 }
