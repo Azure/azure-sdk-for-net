@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
 
             // You can await the completion of the create certificate operation.
-            CertificateWithPolicy certificate = await operation.WaitCompletionAsync();
+            CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
             #endregion
 
             this.client = client;

@@ -504,12 +504,13 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
                 // Assert
-                // data copied within an account, so copy should be instantaneous
+                TimeSpan? pollingInterval = null;
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    pollingInterval = TimeSpan.FromMilliseconds(10);
                 }
-                await operation.WaitCompletionAsync();
+                await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
+
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
             }
@@ -685,11 +686,12 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 // data copied within an account, so copy should be instantaneous
+                TimeSpan? pollingInterval = null;
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    pollingInterval = TimeSpan.FromMilliseconds(10);
                 }
-                await operation.WaitCompletionAsync();
+                await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
             }
@@ -740,11 +742,12 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 // data copied within an account, so copy should be instantaneous
+                TimeSpan? pollingInterval = null;
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    pollingInterval = TimeSpan.FromMilliseconds(10);
                 }
-                await operation.WaitCompletionAsync();
+                await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
 

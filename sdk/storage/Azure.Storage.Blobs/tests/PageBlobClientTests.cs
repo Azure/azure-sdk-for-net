@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Testing;
@@ -1246,11 +1247,12 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await destinationBlob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
+                TimeSpan? pollingInterval = null;
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    pollingInterval = TimeSpan.FromMilliseconds(10);
                 }
-                await operation.WaitCompletionAsync();
+                await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
 
                 // Assert
 
@@ -1315,12 +1317,12 @@ namespace Azure.Storage.Blobs.Test
                     Operation<long> operation = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot);
+                    TimeSpan? pollingInterval = null;
                     if (Mode == RecordedTestMode.Playback)
                     {
-                        operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                        pollingInterval = TimeSpan.FromMilliseconds(10);
                     }
-                    await operation.WaitCompletionAsync();
-
+                    await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
 
                     PageBlobAccessConditions accessConditions = BuildAccessConditions(parameters: parameters);
@@ -1373,12 +1375,12 @@ namespace Azure.Storage.Blobs.Test
                     Operation<long> operation = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot);
+                    TimeSpan? pollingInterval = null;
                     if (Mode == RecordedTestMode.Playback)
                     {
-                        operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                        pollingInterval = TimeSpan.FromMilliseconds(10);
                     }
-                    await operation.WaitCompletionAsync();
-
+                    await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
@@ -1429,12 +1431,12 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await destinationBlob.StartCopyFromUriAsync(
                     sourceBlob.Uri,
                     accessTier: AccessTier.P20);
-
+                TimeSpan? pollingInterval = null;
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    pollingInterval = TimeSpan.FromMilliseconds(10);
                 }
-                await operation.WaitCompletionAsync();
+                await operation.WaitForCompletionAsync(pollingInterval, CancellationToken.None);
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
 

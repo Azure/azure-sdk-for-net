@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 certOp.UpdateStatus();
 
-                Thread.Sleep(certOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's get the created certificate along with it's policy from the Key Vault.
@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(newCertOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // The certificate is no longer needed, need to delete it from the Key Vault.

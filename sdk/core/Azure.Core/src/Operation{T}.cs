@@ -79,13 +79,21 @@ namespace Azure
         public abstract bool HasValue { get; }
 
         /// <summary>
-        /// Polling interval used by WaitCompletionAsync method.
+        /// Gets or sets the value indicating default polling interval used by WaitForCompletion method.
         /// </summary>
+        protected virtual TimeSpan DefaultPollingInterval { get; }
+
+        /// <summary>
+        /// Periodically calls the server till the LRO completes.
+        /// </summary>
+        /// <returns></returns>
         /// <remarks>
-        /// The interval can change based on information returned from the server.
-        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(1);
+        public ValueTask<Response<T>> WaitForCompletionAsync()
+        {
+            return WaitForCompletionAsync(null, CancellationToken.None);
+        }
 
         /// <summary>
         /// Periodically calls the server till the LRO completes.
@@ -95,7 +103,25 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public virtual async ValueTask<Response<T>> WaitCompletionAsync(CancellationToken cancellationToken = default)
+        public ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken)
+        {
+            return WaitForCompletionAsync(null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the LRO completes.
+        /// </summary>
+        /// <param name="pollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -104,7 +130,7 @@ namespace Azure
                 {
                     return Response.FromValue(Value, _response);
                 }
-                await Task.Delay(PollingInterval, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(pollingInterval.GetValueOrDefault(), cancellationToken).ConfigureAwait(false);
             }
         }
 
