@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// The properties and Content returned from downloading a blob
+    /// The details and Content returned from downloading a blob
     /// </summary>
     public partial class BlobDownloadInfo : IDisposable
     {
@@ -48,6 +48,11 @@ namespace Azure.Storage.Blobs.Models
         public Stream Content => _flattened.Content;
 
         /// <summary>
+        /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
+        /// </summary>
+        public string ContentType => _flattened.ContentType;
+
+        /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
@@ -55,9 +60,9 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
-        /// Properties returned when downloading a Blob
+        /// Details returned when downloading a Blob
         /// </summary>
-        public BlobDownloadProperties Properties { get; private set; }
+        public BlobDownloadDetails Details { get; private set; }
 
         /// <summary>
         /// Creates a new DownloadInfo backed by FlattenedDownloadProperties
@@ -66,7 +71,7 @@ namespace Azure.Storage.Blobs.Models
         internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
         {
             _flattened = flattened;
-            Properties = new BlobDownloadProperties() { _flattened = flattened };
+            Details = new BlobDownloadDetails() { _flattened = flattened };
         }
 
         /// <summary>
@@ -80,9 +85,9 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// Properties returned when downloading a Blob
+    /// Details returned when downloading a Blob
     /// </summary>
-    public partial class BlobDownloadProperties
+    public partial class BlobDownloadDetails
     {
         /// <summary>
         /// Internal flattened property representation
@@ -98,11 +103,6 @@ namespace Azure.Storage.Blobs.Models
         /// x-ms-meta
         /// </summary>
         public IDictionary<string, string> Metadata => _flattened.Metadata;
-
-        /// <summary>
-        /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
-        /// </summary>
-        public string ContentType => _flattened.ContentType;
 
         /// <summary>
         /// Indicates the range of bytes returned in the event that the client requested a subset of the blob by setting the 'Range' request header.
