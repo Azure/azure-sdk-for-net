@@ -1883,6 +1883,46 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample]
+        public const string SwitchPipeline = @"
+{
+    ""name"": ""MySwitchPipeline"",
+    ""properties"": {
+        ""activities"": [
+            {
+                ""name"": ""MySwitchActivity"",
+                ""type"": ""Switch"",
+                ""typeProperties"": {
+                    ""on"": {
+                        ""value"": ""@bool(pipeline().parameters.routeSelection)"",
+                        ""type"": ""Expression""
+                    },
+                    ""cases"": [
+                        {
+                            ""value"": ""A"",
+                            ""activities"": [
+                                {
+                                    ""name"": ""MyCaseAActivity"",
+                                    ""type"": ""GetMetadata"",
+                                    ""typeProperties"": {
+                                        ""fieldList"" : [""field""],
+                                        ""dataset"": {
+                                            ""referenceName"": ""MyDataset"",
+                                            ""type"": ""DatasetReference""
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample]
         public const string ForeachPipeline = @"
 {

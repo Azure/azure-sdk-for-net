@@ -2,6 +2,7 @@
 
 ## Current version
 ###  Feature Additions
+- Add Switch activity
 
 ## Version 4.2.0
 ###  Feature Additions
