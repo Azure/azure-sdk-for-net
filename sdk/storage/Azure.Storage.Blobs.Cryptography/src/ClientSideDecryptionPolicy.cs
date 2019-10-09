@@ -74,10 +74,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
                 message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
             }
-            else if (message.Request.Headers.TryGetValue(HttpHeader.Names.XMsRange, out range))
+            else if (message.Request.Headers.TryGetValue(EncryptionConstants.XMsRange, out range))
             {
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-                message.Request.Headers.Remove(HttpHeader.Names.XMsRange); // the next line puts "Range", not "x-ms-range"
+                message.Request.Headers.Remove(EncryptionConstants.XMsRange); // the next line puts "Range", not "x-ms-range"
                 message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
             }
 
@@ -110,10 +110,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
                 message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
             }
-            else if (message.Request.Headers.TryGetValue(HttpHeader.Names.XMsRange, out range))
+            else if (message.Request.Headers.TryGetValue(EncryptionConstants.XMsRange, out range))
             {
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-                message.Request.Headers.Remove(HttpHeader.Names.XMsRange); // the next line puts "Range", not "x-ms-range"
+                message.Request.Headers.Remove(EncryptionConstants.XMsRange); // the next line puts "Range", not "x-ms-range"
                 message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
             }
 

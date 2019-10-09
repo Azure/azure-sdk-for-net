@@ -26,5 +26,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         public const int ENCRYPTION_KEY_SIZE_BITS = 256;
 
         public const int DEFAULT_ROLLING_BUFFER_SIZE = 10 * Constants.MB;
+
+        public static string XMsRange = "x-ms-range";
     }
 }
