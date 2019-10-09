@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -62,7 +61,7 @@ namespace Azure.Storage
             => new ArgumentException($"Invalid resource type: '{s}'");
 
         public static ArgumentException AccountMismatch(string accountNameCredential, string accountNameValue)
-            => new ArgumentException(String.Format(
+            => new ArgumentException(string.Format(
                 CultureInfo.CurrentCulture,
                 "Account Name Mismatch: {0} != {1}",
                 accountNameCredential,
@@ -70,6 +69,9 @@ namespace Azure.Storage
 
         public static ArgumentException ParsingConnectionStringFailed()
             => new ArgumentException("Connection string parsing error");
+
+        public static ArgumentException ParsingHttpRangeFailed()
+            => new ArgumentException("Could not parse the serialized range.");
 
         public static FormatException InvalidFormat(string err)
             => new FormatException(err);
@@ -82,5 +84,13 @@ namespace Azure.Storage
 
         public static AuthenticationException InvalidCredentials(string fullName)
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
+
+        public static StorageRequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
+            => new StorageRequestFailedException(
+                    response,
+                    $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
+
+        public static ArgumentException SeekOutsideBufferRange(long index, long inclusiveRangeStart, long exclusiveRangeEnd)
+            => new ArgumentException($"Tried to seek ouside buffer range. Gave index {index}, range is [{inclusiveRangeStart},{exclusiveRangeEnd}).");
     }
 }
