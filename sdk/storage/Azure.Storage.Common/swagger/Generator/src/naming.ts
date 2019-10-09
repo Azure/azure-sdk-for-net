@@ -48,7 +48,7 @@ export function interfaceName(name: string) { return "I" + type(name); }
 export function namespace(name: string) { return pascalCase(name); }
 export function enumField(name: string) {
     // Convert acronyms to PascalCase
-    // example: StorageAPI -> StorageApi, StorageAPIGenerator -> StorageApiGenerator, ETag -> ETag
+    // example: StorageAPI -> StorageApi, StorageAPIGenerator -> StorageApiGenerator
     if (name && name.length > 2) {
         for (let index = 1; index < name.length; index++) {
             if (isUpper(name.charAt(index)) && isUpper(name.charAt(index - 1))) {
