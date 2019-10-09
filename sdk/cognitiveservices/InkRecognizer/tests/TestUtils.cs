@@ -4,10 +4,6 @@
 
 namespace InkRecognizerTest
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Collections.Generic;
-    using System.Windows.Ink;
-    using System.Windows.Input;
 
  class TestUtils
     {
@@ -757,27 +753,6 @@ namespace InkRecognizerTest
                 ]
             }";
             return drawingJson;
-        }
-
-        public static Stroke CreateRandomStroke(int numPoints = 20)
-        {
-            List<StylusPoint> points = new List<StylusPoint>();
-            var random = new System.Random();
-            for (int i = 0; i < numPoints; ++i)
-            {
-                var point = new StylusPoint();
-                point.X = random.Next() % 1024;
-                point.Y = random.Next() % 768;
-
-                points.Add(point);
-            }
-
-            //StylusPointCollection pointsCollection = new StylusPointCollection(points);
-            //var stroke = new Stroke(pointsCollection);
-            Stroke stroke = null;
-            Assert.IsNotNull(stroke);
-
-            return stroke;
         }
     }
 }
