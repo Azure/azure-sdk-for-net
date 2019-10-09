@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
         /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
-        /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential)
             : this(keyId, credential, null)
@@ -45,8 +45,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
         /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> which will be used for cryptographic operations.</param>
-        /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token.</param>
-        /// <param name="options">Options to configure the management of the requests sent to Key Vault.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
+        /// <param name="options"><see cref="CryptographyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CryptographyClientOptions.Version"/> is not supported.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options) : this(keyId, credential, options, false)
@@ -149,7 +149,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Encrypt");
@@ -210,7 +210,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Encrypt");
@@ -274,7 +274,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Decrypt");
@@ -338,7 +338,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Decrypt");
@@ -391,7 +391,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.WrapKey");
@@ -444,7 +444,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.WrapKey");
@@ -497,7 +497,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.UnwrapKey");
@@ -550,7 +550,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.UnwrapKey");
@@ -603,7 +603,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Sign");
@@ -656,7 +656,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Sign");
@@ -709,7 +709,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Verify");
@@ -762,7 +762,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Verify");
@@ -815,7 +815,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -872,7 +872,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -930,7 +930,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -988,7 +988,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1046,7 +1046,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1104,7 +1104,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1162,7 +1162,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1220,7 +1220,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
