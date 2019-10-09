@@ -8,6 +8,10 @@ namespace Azure.Core.Pipeline
 {
     public class DiagnosticsOptions
     {
+        private const int MaxApplicationIdLength = 24;
+
+        private string? _applicationId;
+
         internal DiagnosticsOptions()
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
@@ -48,7 +52,18 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public IList<string> LoggingAllowedQueryParameters { get; }
 
-        public string? ApplicationId { get; set; }
+        public string? ApplicationId
+        {
+            get => _applicationId;
+            set
+            {
+                if (value != null && value.Length > MaxApplicationIdLength)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
+                }
+                _applicationId = value;
+            }
+        }
 
         public static string? DefaultApplicationId { get; set; }
 
