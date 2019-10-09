@@ -70,6 +70,9 @@ namespace Azure.Storage
         public static ArgumentException ParsingConnectionStringFailed()
             => new ArgumentException("Connection string parsing error");
 
+        public static ArgumentException ParsingHttpRangeFailed()
+            => new ArgumentException("Could not parse the serialized range.");
+
         public static FormatException InvalidFormat(string err)
             => new FormatException(err);
 

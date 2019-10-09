@@ -1215,10 +1215,10 @@ namespace Azure.Storage.Blobs.Specialized
 
             Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
                 =>
-                client.GetPropertiesAsync(
+                client.GetPropertiesInternal(
                         accessConditions: blobAccessConditions,
-                        cancellationToken: ct
-                        );
+                        async: async,
+                        cancellationToken: ct);
 
             static ETag GetEtag(BlobProperties blobProperties) => blobProperties.ETag;
 
@@ -1227,8 +1227,18 @@ namespace Azure.Storage.Blobs.Specialized
             // Download the entire stream
             async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
             {
-                Response<BlobDownloadInfo> response = await client.DownloadAsync(accessConditions: blobAccessConditions, cancellationToken: ct).ConfigureAwait(false);
-                await response.Value.Content.CopyToAsync(destination, 81920 /* default value */, ct).ConfigureAwait(false);
+                Response<BlobDownloadInfo> response = await client.DownloadInternal(
+                    default, blobAccessConditions, default, async, cancellationToken).ConfigureAwait(false);
+
+                if (async)
+                {
+                    await response.Value.Content.CopyToAsync(
+                        destination, 81920 /* default value */, ct).ConfigureAwait(false);
+                }
+                else
+                {
+                    response.Value.Content.CopyTo(destination, 81920 /* default value */);
+                }
 
                 return response;
             }
@@ -1245,7 +1255,8 @@ namespace Azure.Storage.Blobs.Specialized
 
                 accessConditions.HttpAccessConditions = httpAccessConditions;
 
-                return client.DownloadAsync(range: httpRange, accessConditions: accessConditions, cancellationToken: cancellationToken);
+                return client.DownloadInternal(range: httpRange, accessConditions: accessConditions,
+                    rangeGetContentHash: default, async: async, cancellationToken: cancellationToken);
             }
 
             static Task WritePartitionAsync(Response<BlobDownloadInfo> response, Stream destination, bool async, CancellationToken ct)

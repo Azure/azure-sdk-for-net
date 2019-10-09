@@ -86,6 +86,7 @@ namespace Azure.Storage
         internal static class HeaderNames
         {
             public const string XMsPrefix = "x-ms-";
+            public const string MetadataPrefix = "x-ms-meta";
             public const string ErrorCode = "x-ms-error-code";
             public const string RequestId = "x-ms-request-id";
             public const string ClientRequestId = "x-ms-client-request-id";
@@ -102,6 +103,7 @@ namespace Azure.Storage
             public const string IfNoneMatch = "If-None-Match";
             public const string IfUnmodifiedSince = "If-Unmodified-Since";
             public const string Range = "Range";
+            public const string ContentRange = "Content-Range";
         }
 
         /// <summary>
@@ -467,7 +469,7 @@ namespace Azure.Storage
 
         internal static class GeoRedundantRead
         {
-            internal const string AlternateHostKey  = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string AlternateHostKey = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
             internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
         }
 
