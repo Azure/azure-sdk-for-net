@@ -77,7 +77,7 @@ namespace Azure.Core.Tests
         public void ApplicationIdLimitedTo24Chars()
         {
             var options = new DiagnosticsOptions();
-            Assert.Throws<ArgumentException>(() => options.ApplicationId = "0123456789012345678912345");
+            Assert.Throws<ArgumentOutOfRangeException>(() => options.ApplicationId = "0123456789012345678912345");
         }
 
         private class TestOptions : ClientOptions
