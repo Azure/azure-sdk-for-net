@@ -48,7 +48,7 @@ namespace Azure.Core.Http
 
         internal static ETag Parse(string value)
         {
-            if (stringValue == All._value)
+            if (value == All._value)
             {
                 return All;
             }
