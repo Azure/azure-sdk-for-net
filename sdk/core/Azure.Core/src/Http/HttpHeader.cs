@@ -30,7 +30,7 @@ namespace Azure.Core.Http
             return hashCode.ToHashCode();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is HttpHeader header)
             {

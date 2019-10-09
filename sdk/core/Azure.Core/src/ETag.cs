@@ -22,12 +22,12 @@ namespace Azure.Core.Http
             return string.Equals(_value, other._value, StringComparison.Ordinal);
         }
 
-        public bool Equals(string other)
+        public bool Equals(string? other)
         {
             return string.Equals(_value, other, StringComparison.Ordinal);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return (obj is ETag other) && Equals(other);
         }
