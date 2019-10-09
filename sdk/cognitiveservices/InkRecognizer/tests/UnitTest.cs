@@ -3,7 +3,7 @@
 // license information.
 
 #pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
-namespace InkRecognizerTestWPF
+namespace InkRecognizerTest
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,6 @@ namespace InkRecognizerTestWPF
     using System.Linq;
     using Azure.AI.InkRecognizer;
     using Azure.AI.InkRecognizer.Models;
-    using Azure.AI.InkRecognizer.WPF.Stroke;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -29,46 +28,6 @@ namespace InkRecognizerTestWPF
             Assert.IsNotNull(inkRecognizerClient);
         }
 
-        /// <summary>
-        /// This is to test the store functionlaity.
-        /// </summary>
-        [TestMethod]
-        public void TestInkStrokeStrore()
-        {
-            var inkStrokeStore = new InkStrokeStore();
-            Assert.IsNotNull(inkStrokeStore);
-
-            var stroke = TestUtils.CreateRandomStroke();
-            Assert.IsNotNull(stroke);
-
-            // Check default configurations of InkRecognizerStroke
-            var strokeId1 = inkStrokeStore.AddStroke(stroke);
-            var strokesFromStore = inkStrokeStore.GetStrokes();
-            Assert.IsTrue(strokesFromStore.Count() == 1);
-
-            var strokeFromStore = strokesFromStore.ElementAt(0);
-            Assert.IsTrue(strokeFromStore.Id == strokeId1);
-            Assert.IsTrue(strokeFromStore.Kind == InkStrokeKind.Unknown);
-
-            // Change the configurations of InkRecognizerStroke
-            var strokeId2 = inkStrokeStore.AddStroke(stroke, InkStrokeKind.InkDrawing, "en-GB");
-            strokesFromStore = inkStrokeStore.GetStrokes();
-            Assert.IsTrue(strokesFromStore.Count() == 2);
-
-            strokeFromStore = strokesFromStore.ElementAt(1);
-            Assert.IsTrue(strokeFromStore.Id == strokeId2);
-            Assert.IsTrue(strokeFromStore.Kind == InkStrokeKind.InkDrawing);
-            Assert.IsTrue(strokeFromStore.Language == "en-GB");
-
-            // Check deletion of strokes from Stroke store
-            inkStrokeStore.RemoveStroke(strokeId1);
-            strokesFromStore = inkStrokeStore.GetStrokes();
-            Assert.IsTrue(strokesFromStore.Count() == 1);
-            Assert.IsTrue(strokeFromStore.Id == strokeId2);
-            inkStrokeStore.RemoveStroke(strokeId2);
-            strokesFromStore = inkStrokeStore.GetStrokes();
-            Assert.IsTrue(strokesFromStore.Count() == 0);
-        }
 
         [TestMethod]
         public void TestSimpleDrawing()
