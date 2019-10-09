@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized.Cryptography.Models;
+using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography
@@ -208,7 +209,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="content">Content to transform.</param>
         /// <param name="metadata">Content metadata to transform.</param>
         /// <returns>Transformed content stream.</returns>
-        internal protected override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        internal override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
             metadata ??= new Dictionary<string, string>();
 

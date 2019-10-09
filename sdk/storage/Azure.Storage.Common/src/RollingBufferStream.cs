@@ -3,8 +3,10 @@
 
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Common
 {
     internal class RollingBufferStream : Stream
     {
@@ -27,11 +29,6 @@ namespace Azure.Storage.Blobs
         /// Index of the next byte to read from buffer
         /// </summary>
         private int _nextBufferBytePos = 0;
-
-        ///// <summary>
-        ///// The index where the sequential data begins.
-        ///// </summary>
-        //private int _rollingBufferBreakPos = 0;
 
         /// <summary>
         /// Index of the byte reserved for splitting the buffer "start" from "end".
@@ -73,17 +70,16 @@ namespace Azure.Storage.Blobs
             // set read position within rolling buffer
             set
             {
-                if (value < 0)
+                if (value < 0 ||
+                    value < _underlyingStreamBytesRead - BufferSize + 1 ||
+                    value > _underlyingStreamBytesRead)
                 {
-                    throw new ArgumentException("Cannot seek to a negative position");
-                }
-                if (value < _underlyingStreamBytesRead - BufferSize + 1)
-                {
-                    throw new ArgumentException("Tried to seek back further than buffer allowed.");
-                }
-                if (value > _underlyingStreamBytesRead)
-                {
-                    throw new ArgumentException("Tried to seek ahead of what has already been read from stream");
+                    long bufferStartPosInclusive = _hasFilled
+                        ? _underlyingStreamBytesRead - BufferSize + 1
+                        : 0;
+                    long bufferEndPosExclusive = _underlyingStreamBytesRead + 1;
+
+                    throw Errors.SeekOutsideBufferRange(value, bufferStartPosInclusive, bufferEndPosExclusive);
                 }
 
                 _nextBufferBytePos = (int)(value % BufferSize);
@@ -107,6 +103,12 @@ namespace Azure.Storage.Blobs
         }
 
         public override int Read(byte[] buffer, int offset, int count)
+            => ReadImplAsync(false, buffer, offset, count, cancellationToken: default).EnsureCompleted();
+
+        public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            => await ReadImplAsync(true, buffer, offset, count, cancellationToken).ConfigureAwait(false);
+
+        private async Task<int> ReadImplAsync(bool async, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             int totalRead = 0;
 
@@ -146,7 +148,11 @@ namespace Azure.Storage.Blobs
 
             // index of first byte in caller-provided `buffer` that needs to be saved to rolling buffer
             var newBytesBeginning = offset + totalRead;
-            var unsavedStreamBytes = _underlyingStream.Read(buffer, newBytesBeginning, count - totalRead);
+            var unsavedStreamBytes = async
+                ? await _underlyingStream
+                    .ReadAsync(buffer, newBytesBeginning, count - totalRead, cancellationToken)
+                    .ConfigureAwait(false)
+                : _underlyingStream.Read(buffer, newBytesBeginning, count - totalRead);
             _underlyingStreamBytesRead += unsavedStreamBytes;
             totalRead += unsavedStreamBytes;
 

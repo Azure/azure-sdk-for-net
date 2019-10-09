@@ -1,15 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Http;
-
 namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
 {
     /// <summary>
-    /// This is a representation of a range of bytes on an encrypted blob, which may be expanded from the requested range to
-    /// included extra data needed for encryption.Note that this type is not strictly thread-safe as the download method
-    /// will update the count in case the user did not specify one. Passing null as an EncryptedBlobRange value will default
-    /// to the entire range of the blob.
+    /// This is a representation of a range of bytes on an encrypted blob, which may be expanded from the requested
+    /// range to include extra data needed for decryption. It contains the original range as well as the calculated
+    /// expanded range.
     /// </summary>
     internal struct EncryptedBlobRange
     {

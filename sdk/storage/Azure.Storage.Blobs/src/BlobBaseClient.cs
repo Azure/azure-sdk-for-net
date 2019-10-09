@@ -1213,12 +1213,12 @@ namespace Azure.Storage.Blobs.Specialized
 
             return downloadTask;
 
-            Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
+            async Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
                 =>
-                client.GetPropertiesInternal(
+                await client.GetPropertiesInternal(
                         accessConditions: blobAccessConditions,
                         async: async,
-                        cancellationToken: ct);
+                        cancellationToken: ct).ConfigureAwait(false);
 
             static ETag GetEtag(BlobProperties blobProperties) => blobProperties.ETag;
 
@@ -1228,16 +1228,16 @@ namespace Azure.Storage.Blobs.Specialized
             async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
             {
                 Response<BlobDownloadInfo> response = await client.DownloadInternal(
-                    default, blobAccessConditions, default, async, cancellationToken).ConfigureAwait(false);
+                    range: default, blobAccessConditions, default, async, cancellationToken).ConfigureAwait(false);
 
                 if (async)
                 {
                     await response.Value.Content.CopyToAsync(
-                        destination, 81920 /* default value */, ct).ConfigureAwait(false);
+                        destination, Constants.DefaultStreamCopyBufferSize, ct).ConfigureAwait(false);
                 }
                 else
                 {
-                    response.Value.Content.CopyTo(destination, 81920 /* default value */);
+                    response.Value.Content.CopyTo(destination, Constants.DefaultStreamCopyBufferSize);
                 }
 
                 return response;

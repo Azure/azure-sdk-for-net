@@ -1070,7 +1070,7 @@ namespace Azure.Storage.Blobs
         /// <param name="content">Content to transform.</param>
         /// <param name="metadata">Content metadata to transform.</param>
         /// <returns>Transformed content stream and metadata.</returns>
-        internal protected virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        internal virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
             return (content, metadata); // no-op
         }

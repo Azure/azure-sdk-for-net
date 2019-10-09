@@ -12,6 +12,7 @@ using Azure.Core.Cryptography;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized.Cryptography.Models;
+using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Cryptography

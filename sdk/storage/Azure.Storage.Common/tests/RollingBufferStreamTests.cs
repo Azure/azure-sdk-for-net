@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Azure.Storage.Common;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
