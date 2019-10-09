@@ -46,23 +46,23 @@ namespace Azure.Core.Http
             return _value ?? "<null>";
         }
 
-        internal static ETag Parse(string stringValue)
+        internal static ETag Parse(string value)
         {
             if (stringValue == All._value)
             {
                 return All;
             }
-            else if (stringValue.StartsWith("W/", StringComparison.OrdinalIgnoreCase))
+            else if (value.StartsWith("W/", StringComparison.Ordinal))
             {
                 throw new NotSupportedException("Weak ETags are not supported.");
             }
-            else if (!stringValue.StartsWith(QuoteString, StringComparison.OrdinalIgnoreCase) ||
-                     !stringValue.EndsWith(QuoteString, StringComparison.OrdinalIgnoreCase))
+            else if (!value.StartsWith(QuoteString, StringComparison.Ordinal) ||
+                     !value.EndsWith(QuoteString, StringComparison.Ordinal))
             {
-                throw new ArgumentException("The value should be equal to * or be wrapped in quotes", nameof(stringValue));
+                throw new ArgumentException("The value should be equal to * or be wrapped in quotes", nameof(value));
             }
 
-            return new ETag(stringValue.Trim(QuoteCharacter));
+            return new ETag(value.Trim(QuoteCharacter));
         }
     }
 }
