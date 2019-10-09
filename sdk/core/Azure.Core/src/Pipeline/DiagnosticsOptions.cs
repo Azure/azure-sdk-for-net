@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline
             {
                 if (value != null && value.Length > MaxApplicationIdLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters", nameof(value));
+                    throw new ArgumentOutOfRangeException($"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters", nameof(value));
                 }
                 _applicationId = value;
             }
