@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration.Samples
 {

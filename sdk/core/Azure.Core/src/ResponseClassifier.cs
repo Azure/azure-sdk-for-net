@@ -3,8 +3,9 @@
 
 using System;
 using System.IO;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     public class ResponseClassifier
     {

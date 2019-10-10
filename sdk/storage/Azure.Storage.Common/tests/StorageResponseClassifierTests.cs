@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;

@@ -4,8 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Specialized
 {

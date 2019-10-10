@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Diagnostics
 {
     public readonly struct DiagnosticScope : IDisposable
     {

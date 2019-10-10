@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common

@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {

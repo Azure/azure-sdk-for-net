@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Tests
             var hash = new byte[] { 1, 2, 3 };
 
             var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 hash,
@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Tests
                 "key1");
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 hash,
@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Tests
         public void EqualsReturnsTrueForNullValues()
         {
             var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 null,
                 null,
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Tests
                 null);
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 null,
                 null,
@@ -72,7 +72,7 @@ namespace Azure.Storage.Blobs.Tests
             var hash2 = new byte[] { 1, 2, 3 };
 
             var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash1,
                 hash1,
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Tests
                 "key1");
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash2,
                 hash1,
@@ -100,7 +100,7 @@ namespace Azure.Storage.Blobs.Tests
             var hash2 = new byte[] { 1, 2, 3 };
 
             var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash1,
                 hash1,
@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs.Tests
                 "key1");
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash1,
                 hash2,
@@ -127,7 +127,7 @@ namespace Azure.Storage.Blobs.Tests
             var hash = new byte[] { 1, 2, 3 };
 
             var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 null,
                 hash,
@@ -135,7 +135,7 @@ namespace Azure.Storage.Blobs.Tests
                 "key1");
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 hash,
@@ -155,7 +155,7 @@ namespace Azure.Storage.Blobs.Tests
             var hash = new byte[] { 1, 2, 3 };
 
             var info1 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 null,
@@ -163,7 +163,7 @@ namespace Azure.Storage.Blobs.Tests
                 "key1");
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 hash,
@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs.Tests
             var hash = new byte[] { 1, 2, 3 };
 
             var info1 = new PageInfo(
-                new Core.Http.ETag("B"),
+                new ETag("B"),
                 new DateTimeOffset(2019, 9, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 hash,
@@ -192,7 +192,7 @@ namespace Azure.Storage.Blobs.Tests
                 "key1");
 
             var info2 = new PageInfo(
-                new Core.Http.ETag("A"),
+                new ETag("A"),
                 new DateTimeOffset(2019, 11, 25, 1, 1, 1, TimeSpan.Zero),
                 hash,
                 hash,

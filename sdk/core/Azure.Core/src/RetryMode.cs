@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     /// <summary>
     /// The type of approach to apply when calculating the delay
