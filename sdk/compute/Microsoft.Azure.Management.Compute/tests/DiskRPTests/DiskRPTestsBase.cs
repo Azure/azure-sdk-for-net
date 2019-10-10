@@ -431,6 +431,12 @@ namespace Compute.Tests.DiskRPTests
                         dessOut = m_CrpClient.DiskEncryptionSets.ListNext(dessOut.NextPageLink);
                         Assert.True(dessOut.Any());
                     }
+
+                    // Delete diskEncryptionSets
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName1, desName1);
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName1, desName2);
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName2, desName1);
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName2, desName2);
                 }
                 finally
                 {
