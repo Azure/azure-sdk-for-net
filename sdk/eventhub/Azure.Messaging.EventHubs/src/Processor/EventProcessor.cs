@@ -346,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
                 // but it may be overriden by a derived class.
 
-                TimeSpan remainingTimeUntilNextCycle = cycleDuration.Elapsed - LoadBalanceUpdate;
+                TimeSpan remainingTimeUntilNextCycle = LoadBalanceUpdate - cycleDuration.Elapsed;
 
                 if (remainingTimeUntilNextCycle > TimeSpan.Zero)
                 {

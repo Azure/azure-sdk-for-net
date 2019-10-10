@@ -17,7 +17,7 @@ namespace Azure.Core
 
         public DateTimeOffset ExpiresOn { get; private set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is AccessToken accessToken)
             {

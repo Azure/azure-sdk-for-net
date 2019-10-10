@@ -47,12 +47,12 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     }
     ```
 * Use the returned credentials above to set  **AZURE_CLIENT_ID**(appId), **AZURE_CLIENT_SECRET**(password) and **AZURE_TENANT_ID**(tenant) environment variables. The following example shows a way to do this in Powershell:
-```cmd
-$Env:AZURE_CLIENT_ID="generated-app-ID"
-$Env:AZURE_CLIENT_SECRET="random-password"
-$Env:AZURE_TENANT_ID="tenant-ID"
-```
-
+    ```PowerShell
+    $Env:AZURE_CLIENT_ID="generated-app-ID"
+    $Env:AZURE_CLIENT_SECRET="random-password"
+    $Env:AZURE_TENANT_ID="tenant-ID"
+    ```
+    
 * Grant the above mentioned application authorization to perform secret operations on the key vault:
     ```PowerShell
     az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --secret-permissions backup delete get list set
@@ -68,18 +68,14 @@ $Env:AZURE_TENANT_ID="tenant-ID"
 #### Create SecretClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [SecretClient][secret_client_class]:
 
-```c#
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-
-// Create a new secret client using the default credential from Azure.Identity
-var client = new SecretClient(vaultUri: <your-vault-url>, credential: new DefaultAzureCredential());
+```C# CreateClient
+// Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
+// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
 // Create a new secret using the secret client
-Secret secret = client.Set("secret-name", "secret-value");
+Secret secret = client.SetSecret("secret-name", "secret-value");
 ```
-> new DefaultAzureCredential():
-> Uses the environment variables previously set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`)
 
 ## Key concepts
 ### Secret
@@ -106,20 +102,20 @@ The following section provides several code snippets using the [above created](#
 ### Create a Secret
 `Set` creates a Secret to be stored in the Azure Key Vault. If a secret with the same name already exists, then a new version of the secret is created.
 
-```c#
-Secret secret = client.Set("secret-name", "secret-value");
+```C# CreateSecret
+Secret secret = client.SetSecret("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
-Console.WriteLine(secret.Version);
-Console.WriteLine(secret.Enabled);
+Console.WriteLine(secret.Properties.Version);
+Console.WriteLine(secret.Properties.Enabled);
 ```
 
 ### Retrieve a Secret
 `Get` retrieves a secret previously stored in the Key Vault.
 
-```c#
-Secret secret = client.Get("secret-name");
+```C# RetrieveSecret
+Secret secret = client.GetSecret("secret-name");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -128,28 +124,27 @@ Console.WriteLine(secret.Value);
 ### Update an existing Secret
 `Update` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.Set` on a `Secret` with the same name.
 
-```c#
-Secret secret = new Secret("secret-name", "secret-value");
+```C# UpdateSecret
+Secret secret = client.GetSecret("secret-name");
 
-// Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved
-secret.ContentType = "text/plain";
+// Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
+secret.Properties.ContentType = "text/plain";
 
 // You can specify additional application-specific metadata in the form of tags.
-secret.Tags["foo"] = "updated tag";
+secret.Properties.Tags["foo"] = "updated tag";
 
-SecretProperties updatedSecret = client.Update(secret);
+SecretProperties updatedSecretProperties = client.UpdateSecretProperties(secret.Properties);
 
-Console.WriteLine(updatedSecret.Name);
-Console.WriteLine(updatedSecret.Value);
-Console.WriteLine(updatedSecret.Version);
-Console.WriteLine(updatedSecret.ContentType);
+Console.WriteLine(updatedSecretProperties.Name);
+Console.WriteLine(updatedSecretProperties.Version);
+Console.WriteLine(updatedSecretProperties.ContentType);
 ```
 
 ### Delete a Secret
 `Delete` deletes a secret previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the secret.
 
-```c#
-DeletedSecret secret = client.Delete("secret-name");
+```C# DeleteSecret
+DeletedSecret secret = client.DeleteSecret("secret-name");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -158,21 +153,22 @@ Console.WriteLine(secret.Value);
 ### List secrets
 This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.Get` to retrive the value.
 
-```c#
+```C# ListSecrets
 Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
 foreach (SecretProperties secret in allSecrets)
 {
-  Console.WriteLine(secret.Name);
+    Console.WriteLine(secret.Name);
 }
 ```
+
 ### Async create a secret
 Async APIs are identical to their synchronous counterparts. Note that all methods end with `Async`.
 
 This example creates a secret in the Key Vault with the specified optional arguments.
 
-```c#
-Secret secret = await client.SetAsync("secret-name", "secret-value");
+```C# CreateSecretAsync
+Secret secret = await client.SetSecretAsync("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -185,14 +181,14 @@ When you interact with the Azure Key Vault Secret client library using the .NET 
 
 For example, if you try to retrieve a Secret that doesn't exist in your Key Vault, a `404` error is returned, indicating `Not Found`.
 
-```c#
+```C# NotFound
 try
 {
-  Secret secret = client.Get("some_secret");
+    Secret secret = client.GetSecret("some_secret");
 }
 catch (RequestFailedException ex)
 {
-  System.Console.WriteLine(ex.ToString());
+    Console.WriteLine(ex.ToString());
 }
 ```
 
@@ -243,9 +239,9 @@ Several Key Vault Secrets client library samples are available to you in this Gi
   * List deleted secrets in the Key Vault
 
  ###  Additional Documentation
-- For more extensive documentation on Azure Key Vault, see the [API reference documentation][keyvault_rest].
-- For Keys client library see [Keys client library][keys_client_library].
-- For Certificates client library see [Certificates client library][certificates_client_library].
+* For more extensive documentation on Azure Key Vault, see the [API reference documentation][keyvault_rest].
+* For Keys client library see [Keys client library][keys_client_library].
+* For Certificates client library see [Certificates client library][certificates_client_library].
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.

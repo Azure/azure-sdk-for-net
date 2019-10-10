@@ -24,9 +24,13 @@ namespace Azure.Core
                 (DateTimeOffset?)DateTimeOffset.Parse(value, CultureInfo.InvariantCulture) :
                 null;
 
-        public string? ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;
+        public string? ContentType => TryGetValue(HttpHeader.Names.ContentType, out string? value) ? value : null;
 
-        public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out var value) ? value : null;
+        public int? ContentLength => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? int.Parse(stringValue, CultureInfo.InvariantCulture) : (int?)null;
+
+        public ETag? ETag => TryGetValue(HttpHeader.Names.ETag, out string? stringValue) ? Http.ETag.Parse(stringValue) : (ETag?)null;
+
+        public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out string? value) ? value : null;
 
         public IEnumerator<HttpHeader> GetEnumerator()
         {

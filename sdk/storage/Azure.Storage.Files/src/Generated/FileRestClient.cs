@@ -6053,8 +6053,13 @@ namespace Azure.Storage.Files.Models
         internal static Azure.Storage.Files.Models.DirectoryItem FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.DirectoryItem _value = new Azure.Storage.Files.Models.DirectoryItem();
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -6201,12 +6206,33 @@ namespace Azure.Storage.Files.Models
         internal static Azure.Storage.Files.Models.FileCorsRule FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.FileCorsRule _value = new Azure.Storage.Files.Models.FileCorsRule();
-            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
-            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
-            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
-            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
-            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", ""));
+            if (_child != null)
+            {
+                _value.AllowedOrigins = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", ""));
+            if (_child != null)
+            {
+                _value.AllowedMethods = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", ""));
+            if (_child != null)
+            {
+                _value.AllowedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", ""));
+            if (_child != null)
+            {
+                _value.ExposedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""));
+            if (_child != null)
+            {
+                _value.MaxAgeInSeconds = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -6674,9 +6700,18 @@ namespace Azure.Storage.Files.Models
         internal static Azure.Storage.Files.Models.FileItem FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.FileItem _value = new Azure.Storage.Files.Models.FileItem(true);
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            _value.Properties = Azure.Storage.Files.Models.FileProperty.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
+            if (_child != null)
+            {
+                _value.Properties = Azure.Storage.Files.Models.FileProperty.FromXml(_child);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -6778,8 +6813,16 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.FileMetrics _value = new Azure.Storage.Files.Models.FileMetrics(true);
-            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
             if (_child != null)
             {
@@ -6826,8 +6869,13 @@ namespace Azure.Storage.Files.Models
         internal static Azure.Storage.Files.Models.FileProperty FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.FileProperty _value = new Azure.Storage.Files.Models.FileProperty();
-            _value.ContentLength = long.Parse(element.Element(System.Xml.Linq.XName.Get("Content-Length", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Length", ""));
+            if (_child != null)
+            {
+                _value.ContentLength = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -7093,14 +7141,26 @@ namespace Azure.Storage.Files.Models
             System.Xml.Linq.XElement _child;
             System.Xml.Linq.XAttribute _attribute;
             Azure.Storage.Files.Models.FilesAndDirectoriesSegment _value = new Azure.Storage.Files.Models.FilesAndDirectoriesSegment(true);
-            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
-            _value.ShareName = element.Attribute(System.Xml.Linq.XName.Get("ShareName", "")).Value;
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ShareName", ""));
+            if (_attribute != null)
+            {
+                _value.ShareName = _attribute.Value;
+            }
             _attribute = element.Attribute(System.Xml.Linq.XName.Get("ShareSnapshot", ""));
             if (_attribute != null)
             {
                 _value.ShareSnapshot = _attribute.Value;
             }
-            _value.DirectoryPath = element.Attribute(System.Xml.Linq.XName.Get("DirectoryPath", "")).Value;
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("DirectoryPath", ""));
+            if (_attribute != null)
+            {
+                _value.DirectoryPath = _attribute.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
             if (_child != null)
             {
@@ -7116,7 +7176,11 @@ namespace Azure.Storage.Files.Models
             {
                 _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Entries", ""));
             if (_child != null)
             {
@@ -7437,9 +7501,18 @@ namespace Azure.Storage.Files.Models
         internal static Azure.Storage.Files.Models.Range FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.Range _value = new Azure.Storage.Files.Models.Range();
-            _value.Start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.End = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
+            if (_child != null)
+            {
+                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -7879,7 +7952,11 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.RetentionPolicy _value = new Azure.Storage.Files.Models.RetentionPolicy();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
             if (_child != null)
             {
@@ -8000,13 +8077,21 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.ShareItem _value = new Azure.Storage.Files.Models.ShareItem(true);
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Snapshot", ""));
             if (_child != null)
             {
                 _value.Snapshot = _child.Value;
             }
-            _value.Properties = Azure.Storage.Files.Models.ShareItemProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
+            _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
+            if (_child != null)
+            {
+                _value.Properties = Azure.Storage.Files.Models.ShareItemProperties.FromXml(_child);
+            }
             _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
             if (_child != null)
@@ -8278,8 +8363,13 @@ namespace Azure.Storage.Files.Models
         internal static Azure.Storage.Files.Models.ShareStatistics FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.ShareStatistics _value = new Azure.Storage.Files.Models.ShareStatistics();
-            _value.ShareUsageBytes = int.Parse(element.Element(System.Xml.Linq.XName.Get("ShareUsageBytes", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("ShareUsageBytes", ""));
+            if (_child != null)
+            {
+                _value.ShareUsageBytes = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -8374,8 +8464,13 @@ namespace Azure.Storage.Files.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
+            System.Xml.Linq.XAttribute _attribute;
             Azure.Storage.Files.Models.SharesSegment _value = new Azure.Storage.Files.Models.SharesSegment(true);
-            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
             if (_child != null)
             {
@@ -8403,7 +8498,11 @@ namespace Azure.Storage.Files.Models
             {
                 _value.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -8482,7 +8581,11 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.SignedIdentifier _value = new Azure.Storage.Files.Models.SignedIdentifier(true);
-            _value.Id = element.Element(System.Xml.Linq.XName.Get("Id", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Id", ""));
+            if (_child != null)
+            {
+                _value.Id = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
             if (_child != null)
             {
@@ -8848,17 +8951,41 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.StorageHandle _value = new Azure.Storage.Files.Models.StorageHandle();
-            _value.HandleId = element.Element(System.Xml.Linq.XName.Get("HandleId", "")).Value;
-            _value.Path = element.Element(System.Xml.Linq.XName.Get("Path", "")).Value;
-            _value.FileId = element.Element(System.Xml.Linq.XName.Get("FileId", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("HandleId", ""));
+            if (_child != null)
+            {
+                _value.HandleId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Path", ""));
+            if (_child != null)
+            {
+                _value.Path = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("FileId", ""));
+            if (_child != null)
+            {
+                _value.FileId = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("ParentId", ""));
             if (_child != null)
             {
                 _value.ParentId = _child.Value;
             }
-            _value.SessionId = element.Element(System.Xml.Linq.XName.Get("SessionId", "")).Value;
-            _value.ClientIp = element.Element(System.Xml.Linq.XName.Get("ClientIp", "")).Value;
-            _value.OpenTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("OpenTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("SessionId", ""));
+            if (_child != null)
+            {
+                _value.SessionId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ClientIp", ""));
+            if (_child != null)
+            {
+                _value.ClientIp = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("OpenTime", ""));
+            if (_child != null)
+            {
+                _value.OpenTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
             if (_child != null)
             {
@@ -8953,7 +9080,11 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.StorageHandlesSegment _value = new Azure.Storage.Files.Models.StorageHandlesSegment(true);
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Entries", ""));
             if (_child != null)
             {
