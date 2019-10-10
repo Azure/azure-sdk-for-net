@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -57,8 +56,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new <see cref="ReleasedObjectInfo"/>.
         /// </summary>
-        /// <param name="info">A released <see cref="ContainerInfo"/>.</param>
-        internal ReleasedObjectInfo(ContainerInfo info)
+        /// <param name="info">A released <see cref="BlobContainerInfo"/>.</param>
+        internal ReleasedObjectInfo(BlobContainerInfo info)
             : this(info.ETag, info.LastModified)
         {
         }

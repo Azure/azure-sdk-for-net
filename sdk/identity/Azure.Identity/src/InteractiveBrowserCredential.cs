@@ -18,16 +18,14 @@ namespace Azure.Identity
     {
         private readonly IPublicClientApplication _pubApp = null;
         private IAccount _account = null;
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly string _clientId;
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential which will authenticate users with the specified application.
+        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users.
         /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate.</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
-        public InteractiveBrowserCredential(string clientId)
-            : this(clientId, null)
+        public InteractiveBrowserCredential()
+            : this(Constants.DeveloperSignOnClientId, null, null)
         {
 
         }
@@ -36,17 +34,25 @@ namespace Azure.Identity
         /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        /// <param name="tenantId">The tenant id of the application and the users to authentiacte</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
-        public InteractiveBrowserCredential(string clientId, IdentityClientOptions options)
+        public InteractiveBrowserCredential(string clientId, string tenantId = default, AzureCredentialOptions options = default)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            _options = options ??= new IdentityClientOptions();
+            _options = options ??= new AzureCredentialOptions();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(_options);
 
-            _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost").Build();
+            var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost");
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
+            }
+
+            _pubApp = pubAppBuilder.Build();
         }
 
         /// <summary>

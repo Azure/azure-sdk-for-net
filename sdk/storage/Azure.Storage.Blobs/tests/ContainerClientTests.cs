@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -44,7 +43,7 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(container.Uri);
 
-            Assert.AreEqual(containerName, builder.ContainerName);
+            Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual("", builder.BlobName);
             Assert.AreEqual(accountName, builder.AccountName);
         }
@@ -57,10 +56,12 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            var blob = this.InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
-            var builder = new BlobUriBuilder(blob.Uri);
+            BlobContainerClient client1 = InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
+            BlobContainerClient client2 = InstrumentClient(new BlobContainerClient(blobEndpoint));
 
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.AreEqual(accountName, client1.AccountName);
+            Assert.AreEqual(accountName, client2.AccountName);
+
         }
 
         [Test]
@@ -68,15 +69,20 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            var containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+                var accountName = new BlobUriBuilder(service.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => container.AccountName);
+                TestHelper.AssertCacheableProperty(containerName, () => container.Name);
             }
             finally
             {
@@ -95,7 +101,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -117,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -140,7 +146,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Act
-                Response<ContainerInfo> response = await container.CreateAsync();
+                Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 Assert.Fail("CreateAsync unexpected success: blob service SAS should not be usable to create container");
             }
@@ -169,7 +175,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync(metadata: metadata);
 
             // Assert
-            Response<ContainerItem> response = await container.GetPropertiesAsync();
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
             AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
@@ -187,7 +193,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync(publicAccessType: PublicAccessType.Blob);
 
             // Assert
-            Response<ContainerItem> response = await container.GetPropertiesAsync();
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
             Assert.AreEqual(PublicAccessType.Blob, response.Value.Properties.PublicAccess);
 
             // Cleanup
@@ -207,6 +213,43 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                 container.CreateAsync(),
                 e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode.Split('\n')[0]));
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await container.CreateIfNotExistsAsync();
+
+            // Assert
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.Properties.ETag);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            await container.CreateIfNotExistsAsync();
+
+            // Assert
+            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.Properties.ETag);
 
             // Cleanup
             await container.DeleteAsync();
@@ -251,7 +294,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: true);
@@ -274,7 +317,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Arrange
                     parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
-                    ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                    BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
                         ifUnmodifiedSince: true,
                         lease: true);
@@ -288,15 +331,44 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task DeleteIfExistsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            Response<bool> response = await container.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            Response<bool> response = await container.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task GetPropertiesAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container, publicAccessType: PublicAccessType.Container))
+            using (GetNewContainer(out BlobContainerClient container, publicAccessType: PublicAccessType.BlobContainer))
             {
                 // Act
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
 
                 // Assert
-                Assert.AreEqual(PublicAccessType.Container, response.Value.Properties.PublicAccess);
+                Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.Properties.PublicAccess);
             }
         }
 
@@ -325,7 +397,7 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Assert
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
                 AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
@@ -364,13 +436,13 @@ namespace Azure.Storage.Blobs.Test
                 await container.CreateAsync();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
                 IDictionary<string, string> metadata = BuildMetadata();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: false,
                     lease: true);
 
                 // Act
-                Response<ContainerInfo> response = await container.SetMetadataAsync(
+                Response<BlobContainerInfo> response = await container.SetMetadataAsync(
                     metadata: metadata,
                     accessConditions: accessConditions);
 
@@ -378,7 +450,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await container.DeleteAsync(new ContainerAccessConditions
+                await container.DeleteAsync(new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -403,7 +475,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Arrange
                     IDictionary<string, string> metadata = BuildMetadata();
-                    ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                    BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
                         ifUnmodifiedSince: false,
                         lease: true);
@@ -424,7 +496,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Act
-                Response<ContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
+                Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
 
                 // Assert
                 Assert.IsNotNull(response);
@@ -446,13 +518,13 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Response<ContainerAccessPolicy> response = await container.GetAccessPolicyAsync(leaseAccessConditions: leaseAccessConditions);
+            Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync(leaseAccessConditions: leaseAccessConditions);
 
             // Assert
             Assert.IsNotNull(response);
 
             // Cleanup
-            await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+            await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
             {
                 LeaseAccessConditions = leaseAccessConditions
             });
@@ -496,7 +568,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                PublicAccessType publicAccessType = PublicAccessType.Container;
+                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                 SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
@@ -506,10 +578,10 @@ namespace Azure.Storage.Blobs.Test
                 );
 
                 // Assert
-                Response<ContainerItem> propertiesResponse = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> propertiesResponse = await container.GetPropertiesAsync();
                 Assert.AreEqual(publicAccessType, propertiesResponse.Value.Properties.PublicAccess);
 
-                Response<ContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
+                Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
                 Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 
                 SignedIdentifier acl = response.Value.SignedIdentifiers.First();
@@ -544,16 +616,16 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                PublicAccessType publicAccessType = PublicAccessType.Container;
+                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                 SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: true);
 
                 // Act
-                Response<ContainerInfo> response = await container.SetAccessPolicyAsync(
+                Response<BlobContainerInfo> response = await container.SetAccessPolicyAsync(
                     accessType: publicAccessType,
                     permissions: signedIdentifiers,
                     accessConditions: accessConditions
@@ -563,7 +635,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -581,9 +653,9 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    PublicAccessType publicAccessType = PublicAccessType.Container;
+                    PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                     SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
-                    ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                    BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
                         ifUnmodifiedSince: true,
                         lease: true);
@@ -616,7 +688,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(id, response.Value.LeaseId);
 
             // Cleanup
-            await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+            await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
             {
                 LeaseAccessConditions = new LeaseAccessConditions
                 {
@@ -664,7 +736,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -681,7 +753,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -699,7 +771,7 @@ namespace Azure.Storage.Blobs.Test
                 using (GetNewContainer(out BlobContainerClient container))
                 {
                     // Arrange
-                    ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                    BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
                         ifUnmodifiedSince: true,
                         lease: false);
@@ -738,7 +810,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
 
             // Cleanup
-            await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+            await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
             {
                 LeaseAccessConditions = new LeaseAccessConditions
                 {
@@ -770,7 +842,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -787,7 +859,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -806,7 +878,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -823,7 +895,7 @@ namespace Azure.Storage.Blobs.Test
                     e => { });
 
                 // cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -847,7 +919,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(container.GetLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
                 // Assert
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
 
                 Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
                 Assert.AreEqual(LeaseState.Available, response.Value.Properties.LeaseState);
@@ -876,7 +948,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 using (GetNewContainer(out BlobContainerClient container))
                 {
-                    ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                    BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
                         ifUnmodifiedSince: true,
                         lease: false);
@@ -905,7 +977,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -922,7 +994,7 @@ namespace Azure.Storage.Blobs.Test
                     e => { });
 
                 // cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -941,13 +1013,13 @@ namespace Azure.Storage.Blobs.Test
                 var id = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
                 await InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(duration);
-                var breakPeriod = 0;
+                TimeSpan breakPeriod = TimeSpan.FromSeconds(0);
 
                 // Act
                 Response<Lease> breakResponse = await InstrumentClient(container.GetLeaseClient()).BreakAsync(breakPeriod);
 
                 // Assert
-                Response<ContainerItem> response = await container.GetPropertiesAsync();
+                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
                 Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
                 Assert.AreEqual(LeaseState.Broken, response.Value.Properties.LeaseState);
             }
@@ -977,7 +1049,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
 
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -995,7 +1067,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -1014,7 +1086,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -1031,7 +1103,7 @@ namespace Azure.Storage.Blobs.Test
                     e => { });
 
                 // cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -1087,7 +1159,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
 
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -1107,7 +1179,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -1126,7 +1198,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
-                ContainerAccessConditions accessConditions = BuildContainerAccessConditions(
+                BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
                     lease: false);
@@ -1145,7 +1217,7 @@ namespace Azure.Storage.Blobs.Test
                     e => { });
 
                 // cleanup
-                await container.DeleteAsync(accessConditions: new ContainerAccessConditions
+                await container.DeleteAsync(accessConditions: new BlobContainerAccessConditions
                 {
                     LeaseAccessConditions = new LeaseAccessConditions
                     {
@@ -1165,7 +1237,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var blobs = new List<BlobItem>();
-                await foreach (Page<BlobItem> page in container.GetBlobsAsync().ByPage())
+                await foreach (Page<BlobItem> page in container.GetBlobsAsync().AsPages())
                 {
                     blobs.AddRange(page.Values);
                 }
@@ -1189,7 +1261,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                Page<BlobItem> page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
+                Page<BlobItem> page = await container.GetBlobsAsync().AsPages(pageSizeHint: 2).FirstAsync();
 
                 // Assert
                 Assert.AreEqual(2, page.Values.Count);
@@ -1207,10 +1279,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeMetadata = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
 
                 // Assert
-                AssertMetadataEquality(metadata, blobs.First().Value.Metadata);
+                AssertMetadataEquality(metadata, blobs.First().Metadata);
             }
         }
 
@@ -1228,7 +1300,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1236,7 +1308,7 @@ namespace Azure.Storage.Blobs.Test
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Name);
+                Assert.AreEqual(blobName, blobs.First().Name);
 
                 // Cleanup
                 await DisableSoftDelete();
@@ -1262,11 +1334,11 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Uncommitted).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Name);
+                Assert.AreEqual(blobName, blobs.First().Name);
             }
         }
 
@@ -1281,11 +1353,11 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Value.Snapshot);
+                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
             }
         }
 
@@ -1298,7 +1370,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<Response<BlobItem>> blobs = await container.GetBlobsAsync(new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobItem> blobs = await container.GetBlobsAsync(prefix: "foo").ToListAsync();
 
                 // Assert
                 Assert.AreEqual(3, blobs.Count);
@@ -1332,8 +1404,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
                     await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
-                    Response<BlobItem> blobItem = await container.GetBlobsAsync().FirstAsync();
-                    Assert.AreEqual(blobName, blobItem.Value.Name);
+                    BlobItem blobItem = await container.GetBlobsAsync().FirstAsync();
+                    Assert.AreEqual(blobName, blobItem.Name);
                 }
             }
         }
@@ -1350,7 +1422,7 @@ namespace Azure.Storage.Blobs.Test
                 var prefixes = new List<string>();
                 var delimiter = "/";
 
-                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter).ByPage())
+                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter: delimiter).AsPages())
                 {
                     blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
                     prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
@@ -1393,7 +1465,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Page<BlobHierarchyItem> page = await container.GetBlobsByHierarchyAsync(delimiter: delimiter)
-                    .ByPage(pageSizeHint: 2)
+                    .AsPages(pageSizeHint: 2)
                     .FirstAsync();
 
                 // Assert
@@ -1412,10 +1484,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                Response<BlobHierarchyItem> item = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeMetadata = true }).FirstAsync();
+                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
 
                 // Assert
-                AssertMetadataEquality(metadata, item.Value.Blob.Metadata);
+                AssertMetadataEquality(metadata, item.Blob.Metadata);
             }
         }
 
@@ -1433,7 +1505,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
 
                 // Assert
                 if (blobs.Count == 0)
@@ -1441,7 +1513,7 @@ namespace Azure.Storage.Blobs.Test
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Blob.Name);
+                Assert.AreEqual(blobName, blobs.First().Blob.Name);
 
                 // Cleanup
                 await DisableSoftDelete();
@@ -1467,11 +1539,11 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Uncommitted).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Value.Blob.Name);
+                Assert.AreEqual(blobName, blobs.First().Blob.Name);
             }
         }
 
@@ -1486,11 +1558,11 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Snapshots).ToListAsync();
 
                 // Assert
                 Assert.AreEqual(2, blobs.Count);
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Value.Blob.Snapshot);
+                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
             }
         }
 
@@ -1503,7 +1575,7 @@ namespace Azure.Storage.Blobs.Test
                 await SetUpContainerForListing(container);
 
                 // Act
-                IList<Response<BlobHierarchyItem>> blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
+                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(prefix: "foo" ).ToListAsync();
 
 
                 // Assert
@@ -1556,6 +1628,66 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task DeleteBlobIfExistsAsync()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var name = GetNewBlobName();
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+                using (var stream = new MemoryStream(GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                // Act
+                Response<bool> response= await container.DeleteBlobIfExistsAsync(name);
+
+                // Assert
+                Assert.IsTrue(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync_Exists()
+        {
+            using (GetNewContainer(out BlobContainerClient container))
+            {
+                // Arrange
+                var name = GetNewBlobName();
+                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+                using (var stream = new MemoryStream(GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+                await container.DeleteBlobAsync(name);
+
+                //Act
+                Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
+
+                // Assert
+                Assert.IsFalse(response.Value);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobIfExistsAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+        }
+
         #region Secondary Storage
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
@@ -1574,7 +1706,7 @@ namespace Azure.Storage.Blobs.Test
             var properties = await this.EnsurePropagatedAsync(
                 async () => await containerClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
-            
+
             Assert.IsNotNull(properties);
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 
@@ -1653,13 +1785,13 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { IfUnmodifiedSince = OldDate }
             };
 
-        private ContainerAccessConditions BuildContainerAccessConditions(
+        private BlobContainerAccessConditions BuildContainerAccessConditions(
             AccessConditionParameters parameters,
             bool ifUnmodifiedSince,
             bool lease)
         {
 
-            var accessConditions = new ContainerAccessConditions();
+            var accessConditions = new BlobContainerAccessConditions();
 
             var httpAccessConditions = new HttpAccessConditions
             {

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -45,7 +44,58 @@ namespace Azure.Storage.Files
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The Storage account name corresponding to the file client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the file client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The share name corresponding to the file client.
+        /// </summary>
+        private string _shareName;
+
+        /// <summary>
+        /// Gets the share name corresponding to the file client.
+        /// </summary>
+        public virtual string ShareName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _shareName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the file.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the file.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         //const string fileType = "file";
 
@@ -115,7 +165,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -217,7 +267,21 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.Uri, Pipeline);
+            return new FileClient(builder.ToUri(), Pipeline);
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _shareName == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.LastDirectoryOrFileName;
+                _shareName = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
         }
 
         #region Create
@@ -414,9 +478,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileInfo(response.Value));
+                    return Response.FromValue(new StorageFileInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -841,16 +903,12 @@ namespace Azure.Storage.Files
                                 cancellationToken)
                                 .ConfigureAwait(false))
                                 .Item2,
-                        // TODO: For now we're using the default ResponseClassifier
-                        // on FileConnectionOptions so we'll do the same here
-                        new ResponseClassifier(),
+                        Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
                     // to make the Content easier to find
-                    return new Response<StorageFileDownloadInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileDownloadInfo(response.Value));
+                    return Response.FromValue(new StorageFileDownloadInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1133,9 +1191,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileProperties>(
-                        response.GetRawResponse(),
-                        new StorageFileProperties(response.Value));
+                    return Response.FromValue(new StorageFileProperties(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1329,9 +1385,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileInfo(response.Value));
+                    return Response.FromValue(new StorageFileInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1451,9 +1505,7 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileInfo>(
-                        response.GetRawResponse(),
-                        new StorageFileInfo(response.Value));
+                    return Response.FromValue(new StorageFileInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1819,15 +1871,14 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return new Response<StorageFileUploadInfo>(
-                        response.GetRawResponse(),
+                    return Response.FromValue(
                         new StorageFileUploadInfo
                         {
                             ETag = response.Value.ETag,
                             LastModified = response.Value.LastModified,
                             ContentHash = response.Value.XMSContentCrc64,
                             IsServerEncrypted = response.Value.IsServerEncrypted
-                        });
+                        }, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2187,9 +2238,9 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<StorageHandle>> GetHandles(
+        public virtual Pageable<StorageHandle> GetHandles(
             CancellationToken cancellationToken = default) =>
-            new GetFileHandlesAsyncCollection(this, cancellationToken);
+            new GetFileHandlesAsyncCollection(this).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns an async
@@ -2204,16 +2255,16 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{StorageHandle}"/> describing the
+        /// A <see cref="AsyncPageable{T}"/> describing the
         /// handles on the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
+        public virtual AsyncPageable<StorageHandle> GetHandlesAsync(
             CancellationToken cancellationToken = default) =>
-            new GetFileHandlesAsyncCollection(this, cancellationToken);
+            new GetFileHandlesAsyncCollection(this).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesInternal"/> operation returns a list of open

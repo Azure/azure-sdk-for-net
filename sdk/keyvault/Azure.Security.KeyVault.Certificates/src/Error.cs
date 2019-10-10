@@ -42,6 +42,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case MessagePropertyName:
                         Message = prop.Value.GetString();
                         break;
+
                     case InnerErrorPropertyName:
                         InnerError = new Error();
                         ((IJsonDeserializable)InnerError).ReadProperties(prop.Value);

@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs Cryptography client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs.Cryptography --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Blobs.Cryptography --version 12.0.0-preview.4
 ```
 
 ### Prerequisites

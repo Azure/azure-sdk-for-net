@@ -344,6 +344,7 @@ namespace Azure.Messaging.EventHubs
                                                        EventPosition eventPosition,
                                                        EventHubConsumerOptions consumerOptions = default)
         {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(eventPosition, nameof(eventPosition));
 

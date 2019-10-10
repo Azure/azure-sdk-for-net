@@ -32,6 +32,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Pipeline = new KeyVaultPipeline(keyId, apiVersion, pipeline);
         }
 
+        internal RemoteCryptographyClient(KeyVaultPipeline pipeline)
+        {
+            Pipeline = pipeline;
+        }
+
         internal KeyVaultPipeline Pipeline { get; }
 
         public bool SupportsOperation(KeyOperation operation) => true;

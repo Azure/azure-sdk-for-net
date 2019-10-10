@@ -35,6 +35,23 @@ namespace Microsoft.Azure.Management.Search.Tests
         }
 
         [Fact]
+        public void CanListServicesBySubscription()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                SearchService service1 = CreateFreeService(searchMgmt);
+                SearchService service2 = CreateFreeService(searchMgmt);
+
+                var services = searchMgmt.Services.ListBySubscription();
+                Assert.NotNull(services);
+                Assert.Equal(2, services.Count());
+                Assert.Contains(service1.Name, services.Select(s => s.Name));
+                Assert.Contains(service2.Name, services.Select(s => s.Name));
+            });
+        }
+
+        [Fact]
         public void CanCreateAndDeleteService()
         {
             Run(() =>

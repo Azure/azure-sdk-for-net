@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Text;
@@ -27,7 +27,7 @@ namespace TrackOne
     /// EventHubsConnectionStringBuilder can be used to construct a connection string which can establish communication with Event Hubs entities.
     /// It can also be used to perform basic validation on an existing connection string.
     /// <para/>
-    /// A connection string is basically a string consisted of key-value pair separated by ";". 
+    /// A connection string is basically a string consisted of key-value pair separated by ";".
     /// Basic format is "&lt;key&gt;=&lt;value&gt;[;&lt;key&gt;=&lt;value&gt;]" where supported key name are as follow:
     /// <para/> Endpoint - the URL that contains the Event Hubs namespace
     /// <para/> EntityPath - the path to the Event Hub entity
@@ -38,9 +38,9 @@ namespace TrackOne
     /// Sample code:
     /// <code>
     /// var connectionStringBuiler = new EventHubsConnectionStringBuilder(
-    ///     "amqps://EventHubsNamespaceName.servicebus.windows.net", 
-    ///     "EventHubsEntityName", // Event Hub Name 
-    ///     "SharedAccessSignatureKeyName", 
+    ///     "amqps://EventHubsNamespaceName.servicebus.windows.net",
+    ///     "EventHubsEntityName", // Event Hub Name
+    ///     "SharedAccessSignatureKeyName",
     ///     "SharedAccessSignatureKey");
     ///  string connectionString = connectionStringBuiler.ToString();
     /// </code>

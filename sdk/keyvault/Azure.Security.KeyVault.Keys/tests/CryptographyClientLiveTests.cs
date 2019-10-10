@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -60,10 +60,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([Fields(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -131,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
@@ -195,7 +195,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
 
@@ -209,14 +209,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
 
@@ -243,14 +243,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -272,7 +272,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
             CryptographyClient client = GetCryptoClient(key.Id);
 
@@ -286,14 +286,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -306,9 +306,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
 
             Key key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key);
+            RegisterForCleanup(key.Name);
 
-            CryptographyClient client = GetCryptoClient(key.Id);
+            CryptographyClient client = GetCryptoClient(key.Properties.Id);
 
             byte[] data = new byte[32];
             Recording.Random.NextBytes(data);
@@ -320,14 +320,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, signResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.KeyId, verifyResult.KeyId);
+            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -525,7 +525,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
 #else
                     KeyCurveName curveName = algorithm.GetEcKeyCurveName();
-                    ECCurve curve = ECCurve.CreateFromOid(curveName._oid);
+                    ECCurve curve = ECCurve.CreateFromOid(curveName.Oid);
 
                     using (ECDsa ecdsa = ECDsa.Create())
                     {
@@ -536,7 +536,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         }
                         catch (NotSupportedException)
                         {
-                            Assert.Inconclusive("This platform does not support OID {0}", curveName._oid);
+                            Assert.Inconclusive("This platform does not support OID {0}", curveName.Oid);
                         }
                     }
 #endif
@@ -549,7 +549,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Key key = await Client.ImportKeyAsync(keyName, keyMaterial);
 
-            keyMaterial.KeyId = key.KeyMaterial.KeyId;
+            keyMaterial.Id = key.KeyMaterial.Id;
             key.KeyMaterial = keyMaterial;
 
             return key;

@@ -45,15 +45,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// managed integration runtime.</param>
         /// <param name="maxParallelExecutionsPerNode">Maximum parallel
         /// executions count per node for managed integration runtime.</param>
+        /// <param name="dataFlowProperties">Data flow properties for managed
+        /// integration runtime.</param>
         /// <param name="vNetProperties">VNet properties for managed
         /// integration runtime.</param>
-        public IntegrationRuntimeComputeProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string location = default(string), string nodeSize = default(string), int? numberOfNodes = default(int?), int? maxParallelExecutionsPerNode = default(int?), IntegrationRuntimeVNetProperties vNetProperties = default(IntegrationRuntimeVNetProperties))
+        public IntegrationRuntimeComputeProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string location = default(string), string nodeSize = default(string), int? numberOfNodes = default(int?), int? maxParallelExecutionsPerNode = default(int?), IntegrationRuntimeDataFlowProperties dataFlowProperties = default(IntegrationRuntimeDataFlowProperties), IntegrationRuntimeVNetProperties vNetProperties = default(IntegrationRuntimeVNetProperties))
         {
             AdditionalProperties = additionalProperties;
             Location = location;
             NodeSize = nodeSize;
             NumberOfNodes = numberOfNodes;
             MaxParallelExecutionsPerNode = maxParallelExecutionsPerNode;
+            DataFlowProperties = dataFlowProperties;
             VNetProperties = vNetProperties;
             CustomInit();
         }
@@ -100,6 +103,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public int? MaxParallelExecutionsPerNode { get; set; }
 
         /// <summary>
+        /// Gets or sets data flow properties for managed integration runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataFlowProperties")]
+        public IntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets vNet properties for managed integration runtime.
         /// </summary>
         [JsonProperty(PropertyName = "vNetProperties")]
@@ -120,6 +129,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (MaxParallelExecutionsPerNode < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxParallelExecutionsPerNode", 1);
+            }
+            if (DataFlowProperties != null)
+            {
+                DataFlowProperties.Validate();
             }
         }
     }

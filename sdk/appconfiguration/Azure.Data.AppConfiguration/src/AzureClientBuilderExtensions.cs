@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Extensions;
+using Azure.Data.AppConfiguration;
 
-namespace Azure.Data.AppConfiguration
+#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
+namespace Microsoft.Extensions.Azure
+#pragma warning restore AZC0001
 {
     /// <summary>
     /// Extension methods to add <see cref="ConfigurationClient"/> client to clients builder

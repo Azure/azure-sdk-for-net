@@ -259,7 +259,7 @@ namespace Azure.Core.Tests
         {
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com");
+            request.Uri.Reset(new Uri("https://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;
         }

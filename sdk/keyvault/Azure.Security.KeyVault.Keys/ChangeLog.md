@@ -1,16 +1,20 @@
 # Release History
 
-## 4.0.0-preview.4
+## 4.0.0-preview.5 (2019-10-07)
 
 ### Breaking changes
 
 - `KeyType` enumeration values have been changed to match other languages, e.g. `KeyType.EllipticCurve` is now `KeyType.Ec`.
 - `KeyOperations` has been renamed `KeyOperation`.
 - Enumerations including `KeyCurveName`, `KeyOperation`, and `KeyType` are now structures that define well-known, supported static fields.
+- `KeyBase` has been renamed to `KeyProperties`.
+- `Key` and `DeletedKey` no longer extend `KeyProperties`, but instead contain a `KeyProperties` property named `Properties`.
+- `KeyClient.UpdateKey` has been renamed to `KeyClient.UpdateKeyProperties`.
 
 ### Major changes
 
 - `KeyClient.UpdateKey` and `KeyClient.UpdateKeyAsync` now allow the `keyOperations` parameter to be null, resulting in no changes to the allowed key operations.
+- `RSA` and `ECDsa` support have been implemented for `CryptographyClient` to use locally if key operations and key material allow; otherwise, operations will be performed in Azure Key Vault.
 
 ## 4.0.0-preview.1 (2019-06-28)
 

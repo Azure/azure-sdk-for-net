@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -175,7 +174,12 @@ namespace Azure.Storage.Sas
                 identifier: Identifier,
                 resource: resource,
                 permissions: Permissions,
-                signature: signature);
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 

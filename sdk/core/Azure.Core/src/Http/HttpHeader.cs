@@ -30,7 +30,7 @@ namespace Azure.Core.Http
             return hashCode.ToHashCode();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is HttpHeader header)
             {
@@ -53,11 +53,18 @@ namespace Azure.Core.Http
             public static string Date => "Date";
             public static string XMsDate => "x-ms-date";
             public static string ContentType => "Content-Type";
+            public static string ContentLength => "Content-Length";
+            public static string ETag => "ETag";
             public static string XMsRequestId => "x-ms-request-id";
             public static string UserAgent => "User-Agent";
             public static string Accept => "Accept";
             public static string Authorization => "Authorization";
             public static string Range => "Range";
+            public static string XMsRange => "x-ms-range";
+            public static string IfMatch => "If-Match";
+            public static string IfNoneMatch => "If-None-Match";
+            public static string IfModifiedSince => "If-Modified-Since";
+            public static string IfUnmodifiedSince => "If-Unmodified-Since";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible

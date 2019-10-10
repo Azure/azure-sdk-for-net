@@ -50,6 +50,8 @@ namespace Azure.Security.KeyVault.Secrets
         public SecretClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
             Version = version;
+
+            this.ConfigureLogging();
         }
 
         internal string GetVersionString()

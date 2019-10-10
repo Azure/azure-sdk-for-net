@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -12,9 +10,10 @@ using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -22,7 +21,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
-	public class BlobBaseClient
+    public class BlobBaseClient
     {
         /// <summary>
         /// The blob's primary <see cref="Uri"/> endpoint.
@@ -44,7 +43,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
@@ -55,6 +54,57 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         public virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The Storage account name corresponding to the blob client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the blob client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The container name corresponding to the blob client.
+        /// </summary>
+        private string _containerName;
+
+        /// <summary>
+        /// Gets the container name corresponding to the blob client.
+        /// </summary>
+        public virtual string BlobContainerName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _containerName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the blob.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the blob.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -76,14 +126,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        public BlobBaseClient(string connectionString, string containerName, string blobName)
-            : this(connectionString, containerName, blobName, null)
+        public BlobBaseClient(string connectionString, string blobContainerName, string blobName)
+            : this(connectionString, blobContainerName, blobName, null)
         {
         }
 
@@ -98,7 +148,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
@@ -109,16 +159,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobBaseClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+        public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
-                    ContainerName = containerName,
+                    BlobContainerName = blobContainerName,
                     BlobName = blobName
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
             _customerProvidedKey = options?.CustomerProvidedKey;
         }
@@ -247,7 +297,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotImpl(snapshot);
+        public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotCore(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -256,10 +306,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        protected virtual BlobBaseClient WithSnapshotImpl(string snapshot)
+        protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.Uri, Pipeline);
+            return new BlobBaseClient(builder.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -272,7 +322,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>A new <see cref="BlobClient"/></returns>
         public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) =>
-            WithCustomerProvidedKeyImpl(customerProvidedKey);
+            WithCustomerProvidedKeyCore(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -283,7 +333,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="BlobClient"/></returns>
-        protected virtual BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        protected virtual BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {
@@ -295,6 +345,20 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline,
                 new BlobClientOptions(customerProvidedKey: customerProvidedKey));
 
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _containerName == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.BlobName;
+                _containerName = builder.BlobContainerName;
+                _accountName = builder.AccountName;
+            }
         }
 
         ///// <summary>
@@ -593,14 +657,12 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken)
                                 .ConfigureAwait(false))
                             .Item2,
-                        // TODO: For now we're using the default ResponseClassifier
-                        // on BlobConnectionOptions so we'll do the same here
-                        new ResponseClassifier(),
+                        Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
-                    return new Response<BlobDownloadInfo>(response.GetRawResponse(), new BlobDownloadInfo(response.Value));
+                    return Response.FromValue(new BlobDownloadInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1151,12 +1213,12 @@ namespace Azure.Storage.Blobs.Specialized
 
             return downloadTask;
 
-            Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
+            async Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
                 =>
-                client.GetPropertiesAsync(
+                await client.GetPropertiesInternal(
                         accessConditions: blobAccessConditions,
-                        cancellationToken: ct
-                        );
+                        async: async,
+                        cancellationToken: ct).ConfigureAwait(false);
 
             static ETag GetEtag(BlobProperties blobProperties) => blobProperties.ETag;
 
@@ -1165,8 +1227,18 @@ namespace Azure.Storage.Blobs.Specialized
             // Download the entire stream
             async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
             {
-                Response<BlobDownloadInfo> response = await client.DownloadAsync(accessConditions: blobAccessConditions, cancellationToken: ct).ConfigureAwait(false);
-                await response.Value.Content.CopyToAsync(destination, 81920 /* default value */, ct).ConfigureAwait(false);
+                Response<BlobDownloadInfo> response = await client.DownloadInternal(
+                    range: default, blobAccessConditions, default, async, cancellationToken).ConfigureAwait(false);
+
+                if (async)
+                {
+                    await response.Value.Content.CopyToAsync(
+                        destination, Constants.DefaultStreamCopyBufferSize, ct).ConfigureAwait(false);
+                }
+                else
+                {
+                    response.Value.Content.CopyTo(destination, Constants.DefaultStreamCopyBufferSize);
+                }
 
                 return response;
             }
@@ -1183,7 +1255,8 @@ namespace Azure.Storage.Blobs.Specialized
 
                 accessConditions.HttpAccessConditions = httpAccessConditions;
 
-                return client.DownloadAsync(range: httpRange, accessConditions: accessConditions, cancellationToken: cancellationToken);
+                return client.DownloadInternal(range: httpRange, accessConditions: accessConditions,
+                    rangeGetContentHash: default, async: async, cancellationToken: cancellationToken);
             }
 
             static Task WritePartitionAsync(Response<BlobDownloadInfo> response, Stream destination, bool async, CancellationToken ct)
@@ -1833,9 +1906,89 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DeleteInternal"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// The <see cref="DeleteIfExists"/> operation marks the specified blob
+        /// or snapshot for deletion, if the blob exists. The blob is later deleted
+        /// during garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// </summary>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
+        /// <param name="accessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// deleting this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            DeleteSnapshotsOption? deleteOptions = default,
+            BlobAccessConditions? accessConditions = default,
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                deleteOptions,
+                accessConditions ?? default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified blob
+        /// or snapshot for deletion, if the blob exists. The blob is later deleted
+        /// during garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// </summary>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
+        /// <param name="accessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// deleting this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            DeleteSnapshotsOption? deleteOptions = default,
+            BlobAccessConditions? accessConditions = default,
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                deleteOptions,
+                accessConditions ?? default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified blob
+        /// or snapshot for deletion, if the blob exists. The blob is later deleted
+        /// during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -1864,11 +2017,71 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        private async Task<Response<bool>> DeleteIfExistsInternal(
+            DeleteSnapshotsOption? deleteOptions,
+            BlobAccessConditions accessConditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                Response response = await DeleteInternal(
+                    deleteOptions,
+                    accessConditions,
+                    async,
+                    cancellationToken,
+                    Constants.Blob.Base.DeleteIfExists)
+                    .ConfigureAwait(false);
+                return Response.FromValue(true, response);
+            }
+            catch (StorageRequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
+            {
+                return Response.FromValue(false, default);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteInternal"/> operation marks the specified blob
+        /// or snapshot for  deletion. The blob is later deleted during
+        /// garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// </summary>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
+        /// <param name="accessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// deleting this blob.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         private async Task<Response> DeleteInternal(
             DeleteSnapshotsOption? deleteOptions,
             BlobAccessConditions? accessConditions,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = Constants.Blob.Base.Delete)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -1890,7 +2103,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Delete",
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2286,14 +2499,13 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return new Response<BlobInfo>(
-                        response.GetRawResponse(),
+                    return Response.FromValue(
                         new BlobInfo
                         {
                             LastModified = response.Value.LastModified,
                             ETag = response.Value.ETag,
                             BlobSequenceNumber = response.Value.BlobSequenceNumber
-                        });
+                        }, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2443,13 +2655,12 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                    return new Response<BlobInfo>(
-                        response.GetRawResponse(),
+                    return Response.FromValue(
                         new BlobInfo
                         {
                             LastModified = response.Value.LastModified,
                             ETag = response.Value.ETag
-                        });
+                        }, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2612,9 +2823,9 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion CreateSnapshot
 
-        #region SetTier
+        #region SetAccessTier
         /// <summary>
-        /// The <see cref="SetTier"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTier"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2650,12 +2861,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response SetTier(
+        public virtual Response SetAccessTier(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            SetTierInternal(
+            SetAccessTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2664,7 +2875,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetTierAsync"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTierAsync"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2700,12 +2911,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> SetTierAsync(
+        public virtual async Task<Response> SetAccessTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
-            await SetTierInternal(
+            await SetAccessTierInternal(
                 accessTier,
                 leaseAccessConditions,
                 rehydratePriority,
@@ -2714,7 +2925,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetTierInternal"/> operation sets the tier on a blob.
+        /// The <see cref="SetAccessTierInternal"/> operation sets the tier on a blob.
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
@@ -2753,7 +2964,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> SetTierInternal(
+        private async Task<Response> SetAccessTierInternal(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions,
             RehydratePriority? rehydratePriority,
@@ -2770,14 +2981,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.SetTierAsync(
+                    return await BlobRestClient.Blob.SetAccessTierAsync(
                         Pipeline,
                         Uri,
                         tier: accessTier,
                         rehydratePriority: rehydratePriority,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetAccessTier",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2792,203 +3003,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion SetTier
-    }
-}
-
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// BlobInfo
-    /// </summary>
-    public partial class BlobInfo
-    {
-        /// <summary>
-        /// The current sequence number for a page blob. This header is not
-        /// returned for block blobs or append blobs
-        /// </summary>
-        public long BlobSequenceNumber { get; internal set; }
-    }
-
-    /// <summary>
-    /// The properties and Content returned from downloading a blob
-    /// </summary>
-    public partial class BlobDownloadInfo
-    {
-        /// <summary>
-        /// Internal flattened property representation
-        /// </summary>
-        internal FlattenedDownloadProperties _flattened;
-
-        /// <summary>
-        /// The blob's type.
-        /// </summary>
-        public BlobType BlobType => _flattened.BlobType;
-
-        /// <summary>
-        /// The number of bytes present in the response body.
-        /// </summary>
-        public long ContentLength => _flattened.ContentLength;
-
-        /// <summary>
-        /// Content
-        /// </summary>
-        public Stream Content => _flattened.Content;
-
-        /// <summary>
-        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
-        /// </summary>
-#pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash => _flattened.ContentHash;
-#pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// Properties returned when downloading a Blob
-        /// </summary>
-        public BlobDownloadProperties Properties { get; private set; }
-
-        /// <summary>
-        /// Creates a new DownloadInfo backed by FlattenedDownloadProperties
-        /// </summary>
-        /// <param name="flattened">The FlattenedDownloadProperties returned with the request</param>
-        internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
-        {
-            _flattened = flattened;
-            Properties = new BlobDownloadProperties() { _flattened = flattened };
-        }
-    }
-
-    /// <summary>
-    /// Properties returned when downloading a Blob
-    /// </summary>
-    public partial class BlobDownloadProperties
-    {
-        /// <summary>
-        /// Internal flattened property representation
-        /// </summary>
-        internal FlattenedDownloadProperties _flattened;
-
-        /// <summary>
-        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public DateTimeOffset LastModified => _flattened.LastModified;
-
-        /// <summary>
-        /// x-ms-meta
-        /// </summary>
-        public IDictionary<string, string> Metadata => _flattened.Metadata;
-
-        /// <summary>
-        /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
-        /// </summary>
-        public string ContentType => _flattened.ContentType;
-
-        /// <summary>
-        /// Indicates the range of bytes returned in the event that the client requested a subset of the blob by setting the 'Range' request header.
-        /// </summary>
-        public string ContentRange => _flattened.ContentRange;
-
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public ETag ETag => _flattened.ETag;
-
-        /// <summary>
-        /// This header returns the value that was specified for the Content-Encoding request header
-        /// </summary>
-        public string ContentEncoding => _flattened.ContentEncoding;
-
-        /// <summary>
-        /// This header is returned if it was previously specified for the blob.
-        /// </summary>
-        public string CacheControl => _flattened.CacheControl;
-
-        /// <summary>
-        /// This header returns the value that was specified for the 'x-ms-blob-content-disposition' header. The Content-Disposition response header field conveys additional information about how to process the response payload, and also can be used to attach additional metadata. For example, if set to attachment, it indicates that the user-agent should not display the response, but instead show a Save As dialog with a filename other than the blob name specified.
-        /// </summary>
-        public string ContentDisposition => _flattened.ContentDisposition;
-
-        /// <summary>
-        /// This header returns the value that was specified for the Content-Language request header.
-        /// </summary>
-        public string ContentLanguage => _flattened.ContentLanguage;
-
-        /// <summary>
-        /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs
-        /// </summary>
-        public long BlobSequenceNumber => _flattened.BlobSequenceNumber;
-
-        /// <summary>
-        /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
-        /// </summary>
-        public DateTimeOffset CopyCompletionTime => _flattened.CopyCompletionTime;
-
-        /// <summary>
-        /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
-        /// </summary>
-        public string CopyStatusDescription => _flattened.CopyStatusDescription;
-
-        /// <summary>
-        /// String identifier for this copy operation. Use with Get Blob Properties to check the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy.
-        /// </summary>
-        public string CopyId => _flattened.CopyId;
-
-        /// <summary>
-        /// Contains the number of bytes copied and the total bytes in the source in the last attempted Copy Blob operation where this blob was the destination blob. Can show between 0 and Content-Length bytes copied. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
-        /// </summary>
-        public string CopyProgress => _flattened.CopyProgress;
-
-        /// <summary>
-        /// URL up to 2 KB in length that specifies the source blob or file used in the last attempted Copy Blob operation where this blob was the destination blob. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
-        /// </summary>
-        public Uri CopySource => _flattened.CopySource;
-
-        /// <summary>
-        /// State of the copy operation identified by x-ms-copy-id.
-        /// </summary>
-        public CopyStatus CopyStatus => _flattened.CopyStatus;
-
-        /// <summary>
-        /// When a blob is leased, specifies whether the lease is of infinite or fixed duration.
-        /// </summary>
-        public LeaseDurationType LeaseDuration => _flattened.LeaseDuration;
-
-        /// <summary>
-        /// Lease state of the blob.
-        /// </summary>
-        public LeaseState LeaseState => _flattened.LeaseState;
-
-        /// <summary>
-        /// The current lease status of the blob.
-        /// </summary>
-        public LeaseStatus LeaseStatus => _flattened.LeaseStatus;
-
-        /// <summary>
-        /// Indicates that the service supports requests for partial blob content.
-        /// </summary>
-        public string AcceptRanges => _flattened.AcceptRanges;
-
-        /// <summary>
-        /// The number of committed blocks present in the blob. This header is returned only for append blobs.
-        /// </summary>
-        public int BlobCommittedBlockCount => _flattened.BlobCommittedBlockCount;
-
-        /// <summary>
-        /// The value of this header is set to true if the blob data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the blob is unencrypted, or if only parts of the blob/application metadata are encrypted).
-        /// </summary>
-        public bool IsServerEncrypted => _flattened.IsServerEncrypted;
-
-        /// <summary>
-        /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
-        /// </summary>
-        public string EncryptionKeySha256 => _flattened.EncryptionKeySha256;
-
-        /// <summary>
-        /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
-        /// </summary>
-#pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] BlobContentHash => _flattened.BlobContentHash;
-#pragma warning restore CA1819 // Properties should not return arrays
+        #endregion SetAccessTier
     }
 
     /// <summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Azure.Core.Http;
 using Moq;
 using NUnit.Framework;
 
@@ -15,11 +16,13 @@ namespace Azure.Data.AppConfiguration.Samples
         {
             // Create a mock response
             var mockResponse = new Mock<Response>();
+
             // Create a client mock
             var mock = new Mock<ConfigurationClient>();
+
             // Setup client method
-            mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
-                .Returns(new Response<ConfigurationSetting>(mockResponse.Object, ConfigurationModelFactory.ConfigurationSetting("Key", "Value")));
+            mock.Setup(c => c.Get("Key", It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Response.FromValue(ConfigurationModelFactory.ConfigurationSetting("Key", "Value"), mockResponse.Object));
 
             // Use the client mock
             ConfigurationClient client = mock.Object;

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -19,7 +18,7 @@ namespace Azure.Storage.Common
     {
         private MemoryPool<byte> _memoryPool;
         private readonly long? _contentLength;
-        private Func<int, bool, CancellationToken, Task<StreamPartition>> _getNextPartitionImpl;
+        private Func<int, bool, CancellationToken, Task<StreamPartition>> _getNextPartitionCore;
 
         public StreamPartitioner(Stream stream, MemoryPool<byte> memoryPool = default)
         {
@@ -28,14 +27,14 @@ namespace Azure.Storage.Common
                 _contentLength = stream.Length;
             }
             _memoryPool = memoryPool ?? MemoryPool<byte>.Shared;
-            _getNextPartitionImpl = (size, async, ct) => GetNextPartitionAsync(stream, size, async, ct);
+            _getNextPartitionCore = (size, async, ct) => GetNextPartitionAsync(stream, size, async, ct);
         }
 
         public StreamPartitioner(FileInfo file, MemoryPool<byte> memoryPool = default)
         {
             _contentLength = file.Length;
             _memoryPool = memoryPool ?? MemoryPool<byte>.Shared;
-            _getNextPartitionImpl = (size, async, ct) => GetNextPartitionAsync(file, size, async, ct);
+            _getNextPartitionCore = (size, async, ct) => GetNextPartitionAsync(file, size, async, ct);
         }
 
         public async IAsyncEnumerable<StreamPartition> GetPartitionsAsync(
@@ -158,9 +157,9 @@ namespace Azure.Storage.Common
         }
 
         internal Task<StreamPartition> GetNextPartitionAsync(int size = Constants.DefaultBufferSize, bool async = true, CancellationToken ct = default)
-            => _getNextPartitionImpl == default
+            => _getNextPartitionCore == default
             ? throw new ObjectDisposedException(nameof(StreamPartitioner))
-            : _getNextPartitionImpl(size, async, ct);
+            : _getNextPartitionCore(size, async, ct);
 
         private readonly SemaphoreSlim _getNextPartitionAsync_Semaphore = new SemaphoreSlim(1, 1);
 
@@ -287,7 +286,7 @@ namespace Azure.Storage.Common
                 {
                 }
 
-                _getNextPartitionImpl = default;
+                _getNextPartitionCore = default;
                 _memoryPool = default;
 
                 _disposedValue = true;

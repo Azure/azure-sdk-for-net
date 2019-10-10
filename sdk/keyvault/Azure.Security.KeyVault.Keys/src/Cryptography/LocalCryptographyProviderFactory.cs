@@ -19,6 +19,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return new EcCryptographyProvider(key);
             }
 
+            if (key.KeyType == KeyType.Oct)
+            {
+                return new AesCryptographyProvider(key);
+            }
+
             throw new NotSupportedException();
         }
     }

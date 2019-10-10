@@ -6,7 +6,6 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CHANGELOG.md</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,10 +26,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Azure.Messaging.EventHubs.Reference.props" />
   </ItemGroup>
 
   <ItemGroup>

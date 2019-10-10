@@ -62,18 +62,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
 
             var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/";
-            var options = new GetBlobsOptions
+            await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
             {
-                IncludeMetadata = true,
-                Prefix = prefix
-            };
-
-            BlobItem blob;
-
-            await foreach (Response<BlobItem> response in _containerClient.GetBlobsAsync(options).ConfigureAwait(false))
-            {
-                blob = response.Value;
-
                 // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                 // to throw an exception.
 

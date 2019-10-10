@@ -22,7 +22,7 @@ namespace Azure.Identity
         private readonly IPublicClientApplication _pubApp = null;
         private readonly HttpPipeline _pipeline = null;
         private IAccount _account = null;
-        private readonly IdentityClientOptions _options;
+        private readonly AzureCredentialOptions _options;
         private readonly string _clientId;
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
@@ -35,34 +35,30 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new DeviceCodeCredential which will authenticate users with the specified application.
-        /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate.</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
-        /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback)
-            : this(clientId, deviceCodeCallback, null)
-        {
-
-        }
-
-        /// <summary>
         /// Creates a new DeviceCodeCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, IdentityClientOptions options)
+        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be unspecified for multi-tenanted applications.</param>
+        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
+        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, string tenantId = default,  AzureCredentialOptions options = default)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
 
-            _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
+            var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient");
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
+            }
+
+            _pubApp = pubAppBuilder.Build();
         }
 
         /// <summary>

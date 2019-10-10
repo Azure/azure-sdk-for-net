@@ -22,17 +22,27 @@ namespace Azure.Messaging.EventHubs.Compatibility
     ///
     internal sealed class TrackOneEventHubConsumer : TransportEventHubConsumer
     {
+        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
+        private readonly Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
+
         /// <summary>The active retry policy for the producer.</summary>
         private EventHubRetryPolicy _retryPolicy;
-
-        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
-        private Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
 
         /// <summary>
         ///   The track one <see cref="TrackOne.PartitionReceiver" /> for use with this transport producer.
         /// </summary>
         ///
         private TrackOne.PartitionReceiver TrackOneReceiver => _trackOneReceiver.Value;
+
+        /// <summary>
+        ///   Indicates whether or not this consumer has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public override bool Closed => (_trackOneReceiver.IsValueCreated) ? _trackOneReceiver.Value.EventHubClient.CloseCalled : false;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TrackOneEventHubConsumer"/> class.
@@ -127,8 +137,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     LastEnqueuedEventInformation.UpdateMetrics(
                         TrackOneReceiver.RuntimeInfo.LastSequenceNumber,
                         ((parsedOffset >= 0) ? parsedOffset : default(long?)),
-                        TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc,
-                        TrackOneReceiver.RuntimeInfo.RetrievalTime);
+                        ((TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc)),
+                        ((TrackOneReceiver.RuntimeInfo.RetrievalTime == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.RetrievalTime)));
                 }
 
                 return events;

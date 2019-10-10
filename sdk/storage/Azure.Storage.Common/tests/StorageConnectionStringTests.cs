@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -75,7 +74,7 @@ namespace Azure.Storage.Common.Test
             {
                 Assert.AreEqual(a.GetType(), b.GetType());
 
-                // make sure 
+                // make sure
                 if (a.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials &&
                     b.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials)
                 {

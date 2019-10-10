@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -24,12 +23,12 @@ namespace Azure.Storage.Sas
         public bool Service { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether container-level APIs are accessible
+        /// Gets a value indicating whether blob container-level APIs are accessible
         /// from this shared access signature (e.g., Create/Delete Container,
         /// Create/Delete Queue, Create/Delete Table, Create/Delete Share, List
         /// Blobs/Files and Directories).
         /// </summary>
-        public bool Container { get; set; }
+        public bool BlobContainer { get; set; }
 
 #pragma warning disable CA1720 // Identifier contains type name
         /// <summary>
@@ -52,7 +51,7 @@ namespace Azure.Storage.Sas
         {
             var sb = new StringBuilder();
             if (Service) { sb.Append(Constants.Sas.AccountResources.Service); }
-            if (Container) { sb.Append(Constants.Sas.AccountResources.Container); }
+            if (BlobContainer) { sb.Append(Constants.Sas.AccountResources.BlobContainer); }
             if (Object) { sb.Append(Constants.Sas.AccountResources.Object); }
             return sb.ToString();
         }
@@ -74,7 +73,7 @@ namespace Azure.Storage.Sas
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             (Service ? 0b001 : 0) +
-            (Container ? 0b010 : 0) +
+            (BlobContainer ? 0b010 : 0) +
             (Object ? 0b100 : 0);
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasResourceTypes other) =>
             other.Service == Service &&
-            other.Container == Container &&
+            other.BlobContainer == BlobContainer &&
             other.Object == Object;
 
         /// <summary>
@@ -125,8 +124,8 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.AccountResources.Service:
                         types.Service = true;
                         break;
-                    case Constants.Sas.AccountResources.Container:
-                        types.Container = true;
+                    case Constants.Sas.AccountResources.BlobContainer:
+                        types.BlobContainer = true;
                         break;
                     case Constants.Sas.AccountResources.Object:
                         types.Object = true;

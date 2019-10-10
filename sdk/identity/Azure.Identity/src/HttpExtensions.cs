@@ -20,7 +20,7 @@ namespace Azure.Identity
 
             pipelineRequest.Method = RequestMethod.Parse(request.Method.Method);
 
-            pipelineRequest.UriBuilder.Uri = request.RequestUri;
+            pipelineRequest.Uri.Reset(request.RequestUri);
 
             pipelineRequest.Content = await request.Content.ToPipelineRequestContentAsync().ConfigureAwait(false);
 

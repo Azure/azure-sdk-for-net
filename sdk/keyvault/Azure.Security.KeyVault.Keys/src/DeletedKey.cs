@@ -11,10 +11,24 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public class DeletedKey : Key
     {
+        private const string RecoveryIdPropertyName = "recoveryId";
+        private const string DeletedDatePropertyName = "deletedDate";
+        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
+
+        private string _recoveryId;
+
+        internal DeletedKey()
+        {
+        }
+
+        internal DeletedKey(string name) : base(name)
+        {
+        }
+
         /// <summary>
         /// The identifier of the deleted key. This is used to recover the key.
         /// </summary>
-        public string RecoveryId { get; private set; }
+        public Uri RecoveryId => new Uri(_recoveryId);
 
         /// <summary>
         /// The time when the key was deleted, in UTC.
@@ -26,54 +40,25 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
-        internal DeletedKey() { }
-
-        internal DeletedKey(string name) : base(name) { }
-
-        private const string RecoveryIdPropertyName = "recoveryId";
-        private static readonly JsonEncodedText s_recoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
-        private const string DeletedDatePropertyName = "deletedDate";
-        private static readonly JsonEncodedText s_deletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
-        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
-
-        internal override void WriteProperties(Utf8JsonWriter json)
+        internal override void ReadProperty(JsonProperty prop)
         {
-            base.WriteProperties(json);
-
-            if (RecoveryId != null)
+            switch (prop.Name)
             {
-                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId);
-            }
+                case RecoveryIdPropertyName:
+                    _recoveryId = prop.Value.GetString();
+                    break;
 
-            if (DeletedDate.HasValue)
-            {
-                json.WriteNumber(s_deletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
-            }
+                case DeletedDatePropertyName:
+                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
 
-            if (ScheduledPurgeDate.HasValue)
-            {
-                json.WriteNumber(s_scheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
-            }
-        }
+                case ScheduledPurgeDatePropertyName:
+                    ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
 
-        internal override void ReadProperties(JsonElement json)
-        {
-            base.ReadProperties(json);
-            foreach (JsonProperty prop in json.EnumerateObject())
-            {
-                switch (prop.Name)
-                {
-                    case RecoveryIdPropertyName:
-                        RecoveryId = prop.Value.GetString();
-                        break;
-                    case DeletedDatePropertyName:
-                        DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                        break;
-                    case ScheduledPurgeDatePropertyName:
-                        ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                        break;
-                }
+                default:
+                    base.ReadProperty(prop);
+                    break;
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Storage.Sas;
@@ -31,6 +30,11 @@ namespace Azure.Storage.Blobs.Test
             var resource = "bar";
             var permissions = "rw";
             var signature = "a+b=";
+            var cacheControl = "no-store";
+            var contentDisposition = "inline";
+            var contentEncoding = "identity";
+            var contentLanguage = "en-US";
+            var contentType = "text/html";
 
             var sasQueryParameters = new SasQueryParameters(
                 version,
@@ -43,7 +47,12 @@ namespace Azure.Storage.Blobs.Test
                 identifier,
                 resource,
                 permissions,
-                signature
+                signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType
                 );
 
             Assert.AreEqual(signature, sasQueryParameters.Signature);

@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="contentType">The content type of the configuration setting's value.</param>
         /// <param name="eTag">An ETag indicating the state of a configuration setting within a configuration store.</param>
         /// <param name="lastModified">The last time a modifying operation was performed on the given configuration setting.</param>
-        /// <param name="locked">A value indicating whether the configuration setting is locked.</param>
+        /// <param name="readOnly">A value indicating whether the configuration setting is read only.</param>
         public static ConfigurationSetting ConfigurationSetting(
             string key,
             string value,
@@ -28,14 +28,14 @@ namespace Azure.Data.AppConfiguration
             string contentType = null,
             ETag eTag = default,
             DateTimeOffset? lastModified = null,
-            bool? locked = null)
+            bool? readOnly = null)
         {
             return new ConfigurationSetting(key, value, label)
             {
                 ContentType = contentType,
                 ETag = eTag,
                 LastModified = lastModified,
-                Locked = locked
+                ReadOnly = readOnly
             };
         }
     }

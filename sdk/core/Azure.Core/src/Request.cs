@@ -10,7 +10,7 @@ namespace Azure.Core.Http
 {
     public abstract class Request : IDisposable
     {
-        public virtual RequestUriBuilder UriBuilder { get; set; } = new RequestUriBuilder();
+        public virtual RequestUriBuilder Uri { get; set; } = new RequestUriBuilder();
 
         public virtual RequestMethod Method { get; set; }
 

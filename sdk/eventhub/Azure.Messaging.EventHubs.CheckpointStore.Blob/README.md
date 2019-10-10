@@ -8,7 +8,7 @@ Intended as a companion to the `Azure.Messaging.EventHubs` client library, the A
 
 ### Prerequisites
 
-- **Microsoft Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index). 
+- **Microsoft Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
@@ -23,7 +23,7 @@ To quickly create the needed resources in Azure and to receive connection string
 Install the Azure Event Hubs Checkpoint Store for Azure Storage blobs client library for .NET using [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs.CheckpointStore.Blob -Version 1.0.0-preview.1
+Install-Package Azure.Messaging.EventHubs.CheckpointStore.Blob -Version 1.0.0-preview.2
 ```
 
 ### Obtain an Event Hubs connection string

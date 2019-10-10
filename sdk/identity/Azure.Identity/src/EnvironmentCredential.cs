@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,15 +37,24 @@ namespace Azure.Identity
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public EnvironmentCredential(IdentityClientOptions options)
+        public EnvironmentCredential(AzureCredentialOptions options)
         {
-            string tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
-            string clientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-            string clientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
+            string tenantId = EnvironmentVariables.TenantId;
+            string clientId = EnvironmentVariables.ClientId;
+            string clientSecret = EnvironmentVariables.ClientSecret;
+            string username = EnvironmentVariables.Username;
+            string password = EnvironmentVariables.Password;
 
-            if (tenantId != null && clientId != null && clientSecret != null)
+            if (tenantId != null && clientId != null)
             {
-                _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, options);
+                if (clientSecret != null)
+                {
+                    _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, options);
+                }
+                else if (username != null && password != null && tenantId != null && clientId != null)
+                {
+                    _credential = new UsernamePasswordCredential(username, password, clientId, tenantId);
+                }
             }
         }
 

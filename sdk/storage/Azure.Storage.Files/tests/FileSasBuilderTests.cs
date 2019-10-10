@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Storage.Files.Tests;
@@ -44,6 +43,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            AssertResponseHeaders(constants, sasQueryParameters);
         }
 
         [Test]
@@ -71,6 +71,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(Constants.Sas.Resource.Share, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            AssertResponseHeaders(constants, sasQueryParameters);
         }
 
         [Test]

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -24,7 +23,7 @@ namespace Azure.Storage.Blobs
     /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
-	public class BlobClient : BlobBaseClient
+    public class BlobClient : BlobBaseClient
     {
         #region ctors
         /// <summary>
@@ -46,14 +45,14 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        public BlobClient(string connectionString, string containerName, string blobName)
-            : base(connectionString, containerName, blobName)
+        public BlobClient(string connectionString, string blobContainerName, string blobName)
+            : base(connectionString, blobContainerName, blobName)
         {
         }
 
@@ -68,7 +67,7 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
@@ -79,8 +78,8 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public BlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 
@@ -825,8 +824,10 @@ namespace Azure.Storage.Blobs
 
             // Upload the entire stream
             Task<Response<BlobContentInfo>> UploadStreamAsync()
-                =>
-                client.UploadInternal(
+            {
+                (content, metadata) = TransformContent(content, metadata);
+
+                return client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
@@ -835,10 +836,11 @@ namespace Azure.Storage.Blobs
                     progressHandler,
                     async,
                     cancellationToken);
+            }
 
             string GetNewBase64BlockId(long blockOrdinal)
             {
-                // Create and record a new block ID, storing the order information 
+                // Create and record a new block ID, storing the order information
                 // (nominally the block's start position in the original stream)
 
                 var newBlockName = Interlocked.Increment(ref blockName);
@@ -980,7 +982,7 @@ namespace Azure.Storage.Blobs
 
             string GetNewBase64BlockId(long blockOrdinal)
             {
-                // Create and record a new block ID, storing the order information 
+                // Create and record a new block ID, storing the order information
                 // (nominally the block's start position in the original stream)
 
                 var newBlockName = Interlocked.Increment(ref blockName);
@@ -999,9 +1001,12 @@ namespace Azure.Storage.Blobs
             {
                 using (FileStream stream = file.OpenRead())
                 {
+                    Stream transformedStream; // cannot reassign to a "using" variable
+                    (transformedStream, metadata) = TransformContent(stream, metadata);
+
                     return
                         await client.UploadInternal(
-                            stream,
+                            transformedStream,
                             blobHttpHeaders,
                             metadata,
                             blobAccessConditions,
@@ -1058,5 +1063,16 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Upload
+
+        /// <summary>
+        /// Performs a transform on the data for uploads. It is a no-op by default.
+        /// </summary>
+        /// <param name="content">Content to transform.</param>
+        /// <param name="metadata">Content metadata to transform.</param>
+        /// <returns>Transformed content stream and metadata.</returns>
+        internal virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        {
+            return (content, metadata); // no-op
+        }
     }
 }

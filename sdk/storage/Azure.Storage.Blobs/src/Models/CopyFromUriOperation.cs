@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// An <see cref="Operation{Int64}"/> for tracking the status of a 
+    /// An <see cref="Operation{Int64}"/> for tracking the status of a
     /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
     /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
     /// completion will be the number of bytes copied.

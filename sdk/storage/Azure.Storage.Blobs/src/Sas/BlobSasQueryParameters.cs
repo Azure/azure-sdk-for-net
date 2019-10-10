@@ -1,6 +1,5 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 
@@ -11,7 +10,7 @@ namespace Azure.Storage.Sas
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  You can construct a new instance using
     /// <see cref="BlobSasBuilder"/>.
-    /// 
+    ///
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
@@ -19,32 +18,32 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => keyObjectId;
+        public string KeyObjectId => _keyObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => keyTenantId;
+        public string KeyTenantId => _keyTenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStart => keyStart;
+        public DateTimeOffset KeyStart => _keyStart;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiry => keyExpiry;
+        public DateTimeOffset KeyExpiry => _keyExpiry;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => keyService;
+        public string KeyService => _keyService;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => keyVersion;
+        public string KeyVersion => _keyVersion;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -59,7 +58,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
         /// type.
-        /// 
+        ///
         /// Expects decoded values.
         /// </summary>
         internal BlobSasQueryParameters(
@@ -79,7 +78,12 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyStart = default,
             DateTimeOffset keyExpiry = default,
             string keyService = default,
-            string keyVersion = default)
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
             : base(
                 version,
                 services,
@@ -97,7 +101,12 @@ namespace Azure.Storage.Sas
                 keyStart,
                 keyExpiry,
                 keyService,
-                keyVersion)
+                keyVersion,
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType)
         {
         }
 

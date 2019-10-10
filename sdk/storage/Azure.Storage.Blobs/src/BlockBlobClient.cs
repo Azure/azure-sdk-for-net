@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -14,6 +13,8 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -140,7 +141,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this block blob.
         /// </param>
         /// <param name="blobName">
@@ -151,8 +152,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlockBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public BlockBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 
@@ -255,7 +256,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public new BlockBlobClient WithSnapshot(string snapshot) => (BlockBlobClient)WithSnapshotImpl(snapshot);
+        public new BlockBlobClient WithSnapshot(string snapshot) => (BlockBlobClient)WithSnapshotCore(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlockBlobClient"/> class
@@ -264,10 +265,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
+        protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.Uri, Pipeline);
+            return new BlockBlobClient(builder.ToUri(), Pipeline);
         }
 
         /// <summary>
@@ -279,7 +280,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        public new BlockBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (BlockBlobClient)WithCustomerProvidedKeyImpl(customerProvidedKey);
+        public new BlockBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (BlockBlobClient)WithCustomerProvidedKeyCore(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlockBlobClient"/> class
@@ -290,7 +291,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
+        protected sealed override BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {
@@ -1352,7 +1353,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
         /// </summary>
-        /// <param name="listType">
+        /// <param name="blockListTypes">
         /// Specifies whether to return the list of committed blocks, the
         /// list of uncommitted blocks, or both lists together.  If you omit
         /// this parameter, Get Block List returns the list of committed blocks.
@@ -1379,12 +1380,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlockList> GetBlockList(
-            BlockListType? listType = default,
+            BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlockListInternal(
-                listType,
+                blockListTypes,
                 snapshot,
                 leaseAccessConditions,
                 false, // async
@@ -1402,7 +1403,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
         /// </summary>
-        /// <param name="listType">
+        /// <param name="blockListTypes">
         /// Specifies whether to return the list of committed blocks, the
         /// list of uncommitted blocks, or both lists together.  If you omit
         /// this parameter, Get Block List returns the list of committed blocks.
@@ -1429,12 +1430,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
-            BlockListType? listType = default,
+            BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             await GetBlockListInternal(
-                listType,
+                blockListTypes,
                 snapshot,
                 leaseAccessConditions,
                 true, // async
@@ -1452,7 +1453,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
         /// </summary>
-        /// <param name="listType">
+        /// <param name="blockListTypes">
         /// Specifies whether to return the list of committed blocks, the
         /// list of uncommitted blocks, or both lists together.  If you omit
         /// this parameter, Get Block List returns the list of committed blocks.
@@ -1482,7 +1483,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlockList>> GetBlockListInternal(
-            BlockListType? listType,
+            BlockListTypes blockListTypes,
             string snapshot,
             LeaseAccessConditions? leaseAccessConditions,
             bool async,
@@ -1494,7 +1495,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(listType)}: {listType}\n" +
+                    $"{nameof(blockListTypes)}: {blockListTypes}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
@@ -1502,7 +1503,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return (await BlobRestClient.BlockBlob.GetBlockListAsync(
                         Pipeline,
                         Uri,
-                        listType: listType ?? BlockListType.All,
+                        listType: blockListTypes.ToBlockListType(),
                         snapshot: snapshot,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,

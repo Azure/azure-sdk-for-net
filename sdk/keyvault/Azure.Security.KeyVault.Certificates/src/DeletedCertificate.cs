@@ -11,10 +11,16 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class DeletedCertificate : CertificateWithPolicy
     {
+        private const string RecoveryIdPropertyName = "recoveryId";
+        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
+        private const string DeletedDatePropertyName = "deletedDate";
+
+        private string _recoveryId;
+
         /// <summary>
         /// Id identifying the deleted certificate
         /// </summary>
-        public string RecoveryId { get; private set; }
+        public Uri RecoveryId => new Uri(_recoveryId);
 
         /// <summary>
         /// The time the certificate was deleted in UTC
@@ -26,23 +32,22 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
-        private const string RecoveryIdPropertyName = "recoveryId";
-        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private const string DeletedDatePropertyName = "deletedDate";
-
         internal override void ReadProperty(JsonProperty prop)
         {
             switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
-                    RecoveryId = prop.Value.GetString();
+                    _recoveryId = prop.Value.GetString();
                     break;
+
                 case DeletedDatePropertyName:
                     DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
+
                 case ScheduledPurgeDatePropertyName:
                     ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
+
                 default:
                     base.ReadProperty(prop);
                     break;

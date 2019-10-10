@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.4
 ```
 
 ### Prerequisites
@@ -42,6 +42,14 @@ Blob storage is designed for:
 - Writing to log files.
 - Storing data for backup and restore, disaster recovery, and archiving.
 - Storing data for analysis by an on-premises or Azure-hosted service.
+
+Blob storage offers three types of resources:
+
+- The _storage account_ used via `BlobServiceClient`
+- A _container_ in the storage account used via `BlobContainerClient`
+- A _blob_ in a container used via `BlobClient`
+
+Learn more about options for authentication _(including Connection Strings, Shared Key, Shared Key Signatures, Active Directory, and anonymous public access)_ [in our samples.](samples/Sample02_Auth.cs)
 
 ## Examples
 
@@ -84,10 +92,10 @@ using (FileStream file = File.OpenRead("local-file.jpg"))
 BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
 
 // Download the blob
-BlobDownloadInfo download = blob.Download();
+Response<BlobDownloadInfo> download = blob.Download();
 using (FileStream file = File.OpenWrite("hello.jpg"))
 {
-    download.Content.CopyTo(file);
+    download.Value.Content.CopyTo(file);
 }
 ```
 
@@ -115,10 +123,10 @@ We fully support both synchronous and asynchronous APIs.
 BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
 
 // Download the blob
-BlobDownloadInfo download = await blob.DownloadAsync();
+Response<BlobDownloadInfo> download = await blob.DownloadAsync();
 using (FileStream file = File.OpenWrite("hello.jpg"))
 {
-    await download.Content.CopyToAsync(file);
+    await download.Value.Content.CopyToAsync(file);
 }
 ```
 

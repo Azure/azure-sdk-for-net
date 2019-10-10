@@ -13,6 +13,11 @@ namespace Azure.Core.Cryptography
     public interface IKeyEncryptionKey
     {
         /// <summary>
+        /// The Id of the key used to perform cryptographic operations for the client.
+        /// </summary>
+        string KeyId { get; }
+
+        /// <summary>
         /// Encrypts the specified key using the specified algorithm
         /// </summary>
         /// <param name="algorithm">The key wrap algorithm used to encrypt the specified key</param>

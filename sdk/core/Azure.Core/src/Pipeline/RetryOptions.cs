@@ -11,6 +11,10 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class RetryOptions
     {
+        internal RetryOptions()
+        {
+        }
+
         /// <summary>
         /// The maximum number of retry attempts before giving up.
         /// </summary>

@@ -2,15 +2,28 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
     public class DiagnosticsOptions
     {
-        public DiagnosticsOptions()
+        private const int MaxApplicationIdLength = 24;
+
+        private string? _applicationId;
+
+        internal DiagnosticsOptions()
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             ApplicationId = DefaultApplicationId;
+            LoggingAllowedHeaderNames = new List<string>()
+            {
+                "Date",
+                "traceparent",
+                "x-ms-client-request-id",
+                "x-ms-request-id"
+            };
+            LoggingAllowedQueryParameters = new List<string>();
         }
 
         public bool IsLoggingEnabled { get; set; } = true;
@@ -24,7 +37,33 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public bool IsLoggingContentEnabled { get; set; }
 
-        public string? ApplicationId { get; set; }
+        /// <summary>
+        /// Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
+        /// </summary>
+        public int LoggingContentSizeLimit { get; set; } = 4 * 1024;
+
+        /// <summary>
+        /// Gets a list of headers names that are not redacted during logging.
+        /// </summary>
+        public IList<string> LoggingAllowedHeaderNames { get; }
+
+        /// <summary>
+        /// Gets a list of query parameter names that are not redacted during logging.
+        /// </summary>
+        public IList<string> LoggingAllowedQueryParameters { get; }
+
+        public string? ApplicationId
+        {
+            get => _applicationId;
+            set
+            {
+                if (value != null && value.Length > MaxApplicationIdLength)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
+                }
+                _applicationId = value;
+            }
+        }
 
         public static string? DefaultApplicationId { get; set; }
 

@@ -4,7 +4,7 @@
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represents the attributes to assign to an Elliptic Curve key at creation.
+    /// The properties needed to create an Elliptic Curve key using the <see cref="KeyClient"/>.
     /// </summary>
     public class EcKeyCreateOptions : KeyCreateOptions
     {

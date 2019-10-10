@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 // This file was automatically generated.  Do not edit.
 
-#pragma warning disable IDE0016 // Null check can be simplified 
+#pragma warning disable IDE0016 // Null check can be simplified
 #pragma warning disable IDE0017 // Variable declaration can be inlined
 #pragma warning disable IDE0018 // Object initialization can be simplified
 #pragma warning disable SA1402  // File may only contain a single type
@@ -117,10 +116,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -248,10 +247,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -278,12 +277,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobServiceProperties _value = Azure.Storage.Blobs.Models.BlobServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -382,10 +376,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "stats");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "stats");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -412,12 +406,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobServiceStatistics _value = Azure.Storage.Blobs.Models.BlobServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -431,7 +420,7 @@ namespace Azure.Storage.Blobs
             }
             #endregion Service.GetStatisticsAsync
 
-            #region Service.ListContainersSegmentAsync
+            #region Service.ListBlobContainersSegmentAsync
             /// <summary>
             /// The List Containers Segment operation returns a list of the containers under the specified account
             /// </summary>
@@ -447,17 +436,17 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainersSegment>> ListBlobContainersSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
                 string marker = default,
                 int? maxresults = default,
-                Azure.Storage.Blobs.Models.ListContainersIncludeType? include = default,
+                Azure.Storage.Blobs.Models.ListBlobContainersIncludeType? include = default,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Blobs.ServiceClient.ListContainersSegment",
+                string operationName = "Azure.Storage.Blobs.ServiceClient.ListBlobContainersSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
@@ -465,7 +454,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListContainersSegmentAsync_CreateMessage(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListBlobContainersSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -488,7 +477,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListContainersSegmentAsync_CreateResponse(_response);
+                        return ListBlobContainersSegmentAsync_CreateResponse(_response);
                     }
                 }
                 catch (System.Exception ex)
@@ -503,7 +492,7 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Service.ListContainersSegmentAsync request.
+            /// Create the Service.ListBlobContainersSegmentAsync request.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
@@ -513,14 +502,14 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify that the container's metadata be returned as part of the response body.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Service.ListContainersSegmentAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ListContainersSegmentAsync_CreateMessage(
+            /// <returns>The Service.ListBlobContainersSegmentAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage ListBlobContainersSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
                 string marker = default,
                 int? maxresults = default,
-                Azure.Storage.Blobs.Models.ListContainersIncludeType? include = default,
+                Azure.Storage.Blobs.Models.ListBlobContainersIncludeType? include = default,
                 int? timeout = default,
                 string requestId = default)
             {
@@ -536,13 +525,13 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "list");
-                if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (include != null) { _request.UriBuilder.AppendQuery("include", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(include.Value))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "list");
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (include != null) { _request.Uri.AppendQuery("include", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(include.Value))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -552,11 +541,11 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Service.ListContainersSegmentAsync response or throw a failure exception.
+            /// Create the Service.ListBlobContainersSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.ListContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.ContainersSegment}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment> ListContainersSegmentAsync_CreateResponse(
+            /// <returns>The Service.ListBlobContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainersSegment}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainersSegment> ListBlobContainersSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -566,15 +555,10 @@ namespace Azure.Storage.Blobs
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.ContainersSegment _value = Azure.Storage.Blobs.Models.ContainersSegment.FromXml(_xml.Root);
+                        Azure.Storage.Blobs.Models.BlobContainersSegment _value = Azure.Storage.Blobs.Models.BlobContainersSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -586,7 +570,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
             }
-            #endregion Service.ListContainersSegmentAsync
+            #endregion Service.ListBlobContainersSegmentAsync
 
             #region Service.GetUserDelegationKeyAsync
             /// <summary>
@@ -682,10 +666,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "service");
-                _request.UriBuilder.AppendQuery("comp", "userdelegationkey");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "service");
+                _request.Uri.AppendQuery("comp", "userdelegationkey");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -719,12 +703,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.UserDelegationKey _value = Azure.Storage.Blobs.Models.UserDelegationKey.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -813,9 +792,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "account");
-                _request.UriBuilder.AppendQuery("comp", "properties");
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "account");
+                _request.Uri.AppendQuery("comp", "properties");
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -836,27 +815,24 @@ namespace Azure.Storage.Blobs
                 {
                     case 200:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo();
 
                         // Get response headers
                         string _header;
+                        Azure.Storage.Blobs.Models.SkuName skuName = default;
+                        Azure.Storage.Blobs.Models.AccountKind accountKind = default;
                         if (response.Headers.TryGetValue("x-ms-sku-name", out _header))
                         {
-                            _value.SkuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
+                            skuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-account-kind", out _header))
                         {
-                            _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
+                            accountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
                         }
 
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>(
-                                response,
-                                _value);
+                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo(skuName, accountKind);
 
-                        return _result;
+                        // Create the response
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -884,8 +860,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>> SubmitBatchAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult>> SubmitBatchAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -978,9 +954,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "batch");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "batch");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -998,18 +974,18 @@ namespace Azure.Storage.Blobs
             /// Create the Service.SubmitBatchAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult> SubmitBatchAsync_CreateResponse(
+            /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
                 switch (response.Status)
                 {
-                    case 200:
+                    case 202:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ServiceSubmitBatchResult _value = new Azure.Storage.Blobs.Models.ServiceSubmitBatchResult();
-                        _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
+                        Azure.Storage.Blobs.Models.BlobBatchResult _value = new Azure.Storage.Blobs.Models.BlobBatchResult();
+                        _value.Content = response.ContentStream; // You should manually wrap with RetriableStream!
 
                         // Get response headers
                         string _header;
@@ -1019,12 +995,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1059,8 +1030,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1141,9 +1112,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 if (access != Azure.Storage.Blobs.Models.PublicAccessType.None) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access)); }
@@ -1163,8 +1134,8 @@ namespace Azure.Storage.Blobs
             /// Create the Container.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> CreateAsync_CreateResponse(
+            /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1173,7 +1144,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ContainerInfo _value = new Azure.Storage.Blobs.Models.ContainerInfo();
+                        Azure.Storage.Blobs.Models.BlobContainerInfo _value = new Azure.Storage.Blobs.Models.BlobContainerInfo();
 
                         // Get response headers
                         string _header;
@@ -1187,12 +1158,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1296,9 +1262,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -1368,12 +1334,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1487,9 +1448,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -1542,8 +1503,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1628,10 +1589,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -1652,8 +1613,8 @@ namespace Azure.Storage.Blobs
             /// Create the Container.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> SetMetadataAsync_CreateResponse(
+            /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1662,7 +1623,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ContainerInfo _value = new Azure.Storage.Blobs.Models.ContainerInfo();
+                        Azure.Storage.Blobs.Models.BlobContainerInfo _value = new Azure.Storage.Blobs.Models.BlobContainerInfo();
 
                         // Get response headers
                         string _header;
@@ -1676,12 +1637,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1707,8 +1663,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerAccessPolicy}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1785,10 +1741,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                _request.UriBuilder.AppendQuery("comp", "acl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                _request.Uri.AppendQuery("comp", "acl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -1802,8 +1758,8 @@ namespace Azure.Storage.Blobs
             /// Create the Container.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
+            /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerAccessPolicy}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1813,7 +1769,7 @@ namespace Azure.Storage.Blobs
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.ContainerAccessPolicy _value = new Azure.Storage.Blobs.Models.ContainerAccessPolicy();
+                        Azure.Storage.Blobs.Models.BlobContainerAccessPolicy _value = new Azure.Storage.Blobs.Models.BlobContainerAccessPolicy();
                         _value.SignedIdentifiers =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
@@ -1836,12 +1792,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -1871,8 +1822,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1965,10 +1916,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                _request.UriBuilder.AppendQuery("comp", "acl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                _request.Uri.AppendQuery("comp", "acl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 if (access != Azure.Storage.Blobs.Models.PublicAccessType.None) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access)); }
@@ -1999,8 +1950,8 @@ namespace Azure.Storage.Blobs
             /// Create the Container.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> SetAccessPolicyAsync_CreateResponse(
+            /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -2009,7 +1960,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ContainerInfo _value = new Azure.Storage.Blobs.Models.ContainerInfo();
+                        Azure.Storage.Blobs.Models.BlobContainerInfo _value = new Azure.Storage.Blobs.Models.BlobContainerInfo();
 
                         // Get response headers
                         string _header;
@@ -2023,12 +1974,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2147,10 +2093,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "acquire");
@@ -2196,12 +2142,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2229,8 +2170,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2319,10 +2260,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "release");
@@ -2339,8 +2280,8 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> ReleaseLeaseAsync_CreateResponse(
+            /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> ReleaseLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -2349,7 +2290,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ContainerInfo _value = new Azure.Storage.Blobs.Models.ContainerInfo();
+                        Azure.Storage.Blobs.Models.BlobContainerInfo _value = new Azure.Storage.Blobs.Models.BlobContainerInfo();
 
                         // Get response headers
                         string _header;
@@ -2363,12 +2304,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2486,10 +2422,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "renew");
@@ -2534,12 +2470,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2572,7 +2503,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? breakPeriod = default,
+                long? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
@@ -2636,7 +2567,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? breakPeriod = default,
+                long? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -2653,10 +2584,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "break");
@@ -2701,12 +2632,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -2833,10 +2759,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                _request.UriBuilder.AppendQuery("restype", "container");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                _request.Uri.AppendQuery("restype", "container");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "change");
@@ -2882,12 +2808,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3006,14 +2927,14 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                _request.UriBuilder.AppendQuery("comp", "list");
-                if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (include != null) { _request.UriBuilder.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                _request.Uri.AppendQuery("comp", "list");
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (include != null) { _request.Uri.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3040,12 +2961,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobsFlatSegment _value = Azure.Storage.Blobs.Models.BlobsFlatSegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3169,15 +3085,15 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "container");
-                _request.UriBuilder.AppendQuery("comp", "list");
-                if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
-                if (delimiter != null) { _request.UriBuilder.AppendQuery("delimiter", System.Uri.EscapeDataString(delimiter)); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
-                if (maxresults != null) { _request.UriBuilder.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (include != null) { _request.UriBuilder.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))))); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container");
+                _request.Uri.AppendQuery("comp", "list");
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
+                if (delimiter != null) { _request.Uri.AppendQuery("delimiter", System.Uri.EscapeDataString(delimiter)); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", System.Uri.EscapeDataString(maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (include != null) { _request.Uri.AppendQuery("include", System.Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item))))); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3204,12 +3120,7 @@ namespace Azure.Storage.Blobs
                         Azure.Storage.Blobs.Models.BlobsHierarchySegment _value = Azure.Storage.Blobs.Models.BlobsHierarchySegment.FromXml(_xml.Root);
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -3378,9 +3289,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3541,12 +3452,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 206:
                     {
@@ -3674,12 +3580,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -3837,9 +3738,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
-                if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -4008,12 +3909,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -4167,9 +4063,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
-                if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -4341,9 +4237,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("action", "setAccessControl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "setAccessControl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -4389,12 +4285,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4523,12 +4414,12 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("action", "getAccessControl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "getAccessControl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (upn != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.UriBuilder.AppendQuery("upn", System.Uri.EscapeDataString(upn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                _request.Uri.AppendQuery("upn", System.Uri.EscapeDataString(upn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
 
@@ -4588,12 +4479,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4796,9 +4682,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (pathRenameMode != null) { _request.UriBuilder.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (pathRenameMode != null) { _request.Uri.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-rename-source", renameSource);
@@ -4858,12 +4744,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -4962,9 +4843,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "undelete");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "undelete");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -5140,9 +5021,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -5204,12 +5085,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5353,9 +5229,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "metadata");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "metadata");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -5414,12 +5290,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5548,9 +5419,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "acquire");
@@ -5598,12 +5469,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5731,9 +5597,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "release");
@@ -5776,12 +5642,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -5909,9 +5770,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "renew");
@@ -5958,12 +5819,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6100,9 +5956,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "change");
@@ -6150,12 +6006,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.Lease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.Lease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6190,7 +6041,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? breakPeriod = default,
+                long? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -6260,7 +6111,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? breakPeriod = default,
+                long? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -6279,9 +6130,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "lease");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "break");
@@ -6328,12 +6179,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6477,9 +6323,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "snapshot");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "snapshot");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -6538,12 +6384,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6711,8 +6552,8 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
@@ -6724,7 +6565,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
-                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority); }
+                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfMatch != null) { _request.Headers.SetValue("x-ms-source-if-match", sourceIfMatch.Value.ToString()); }
@@ -6775,12 +6616,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -6943,8 +6779,8 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-requires-sync", "true");
@@ -7007,12 +6843,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -7125,10 +6956,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "copy");
-                _request.UriBuilder.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "copy");
+                _request.Uri.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-action", "abort");
@@ -7166,7 +6997,7 @@ namespace Azure.Storage.Blobs
             }
             #endregion Blob.AbortCopyFromUriAsync
 
-            #region Blob.SetTierAsync
+            #region Blob.SetAccessTierAsync
             /// <summary>
             /// The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive storage type. This operation does not update the blob's ETag.
             /// </summary>
@@ -7181,7 +7012,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetTierAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetAccessTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7190,7 +7021,7 @@ namespace Azure.Storage.Blobs
                 string requestId = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Blobs.BlobClient.SetTier",
+                string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
@@ -7198,7 +7029,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetTierAsync_CreateMessage(
+                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessTierAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         tier,
@@ -7220,7 +7051,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetTierAsync_CreateResponse(_response);
+                        return SetAccessTierAsync_CreateResponse(_response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7235,7 +7066,7 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Blob.SetTierAsync request.
+            /// Create the Blob.SetAccessTierAsync request.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
@@ -7244,8 +7075,8 @@ namespace Azure.Storage.Blobs
             /// <param name="rehydratePriority">Optional: Indicates the priority with which to rehydrate an archived blob.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <returns>The Blob.SetTierAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetTierAsync_CreateMessage(
+            /// <returns>The Blob.SetAccessTierAsync Message.</returns>
+            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessTierAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7266,14 +7097,14 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "tier");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "tier");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-access-tier", tier);
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority); }
+                if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
@@ -7281,11 +7112,11 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Blob.SetTierAsync response or throw a failure exception.
+            /// Create the Blob.SetAccessTierAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.SetTierAsync Azure.Response.</returns>
-            internal static Azure.Response SetTierAsync_CreateResponse(
+            /// <returns>The Blob.SetAccessTierAsync Azure.Response.</returns>
+            internal static Azure.Response SetAccessTierAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -7309,7 +7140,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
             }
-            #endregion Blob.SetTierAsync
+            #endregion Blob.SetAccessTierAsync
         }
         #endregion Blob operations
 
@@ -7328,6 +7159,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLength">The length of the request.</param>
             /// <param name="blobContentLength">This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="tier">Optional. Indicates the tier to be set on the page blob.</param>
             /// <param name="blobContentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentLanguage">Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -7355,6 +7187,7 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 long blobContentLength,
                 int? timeout = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 string blobContentType = default,
                 System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
                 System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
@@ -7387,6 +7220,7 @@ namespace Azure.Storage.Blobs
                         contentLength,
                         blobContentLength,
                         timeout,
+                        tier,
                         blobContentType,
                         blobContentEncoding,
                         blobContentLanguage,
@@ -7440,6 +7274,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLength">The length of the request.</param>
             /// <param name="blobContentLength">This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="tier">Optional. Indicates the tier to be set on the page blob.</param>
             /// <param name="blobContentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentLanguage">Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -7464,6 +7299,7 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 long blobContentLength,
                 int? timeout = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 string blobContentType = default,
                 System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
                 System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
@@ -7494,14 +7330,15 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-type", "PageBlob");
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
                 if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
@@ -7578,12 +7415,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -7766,9 +7598,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "page");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "page");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "update");
@@ -7809,43 +7641,44 @@ namespace Azure.Storage.Blobs
                 {
                     case 201:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
+                        Azure.Core.Http.ETag eTag = default;
+                        System.DateTimeOffset lastModified = default;
+                        byte[] contentHash = default;
+                        byte[] contentCrc64 = default;
+                        long blobSequenceNumber = default;
+                        string encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            eTag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            lastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
-                            _value.ContentHash = System.Convert.FromBase64String(_header);
+                            contentHash = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            contentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            blobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
-                            _value.EncryptionKeySha256 = _header;
+                            encryptionKeySha256 = _header;
                         }
 
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
-                                response,
-                                _value);
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
-                        return _result;
+                        // Create the response
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -8009,9 +7842,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "page");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "page");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "clear");
@@ -8047,39 +7880,44 @@ namespace Azure.Storage.Blobs
                 {
                     case 201:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
+                        Azure.Core.Http.ETag eTag = default;
+                        System.DateTimeOffset lastModified = default;
+                        byte[] contentHash = default;
+                        byte[] contentCrc64 = default;
+                        long blobSequenceNumber = default;
+                        string encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            eTag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            lastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
-                            _value.ContentHash = System.Convert.FromBase64String(_header);
+                            contentHash = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            contentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            blobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
+                        {
+                            encryptionKeySha256 = _header;
                         }
 
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
-                                response,
-                                _value);
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
-                        return _result;
+                        // Create the response
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -8295,9 +8133,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "page");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "page");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "update");
@@ -8341,39 +8179,44 @@ namespace Azure.Storage.Blobs
                 {
                     case 201:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
+                        Azure.Core.Http.ETag eTag = default;
+                        System.DateTimeOffset lastModified = default;
+                        byte[] contentHash = default;
+                        byte[] contentCrc64 = default;
+                        long blobSequenceNumber = default;
+                        string encryptionKeySha256 = default;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                            eTag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            lastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
-                            _value.ContentHash = System.Convert.FromBase64String(_header);
+                            contentHash = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            contentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            blobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
+                        {
+                            encryptionKeySha256 = _header;
                         }
 
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
-                                response,
-                                _value);
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
 
-                        return _result;
+                        // Create the response
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -8521,10 +8364,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "pagelist");
-                if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "pagelist");
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -8573,12 +8416,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -8731,11 +8569,11 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "pagelist");
-                if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (prevsnapshot != null) { _request.UriBuilder.AppendQuery("prevsnapshot", System.Uri.EscapeDataString(prevsnapshot)); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "pagelist");
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (prevsnapshot != null) { _request.Uri.AppendQuery("prevsnapshot", System.Uri.EscapeDataString(prevsnapshot)); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -8784,12 +8622,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -8947,9 +8780,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -8999,12 +8832,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9138,9 +8966,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "properties");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-sequence-number-action", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(sequenceNumberAction));
@@ -9188,12 +9016,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9321,9 +9144,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "incrementalcopy");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "incrementalcopy");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
@@ -9373,12 +9196,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9565,8 +9383,8 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-type", "AppendBlob");
@@ -9647,12 +9465,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -9825,9 +9638,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "appendblock");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "appendblock");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -9884,7 +9697,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _value.ContentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-append-offset", out _header))
                         {
@@ -9904,12 +9717,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -10112,9 +9920,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "appendblock");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "appendblock");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
@@ -10175,7 +9983,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _value.ContentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-append-offset", out _header))
                         {
@@ -10195,12 +10003,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -10415,8 +10218,8 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-type", "BlockBlob");
@@ -10501,12 +10304,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -10658,10 +10456,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "block");
-                _request.UriBuilder.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "block");
+                _request.Uri.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -10704,7 +10502,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _value.ContentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
@@ -10712,12 +10510,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -10894,10 +10687,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "block");
-                _request.UriBuilder.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "block");
+                _request.Uri.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -10943,7 +10736,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
                         {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                            _value.ContentCrc64 = System.Convert.FromBase64String(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
@@ -10951,12 +10744,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
@@ -11168,9 +10956,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "blocklist");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "blocklist");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -11259,12 +11047,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11378,11 +11161,11 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("comp", "blocklist");
-                _request.UriBuilder.AppendQuery("blocklisttype", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(listType)));
-                if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "blocklist");
+                _request.Uri.AppendQuery("blocklisttype", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(listType)));
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -11430,12 +11213,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11607,9 +11385,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("resource", "directory");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("resource", "directory");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -11663,12 +11441,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -11876,10 +11649,10 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
-                _request.UriBuilder.Uri = resourceUri;
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("continuation", System.Uri.EscapeDataString(marker)); }
-                if (pathRenameMode != null) { _request.UriBuilder.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
+                _request.Uri.Reset(resourceUri);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (marker != null) { _request.Uri.AppendQuery("continuation", System.Uri.EscapeDataString(marker)); }
+                if (pathRenameMode != null) { _request.Uri.AppendQuery("mode", System.Uri.EscapeDataString(Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(pathRenameMode.Value))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-rename-source", renameSource);
@@ -11943,12 +11716,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -12082,14 +11850,14 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
-                _request.UriBuilder.Uri = resourceUri;
+                _request.Uri.Reset(resourceUri);
 
                 #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.UriBuilder.AppendQuery("recursive", System.Uri.EscapeDataString(recursiveDirectoryDelete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                _request.Uri.AppendQuery("recursive", System.Uri.EscapeDataString(recursiveDirectoryDelete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
                 #pragma warning restore CA1308 // Normalize strings to uppercase
 
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (marker != null) { _request.UriBuilder.AppendQuery("continuation", System.Uri.EscapeDataString(marker)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                if (marker != null) { _request.Uri.AppendQuery("continuation", System.Uri.EscapeDataString(marker)); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -12127,12 +11895,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -12276,9 +12039,9 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("action", "setAccessControl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "setAccessControl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -12324,12 +12087,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -12458,12 +12216,12 @@ namespace Azure.Storage.Blobs
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("action", "getAccessControl");
-                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "getAccessControl");
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (upn != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.UriBuilder.AppendQuery("upn", System.Uri.EscapeDataString(upn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                _request.Uri.AppendQuery("upn", System.Uri.EscapeDataString(upn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
 
@@ -12523,12 +12281,7 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>(
-                                response,
-                                _value);
-
-                        return _result;
+                        return Response.FromValue(_value, response);
                     }
                     default:
                     {
@@ -12572,6 +12325,12 @@ namespace Azure.Storage.Blobs.Models
         public string Permission { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use BlobsModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
+
+        /// <summary>
         /// Serialize a AccessPolicy instance as XML.
         /// </summary>
         /// <param name="value">The AccessPolicy instance to serialize.</param>
@@ -12602,10 +12361,23 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.AccessPolicy FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.AccessPolicy _value = new Azure.Storage.Blobs.Models.AccessPolicy();
-            _value.Start = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.Expiry = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("Expiry", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.Permission = element.Element(System.Xml.Linq.XName.Get("Permission", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
+            if (_child != null)
+            {
+                _value.Expiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
+            if (_child != null)
+            {
+                _value.Permission = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -12744,46 +12516,99 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Convert an AccessTier to a string.
         /// </summary>
-        /// <param name="o">The AccessTier value.</param>
+        /// <param name="value">The AccessTier value.</param>
         /// <returns>String representation of the AccessTier value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTier o) => o._value;
+        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTier value) => value._value;
 
         /// <summary>
         /// Check if two AccessTier instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier a, Azure.Storage.Blobs.Models.AccessTier b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => left.Equals(right);
 
         /// <summary>
         /// Check if two AccessTier instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTier a, Azure.Storage.Blobs.Models.AccessTier b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => !left.Equals(right);
     }
 }
 #endregion enum strings AccessTier
 
-#region class AccountInfo
+#region struct AccountInfo
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// AccountInfo
     /// </summary>
-    public partial class AccountInfo
+    public readonly partial struct AccountInfo: System.IEquatable<AccountInfo>
     {
         /// <summary>
         /// Identifies the sku name of the account
         /// </summary>
-        public Azure.Storage.Blobs.Models.SkuName SkuName { get; internal set; }
+        public Azure.Storage.Blobs.Models.SkuName SkuName { get; }
 
         /// <summary>
         /// Identifies the account kind
         /// </summary>
-        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
+        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AccountInfo instances.
+        /// You can use BlobsModelFactory.AccountInfo instead.
+        /// </summary>
+        internal AccountInfo(
+            Azure.Storage.Blobs.Models.SkuName skuName,
+            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            {
+                SkuName = skuName;
+                AccountKind = accountKind;
+            }
+
+        /// <summary>
+        /// Check if two AccountInfo instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public bool Equals(AccountInfo other)
+        {
+            if (!SkuName.Equals(other.SkuName))
+            {
+                return false;
+            }
+            if (!AccountKind.Equals(other.AccountKind))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two AccountInfo instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override bool Equals(object obj) => obj is AccountInfo && Equals((AccountInfo)obj);
+
+        /// <summary>
+        /// Get a hash code for the AccountInfo.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override int GetHashCode()
+        {
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(SkuName);
+            hashCode.Add(AccountKind);
+
+            return hashCode.ToHashCode();
+        }
     }
 
     /// <summary>
@@ -12798,15 +12623,11 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.SkuName skuName,
             Azure.Storage.Blobs.Models.AccountKind accountKind)
         {
-            return new AccountInfo()
-            {
-                SkuName = skuName,
-                AccountKind = accountKind,
-            };
+            return new AccountInfo(skuName, accountKind);
         }
     }
 }
-#endregion class AccountInfo
+#endregion struct AccountInfo
 
 #region enum AccountKind
 namespace Azure.Storage.Blobs.Models
@@ -12834,97 +12655,57 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion enum AccountKind
 
-#region enum strings ArchiveStatus
+#region enum ArchiveStatus
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// ArchiveStatus values
     /// </summary>
-    public partial struct ArchiveStatus : System.IEquatable<ArchiveStatus>
+    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
+    public enum ArchiveStatus
+    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
         /// <summary>
         /// rehydrate-pending-to-hot
         /// </summary>
-        public static Azure.Storage.Blobs.Models.ArchiveStatus RehydratePendingToHot { get; } = @"rehydrate-pending-to-hot";
+        RehydratePendingToHot,
 
         /// <summary>
         /// rehydrate-pending-to-cool
         /// </summary>
-        public static Azure.Storage.Blobs.Models.ArchiveStatus RehydratePendingToCool { get; } = @"rehydrate-pending-to-cool";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The ArchiveStatus value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new ArchiveStatus instance.
-        /// </summary>
-        /// <param name="value">The ArchiveStatus value.</param>
-        private ArchiveStatus(string value) { _value = value; }
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.ArchiveStatus other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.ArchiveStatus other && Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the ArchiveStatus.
-        /// </summary>
-        /// <returns>Hash code for the ArchiveStatus.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
-
-        /// <summary>
-        /// Convert the ArchiveStatus to a string.
-        /// </summary>
-        /// <returns>String representation of the ArchiveStatus.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a ArchiveStatus.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The ArchiveStatus value.</returns>
-        public static implicit operator ArchiveStatus(string value) => new Azure.Storage.Blobs.Models.ArchiveStatus(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an ArchiveStatus to a string.
-        /// </summary>
-        /// <param name="o">The ArchiveStatus value.</param>
-        /// <returns>String representation of the ArchiveStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.ArchiveStatus o) => o._value;
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.ArchiveStatus a, Azure.Storage.Blobs.Models.ArchiveStatus b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two ArchiveStatus instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.ArchiveStatus a, Azure.Storage.Blobs.Models.ArchiveStatus b) => !a.Equals(b);
+        RehydratePendingToCool
     }
 }
-#endregion enum strings ArchiveStatus
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.ArchiveStatus value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToHot => "rehydrate-pending-to-hot",
+                    Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToCool => "rehydrate-pending-to-cool",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ArchiveStatus value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.ArchiveStatus ParseArchiveStatus(string value)
+            {
+                return value switch
+                {
+                    "rehydrate-pending-to-hot" => Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToHot,
+                    "rehydrate-pending-to-cool" => Azure.Storage.Blobs.Models.ArchiveStatus.RehydratePendingToCool,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ArchiveStatus value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ArchiveStatus
 
 #region class BlobGetAccessControlResult
 namespace Azure.Storage.Blobs.Models
@@ -12932,7 +12713,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob GetAccessControlResult
     /// </summary>
-    public partial class BlobGetAccessControlResult
+    internal partial class BlobGetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -12963,34 +12744,12 @@ namespace Azure.Storage.Blobs.Models
         /// The POSIX access control list for the file or directory.  Included in the response only if the action is "getAccessControl" and Hierarchical Namespace is enabled for the account.
         /// </summary>
         public string XMSAcl { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new BlobGetAccessControlResult instance for mocking.
+        /// Prevent direct instantiation of BlobGetAccessControlResult instances.
+        /// You can use BlobsModelFactory.BlobGetAccessControlResult instead.
         /// </summary>
-        public static BlobGetAccessControlResult BlobGetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string xMSOwner,
-            string xMSGroup,
-            string xMSPermissions,
-            string xMSAcl)
-        {
-            return new BlobGetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                XMSOwner = xMSOwner,
-                XMSGroup = xMSGroup,
-                XMSPermissions = xMSPermissions,
-                XMSAcl = xMSAcl,
-            };
-        }
+        internal BlobGetAccessControlResult() { }
     }
 }
 #endregion class BlobGetAccessControlResult
@@ -13001,7 +12760,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob RenameResult
     /// </summary>
-    public partial class BlobRenameResult
+    internal partial class BlobRenameResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -13017,28 +12776,12 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the resource in bytes.
         /// </summary>
         public long ContentLength { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new BlobRenameResult instance for mocking.
+        /// Prevent direct instantiation of BlobRenameResult instances.
+        /// You can use BlobsModelFactory.BlobRenameResult instead.
         /// </summary>
-        public static BlobRenameResult BlobRenameResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            long contentLength)
-        {
-            return new BlobRenameResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentLength = contentLength,
-            };
-        }
+        internal BlobRenameResult() { }
     }
 }
 #endregion class BlobRenameResult
@@ -13049,7 +12792,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob SetAccessControlResult
     /// </summary>
-    public partial class BlobSetAccessControlResult
+    internal partial class BlobSetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -13060,29 +12803,145 @@ namespace Azure.Storage.Blobs.Models
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new BlobSetAccessControlResult instance for mocking.
+        /// Prevent direct instantiation of BlobSetAccessControlResult instances.
+        /// You can use BlobsModelFactory.BlobSetAccessControlResult instead.
         /// </summary>
-        public static BlobSetAccessControlResult BlobSetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            return new BlobSetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-            };
-        }
+        internal BlobSetAccessControlResult() { }
     }
 }
 #endregion class BlobSetAccessControlResult
+
+#region class BlobAnalyticsLogging
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Azure Analytics Logging settings.
+    /// </summary>
+    public partial class BlobAnalyticsLogging
+    {
+        /// <summary>
+        /// The version of Storage Analytics to configure.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Indicates whether all delete requests should be logged.
+        /// </summary>
+        public bool Delete { get; set; }
+
+        /// <summary>
+        /// Indicates whether all read requests should be logged.
+        /// </summary>
+        public bool Read { get; set; }
+
+        /// <summary>
+        /// Indicates whether all write requests should be logged.
+        /// </summary>
+        public bool Write { get; set; }
+
+        /// <summary>
+        /// the retention policy which determines how long the associated data should persist
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new BlobAnalyticsLogging instance
+        /// </summary>
+        public BlobAnalyticsLogging()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobAnalyticsLogging instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobAnalyticsLogging(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a BlobAnalyticsLogging instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobAnalyticsLogging instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Logging".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobAnalyticsLogging value, string name = "Logging", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Version", ""),
+                value.Version));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Delete", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Delete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Read", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Read.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Write", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Write.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            _element.Add(Azure.Storage.Blobs.Models.BlobRetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobAnalyticsLogging instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobAnalyticsLogging instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobAnalyticsLogging FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobAnalyticsLogging _value = new Azure.Storage.Blobs.Models.BlobAnalyticsLogging(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Delete", ""));
+            if (_child != null)
+            {
+                _value.Delete = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Read", ""));
+            if (_child != null)
+            {
+                _value.Read = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Write", ""));
+            if (_child != null)
+            {
+                _value.Write = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
+            if (_child != null)
+            {
+                _value.RetentionPolicy = Azure.Storage.Blobs.Models.BlobRetentionPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobAnalyticsLogging value);
+    }
+}
+#endregion class BlobAnalyticsLogging
 
 #region class BlobAppendInfo
 namespace Azure.Storage.Blobs.Models
@@ -13113,7 +12972,7 @@ namespace Azure.Storage.Blobs.Models
         /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers.
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] XMSContentCrc64 { get; internal set; }
+        public byte[] ContentCrc64 { get; internal set; }
         #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
@@ -13135,6 +12994,12 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the block. This header is only returned when the block was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobAppendInfo instances.
+        /// You can use BlobsModelFactory.BlobAppendInfo instead.
+        /// </summary>
+        internal BlobAppendInfo() { }
     }
 
     /// <summary>
@@ -13149,7 +13014,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
-            byte[] xMSContentCrc64,
+            byte[] contentCrc64,
             string blobAppendOffset,
             int blobCommittedBlockCount,
             bool isServerEncrypted,
@@ -13160,7 +13025,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 ContentHash = contentHash,
-                XMSContentCrc64 = xMSContentCrc64,
+                ContentCrc64 = contentCrc64,
                 BlobAppendOffset = blobAppendOffset,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
                 IsServerEncrypted = isServerEncrypted,
@@ -13170,6 +13035,507 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobAppendInfo
+
+#region class BlobBatchResult
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlobBatchResult
+    /// </summary>
+    internal partial class BlobBatchResult
+    {
+        /// <summary>
+        /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// Content
+        /// </summary>
+        public System.IO.Stream Content { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobBatchResult instances.
+        /// You can use BlobsModelFactory.BlobBatchResult instead.
+        /// </summary>
+        internal BlobBatchResult() { }
+    }
+}
+#endregion class BlobBatchResult
+
+#region class BlobContainerAccessPolicy
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlobContainerAccessPolicy
+    /// </summary>
+    public partial class BlobContainerAccessPolicy
+    {
+        /// <summary>
+        /// Indicated whether data in the container may be accessed publicly and the level of access
+        /// </summary>
+        public Azure.Storage.Blobs.Models.PublicAccessType BlobPublicAccess { get; internal set; }
+
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// a collection of signed identifiers
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> SignedIdentifiers { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobContainerAccessPolicy instance
+        /// </summary>
+        public BlobContainerAccessPolicy()
+        {
+            SignedIdentifiers = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.SignedIdentifier>();
+        }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobContainerAccessPolicy instance for mocking.
+        /// </summary>
+        public static BlobContainerAccessPolicy BlobContainerAccessPolicy(
+            Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
+        {
+            return new BlobContainerAccessPolicy()
+            {
+                BlobPublicAccess = blobPublicAccess,
+                ETag = eTag,
+                LastModified = lastModified,
+                SignedIdentifiers = signedIdentifiers,
+            };
+        }
+    }
+}
+#endregion class BlobContainerAccessPolicy
+
+#region class BlobContainerInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlobContainerInfo
+    /// </summary>
+    public partial class BlobContainerInfo
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobContainerInfo instances.
+        /// You can use BlobsModelFactory.BlobContainerInfo instead.
+        /// </summary>
+        internal BlobContainerInfo() { }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobContainerInfo instance for mocking.
+        /// </summary>
+        public static BlobContainerInfo BlobContainerInfo(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            return new BlobContainerInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+            };
+        }
+    }
+}
+#endregion class BlobContainerInfo
+
+#region class BlobContainerItem
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// An Azure Storage container
+    /// </summary>
+    public partial class BlobContainerItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Properties of a container
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { get; internal set; }
+
+        /// <summary>
+        /// Metadata
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobContainerItem instance
+        /// </summary>
+        public BlobContainerItem()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerItem instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobContainerItem(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Properties = new Azure.Storage.Blobs.Models.BlobContainerProperties();
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobContainerItem instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobContainerItem instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobContainerItem FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobContainerItem _value = new Azure.Storage.Blobs.Models.BlobContainerItem(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
+            if (_child != null)
+            {
+                _value.Properties = Azure.Storage.Blobs.Models.BlobContainerProperties.FromXml(_child);
+            }
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            if (_child != null)
+            {
+                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
+                {
+                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
+                }
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobContainerItem value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobContainerItem instance for mocking.
+        /// </summary>
+        public static BlobContainerItem BlobContainerItem(
+            string name,
+            Azure.Storage.Blobs.Models.BlobContainerProperties properties,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            return new BlobContainerItem()
+            {
+                Name = name,
+                Properties = properties,
+                Metadata = metadata,
+            };
+        }
+    }
+}
+#endregion class BlobContainerItem
+
+#region class BlobContainerProperties
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Properties of a container
+    /// </summary>
+    public partial class BlobContainerProperties
+    {
+        /// <summary>
+        /// Last-Modified
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// LeaseStatus
+        /// </summary>
+        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// LeaseState
+        /// </summary>
+        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get; internal set; }
+
+        /// <summary>
+        /// LeaseDuration
+        /// </summary>
+        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get; internal set; }
+
+        /// <summary>
+        /// PublicAccess
+        /// </summary>
+        public Azure.Storage.Blobs.Models.PublicAccessType? PublicAccess { get; internal set; }
+
+        /// <summary>
+        /// HasImmutabilityPolicy
+        /// </summary>
+        public bool? HasImmutabilityPolicy { get; internal set; }
+
+        /// <summary>
+        /// HasLegalHold
+        /// </summary>
+        public bool? HasLegalHold { get; internal set; }
+
+        /// <summary>
+        /// ETag
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobContainerProperties instances.
+        /// You can use BlobsModelFactory.BlobContainerProperties instead.
+        /// </summary>
+        internal BlobContainerProperties() { }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobContainerProperties instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobContainerProperties instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobContainerProperties FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobContainerProperties _value = new Azure.Storage.Blobs.Models.BlobContainerProperties();
+            _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
+            if (_child != null)
+            {
+                _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseState", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseDuration", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseDuration = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseDurationType(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("PublicAccess", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.PublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(_child?.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("HasImmutabilityPolicy", ""));
+            if (_child != null)
+            {
+                _value.HasImmutabilityPolicy = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("HasLegalHold", ""));
+            if (_child != null)
+            {
+                _value.HasLegalHold = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
+            if (_child != null)
+            {
+                _value.ETag = new Azure.Core.Http.ETag(_child.Value);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobContainerProperties value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        public static BlobContainerProperties BlobContainerProperties(
+            System.DateTimeOffset lastModified,
+            Azure.Core.Http.ETag eTag,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
+            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
+            bool? hasLegalHold = default)
+        {
+            return new BlobContainerProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                HasLegalHold = hasLegalHold,
+            };
+        }
+    }
+}
+#endregion class BlobContainerProperties
+
+#region class BlobContainersSegment
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// An enumeration of containers
+    /// </summary>
+    internal partial class BlobContainersSegment
+    {
+        /// <summary>
+        /// ServiceEndpoint
+        /// </summary>
+        public string ServiceEndpoint { get; internal set; }
+
+        /// <summary>
+        /// Prefix
+        /// </summary>
+        public string Prefix { get; internal set; }
+
+        /// <summary>
+        /// Marker
+        /// </summary>
+        public string Marker { get; internal set; }
+
+        /// <summary>
+        /// MaxResults
+        /// </summary>
+        public int? MaxResults { get; internal set; }
+
+        /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// BlobContainerItems
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobContainerItem> BlobContainerItems { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobContainersSegment instance
+        /// </summary>
+        public BlobContainersSegment()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainersSegment instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobContainersSegment(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                BlobContainerItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobContainerItem>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobContainersSegment instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobContainersSegment instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobContainersSegment FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            System.Xml.Linq.XAttribute _attribute;
+            Azure.Storage.Blobs.Models.BlobContainersSegment _value = new Azure.Storage.Blobs.Models.BlobContainersSegment(true);
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
+            if (_child != null)
+            {
+                _value.Prefix = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Marker", ""));
+            if (_child != null)
+            {
+                _value.Marker = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxResults", ""));
+            if (_child != null)
+            {
+                _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Containers", ""));
+            if (_child != null)
+            {
+                _value.BlobContainerItems = System.Linq.Enumerable.ToList(
+                    System.Linq.Enumerable.Select(
+                        _child.Elements(System.Xml.Linq.XName.Get("Container", "")),
+                        e => Azure.Storage.Blobs.Models.BlobContainerItem.FromXml(e)));
+            }
+            else
+            {
+                _value.BlobContainerItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobContainerItem>();
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobContainersSegment value);
+    }
+}
+#endregion class BlobContainersSegment
 
 #region class BlobContentInfo
 namespace Azure.Storage.Blobs.Models
@@ -13205,6 +13571,12 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobContentInfo instances.
+        /// You can use BlobsModelFactory.BlobContentInfo instead.
+        /// </summary>
+        internal BlobContentInfo() { }
     }
 
     /// <summary>
@@ -13262,6 +13634,12 @@ namespace Azure.Storage.Blobs.Models
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobCopyInfo instances.
+        /// You can use BlobsModelFactory.BlobCopyInfo instead.
+        /// </summary>
+        internal BlobCopyInfo() { }
     }
 
     /// <summary>
@@ -13289,6 +13667,118 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobCopyInfo
+
+#region class BlobCorsRule
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
+    /// </summary>
+    public partial class BlobCorsRule
+    {
+        /// <summary>
+        /// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
+        /// </summary>
+        public string AllowedOrigins { get; set; }
+
+        /// <summary>
+        /// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+        /// </summary>
+        public string AllowedMethods { get; set; }
+
+        /// <summary>
+        /// the request headers that the origin domain may specify on the CORS request.
+        /// </summary>
+        public string AllowedHeaders { get; set; }
+
+        /// <summary>
+        /// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+        /// </summary>
+        public string ExposedHeaders { get; set; }
+
+        /// <summary>
+        /// The maximum amount time that a browser should cache the preflight OPTIONS request.
+        /// </summary>
+        public int MaxAgeInSeconds { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobCorsRule instances.
+        /// You can use BlobsModelFactory.BlobCorsRule instead.
+        /// </summary>
+        internal BlobCorsRule() { }
+
+        /// <summary>
+        /// Serialize a BlobCorsRule instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobCorsRule instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "CorsRule".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobCorsRule value, string name = "CorsRule", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedOrigins", ""),
+                value.AllowedOrigins));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedMethods", ""),
+                value.AllowedMethods));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("AllowedHeaders", ""),
+                value.AllowedHeaders));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("ExposedHeaders", ""),
+                value.ExposedHeaders));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""),
+                value.MaxAgeInSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobCorsRule instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobCorsRule instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobCorsRule FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobCorsRule _value = new Azure.Storage.Blobs.Models.BlobCorsRule();
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", ""));
+            if (_child != null)
+            {
+                _value.AllowedOrigins = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", ""));
+            if (_child != null)
+            {
+                _value.AllowedMethods = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", ""));
+            if (_child != null)
+            {
+                _value.AllowedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", ""));
+            if (_child != null)
+            {
+                _value.ExposedHeaders = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""));
+            if (_child != null)
+            {
+                _value.MaxAgeInSeconds = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobCorsRule value);
+    }
+}
+#endregion class BlobCorsRule
 
 #region enum strings BlobErrorCode
 namespace Azure.Storage.Blobs.Models
@@ -13823,6 +14313,31 @@ namespace Azure.Storage.Blobs.Models
         /// BlobNotArchived
         /// </summary>
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived { get; } = @"BlobNotArchived";
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>
@@ -13874,25 +14389,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Convert an BlobErrorCode to a string.
         /// </summary>
-        /// <param name="o">The BlobErrorCode value.</param>
+        /// <param name="value">The BlobErrorCode value.</param>
         /// <returns>String representation of the BlobErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode o) => o._value;
+        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode value) => value._value;
 
         /// <summary>
         /// Check if two BlobErrorCode instances are equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => a.Equals(b);
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => left.Equals(right);
 
         /// <summary>
         /// Check if two BlobErrorCode instances are not equal.
         /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => !a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => !left.Equals(right);
     }
 }
 #endregion enum strings BlobErrorCode
@@ -13914,6 +14429,12 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobInfo instances.
+        /// You can use BlobsModelFactory.BlobInfo instead.
+        /// </summary>
+        internal BlobInfo() { }
     }
 
     /// <summary>
@@ -13954,7 +14475,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Deleted
         /// </summary>
-        public bool? Deleted { get; internal set; }
+        public bool Deleted { get; internal set; }
 
         /// <summary>
         /// Snapshot
@@ -14002,7 +14523,11 @@ namespace Azure.Storage.Blobs.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobItem _value = new Azure.Storage.Blobs.Models.BlobItem(true);
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
             if (_child != null)
             {
@@ -14013,7 +14538,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Snapshot = _child.Value;
             }
-            _value.Properties = Azure.Storage.Blobs.Models.BlobItemProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
+            _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
+            if (_child != null)
+            {
+                _value.Properties = Azure.Storage.Blobs.Models.BlobItemProperties.FromXml(_child);
+            }
             _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
             if (_child != null)
@@ -14040,16 +14569,16 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItem BlobItem(
             string name,
+            bool deleted,
             Azure.Storage.Blobs.Models.BlobItemProperties properties,
-            bool? deleted = default,
             string snapshot = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new BlobItem()
             {
                 Name = name,
-                Properties = properties,
                 Deleted = deleted,
+                Properties = properties,
                 Snapshot = snapshot,
                 Metadata = metadata,
             };
@@ -14201,7 +14730,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// AccessTierInferred
         /// </summary>
-        public bool? AccessTierInferred { get; internal set; }
+        public bool AccessTierInferred { get; internal set; }
 
         /// <summary>
         /// ArchiveStatus
@@ -14222,6 +14751,12 @@ namespace Azure.Storage.Blobs.Models
         /// ETag
         /// </summary>
         public Azure.Core.Http.ETag? ETag { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobItemProperties instances.
+        /// You can use BlobsModelFactory.BlobItemProperties instead.
+        /// </summary>
+        internal BlobItemProperties() { }
 
         /// <summary>
         /// Deserializes XML into a new BlobItemProperties instance.
@@ -14371,7 +14906,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("ArchiveStatus", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
-                _value.ArchiveStatus = _child.Value;
+                _value.ArchiveStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseArchiveStatus(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("CustomerProvidedKeySha256", ""));
             if (_child != null)
@@ -14404,8 +14939,8 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobItemProperties instance for mocking.
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
+            bool accessTierInferred,
             Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
-            System.DateTimeOffset? creationTime = default,
             long? contentLength = default,
             string contentType = default,
             string contentEncoding = default,
@@ -14430,7 +14965,7 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset? deletedTime = default,
             int? remainingRetentionDays = default,
             Azure.Storage.Blobs.Models.AccessTier? accessTier = default,
-            bool? accessTierInferred = default,
+            System.DateTimeOffset? creationTime = default,
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             System.DateTimeOffset? accessTierChangeTime = default,
@@ -14438,8 +14973,8 @@ namespace Azure.Storage.Blobs.Models
         {
             return new BlobItemProperties()
             {
+                AccessTierInferred = accessTierInferred,
                 CopyStatus = copyStatus,
-                CreationTime = creationTime,
                 ContentLength = contentLength,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
@@ -14464,7 +14999,7 @@ namespace Azure.Storage.Blobs.Models
                 DeletedTime = deletedTime,
                 RemainingRetentionDays = remainingRetentionDays,
                 AccessTier = accessTier,
-                AccessTierInferred = accessTierInferred,
+                CreationTime = creationTime,
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
                 AccessTierChangeTime = accessTierChangeTime,
@@ -14474,6 +15009,130 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobItemProperties
+
+#region class BlobMetrics
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// a summary of request statistics grouped by API in hour or minute aggregates for blobs
+    /// </summary>
+    public partial class BlobMetrics
+    {
+        /// <summary>
+        /// The version of Storage Analytics to configure.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics are enabled for the Blob service.
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics should generate summary statistics for called API operations.
+        /// </summary>
+        public bool? IncludeAPIs { get; set; }
+
+        /// <summary>
+        /// the retention policy which determines how long the associated data should persist
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new BlobMetrics instance
+        /// </summary>
+        public BlobMetrics()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobMetrics instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobMetrics(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a BlobMetrics instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobMetrics instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Metrics".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobMetrics value, string name = "Metrics", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Version != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Version", ""),
+                    value.Version));
+            }
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.IncludeAPIs != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("IncludeAPIs", ""),
+                    #pragma warning disable CA1308 // Normalize strings to uppercase
+                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    #pragma warning restore CA1308 // Normalize strings to uppercase
+            }
+            if (value.RetentionPolicy != null)
+            {
+                _element.Add(Azure.Storage.Blobs.Models.BlobRetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobMetrics instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobMetrics instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobMetrics FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobMetrics _value = new Azure.Storage.Blobs.Models.BlobMetrics(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
+            if (_child != null)
+            {
+                _value.IncludeAPIs = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
+            if (_child != null)
+            {
+                _value.RetentionPolicy = Azure.Storage.Blobs.Models.BlobRetentionPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobMetrics value);
+    }
+}
+#endregion class BlobMetrics
 
 #region class BlobPrefix
 namespace Azure.Storage.Blobs.Models
@@ -14489,6 +15148,12 @@ namespace Azure.Storage.Blobs.Models
         public string Name { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of BlobPrefix instances.
+        /// You can use BlobsModelFactory.BlobPrefix instead.
+        /// </summary>
+        internal BlobPrefix() { }
+
+        /// <summary>
         /// Deserializes XML into a new BlobPrefix instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -14496,8 +15161,13 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.BlobPrefix FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobPrefix _value = new Azure.Storage.Blobs.Models.BlobPrefix();
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -14770,6 +15440,84 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobProperties
 
+#region class BlobRetentionPolicy
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// the retention policy which determines how long the associated data should persist
+    /// </summary>
+    public partial class BlobRetentionPolicy
+    {
+        /// <summary>
+        /// Indicates whether a retention policy is enabled for the storage service
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
+        /// </summary>
+        public int? Days { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobRetentionPolicy instances.
+        /// You can use BlobsModelFactory.BlobRetentionPolicy instead.
+        /// </summary>
+        internal BlobRetentionPolicy() { }
+
+        /// <summary>
+        /// Serialize a BlobRetentionPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobRetentionPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobRetentionPolicy value, string name = "RetentionPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.Days != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Days", ""),
+                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobRetentionPolicy instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobRetentionPolicy instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobRetentionPolicy FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobRetentionPolicy _value = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
+            if (_child != null)
+            {
+                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobRetentionPolicy value);
+    }
+}
+#endregion class BlobRetentionPolicy
+
 #region class BlobServiceProperties
 namespace Azure.Storage.Blobs.Models
 {
@@ -14781,22 +15529,22 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Azure Analytics Logging settings.
         /// </summary>
-        public Azure.Storage.Blobs.Models.Logging Logging { get; set; }
+        public Azure.Storage.Blobs.Models.BlobAnalyticsLogging Logging { get; set; }
 
         /// <summary>
         /// a summary of request statistics grouped by API in hour or minute aggregates for blobs
         /// </summary>
-        public Azure.Storage.Blobs.Models.Metrics HourMetrics { get; set; }
+        public Azure.Storage.Blobs.Models.BlobMetrics HourMetrics { get; set; }
 
         /// <summary>
         /// a summary of request statistics grouped by API in hour or minute aggregates for blobs
         /// </summary>
-        public Azure.Storage.Blobs.Models.Metrics MinuteMetrics { get; set; }
+        public Azure.Storage.Blobs.Models.BlobMetrics MinuteMetrics { get; set; }
 
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.CorsRule> Cors { get; internal set; }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { get; set; }
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions
@@ -14806,12 +15554,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// the retention policy which determines how long the associated data should persist
         /// </summary>
-        public Azure.Storage.Blobs.Models.RetentionPolicy DeleteRetentionPolicy { get; set; }
+        public Azure.Storage.Blobs.Models.BlobRetentionPolicy DeleteRetentionPolicy { get; set; }
 
         /// <summary>
         /// The properties that enable an account to host a static website
         /// </summary>
-        public Azure.Storage.Blobs.Models.StaticWebsite StaticWebsite { get; set; }
+        public Azure.Storage.Blobs.Models.BlobStaticWebsite StaticWebsite { get; set; }
 
         /// <summary>
         /// Creates a new BlobServiceProperties instance
@@ -14829,12 +15577,11 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                Logging = new Azure.Storage.Blobs.Models.Logging();
-                HourMetrics = new Azure.Storage.Blobs.Models.Metrics();
-                MinuteMetrics = new Azure.Storage.Blobs.Models.Metrics();
-                Cors = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.CorsRule>();
-                DeleteRetentionPolicy = new Azure.Storage.Blobs.Models.RetentionPolicy();
-                StaticWebsite = new Azure.Storage.Blobs.Models.StaticWebsite();
+                Logging = new Azure.Storage.Blobs.Models.BlobAnalyticsLogging();
+                HourMetrics = new Azure.Storage.Blobs.Models.BlobMetrics();
+                MinuteMetrics = new Azure.Storage.Blobs.Models.BlobMetrics();
+                DeleteRetentionPolicy = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+                StaticWebsite = new Azure.Storage.Blobs.Models.BlobStaticWebsite();
             }
         }
 
@@ -14851,22 +15598,22 @@ namespace Azure.Storage.Blobs.Models
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             if (value.Logging != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.Logging.ToXml(value.Logging, "Logging", ""));
+                _element.Add(Azure.Storage.Blobs.Models.BlobAnalyticsLogging.ToXml(value.Logging, "Logging", ""));
             }
             if (value.HourMetrics != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.Metrics.ToXml(value.HourMetrics, "HourMetrics", ""));
+                _element.Add(Azure.Storage.Blobs.Models.BlobMetrics.ToXml(value.HourMetrics, "HourMetrics", ""));
             }
             if (value.MinuteMetrics != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.Metrics.ToXml(value.MinuteMetrics, "MinuteMetrics", ""));
+                _element.Add(Azure.Storage.Blobs.Models.BlobMetrics.ToXml(value.MinuteMetrics, "MinuteMetrics", ""));
             }
             if (value.Cors != null)
             {
                 System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Cors", ""));
-                foreach (Azure.Storage.Blobs.Models.CorsRule _child in value.Cors)
+                foreach (Azure.Storage.Blobs.Models.BlobCorsRule _child in value.Cors)
                 {
-                    _elements.Add(Azure.Storage.Blobs.Models.CorsRule.ToXml(_child));
+                    _elements.Add(Azure.Storage.Blobs.Models.BlobCorsRule.ToXml(_child));
                 }
                 _element.Add(_elements);
             }
@@ -14878,11 +15625,11 @@ namespace Azure.Storage.Blobs.Models
             }
             if (value.DeleteRetentionPolicy != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.RetentionPolicy.ToXml(value.DeleteRetentionPolicy, "DeleteRetentionPolicy", ""));
+                _element.Add(Azure.Storage.Blobs.Models.BlobRetentionPolicy.ToXml(value.DeleteRetentionPolicy, "DeleteRetentionPolicy", ""));
             }
             if (value.StaticWebsite != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.StaticWebsite.ToXml(value.StaticWebsite, "StaticWebsite", ""));
+                _element.Add(Azure.Storage.Blobs.Models.BlobStaticWebsite.ToXml(value.StaticWebsite, "StaticWebsite", ""));
             }
             return _element;
         }
@@ -14900,17 +15647,17 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Logging", ""));
             if (_child != null)
             {
-                _value.Logging = Azure.Storage.Blobs.Models.Logging.FromXml(_child);
+                _value.Logging = Azure.Storage.Blobs.Models.BlobAnalyticsLogging.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("HourMetrics", ""));
             if (_child != null)
             {
-                _value.HourMetrics = Azure.Storage.Blobs.Models.Metrics.FromXml(_child);
+                _value.HourMetrics = Azure.Storage.Blobs.Models.BlobMetrics.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("MinuteMetrics", ""));
             if (_child != null)
             {
-                _value.MinuteMetrics = Azure.Storage.Blobs.Models.Metrics.FromXml(_child);
+                _value.MinuteMetrics = Azure.Storage.Blobs.Models.BlobMetrics.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Cors", ""));
             if (_child != null)
@@ -14918,11 +15665,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.Cors = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("CorsRule", "")),
-                        e => Azure.Storage.Blobs.Models.CorsRule.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.BlobCorsRule.FromXml(e)));
             }
             else
             {
-                _value.Cors = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.CorsRule>();
+                _value.Cors = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobCorsRule>();
             }
             _child = element.Element(System.Xml.Linq.XName.Get("DefaultServiceVersion", ""));
             if (_child != null)
@@ -14932,12 +15679,12 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("DeleteRetentionPolicy", ""));
             if (_child != null)
             {
-                _value.DeleteRetentionPolicy = Azure.Storage.Blobs.Models.RetentionPolicy.FromXml(_child);
+                _value.DeleteRetentionPolicy = Azure.Storage.Blobs.Models.BlobRetentionPolicy.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("StaticWebsite", ""));
             if (_child != null)
             {
-                _value.StaticWebsite = Azure.Storage.Blobs.Models.StaticWebsite.FromXml(_child);
+                _value.StaticWebsite = Azure.Storage.Blobs.Models.BlobStaticWebsite.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -15050,6 +15797,12 @@ namespace Azure.Storage.Blobs.Models
         /// True if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. For a snapshot request, this header is set to true when metadata was provided in the request and encrypted with a customer-provided key.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobSnapshotInfo instances.
+        /// You can use BlobsModelFactory.BlobSnapshotInfo instead.
+        /// </summary>
+        internal BlobSnapshotInfo() { }
     }
 
     /// <summary>
@@ -15077,6 +15830,100 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobSnapshotInfo
+
+#region class BlobStaticWebsite
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// The properties that enable an account to host a static website
+    /// </summary>
+    public partial class BlobStaticWebsite
+    {
+        /// <summary>
+        /// Indicates whether this account is hosting a static website
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// The default name of the index page under each directory
+        /// </summary>
+        public string IndexDocument { get; set; }
+
+        /// <summary>
+        /// The absolute path of the custom 404 page
+        /// </summary>
+        public string ErrorDocument404Path { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobStaticWebsite instances.
+        /// You can use BlobsModelFactory.BlobStaticWebsite instead.
+        /// </summary>
+        internal BlobStaticWebsite() { }
+
+        /// <summary>
+        /// Serialize a BlobStaticWebsite instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobStaticWebsite instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "StaticWebsite".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobStaticWebsite value, string name = "StaticWebsite", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.IndexDocument != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("IndexDocument", ""),
+                    value.IndexDocument));
+            }
+            if (value.ErrorDocument404Path != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("ErrorDocument404Path", ""),
+                    value.ErrorDocument404Path));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobStaticWebsite instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobStaticWebsite instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobStaticWebsite FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobStaticWebsite _value = new Azure.Storage.Blobs.Models.BlobStaticWebsite();
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IndexDocument", ""));
+            if (_child != null)
+            {
+                _value.IndexDocument = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ErrorDocument404Path", ""));
+            if (_child != null)
+            {
+                _value.ErrorDocument404Path = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobStaticWebsite value);
+    }
+}
+#endregion class BlobStaticWebsite
 
 #region enum BlobType
 namespace Azure.Storage.Blobs.Models
@@ -15138,11 +15985,6 @@ namespace Azure.Storage.Blobs.Models
         public int? MaxResults { get; internal set; }
 
         /// <summary>
-        /// Delimiter
-        /// </summary>
-        public string Delimiter { get; internal set; }
-
-        /// <summary>
         /// NextMarker
         /// </summary>
         public string NextMarker { get; internal set; }
@@ -15181,9 +16023,18 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
+            System.Xml.Linq.XAttribute _attribute;
             Azure.Storage.Blobs.Models.BlobsFlatSegment _value = new Azure.Storage.Blobs.Models.BlobsFlatSegment(true);
-            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
-            _value.ContainerName = element.Attribute(System.Xml.Linq.XName.Get("ContainerName", "")).Value;
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ContainerName", ""));
+            if (_attribute != null)
+            {
+                _value.ContainerName = _attribute.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
             if (_child != null)
             {
@@ -15199,12 +16050,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("Delimiter", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
             if (_child != null)
             {
-                _value.Delimiter = _child.Value;
+                _value.NextMarker = _child.Value;
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
             if (_child != null)
             {
@@ -15309,9 +16159,18 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
+            System.Xml.Linq.XAttribute _attribute;
             Azure.Storage.Blobs.Models.BlobsHierarchySegment _value = new Azure.Storage.Blobs.Models.BlobsHierarchySegment(true);
-            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
-            _value.ContainerName = element.Attribute(System.Xml.Linq.XName.Get("ContainerName", "")).Value;
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ContainerName", ""));
+            if (_attribute != null)
+            {
+                _value.ContainerName = _attribute.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
             if (_child != null)
             {
@@ -15332,7 +16191,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Delimiter = _child.Value;
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
             if (_child != null)
             {
@@ -15385,6 +16248,12 @@ namespace Azure.Storage.Blobs.Models
         public int Size { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of Block instances.
+        /// You can use BlobsModelFactory.Block instead.
+        /// </summary>
+        internal Block() { }
+
+        /// <summary>
         /// Deserializes XML into a new Block instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -15392,9 +16261,18 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.Block FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.Block _value = new Azure.Storage.Blobs.Models.Block();
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            _value.Size = int.Parse(element.Element(System.Xml.Linq.XName.Get("Size", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Size", ""));
+            if (_child != null)
+            {
+                _value.Size = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -15443,13 +16321,19 @@ namespace Azure.Storage.Blobs.Models
         /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers.
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] XMSContentCrc64 { get; internal set; }
+        public byte[] ContentCrc64 { get; internal set; }
         #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// The SHA-256 hash of the encryption key used to encrypt the block. This header is only returned when the block was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlockInfo instances.
+        /// You can use BlobsModelFactory.BlockInfo instead.
+        /// </summary>
+        internal BlockInfo() { }
     }
 
     /// <summary>
@@ -15462,13 +16346,13 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlockInfo BlockInfo(
             byte[] contentHash,
-            byte[] xMSContentCrc64,
+            byte[] contentCrc64,
             string encryptionKeySha256)
         {
             return new BlockInfo()
             {
                 ContentHash = contentHash,
-                XMSContentCrc64 = xMSContentCrc64,
+                ContentCrc64 = contentCrc64,
                 EncryptionKeySha256 = encryptionKeySha256,
             };
         }
@@ -15584,7 +16468,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
     /// </summary>
-    public enum BlockListType
+    internal enum BlockListType
     {
         /// <summary>
         /// committed
@@ -15728,6 +16612,12 @@ namespace Azure.Storage.Blobs.Models
         /// Approximate time remaining in the lease period, in seconds.
         /// </summary>
         public int LeaseTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BrokenLease instances.
+        /// You can use BlobsModelFactory.BrokenLease instead.
+        /// </summary>
+        internal BrokenLease() { }
     }
 }
 #endregion class BrokenLease
@@ -15751,6 +16641,12 @@ namespace Azure.Storage.Blobs.Models
         public long End { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of ClearRange instances.
+        /// You can use BlobsModelFactory.ClearRange instead.
+        /// </summary>
+        internal ClearRange() { }
+
+        /// <summary>
         /// Deserializes XML into a new ClearRange instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -15758,9 +16654,18 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.ClearRange FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.ClearRange _value = new Azure.Storage.Blobs.Models.ClearRange();
-            _value.Start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.End = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
+            if (_child != null)
+            {
+                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -15802,446 +16707,15 @@ namespace Azure.Storage.Blobs.Models
         /// x-ms-error-code
         /// </summary>
         public string ErrorCode { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ConditionNotMetError instances.
+        /// You can use BlobsModelFactory.ConditionNotMetError instead.
+        /// </summary>
+        internal ConditionNotMetError() { }
     }
 }
 #endregion class ConditionNotMetError
-
-#region class ContainerAccessPolicy
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// ContainerAccessPolicy
-    /// </summary>
-    public partial class ContainerAccessPolicy
-    {
-        /// <summary>
-        /// Indicated whether data in the container may be accessed publicly and the level of access
-        /// </summary>
-        public Azure.Storage.Blobs.Models.PublicAccessType BlobPublicAccess { get; internal set; }
-
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// a collection of signed identifiers
-        /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> SignedIdentifiers { get; internal set; }
-
-        /// <summary>
-        /// Creates a new ContainerAccessPolicy instance
-        /// </summary>
-        public ContainerAccessPolicy()
-        {
-            SignedIdentifiers = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.SignedIdentifier>();
-        }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ContainerAccessPolicy instance for mocking.
-        /// </summary>
-        public static ContainerAccessPolicy ContainerAccessPolicy(
-            Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
-        {
-            return new ContainerAccessPolicy()
-            {
-                BlobPublicAccess = blobPublicAccess,
-                ETag = eTag,
-                LastModified = lastModified,
-                SignedIdentifiers = signedIdentifiers,
-            };
-        }
-    }
-}
-#endregion class ContainerAccessPolicy
-
-#region class ContainerInfo
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// ContainerInfo
-    /// </summary>
-    public partial class ContainerInfo
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ContainerInfo instance for mocking.
-        /// </summary>
-        public static ContainerInfo ContainerInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            return new ContainerInfo()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-            };
-        }
-    }
-}
-#endregion class ContainerInfo
-
-#region class ContainerItem
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// An Azure Storage container
-    /// </summary>
-    public partial class ContainerItem
-    {
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>
-        /// Properties of a container
-        /// </summary>
-        public Azure.Storage.Blobs.Models.ContainerProperties Properties { get; internal set; }
-
-        /// <summary>
-        /// Metadata
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// Creates a new ContainerItem instance
-        /// </summary>
-        public ContainerItem()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new ContainerItem instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal ContainerItem(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                Properties = new Azure.Storage.Blobs.Models.ContainerProperties();
-                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            }
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new ContainerItem instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ContainerItem instance.</returns>
-        internal static Azure.Storage.Blobs.Models.ContainerItem FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.ContainerItem _value = new Azure.Storage.Blobs.Models.ContainerItem(true);
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            _value.Properties = Azure.Storage.Blobs.Models.ContainerProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
-            if (_child != null)
-            {
-                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
-                {
-                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainerItem value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ContainerItem instance for mocking.
-        /// </summary>
-        public static ContainerItem ContainerItem(
-            string name,
-            Azure.Storage.Blobs.Models.ContainerProperties properties,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
-        {
-            return new ContainerItem()
-            {
-                Name = name,
-                Properties = properties,
-                Metadata = metadata,
-            };
-        }
-    }
-}
-#endregion class ContainerItem
-
-#region class ContainerProperties
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Properties of a container
-    /// </summary>
-    public partial class ContainerProperties
-    {
-        /// <summary>
-        /// Last-Modified
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// LeaseStatus
-        /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get; internal set; }
-
-        /// <summary>
-        /// LeaseState
-        /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get; internal set; }
-
-        /// <summary>
-        /// LeaseDuration
-        /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get; internal set; }
-
-        /// <summary>
-        /// PublicAccess
-        /// </summary>
-        public Azure.Storage.Blobs.Models.PublicAccessType? PublicAccess { get; internal set; }
-
-        /// <summary>
-        /// HasImmutabilityPolicy
-        /// </summary>
-        public bool? HasImmutabilityPolicy { get; internal set; }
-
-        /// <summary>
-        /// HasLegalHold
-        /// </summary>
-        public bool? HasLegalHold { get; internal set; }
-
-        /// <summary>
-        /// ETag
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new ContainerProperties instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ContainerProperties instance.</returns>
-        internal static Azure.Storage.Blobs.Models.ContainerProperties FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.ContainerProperties _value = new Azure.Storage.Blobs.Models.ContainerProperties();
-            _value.LastModified = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("Last-Modified", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LeaseState", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LeaseDuration", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.LeaseDuration = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseDurationType(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("PublicAccess", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.PublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("HasImmutabilityPolicy", ""));
-            if (_child != null)
-            {
-                _value.HasImmutabilityPolicy = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("HasLegalHold", ""));
-            if (_child != null)
-            {
-                _value.HasLegalHold = bool.Parse(_child.Value);
-            }
-            _value.ETag = new Azure.Core.Http.ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainerProperties value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ContainerProperties instance for mocking.
-        /// </summary>
-        public static ContainerProperties ContainerProperties(
-            System.DateTimeOffset lastModified,
-            Azure.Core.Http.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
-            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
-            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
-            Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
-            bool? hasImmutabilityPolicy = default,
-            bool? hasLegalHold = default)
-        {
-            return new ContainerProperties()
-            {
-                LastModified = lastModified,
-                ETag = eTag,
-                LeaseStatus = leaseStatus,
-                LeaseState = leaseState,
-                LeaseDuration = leaseDuration,
-                PublicAccess = publicAccess,
-                HasImmutabilityPolicy = hasImmutabilityPolicy,
-                HasLegalHold = hasLegalHold,
-            };
-        }
-    }
-}
-#endregion class ContainerProperties
-
-#region class ContainersSegment
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// An enumeration of containers
-    /// </summary>
-    internal partial class ContainersSegment
-    {
-        /// <summary>
-        /// ServiceEndpoint
-        /// </summary>
-        public string ServiceEndpoint { get; internal set; }
-
-        /// <summary>
-        /// Prefix
-        /// </summary>
-        public string Prefix { get; internal set; }
-
-        /// <summary>
-        /// Marker
-        /// </summary>
-        public string Marker { get; internal set; }
-
-        /// <summary>
-        /// MaxResults
-        /// </summary>
-        public int? MaxResults { get; internal set; }
-
-        /// <summary>
-        /// ContainerItems
-        /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ContainerItem> ContainerItems { get; internal set; }
-
-        /// <summary>
-        /// NextMarker
-        /// </summary>
-        public string NextMarker { get; internal set; }
-
-        /// <summary>
-        /// Creates a new ContainersSegment instance
-        /// </summary>
-        public ContainersSegment()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new ContainersSegment instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal ContainersSegment(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                ContainerItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.ContainerItem>();
-            }
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new ContainersSegment instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ContainersSegment instance.</returns>
-        internal static Azure.Storage.Blobs.Models.ContainersSegment FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.ContainersSegment _value = new Azure.Storage.Blobs.Models.ContainersSegment(true);
-            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
-            _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
-            if (_child != null)
-            {
-                _value.Prefix = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Marker", ""));
-            if (_child != null)
-            {
-                _value.Marker = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MaxResults", ""));
-            if (_child != null)
-            {
-                _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Containers", ""));
-            if (_child != null)
-            {
-                _value.ContainerItems = System.Linq.Enumerable.ToList(
-                    System.Linq.Enumerable.Select(
-                        _child.Elements(System.Xml.Linq.XName.Get("Container", "")),
-                        e => Azure.Storage.Blobs.Models.ContainerItem.FromXml(e)));
-            }
-            else
-            {
-                _value.ContainerItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.ContainerItem>();
-            }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainersSegment value);
-    }
-}
-#endregion class ContainersSegment
 
 #region enum CopyStatus
 namespace Azure.Storage.Blobs.Models
@@ -16308,91 +16782,6 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum CopyStatus
-
-#region class CorsRule
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
-    /// </summary>
-    public partial class CorsRule
-    {
-        /// <summary>
-        /// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
-        /// </summary>
-        public string AllowedOrigins { get; set; }
-
-        /// <summary>
-        /// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
-        /// </summary>
-        public string AllowedMethods { get; set; }
-
-        /// <summary>
-        /// the request headers that the origin domain may specify on the CORS request.
-        /// </summary>
-        public string AllowedHeaders { get; set; }
-
-        /// <summary>
-        /// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
-        /// </summary>
-        public string ExposedHeaders { get; set; }
-
-        /// <summary>
-        /// The maximum amount time that a browser should cache the preflight OPTIONS request.
-        /// </summary>
-        public int MaxAgeInSeconds { get; set; }
-
-        /// <summary>
-        /// Serialize a CorsRule instance as XML.
-        /// </summary>
-        /// <param name="value">The CorsRule instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "CorsRule".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.CorsRule value, string name = "CorsRule", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedOrigins", ""),
-                value.AllowedOrigins));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedMethods", ""),
-                value.AllowedMethods));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("AllowedHeaders", ""),
-                value.AllowedHeaders));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("ExposedHeaders", ""),
-                value.ExposedHeaders));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("MaxAgeInSeconds", ""),
-                value.MaxAgeInSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new CorsRule instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized CorsRule instance.</returns>
-        internal static Azure.Storage.Blobs.Models.CorsRule FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Blobs.Models.CorsRule _value = new Azure.Storage.Blobs.Models.CorsRule();
-            _value.AllowedOrigins = element.Element(System.Xml.Linq.XName.Get("AllowedOrigins", "")).Value;
-            _value.AllowedMethods = element.Element(System.Xml.Linq.XName.Get("AllowedMethods", "")).Value;
-            _value.AllowedHeaders = element.Element(System.Xml.Linq.XName.Get("AllowedHeaders", "")).Value;
-            _value.ExposedHeaders = element.Element(System.Xml.Linq.XName.Get("ExposedHeaders", "")).Value;
-            _value.MaxAgeInSeconds = int.Parse(element.Element(System.Xml.Linq.XName.Get("MaxAgeInSeconds", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.CorsRule value);
-    }
-}
-#endregion class CorsRule
 
 #region class DataLakeStorageError
 namespace Azure.Storage.Blobs.Models
@@ -16507,7 +16896,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory CreateResult
     /// </summary>
-    public partial class DirectoryCreateResult
+    internal partial class DirectoryCreateResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -16523,28 +16912,12 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the resource in bytes.
         /// </summary>
         public long ContentLength { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new DirectoryCreateResult instance for mocking.
+        /// Prevent direct instantiation of DirectoryCreateResult instances.
+        /// You can use BlobsModelFactory.DirectoryCreateResult instead.
         /// </summary>
-        public static DirectoryCreateResult DirectoryCreateResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            long contentLength)
-        {
-            return new DirectoryCreateResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentLength = contentLength,
-            };
-        }
+        internal DirectoryCreateResult() { }
     }
 }
 #endregion class DirectoryCreateResult
@@ -16555,30 +16928,18 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory DeleteResult
     /// </summary>
-    public partial class DirectoryDeleteResult
+    internal partial class DirectoryDeleteResult
     {
         /// <summary>
         /// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the rename operation to continue renaming the directory.
         /// </summary>
         public string Marker { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new DirectoryDeleteResult instance for mocking.
+        /// Prevent direct instantiation of DirectoryDeleteResult instances.
+        /// You can use BlobsModelFactory.DirectoryDeleteResult instead.
         /// </summary>
-        public static DirectoryDeleteResult DirectoryDeleteResult(
-            string marker)
-        {
-            return new DirectoryDeleteResult()
-            {
-                Marker = marker,
-            };
-        }
+        internal DirectoryDeleteResult() { }
     }
 }
 #endregion class DirectoryDeleteResult
@@ -16589,7 +16950,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory GetAccessControlResult
     /// </summary>
-    public partial class DirectoryGetAccessControlResult
+    internal partial class DirectoryGetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -16620,34 +16981,12 @@ namespace Azure.Storage.Blobs.Models
         /// The POSIX access control list for the file or directory.  Included in the response only if the action is "getAccessControl" and Hierarchical Namespace is enabled for the account.
         /// </summary>
         public string XMSAcl { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new DirectoryGetAccessControlResult instance for mocking.
+        /// Prevent direct instantiation of DirectoryGetAccessControlResult instances.
+        /// You can use BlobsModelFactory.DirectoryGetAccessControlResult instead.
         /// </summary>
-        public static DirectoryGetAccessControlResult DirectoryGetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string xMSOwner,
-            string xMSGroup,
-            string xMSPermissions,
-            string xMSAcl)
-        {
-            return new DirectoryGetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                XMSOwner = xMSOwner,
-                XMSGroup = xMSGroup,
-                XMSPermissions = xMSPermissions,
-                XMSAcl = xMSAcl,
-            };
-        }
+        internal DirectoryGetAccessControlResult() { }
     }
 }
 #endregion class DirectoryGetAccessControlResult
@@ -16658,7 +16997,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory RenameResult
     /// </summary>
-    public partial class DirectoryRenameResult
+    internal partial class DirectoryRenameResult
     {
         /// <summary>
         /// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the rename operation to continue renaming the directory.
@@ -16679,30 +17018,12 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the resource in bytes.
         /// </summary>
         public long ContentLength { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new DirectoryRenameResult instance for mocking.
+        /// Prevent direct instantiation of DirectoryRenameResult instances.
+        /// You can use BlobsModelFactory.DirectoryRenameResult instead.
         /// </summary>
-        public static DirectoryRenameResult DirectoryRenameResult(
-            string marker,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            long contentLength)
-        {
-            return new DirectoryRenameResult()
-            {
-                Marker = marker,
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentLength = contentLength,
-            };
-        }
+        internal DirectoryRenameResult() { }
     }
 }
 #endregion class DirectoryRenameResult
@@ -16713,7 +17034,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Directory SetAccessControlResult
     /// </summary>
-    public partial class DirectorySetAccessControlResult
+    internal partial class DirectorySetAccessControlResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -16724,26 +17045,12 @@ namespace Azure.Storage.Blobs.Models
         /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
-    }
 
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
         /// <summary>
-        /// Creates a new DirectorySetAccessControlResult instance for mocking.
+        /// Prevent direct instantiation of DirectorySetAccessControlResult instances.
+        /// You can use BlobsModelFactory.DirectorySetAccessControlResult instead.
         /// </summary>
-        public static DirectorySetAccessControlResult DirectorySetAccessControlResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            return new DirectorySetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-            };
-        }
+        internal DirectorySetAccessControlResult() { }
     }
 }
 #endregion class DirectorySetAccessControlResult
@@ -17017,6 +17324,12 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastSyncTime { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of GeoReplication instances.
+        /// You can use BlobsModelFactory.GeoReplication instead.
+        /// </summary>
+        internal GeoReplication() { }
+
+        /// <summary>
         /// Deserializes XML into a new GeoReplication instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -17024,9 +17337,18 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.GeoReplication FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.GeoReplication _value = new Azure.Storage.Blobs.Models.GeoReplication();
-            _value.Status = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseGeoReplicationStatus(element.Element(System.Xml.Linq.XName.Get("Status", "")).Value);
-            _value.LastSyncTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("LastSyncTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("Status", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.Status = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseGeoReplicationStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LastSyncTime", ""));
+            if (_child != null)
+            {
+                _value.LastSyncTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -17178,6 +17500,12 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset Expiry { get; set; }
 
         /// <summary>
+        /// Prevent direct instantiation of KeyInfo instances.
+        /// You can use BlobsModelFactory.KeyInfo instead.
+        /// </summary>
+        internal KeyInfo() { }
+
+        /// <summary>
         /// Serialize a KeyInfo instance as XML.
         /// </summary>
         /// <param name="value">The KeyInfo instance to serialize.</param>
@@ -17225,6 +17553,12 @@ namespace Azure.Storage.Blobs.Models
         /// Uniquely identifies a container's or blob's lease
         /// </summary>
         public string LeaseId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of Lease instances.
+        /// You can use BlobsModelFactory.Lease instead.
+        /// </summary>
+        internal Lease() { }
     }
 
     /// <summary>
@@ -17424,6 +17758,49 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum LeaseStatus
 
+#region enum ListBlobContainersIncludeType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Include this parameter to specify that the container's metadata be returned as part of the response body.
+    /// </summary>
+    internal enum ListBlobContainersIncludeType
+    {
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.ListBlobContainersIncludeType.Metadata => "metadata",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.ListBlobContainersIncludeType ParseListBlobContainersIncludeType(string value)
+            {
+                return value switch
+                {
+                    "metadata" => Azure.Storage.Blobs.Models.ListBlobContainersIncludeType.Metadata,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListBlobContainersIncludeType
+
 #region enum ListBlobsIncludeItem
 namespace Azure.Storage.Blobs.Models
 {
@@ -17495,280 +17872,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum ListBlobsIncludeItem
 
-#region enum ListContainersIncludeType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Include this parameter to specify that the container's metadata be returned as part of the response body.
-    /// </summary>
-    internal enum ListContainersIncludeType
-    {
-        /// <summary>
-        /// metadata
-        /// </summary>
-        Metadata
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.ListContainersIncludeType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata => "metadata",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.ListContainersIncludeType ParseListContainersIncludeType(string value)
-            {
-                return value switch
-                {
-                    "metadata" => Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum ListContainersIncludeType
-
-#region class Logging
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Azure Analytics Logging settings.
-    /// </summary>
-    #pragma warning disable CA1724
-    public partial class Logging
-    #pragma warning restore CA1724
-    {
-        /// <summary>
-        /// The version of Storage Analytics to configure.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Indicates whether all delete requests should be logged.
-        /// </summary>
-        public bool Delete { get; set; }
-
-        /// <summary>
-        /// Indicates whether all read requests should be logged.
-        /// </summary>
-        public bool Read { get; set; }
-
-        /// <summary>
-        /// Indicates whether all write requests should be logged.
-        /// </summary>
-        public bool Write { get; set; }
-
-        /// <summary>
-        /// the retention policy which determines how long the associated data should persist
-        /// </summary>
-        public Azure.Storage.Blobs.Models.RetentionPolicy RetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new Logging instance
-        /// </summary>
-        public Logging()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new Logging instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal Logging(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                RetentionPolicy = new Azure.Storage.Blobs.Models.RetentionPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a Logging instance as XML.
-        /// </summary>
-        /// <param name="value">The Logging instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "Logging".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.Logging value, string name = "Logging", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Version", ""),
-                value.Version));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Delete", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Delete.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Read", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Read.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Write", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Write.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            _element.Add(Azure.Storage.Blobs.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new Logging instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Logging instance.</returns>
-        internal static Azure.Storage.Blobs.Models.Logging FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Blobs.Models.Logging _value = new Azure.Storage.Blobs.Models.Logging(true);
-            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
-            _value.Delete = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Delete", "")).Value);
-            _value.Read = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Read", "")).Value);
-            _value.Write = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Write", "")).Value);
-            _value.RetentionPolicy = Azure.Storage.Blobs.Models.RetentionPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", "")));
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Logging value);
-    }
-}
-#endregion class Logging
-
-#region class Metrics
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// a summary of request statistics grouped by API in hour or minute aggregates for blobs
-    /// </summary>
-    public partial class Metrics
-    {
-        /// <summary>
-        /// The version of Storage Analytics to configure.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Indicates whether metrics are enabled for the Blob service.
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates whether metrics should generate summary statistics for called API operations.
-        /// </summary>
-        public bool? IncludeAPIs { get; set; }
-
-        /// <summary>
-        /// the retention policy which determines how long the associated data should persist
-        /// </summary>
-        public Azure.Storage.Blobs.Models.RetentionPolicy RetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new Metrics instance
-        /// </summary>
-        public Metrics()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new Metrics instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal Metrics(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                RetentionPolicy = new Azure.Storage.Blobs.Models.RetentionPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a Metrics instance as XML.
-        /// </summary>
-        /// <param name="value">The Metrics instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "Metrics".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.Metrics value, string name = "Metrics", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.Version != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Version", ""),
-                    value.Version));
-            }
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.IncludeAPIs != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("IncludeAPIs", ""),
-                    #pragma warning disable CA1308 // Normalize strings to uppercase
-                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                    #pragma warning restore CA1308 // Normalize strings to uppercase
-            }
-            if (value.RetentionPolicy != null)
-            {
-                _element.Add(Azure.Storage.Blobs.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new Metrics instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Metrics instance.</returns>
-        internal static Azure.Storage.Blobs.Models.Metrics FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.Metrics _value = new Azure.Storage.Blobs.Models.Metrics(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
-            if (_child != null)
-            {
-                _value.Version = _child.Value;
-            }
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
-            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
-            if (_child != null)
-            {
-                _value.IncludeAPIs = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
-            if (_child != null)
-            {
-                _value.RetentionPolicy = Azure.Storage.Blobs.Models.RetentionPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Metrics value);
-    }
-}
-#endregion class Metrics
-
 #region class PageBlobInfo
 namespace Azure.Storage.Blobs.Models
 {
@@ -17791,6 +17894,12 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PageBlobInfo instances.
+        /// You can use BlobsModelFactory.PageBlobInfo instead.
+        /// </summary>
+        internal PageBlobInfo() { }
     }
 
     /// <summary>
@@ -17817,47 +17926,131 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class PageBlobInfo
 
-#region class PageInfo
+#region struct PageInfo
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// PageInfo
     /// </summary>
-    public partial class PageInfo
+    public readonly partial struct PageInfo: System.IEquatable<PageInfo>
     {
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
+        public System.DateTimeOffset LastModified { get; }
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash { get; internal set; }
+        public byte[] ContentHash { get; }
         #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers.
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] XMSContentCrc64 { get; internal set; }
+        public byte[] ContentCrc64 { get; }
         #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
-        public long BlobSequenceNumber { get; internal set; }
+        public long BlobSequenceNumber { get; }
 
         /// <summary>
         /// The SHA-256 hash of the encryption key used to encrypt the pages. This header is only returned when the pages were encrypted with a customer-provided key.
         /// </summary>
-        public string EncryptionKeySha256 { get; internal set; }
+        public string EncryptionKeySha256 { get; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PageInfo instances.
+        /// You can use BlobsModelFactory.PageInfo instead.
+        /// </summary>
+        internal PageInfo(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            byte[] contentCrc64,
+            long blobSequenceNumber,
+            string encryptionKeySha256)
+            {
+                ETag = eTag;
+                LastModified = lastModified;
+                ContentHash = contentHash;
+                ContentCrc64 = contentCrc64;
+                BlobSequenceNumber = blobSequenceNumber;
+                EncryptionKeySha256 = encryptionKeySha256;
+            }
+
+        /// <summary>
+        /// Check if two PageInfo instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public bool Equals(PageInfo other)
+        {
+            if (!ETag.Equals(other.ETag))
+            {
+                return false;
+            }
+            if (!LastModified.Equals(other.LastModified))
+            {
+                return false;
+            }
+            if (!System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(ContentHash, other.ContentHash))
+            {
+                return false;
+            }
+            if (!System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(ContentCrc64, other.ContentCrc64))
+            {
+                return false;
+            }
+            if (!BlobSequenceNumber.Equals(other.BlobSequenceNumber))
+            {
+                return false;
+            }
+            if (!System.StringComparer.Ordinal.Equals(EncryptionKeySha256, other.EncryptionKeySha256))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two PageInfo instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override bool Equals(object obj) => obj is PageInfo && Equals((PageInfo)obj);
+
+        /// <summary>
+        /// Get a hash code for the PageInfo.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override int GetHashCode()
+        {
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(ETag);
+            hashCode.Add(LastModified);
+            hashCode.Add(System.Collections.StructuralComparisons.StructuralEqualityComparer.GetHashCode(ContentHash));
+            hashCode.Add(System.Collections.StructuralComparisons.StructuralEqualityComparer.GetHashCode(ContentCrc64));
+            hashCode.Add(BlobSequenceNumber);
+            if (EncryptionKeySha256 != null)
+            {
+                hashCode.Add(EncryptionKeySha256, System.StringComparer.Ordinal);
+            }
+
+            return hashCode.ToHashCode();
+        }
     }
 
     /// <summary>
@@ -17872,23 +18065,15 @@ namespace Azure.Storage.Blobs.Models
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
-            byte[] xMSContentCrc64,
+            byte[] contentCrc64,
             long blobSequenceNumber,
             string encryptionKeySha256)
         {
-            return new PageInfo()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentHash = contentHash,
-                XMSContentCrc64 = xMSContentCrc64,
-                BlobSequenceNumber = blobSequenceNumber,
-                EncryptionKeySha256 = encryptionKeySha256,
-            };
+            return new PageInfo(eTag, lastModified, contentHash, contentCrc64, blobSequenceNumber, encryptionKeySha256);
         }
     }
 }
-#endregion class PageInfo
+#endregion struct PageInfo
 
 #region class PageList
 namespace Azure.Storage.Blobs.Models
@@ -17975,23 +18160,76 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class PageList
 
-#region class PageRange
+#region struct PageRange
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// PageRange
     /// </summary>
-    public partial class PageRange
+    public readonly partial struct PageRange: System.IEquatable<PageRange>
     {
         /// <summary>
         /// Start
         /// </summary>
-        public long Start { get; internal set; }
+        public long Start { get; }
 
         /// <summary>
         /// End
         /// </summary>
-        public long End { get; internal set; }
+        public long End { get; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PageRange instances.
+        /// You can use BlobsModelFactory.PageRange instead.
+        /// </summary>
+        internal PageRange(
+            long start,
+            long end)
+            {
+                Start = start;
+                End = end;
+            }
+
+        /// <summary>
+        /// Check if two PageRange instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public bool Equals(PageRange other)
+        {
+            if (!Start.Equals(other.Start))
+            {
+                return false;
+            }
+            if (!End.Equals(other.End))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two PageRange instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override bool Equals(object obj) => obj is PageRange && Equals((PageRange)obj);
+
+        /// <summary>
+        /// Get a hash code for the PageRange.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override int GetHashCode()
+        {
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(Start);
+            hashCode.Add(End);
+
+            return hashCode.ToHashCode();
+        }
 
         /// <summary>
         /// Deserializes XML into a new PageRange instance.
@@ -18001,9 +18239,20 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.PageRange FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Blobs.Models.PageRange _value = new Azure.Storage.Blobs.Models.PageRange();
-            _value.Start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.End = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            System.Xml.Linq.XElement _child;
+            long start = default;
+            long end = default;
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
+            if (_child != null)
+            {
+                end = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            Azure.Storage.Blobs.Models.PageRange _value = new Azure.Storage.Blobs.Models.PageRange(start, end);
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -18023,15 +18272,11 @@ namespace Azure.Storage.Blobs.Models
             long start,
             long end)
         {
-            return new PageRange()
-            {
-                Start = start,
-                End = end,
-            };
+            return new PageRange(start, end);
         }
     }
 }
-#endregion class PageRange
+#endregion struct PageRange
 
 #region class PageRangesInfo
 namespace Azure.Storage.Blobs.Models
@@ -18162,7 +18407,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// container
         /// </summary>
-        Container,
+        BlobContainer,
 
         /// <summary>
         /// blob
@@ -18182,7 +18427,7 @@ namespace Azure.Storage.Blobs
                 return value switch
                 {
                     Azure.Storage.Blobs.Models.PublicAccessType.None => null,
-                    Azure.Storage.Blobs.Models.PublicAccessType.Container => "container",
+                    Azure.Storage.Blobs.Models.PublicAccessType.BlobContainer => "container",
                     Azure.Storage.Blobs.Models.PublicAccessType.Blob => "blob",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.PublicAccessType value.")
                 };
@@ -18193,7 +18438,7 @@ namespace Azure.Storage.Blobs
                 return value switch
                 {
                     null => Azure.Storage.Blobs.Models.PublicAccessType.None,
-                    "container" => Azure.Storage.Blobs.Models.PublicAccessType.Container,
+                    "container" => Azure.Storage.Blobs.Models.PublicAccessType.BlobContainer,
                     "blob" => Azure.Storage.Blobs.Models.PublicAccessType.Blob,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.PublicAccessType value.")
                 };
@@ -18203,165 +18448,26 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum PublicAccessType
 
-#region enum strings RehydratePriority
+#region enum RehydratePriority
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Optional: Indicates the priority with which to rehydrate an archived blob.
     /// </summary>
-    public partial struct RehydratePriority : System.IEquatable<RehydratePriority>
+    public enum RehydratePriority
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
         /// <summary>
         /// High
         /// </summary>
-        public static Azure.Storage.Blobs.Models.RehydratePriority High { get; } = @"High";
+        High,
 
         /// <summary>
         /// Standard
         /// </summary>
-        public static Azure.Storage.Blobs.Models.RehydratePriority Standard { get; } = @"Standard";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The RehydratePriority value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new RehydratePriority instance.
-        /// </summary>
-        /// <param name="value">The RehydratePriority value.</param>
-        private RehydratePriority(string value) { _value = value; }
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.RehydratePriority other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.RehydratePriority other && Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the RehydratePriority.
-        /// </summary>
-        /// <returns>Hash code for the RehydratePriority.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
-
-        /// <summary>
-        /// Convert the RehydratePriority to a string.
-        /// </summary>
-        /// <returns>String representation of the RehydratePriority.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a RehydratePriority.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The RehydratePriority value.</returns>
-        public static implicit operator RehydratePriority(string value) => new Azure.Storage.Blobs.Models.RehydratePriority(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an RehydratePriority to a string.
-        /// </summary>
-        /// <param name="o">The RehydratePriority value.</param>
-        /// <returns>String representation of the RehydratePriority value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.RehydratePriority o) => o._value;
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.RehydratePriority a, Azure.Storage.Blobs.Models.RehydratePriority b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two RehydratePriority instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.RehydratePriority a, Azure.Storage.Blobs.Models.RehydratePriority b) => !a.Equals(b);
+        Standard
     }
 }
-#endregion enum strings RehydratePriority
-
-#region class RetentionPolicy
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// the retention policy which determines how long the associated data should persist
-    /// </summary>
-    public partial class RetentionPolicy
-    {
-        /// <summary>
-        /// Indicates whether a retention policy is enabled for the storage service
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
-        /// </summary>
-        public int? Days { get; set; }
-
-        /// <summary>
-        /// Serialize a RetentionPolicy instance as XML.
-        /// </summary>
-        /// <param name="value">The RetentionPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.RetentionPolicy value, string name = "RetentionPolicy", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.Days != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Days", ""),
-                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new RetentionPolicy instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized RetentionPolicy instance.</returns>
-        internal static Azure.Storage.Blobs.Models.RetentionPolicy FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.RetentionPolicy _value = new Azure.Storage.Blobs.Models.RetentionPolicy();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
-            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
-            if (_child != null)
-            {
-                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.RetentionPolicy value);
-    }
-}
-#endregion class RetentionPolicy
+#endregion enum RehydratePriority
 
 #region enum SequenceNumberAction
 namespace Azure.Storage.Blobs.Models
@@ -18420,47 +18526,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum SequenceNumberAction
 
-#region class ServiceSubmitBatchResult
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Service SubmitBatchResult
-    /// </summary>
-    public partial class ServiceSubmitBatchResult
-    {
-        /// <summary>
-        /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
-        /// </summary>
-        public string ContentType { get; internal set; }
-
-        /// <summary>
-        /// Body
-        /// </summary>
-        public System.IO.Stream Body { get; internal set; }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ServiceSubmitBatchResult instance for mocking.
-        /// </summary>
-        public static ServiceSubmitBatchResult ServiceSubmitBatchResult(
-            string contentType,
-            System.IO.Stream body)
-        {
-            return new ServiceSubmitBatchResult()
-            {
-                ContentType = contentType,
-                Body = body,
-            };
-        }
-    }
-}
-#endregion class ServiceSubmitBatchResult
-
 #region class SetHttpHeadersOperation
 namespace Azure.Storage.Blobs.Models
 {
@@ -18483,6 +18548,12 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of SetHttpHeadersOperation instances.
+        /// You can use BlobsModelFactory.SetHttpHeadersOperation instead.
+        /// </summary>
+        internal SetHttpHeadersOperation() { }
     }
 }
 #endregion class SetHttpHeadersOperation
@@ -18514,6 +18585,12 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the metadata. This header is only returned when the metadata was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of SetMetadataOperation instances.
+        /// You can use BlobsModelFactory.SetMetadataOperation instead.
+        /// </summary>
+        internal SetMetadataOperation() { }
     }
 }
 #endregion class SetMetadataOperation
@@ -18582,9 +18659,18 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.SignedIdentifier _value = new Azure.Storage.Blobs.Models.SignedIdentifier(true);
-            _value.Id = element.Element(System.Xml.Linq.XName.Get("Id", "")).Value;
-            _value.AccessPolicy = Azure.Storage.Blobs.Models.AccessPolicy.FromXml(element.Element(System.Xml.Linq.XName.Get("AccessPolicy", "")));
+            _child = element.Element(System.Xml.Linq.XName.Get("Id", ""));
+            if (_child != null)
+            {
+                _value.Id = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
+            if (_child != null)
+            {
+                _value.AccessPolicy = Azure.Storage.Blobs.Models.AccessPolicy.FromXml(_child);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -18665,90 +18751,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum SkuName
 
-#region class StaticWebsite
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// The properties that enable an account to host a static website
-    /// </summary>
-    public partial class StaticWebsite
-    {
-        /// <summary>
-        /// Indicates whether this account is hosting a static website
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// The default name of the index page under each directory
-        /// </summary>
-        public string IndexDocument { get; set; }
-
-        /// <summary>
-        /// The absolute path of the custom 404 page
-        /// </summary>
-        public string ErrorDocument404Path { get; set; }
-
-        /// <summary>
-        /// Serialize a StaticWebsite instance as XML.
-        /// </summary>
-        /// <param name="value">The StaticWebsite instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "StaticWebsite".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.StaticWebsite value, string name = "StaticWebsite", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.IndexDocument != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("IndexDocument", ""),
-                    value.IndexDocument));
-            }
-            if (value.ErrorDocument404Path != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("ErrorDocument404Path", ""),
-                    value.ErrorDocument404Path));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new StaticWebsite instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized StaticWebsite instance.</returns>
-        internal static Azure.Storage.Blobs.Models.StaticWebsite FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.StaticWebsite _value = new Azure.Storage.Blobs.Models.StaticWebsite();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
-            _child = element.Element(System.Xml.Linq.XName.Get("IndexDocument", ""));
-            if (_child != null)
-            {
-                _value.IndexDocument = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ErrorDocument404Path", ""));
-            if (_child != null)
-            {
-                _value.ErrorDocument404Path = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.StaticWebsite value);
-    }
-}
-#endregion class StaticWebsite
-
 #region class StorageError
 namespace Azure.Storage.Blobs.Models
 {
@@ -18766,6 +18768,12 @@ namespace Azure.Storage.Blobs.Models
         /// Code
         /// </summary>
         public string Code { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageError instances.
+        /// You can use BlobsModelFactory.StorageError instead.
+        /// </summary>
+        internal StorageError() { }
 
         /// <summary>
         /// Deserializes XML into a new StorageError instance.
@@ -18840,6 +18848,12 @@ namespace Azure.Storage.Blobs.Models
         public string Value { get; internal set; }
 
         /// <summary>
+        /// Prevent direct instantiation of UserDelegationKey instances.
+        /// You can use BlobsModelFactory.UserDelegationKey instead.
+        /// </summary>
+        internal UserDelegationKey() { }
+
+        /// <summary>
         /// Deserializes XML into a new UserDelegationKey instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -18847,14 +18861,43 @@ namespace Azure.Storage.Blobs.Models
         internal static Azure.Storage.Blobs.Models.UserDelegationKey FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.UserDelegationKey _value = new Azure.Storage.Blobs.Models.UserDelegationKey();
-            _value.SignedOid = element.Element(System.Xml.Linq.XName.Get("SignedOid", "")).Value;
-            _value.SignedTid = element.Element(System.Xml.Linq.XName.Get("SignedTid", "")).Value;
-            _value.SignedStart = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("SignedStart", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.SignedExpiry = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("SignedExpiry", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.SignedService = element.Element(System.Xml.Linq.XName.Get("SignedService", "")).Value;
-            _value.SignedVersion = element.Element(System.Xml.Linq.XName.Get("SignedVersion", "")).Value;
-            _value.Value = element.Element(System.Xml.Linq.XName.Get("Value", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedOid", ""));
+            if (_child != null)
+            {
+                _value.SignedOid = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedTid", ""));
+            if (_child != null)
+            {
+                _value.SignedTid = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedStart", ""));
+            if (_child != null)
+            {
+                _value.SignedStart = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedExpiry", ""));
+            if (_child != null)
+            {
+                _value.SignedExpiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedService", ""));
+            if (_child != null)
+            {
+                _value.SignedService = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedVersion", ""));
+            if (_child != null)
+            {
+                _value.SignedVersion = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Value", ""));
+            if (_child != null)
+            {
+                _value.Value = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -18900,7 +18943,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The service error response object.
     /// </summary>
-    public partial class Error
+    internal partial class Error
     {
         /// <summary>
         /// The service error code.
@@ -18911,6 +18954,12 @@ namespace Azure.Storage.Blobs.Models
         /// The service error message.
         /// </summary>
         public string Message { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of Error instances.
+        /// You can use BlobsModelFactory.Error instead.
+        /// </summary>
+        internal Error() { }
 
         /// <summary>
         /// Deserializes XML into a new Error instance.
@@ -18937,26 +18986,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Error value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new Error instance for mocking.
-        /// </summary>
-        public static Error Error(
-            string code = default,
-            string message = default)
-        {
-            return new Error()
-            {
-                Code = code,
-                Message = message,
-            };
-        }
     }
 }
 #endregion class Error

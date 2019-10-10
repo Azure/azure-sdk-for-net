@@ -9,6 +9,10 @@ namespace Azure.Security.KeyVault.Certificates
 {
     internal class ContactList : IJsonDeserializable, IJsonSerializable
     {
+        private const string ContactsPropertyName = "contacts";
+
+        private static readonly JsonEncodedText s_contactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
+
         private IEnumerable<Contact> _contacts;
 
         public ContactList()
@@ -33,8 +37,6 @@ namespace Azure.Security.KeyVault.Certificates
             return ret;
         }
 
-        private const string ContactsPropertyName = "contacts";
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             var contacts = new List<Contact>();
@@ -53,8 +55,6 @@ namespace Azure.Security.KeyVault.Certificates
 
             _contacts = contacts;
         }
-
-        private static readonly JsonEncodedText s_contactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
