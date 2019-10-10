@@ -141,27 +141,29 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void ConfigurationSettingEquals()
         {
+            var comparer = ConfigurationSettingEqualityComparer.Instance;
+
             //Case tests
             ConfigurationSetting testSettingUpperCase = s_testSetting.Clone();
             testSettingUpperCase.Key = testSettingUpperCase.Key.ToUpper();
 
             ConfigurationSetting testSettingLowerCase = s_testSetting.Clone();
             testSettingLowerCase.Key = testSettingLowerCase.Key.ToLower();
-            Assert.AreNotEqual(testSettingUpperCase, testSettingLowerCase);
+            Assert.IsFalse(comparer.Equals(testSettingUpperCase, testSettingLowerCase));
 
             ConfigurationSetting testSettingsameCase = s_testSetting.Clone();
-            Assert.AreEqual(s_testSetting, testSettingsameCase);
+            Assert.IsTrue(comparer.Equals(s_testSetting, testSettingsameCase));
 
             //Etag tests
             ConfigurationSetting testSettingEtagDiff = testSettingsameCase.Clone();
             testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
             testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
-            Assert.AreNotEqual(testSettingsameCase, testSettingEtagDiff);
+            Assert.IsFalse(comparer.Equals(testSettingsameCase, testSettingEtagDiff));
 
             // Different tags
             ConfigurationSetting testSettingDiffTags = s_testSetting.Clone();
             testSettingDiffTags.Tags.Add("tag3", "test_value3");
-            Assert.AreNotEqual(s_testSetting, testSettingDiffTags);
+            Assert.IsFalse(comparer.Equals(s_testSetting, testSettingDiffTags));
         }
     }
 }
