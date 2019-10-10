@@ -215,40 +215,40 @@ Each of the samples is self-contained and focused on illustrating one specific s
 
 The available samples are:
 
-- [Hello world](./samples/Sample01_HelloWorld.cs)  
+- [Hello world](./samples/Sample01_HelloWorld.cs)
   An introduction to Event Hubs, illustrating how to connect and query the service.
 
-- [Create an Event Hub client with custom options](./samples/Sample02_ClientWithCustomOptions.cs)  
+- [Create an Event Hub client with custom options](./samples/Sample02_ClientWithCustomOptions.cs)
   An introduction to Event Hubs, exploring additional options for creating an Event Hub client.
   
-- [Publish an event to an Event Hub](./samples/Sample03_PublishAnEvent.cs)  
+- [Publish an event to an Event Hub](./samples/Sample03_PublishAnEvent.cs)
   An introduction to publishing events, using a simple Event Hub producer.
   
-- [Publish events using a partition key](./samples/Sample04_PublishEventsWithPartitionKey.cs)  
+- [Publish events using a partition key](./samples/Sample04_PublishEventsWithPartitionKey.cs)
   An introduction to publishing events, using a partition key to group them together.
   
-- [Publish a size-limited batch of events](./samples/Sample05_PublishAnEventBatch.cs)  
+- [Publish a size-limited batch of events](./samples/Sample05_PublishAnEventBatch.cs)
   An introduction to publishing events, using a size-aware batch to ensure the size does not exceed the transport size limits.
 
-- [Publish events to a specific Event Hub partition](./samples/Sample06_PublishEventsToSpecificPartitions.cs)  
+- [Publish events to a specific Event Hub partition](./samples/Sample06_PublishEventsToSpecificPartitions.cs)
   An introduction to publishing events, using an Event Hub producer that is associated with a specific partition.
   
-- [Publish events with custom metadata](./samples/Sample07_PublishEventsWithCustomMetadata.cs)  
+- [Publish events with custom metadata](./samples/Sample07_PublishEventsWithCustomMetadata.cs)
   An example of publishing events, extending the event data with custom metadata.
   
-- [Consume events from an Event Hub partition](./samples/Sample08_ConsumeEvents.cs)  
+- [Consume events from an Event Hub partition](./samples/Sample08_ConsumeEvents.cs)
   An introduction to consuming events, using a simple Event Hub consumer.
   
-- [Consume events from an Event Hub partition, limiting the period of time to wait for an event](./samples/Sample09_ConsumeEventsWithMaximumWaitTime.cs)  
+- [Consume events from an Event Hub partition, limiting the period of time to wait for an event](./samples/Sample09_ConsumeEventsWithMaximumWaitTime.cs)
   An introduction to consuming events, using an Event Hub consumer with maximum wait time.
 
-- [Consume events from a known position in the Event Hub partition](./samples/Sample10_ConsumeEventsFromAKnownPosition.cs)  
+- [Consume events from a known position in the Event Hub partition](./samples/Sample10_ConsumeEventsFromAKnownPosition.cs)
   An example of consuming events, starting at a well-known position in the Event Hub partition.
   
-- [Consume events from an Event Hub partition in batches](./samples/Sample11_ConsumeEventsByBatch.cs)  
+- [Consume events from an Event Hub partition in batches](./samples/Sample11_ConsumeEventsByBatch.cs)
   An example of consuming events, using a batch approach to control throughput.
   
-- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample12_ConsumeEventsWithEventProcessor.cs)  
+- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample12_ConsumeEventsWithEventProcessor.cs)
   An example of consuming events from all Event Hub partitions at once, using the Event Processor.
 
 ## Contributing  

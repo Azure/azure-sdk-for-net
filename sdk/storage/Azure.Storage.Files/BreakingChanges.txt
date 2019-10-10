@@ -1,8 +1,13 @@
 Breaking Changes
 ================
-Next Release
+
+12.0.0-preview.4 (2019-10)
 --------------------------
-- Removing Uri property from FileUriBuilder and replacing with a ToUri method that returns the Uri.
+- Removing Uri property from FileUriBuilder and replacing with a ToUri method
+  that returns the Uri.
+- Added File prefix to all the FileServiceClient.GetProperties return types
+- Made Pipeline property internal
+- Removed public constructors from output only Models
 
 12.0.0-preview.1 (2019-07)
 --------------------------

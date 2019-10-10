@@ -860,8 +860,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>> SubmitBatchAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult>> SubmitBatchAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -974,18 +974,18 @@ namespace Azure.Storage.Blobs
             /// Create the Service.SubmitBatchAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult> SubmitBatchAsync_CreateResponse(
+            /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
                 switch (response.Status)
                 {
-                    case 200:
+                    case 202:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ServiceSubmitBatchResult _value = new Azure.Storage.Blobs.Models.ServiceSubmitBatchResult();
-                        _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
+                        Azure.Storage.Blobs.Models.BlobBatchResult _value = new Azure.Storage.Blobs.Models.BlobBatchResult();
+                        _value.Content = response.ContentStream; // You should manually wrap with RetriableStream!
 
                         // Get response headers
                         string _header;
@@ -13027,6 +13027,33 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobAppendInfo
 
+#region class BlobBatchResult
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlobBatchResult
+    /// </summary>
+    internal partial class BlobBatchResult
+    {
+        /// <summary>
+        /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// Content
+        /// </summary>
+        public System.IO.Stream Content { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobBatchResult instances.
+        /// You can use BlobsModelFactory.BlobBatchResult instead.
+        /// </summary>
+        internal BlobBatchResult() { }
+    }
+}
+#endregion class BlobBatchResult
+
 #region class BlobContainerAccessPolicy
 namespace Azure.Storage.Blobs.Models
 {
@@ -18480,53 +18507,6 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum SequenceNumberAction
-
-#region class ServiceSubmitBatchResult
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Service SubmitBatchResult
-    /// </summary>
-    public partial class ServiceSubmitBatchResult
-    {
-        /// <summary>
-        /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
-        /// </summary>
-        public string ContentType { get; internal set; }
-
-        /// <summary>
-        /// Body
-        /// </summary>
-        public System.IO.Stream Body { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of ServiceSubmitBatchResult instances.
-        /// You can use BlobsModelFactory.ServiceSubmitBatchResult instead.
-        /// </summary>
-        internal ServiceSubmitBatchResult() { }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ServiceSubmitBatchResult instance for mocking.
-        /// </summary>
-        public static ServiceSubmitBatchResult ServiceSubmitBatchResult(
-            string contentType,
-            System.IO.Stream body)
-        {
-            return new ServiceSubmitBatchResult()
-            {
-                ContentType = contentType,
-                Body = body,
-            };
-        }
-    }
-}
-#endregion class ServiceSubmitBatchResult
 
 #region class SetHttpHeadersOperation
 namespace Azure.Storage.Blobs.Models
