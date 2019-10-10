@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core.Http
+namespace Azure.Core
 {
     public readonly struct HttpHeader : IEquatable<HttpHeader>
     {

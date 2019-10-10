@@ -8,9 +8,8 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Core.Http.Multipart;
-using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Specialized
 {

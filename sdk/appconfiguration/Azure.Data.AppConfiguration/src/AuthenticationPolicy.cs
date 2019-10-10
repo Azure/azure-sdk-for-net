@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration

@@ -5,7 +5,7 @@ using System;
 
 namespace Azure
 {
-    public class DateConditionalRequestOptions : ConditionalRequestOptions
+    public class ModifiedSinceConditions : MatchConditions
     {
         /// <summary>
         /// Optionally limit requests to resources that have only been

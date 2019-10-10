@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Http;
 using Azure.Storage.Blobs.Models;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -240,7 +239,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus = default,
             byte[] contentHash = default,
             string acceptRanges = default,
-            Azure.Core.Http.ETag eTag = default,
+            ETag eTag = default,
             int blobCommittedBlockCount = default,
             string contentRange = default,
             bool isServerEncrypted = default,

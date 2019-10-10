@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
-using Azure.Core.Http;
 using Moq;
 using NUnit.Framework;
 
