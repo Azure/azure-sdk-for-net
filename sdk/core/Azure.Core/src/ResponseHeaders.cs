@@ -28,7 +28,7 @@ namespace Azure.Core
 
         public int? ContentLength => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? int.Parse(stringValue, CultureInfo.InvariantCulture) : (int?)null;
 
-        public ETag? ETag => TryGetValue(HttpHeader.Names.ETag, out string? stringValue) ? Http.ETag.Parse(stringValue) : (ETag?)null;
+        public ETag? ETag => TryGetValue(HttpHeader.Names.ETag, out string? stringValue) ? Azure.ETag.Parse(stringValue) : (ETag?)null;
 
         public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out string? value) ? value : null;
 
