@@ -38,7 +38,9 @@ namespace Kusto.Tests.ScenarioTests
         public ResourceManagementClient resourcesClient { get; set; }
         public string rgName { get; internal set; }
         public string clusterName { get; internal set; }
+        public string followerClusterName { get; internal set; }
         public string databaseName { get; internal set; }
+        public string attachedDatabaseConfigurationName { get; internal set; }
         public string eventHubConnectionName { get; internal set; }
         public string eventGridConnectinoName { get; internal set; }
         public string iotHubConnectionName { get; internal set; }
@@ -49,8 +51,11 @@ namespace Kusto.Tests.ScenarioTests
         public TimeSpan? hotCachePeriod1 { get; set; }
         public TimeSpan? softDeletePeriod2 { get; set; }
         public TimeSpan? hotCachePeriod2 { get; set; }
+        public string defaultPrincipalsModificationKind { get; set; }
         public Cluster cluster { get; set; }
-        public Database database { get; set; }
+        public Cluster followerCluster { get; set; }
+        public ReadWriteDatabase database { get; set; }
+        public AttachedDatabaseConfiguration attachedDatabaseConfiguration { get; set; }
         public EventHubDataConnection eventhubConnection { get; set; }
         public EventGridDataConnection eventGridDataConnection { get; set; }
         public IotHubDataConnection iotHubDataConnection { get; set; }
@@ -58,7 +63,6 @@ namespace Kusto.Tests.ScenarioTests
         public string dataFormat { get; set; }
         public List<DatabasePrincipal> databasePrincipals { get; set; }
         public DatabasePrincipal databasePrincipal { get; set; }
-
 
         public KustoTestBase(MockContext context)
         {
@@ -101,7 +105,9 @@ namespace Kusto.Tests.ScenarioTests
             resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location });
 
             clusterName = TestUtilities.GenerateName("testcluster");
+            followerClusterName = TestUtilities.GenerateName("testfollower");
             databaseName = TestUtilities.GenerateName("testdatabase");
+            attachedDatabaseConfigurationName = TestUtilities.GenerateName("testattacheddatabaseconfiguration");
             eventHubConnectionName = TestUtilities.GenerateName("eventhubConnection");
             eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
@@ -118,14 +124,20 @@ namespace Kusto.Tests.ScenarioTests
             softDeletePeriod2 = TimeSpan.FromDays(6);
             dataFormat = "CSV";
 
+            defaultPrincipalsModificationKind = "Replace";
+
             cluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
-            database = new Database(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
+            followerCluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            database = new ReadWriteDatabase(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName, dataFormat, location: location);
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
 
             databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
             databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};
+
+            var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
+            attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
         }
 
         private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)
