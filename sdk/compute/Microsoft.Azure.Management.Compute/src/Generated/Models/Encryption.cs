@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the Encryption class.
         /// </summary>
-        /// <param name="diskEncryptionSetId">ResourceId of the disk encryption
-        /// set to use for enabling encryption at rest.</param>
         /// <param name="type">The type of key used to encrypt the data of the
         /// disk. Possible values include: 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey'</param>
-        public Encryption(string diskEncryptionSetId, string type)
+        /// <param name="diskEncryptionSetId">ResourceId of the disk encryption
+        /// set to use for enabling encryption at rest.</param>
+        public Encryption(string type, string diskEncryptionSetId = default(string))
         {
             DiskEncryptionSetId = diskEncryptionSetId;
             Type = type;
@@ -70,10 +70,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (DiskEncryptionSetId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DiskEncryptionSetId");
-            }
             if (Type == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Type");
