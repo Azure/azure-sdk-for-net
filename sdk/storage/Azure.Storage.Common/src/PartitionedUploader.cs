@@ -123,7 +123,7 @@ namespace Azure.Storage
                                 async,
                                 cancellationToken
                                 )
-                            )
+                            .ConfigureAwait(false))
                         {
                             // execute on background task
 
