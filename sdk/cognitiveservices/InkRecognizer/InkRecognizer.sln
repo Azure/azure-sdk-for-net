@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InkRecognizerTestUWP", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerUWP", "..\InkRecognizer.UWP.Stroke\samples\NoteTakerUWP.csproj", "{05970B9F-6C19-46EF-B961-4E7B62BC0345}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InkRecognizerTest", "tests\Azure.AI.InkRecognizerTest.csproj", "{3D214592-492B-4E0B-848D-BAF841F24010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InkRecognizerTest", "tests\Azure.AI.InkRecognizer.Tests.csproj", "{3D214592-492B-4E0B-848D-BAF841F24010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
