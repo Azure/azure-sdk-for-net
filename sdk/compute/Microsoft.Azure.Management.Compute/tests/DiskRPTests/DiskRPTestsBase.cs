@@ -405,7 +405,7 @@ namespace Compute.Tests.DiskRPTests
                     m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName1, new ResourceGroup { Location = DiskRPLocation });
                     m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName2, new ResourceGroup { Location = DiskRPLocation });
 
-                    // Put 4 diskEncryptionSetss, 2 in each resource group
+                    // Put 4 diskEncryptionSets, 2 in each resource group
                     m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName1, desName1, des1);
                     m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName1, desName2, des2);
                     m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName2, desName1, des1);
