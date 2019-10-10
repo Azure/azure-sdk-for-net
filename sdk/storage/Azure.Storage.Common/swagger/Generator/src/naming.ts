@@ -50,16 +50,13 @@ export function enumField(name: string) {
     // Convert acronyms to PascalCase
     // example: StorageAPI -> StorageApi, StorageAPIGenerator -> StorageApiGenerator
     if (name && name.length > 2) {
-        for (let index = 1; index < name.length; index++) {
-            if (isUpper(name.charAt(index)) && isUpper(name.charAt(index - 1))) {
-                let latterString = name.substring(index, name.length);
-                var found = latterString.match(/[A-Z][a-z]+/g);
-                if (found) {
-                    latterString = latterString.substring(0, latterString.indexOf(found[0]));
-                }
-                name = name.replace(latterString, latterString.toLowerCase());
+        let nameArray = name.split(/(?=[A-Z]|[0-9]+)/);
+        for (let index = 1; index < nameArray.length; index++) {
+            if (nameArray[index].length === 1 && nameArray[index - 1].length === 1 && !(/^[0-9]$/.test(nameArray[index - 1]))) {
+                nameArray[index] = nameArray[index].toLowerCase();
             }
         }
+        name = nameArray.join('');
     }
 
     return pascalCase(name);
