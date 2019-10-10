@@ -17,31 +17,29 @@ namespace Microsoft.Azure.Management.Kusto.Models
     /// <summary>
     /// The result returned from a database check name availability request.
     /// </summary>
-    public partial class DatabaseCheckNameRequest
+    public partial class CheckNameRequest
     {
         /// <summary>
-        /// Initializes a new instance of the DatabaseCheckNameRequest class.
+        /// Initializes a new instance of the CheckNameRequest class.
         /// </summary>
-        public DatabaseCheckNameRequest()
+        public CheckNameRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DatabaseCheckNameRequest class.
+        /// Initializes a new instance of the CheckNameRequest class.
         /// </summary>
-        /// <param name="name">Database name.</param>
-        public DatabaseCheckNameRequest(string name)
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">The type of resource, for instance
+        /// Microsoft.Kusto/clusters/databases. Possible values include:
+        /// 'Microsoft.Kusto/clusters/databases',
+        /// 'Microsoft.Kusto/clusters/attachedDatabaseConfigurations'</param>
+        public CheckNameRequest(string name, Type type)
         {
             Name = name;
+            Type = type;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for DatabaseCheckNameRequest class.
-        /// </summary>
-        static DatabaseCheckNameRequest()
-        {
-            Type = "Microsoft.Kusto/clusters/databases";
         }
 
         /// <summary>
@@ -50,16 +48,19 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets database name.
+        /// Gets or sets resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The type of resource, Microsoft.Kusto/clusters/databases.
+        /// Gets or sets the type of resource, for instance
+        /// Microsoft.Kusto/clusters/databases. Possible values include:
+        /// 'Microsoft.Kusto/clusters/databases',
+        /// 'Microsoft.Kusto/clusters/attachedDatabaseConfigurations'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        public Type Type { get; set; }
 
         /// <summary>
         /// Validate the object.
