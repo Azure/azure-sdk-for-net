@@ -86,24 +86,12 @@ namespace Azure
         /// <summary>
         /// Periodically calls the server till the LRO completes.
         /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
-        /// </remarks>
-        public ValueTask<Response<T>> WaitForCompletionAsync()
-        {
-            return WaitForCompletionAsync(null, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Periodically calls the server till the LRO completes.
-        /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken)
+        public ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
             return WaitForCompletionAsync(null, cancellationToken);
         }
