@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.Azure
 #pragma warning restore AZC0001
 {
     /// <summary>
-    /// Extension methods to add secret client to clients builder
+    /// Extension methods to add <see cref="SecretClient"/> to clients builder
     /// </summary>
     public static class AzureClientBuilderExtensions
     {
