@@ -3,7 +3,7 @@
 
 using System.Diagnostics;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Diagnostics
 {
     public sealed class ClientDiagnostics
     {

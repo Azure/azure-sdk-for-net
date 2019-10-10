@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Buffers;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     public abstract class HttpPipelineRequestContent : IDisposable
     {

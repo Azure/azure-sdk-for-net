@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault
 {

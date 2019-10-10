@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Specialized

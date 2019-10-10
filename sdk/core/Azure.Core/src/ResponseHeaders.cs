@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace Azure.Core.Http
+namespace Azure.Core
 {
     public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     {
@@ -28,7 +28,7 @@ namespace Azure.Core.Http
 
         public int? ContentLength => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? int.Parse(stringValue, CultureInfo.InvariantCulture) : (int?)null;
 
-        public ETag? ETag => TryGetValue(HttpHeader.Names.ETag, out string? stringValue) ? Http.ETag.Parse(stringValue) : (ETag?)null;
+        public ETag? ETag => TryGetValue(HttpHeader.Names.ETag, out string? stringValue) ? Azure.ETag.Parse(stringValue) : (ETag?)null;
 
         public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out string? value) ? value : null;
 
