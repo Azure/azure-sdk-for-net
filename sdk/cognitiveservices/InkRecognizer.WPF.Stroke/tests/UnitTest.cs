@@ -32,7 +32,7 @@ namespace InkRecognizerTestWPF
         /// <summary>
         /// This is to test the store functionlaity.
         /// </summary>
-        //[TestMethod]
+        [TestMethod]
         public void TestInkStrokeStrore()
         {
             var inkStrokeStore = new InkStrokeStore();

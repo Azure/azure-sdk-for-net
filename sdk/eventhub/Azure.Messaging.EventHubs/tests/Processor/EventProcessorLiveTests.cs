@@ -990,6 +990,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(30, 10)]
         [TestCase(32, 7)]
         [TestCase(32, 32)]
+        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task PartitionDistributionIsEvenAfterLoadBalancing(int partitions, int eventProcessors)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))

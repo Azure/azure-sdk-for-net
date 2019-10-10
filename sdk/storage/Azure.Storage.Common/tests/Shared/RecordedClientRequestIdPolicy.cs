@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 

@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {

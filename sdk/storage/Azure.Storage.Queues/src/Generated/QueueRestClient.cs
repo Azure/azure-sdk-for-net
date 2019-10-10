@@ -47,12 +47,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         properties,
@@ -95,7 +95,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueServiceProperties properties,
@@ -113,11 +113,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -132,7 +132,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -187,12 +187,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -233,7 +233,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -246,11 +246,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "properties");
@@ -318,12 +318,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -364,7 +364,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetStatisticsAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -377,11 +377,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "service");
                 _request.Uri.AppendQuery("comp", "stats");
@@ -457,12 +457,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.ListQueuesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ListQueuesSegmentAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = ListQueuesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -511,7 +511,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.ListQueuesSegmentAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ListQueuesSegmentAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage ListQueuesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -528,11 +528,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "list");
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
@@ -613,12 +613,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -661,7 +661,7 @@ namespace Azure.Storage.Queues
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.CreateAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -675,11 +675,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -750,12 +750,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -796,7 +796,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.DeleteAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -809,11 +809,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = Azure.Core.RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -874,12 +874,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -920,7 +920,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -933,11 +933,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -968,7 +968,7 @@ namespace Azure.Storage.Queues
                         // Get response headers
                         string _header;
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -1020,12 +1020,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Queues
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1082,11 +1082,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1154,12 +1154,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1200,7 +1200,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.GetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1213,11 +1213,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "acl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1290,12 +1290,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         permissions,
@@ -1338,7 +1338,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.SetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier> permissions = default,
@@ -1352,11 +1352,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "acl");
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1377,7 +1377,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -1444,12 +1444,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Dequeue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DequeueAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = DequeueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         numberOfMessages,
@@ -1494,7 +1494,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.DequeueAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DequeueAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage DequeueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1509,11 +1509,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (visibilitytimeout != null) { _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1585,12 +1585,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Clear",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = ClearAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = ClearAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1631,7 +1631,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.ClearAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage ClearAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage ClearAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1644,11 +1644,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = Azure.Core.RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -1715,12 +1715,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Enqueue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = EnqueueAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = EnqueueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         message,
@@ -1767,7 +1767,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.EnqueueAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage EnqueueAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage EnqueueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -1787,11 +1787,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
+                _request.Method = Azure.Core.RequestMethod.Post;
                 _request.Uri.Reset(resourceUri);
                 if (visibilitytimeout != null) { _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
                 if (messageTimeToLive != null) { _request.Uri.AppendQuery("messagettl", System.Uri.EscapeDataString(messageTimeToLive.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1806,7 +1806,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -1872,12 +1872,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Peek",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = PeekAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = PeekAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         numberOfMessages,
@@ -1920,7 +1920,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.PeekAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage PeekAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage PeekAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1934,11 +1934,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("peekonly", "true");
                 if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", System.Uri.EscapeDataString(numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2024,12 +2024,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = UpdateAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = UpdateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         message,
@@ -2076,7 +2076,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The MessageId.UpdateAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage UpdateAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage UpdateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueMessage message,
@@ -2100,11 +2100,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
                 _request.Uri.AppendQuery("visibilitytimeout", System.Uri.EscapeDataString(visibilitytimeout.ToString(System.Globalization.CultureInfo.InvariantCulture)));
@@ -2119,7 +2119,7 @@ namespace Azure.Storage.Queues
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -2191,12 +2191,12 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.Pipeline.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         popReceipt,
@@ -2239,7 +2239,7 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The MessageId.DeleteAsync Message.</returns>
-            internal static Azure.Core.Pipeline.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string popReceipt,
@@ -2257,11 +2257,11 @@ namespace Azure.Storage.Queues
                 }
 
                 // Create the request
-                Azure.Core.Pipeline.HttpPipelineMessage _message = pipeline.CreateMessage();
-                Azure.Core.Http.Request _request = _message.Request;
+                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
+                _request.Method = Azure.Core.RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("popreceipt", System.Uri.EscapeDataString(popReceipt));
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }

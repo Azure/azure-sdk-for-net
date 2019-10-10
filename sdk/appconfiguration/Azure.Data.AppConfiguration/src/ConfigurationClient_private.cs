@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -154,18 +153,7 @@ namespace Azure.Data.AppConfiguration
 
             if (selector.Labels.Count > 0)
             {
-                var labelsCopy = new List<string>();
-                foreach (var label in selector.Labels)
-                {
-                    if (string.IsNullOrEmpty(label))
-                    {
-                        labelsCopy.Add("\0");
-                    }
-                    else
-                    {
-                        labelsCopy.Add(EscapeReservedCharacters(label));
-                    }
-                }
+                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
                 var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }

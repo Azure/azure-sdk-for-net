@@ -26,6 +26,12 @@ namespace Azure.Storage
         public const int DefaultBufferSize = 4 * Constants.MB;
         public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
 
+        /// <summary>
+        /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>
+        /// and it's overloads. This is the default for .NET Core to be applied everywhere for test consistency.
+        /// </summary>
+        public const int DefaultStreamCopyBufferSize = 81920;
+
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";
 
@@ -86,6 +92,7 @@ namespace Azure.Storage
         internal static class HeaderNames
         {
             public const string XMsPrefix = "x-ms-";
+            public const string MetadataPrefix = "x-ms-meta-";
             public const string ErrorCode = "x-ms-error-code";
             public const string RequestId = "x-ms-request-id";
             public const string ClientRequestId = "x-ms-client-request-id";
@@ -102,6 +109,7 @@ namespace Azure.Storage
             public const string IfNoneMatch = "If-None-Match";
             public const string IfUnmodifiedSince = "If-Unmodified-Since";
             public const string Range = "Range";
+            public const string ContentRange = "Content-Range";
         }
 
         /// <summary>
@@ -408,10 +416,10 @@ namespace Azure.Storage
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
-                public const string KeyOid = "skoid";
-                public const string KeyOidUpper = "SKOID";
-                public const string KeyTid = "sktid";
-                public const string KeyTidUpper = "SKTID";
+                public const string KeyObjectId = "skoid";
+                public const string KeyObjectIdUpper = "SKOID";
+                public const string KeyTenantId = "sktid";
+                public const string KeyTenantIdUpper = "SKTID";
                 public const string KeyStart = "skt";
                 public const string KeyStartUpper = "SKT";
                 public const string KeyExpiry = "ske";
@@ -467,7 +475,7 @@ namespace Azure.Storage
 
         internal static class GeoRedundantRead
         {
-            internal const string AlternateHostKey  = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string AlternateHostKey = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
             internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
         }
 

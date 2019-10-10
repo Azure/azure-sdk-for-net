@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Http;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography

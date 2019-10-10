@@ -5,7 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
-using Azure.Core.Http;
 
 namespace Azure
 {
@@ -97,7 +96,7 @@ namespace Azure
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HttpRange other && Equals(other);
+        public override bool Equals(object? obj) => obj is HttpRange other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="HttpRange"/>.

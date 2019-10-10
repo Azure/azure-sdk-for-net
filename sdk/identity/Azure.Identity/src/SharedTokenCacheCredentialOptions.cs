@@ -4,6 +4,7 @@
 using Azure.Core.Pipeline;
 using System;
 using System.IO;
+using Azure.Core;
 
 namespace Azure.Identity
 {

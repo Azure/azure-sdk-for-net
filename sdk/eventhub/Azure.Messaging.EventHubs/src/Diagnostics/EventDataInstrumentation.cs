@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Diagnostics

@@ -105,9 +105,9 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #region ListSecrets
             Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
-            foreach (SecretProperties secret in allSecrets)
+            foreach (SecretProperties secretProperties in allSecrets)
             {
-                Console.WriteLine(secret.Name);
+                Console.WriteLine(secretProperties.Name);
             }
             #endregion
         }

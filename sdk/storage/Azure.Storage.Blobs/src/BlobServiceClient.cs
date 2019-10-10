@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -43,6 +41,21 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The authentication policy for our pipeline.  We cache it here in
+        /// case we need to construct a pipeline for authenticating batch
+        /// operations.
+        /// </summary>
+        private readonly HttpPipelinePolicy _authenticationPolicy;
+
+        internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
+
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
+        /// requests for batching without actually sending them.
+        /// </summary>
+        internal virtual HttpPipeline BatchOperationPipeline { get; set; }
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
@@ -122,7 +135,8 @@ namespace Azure.Storage.Blobs
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.BlobEndpoint;
             options ??= new BlobClientOptions();
-            _pipeline = options.Build(conn.Credentials);
+            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
+            _pipeline = options.Build(_authenticationPolicy);
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -199,11 +213,9 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+            : this(serviceUri, authentication, (options ?? new BlobClientOptions()).Build(authentication))
         {
-            _uri = serviceUri;
-            options ??= new BlobClientOptions();
-            _pipeline = options.Build(authentication);
-            _clientDiagnostics = new ClientDiagnostics(options);
+
         }
 
         /// <summary>
@@ -213,13 +225,15 @@ namespace Azure.Storage.Blobs
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
         /// </param>
+        /// <param name="authentication"></param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = serviceUri;
+            _authenticationPolicy = authentication;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
         }

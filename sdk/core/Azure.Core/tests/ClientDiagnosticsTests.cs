@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 

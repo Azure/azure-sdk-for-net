@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using Microsoft.Azure.Amqp.Transport;
 using Moq;
@@ -488,10 +487,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var options = new EventHubConsumerOptions
             {
-               Identifier = "testIdentifier123",
-               OwnerLevel = 459,
-               PrefetchCount = 697,
-               TrackLastEnqueuedEventInformation = true
+                Identifier = "testIdentifier123",
+                OwnerLevel = 459,
+                PrefetchCount = 697,
+                TrackLastEnqueuedEventInformation = true
             };
 
             var mockScope = new Mock<AmqpConnectionScope>(endpoint, eventHub, credential, transport, null, identifier)
@@ -570,10 +569,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var options = new EventHubConsumerOptions
             {
-               Identifier = consumerIdentifier,
-               OwnerLevel = 459,
-               PrefetchCount = 697,
-               TrackLastEnqueuedEventInformation = true
+                Identifier = consumerIdentifier,
+                OwnerLevel = 459,
+                PrefetchCount = 697,
+                TrackLastEnqueuedEventInformation = true
             };
 
             var mockScope = new Mock<AmqpConnectionScope>(endpoint, eventHub, credential, transport, null, identifier)
@@ -638,10 +637,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var options = new EventHubConsumerOptions
             {
-               Identifier = "testIdentifier123",
-               OwnerLevel = null,
-               PrefetchCount = 697,
-               TrackLastEnqueuedEventInformation = true
+                Identifier = "testIdentifier123",
+                OwnerLevel = null,
+                PrefetchCount = 697,
+                TrackLastEnqueuedEventInformation = true
             };
 
             var mockScope = new Mock<AmqpConnectionScope>(endpoint, eventHub, credential, transport, null, identifier)
@@ -706,10 +705,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var options = new EventHubConsumerOptions
             {
-               Identifier = "testIdentifier123",
-               OwnerLevel = 9987,
-               PrefetchCount = 697,
-               TrackLastEnqueuedEventInformation = false
+                Identifier = "testIdentifier123",
+                OwnerLevel = 9987,
+                PrefetchCount = 697,
+                TrackLastEnqueuedEventInformation = false
             };
 
             var mockScope = new Mock<AmqpConnectionScope>(endpoint, eventHub, credential, transport, null, identifier)
@@ -916,7 +915,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Allow for a small number of delay and retries to account for it.
 
             var attemptCount = 0;
-            var remainingAttempts = 5;
+            var remainingAttempts = 10;
 
             while ((--remainingAttempts >= 0) && (!timerCallbackInvoked))
             {
@@ -1015,7 +1014,7 @@ namespace Azure.Messaging.EventHubs.Tests
             refreshTimer.Change(0, Timeout.Infinite);
 
             var attemptCount = 0;
-            var remainingAttempts = 5;
+            var remainingAttempts = 10;
             var success = false;
 
             while ((--remainingAttempts >= 0) && (!success))

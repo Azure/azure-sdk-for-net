@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
@@ -71,8 +71,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
@@ -85,8 +84,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Add(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return Add(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
@@ -159,10 +157,8 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateAddRequest(ConfigurationSetting setting)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
 
@@ -172,7 +168,7 @@ namespace Azure.Data.AppConfiguration
 
             BuildUriForKvRoute(request.Uri, setting);
 
-            ConditionalRequestOptions requestOptions = new ConditionalRequestOptions();
+            MatchConditions requestOptions = new MatchConditions();
             requestOptions.SetIfNotExistsCondition();
             ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
 
@@ -192,9 +188,8 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value, label), default(ConditionalRequestOptions), cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return await SetAsync(new ConfigurationSetting(key, value, label), default(MatchConditions), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,9 +201,8 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Set(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return Set(new ConfigurationSetting(key, value, label), default(ConditionalRequestOptions), cancellationToken);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return Set(new ConfigurationSetting(key, value, label), default(MatchConditions), cancellationToken);
         }
 
         /// <summary>
@@ -222,10 +216,10 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            ConditionalRequestOptions requestOptions = default;
+            MatchConditions requestOptions = default;
             if (onlyIfUnchanged)
             {
-                requestOptions = new ConditionalRequestOptions();
+                requestOptions = new MatchConditions();
                 requestOptions.SetIfUnmodifiedCondition(setting.ETag);
             }
 
@@ -243,10 +237,10 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            ConditionalRequestOptions requestOptions = default;
+            MatchConditions requestOptions = default;
             if (onlyIfUnchanged)
             {
-                requestOptions = new ConditionalRequestOptions();
+                requestOptions = new MatchConditions();
                 requestOptions.SetIfUnmodifiedCondition(setting.ETag);
             }
 
@@ -259,7 +253,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -292,7 +286,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -320,12 +314,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateSetRequest(ConfigurationSetting setting, ConditionalRequestOptions requestOptions)
+        private Request CreateSetRequest(ConfigurationSetting setting, MatchConditions requestOptions)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
             ReadOnlyMemory<byte> content = Serialize(setting);
@@ -377,10 +369,10 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            ConditionalRequestOptions requestOptions = default;
+            MatchConditions requestOptions = default;
             if (onlyIfUnchanged)
             {
-                requestOptions = new ConditionalRequestOptions();
+                requestOptions = new MatchConditions();
                 requestOptions.SetIfUnmodifiedCondition(setting.ETag);
             }
 
@@ -398,10 +390,10 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            ConditionalRequestOptions requestOptions = default;
+            MatchConditions requestOptions = default;
             if (onlyIfUnchanged)
             {
-                requestOptions = new ConditionalRequestOptions();
+                requestOptions = new MatchConditions();
                 requestOptions.SetIfUnmodifiedCondition(setting.ETag);
             }
 
@@ -415,7 +407,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeleteAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -450,7 +442,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual Response Delete(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response Delete(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -478,10 +470,9 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateDeleteRequest(string key, string label, ConditionalRequestOptions requestOptions)
+        private Request CreateDeleteRequest(string key, string label, MatchConditions requestOptions)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
@@ -528,10 +519,10 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            ConditionalRequestOptions requestOptions = default;
+            MatchConditions requestOptions = default;
             if (onlyIfChanged)
             {
-                requestOptions = new ConditionalRequestOptions();
+                requestOptions = new MatchConditions();
                 requestOptions.SetIfModifiedCondition(setting.ETag);
             }
 
@@ -549,10 +540,10 @@ namespace Azure.Data.AppConfiguration
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
 
-            ConditionalRequestOptions requestOptions = default;
+            MatchConditions requestOptions = default;
             if (onlyIfChanged)
             {
-                requestOptions = new ConditionalRequestOptions();
+                requestOptions = new MatchConditions();
                 requestOptions.SetIfModifiedCondition(setting.ETag);
             }
 
@@ -567,7 +558,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute("key", key);
@@ -600,7 +591,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSetting> Get(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
             scope.AddAttribute(nameof(key), key);
@@ -667,10 +658,9 @@ namespace Azure.Data.AppConfiguration
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
         }
 
-        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, ConditionalRequestOptions requestOptions)
+        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -856,8 +846,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateHeadRequest(string key, string label)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Head;
@@ -933,8 +922,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateSetReadOnlyRequest(string key, string label)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Put;
@@ -1009,8 +997,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateClearReadOnlyRequest(string key, string label)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;

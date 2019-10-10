@@ -3,11 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 
@@ -43,6 +46,26 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override bool Closed => _closed;
 
         /// <summary>
+        ///   The name of the Event Hub to which the client is bound.
+        /// </summary>
+        ///
+        private string EventHubName { get; }
+
+        /// <summary>
+        ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
+        ///   only from this partition.
+        /// </summary>
+        ///
+        private string PartitionId { get; }
+
+        /// <summary>
+        ///   The name of the consumer group that this consumer is associated with.  Events will be read
+        ///   only in the context of this group.
+        /// </summary>
+        ///
+        private string ConsumerGroup { get; }
+
+        /// <summary>
         ///   The converter to use for translating between AMQP messages and client library
         ///   types.
         /// </summary>
@@ -65,6 +88,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   Initializes a new instance of the <see cref="AmqpEventHubConsumer"/> class.
         /// </summary>
         ///
+        /// <param name="eventHubName">The name of the Event Hub from which events will be consumed.</param>
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="consumerOptions">The set of active options for the consumer that will make use of the link.</param>
@@ -83,7 +107,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpEventHubConsumer(string consumerGroup,
+        public AmqpEventHubConsumer(string eventHubName,
+                                    string consumerGroup,
                                     string partitionId,
                                     EventPosition eventPosition,
                                     EventHubConsumerOptions consumerOptions,
@@ -92,12 +117,18 @@ namespace Azure.Messaging.EventHubs.Amqp
                                     EventHubRetryPolicy retryPolicy,
                                     LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(lastEnqueuedEventProperties)
         {
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNull(eventPosition, nameof(EventPosition));
+            Argument.AssertNotNull(consumerOptions, nameof(EventHubConsumerOptions));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            PartitionId = partitionId;
             ConnectionScope = connectionScope;
             MessageConverter = messageConverter;
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout => ConnectionScope.OpenConsumerLinkAsync(consumerGroup, partitionId, eventPosition, consumerOptions, timeout, CancellationToken.None), link => link.SafeClose());
@@ -130,11 +161,111 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                  TimeSpan? maximumWaitTime,
-                                                                  CancellationToken cancellationToken)
+        public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                        TimeSpan? maximumWaitTime,
+                                                                        CancellationToken cancellationToken)
         {
-             throw new NotImplementedException();
+            Argument.AssertNotClosed(_closed, nameof(AmqpEventHubClient));
+            Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
+
+            var receivedEventCount = 0;
+            var failedAttemptCount = 0;
+            var waitTime = (maximumWaitTime ?? _tryTimeout);
+            var link = default(ReceivingAmqpLink);
+            var retryDelay = default(TimeSpan?);
+            var amqpMessages = default(IEnumerable<AmqpMessage>);
+            var receivedEvents = default(List<EventData>);
+
+            var stopWatch = Stopwatch.StartNew();
+
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId);
+
+                        link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, _tryTimeout)).ConfigureAwait(false);
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                        var messagesReceived = await Task.Factory.FromAsync
+                        (
+                            (callback, state) => link.BeginReceiveMessages(maximumMessageCount, waitTime, callback, state),
+                            (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
+                            TaskCreationOptions.RunContinuationsAsynchronously
+                        ).ConfigureAwait(false);
+
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                        // If event messages were received, then package them for consumption and
+                        // return them.
+
+                        if ((messagesReceived) && (amqpMessages != null))
+                        {
+                            receivedEvents ??= new List<EventData>();
+
+                            foreach (AmqpMessage message in amqpMessages)
+                            {
+                                link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
+                                receivedEvents.Add(MessageConverter.CreateEventFromMessage(message));
+                                message.Dispose();
+                            }
+
+                            receivedEventCount = receivedEvents.Count;
+
+                            if (LastEnqueuedEventInformation != null)
+                            {
+                                EventData lastEvent = receivedEvents[receivedEventCount - 1];
+                                LastEnqueuedEventInformation.UpdateMetrics(lastEvent.LastPartitionSequenceNumber, lastEvent.LastPartitionOffset, lastEvent.LastPartitionEnqueuedTime, DateTimeOffset.UtcNow);
+                            }
+
+                            return receivedEvents;
+                        }
+
+                        // No events were available.
+
+                        return Enumerable.Empty<EventData>();
+                    }
+                    catch (EventHubsTimeoutException)
+                    {
+                        // Because the timeout specified with the request is intended to be the maximum
+                        // amount of time to wait for events, a timeout isn't considered an error condition,
+                        // rather a sign that no events were available in the requested period.
+
+                        return Enumerable.Empty<EventData>();
+                    }
+                    catch (Exception ex)
+                    {
+                        EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
+
+                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                        // Otherwise, bubble the exception.
+
+                        ++failedAttemptCount;
+                        retryDelay = _retryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed))
+                        {
+                            await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+
+                // If no value has been returned nor exception thrown by this point,
+                // then cancellation has been requested.
+
+                throw new TaskCanceledException();
+            }
+            finally
+            {
+                stopWatch.Stop();
+                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, receivedEventCount);
+            }
         }
 
         /// <summary>
@@ -143,6 +274,35 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public override Task CloseAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+        public override async Task CloseAsync(CancellationToken cancellationToken)
+        {
+            if (_closed)
+            {
+                return;
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
+            {
+                await ReceiveLink.CloseAsync().ConfigureAwait(false);
+            }
+
+            ReceiveLink.Dispose();
+
+            _closed = true;
+        }
+
+        /// <summary>
+        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
+        /// </summary>
+        ///
+        /// <param name="firstOption">The first option to consider.</param>
+        /// <param name="secondOption">The second option to consider.</param>
+        ///
+        /// <returns></returns>
+        ///
+        private static TimeSpan UseMinimum(TimeSpan firstOption,
+                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

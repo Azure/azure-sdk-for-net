@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            CertificateWithPolicy certificateWithPolicy = await Client.GetCertificateWithPolicyAsync(certName);
+            CertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
             Assert.NotNull(certificateWithPolicy);
 
@@ -107,7 +107,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Properties.Version);
+            Certificate certificate = await Client.GetCertificateVersionAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -125,7 +125,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForCompletion(operation);
 
-            CertificateWithPolicy certificateWithPolicy = await Client.GetCertificateWithPolicyAsync(certName);
+            CertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
             Assert.NotNull(certificateWithPolicy);
 
@@ -133,7 +133,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Properties.Version);
+            Certificate certificate = await Client.GetCertificateVersionAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 

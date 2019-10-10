@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault
 {
