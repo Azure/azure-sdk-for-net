@@ -55,7 +55,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform key operations on the key vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create
+    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
     ```
     > --key-permissions:
     > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
@@ -131,6 +131,8 @@ Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyMaterial.KeyType);
 
 // Create a hardware Elliptic Curve key
+// Because only premium key vault supports HSM backed keys , please ensure your key vault
+// SKU is premium while you set "hsm" value to true.
 var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
 Key ecKey = client.CreateEcKey(echsmkey);
 
