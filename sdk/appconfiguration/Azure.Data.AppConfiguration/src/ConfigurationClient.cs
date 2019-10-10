@@ -68,8 +68,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
@@ -82,8 +81,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Add(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return Add(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
@@ -156,10 +154,8 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateAddRequest(ConfigurationSetting setting)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
 
@@ -189,8 +185,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return await SetAsync(new ConfigurationSetting(key, value, label), default(MatchConditions), cancellationToken).ConfigureAwait(false);
         }
 
@@ -203,8 +198,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Set(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return Set(new ConfigurationSetting(key, value, label), default(MatchConditions), cancellationToken);
         }
 
@@ -319,10 +313,8 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateSetRequest(ConfigurationSetting setting, MatchConditions requestOptions)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
             ReadOnlyMemory<byte> content = Serialize(setting);
@@ -477,8 +469,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateDeleteRequest(string key, string label, MatchConditions requestOptions)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
@@ -666,8 +657,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -853,8 +843,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateHeadRequest(string key, string label)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Head;
@@ -930,8 +919,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateSetReadOnlyRequest(string key, string label)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Put;
@@ -1006,8 +994,7 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateClearReadOnlyRequest(string key, string label)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
