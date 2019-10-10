@@ -780,19 +780,19 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
 
             // Dump out the infrastructure
             w.line(`/// <summary>`);
-            w.line(`/// Determines if two <see cref="${enumName}"/> values are different.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
-            w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
-            w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>`);
-            w.line(`public static bool operator ==(${enumFullName} left, ${enumFullName} right) => left.Equals(right);`);
-            w.line(``);
-            w.line(`/// <summary>`);
             w.line(`/// Determines if two <see cref="${enumName}"/> values are the same.`);
             w.line(`/// </summary>`);
             w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
             w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
             w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>`);
+            w.line(`public static bool operator ==(${enumFullName} left, ${enumFullName} right) => left.Equals(right);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Determines if two <see cref="${enumName}"/> values are different.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>`);
             w.line(`public static bool operator !=(${enumFullName} left, ${enumFullName} right) => !left.Equals(right);`);
             w.line(``);
             w.line(`/// <summary>`);
@@ -807,7 +807,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
             w.line(`/// </summary>`);
             w.line(`/// <param name="obj">The instance to compare to.</param>`);
             w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`[System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]`);
+            w.line(`[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]`);
             w.line(`public override bool Equals(object obj) => obj is ${enumFullName} other && Equals(other);`);
             w.line(``);
             w.line(`/// <summary>`);
@@ -821,7 +821,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
             w.line(`/// Get a hash code for the <see cref="${enumName}"/>.`);
             w.line(`/// </summary>`);
             w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
-            w.line(`[System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]`);
+            w.line(`[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]`);
             w.line(`public override int GetHashCode() => _value?.GetHashCode() ?? 0;`);
             w.line(``);
             w.line(`/// <summary>`);

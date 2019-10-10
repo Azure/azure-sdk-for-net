@@ -12477,19 +12477,19 @@ namespace Azure.Storage.Blobs.Models
         public static readonly Azure.Storage.Blobs.Models.AccessTier Archive = new AccessTier(@"Archive");
 
         /// <summary>
-        /// Determines if two <see cref="AccessTier"/> values are different.
-        /// </summary>
-        /// <param name="left">The first <see cref="AccessTier"/> to compare.</param>
-        /// <param name="right">The second <see cref="AccessTier"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => left.Equals(right);
-
-        /// <summary>
         /// Determines if two <see cref="AccessTier"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="AccessTier"/> to compare.</param>
         /// <param name="right">The second <see cref="AccessTier"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="AccessTier"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="AccessTier"/> to compare.</param>
+        /// <param name="right">The second <see cref="AccessTier"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => !left.Equals(right);
 
         /// <summary>
@@ -12504,7 +12504,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Azure.Storage.Blobs.Models.AccessTier other && Equals(other);
 
         /// <summary>
@@ -12518,7 +12518,7 @@ namespace Azure.Storage.Blobs.Models
         /// Get a hash code for the <see cref="AccessTier"/>.
         /// </summary>
         /// <returns>Hash code for the AccessTier.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <summary>
@@ -14341,19 +14341,19 @@ namespace Azure.Storage.Blobs.Models
         public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch = new BlobErrorCode(@"AuthorizationResourceTypeMismatch");
 
         /// <summary>
-        /// Determines if two <see cref="BlobErrorCode"/> values are different.
-        /// </summary>
-        /// <param name="left">The first <see cref="BlobErrorCode"/> to compare.</param>
-        /// <param name="right">The second <see cref="BlobErrorCode"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => left.Equals(right);
-
-        /// <summary>
         /// Determines if two <see cref="BlobErrorCode"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="BlobErrorCode"/> to compare.</param>
         /// <param name="right">The second <see cref="BlobErrorCode"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="BlobErrorCode"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="BlobErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="BlobErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => !left.Equals(right);
 
         /// <summary>
@@ -14368,7 +14368,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Azure.Storage.Blobs.Models.BlobErrorCode other && Equals(other);
 
         /// <summary>
@@ -14382,7 +14382,7 @@ namespace Azure.Storage.Blobs.Models
         /// Get a hash code for the <see cref="BlobErrorCode"/>.
         /// </summary>
         /// <returns>Hash code for the BlobErrorCode.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <summary>

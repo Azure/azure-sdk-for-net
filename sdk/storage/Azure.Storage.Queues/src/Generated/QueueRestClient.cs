@@ -2710,19 +2710,19 @@ namespace Azure.Storage.Queues.Models
         public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable = new GeoReplicationStatus(@"unavailable");
 
         /// <summary>
-        /// Determines if two <see cref="GeoReplicationStatus"/> values are different.
-        /// </summary>
-        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
-        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
-
-        /// <summary>
         /// Determines if two <see cref="GeoReplicationStatus"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
         /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="GeoReplicationStatus"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => !left.Equals(right);
 
         /// <summary>
@@ -2737,7 +2737,7 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Azure.Storage.Queues.Models.GeoReplicationStatus other && Equals(other);
 
         /// <summary>
@@ -2751,7 +2751,7 @@ namespace Azure.Storage.Queues.Models
         /// Get a hash code for the <see cref="GeoReplicationStatus"/>.
         /// </summary>
         /// <returns>Hash code for the GeoReplicationStatus.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <summary>
@@ -3462,19 +3462,19 @@ namespace Azure.Storage.Queues.Models
         public static readonly Azure.Storage.Queues.Models.QueueErrorCode FeatureVersionMismatch = new QueueErrorCode(@"FeatureVersionMismatch");
 
         /// <summary>
-        /// Determines if two <see cref="QueueErrorCode"/> values are different.
-        /// </summary>
-        /// <param name="left">The first <see cref="QueueErrorCode"/> to compare.</param>
-        /// <param name="right">The second <see cref="QueueErrorCode"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => left.Equals(right);
-
-        /// <summary>
         /// Determines if two <see cref="QueueErrorCode"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="QueueErrorCode"/> to compare.</param>
         /// <param name="right">The second <see cref="QueueErrorCode"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="QueueErrorCode"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="QueueErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="QueueErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => !left.Equals(right);
 
         /// <summary>
@@ -3489,7 +3489,7 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Azure.Storage.Queues.Models.QueueErrorCode other && Equals(other);
 
         /// <summary>
@@ -3503,7 +3503,7 @@ namespace Azure.Storage.Queues.Models
         /// Get a hash code for the <see cref="QueueErrorCode"/>.
         /// </summary>
         /// <returns>Hash code for the QueueErrorCode.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <summary>

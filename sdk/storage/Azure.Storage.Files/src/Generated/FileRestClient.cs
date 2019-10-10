@@ -6592,19 +6592,19 @@ namespace Azure.Storage.Files.Models
         public static readonly Azure.Storage.Files.Models.FileErrorCode FeatureVersionMismatch = new FileErrorCode(@"FeatureVersionMismatch");
 
         /// <summary>
-        /// Determines if two <see cref="FileErrorCode"/> values are different.
-        /// </summary>
-        /// <param name="left">The first <see cref="FileErrorCode"/> to compare.</param>
-        /// <param name="right">The second <see cref="FileErrorCode"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => left.Equals(right);
-
-        /// <summary>
         /// Determines if two <see cref="FileErrorCode"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="FileErrorCode"/> to compare.</param>
         /// <param name="right">The second <see cref="FileErrorCode"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="FileErrorCode"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="FileErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="FileErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Files.Models.FileErrorCode left, Azure.Storage.Files.Models.FileErrorCode right) => !left.Equals(right);
 
         /// <summary>
@@ -6619,7 +6619,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Azure.Storage.Files.Models.FileErrorCode other && Equals(other);
 
         /// <summary>
@@ -6633,7 +6633,7 @@ namespace Azure.Storage.Files.Models
         /// Get a hash code for the <see cref="FileErrorCode"/>.
         /// </summary>
         /// <returns>Hash code for the FileErrorCode.</returns>
-        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <summary>
