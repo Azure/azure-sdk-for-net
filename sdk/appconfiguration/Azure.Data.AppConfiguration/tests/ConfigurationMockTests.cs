@@ -438,7 +438,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                Response response = await service.DeleteAsync(s_testSetting);
+                Response<ConfigurationSetting> response = await service.DeleteAsync(s_testSetting);
             });
             Assert.AreEqual(409, exception.Status);
         }
@@ -458,7 +458,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Response response = await service.DeleteAsync(requestSetting, onlyIfUnchanged: true);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(requestSetting, onlyIfUnchanged: true);
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -466,7 +466,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
-            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
         [Test]
@@ -486,7 +486,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                Response response = await service.DeleteAsync(requestSetting, onlyIfUnchanged: true);
+                await service.DeleteAsync(requestSetting, onlyIfUnchanged: true);
             });
             Assert.AreEqual(412, exception.Status);
 
@@ -516,7 +516,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 IfMatch = new ETag("v2")
             };
 
-            Response response = await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label, requestOptions);
+            await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label, requestOptions);
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);

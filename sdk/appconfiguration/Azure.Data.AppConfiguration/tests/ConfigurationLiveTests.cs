@@ -82,10 +82,9 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            Response response = await service.DeleteAsync(testSetting.Key);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(testSetting.Key);
 
-            Assert.AreEqual(204, response.Status);
-            response.Dispose();
+            Assert.AreEqual(204, response.GetRawResponse().Status);
         }
 
         [Test]
@@ -158,8 +157,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var setting = await service.AddAsync(testSetting);
-                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+               await service.AddAsync(testSetting);
+               await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
 
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -185,8 +184,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting setting = await service.AddAsync(testSetting);
 
                 // Test
-                Response response = await service.DeleteAsync(setting, onlyIfUnchanged: true);
-                Assert.AreEqual(200, response.Status);
+                Response<ConfigurationSetting> response = await service.DeleteAsync(setting, onlyIfUnchanged: true);
+                Assert.AreEqual(200, response.GetRawResponse().Status);
             }
             finally
             {
@@ -205,7 +204,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting setting = await service.AddAsync(testSetting);
                 ConfigurationSetting modifiedSetting = setting.Clone();
                 modifiedSetting.Value = "new_value";
-                modifiedSetting = await service.SetAsync(modifiedSetting);
+                await service.SetAsync(modifiedSetting);
 
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -262,8 +261,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var setting = await service.AddAsync(testSetting);
-                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.AddAsync(testSetting);
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
 
                 testSetting.Value = "new_value";
 
@@ -313,7 +312,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting setting = await service.AddAsync(testSetting);
                 ConfigurationSetting modifiedSetting = setting.Clone();
                 modifiedSetting.Value = "new_value";
-                modifiedSetting = await service.SetAsync(modifiedSetting);
+                await service.SetAsync(modifiedSetting);
 
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -885,7 +884,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var setting = await service.AddAsync(testSetting);
+                await service.AddAsync(testSetting);
                 var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
                 Assert.IsTrue(readOnly.Value.ReadOnly);
             }
@@ -904,7 +903,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.SetReadOnlyAsync(testSetting.Key);
                 });
@@ -923,7 +922,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var setting = await service.AddAsync(testSetting);
+                await service.AddAsync(testSetting);
                 var readOnly = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
                 Assert.IsFalse(readOnly.Value.ReadOnly);
             }
@@ -941,7 +940,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.SetReadOnlyAsync(testSetting.Key);
                 });

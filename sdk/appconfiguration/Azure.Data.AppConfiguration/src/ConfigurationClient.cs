@@ -347,7 +347,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> DeleteAsync(string key, string label = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> DeleteAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
             return await DeleteAsync(key, label, default, cancellationToken).ConfigureAwait(false);
         }
@@ -358,7 +358,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response Delete(string key, string label = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Delete(string key, string label = default, CancellationToken cancellationToken = default)
         {
             return Delete(key, label, default, cancellationToken);
         }
@@ -369,7 +369,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="onlyIfUnchanged"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> DeleteAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> DeleteAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
@@ -390,7 +390,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="onlyIfUnchanged"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response Delete(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Delete(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
@@ -412,7 +412,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual async Task<Response> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSetting>> DeleteAsync(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -425,8 +425,8 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => response,
-                    204 => response,
+                    200 => CreateResponse(response),
+                    204 => CreateResourceModifiedResponse(response),
                     409 => throw response.CreateRequestFailedException("The setting is read only"),
 
                     // Throws on 412 if resource was modified.
@@ -447,7 +447,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal virtual Response Delete(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSetting> Delete(string key, string label, ConditionalRequestOptions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
@@ -456,12 +456,12 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using Request request = CreateDeleteRequest(key, label, requestOptions);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                using Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
                 {
-                    200 => response,
-                    204 => response,
+                    200 => CreateResponse(response),
+                    204 => CreateResourceModifiedResponse(response),
                     409 => throw response.CreateRequestFailedException("The setting is read only."),
 
                     // Throws on 412 if resource was modified.
