@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core
 {
     /// <summary>
     ///  The set of options that can be specified to influence how

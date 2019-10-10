@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common

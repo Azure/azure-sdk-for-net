@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Core.Http
+namespace Azure.Core
 {
     public class RequestUriBuilder
     {
