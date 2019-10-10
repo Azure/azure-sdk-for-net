@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="isAutoProtectable">Indicates if workload item is
         /// auto-protectable</param>
         /// <param name="subinquireditemcount">For instance or AG, indicates
-        /// number of DBs present</param>
+        /// number of DB's present</param>
         /// <param name="subWorkloadItemCount">For instance or AG, indicates
-        /// number of DBs to be protected</param>
+        /// number of DB's to be protected</param>
         public AzureVmWorkloadSQLDatabaseWorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subWorkloadItemCount = default(int?))
             : base(backupManagementType, workloadType, friendlyName, protectionState, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
         {

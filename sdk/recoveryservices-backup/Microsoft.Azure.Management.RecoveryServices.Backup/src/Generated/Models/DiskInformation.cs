@@ -10,26 +10,46 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Parameters to Provision ILR API.
+    /// Disk information
     /// </summary>
-    public partial class ILRRequest
+    public partial class DiskInformation
     {
         /// <summary>
-        /// Initializes a new instance of the ILRRequest class.
+        /// Initializes a new instance of the DiskInformation class.
         /// </summary>
-        public ILRRequest()
+        public DiskInformation()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DiskInformation class.
+        /// </summary>
+        public DiskInformation(int? lun = default(int?), string name = default(string))
+        {
+            Lun = lun;
+            Name = name;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "lun")]
+        public int? Lun { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
     }
 }
