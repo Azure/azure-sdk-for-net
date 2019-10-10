@@ -416,10 +416,10 @@ namespace Azure.Storage
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
-                public const string KeyOid = "skoid";
-                public const string KeyOidUpper = "SKOID";
-                public const string KeyTid = "sktid";
-                public const string KeyTidUpper = "SKTID";
+                public const string KeyObjectId = "skoid";
+                public const string KeyObjectIdUpper = "SKOID";
+                public const string KeyTenantId = "sktid";
+                public const string KeyTenantIdUpper = "SKTID";
                 public const string KeyStart = "skt";
                 public const string KeyStartUpper = "SKT";
                 public const string KeyExpiry = "ske";
