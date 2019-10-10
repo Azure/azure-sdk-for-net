@@ -79,9 +79,9 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error Response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
-        public void ErrorResponse(string requestId, int status, string headers, double seconds)
+        public void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds)
         {
-            WriteEvent(ErrorResponseEvent, requestId, status, headers, seconds);
+            WriteEvent(ErrorResponseEvent, requestId, status, reasonPhrase, headers, seconds);
         }
 
         [Event(ErrorResponseContentEvent, Level = EventLevel.Informational, Message = "Response [{0}] content: {1}")]

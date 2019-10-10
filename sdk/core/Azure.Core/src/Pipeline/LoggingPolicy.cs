@@ -102,7 +102,7 @@ namespace Azure.Core.Pipeline
 
             if (isError)
             {
-                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, FormatHeaders(response.Headers), elapsed);
+                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
             }
             else
             {
