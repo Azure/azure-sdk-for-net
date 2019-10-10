@@ -363,7 +363,7 @@ directive:
         delete $.BlobsFlatSegment.properties.Segment;
         delete $.BlobFlatListSegment;
     }
-    $.BlobItem.required = [ "Name", "Properties" ];
+    $.BlobItem.required = [ "Name", "Properties", "Deleted" ];
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=list&flat"]
   transform: >
@@ -459,6 +459,7 @@ directive:
         delete $.BlobItemProperties.required;
         $.BlobItemProperties.properties["Content-MD5"]["x-ms-client-name"] = "ContentHash";
         $.BlobItemProperties.properties.CopySource.format = "url";
+        $.BlobItemProperties.required = ["AccessTierInferred"];
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
     }
@@ -1245,4 +1246,20 @@ directive:
   where: $.parameters.BlockListType
   transform: >
     $["x-az-public"] = false;
+```
+
+### Batch returns a 202
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/?comp=batch"].post.responses
+  transform: >
+    const response = $["200"];
+    if (response) {
+        delete $["200"];
+        $["202"] = response;
+        $["202"]["x-az-public"] = false;
+        $["202"]["x-az-response-name"] = "BlobBatchResult";
+        $["202"]["x-az-response-schema-name"] = "Content";
+    }
 ```

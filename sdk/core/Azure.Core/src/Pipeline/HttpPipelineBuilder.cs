@@ -10,28 +10,28 @@ namespace Azure.Core.Pipeline
 {
     public static class HttpPipelineBuilder
     {
-        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryClientPolicies)
+        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryPolicies)
         {
-            return Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryClientPolicies, new ResponseClassifier());
+            return Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryPolicies, new ResponseClassifier());
         }
 
-        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallClientPolicies, HttpPipelinePolicy[] perRetryClientPolicies, ResponseClassifier responseClassifier)
+        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier)
         {
-            if (perCallClientPolicies == null)
+            if (perCallPolicies == null)
             {
-                throw new ArgumentNullException(nameof(perCallClientPolicies));
+                throw new ArgumentNullException(nameof(perCallPolicies));
             }
 
-            if (perRetryClientPolicies == null)
+            if (perRetryPolicies == null)
             {
-                throw new ArgumentNullException(nameof(perRetryClientPolicies));
+                throw new ArgumentNullException(nameof(perRetryPolicies));
             }
 
             var policies = new List<HttpPipelinePolicy>();
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
-            policies.AddRange(perCallClientPolicies);
+            policies.AddRange(perCallPolicies);
 
             policies.AddRange(options.PerCallPolicies);
 
@@ -46,7 +46,7 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
-            policies.AddRange(perRetryClientPolicies);
+            policies.AddRange(perRetryPolicies);
 
             policies.AddRange(options.PerRetryPolicies);
 

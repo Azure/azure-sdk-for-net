@@ -252,7 +252,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerMock = new Mock<EventHubConsumer>();
             bool returnedItems = false;
             consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(()=> {
+                .Returns(() =>
+                {
                     if (returnedItems)
                     {
                         throw new InvalidOperationException("Something bad happened");
@@ -288,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask)
                 .Callback(() => processorCalledSource.SetResult(null));
 
-            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()),  processorMock.Object, new EventProcessorOptions());
+            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()), processorMock.Object, new EventProcessorOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;

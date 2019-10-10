@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
             return string.Equals(Method, other.Method, StringComparison.Ordinal);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is RequestMethod other && Equals(other);
         }
