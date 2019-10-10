@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Core.Http;
 
 namespace Azure.Data.AppConfiguration
 {

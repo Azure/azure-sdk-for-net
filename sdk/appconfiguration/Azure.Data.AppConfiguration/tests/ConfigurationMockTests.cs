@@ -6,15 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -208,7 +205,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions { IfMatch = new ETag("v1") };
+            var requestOptions = new MatchConditions { IfMatch = new ETag("v1") };
 
             ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label, default, requestOptions);
 
@@ -361,7 +358,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions
+            var requestOptions = new MatchConditions
             {
                 IfNoneMatch = new ETag("v1"),
                 IfMatch = new ETag("v2")
@@ -510,7 +507,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions
+            var requestOptions = new MatchConditions
             {
                 IfNoneMatch = new ETag("v1"),
                 IfMatch = new ETag("v2")

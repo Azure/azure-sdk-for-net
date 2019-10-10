@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
             }, responseClassifier: new CustomResponseClassifier());
 
-            Http.Request request = pipeline.CreateRequest();
+            Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);

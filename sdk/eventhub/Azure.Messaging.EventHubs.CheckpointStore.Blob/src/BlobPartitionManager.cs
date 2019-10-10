@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage;
 using Azure.Storage.Blobs;

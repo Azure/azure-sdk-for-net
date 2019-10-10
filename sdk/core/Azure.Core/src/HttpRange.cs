@@ -5,7 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
-using Azure.Core.Http;
 
 namespace Azure
 {
