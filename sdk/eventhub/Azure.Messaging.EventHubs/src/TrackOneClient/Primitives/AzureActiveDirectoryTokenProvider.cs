@@ -74,14 +74,14 @@ namespace TrackOne
             {
 #if ALLOW_CERTIFICATE_IDENTITY
                 case AuthType.ClientCredential:
-                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientCredential);
+                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientCredential).ConfigureAwait(false);
                     break;
 
                 case AuthType.ClientAssertionCertificate:
-                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientAssertionCertificate);
+                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientAssertionCertificate).ConfigureAwait(false);
                     break;
 #endif
-                AuthType.InteractiveUserLogin => await _authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, _clientId, _redirectUri, _platformParameters, _userIdentifier),
+                AuthType.InteractiveUserLogin => await _authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, _clientId, _redirectUri, _platformParameters, _userIdentifier).ConfigureAwait(false),
 
                 _ => throw new NotSupportedException(),
             };
