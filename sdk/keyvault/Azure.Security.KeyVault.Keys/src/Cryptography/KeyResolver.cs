@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
-                return (key != null) ? new CryptographyClient(key.KeyMaterial, pipeline) : new CryptographyClient(keyId, pipeline);
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
-                return (key != null) ? new CryptographyClient(key.KeyMaterial, pipeline) : new CryptographyClient(keyId, pipeline);
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
 
             }
             catch (Exception e)
