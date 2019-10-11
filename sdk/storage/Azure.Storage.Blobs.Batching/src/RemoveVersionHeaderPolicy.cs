@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The x-ms-version header needs to be stripped from batched
     /// sub-operations.
     /// </summary>
-    internal class RemoveVersionHeaderPolicy : SynchronousHttpPipelinePolicy
+    internal class RemoveVersionHeaderPolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Shared instance of the policy.
@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal bool RemoveClientRequestIdHeaders { get; set; } = false;
 
         /// <inheritdoc />
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
             message.Request.Headers.Remove(BatchConstants.XmsVersionName);

@@ -7,9 +7,9 @@ namespace Azure.Core.Pipeline
 {
     public abstract class HttpPipelineTransport
     {
-        public abstract void Process(HttpPipelineMessage message);
+        public abstract void Process(HttpMessage message);
 
-        public abstract ValueTask ProcessAsync(HttpPipelineMessage message);
+        public abstract ValueTask ProcessAsync(HttpMessage message);
 
         public abstract Request CreateRequest();
     }

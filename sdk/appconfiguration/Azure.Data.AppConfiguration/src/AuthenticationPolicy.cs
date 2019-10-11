@@ -23,14 +23,14 @@ namespace Azure.Data.AppConfiguration
             _secret = secret;
         }
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, async: true).ConfigureAwait(false);
 
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        private async ValueTask ProcessAsync(HttpPipelineMessage message, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, bool async)
         {
             string contentHash;
 
@@ -75,7 +75,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, async: false).GetAwaiter().GetResult();
 

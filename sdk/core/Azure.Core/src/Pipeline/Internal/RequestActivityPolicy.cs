@@ -23,17 +23,17 @@ namespace Azure.Core.Pipeline
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
         }
 
-        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
             if (!_isDistributedTracingEnabled)
             {
@@ -100,7 +100,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static async ValueTask ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static async ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
             Activity currentActivity = Activity.Current;
 

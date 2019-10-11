@@ -18,7 +18,7 @@ namespace Azure.Storage.Test
         /// </summary>
         /// <param name="response">The response.</param>
         /// <returns>Whether it should be retried.</returns>
-        public override bool IsRetriableResponse(HttpPipelineMessage message)
+        public override bool IsRetriableResponse(HttpMessage message)
         {
             // Retry select Storage Error Codes
             if (message.Response.Status >= 400 &&

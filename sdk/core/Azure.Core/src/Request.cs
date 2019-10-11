@@ -13,7 +13,7 @@ namespace Azure.Core
 
         public virtual RequestMethod Method { get; set; }
 
-        public virtual HttpPipelineRequestContent? Content { get; set; }
+        public virtual RequestContent? Content { get; set; }
 
         protected internal abstract void AddHeader(string name, string value);
 

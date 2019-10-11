@@ -12,7 +12,7 @@ namespace Azure.Core
         /// <summary>
         /// Specifies if the response should terminate the pipeline and not be retried.
         /// </summary>
-        public virtual bool IsRetriableResponse(HttpPipelineMessage message)
+        public virtual bool IsRetriableResponse(HttpMessage message)
         {
             return message.Response.Status == 429 || message.Response.Status == 503;
         }
@@ -28,7 +28,7 @@ namespace Azure.Core
         /// <summary>
         /// Specifies if the response is not successful but can be retried.
         /// </summary>
-        public virtual bool IsErrorResponse(HttpPipelineMessage message)
+        public virtual bool IsErrorResponse(HttpMessage message)
         {
             var statusKind = message.Response.Status / 100;
             return statusKind == 4 || statusKind == 5;
