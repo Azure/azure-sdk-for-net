@@ -32,7 +32,8 @@ Param(
 
 $generateFolder = "$PSScriptRoot\Generated"
 
-Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Data" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -ConfigFileTag $Tag
+# TODO: Change AutoRestVersion back to "latest" when the hanging issue is fixed.
+Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Data" -AutoRestVersion "2.0.4302" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -ConfigFileTag $Tag
 
 Write-Output "Deleting extra files and cleaning up..."
 
