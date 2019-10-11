@@ -84,15 +84,18 @@ namespace Microsoft.Azure.ServiceBus
                                 });
                             }
                         }
+                        catch (OperationCanceledException) when (pumpCancellationToken.IsCancellationRequested) 
+                        {
+                            // Ignore as we are stopping the pump
+                        }
+                        catch (ObjectDisposedException) when (pumpCancellationToken.IsCancellationRequested)
+                        {
+                            // Ignore as we are stopping the pump
+                        }
                         catch (Exception exception)
                         {
-                            // Not reporting an ObjectDisposedException and OperationCanceledException as we're stopping the pump
-                            if (!(this.pumpCancellationToken.IsCancellationRequested && 
-                                (exception is ObjectDisposedException || exception is OperationCanceledException)))
-                            {
-                                MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
-                                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
-                            }
+                            MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                         }
                         finally
                         {
