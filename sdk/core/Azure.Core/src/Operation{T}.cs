@@ -93,7 +93,7 @@ namespace Azure
         /// </remarks>
         public ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletionAsync(null, cancellationToken);
+            return WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -118,7 +118,7 @@ namespace Azure
                 {
                     return Response.FromValue(Value, _response);
                 }
-                await Task.Delay(pollingInterval.GetValueOrDefault(), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
             }
         }
 
