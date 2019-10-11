@@ -37,7 +37,7 @@ namespace Azure.Storage.Test.Shared
         /// x-ms-client-return-request-id is an echo of x-mis-client-request-id.
         /// </summary>
         /// <param name="message">The message that was sent</param>
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             if (_parallelRangePrefix != null &&
                 message.Request.Headers.TryGetValue("x-ms-range", out string range))

@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
             { "correlation-context", false }
         };
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             Activity activity = Activity.Current;
             while (activity != null && activity.OperationName != ActivityId)

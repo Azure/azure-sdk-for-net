@@ -32,7 +32,7 @@ namespace Azure.Storage.Common
         /// x-ms-client-return-request-id is an echo of x-mis-client-request-id.
         /// </summary>
         /// <param name="message">The message that was sent</param>
-        public override void OnReceivedResponse(HttpPipelineMessage message)
+        public override void OnReceivedResponse(HttpMessage message)
         {
             if (message.HasResponse &&
                 message.Request.Headers.TryGetValue(Constants.HeaderNames.ClientRequestId, out var original) &&

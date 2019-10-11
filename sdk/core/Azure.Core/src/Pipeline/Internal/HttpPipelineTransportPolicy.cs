@@ -16,14 +16,14 @@ namespace Azure.Core.Pipeline
             _transport = transport;
         }
 
-        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             Debug.Assert(pipeline.IsEmpty);
 
             return _transport.ProcessAsync(message);
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             Debug.Assert(pipeline.IsEmpty);
 

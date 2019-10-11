@@ -24,7 +24,7 @@ namespace Azure.Storage.Common
             _secondaryStorageHost = secondaryStorageUri.Host;
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             if (message.Request.Method != RequestMethod.Get && message.Request.Method != RequestMethod.Head)
             {

@@ -50,7 +50,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
         private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 message.Request.Headers.Add("User-Agent", "ConfiguraingPipelineSample");
             }
@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
         private class CustomLogPolicy : SynchronousHttpPipelinePolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 Console.WriteLine(message.ToString());
             }

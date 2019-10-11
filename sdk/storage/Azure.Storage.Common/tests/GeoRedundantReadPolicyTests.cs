@@ -18,7 +18,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void OnSendingRequest_FirstTry_ShouldUsePrimary_ShouldSetAlternateToSecondary()
         {
-            var message = new HttpPipelineMessage(
+            var message = new HttpMessage(
                 CreateMockRequest(MockPrimaryUri),
                 new StorageResponseClassifier(MockSecondaryUri));
 
@@ -34,7 +34,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void OnSendingRequest_SecondTry_ShouldUseSecondary_ShouldSetAlternateToPrimary()
         {
-            var message = new HttpPipelineMessage(
+            var message = new HttpMessage(
                 CreateMockRequest(MockPrimaryUri),
                 new StorageResponseClassifier(MockSecondaryUri));
 
@@ -51,7 +51,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void OnSendingRequest_ThirdTry_ShouldUsePrimary_ShouldSetAlternateToSecondary()
         {
-            var message = new HttpPipelineMessage(
+            var message = new HttpMessage(
                 CreateMockRequest(MockSecondaryUri),
                 new StorageResponseClassifier(MockSecondaryUri));
 
@@ -68,7 +68,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void OnSendingRequest_404onSecondary_ShouldSetNotFoundFlag_ShouldUsePrimary()
         {
-            var message = new HttpPipelineMessage(
+            var message = new HttpMessage(
                 CreateMockRequest(MockSecondaryUri),
                 new StorageResponseClassifier(MockSecondaryUri))
 
@@ -88,7 +88,7 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void OnSendingRequest_404FlagSet_ShouldUsePrimary()
         {
-            var message = new HttpPipelineMessage(
+            var message = new HttpMessage(
                 CreateMockRequest(MockPrimaryUri),
                 new StorageResponseClassifier(MockSecondaryUri));
 
@@ -106,7 +106,7 @@ namespace Azure.Storage.Common.Tests
         {
             MockRequest request = CreateMockRequest(MockPrimaryUri);
             request.Method = RequestMethod.Put;
-            var message = new HttpPipelineMessage(
+            var message = new HttpMessage(
                 request,
                 new StorageResponseClassifier(MockSecondaryUri));
 

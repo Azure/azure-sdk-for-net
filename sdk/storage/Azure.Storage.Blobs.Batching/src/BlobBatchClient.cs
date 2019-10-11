@@ -234,7 +234,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             // Get the sub-operation messages to submit
-            IList<HttpPipelineMessage> messages = batch.GetMessagesToSubmit();
+            IList<HttpMessage> messages = batch.GetMessagesToSubmit();
             if (messages.Count == 0)
             {
                 throw BatchErrors.CannotSubmitEmptyBatch(nameof(batch));
@@ -297,13 +297,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// single multipart/mixed content stream and content type.
         /// </returns>
         private async Task<(Stream, string)> MergeOperationRequests(
-            IList<HttpPipelineMessage> messages,
+            IList<HttpMessage> messages,
             bool async,
             CancellationToken cancellationToken)
         {
             // Send all of the requests through a batch sub-operation pipeline
             // to prepare the requests with various headers like Authorization
-            foreach (HttpPipelineMessage message in messages)
+            foreach (HttpMessage message in messages)
             {
                 if (async)
                 {
@@ -354,7 +354,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>A Task representing the update operation.</returns>
         private static async Task UpdateOperationResponses(
-            IList<HttpPipelineMessage> messages,
+            IList<HttpMessage> messages,
             Response rawResponse,
             Stream responseContent,
             string responseContentType,

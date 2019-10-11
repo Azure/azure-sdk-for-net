@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal bool RemoveClientRequestIdHeaders { get; set; } = false;
 
         /// <inheritdoc />
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
             message.Request.Headers.Remove(BatchConstants.XmsVersionName);

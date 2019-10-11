@@ -35,16 +35,16 @@ namespace Azure.Storage.Blobs.Specialized
         public override Request CreateRequest() => _original.CreateRequest();
 
         /// <inheritdoc />
-        public override void Process(HttpPipelineMessage message) =>
+        public override void Process(HttpMessage message) =>
             SetResponse(message);
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         /// <inheritdoc />
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message) =>
+        public override async ValueTask ProcessAsync(HttpMessage message) =>
             SetResponse(message);
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
-        private static void SetResponse(HttpPipelineMessage message) =>
+        private static void SetResponse(HttpMessage message) =>
             message.Response = new MemoryResponse();
     }
 }

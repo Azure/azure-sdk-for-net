@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
         }

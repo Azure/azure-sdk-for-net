@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Azure.Samples
             this._environment = environment;
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             message.Request.Headers.Add("application-name", _environment.ApplicationName);
             base.OnSendingRequest(message);

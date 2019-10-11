@@ -70,7 +70,7 @@ namespace Azure.Core.Tests
 
         private class CounterPolicy : SynchronousHttpPipelinePolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 ExecutionCount++;
             }

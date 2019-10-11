@@ -162,7 +162,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -174,7 +174,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = SendRequest(request, cancellationToken);
 

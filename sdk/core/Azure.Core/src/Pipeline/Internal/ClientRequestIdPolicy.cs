@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
 
         public static ClientRequestIdPolicy Shared { get; } = new ClientRequestIdPolicy();
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             message.Request.Headers.Add(ClientRequestIdHeader, message.Request.ClientRequestId);
             message.Request.Headers.Add(EchoClientRequestId, "true");

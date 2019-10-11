@@ -200,7 +200,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 }
             }
             w.line(`${scopeName}.Start();`);
-            w.write(`using (Azure.Core.HttpPipelineMessage ${messageName} = ${methodName}_CreateMessage(`);
+            w.write(`using (Azure.Core.HttpMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
                 for (const arg of operation.request.arguments) {
@@ -270,7 +270,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
     }
     w.line(`/// <returns>The ${regionName} Message.</returns>`);
-    w.write(`internal static Azure.Core.HttpPipelineMessage ${methodName}_CreateMessage(`);
+    w.write(`internal static Azure.Core.HttpMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -336,7 +336,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Core.HttpPipelineMessage ${messageName} = ${pipelineName}.CreateMessage();`);
+        w.line(`Azure.Core.HttpMessage ${messageName} = ${pipelineName}.CreateMessage();`);
         w.line(`Azure.Core.Request ${requestName} = ${messageName}.Request;`);
         w.line();
 
@@ -385,10 +385,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/json");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
-                w.line(`${requestName}.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else if (operation.consumes === `stream` || bodyType.type === `file`) {
                 // Serialize a file
-                w.line(`${requestName}.Content = Azure.Core.HttpPipelineRequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
             } else if (operation.consumes === `xml`) {
                 // Serialize XML
                 if (isObjectType(bodyType)) {
@@ -428,7 +428,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`string ${textName} = ${bodyName}.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
-                w.line(`${requestName}.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
             }

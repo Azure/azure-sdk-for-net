@@ -32,13 +32,13 @@ namespace Azure.Core.Pipeline
         public sealed override Request CreateRequest()
             => new PipelineRequest();
 
-        public override void Process(HttpPipelineMessage message)
+        public override void Process(HttpMessage message)
         {
             // Intentionally blocking here
             ProcessAsync(message).GetAwaiter().GetResult();
         }
 
-        public sealed override async ValueTask ProcessAsync(HttpPipelineMessage message)
+        public sealed override async ValueTask ProcessAsync(HttpMessage message)
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
@@ -68,7 +68,7 @@ namespace Azure.Core.Pipeline
             return new HttpClient(httpClientHandler);
         }
 
-        private static HttpRequestMessage BuildRequestMessage(HttpPipelineMessage message)
+        private static HttpRequestMessage BuildRequestMessage(HttpMessage message)
         {
             if (!(message.Request is PipelineRequest pipelineRequest))
             {
@@ -167,7 +167,7 @@ namespace Azure.Core.Pipeline
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
-            public override HttpPipelineRequestContent? Content { get; set; }
+            public override RequestContent? Content { get; set; }
 
             public override string ClientRequestId { get; set; }
 
@@ -299,7 +299,7 @@ namespace Azure.Core.Pipeline
 
             private sealed class PipelineContentAdapter : HttpContent
             {
-                public HttpPipelineRequestContent? PipelineContent { get; set; }
+                public RequestContent? PipelineContent { get; set; }
 
                 public CancellationToken CancellationToken { get; set; }
 

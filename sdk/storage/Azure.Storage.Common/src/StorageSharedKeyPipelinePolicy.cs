@@ -37,7 +37,7 @@ namespace Azure.Storage.Common
         /// Sign the request using the shared key credentials.
         /// </summary>
         /// <param name="message">The message with the request to sign.</param>
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
 
@@ -55,7 +55,7 @@ namespace Azure.Storage.Common
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
-        private string BuildStringToSign(HttpPipelineMessage message)
+        private string BuildStringToSign(HttpMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
 
@@ -88,7 +88,7 @@ namespace Azure.Storage.Common
             return stringToSign;
         }
 
-        private static string BuildCanonicalizedHeaders(HttpPipelineMessage message)
+        private static string BuildCanonicalizedHeaders(HttpMessage message)
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).

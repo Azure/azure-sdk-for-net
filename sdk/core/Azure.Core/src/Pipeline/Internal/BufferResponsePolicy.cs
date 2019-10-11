@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
 
         public static HttpPipelinePolicy Shared { get; set; } = new BufferResponsePolicy();
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
 
@@ -25,7 +25,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
 
@@ -35,7 +35,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static async ValueTask BufferResponse(HttpPipelineMessage message, bool async)
+        private static async ValueTask BufferResponse(HttpMessage message, bool async)
         {
             if (message.Response.ContentStream != null && !message.Response.ContentStream.CanSeek)
             {

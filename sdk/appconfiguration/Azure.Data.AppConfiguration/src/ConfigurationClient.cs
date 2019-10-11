@@ -171,7 +171,7 @@ namespace Azure.Data.AppConfiguration
 
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
 
             return request;
         }
@@ -329,7 +329,7 @@ namespace Azure.Data.AppConfiguration
                 ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
 
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
             return request;
         }
 
