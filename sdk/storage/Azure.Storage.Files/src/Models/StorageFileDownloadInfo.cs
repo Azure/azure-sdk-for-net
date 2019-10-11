@@ -38,9 +38,9 @@ namespace Azure.Storage.Files.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
-        /// Properties returned when downloading a file
+        /// Details returned when downloading a file
         /// </summary>
-        public StorageFileDownloadProperties Properties { get; private set; }
+        public StorageFileDownloadDetails Details { get; private set; }
 
         /// <summary>
         /// Creates a new StorageFileDownloadInfo backed by FlattenedStorageFileProperties
@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Models
         internal StorageFileDownloadInfo(FlattenedStorageFileProperties flattened)
         {
             _flattened = flattened;
-            Properties = new StorageFileDownloadProperties(flattened);
+            Details = new StorageFileDownloadDetails(flattened);
         }
 
         /// <summary>
