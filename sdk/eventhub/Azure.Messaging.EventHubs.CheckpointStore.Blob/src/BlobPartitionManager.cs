@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                         try
                         {
                             blobContent = new MemoryStream(new byte[0]);
-                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, blobAccessConditions: blobAccessConditions).ConfigureAwait(false);
+                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, accessConditions: blobAccessConditions).ConfigureAwait(false);
                         }
                         catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
