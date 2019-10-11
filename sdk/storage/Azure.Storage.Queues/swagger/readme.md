@@ -287,6 +287,15 @@ directive:
     $.name = "permissions";
 ```
 
+### Set Start/Expiry nullable in AccessPolicy 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+     delete $.required;
+```
+
 ### Url
 ``` yaml
 directive:

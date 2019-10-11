@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs.Test
                 1,
                 out TestExceptionPolicy testExceptionPolicy,
                 false,
-                new List<Core.Pipeline.RequestMethod>(new Core.Pipeline.RequestMethod[] { RequestMethod.Put }));
+                new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }));
 
             using (GetNewContainer(out BlobContainerClient container, serviceClient))
             {
@@ -504,12 +504,15 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
                 // Assert
-                // data copied within an account, so copy should be instantaneous
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
                 }
-                await operation.WaitCompletionAsync();
+                else
+                {
+                    await operation.WaitForCompletionAsync();
+                }
+
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
             }
@@ -687,9 +690,13 @@ namespace Azure.Storage.Blobs.Test
                 // data copied within an account, so copy should be instantaneous
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
                 }
-                await operation.WaitCompletionAsync();
+                else
+                {
+                    await operation.WaitForCompletionAsync();
+                }
+
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
             }
@@ -742,9 +749,13 @@ namespace Azure.Storage.Blobs.Test
                 // data copied within an account, so copy should be instantaneous
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
                 }
-                await operation.WaitCompletionAsync();
+                else
+                {
+                    await operation.WaitForCompletionAsync();
+                }
+
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
 

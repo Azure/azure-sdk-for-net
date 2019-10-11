@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -19,6 +20,8 @@ namespace Azure.Security.KeyVault.Keys
     {
         private readonly Uri _vaultUri;
         private readonly KeyVaultPipeline _pipeline;
+
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         private const string KeysPath = "/keys/";
         private const string DeletedKeysPath = "/deletedkeys/";
@@ -60,7 +63,8 @@ namespace Azure.Security.KeyVault.Keys
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
 
-            _pipeline = new KeyVaultPipeline(_vaultUri, apiVersion, pipeline);
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = new KeyVaultPipeline(_vaultUri, apiVersion, pipeline, _clientDiagnostics);
         }
 
         /// <summary>

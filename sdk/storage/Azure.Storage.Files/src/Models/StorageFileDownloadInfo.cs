@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.Models
             System.DateTimeOffset fileCreationTime = default,
             byte[] contentHash = default,
             System.DateTimeOffset fileLastWriteTime = default,
-            Azure.Core.Http.ETag eTag = default,
+            ETag eTag = default,
             System.DateTimeOffset fileChangeTime = default,
             string contentRange = default,
             string filePermissionKey = default,

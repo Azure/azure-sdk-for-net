@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
@@ -21,6 +21,7 @@ namespace Azure.Identity
 
         private readonly AzureCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
@@ -35,6 +36,7 @@ namespace Azure.Identity
             _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
+            _clientDiagnostics = new ClientDiagnostics(_options);
         }
 
         public static AadIdentityClient SharedClient { get { return s_sharedClient.Value; } }
@@ -42,7 +44,7 @@ namespace Azure.Identity
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -66,7 +68,7 @@ namespace Azure.Identity
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -90,7 +92,7 @@ namespace Azure.Identity
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -114,7 +116,7 @@ namespace Azure.Identity
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -182,7 +184,7 @@ namespace Azure.Identity
 
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
 
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
 
             return request;
         }
@@ -207,7 +209,7 @@ namespace Azure.Identity
 
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
 
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
 
             return request;
         }

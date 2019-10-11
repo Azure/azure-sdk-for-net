@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -20,7 +19,7 @@ namespace Azure.Core.Testing
 
         protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<Request> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            HttpPipelineMessage message = pipeline.CreateMessage();
+            HttpMessage message = pipeline.CreateMessage();
             message.BufferResponse = bufferResponse;
             requestAction(message.Request);
 

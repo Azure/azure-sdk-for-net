@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
@@ -14,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     internal static class EventDataInstrumentation
     {
         /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics(true);
+        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics("Azure.Messaging.EventHubs", true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.

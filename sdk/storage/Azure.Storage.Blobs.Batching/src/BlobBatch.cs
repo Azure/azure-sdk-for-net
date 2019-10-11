@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Specialized
@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The list of messages that will be sent as part of this batch.
         /// </summary>
-        private readonly IList<HttpPipelineMessage> _messages = new List<HttpPipelineMessage>();
+        private readonly IList<HttpMessage> _messages = new List<HttpMessage>();
 
         /// <summary>
         /// A value indicating whether the batch has already been submitted.
@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>
         /// The list of messages to submit as part of this batch.
         /// </returns>
-        internal IList<HttpPipelineMessage> GetMessagesToSubmit()
+        internal IList<HttpMessage> GetMessagesToSubmit()
         {
             Submitted = true;
             return _messages;
@@ -178,7 +178,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
-            HttpPipelineMessage message = BlobRestClient.Blob.DeleteAsync_CreateMessage(
+            HttpMessage message = BlobRestClient.Blob.DeleteAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
                 deleteSnapshots: deleteOptions,
@@ -280,7 +280,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
-            HttpPipelineMessage message = BlobRestClient.Blob.SetAccessTierAsync_CreateMessage(
+            HttpMessage message = BlobRestClient.Blob.SetAccessTierAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
                 tier: accessTier,

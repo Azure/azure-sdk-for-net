@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Properties.Status == "completed")
             {
-                Response<CertificateWithPolicy> getResponse = _client.GetCertificateWithPolicy(Properties.Name, cancellationToken);
+                Response<CertificateWithPolicy> getResponse = _client.GetCertificate(Properties.Name, cancellationToken);
 
                 SetRawResponse(getResponse.GetRawResponse());
 
@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Properties.Status == "completed")
             {
-                Response<CertificateWithPolicy> getResponse = await _client.GetCertificateWithPolicyAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
+                Response<CertificateWithPolicy> getResponse = await _client.GetCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
 
                 SetRawResponse(getResponse.GetRawResponse());
 

@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetTokenIsNotPermitted()
         {
-            Assert.That(() => new EventHubSharedKeyCredential("key", "value").GetToken(new TokenRequest(new[] { "test" }), default), Throws.InvalidOperationException);
+            Assert.That(() => new EventHubSharedKeyCredential("key", "value").GetToken(new TokenRequestContext(new[] { "test" }), default), Throws.InvalidOperationException);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetTokenAsyncIsNotPermitted()
         {
-            Assert.That(async () => await (new EventHubSharedKeyCredential("key", "value").GetTokenAsync(new TokenRequest(new[] { "thing" }), default)), Throws.InvalidOperationException);
+            Assert.That(async () => await (new EventHubSharedKeyCredential("key", "value").GetTokenAsync(new TokenRequestContext(new[] { "thing" }), default)), Throws.InvalidOperationException);
         }
 
         /// <summary>

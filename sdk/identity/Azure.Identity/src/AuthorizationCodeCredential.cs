@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 
@@ -18,6 +19,7 @@ namespace Azure.Identity
     public class AuthorizationCodeCredential : TokenCredential
     {
         private readonly IConfidentialClientApplication _confidentialClient;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _authCode;
         private readonly HttpPipeline _pipeline;
         private IAccount _account;
@@ -64,28 +66,30 @@ namespace Azure.Identity
             _pipeline = HttpPipelineBuilder.Build(options);
 
             _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
+
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
 
             scope.Start();
 
@@ -95,7 +99,7 @@ namespace Azure.Identity
 
                 if (_account is null)
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(request.Scopes, _authCode).ExecuteAsync().ConfigureAwait(false);
+                    AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync().ConfigureAwait(false);
 
                     _account = result.Account;
 
@@ -103,7 +107,7 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(request.Scopes, _account).ExecuteAsync().ConfigureAwait(false);
+                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync().ConfigureAwait(false);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

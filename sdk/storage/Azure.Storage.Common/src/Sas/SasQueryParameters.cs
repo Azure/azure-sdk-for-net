@@ -343,11 +343,11 @@ namespace Azure.Storage.Sas
                         break;
 
                     // Optionally include Blob parameters
-                    case Constants.Sas.Parameters.KeyOidUpper:
+                    case Constants.Sas.Parameters.KeyObjectIdUpper:
                         if (includeBlobParameters) { _keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
-                    case Constants.Sas.Parameters.KeyTidUpper:
+                    case Constants.Sas.Parameters.KeyTenantIdUpper:
                         if (includeBlobParameters) { _keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
@@ -493,12 +493,12 @@ namespace Azure.Storage.Sas
             {
                 if (!string.IsNullOrWhiteSpace(_keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyOid, _keyObjectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyObjectId);
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTid, _keyTenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyTenantId);
                 }
 
                 if (_keyStart != DateTimeOffset.MinValue)

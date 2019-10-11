@@ -10,6 +10,7 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
@@ -22,6 +23,7 @@ namespace Azure.Identity
     {
         private readonly IPublicClientApplication _pubApp = null;
         private readonly HttpPipeline _pipeline = null;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AzureCredentialOptions _options;
         private readonly string _username = null;
         private readonly SecureString _password;
@@ -68,6 +70,8 @@ namespace Azure.Identity
 
             _pipeline = HttpPipelineBuilder.Build(_options);
 
+            _clientDiagnostics = new ClientDiagnostics(options);
+
             _pubApp = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).Build();
         }
 
@@ -75,30 +79,30 @@ namespace Azure.Identity
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
         /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
         /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.UsernamePasswordCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.UsernamePasswordCredential.GetToken");
 
             scope.Start();
 
             try
             {
-                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(request.Scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(requestContext.Scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }
