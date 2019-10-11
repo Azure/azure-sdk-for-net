@@ -65,12 +65,12 @@ namespace Azure.Identity
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
         /// </remarks>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="options">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenOptions options, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? _credential.GetToken(request, cancellationToken) : default;
+            return (_credential != null) ? _credential.GetToken(options, cancellationToken) : default;
         }
 
         /// <summary>
@@ -80,12 +80,12 @@ namespace Azure.Identity
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specifeid, the default <see cref="AccessToken"/>
         /// </remarks>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="options">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenOptions options, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? await _credential.GetTokenAsync(request, cancellationToken).ConfigureAwait(false) : default;
+            return (_credential != null) ? await _credential.GetTokenAsync(options, cancellationToken).ConfigureAwait(false) : default;
         }
     }
 }

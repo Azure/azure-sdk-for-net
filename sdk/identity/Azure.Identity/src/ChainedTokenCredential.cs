@@ -50,16 +50,16 @@ namespace Azure.Identity
         /// <summary>
         /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="options">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenOptions options, CancellationToken cancellationToken = default)
         {
             AccessToken token = new AccessToken();
 
             for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = _sources.Span[i].GetToken(request, cancellationToken);
+                token = _sources.Span[i].GetToken(options, cancellationToken);
             }
 
             return token;
@@ -68,16 +68,16 @@ namespace Azure.Identity
         /// <summary>
         /// Sequencially calls <see cref="TokenCredential.GetTokenAsync"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="options">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenOptions options, CancellationToken cancellationToken = default)
         {
             AccessToken token = new AccessToken();
 
             for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = await _sources.Span[i].GetTokenAsync(request, cancellationToken).ConfigureAwait(false);
+                token = await _sources.Span[i].GetTokenAsync(options, cancellationToken).ConfigureAwait(false);
             }
 
             return token;

@@ -469,7 +469,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if ((string.IsNullOrEmpty(activeToken.Token)) || (activeToken.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                activeToken = await Credential.GetTokenAsync(new TokenRequest(new string[0]), cancellationToken).ConfigureAwait(false);
+                activeToken = await Credential.GetTokenAsync(new TokenOptions(new string[0]), cancellationToken).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(activeToken.Token)))
                 {

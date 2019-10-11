@@ -66,23 +66,23 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="options">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenOptions options, CancellationToken cancellationToken = default)
         {
-            return _client.Authenticate(TenantId, ClientId, ClientCertificate, request.Scopes, cancellationToken);
+            return _client.Authenticate(TenantId, ClientId, ClientCertificate, options.Scopes, cancellationToken);
         }
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="options">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenOptions options, CancellationToken cancellationToken = default)
         {
-            return await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, request.Scopes, cancellationToken).ConfigureAwait(false);
+            return await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, options.Scopes, cancellationToken).ConfigureAwait(false);
         }
     }
 }

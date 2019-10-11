@@ -7,13 +7,13 @@ namespace Azure.Core
     /// <summary>
     /// Contains the details of an authentication token request
     /// </summary>
-    public readonly struct TokenRequest
+    public readonly struct TokenOptions
     {
         /// <summary>
         /// Creates a new TokenRequest with the specified scopes
         /// </summary>
         /// <param name="scopes">The scopes required for the token</param>
-        public TokenRequest(string[] scopes)
+        public TokenOptions(string[] scopes)
         {
             Scopes = scopes;
         }

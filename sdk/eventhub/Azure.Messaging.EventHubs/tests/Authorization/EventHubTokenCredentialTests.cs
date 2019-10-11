@@ -92,11 +92,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new EventHubTokenCredential(mockCredential.Object, resource);
 
             mockCredential
-                .Setup(cred => cred.GetToken(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == resource), It.IsAny<CancellationToken>()))
+                .Setup(cred => cred.GetToken(It.Is<TokenOptions>(value => value.Scopes.FirstOrDefault() == resource), It.IsAny<CancellationToken>()))
                 .Returns(accessToken)
                 .Verifiable("The source credential GetToken method should have been called.");
 
-            AccessToken tokenResult = credential.GetToken(new TokenRequest(new[] { resource }), CancellationToken.None);
+            AccessToken tokenResult = credential.GetToken(new TokenOptions(new[] { resource }), CancellationToken.None);
 
             Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delegated call.");
             mockCredential.VerifyAll();
@@ -115,11 +115,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new EventHubTokenCredential(mockCredential.Object, resource);
 
             mockCredential
-                .Setup(cred => cred.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == resource), It.IsAny<CancellationToken>()))
+                .Setup(cred => cred.GetTokenAsync(It.Is<TokenOptions>(value => value.Scopes.FirstOrDefault() == resource), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken)
                 .Verifiable("The source credential GetToken method should have been called.");
 
-            AccessToken tokenResult = await credential.GetTokenAsync(new TokenRequest(new[] { resource }), CancellationToken.None);
+            AccessToken tokenResult = await credential.GetTokenAsync(new TokenOptions(new[] { resource }), CancellationToken.None);
 
             Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delegated call.");
             mockCredential.VerifyAll();
