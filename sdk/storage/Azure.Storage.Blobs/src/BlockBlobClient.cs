@@ -531,6 +531,7 @@ namespace Azure.Storage.Blobs.Specialized
                         {
                             Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                             return await BlobRestClient.BlockBlob.UploadAsync(
+                                ClientDiagnostics,
                                 Pipeline,
                                 Uri,
                                 body: content,
@@ -788,6 +789,7 @@ namespace Azure.Storage.Blobs.Specialized
                             {
                                 Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
                                 return BlobRestClient.BlockBlob.StageBlockAsync(
+                                    ClientDiagnostics,
                                     Pipeline,
                                     Uri,
                                     blockId: base64BlockId,
@@ -1058,6 +1060,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.BlockBlob.StageBlockFromUriAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
@@ -1303,6 +1306,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         blocks,
@@ -1500,6 +1504,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return (await BlobRestClient.BlockBlob.GetBlockListAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         listType: blockListTypes.ToBlockListType(),

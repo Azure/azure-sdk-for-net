@@ -32,6 +32,12 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
         /// requests for batching without actually sending them.
         /// </summary>
@@ -57,6 +63,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Uri = client.Uri;
             Pipeline = client.Pipeline;
+            ClientDiagnostics = client.ClientDiagnostics;
             BatchOperationPipeline = client.BatchOperationPipeline;
 
             // Construct a dummy pipeline for processing batch sub-operations
@@ -252,6 +259,7 @@ namespace Azure.Storage.Blobs.Specialized
             // Send the batch request
             Response<BlobBatchResult> batchResult =
                 await BlobRestClient.Service.SubmitBatchAsync(
+                    ClientDiagnostics,
                     Pipeline,
                     Uri,
                     body: content,

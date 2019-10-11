@@ -24,8 +24,8 @@ namespace Azure.Core.Tests
         public async Task ActivityIsCreatedForRequest()
         {
             Activity activity = null;
-            KeyValuePair<string, object> startEvent = default;
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            (string Key, object Value, DiagnosticListener) startEvent = default;
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             MockTransport mockTransport = CreateMockTransport(_ =>
             {
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
 
             await requestTask;
 
-            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
 
             Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
             Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task ActivityIdIsStampedOnRequest()
         {
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -151,14 +151,14 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task PassesMessageIntoIsEnabledStartAndStopEvents()
         {
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             var transport = new MockTransport(new MockResponse(200));
 
             await SendGetRequest(transport, s_enabledPolicy);
 
-            KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
-            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
             (string, object, object) isEnabledCall = testListener.IsEnabledCalls.Dequeue();
 
             Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
@@ -175,7 +175,7 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task ActivityIsNotCreatedWhenDisabled()
         {
-            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+            using var testListener = new TestDiagnosticListener("Azure.Core");
 
             var transport = new MockTransport(new MockResponse(200));
 

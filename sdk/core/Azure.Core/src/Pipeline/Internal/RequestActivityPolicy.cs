@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
         private const string TraceStateHeaderName = "tracestate";
         private const string RequestIdHeaderName = "Request-Id";
 
-        private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Pipeline");
+        private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
 
         public RequestActivityPolicy(bool isDistributedTracingEnabled)
         {

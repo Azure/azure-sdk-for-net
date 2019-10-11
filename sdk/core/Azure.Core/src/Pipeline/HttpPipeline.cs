@@ -14,12 +14,10 @@ namespace Azure.Core.Pipeline
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null, ClientDiagnostics? clientDiagnostics = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             ResponseClassifier = responseClassifier ?? new ResponseClassifier();
-
-            Diagnostics = clientDiagnostics ?? new ClientDiagnostics(true);
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
@@ -39,8 +37,6 @@ namespace Azure.Core.Pipeline
         }
 
         public ResponseClassifier ResponseClassifier { get; }
-
-        public ClientDiagnostics Diagnostics { get; }
 
         public ValueTask SendAsync(HttpPipelineMessage message, CancellationToken cancellationToken)
         {
