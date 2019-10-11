@@ -279,6 +279,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             Assert.Equal("SomeUserProperty", clonedMessage.UserProperties["UserProperty"]);
             Assert.Equal(Encoding.UTF8.GetBytes("test"), clonedMessage.Body);
+            Assert.NotSame(originalMessage.Body, clonedMessage.Body);
+            Assert.NotSame(originalMessage.UserProperties, clonedMessage.UserProperties);
         }
     }
 }

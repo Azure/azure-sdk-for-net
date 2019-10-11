@@ -309,12 +309,8 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             clone.SystemProperties = new SystemPropertiesCollection();
-            clone.UserProperties = new Dictionary<string, object>(this.UserProperties.Count);
-            foreach (var userProperty in this.UserProperties)
-            {
-                clone.UserProperties.Add(userProperty);
-            }
-
+            clone.UserProperties = new Dictionary<string, object>(this.UserProperties);
+            
             return clone;
         }
 
