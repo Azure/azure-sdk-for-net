@@ -33,7 +33,7 @@ namespace Azure.Core.Cryptography
         /// <param name="key">The key to be encrypted</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The encrypted key bytes</returns>
-        ValueTask<byte[]> WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken = default);
+        Task<byte[]> WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Decrypts the specified encrpted key using the specified algorithm
@@ -51,6 +51,6 @@ namespace Azure.Core.Cryptography
         /// <param name="encryptedKey">The encrypted key to be decrypted</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The decrpted key bytes</returns>
-        ValueTask<byte[]> UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken = default);
+        Task<byte[]> UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken = default);
     }
 }
