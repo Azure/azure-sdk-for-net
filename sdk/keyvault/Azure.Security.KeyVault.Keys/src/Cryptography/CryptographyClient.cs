@@ -3,13 +3,13 @@
 
 using Azure.Core;
 using Azure.Core.Cryptography;
+using Azure.Core.Pipeline;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
