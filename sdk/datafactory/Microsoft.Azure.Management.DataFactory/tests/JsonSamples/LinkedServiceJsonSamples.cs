@@ -247,6 +247,36 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureMLServiceLinkedService = @"
+{
+    name: ""Test-AzureMLService-LinkedService"",
+    properties:
+    {
+        type: ""AzureMLService"",
+        connectVia: {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            subscriptionId: ""1e42591f-0000-0000-0000-a268f6105ec5"",
+            resourceGroupName: ""MyResourceGroupName"",
+            mlWorkspaceName: ""MyMLWorkspaceName"",
+            servicePrincipalId: ""fakeSPID"",
+            servicePrincipalKey: {
+                value: ""fakeSPKey"",
+                type: ""SecureString""
+            },
+            tenant: ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureMLLinkedServiceWithOptionalPropertyJson = @"
 {
     name: ""Test-ML-LinkedService"",
