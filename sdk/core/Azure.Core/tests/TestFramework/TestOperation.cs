@@ -31,6 +31,8 @@ namespace Azure.Core.Tests.TestFramework
             _started = DateTimeOffset.UtcNow;
         }
 
+        protected override TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromMilliseconds(1);
+
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             UpdateStatus(cancellationToken);

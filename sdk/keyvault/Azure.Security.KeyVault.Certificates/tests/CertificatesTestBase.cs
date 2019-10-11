@@ -66,11 +66,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<CertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
-            operation.PollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
 
             if (IsAsync)
             {
-                await operation.WaitCompletionAsync();
+                await operation.WaitForCompletionAsync();
             }
             else
             {
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 {
                     operation.UpdateStatus();
 
-                    await Task.Delay(operation.PollingInterval);
+                    await Task.Delay(pollingInterval);
                 }
             }
 

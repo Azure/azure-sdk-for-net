@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
     public class OperationTests
     {
         [Test]
-        public async Task WaitCompletionAsync()
+        public async Task WaitForCompletionAsync()
         {
             int updateCalled = 0;
             var testResult = 100;
@@ -23,11 +23,10 @@ namespace Azure.Core.Tests
 
             var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
             {
-                PollingInterval = TimeSpan.FromMilliseconds(1),
                 UpdateCalled = () => { updateCalled++; }
             };
 
-            Response<int> operationResult = await operation.WaitCompletionAsync();
+            Response<int> operationResult = await operation.WaitForCompletionAsync();
 
             Assert.Greater(updateCalled, 0);
             Assert.IsTrue(operation.HasCompleted);
@@ -102,13 +101,12 @@ namespace Azure.Core.Tests
 
             var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(1000), 100, null)
             {
-                PollingInterval = TimeSpan.FromMilliseconds(10),
                 UpdateCalled = () => { updateCalled++; }
             };
 
             Assert.That(async () =>
             {
-                _ = await operation.WaitCompletionAsync(cancel.Token);
+                _ = await operation.WaitForCompletionAsync(cancel.Token);
             }, Throws.InstanceOf<OperationCanceledException>());
 
             Assert.IsTrue(cancel.IsCancellationRequested);
