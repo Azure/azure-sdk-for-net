@@ -24,7 +24,8 @@
 
 Param(
     [string] $SpecsRepoFork = "Azure",
-    [string] $SpecsRepoBranch = "master"
+    [string] $SpecsRepoBranch = "master",
+    [string] $Tag = ""
 )
 
 "$PSScriptRoot\..\..\Install-BuildTools.ps1"
@@ -32,7 +33,7 @@ Param(
 $generateFolder = "$PSScriptRoot\Generated"
 $sharedGenerateFolder = "$PSScriptRoot\..\..\Microsoft.Azure.Search.Common\src\Generated"
 
-Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
+Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -ConfigFileTag $Tag
 
 Write-Output "Deleting extra files and cleaning up..."
 
