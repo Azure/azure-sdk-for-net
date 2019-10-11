@@ -79,8 +79,8 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset lastModified,
             ETag eTag,
             long blobContentLength,
-            IEnumerable<HttpRange> pageRange,
-            IEnumerable<HttpRange> clearRange)
+            IEnumerable<HttpRange> pageRanges,
+            IEnumerable<HttpRange> clearRanges)
         {
             var pageRangesInfo =
                 new PageRangesInfo(
@@ -92,8 +92,8 @@ namespace Azure.Storage.Blobs.Models
                     }
                 )
                 {
-                    PageRanges = pageRange,
-                    ClearRanges = clearRange
+                    PageRanges = pageRanges,
+                    ClearRanges = clearRanges
                 };
             return pageRangesInfo;
         }
