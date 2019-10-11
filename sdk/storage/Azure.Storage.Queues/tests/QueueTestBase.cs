@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Common.Test;

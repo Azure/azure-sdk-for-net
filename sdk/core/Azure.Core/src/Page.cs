@@ -70,7 +70,7 @@ namespace Azure
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object? obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="Page{T}"/>.

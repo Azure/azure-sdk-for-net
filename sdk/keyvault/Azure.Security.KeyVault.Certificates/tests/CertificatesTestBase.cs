@@ -131,7 +131,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateWithPolicyAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name));
             }
         }
 

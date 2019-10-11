@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // Let's get the created certificate along with it's policy from the Key Vault.
-            CertificateWithPolicy certificate = client.GetCertificateWithPolicy(certName);
+            CertificateWithPolicy certificate = client.GetCertificate(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 

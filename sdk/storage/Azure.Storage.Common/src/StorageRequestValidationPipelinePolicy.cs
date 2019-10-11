@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Core.Http;
+using System.Linq;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common
@@ -37,10 +36,10 @@ namespace Azure.Storage.Common
         {
             if (message.HasResponse &&
                 message.Request.Headers.TryGetValue(Constants.HeaderNames.ClientRequestId, out var original) &&
-                message.Response.Headers.TryGetValue(Constants.HeaderNames.ClientRequestId, out var echo) &&
-                !String.Equals(original, echo, StringComparison.OrdinalIgnoreCase))
+                message.Response.Headers.TryGetValues(Constants.HeaderNames.ClientRequestId, out var echo) &&
+                !String.Equals(original, echo.First(), StringComparison.OrdinalIgnoreCase))
             {
-                throw Errors.ClientRequestIdMismatch(message.Response, echo, original);
+                throw Errors.ClientRequestIdMismatch(message.Response, echo.First(), original);
             }
         }
     }

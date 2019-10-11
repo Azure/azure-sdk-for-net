@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -43,6 +41,21 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The authentication policy for our pipeline.  We cache it here in
+        /// case we need to construct a pipeline for authenticating batch
+        /// operations.
+        /// </summary>
+        private readonly HttpPipelinePolicy _authenticationPolicy;
+
+        internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
+
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
+        /// requests for batching without actually sending them.
+        /// </summary>
+        internal virtual HttpPipeline BatchOperationPipeline { get; set; }
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -110,7 +123,8 @@ namespace Azure.Storage.Blobs
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.BlobEndpoint;
             options ??= new BlobClientOptions();
-            _pipeline = options.Build(conn.Credentials);
+            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
+            _pipeline = options.Build(_authenticationPolicy);
         }
 
         /// <summary>
@@ -186,10 +200,8 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+            : this(serviceUri, authentication, (options ?? new BlobClientOptions()).Build(authentication))
         {
-            _uri = serviceUri;
-            options ??= new BlobClientOptions();
-            _pipeline = options.Build(authentication);
         }
 
         /// <summary>
@@ -199,12 +211,14 @@ namespace Azure.Storage.Blobs
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
         /// </param>
+        /// <param name="authentication"></param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline)
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline)
         {
             _uri = serviceUri;
+            _authenticationPolicy = authentication;
             _pipeline = pipeline;
         }
         #endregion ctors
@@ -716,7 +730,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatistics"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -744,7 +758,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatisticsAsync"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -772,7 +786,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatisticsInternal"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.

@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey KeyMaterial { get; set; }
 
         /// <summary>
-        /// Gets or sets the attributes of the <see cref="Key"/>.
+        /// Additional properties of the <see cref="Key"/>.
         /// </summary>
         public KeyProperties Properties { get; }
 

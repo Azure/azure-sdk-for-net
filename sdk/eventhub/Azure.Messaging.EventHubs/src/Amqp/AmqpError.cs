@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs
         ///   Indicates that an argument provided to the Event Hubs service was incorrect.
         /// </summary>
         ///
-        public static AmqpSymbol ArgumentError { get; }= AmqpConstants.Vendor + ":argument-error";
+        public static AmqpSymbol ArgumentError { get; } = AmqpConstants.Vendor + ":argument-error";
 
         /// <summary>
         ///   Indicates that an argument provided to the Event Hubs service was incorrect.
@@ -111,6 +111,26 @@ namespace Azure.Messaging.EventHubs
             }
 
             return CreateException(error.Condition.Value, error.Description, eventHubsResource);
+        }
+
+        /// <summary>
+        ///   Determines if a given AMQP message response is an error and, if so, throws the
+        ///   appropriate corresponding exception type.
+        /// </summary>
+        ///
+        /// <param name="response">The AMQP response message to consider.</param>
+        /// <param name="eventHubName">The name of the Event Hub associated with the request.</param>
+        ///
+        public static void ThrowIfErrorResponse(AmqpMessage response,
+                                                string eventHubName)
+        {
+            var statusCode = default(int);
+
+            if ((response?.ApplicationProperties?.Map.TryGetValue(AmqpResponse.StatusCode, out statusCode) == false)
+                || (!AmqpResponse.IsSuccessStatus((AmqpResponseStatusCode)statusCode)))
+            {
+                throw CreateExceptionForResponse(response, eventHubName);
+            }
         }
 
         /// <summary>

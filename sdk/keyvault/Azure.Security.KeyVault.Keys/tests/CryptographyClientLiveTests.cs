@@ -197,7 +197,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key.Name);
 
-            (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
+            (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key);
 
             byte[] data = new byte[32];
             Recording.Random.NextBytes(data);
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Key key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key.Name);
 
-            (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key.KeyMaterial);
+            (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key);
 
             byte[] data = new byte[32];
             Recording.Random.NextBytes(data);
@@ -369,11 +369,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(client);
         }
 
-        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(JsonWebKey keyMaterial, TestRecording recording = null)
+        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(Key key, TestRecording recording = null)
         {
             recording ??= Recording;
 
-            CryptographyClient client = new CryptographyClient(keyMaterial, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new CryptographyClientOptions()));
+            CryptographyClient client = new CryptographyClient(key, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new CryptographyClientOptions()));
             CryptographyClient clientProxy = InstrumentClient(client);
 
             ICryptographyProvider remoteClientProxy = null;

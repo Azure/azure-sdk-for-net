@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Http;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline);
 
-                return (key != null) ? new CryptographyClient(key.KeyMaterial, pipeline) : new CryptographyClient(keyId, pipeline);
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
             }
             catch (Exception e)
             {
@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline);
 
-                return (key != null) ? new CryptographyClient(key.KeyMaterial, pipeline) : new CryptographyClient(keyId, pipeline);
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
 
             }
             catch (Exception e)
