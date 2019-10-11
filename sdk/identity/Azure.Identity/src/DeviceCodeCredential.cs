@@ -21,6 +21,7 @@ namespace Azure.Identity
     public class DeviceCodeCredential : TokenCredential
     {
         private readonly IPublicClientApplication _pubApp = null;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline = null;
         private IAccount _account = null;
         private readonly AzureCredentialOptions _options;
@@ -52,6 +53,8 @@ namespace Azure.Identity
 
             _pipeline = HttpPipelineBuilder.Build(_options);
 
+            _clientDiagnostics = new ClientDiagnostics(options);
+
             var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient");
 
             if (!string.IsNullOrEmpty(tenantId))
@@ -70,7 +73,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
 
             scope.Start();
 
@@ -111,7 +114,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
 
             scope.Start();
 

@@ -35,6 +35,7 @@ namespace Azure.Identity
 
         private readonly AzureCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         protected ManagedIdentityClient()
         {
@@ -45,6 +46,7 @@ namespace Azure.Identity
             _options = options ?? new AzureCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
+            _clientDiagnostics = new ClientDiagnostics(_options);
         }
 
         private enum MsiType
@@ -68,7 +70,7 @@ namespace Azure.Identity
                 return default;
             }
 
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -99,7 +101,7 @@ namespace Azure.Identity
                 return default;
             }
 
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
             scope.Start();
 
             try

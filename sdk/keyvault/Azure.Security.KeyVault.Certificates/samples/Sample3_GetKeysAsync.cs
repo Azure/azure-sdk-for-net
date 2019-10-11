@@ -42,8 +42,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
-            await certOp1.WaitCompletionAsync();
-            await certOp2.WaitCompletionAsync();
+            await certOp1.WaitForCompletionAsync();
+            await certOp2.WaitForCompletionAsync();
 
             // Let's list the certificates which exist in the vault along with their thumbprints
             await foreach (CertificateProperties cert in client.GetCertificatesAsync())
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate
             CertificateOperation newCertOp = await client.StartCreateCertificateAsync(certName1);
 
-            await newCertOp.WaitCompletionAsync();
+            await newCertOp.WaitForCompletionAsync();
 
             // Let's print all the versions of this certificate
             await foreach (CertificateProperties cert in client.GetCertificateVersionsAsync(certName1))

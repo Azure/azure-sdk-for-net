@@ -19,6 +19,7 @@ namespace Azure.Identity
     public class AuthorizationCodeCredential : TokenCredential
     {
         private readonly IConfidentialClientApplication _confidentialClient;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _authCode;
         private readonly HttpPipeline _pipeline;
         private IAccount _account;
@@ -65,6 +66,8 @@ namespace Azure.Identity
             _pipeline = HttpPipelineBuilder.Build(options);
 
             _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
+
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -86,7 +89,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
 
             scope.Start();
 

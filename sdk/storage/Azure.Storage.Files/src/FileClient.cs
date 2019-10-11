@@ -46,6 +46,18 @@ namespace Azure.Storage.Files
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// The Storage account name corresponding to the file client.
         /// </summary>
         private string _accountName;
@@ -157,6 +169,7 @@ namespace Azure.Storage.Files
         /// </param>
         public FileClient(string connectionString, string shareName, string filePath, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new FileUriBuilder(conn.FileEndpoint)
@@ -165,7 +178,8 @@ namespace Azure.Storage.Files
                     DirectoryOrFilePath = filePath
                 };
             _uri = builder.ToUri();
-            _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+            _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -226,8 +240,10 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileClient(Uri fileUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             _uri = fileUri;
-            _pipeline = (options ?? new FileClientOptions()).Build(authentication);
+            _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -240,10 +256,12 @@ namespace Azure.Storage.Files
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal FileClient(Uri fileUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal FileClient(Uri fileUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = fileUri;
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -266,7 +284,7 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.ToUri(), Pipeline);
+            return new FileClient(builder.ToUri(), Pipeline, ClientDiagnostics);
         }
 
         /// <summary>
@@ -458,6 +476,7 @@ namespace Azure.Storage.Files
                     }
 
                     Response<RawStorageFileInfo> response = await FileRestClient.File.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         fileContentLength: maxSize,
@@ -603,6 +622,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.StartCopyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         copySource: sourceUri,
@@ -720,6 +740,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.AbortCopyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         copyId: copyId,
@@ -968,6 +989,7 @@ namespace Azure.Storage.Files
             Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
             (Response<FlattenedStorageFileProperties> response, Stream stream) =
                 await FileRestClient.File.DownloadAsync(
+                    ClientDiagnostics,
                     Pipeline,
                     Uri,
                     range: pageRange.ToString(),
@@ -1058,6 +1080,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -1183,6 +1206,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     Response<RawStorageFileProperties> response = await FileRestClient.File.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sharesnapshot: shareSnapshot,
@@ -1365,6 +1389,7 @@ namespace Azure.Storage.Files
                     }
 
                     Response<RawStorageFileInfo> response = await FileRestClient.File.SetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         fileContentLength: newSize,
@@ -1497,6 +1522,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     Response<RawStorageFileInfo> response = await FileRestClient.File.SetMetadataAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -1706,6 +1732,7 @@ namespace Azure.Storage.Files
                             {
                                 Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                                 return FileRestClient.File.UploadRangeAsync(
+                                    ClientDiagnostics,
                                     Pipeline,
                                     Uri,
                                     optionalbody: content,
@@ -1860,6 +1887,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     var response = await FileRestClient.File.UploadRangeFromURLAsync(
+                        clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: Uri,
                         range: range.ToString(),
@@ -2195,6 +2223,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.GetRangeListAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sharesnapshot: shareSnapshot,
@@ -2317,6 +2346,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.ListHandlesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,
@@ -2492,6 +2522,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.ForceCloseHandlesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,

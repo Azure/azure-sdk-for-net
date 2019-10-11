@@ -45,6 +45,18 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         private readonly CustomerProvidedKey? _customerProvidedKey;
@@ -160,6 +172,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
+            options ??= new BlobClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new BlobUriBuilder(conn.BlobEndpoint)
@@ -168,7 +181,8 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobName = blobName
                 };
             _uri = builder.ToUri();
-            _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options?.CustomerProvidedKey;
         }
 
@@ -254,8 +268,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
+            options ??= new BlobClientOptions();
             _uri = blobUri;
-            _pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options?.CustomerProvidedKey;
         }
 
@@ -277,8 +293,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions options = default)
         {
+            options ??= new BlobClientOptions();
+
             _uri = blobUri;
             _pipeline = pipeline;
+            _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options?.CustomerProvidedKey;
         }
         #endregion ctors
@@ -734,6 +753,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             (Response<FlattenedDownloadProperties> response, Stream stream) =
                 await BlobRestClient.Blob.DownloadAsync(
+                    ClientDiagnostics,
                     Pipeline,
                     Uri,
                     range: pageRange.ToString(),
@@ -1650,6 +1670,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.StartCopyFromUriAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         copySource: source,
@@ -1801,6 +1822,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.AbortCopyFromUriAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         copyId: copyId,
@@ -2093,6 +2115,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -2201,6 +2224,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.UndeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -2332,6 +2356,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.Blob.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -2481,6 +2506,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     Response<SetHttpHeadersOperation> response =
                         await BlobRestClient.Blob.SetHttpHeadersAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             blobCacheControl: httpHeaders?.CacheControl,
@@ -2639,6 +2665,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     Response<SetMetadataOperation> response =
                         await BlobRestClient.Blob.SetMetadataAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             metadata: metadata,
@@ -2793,6 +2820,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.Blob.CreateSnapshotAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -2981,6 +3009,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.SetAccessTierAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         tier: accessTier,
