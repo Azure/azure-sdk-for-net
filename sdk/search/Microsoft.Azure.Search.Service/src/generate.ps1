@@ -54,6 +54,11 @@ Remove-Item -Force "$generateFolder\Models\TokenFilterName.cs"
 Remove-Item -Force "$generateFolder\Models\CharFilterName.cs"
 Remove-Item -Force "$generateFolder\Models\RegexFlags.cs"
 Remove-Item -Force "$generateFolder\Models\DataType.cs"
+
+# NOTE: THE FOLLOWING LINE SHOULD NOT BE REMOVED
+# This is because DataSourceType contains a symbol (DocumentDb) which isn't removed for backwards compatibility reason
+# but is marked as obsolete, which we can only do it via a customization. This can only be removed if the SDK version decides
+# to get rid of the symbol altogether.
 Remove-Item -Force "$generateFolder\Models\DataSourceType.cs"
 
 # NOTE: THE FOLLOWING LINE SHOULD NOT BE REMOVED
