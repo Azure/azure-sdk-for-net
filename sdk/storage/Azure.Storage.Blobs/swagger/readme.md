@@ -1324,6 +1324,7 @@ directive:
 - from: swagger-document
   where: $.definitions.AccessPolicy
   transform: >
+    $["x-ms-client-name"] = "BlobAccessPolicy";
     $.properties.StartsOn = $.properties.Start;
     $.properties.StartsOn.xml = { "name": "Start"};
     delete $.properties.Start;
