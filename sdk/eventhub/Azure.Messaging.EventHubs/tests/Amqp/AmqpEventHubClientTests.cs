@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenOptions>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenOptions>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
 
             mockConverter
@@ -353,7 +353,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenOptions>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
@@ -395,7 +395,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenOptions>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
 
             mockConverter

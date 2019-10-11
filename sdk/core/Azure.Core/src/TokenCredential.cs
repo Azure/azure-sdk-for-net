@@ -11,8 +11,8 @@ namespace Azure.Core
     /// </summary>
     public abstract class TokenCredential
     {
-        public abstract Task<AccessToken> GetTokenAsync(TokenOptions options, CancellationToken cancellationToken);
+        public abstract Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken);
 
-        public abstract AccessToken GetToken(TokenOptions options, CancellationToken cancellationToken);
+        public abstract AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken);
     }
 }

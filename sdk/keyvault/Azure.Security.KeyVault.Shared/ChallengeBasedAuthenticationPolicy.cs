@@ -98,8 +98,8 @@ namespace Azure.Security.KeyVault
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {
                 AccessToken token = async ?
-                        await _credential.GetTokenAsync(new TokenOptions(_challenge.Scopes), message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(new TokenOptions(_challenge.Scopes), message.CancellationToken);
+                        await _credential.GetTokenAsync(new TokenRequest(_challenge.Scopes), message.CancellationToken).ConfigureAwait(false) :
+                        _credential.GetToken(new TokenRequest(_challenge.Scopes), message.CancellationToken);
 
                 _headerValue = "Bearer " + token.Token;
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);
