@@ -390,9 +390,9 @@ namespace Azure.Storage.Test.Shared
                     AccessPolicy =
                         new AccessPolicy
                         {
-                            Start = Recording.UtcNow.AddHours(-1),
-                            Expiry =  Recording.UtcNow.AddHours(1),
-                            Permission = "rw"
+                            StartsOn = Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "rw"
                         }
                 }
             };

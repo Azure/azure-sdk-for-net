@@ -12434,17 +12434,17 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// the date-time the policy is active
         /// </summary>
-        public System.DateTimeOffset Start { get; set; }
+        public System.DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// the date-time the policy expires
         /// </summary>
-        public System.DateTimeOffset Expiry { get; set; }
+        public System.DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// the permissions for the acl policy
         /// </summary>
-        public string Permission { get; set; }
+        public string Permissions { get; set; }
 
         /// <summary>
         /// Prevent direct instantiation of AccessPolicy instances.
@@ -12465,13 +12465,13 @@ namespace Azure.Storage.Blobs.Models
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Start", ""),
-                value.Start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+                value.StartsOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Expiry", ""),
-                value.Expiry.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+                value.ExpiresOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Permission", ""),
-                value.Permission));
+                value.Permissions));
             return _element;
         }
 
@@ -12488,17 +12488,17 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
             if (_child != null)
             {
-                _value.Start = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.StartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
             if (_child != null)
             {
-                _value.Expiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
             if (_child != null)
             {
-                _value.Permission = _child.Value;
+                _value.Permissions = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
