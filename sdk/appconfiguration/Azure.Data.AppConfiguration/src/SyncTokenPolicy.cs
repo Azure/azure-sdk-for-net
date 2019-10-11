@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class SyncTokenPolicy : SynchronousHttpPipelinePolicy
+    internal class SyncTokenPolicy : HttpPipelineSynchronousPolicy
     {
         private const string SyncTokenHeader = "Sync-Token";
 

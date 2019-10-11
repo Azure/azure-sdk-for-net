@@ -14,7 +14,7 @@ namespace Azure.Storage.Common
     /// <summary>
     /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
     /// </summary>
-    public sealed class StorageSharedKeyPipelinePolicy : SynchronousHttpPipelinePolicy
+    public sealed class StorageSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Whether to always add the x-ms-date header.

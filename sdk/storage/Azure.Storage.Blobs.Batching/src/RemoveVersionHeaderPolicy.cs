@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The x-ms-version header needs to be stripped from batched
     /// sub-operations.
     /// </summary>
-    internal class RemoveVersionHeaderPolicy : SynchronousHttpPipelinePolicy
+    internal class RemoveVersionHeaderPolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Shared instance of the policy.

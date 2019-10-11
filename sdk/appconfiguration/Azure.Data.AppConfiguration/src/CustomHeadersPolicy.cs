@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class CustomHeadersPolicy : SynchronousHttpPipelinePolicy
+    internal class CustomHeadersPolicy : HttpPipelineSynchronousPolicy
     {
         private const string ActivityId = "Azure.CustomDiagnosticHeaders";
 

@@ -68,7 +68,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        private class CounterPolicy : SynchronousHttpPipelinePolicy
+        private class CounterPolicy : HttpPipelineSynchronousPolicy
         {
             public override void OnSendingRequest(HttpMessage message)
             {

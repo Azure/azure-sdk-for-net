@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    public abstract class SynchronousHttpPipelinePolicy : HttpPipelinePolicy
+    public abstract class HttpPipelineSynchronousPolicy : HttpPipelinePolicy
     {
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {

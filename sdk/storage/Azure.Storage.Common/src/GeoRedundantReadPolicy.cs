@@ -11,7 +11,7 @@ namespace Azure.Storage.Common
     /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage
     /// accounts configured with RA-GRS to retry GET or HEAD requests against the secondary storage Uri.
     /// </summary>
-    internal class GeoRedundantReadPolicy : SynchronousHttpPipelinePolicy
+    internal class GeoRedundantReadPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _secondaryStorageHost;
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace Microsoft.Extensions.Azure.Samples
 {
-    internal class DependencyInjectionEnabledPolicy : SynchronousHttpPipelinePolicy
+    internal class DependencyInjectionEnabledPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly IHostingEnvironment _environment;
 

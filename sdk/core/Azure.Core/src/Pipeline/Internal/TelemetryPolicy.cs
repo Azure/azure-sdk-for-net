@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Core.Pipeline
 {
-    internal class TelemetryPolicy : SynchronousHttpPipelinePolicy
+    internal class TelemetryPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _header;
 

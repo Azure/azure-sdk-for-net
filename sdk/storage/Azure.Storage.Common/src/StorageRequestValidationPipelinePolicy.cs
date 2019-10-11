@@ -12,7 +12,7 @@ namespace Azure.Storage.Common
     /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
     /// headers that are echoed back from a request match.
     /// </summary>
-    internal class StorageRequestValidationPipelinePolicy : SynchronousHttpPipelinePolicy
+    internal class StorageRequestValidationPipelinePolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Create a new StorageRequestValidationPipelinePolicy

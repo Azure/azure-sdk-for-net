@@ -15,7 +15,7 @@ namespace Azure.Storage.Test.Shared
     /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
     /// headers that are echoed back from a request match.
     /// </summary>
-    public class RecordedClientRequestIdPolicy : SynchronousHttpPipelinePolicy
+    public class RecordedClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly TestRecording _testRecording;
         private readonly string _parallelRangePrefix = null;

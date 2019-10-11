@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class ApiVersionPolicy : SynchronousHttpPipelinePolicy
+    internal class ApiVersionPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _versionString;
 

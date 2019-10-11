@@ -48,7 +48,7 @@ namespace Azure.Data.AppConfiguration.Samples
             client.Delete("some_key");
         }
 
-        private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
+        private class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {
             public override void OnSendingRequest(HttpMessage message)
             {
@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        private class CustomLogPolicy : SynchronousHttpPipelinePolicy
+        private class CustomLogPolicy : HttpPipelineSynchronousPolicy
         {
             public override void OnSendingRequest(HttpMessage message)
             {
