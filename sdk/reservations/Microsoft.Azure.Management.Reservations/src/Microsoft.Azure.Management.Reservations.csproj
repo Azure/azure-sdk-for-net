@@ -10,9 +10,6 @@
 		<Version>1.12.0-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Enhancing Patch API for RI renewal.
-		</PackageReleaseNotes>
-		<PackageReleaseNotes>
 			Release Billing Plan for Reservations.
 		</PackageReleaseNotes>
 	</PropertyGroup>
