@@ -3351,7 +3351,7 @@ namespace Azure.Storage.Blobs
                 }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -3791,7 +3791,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -5302,7 +5302,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -6407,7 +6407,7 @@ namespace Azure.Storage.Blobs
                 }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7444,7 +7444,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7694,7 +7694,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -7938,7 +7938,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8234,7 +8234,7 @@ namespace Azure.Storage.Blobs
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8882,7 +8882,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9513,7 +9513,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9752,7 +9752,7 @@ namespace Azure.Storage.Blobs
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -10036,7 +10036,7 @@ namespace Azure.Storage.Blobs
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10354,7 +10354,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10575,7 +10575,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
@@ -10809,7 +10809,7 @@ namespace Azure.Storage.Blobs
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11099,7 +11099,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -17188,7 +17188,34 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// AES256
         /// </summary>
-        AES256
+        Aes256
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.EncryptionAlgorithmType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.EncryptionAlgorithmType.Aes256 => "AES256",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.EncryptionAlgorithmType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.EncryptionAlgorithmType ParseEncryptionAlgorithmType(string value)
+            {
+                return value switch
+                {
+                    "AES256" => Azure.Storage.Blobs.Models.EncryptionAlgorithmType.Aes256,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.EncryptionAlgorithmType value.")
+                };
+            }
+        }
     }
 }
 #endregion enum EncryptionAlgorithmType
@@ -18813,27 +18840,27 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Standard_LRS
         /// </summary>
-        StandardLRS,
+        StandardLrs,
 
         /// <summary>
         /// Standard_GRS
         /// </summary>
-        StandardGRS,
+        StandardGrs,
 
         /// <summary>
         /// Standard_RAGRS
         /// </summary>
-        StandardRAGRS,
+        StandardRagrs,
 
         /// <summary>
         /// Standard_ZRS
         /// </summary>
-        StandardZRS,
+        StandardZrs,
 
         /// <summary>
         /// Premium_LRS
         /// </summary>
-        PremiumLRS
+        PremiumLrs
     }
 }
 
@@ -18847,11 +18874,11 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    Azure.Storage.Blobs.Models.SkuName.StandardLRS => "Standard_LRS",
-                    Azure.Storage.Blobs.Models.SkuName.StandardGRS => "Standard_GRS",
-                    Azure.Storage.Blobs.Models.SkuName.StandardRAGRS => "Standard_RAGRS",
-                    Azure.Storage.Blobs.Models.SkuName.StandardZRS => "Standard_ZRS",
-                    Azure.Storage.Blobs.Models.SkuName.PremiumLRS => "Premium_LRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardLrs => "Standard_LRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardGrs => "Standard_GRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardRagrs => "Standard_RAGRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardZrs => "Standard_ZRS",
+                    Azure.Storage.Blobs.Models.SkuName.PremiumLrs => "Premium_LRS",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.SkuName value.")
                 };
             }
@@ -18860,11 +18887,11 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    "Standard_LRS" => Azure.Storage.Blobs.Models.SkuName.StandardLRS,
-                    "Standard_GRS" => Azure.Storage.Blobs.Models.SkuName.StandardGRS,
-                    "Standard_RAGRS" => Azure.Storage.Blobs.Models.SkuName.StandardRAGRS,
-                    "Standard_ZRS" => Azure.Storage.Blobs.Models.SkuName.StandardZRS,
-                    "Premium_LRS" => Azure.Storage.Blobs.Models.SkuName.PremiumLRS,
+                    "Standard_LRS" => Azure.Storage.Blobs.Models.SkuName.StandardLrs,
+                    "Standard_GRS" => Azure.Storage.Blobs.Models.SkuName.StandardGrs,
+                    "Standard_RAGRS" => Azure.Storage.Blobs.Models.SkuName.StandardRagrs,
+                    "Standard_ZRS" => Azure.Storage.Blobs.Models.SkuName.StandardZrs,
+                    "Premium_LRS" => Azure.Storage.Blobs.Models.SkuName.PremiumLrs,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.SkuName value.")
                 };
             }

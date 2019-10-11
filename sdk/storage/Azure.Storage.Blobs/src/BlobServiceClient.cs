@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatistics"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -778,7 +778,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatisticsAsync"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -806,7 +806,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatisticsInternal"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
