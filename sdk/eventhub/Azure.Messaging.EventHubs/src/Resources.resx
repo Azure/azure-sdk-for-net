@@ -216,4 +216,7 @@
   <data name="CouldNotCreateLink" xml:space="preserve">
     <value>Unable to create the items needed to communicate with the Event Hubs service.</value>
   </data>
+  <data name="ClosedConnectionCannotPerformOperation" xml:space="preserve">
+    <value>{0} has already been closed and cannot perform the requested operation.</value>
+  </data>
 </root>

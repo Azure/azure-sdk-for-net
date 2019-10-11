@@ -4,11 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault
+    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault.
     /// </summary>
     public class CertificatePolicy : IJsonSerializable, IJsonDeserializable
     {
@@ -59,6 +60,42 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
+        /// <param name="issuerName">The name of an issuer for the certificate, including "Self" for self-signed certificates, "Unknown" for certificate requests, or other well-known names supported by Azure Key Vault.</param>
+        /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(string subject, string issuerName)
+        {
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+
+            Subject = Subject;
+            IssuerName = issuerName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate</param>
+        /// <param name="issuerName">The name of an issuer for the certificate, including "Self" for self-signed certificates, "Unknown" for certificate requests, or other well-known names supported by Azure Key Vault.</param>
+        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(SubjectAlternativeNames subjectAlternativeNames, string issuerName)
+        {
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+
+            SubjectAlternativeNames = subjectAlternativeNames;
+            IssuerName = issuerName;
+        }
+
+        internal CertificatePolicy()
+        {
+        }
+
+        /// <summary>
         /// The type of backing key to be generated when issuing new certificates
         /// </summary>
         public CertificateKeyType? KeyType { get; set; }
@@ -89,7 +126,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string Subject { get; set; }
 
         /// <summary>
-        /// The subject alternative names (SAN) of a certificate
+        /// The subject alternative names (SANs) of a certificate
         /// </summary>
         public SubjectAlternativeNames SubjectAlternativeNames { get; set; }
 

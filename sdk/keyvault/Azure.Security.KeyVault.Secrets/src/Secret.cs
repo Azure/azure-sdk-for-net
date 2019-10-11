@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Secrets
         public string Name => Properties.Name;
 
         /// <summary>
-        /// Gets or sets the attributes of the <see cref="Secret"/>.
+        /// Additional properties of the <see cref="Secret"/>.
         /// </summary>
         public SecretProperties Properties { get; }
 

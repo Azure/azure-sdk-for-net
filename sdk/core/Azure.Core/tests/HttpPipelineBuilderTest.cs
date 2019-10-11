@@ -5,7 +5,6 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -69,9 +68,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        private class CounterPolicy : SynchronousHttpPipelinePolicy
+        private class CounterPolicy : HttpPipelineSynchronousPolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 ExecutionCount++;
             }

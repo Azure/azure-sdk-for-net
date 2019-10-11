@@ -447,6 +447,55 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpError.ThrowIfErrorResponse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(AmqpResponseStatusCode.OK)]
+        [TestCase(AmqpResponseStatusCode.Accepted)]
+        public void ThrowIfErrorResponseDoesNotThrowOnSuccess(AmqpResponseStatusCode statusCode)
+        {
+            var description = "This is a test description.";
+            var resourceName = "TestHub";
+
+            using var response = AmqpMessage.Create();
+            response.ApplicationProperties = new ApplicationProperties();
+            response.ApplicationProperties.Map[AmqpResponse.StatusCode] = (int)statusCode;
+            response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
+
+            Assert.That(() => AmqpError.ThrowIfErrorResponse(response, resourceName), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpError.ThrowIfErrorResponse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(AmqpResponseStatusCode.BadRequest)]
+        [TestCase(AmqpResponseStatusCode.InternalServerError)]
+        [TestCase(AmqpResponseStatusCode.ServiceUnavailable)]
+        [TestCase(AmqpResponseStatusCode.Unauthorized)]
+        [TestCase(AmqpResponseStatusCode.RequestTimeout)]
+        [TestCase(AmqpResponseStatusCode.NotFound)]
+        [TestCase(AmqpResponseStatusCode.Forbidden)]
+        [TestCase(AmqpResponseStatusCode.Created)]
+        [TestCase(AmqpResponseStatusCode.Redirect)]
+        public void ThrowIfErrorResponseThrowsOnFailure(AmqpResponseStatusCode statusCode)
+        {
+            var description = "This is a test description.";
+            var resourceName = "TestHub";
+
+            using var response = AmqpMessage.Create();
+            response.ApplicationProperties = new ApplicationProperties();
+            response.ApplicationProperties.Map[AmqpResponse.StatusCode] = (int)statusCode;
+            response.ApplicationProperties.Map[AmqpResponse.StatusDescription] = description;
+
+            Assert.That(() => AmqpError.ThrowIfErrorResponse(response, resourceName), Throws.Exception);
+        }
+
+        /// <summary>
         ///   Gets text used to determine that a status description corresponds
         ///   to a "Not Found" case, using the private field value.
         /// </summary>

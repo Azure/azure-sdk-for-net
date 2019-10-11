@@ -356,5 +356,14 @@ namespace Azure.Messaging.EventHubs {
                 return ResourceManager.GetString("CouldNotCreateLink", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has already been closed and cannot perform the requested operation..
+        /// </summary>
+        internal static string ClosedConnectionCannotPerformOperation {
+            get {
+                return ResourceManager.GetString("ClosedConnectionCannotPerformOperation", resourceCulture);
+            }
+        }
     }
 }

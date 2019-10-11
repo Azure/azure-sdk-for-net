@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -29,7 +30,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
 
-            Pipeline = new KeyVaultPipeline(keyId, apiVersion, pipeline);
+            Pipeline = new KeyVaultPipeline(keyId, apiVersion, pipeline, new ClientDiagnostics(options));
         }
 
         internal RemoteCryptographyClient(KeyVaultPipeline pipeline)

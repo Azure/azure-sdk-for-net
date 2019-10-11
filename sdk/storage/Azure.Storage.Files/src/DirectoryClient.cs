@@ -41,6 +41,18 @@ namespace Azure.Storage.Files
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// The Storage account name corresponding to the directory client.
         /// </summary>
         private string _accountName;
@@ -144,6 +156,7 @@ namespace Azure.Storage.Files
         /// </param>
         public DirectoryClient(string connectionString, string shareName, string directoryPath, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new FileUriBuilder(conn.FileEndpoint)
@@ -152,7 +165,8 @@ namespace Azure.Storage.Files
                     DirectoryOrFilePath = directoryPath
                 };
             _uri = builder.ToUri();
-            _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+            _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -215,8 +229,10 @@ namespace Azure.Storage.Files
         /// </param>
         internal DirectoryClient(Uri directoryUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             _uri = directoryUri;
-            _pipeline = (options ?? new FileClientOptions()).Build(authentication);
+            _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -231,10 +247,12 @@ namespace Azure.Storage.Files
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DirectoryClient(Uri directoryUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal DirectoryClient(Uri directoryUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = directoryUri;
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -247,7 +265,7 @@ namespace Azure.Storage.Files
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="FileClient"/> instance.</returns>
         public virtual FileClient GetFileClient(string fileName)
-            => new FileClient(Uri.AppendToPath(fileName), Pipeline);
+            => new FileClient(Uri.AppendToPath(fileName), Pipeline, ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="DirectoryClient"/> object by appending
@@ -258,7 +276,7 @@ namespace Azure.Storage.Files
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetSubdirectoryClient(string subdirectoryName)
-            => new DirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
+            => new DirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -408,6 +426,7 @@ namespace Azure.Storage.Files
                     }
 
                     Response<RawStorageDirectoryInfo> response = await FileRestClient.Directory.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -512,6 +531,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -644,6 +664,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     Response<RawStorageDirectoryProperties> response = await FileRestClient.Directory.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sharesnapshot: shareSnapshot,
@@ -788,6 +809,7 @@ namespace Azure.Storage.Files
                     }
 
                     Response<RawStorageDirectoryInfo> response = await FileRestClient.Directory.SetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
@@ -911,6 +933,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     Response<RawStorageDirectoryInfo> response = await FileRestClient.Directory.SetMetadataAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -1047,6 +1070,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,
@@ -1185,6 +1209,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.ListHandlesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,
@@ -1382,6 +1407,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.ForceCloseHandlesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,

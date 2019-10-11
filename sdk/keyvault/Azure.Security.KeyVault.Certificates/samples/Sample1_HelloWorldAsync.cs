@@ -37,10 +37,10 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
-            CertificateWithPolicy certificate = await certOp.WaitCompletionAsync();
+            CertificateWithPolicy certificate = await certOp.WaitForCompletionAsync();
 
             // At some time later we could get the created certificate along with it's policy from the Key Vault.
-            certificate = await client.GetCertificateWithPolicyAsync(certName);
+            certificate = await client.GetCertificateAsync(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 
@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // certificate with similar properties to the original certificate
             CertificateOperation newCertOp = await client.StartCreateCertificateAsync(certificate.Name, certificate.Policy);
 
-            CertificateWithPolicy newCert = await newCertOp.WaitCompletionAsync();
+            CertificateWithPolicy newCert = await newCertOp.WaitForCompletionAsync();
 
             // The certificate is no longer needed, need to delete it from the Key Vault.
             await client.DeleteCertificateAsync(certName);

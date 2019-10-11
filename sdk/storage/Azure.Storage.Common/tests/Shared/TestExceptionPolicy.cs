@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 
@@ -32,7 +33,7 @@ namespace Azure.Storage.Common.Test
             TrackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             if (!SimulateFailure(message))
             {
@@ -40,7 +41,7 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             if (!SimulateFailure(message))
             {
@@ -48,7 +49,7 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        private bool SimulateFailure(HttpPipelineMessage message)
+        private bool SimulateFailure(HttpMessage message)
         {
             if (TrackedRequestMethods.Contains(message.Request.Method))
             {

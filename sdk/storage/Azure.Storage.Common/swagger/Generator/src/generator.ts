@@ -138,6 +138,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const pairName = `_headerPair`;
     let responseName = "_response";
     const scopeName = "_scope";
+    const clientDiagnostics = "clientDiagnostics";
     const operationName = "operationName";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
@@ -169,11 +170,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${clientDiagnostics}">The ClientDiagnostics instance used for operation reporting.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
+        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
@@ -191,7 +194,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope(${operationName});`)
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${clientDiagnostics}.CreateScope(${operationName});`)
         w.line(`try`);
         w.scope('{', '}', () => {
             for (const arg of operation.request.arguments) {
@@ -200,7 +203,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 }
             }
             w.line(`${scopeName}.Start();`);
-            w.write(`using (Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${methodName}_CreateMessage(`);
+            w.write(`using (Azure.Core.HttpMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
                 for (const arg of operation.request.arguments) {
@@ -270,7 +273,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
     }
     w.line(`/// <returns>The ${regionName} Message.</returns>`);
-    w.write(`internal static Azure.Core.Pipeline.HttpPipelineMessage ${methodName}_CreateMessage(`);
+    w.write(`internal static Azure.Core.HttpMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -336,13 +339,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${pipelineName}.CreateMessage();`);
-        w.line(`Azure.Core.Http.Request ${requestName} = ${messageName}.Request;`);
+        w.line(`Azure.Core.HttpMessage ${messageName} = ${pipelineName}.CreateMessage();`);
+        w.line(`Azure.Core.Request ${requestName} = ${messageName}.Request;`);
         w.line();
 
         w.line(`// Set the endpoint`);
         const httpMethod = naming.pascalCase(operation.method);
-        w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
+        w.line(`${requestName}.Method = Azure.Core.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
         w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
@@ -385,10 +388,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/json");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
-                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else if (operation.consumes === `stream` || bodyType.type === `file`) {
                 // Serialize a file
-                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
             } else if (operation.consumes === `xml`) {
                 // Serialize XML
                 if (isObjectType(bodyType)) {
@@ -428,7 +431,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`string ${textName} = ${bodyName}.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
-                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
             }
@@ -588,7 +591,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
                     const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
                     w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
-                    w.line(`foreach (Azure.Core.Http.HttpHeader ${pairName} in ${responseName}.Headers)`);
+                    w.line(`foreach (Azure.Core.HttpHeader ${pairName} in ${responseName}.Headers)`);
                     w.scope(`{`, `}`, () => {
                         w.line(`if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.InvariantCulture))`);
                         w.scope(`{`, `}`, () => {

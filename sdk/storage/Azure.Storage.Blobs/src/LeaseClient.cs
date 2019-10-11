@@ -55,6 +55,12 @@ namespace Azure.Storage.Blobs.Specialized
         private HttpPipeline Pipeline => BlobClient?.Pipeline ?? BlobContainerClient.Pipeline;
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => BlobClient?.ClientDiagnostics ?? BlobContainerClient.ClientDiagnostics;
+
+        /// <summary>
         /// The <see cref="TimeSpan"/> representing an infinite lease duration.
         /// </summary>
         public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
@@ -272,6 +278,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         return await BlobRestClient.Blob.AcquireLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             duration: serviceDuration,
@@ -294,6 +301,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
                         return await BlobRestClient.Container.AcquireLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             duration: serviceDuration,
@@ -440,6 +448,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         return await BlobRestClient.Blob.RenewLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
@@ -461,6 +470,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
                         return await BlobRestClient.Container.RenewLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
@@ -608,6 +618,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         Response<BlobInfo> response =
                             await BlobRestClient.Blob.ReleaseLeaseAsync(
+                                ClientDiagnostics,
                                 Pipeline,
                                 Uri,
                                 leaseId: LeaseId,
@@ -631,6 +642,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         Response<BlobContainerInfo> response =
                             await BlobRestClient.Container.ReleaseLeaseAsync(
+                                ClientDiagnostics,
                                 Pipeline,
                                 Uri,
                                 leaseId: LeaseId,
@@ -784,6 +796,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         return await BlobRestClient.Blob.ChangeLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
@@ -806,6 +819,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
                         return await BlobRestClient.Container.ChangeLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
@@ -1013,6 +1027,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         return (await BlobRestClient.Blob.BreakLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             breakPeriod: serviceBreakPeriod,
@@ -1035,6 +1050,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
                         return (await BlobRestClient.Container.BreakLeaseAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             breakPeriod: serviceBreakPeriod,

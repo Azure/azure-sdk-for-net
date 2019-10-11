@@ -6,9 +6,9 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.IsolatedStorage;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ContactsPath = "/contacts/";
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Initializes a new instance of the <see cref="CertificateClient"/> class for mocking.
         /// </summary>
         protected CertificateClient()
         {
@@ -37,10 +37,10 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a new certificate client for the specified vault.
+        /// Initializes a new instance of the <see cref="CertificateClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">The vault on which the certificate client operates</param>
-        /// <param name="credential">The credential used to authenticate requests to the vault</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         public CertificateClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
@@ -48,11 +48,11 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a new certificate client for the specified vault.
+        /// Initializes a new instance of the <see cref="CertificateClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">The vault on which the certificate client operates</param>
-        /// <param name="credential">The credential used to authenticate requests to the vault</param>
-        /// <param name="options">Options that allow to configure the requests sent to Key Vault.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
+        /// <param name="options"><see cref="CertificateClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         public CertificateClient(Uri vaultUri, TokenCredential credential, CertificateClientOptions options)
         {
             Argument.AssertNotNull(vaultUri, nameof(vaultUri));
@@ -63,13 +63,13 @@ namespace Azure.Security.KeyVault.Certificates
 
             _defaultPolicy = options.DefaultPolicy ?? CreateDefaultPolicy();
 
-            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline);
+            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, new ClientDiagnostics(options));
         }
 
         // Certificates API
 
         /// <summary>
-        /// Starts a long running operation to create a <see cref="Certificate"/> in the vault, using the default certificate policy.
+        /// Starts a long running operation to create a self-signed <see cref="Certificate"/> in the vault, using the default certificate policy.
         /// </summary>
         /// <remarks>
         /// If no certificate with the specified name exists it will be created, otherwise a new version of the existing certificate will be created. This operation requires the certificates/create permission.
@@ -174,11 +174,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the certificate and policy as a <see cref="CertificateWithPolicy"/> instance</returns>
-        public virtual Response<CertificateWithPolicy> GetCertificateWithPolicy(string name, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateWithPolicy> GetCertificate(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateWithPolicy");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
@@ -199,11 +199,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the certificate and policy as a <see cref="CertificateWithPolicy"/> instance</returns>
-        public virtual async Task<Response<CertificateWithPolicy>> GetCertificateWithPolicyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateWithPolicy>> GetCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateWithPolicy");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
@@ -225,11 +225,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="version">Ther version of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="Certificate"/></returns>
-        public virtual Response<Certificate> GetCertificate(string name, string version, CancellationToken cancellationToken = default)
+        public virtual Response<Certificate> GetCertificateVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
@@ -251,12 +251,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="version">Ther version of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="Certificate"/></returns>
-        public virtual async Task<Response<Certificate>> GetCertificateAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Certificate>> GetCertificateVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
             scope.AddAttribute("certificate", name);
             scope.Start();
 

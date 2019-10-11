@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Secrets
@@ -24,7 +25,7 @@ namespace Azure.Security.KeyVault.Secrets
         private const string DeletedSecretsPath = "/deletedsecrets/";
 
         /// <summary>
-        /// Protected constructor to allow mocking
+        /// Initializes a new instance of the <see cref="SecretClient"/> class for mocking.
         /// </summary>
         protected SecretClient()
         {
@@ -32,10 +33,10 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Initializes a new instance of the SecretClient class.
+        /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">Endpoint URL for the Azure Key Vault service.</param>
-        /// <param name="credential">Represents a credential capable of providing an OAuth token.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public SecretClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
@@ -44,11 +45,11 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Initializes a new instance of the SecretClient class.
+        /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">Endpoint URL for the Azure Key Vault service.</param>
-        /// <param name="credential">Represents a credential capable of providing an OAuth token.</param>
-        /// <param name="options">Options that allow to configure the management of the request sent to Key Vault.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
+        /// <param name="options"><see cref="SecretClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public SecretClient(Uri vaultUri, TokenCredential credential, SecretClientOptions options)
         {
@@ -61,7 +62,7 @@ namespace Azure.Security.KeyVault.Secrets
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
 
-            _pipeline = new KeyVaultPipeline(_vaultUri, apiVersion, pipeline);
+            _pipeline = new KeyVaultPipeline(_vaultUri, apiVersion, pipeline, new ClientDiagnostics(options));
         }
 
         /// <summary>

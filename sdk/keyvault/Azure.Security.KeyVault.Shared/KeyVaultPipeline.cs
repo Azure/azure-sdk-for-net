@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault
 {
@@ -14,11 +14,14 @@ namespace Azure.Security.KeyVault
     {
         private readonly Uri _vaultUri;
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
-        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline)
+        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _vaultUri = vaultUri;
             _pipeline = pipeline;
+
+            _clientDiagnostics = clientDiagnostics;
 
             ApiVersion = apiVersion;
         }
@@ -92,13 +95,13 @@ namespace Azure.Security.KeyVault
 
         public DiagnosticScope CreateScope(string name)
         {
-            return _pipeline.Diagnostics.CreateScope(name);
+            return _clientDiagnostics.CreateScope(name);
         }
 
         public async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -129,7 +132,7 @@ namespace Azure.Security.KeyVault
         public Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -162,7 +165,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -174,7 +177,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = SendRequest(request, cancellationToken);
 

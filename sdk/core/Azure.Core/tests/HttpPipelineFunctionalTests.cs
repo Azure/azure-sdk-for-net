@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -59,7 +58,7 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 100; i++)
             {
                 Stream extractedStream;
-                using (HttpPipelineMessage message = httpPipeline.CreateMessage())
+                using (HttpMessage message = httpPipeline.CreateMessage())
                 {
                     message.Request.Uri.Reset(testServer.Address);
                     message.BufferResponse = false;

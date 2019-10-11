@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common
@@ -20,7 +21,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="message">The message containing both Response and Request</param>
         /// <returns></returns>
-        public override bool IsRetriableResponse(HttpPipelineMessage message)
+        public override bool IsRetriableResponse(HttpMessage message)
         {
             if (message.Request.Uri.Host == SecondaryStorageUri.Host && message.Response.Status == Constants.HttpStatusCode.NotFound)
             {

@@ -18,7 +18,7 @@ being used.
 Install the Azure Storage Files client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Files --version 12.0.0-preview.4
 ```
 
 ### Prerequisites
