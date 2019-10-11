@@ -32,7 +32,41 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: keyvault
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Azure.Security.KeyVault.Certificates:
+          PackageName: "Azure.Security.KeyVault.Certificates"
+        Azure.Security.KeyVault.Keys:
+          PackageName: "Azure.Security.KeyVault.Keys"
+        Azure.Security.KeyVault.Secrets:
+          PackageName: "Azure.Security.KeyVault.Secrets"
+        Microsoft.Azure.KeyVault:
+          PackageName: "Microsoft.Azure.KeyVault"
+        Microsoft.Azure.KeyVault.Core:
+          PackageName: "Microsoft.Azure.KeyVault.Core"
+        Microsoft.Azure.KeyVault.Cryptography:
+          PackageName: "Microsoft.Azure.KeyVault.Cryptography"
+        Microsoft.Azure.KeyVault.Extensions:
+          PackageName: "Microsoft.Azure.KeyVault.Extensions"
+        Microsoft.Azure.KeyVault.WebKey:
+          PackageName: "Microsoft.Azure.KeyVault.WebKey"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: keyvault/$(PackageName)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: keyvault

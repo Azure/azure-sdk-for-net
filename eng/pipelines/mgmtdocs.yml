@@ -1,0 +1,480 @@
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
+variables:
+  DotNetCoreSDKVersion: '2.2.202'
+  skipComponentGovernanceDetection: true
+  msBuildLogDir: msbuildlogs
+  loggingArgs: '/clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'
+  RPScopeArgs: '/p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)'
+  timeoutInMinutes: 120
+
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: 10
+      matrix:
+        Microsoft.Azure.Management.Advisor:
+          PackageDir: 'Microsoft.Azure.Management.Advisor'
+          PackageName: 'Microsoft.Azure.Management.Advisor'
+          ServiceDir: 'advisor'
+        Microsoft.Azure.Management.AlertsManagement:
+          PackageDir: 'Microsoft.Azure.Management.AlertsManagement'
+          PackageName: 'Microsoft.Azure.Management.AlertsManagement'
+          ServiceDir: 'alertsmanagement'
+        Microsoft.Azure.Management.AnalysisServices:
+          PackageDir: 'Microsoft.Azure.Management.AnalysisServices'
+          PackageName: 'Microsoft.Azure.Management.Analysis'
+          ServiceDir: 'analysisservices'
+        Microsoft.Azure.Management.ApiManagement:
+          PackageDir: 'Microsoft.Azure.Management.ApiManagement'
+          PackageName: 'Microsoft.Azure.Management.ApiManagement'
+          ServiceDir: 'apimanagement'
+        Microsoft.Azure.Management.ApplicationInsights:
+          PackageDir: 'Microsoft.Azure.Management.ApplicationInsights'
+          PackageName: 'Microsoft.Azure.Management.ApplicationInsights'
+          ServiceDir: 'applicationinsights'
+        Microsoft.Azure.Management.Attestation:
+          PackageDir: 'Microsoft.Azure.Management.Attestation'
+          PackageName: 'Microsoft.Azure.Management.Attestation'
+          ServiceDir: 'attestation'
+        Microsoft.Azure.Management.Authorization:
+          PackageDir: 'Microsoft.Azure.Management.Authorization'
+          PackageName: 'Microsoft.Azure.Management.Authorization'
+          ServiceDir: 'authorization'
+        Microsoft.Azure.Management.Automation:
+          PackageDir: 'Microsoft.Azure.Management.Automation'
+          PackageName: 'Microsoft.Azure.Management.Automation'
+          ServiceDir: 'automation'
+        Microsoft.AzureStack.Management.AzureBridge.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.AzureBridge.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.AzureBridge.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Backup.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Backup.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Backup.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Commerce.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Commerce.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Commerce.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Compute.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Compute.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Compute.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Fabric.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Fabric.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Fabric.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Gallery.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Gallery.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Gallery.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.InfrastructureInsights.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.InfrastructureInsights.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.InfrastructureInsights.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.KeyVault.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.KeyVault.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.KeyVault.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Network.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Network.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Network.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Storage.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Storage.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Storage.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Subscription:
+          PackageDir: 'Microsoft.AzureStack.Management.Subscription'
+          PackageName: 'Microsoft.AzureStack.Management.Subscription'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Subscriptions.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Subscriptions.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Subscriptions.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.AzureStack.Management.Update.Admin:
+          PackageDir: 'Microsoft.AzureStack.Management.Update.Admin'
+          PackageName: 'Microsoft.AzureStack.Management.Update.Admin'
+          ServiceDir: 'azurestack'
+        Microsoft.Azure.Management.Batch:
+          PackageDir: 'Microsoft.Azure.Management.Batch'
+          PackageName: 'Microsoft.Azure.Management.Batch'
+          ServiceDir: 'batch'
+        Microsoft.Azure.Management.BatchAI:
+          PackageDir: 'Microsoft.Azure.Management.BatchAI'
+          PackageName: 'Microsoft.Azure.Management.BatchAI'
+          ServiceDir: 'batchai'
+        Microsoft.Azure.Management.Billing:
+          PackageDir: 'Microsoft.Azure.Management.Billing'
+          PackageName: 'Microsoft.Azure.Management.Billing'
+          ServiceDir: 'billing'
+        Microsoft.Azure.Management.Blueprint:
+          PackageDir: 'Microsoft.Azure.Management.Blueprint'
+          PackageName: 'Microsoft.Azure.Management.Blueprint'
+          ServiceDir: 'blueprint'
+        Microsoft.Azure.Management.BotService:
+          PackageDir: 'Microsoft.Azure.Management.BotService'
+          PackageName: 'Microsoft.Azure.Management.BotService'
+          ServiceDir: 'botservice'
+        Microsoft.Azure.Management.Cdn:
+          PackageDir: 'Microsoft.Azure.Management.Cdn'
+          PackageName: 'Microsoft.Azure.Management.Cdn'
+          ServiceDir: 'cdn'
+        Microsoft.Azure.Management.CognitiveServices:
+          PackageDir: 'Microsoft.Azure.Management.CognitiveServices'
+          PackageName: 'Microsoft.Azure.Management.CognitiveServices'
+          ServiceDir: 'cognitiveservices'
+        Microsoft.Azure.Management.Compute:
+          PackageDir: 'Microsoft.Azure.Management.Compute'
+          PackageName: 'Microsoft.Azure.Management.Compute'
+          ServiceDir: 'compute'
+        Microsoft.Azure.Management.Consumption:
+          PackageDir: 'Microsoft.Azure.Management.Consumption'
+          PackageName: 'Microsoft.Azure.Management.Consumption'
+          ServiceDir: 'consumption'
+        Microsoft.Azure.Management.ContainerInstance:
+          PackageDir: 'Microsoft.Azure.Management.ContainerInstance'
+          PackageName: 'Microsoft.Azure.Management.ContainerInstance'
+          ServiceDir: 'containerinstance'
+        Microsoft.Azure.Management.ContainerRegistry:
+          PackageDir: 'Microsoft.Azure.Management.ContainerRegistry'
+          PackageName: 'Microsoft.Azure.Management.ContainerRegistry'
+          ServiceDir: 'containerregistry'
+        Microsoft.Azure.Management.ContainerService:
+          PackageDir: 'Microsoft.Azure.Management.ContainerService'
+          PackageName: 'Microsoft.Azure.Management.ContainerService'
+          ServiceDir: 'containerservice'
+        Microsoft.Azure.Management.CostManagement:
+          PackageDir: 'Microsoft.Azure.Management.CostManagement'
+          PackageName: 'Microsoft.Azure.Management.CostManagement'
+          ServiceDir: 'cost-management'
+        Microsoft.Azure.Management.CustomerInsights:
+          PackageDir: 'Microsoft.Azure.Management.CustomerInsights'
+          PackageName: 'Microsoft.Azure.Management.CustomerInsights'
+          ServiceDir: 'customer-insights'
+        Microsoft.Azure.Management.CustomProviders:
+          PackageDir: 'Microsoft.Azure.Management.CustomProviders'
+          PackageName: 'Microsoft.Azure.Management.CustomProviders'
+          ServiceDir: 'customproviders'
+        Microsoft.Azure.Management.DataBox:
+          PackageDir: 'Microsoft.Azure.Management.DataBox'
+          PackageName: 'Microsoft.Azure.Management.DataBox'
+          ServiceDir: 'databox'
+        Microsoft.Azure.Management.DataBoxEdge:
+          PackageDir: 'Microsoft.Azure.Management.DataBoxEdge'
+          PackageName: 'Microsoft.Azure.Management.DataBoxEdge'
+          ServiceDir: 'databoxedge'
+        Microsoft.Azure.Management.DataFactory:
+          PackageDir: 'Microsoft.Azure.Management.DataFactory'
+          PackageName: 'Microsoft.Azure.Management.DataFactory'
+          ServiceDir: 'datafactory'
+        Microsoft.Azure.Management.DataLake.Analytics:
+          PackageDir: 'Microsoft.Azure.Management.DataLake.Analytics'
+          PackageName: 'Microsoft.Azure.Management.DataLake.Analytics'
+          ServiceDir: 'datalake-analytics'
+        #Microsoft.Azure.Management.DataLake.Store:
+        #  PackageDir: 'Microsoft.Azure.Management.DataLake.Store'
+        #  PackageName: 'Microsoft.Azure.Management.DataLake.Store'
+        #  ServiceDir: 'datalake-store'
+        Microsoft.Azure.Management.DataMigration:
+          PackageDir: 'Microsoft.Azure.Management.DataMigration'
+          PackageName: 'Microsoft.Azure.Management.DataMigration'
+          ServiceDir: 'datamigration'
+        Microsoft.Azure.Management.DataShare:
+          PackageDir: 'Microsoft.Azure.Management.DataShare'
+          PackageName: 'Microsoft.Azure.Management.DataShare'
+          ServiceDir: 'datashare'
+        Microsoft.Azure.Management.DeploymentManager:
+          PackageDir: 'Microsoft.Azure.Management.DeploymentManager'
+          PackageName: 'Microsoft.Azure.Management.DeploymentManager'
+          ServiceDir: 'deploymentmanager'
+        Microsoft.Azure.Management.DeviceProvisioningServices:
+          PackageDir: 'Microsoft.Azure.Management.DeviceProvisioningServices'
+          PackageName: 'Microsoft.Azure.Management.DeviceProvisioningServices'
+          ServiceDir: 'deviceprovisioningservices'
+        Microsoft.Azure.Management.DevSpaces:
+          PackageDir: 'Microsoft.Azure.Management.DevSpaces'
+          PackageName: 'Microsoft.Azure.Management.DevSpaces'
+          ServiceDir: 'devspaces'
+        Microsoft.Azure.Management.DevTestLabs:
+          PackageDir: 'Microsoft.Azure.Management.DevTestLabs'
+          PackageName: 'Microsoft.Azure.Management.DevTestLabs'
+          ServiceDir: 'devtestlabs'
+        Microsoft.Azure.Management.Dns:
+          PackageDir: 'Microsoft.Azure.Management.Dns'
+          PackageName: 'Microsoft.Azure.Management.Dns'
+          ServiceDir: 'dns'
+        Microsoft.Azure.Management.EdgeGateway:
+          PackageDir: 'Microsoft.Azure.Management.EdgeGateway'
+          PackageName: 'Microsoft.Azure.Management.EdgeGateway'
+          ServiceDir: 'edgegateway'
+        Microsoft.Azure.Management.EventGrid:
+          PackageDir: 'Microsoft.Azure.Management.EventGrid'
+          PackageName: 'Microsoft.Azure.Management.EventGrid'
+          ServiceDir: 'eventgrid'
+        Microsoft.Azure.Management.EventHub:
+          PackageDir: 'Microsoft.Azure.Management.EventHub'
+          PackageName: 'Microsoft.Azure.Management.EventHub'
+          ServiceDir: 'eventhub'
+        Microsoft.Azure.Management.FrontDoor:
+          PackageDir: 'Microsoft.Azure.Management.FrontDoor'
+          PackageName: 'Microsoft.Azure.Management.FrontDoor'
+          ServiceDir: 'frontdoor'
+        Microsoft.Azure.Management.GuestConfiguration:
+          PackageDir: 'Microsoft.Azure.Management.GuestConfiguration'
+          PackageName: 'Microsoft.Azure.Management.GuestConfiguration'
+          ServiceDir: 'guestconfiguration'
+        Microsoft.Azure.Management.HDInsight:
+          PackageDir: 'Microsoft.Azure.Management.HDInsight'
+          PackageName: 'Microsoft.Azure.Management.HDInsight'
+          ServiceDir: 'hdinsight'
+        Microsoft.Azure.Management.HealthcareApis:
+          PackageDir: 'Microsoft.Azure.Management.HealthcareApis'
+          PackageName: 'Microsoft.Azure.Management.HealthcareApis'
+          ServiceDir: 'healthcareapis'
+        Microsoft.Azure.Management.HybridDataManager:
+          PackageDir: 'Microsoft.Azure.Management.HybridDataManager'
+          PackageName: 'Microsoft.Azure.Management.HybridData'
+          ServiceDir: 'hybriddatamanager'
+        Microsoft.Azure.Management.Insights:
+          PackageDir: 'Microsoft.Azure.Management.Insights'
+          PackageName: 'Microsoft.Azure.Management.Insights'
+          ServiceDir: 'insights'
+        Microsoft.Azure.Management.IotCentral:
+          PackageDir: 'Microsoft.Azure.Management.IotCentral'
+          PackageName: 'Microsoft.Azure.Management.IotCentral'
+          ServiceDir: 'iotcentral'
+        Microsoft.Azure.Management.IotHub:
+          PackageDir: 'Microsoft.Azure.Management.IotHub'
+          PackageName: 'Microsoft.Azure.Management.IotHub'
+          ServiceDir: 'iothub'
+        Microsoft.Azure.Management.KeyVault:
+          PackageDir: 'Microsoft.Azure.Management.KeyVault'
+          PackageName: 'Microsoft.Azure.Management.KeyVault'
+          ServiceDir: 'keyvault'
+        Microsoft.Azure.Management.Kusto:
+          PackageDir: 'Microsoft.Azure.Management.Kusto'
+          PackageName: 'Microsoft.Azure.Management.Kusto'
+          ServiceDir: 'kusto'
+        Microsoft.Azure.Management.LabServices:
+          PackageDir: 'Microsoft.Azure.Management.LabServices'
+          PackageName: 'Microsoft.Azure.Management.LabServices'
+          ServiceDir: 'labservices'
+        #Microsoft.Azure.Management.LocationBasedServices:
+        #  PackageDir: 'Microsoft.Azure.Management.LocationBasedServices'
+        #  PackageName: 'Microsoft.Azure.Management.LocationBasedServices'
+        #  ServiceDir: 'locationbasedservices'
+        Microsoft.Azure.Management.Logic:
+          PackageDir: 'Microsoft.Azure.Management.Logic'
+          PackageName: 'Microsoft.Azure.Management.Logic'
+          ServiceDir: 'logic'
+        Microsoft.Azure.Management.MachineLearning:
+          PackageDir: 'Microsoft.Azure.Management.MachineLearning'
+          PackageName: 'Microsoft.Azure.Management.MachineLearning'
+          ServiceDir: 'machinelearning'
+        Microsoft.Azure.Management.MachineLearningCompute:
+          PackageDir: 'Microsoft.Azure.Management.MachineLearningCompute'
+          PackageName: 'Microsoft.Azure.Management.MachineLearningCompute'
+          ServiceDir: 'machinelearningcompute'
+        Microsoft.Azure.Management.Maintenance:
+          PackageDir: 'Microsoft.Azure.Management.Maintenance'
+          PackageName: 'Microsoft.Azure.Management.Maintenance'
+          ServiceDir: 'maintenance'
+        Microsoft.Azure.Management.ManagedNetwork:
+          PackageDir: 'Microsoft.Azure.Management.ManagedNetwork'
+          PackageName: 'Microsoft.Azure.Management.ManagedNetwork'
+          ServiceDir: 'managednetwork'
+        Microsoft.Azure.Management.ManagedServiceIdentity:
+          PackageDir: 'Microsoft.Azure.Management.ManagedServiceIdentity'
+          PackageName: 'Microsoft.Azure.Management.ManagedServiceIdentity'
+          ServiceDir: 'managedserviceidentity'
+        Microsoft.Azure.Management.ManagedServices:
+          PackageDir: 'Microsoft.Azure.Management.ManagedServices'
+          PackageName: 'Microsoft.Azure.Management.ManagedServices'
+          ServiceDir: 'managedservices'
+        Microsoft.Azure.Management.ManagementGroups:
+          PackageDir: 'Microsoft.Azure.Management.ManagementGroups'
+          PackageName: 'Microsoft.Azure.Management.ManagementGroups'
+          ServiceDir: 'managementgroups'
+        Microsoft.Azure.Management.ManagementPartner:
+          PackageDir: 'Microsoft.Azure.Management.ManagementPartner'
+          PackageName: 'Microsoft.Azure.Management.ManagementPartner'
+          ServiceDir: 'managementpartner'
+        Microsoft.Azure.Management.Maps:
+          PackageDir: 'Microsoft.Azure.Management.Maps'
+          PackageName: 'Microsoft.Azure.Management.Maps'
+          ServiceDir: 'maps'
+        Microsoft.Azure.Management.MarketplaceOrdering:
+          PackageDir: 'Microsoft.Azure.Management.MarketplaceOrdering'
+          PackageName: 'Microsoft.Azure.Management.MarketplaceOrdering'
+          ServiceDir: 'marketplaceordering'
+        Microsoft.Azure.Management.Media:
+          PackageDir: 'Microsoft.Azure.Management.Media'
+          PackageName: 'Microsoft.Azure.Management.Media'
+          ServiceDir: 'mediaservices'
+        Microsoft.Azure.Management.MixedReality:
+          PackageDir: 'Microsoft.Azure.Management.MixedReality'
+          PackageName: 'Microsoft.Azure.Management.MixedReality'
+          ServiceDir: 'mixedreality'
+        Microsoft.Azure.Management.Monitor:
+          PackageDir: 'Microsoft.Azure.Management.Monitor'
+          PackageName: 'Microsoft.Azure.Management.Monitor'
+          ServiceDir: 'monitor'
+        Microsoft.Azure.Management.NetApp:
+          PackageDir: 'Microsoft.Azure.Management.NetApp'
+          PackageName: 'Microsoft.Azure.Management.NetApp'
+          ServiceDir: 'netapp'
+        Microsoft.Azure.Management.Network:
+          PackageDir: 'Microsoft.Azure.Management.Network'
+          PackageName: 'Microsoft.Azure.Management.Network'
+          ServiceDir: 'network'
+        Microsoft.Azure.Management.NotificationHubs:
+          PackageDir: 'Microsoft.Azure.Management.NotificationHubs'
+          PackageName: 'Microsoft.Azure.Management.NotificationHubs'
+          ServiceDir: 'notificationhubs'
+        Microsoft.Azure.Management.OperationalInsights:
+          PackageDir: 'Microsoft.Azure.Management.OperationalInsights'
+          PackageName: 'Microsoft.Azure.Management.OperationalInsights'
+          ServiceDir: 'operationalinsights'
+        Microsoft.Azure.Management.Peering:
+          PackageDir: 'Microsoft.Azure.Management.Peering'
+          PackageName: 'Microsoft.Azure.Management.Peering'
+          ServiceDir: 'peering'
+        Microsoft.Azure.Management.PolicyInsights:
+          PackageDir: 'Microsoft.Azure.Management.PolicyInsights'
+          PackageName: 'Microsoft.Azure.Management.PolicyInsights'
+          ServiceDir: 'policyinsights'
+        Microsoft.Azure.Management.PostgreSQL:
+          PackageDir: 'Microsoft.Azure.Management.PostgreSQL'
+          PackageName: 'Microsoft.Azure.Management.PostgreSQL'
+          ServiceDir: 'postgresql'
+        Microsoft.Azure.Management.PowerBIDedicated:
+          PackageDir: 'Microsoft.Azure.Management.PowerBIDedicated'
+          PackageName: 'Microsoft.Azure.Management.PowerBIDedicated'
+          ServiceDir: 'powerbidedicated'
+        Microsoft.Azure.Management.PrivateDns:
+          PackageDir: 'Microsoft.Azure.Management.PrivateDns'
+          PackageName: 'Microsoft.Azure.Management.PrivateDns'
+          ServiceDir: 'privatedns'
+        Microsoft.Azure.Management.RecoveryServices:
+          PackageDir: 'Microsoft.Azure.Management.RecoveryServices'
+          PackageName: 'Microsoft.Azure.Management.RecoveryServices'
+          ServiceDir: 'recoveryservices'
+        Microsoft.Azure.Management.RecoveryServices.Backup:
+          PackageDir: 'Microsoft.Azure.Management.RecoveryServices.Backup'
+          PackageName: 'Microsoft.Azure.Management.RecoveryServices.Backup'
+          ServiceDir: 'recoveryservices-backup'
+        Microsoft.Azure.Management.RecoveryServices.SiteRecovery:
+          PackageDir: 'Microsoft.Azure.Management.RecoveryServices.SiteRecovery'
+          PackageName: 'Microsoft.Azure.Management.RecoveryServices.SiteRecovery'
+          ServiceDir: 'recoveryservices-siterecovery'
+        Microsoft.Azure.Management.RedisCache:
+          PackageDir: 'Microsoft.Azure.Management.RedisCache'
+          PackageName: 'Microsoft.Azure.Management.Redis'
+          ServiceDir: 'redis'
+        Microsoft.Azure.Management.Relay:
+          PackageDir: 'Microsoft.Azure.Management.Relay'
+          PackageName: 'Microsoft.Azure.Management.Relay'
+          ServiceDir: 'relay'
+        Microsoft.Azure.Management.Reservations:
+          PackageDir: 'Microsoft.Azure.Management.Reservations'
+          PackageName: 'Microsoft.Azure.Management.Reservations'
+          ServiceDir: 'reservations'
+        Microsoft.Azure.Management.ResourceGraph:
+          PackageDir: 'Microsoft.Azure.Management.ResourceGraph'
+          PackageName: 'Microsoft.Azure.Management.ResourceGraph'
+          ServiceDir: 'resourcegraph'
+        Microsoft.Azure.Management.Resource:
+          PackageDir: 'Microsoft.Azure.Management.Resource'
+          PackageName: 'Microsoft.Azure.Management.ResourceManager'
+          ServiceDir: 'resources'
+        Microsoft.Azure.Management.Scheduler:
+          PackageDir: 'Microsoft.Azure.Management.Scheduler'
+          PackageName: 'Microsoft.Azure.Management.Scheduler'
+          ServiceDir: 'scheduler'
+        Microsoft.Azure.Management.Search:
+          PackageDir: 'Microsoft.Azure.Management.Search'
+          PackageName: 'Microsoft.Azure.Management.Search'
+          ServiceDir: 'search'
+        Microsoft.Azure.Management.SecurityCenter:
+          PackageDir: 'Microsoft.Azure.Management.SecurityCenter'
+          PackageName: 'Microsoft.Azure.Management.SecurityCenter'
+          ServiceDir: 'securitycenter'
+        Microsoft.Azure.Management.ServerManagement:
+          PackageDir: 'Microsoft.Azure.Management.ServerManagement'
+          PackageName: 'Microsoft.Azure.Management.ServerManagement'
+          ServiceDir: 'servermanagement'
+        Microsoft.Azure.Management.ServiceBus:
+          PackageDir: 'Microsoft.Azure.Management.ServiceBus'
+          PackageName: 'Microsoft.Azure.Management.ServiceBus'
+          ServiceDir: 'servicebus'
+        Microsoft.Azure.Management.ServiceFabric:
+          PackageDir: 'Microsoft.Azure.Management.ServiceFabric'
+          PackageName: 'Microsoft.Azure.Management.ServiceFabric'
+          ServiceDir: 'servicefabric'
+        Microsoft.Azure.Management.SignalR:
+          PackageDir: 'Microsoft.Azure.Management.SignalR'
+          PackageName: 'Microsoft.Azure.Management.SignalR'
+          ServiceDir: 'signalr'
+        Microsoft.Azure.Management.SqlManagement:
+          PackageDir: 'Microsoft.Azure.Management.SqlManagement'
+          PackageName: 'Microsoft.Azure.Management.Sql'
+          ServiceDir: 'sqlmanagement'
+        Microsoft.Azure.Management.SqlVirtualMachine:
+          PackageDir: 'Microsoft.Azure.Management.SqlVirtualMachine'
+          PackageName: 'Microsoft.Azure.Management.SqlVirtualMachine'
+          ServiceDir: 'sqlvirtualmachine'
+        Microsoft.Azure.Management.Storage:
+          PackageDir: 'Microsoft.Azure.Management.Storage'
+          PackageName: 'Microsoft.Azure.Management.Storage'
+          ServiceDir: 'storage'
+        Microsoft.Azure.Management.StorageSync:
+          PackageDir: 'Microsoft.Azure.Management.StorageSync'
+          PackageName: 'Microsoft.Azure.Management.StorageSync'
+          ServiceDir: 'storagesync'
+        Microsoft.Azure.Management.StorSimple:
+          PackageDir: 'Microsoft.Azure.Management.StorSimple'
+          PackageName: 'Microsoft.Azure.Management.StorSimple1200Series'
+          ServiceDir: 'storsimple'
+        Microsoft.Azure.Management.StorSimple8000Series:
+          PackageDir: 'Microsoft.Azure.Management.StorSimple8000Series'
+          PackageName: 'Microsoft.Azure.Management.StorSimple8000Series'
+          ServiceDir: 'storsimple8000series'
+        Microsoft.Azure.Management.StreamAnalytics:
+          PackageDir: 'Microsoft.Azure.Management.StreamAnalytics'
+          PackageName: 'Microsoft.Azure.Management.StreamAnalytics'
+          ServiceDir: 'streamanalytics'
+        Microsoft.Azure.Management.Subscription:
+          PackageDir: 'Microsoft.Azure.Management.Subscription'
+          PackageName: 'Microsoft.Azure.Management.Subscription'
+          ServiceDir: 'subscription'
+        Microsoft.Azure.Management.TrafficManager:
+          PackageDir: 'Microsoft.Azure.Management.TrafficManager'
+          PackageName: 'Microsoft.Azure.Management.TrafficManager'
+          ServiceDir: 'trafficmanager'
+        Microsoft.Azure.Management.WebSites:
+          PackageDir: 'Microsoft.Azure.Management.WebSites'
+          PackageName: 'Microsoft.Azure.Management.Websites'
+          ServiceDir: 'websites'
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: $(ServiceDir)/$(PackageDir)/src
+        LibType: 'Management'
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: templates/jobs/archetype-sdk-mgmt.yml
+    parameters:
+      ServiceDirectory: $(Scope)

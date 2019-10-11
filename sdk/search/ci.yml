@@ -24,7 +24,33 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: search
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Microsoft.Azure.Search:
+          PackageName: "Microsoft.Azure.Search"
+        Microsoft.Azure.Search.Common:
+          PackageName: "Microsoft.Azure.Search.Common"
+        Microsoft.Azure.Search.Data:
+          PackageName: "Microsoft.Azure.Search.Data"
+        Microsoft.Azure.Search.Service:
+          PackageName: "Microsoft.Azure.Search.Service"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: search/$(PackageName)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: search

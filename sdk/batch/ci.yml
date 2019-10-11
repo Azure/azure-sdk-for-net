@@ -24,7 +24,31 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: batch
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Microsoft.Azure.Batch:
+          PackageName: "Microsoft.Azure.Batch"
+        Microsoft.Azure.Batch.Conventions.Files:
+          PackageName: "Microsoft.Azure.Batch.Conventions.Files"
+        Microsoft.Azure.Batch.FileStaging:
+          PackageName: "Microsoft.Azure.Batch.FileStaging"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: batch/$(PackageName)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: batch

@@ -24,7 +24,27 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: operationalinsights
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Microsoft.Azure.OperationalInsights:
+          PackageName: "Microsoft.Azure.OperationalInsights"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: operationalinsights/$(PackageName)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: operationalinsights

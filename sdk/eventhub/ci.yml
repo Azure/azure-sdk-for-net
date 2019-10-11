@@ -24,7 +24,36 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: eventhub
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Azure.Messaging.EventHubs:
+          PackageName: "Azure.Messaging.EventHubs"
+        Azure.Messaging.EventHubs.CheckpointStore.Blob:
+          PackageName: "Azure.Messaging.EventHubs.CheckpointStore.Blob"
+        Microsoft.Azure.EventHubs:
+          PackageName: "Microsoft.Azure.EventHubs"
+        Microsoft.Azure.EventHubs.Processor:
+          PackageName: "Microsoft.Azure.EventHubs.Processor"
+        Microsoft.Azure.EventHubs.ServiceFabricProcessor:
+          PackageName: "Microsoft.Azure.EventHubs.ServiceFabricProcessor"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: eventhub/$(PackageName)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: eventhub
+

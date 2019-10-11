@@ -24,7 +24,41 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: storage
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Azure.Storage.Blobs:
+          PackageName: "Azure.Storage.Blobs"
+        Azure.Storage.Blobs.Batching:
+          PackageName: "Azure.Storage.Blobs.Batching"
+        Azure.Storage.Blobs.Cryptography:
+          PackageName: "Azure.Storage.Blobs.Cryptography"
+        Azure.Storage.Common:
+          PackageName: "Azure.Storage.Common"
+        Azure.Storage.Files:
+          PackageName: "Azure.Storage.Files"
+        Azure.Storage.Files.DataLake:
+          PackageName: "Azure.Storage.Files.DataLake"
+        Azure.Storage.Queues:
+          PackageName: "Azure.Storage.Queues"
+        Azure.Storage.Queues.Cryptography:
+          PackageName: "Azure.Storage.Queues.Cryptography"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: storage/$(PackageName)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: storage

@@ -24,7 +24,97 @@ resources:
       name: Azure/azure-sdk-tools
       endpoint: azure
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: cognitiveservices
+stages:
+- stage: DocGenerationPerPackage
+  jobs:
+  - job:
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        AnomalyDetector:
+          PackageDir: "AnomalyDetector"
+          PackageName: "Microsoft.Azure.CognitiveServices.AnomalyDetector"
+        FormRecognizer:
+          PackageDir: "FormRecognizer"
+          PackageName: "Microsoft.Azure.CognitiveServices.Vision.FormRecognizer"
+        InkRecognizer:
+          PackageDir: "InkRecognizer"
+          PackageName: "Azure.AI.InkRecognizer"
+        Knowledge.QnAMaker:
+          PackageDir: "Knowledge.QnAMaker"
+          PackageName: "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker"
+        Language.LUIS.Authoring:
+          PackageDir: "Language.LUIS.Authoring"
+          PackageName: "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring"
+        Language.LUIS.Runtime:
+          PackageDir: "Language.LUIS.Runtime"
+          PackageName: "Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime"
+        Language.SpellCheck:
+          PackageDir: "Language.SpellCheck"
+          PackageName: "Microsoft.Azure.CognitiveServices.Language.SpellCheck"
+        Language.TextAnalytics:
+          PackageDir: "Language.TextAnalytics"
+          PackageName: "Microsoft.Azure.CognitiveServices.Language.TextAnalytics"
+        Personalizer:
+          PackageDir: "Personalizer"
+          PackageName: "Microsoft.Azure.CognitiveServices.Personalizer"
+        Search.BingAutoSuggest:
+          PackageDir: "Search.BingAutoSuggest"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest"
+        Search.BingCustomImageSearch:
+          PackageDir: "Search.BingCustomImageSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingCustomImageSearch"
+        Search.BingCustomSearch:
+          PackageDir: "Search.BingCustomSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingCustomSearch"
+        Search.BingEntitySearch:
+          PackageDir: "Search.BingEntitySearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingEntitySearch"
+        Search.BingImageSearch:
+          PackageDir: "Search.BingImageSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingImageSearch"
+        Search.BingLocalSearch:
+          PackageDir: "Search.BingLocalSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingLocalSearch"
+        Search.BingNewsSearch:
+          PackageDir: "Search.BingNewsSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingNewsSearch"
+        Search.BingVideoSearch:
+          PackageDir: "Search.BingVideoSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingVideoSearch"
+        Search.BingVisualSearch:
+          PackageDir: "Search.BingVisualSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingVisualSearch"
+        Search.BingWebSearch:
+          PackageDir: "Search.BingWebSearch"
+          PackageName: "Microsoft.Azure.CognitiveServices.Search.BingWebSearch"
+        Vision.ComputerVision:
+          PackageDir: "Vision.ComputerVision"
+          PackageName: "Microsoft.Azure.CognitiveServices.Vision.ComputerVision"
+        Vision.ContentModerator:
+          PackageDir: "Vision.ContentModerator"
+          PackageName: "Microsoft.Azure.CognitiveServices.Vision.ContentModerator"
+        Vision.CustomVision.Prediction:
+          PackageDir: "Vision.CustomVision.Prediction"
+          PackageName: "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction"
+        Vision.CustomVision.Training:
+          PackageDir: "Vision.CustomVision.Training"
+          PackageName: "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training"
+        Vision.Face:
+          PackageDir: "Vision.Face"
+          PackageName: "Microsoft.Azure.CognitiveServices.Vision.Face"
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
+      parameters:
+        PackageLocation: cognitiveservices/$(PackageDir)
+
+- stage: BuildTestandAnalyze
+  dependsOn: []
+  jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+    parameters:
+      ServiceDirectory: cognitiveservices
