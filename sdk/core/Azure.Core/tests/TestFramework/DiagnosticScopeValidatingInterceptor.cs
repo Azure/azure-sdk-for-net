@@ -26,7 +26,7 @@ namespace Azure.Core.Testing
                     expectedEventPrefix + ".Start"
                 };
 
-                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener(s=>s.Name.StartsWith("Azure."));
+                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener(s => s.Name.StartsWith("Azure."));
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
