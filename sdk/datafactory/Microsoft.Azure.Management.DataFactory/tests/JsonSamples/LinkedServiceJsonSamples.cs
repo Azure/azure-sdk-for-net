@@ -259,10 +259,6 @@ namespace DataFactory.Tests.JsonSamples
         },
         typeProperties:
         {
-            connectionString: {
-                value : ""fakeConnString"",
-                type : ""SecureString""
-            },
             subscriptionId: ""1e42591f-0000-0000-0000-a268f6105ec5"",
             resourceGroupName: ""MyResourceGroupName"",
             mlWorkspaceName: ""MyMLWorkspaceName"",
