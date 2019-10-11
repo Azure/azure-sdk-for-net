@@ -3,6 +3,8 @@
 ## Current version
 ###  Feature Additions
 - Add Switch activity
+- Add AzureMLExecutePipeline activity
+- Add AzureMLService linked service type
 
 ## Version 4.2.0
 ###  Feature Additions
