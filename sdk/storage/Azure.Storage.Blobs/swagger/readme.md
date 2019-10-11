@@ -777,14 +777,14 @@ directive:
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
 ```
-
 ### /{containerName}/{blob}?comp=pagelist
 ``` yaml
 directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=pagelist"]
   transform: >
-    $.get.responses["200"]["x-az-response-name"] = "PageRangesInfo";
+    $.get.responses["200"]["x-az-response-name"] = "PageRangesInfoInternal";
+    $.get.responses["200"]["x-az-public"] = false;
     $.get.responses["304"] = {
         "description": "The condition specified using HTTP conditional header(s) is not met.",
         "x-az-response-name": "ConditionNotMetError",
@@ -800,7 +800,8 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=pagelist&diff"]
   transform: >
-    $.get.responses["200"]["x-az-response-name"] = "PageRangesInfo";
+    $.get.responses["200"]["x-az-response-name"] = "PageRangesInfoInternal";
+    $.get.responses["200"]["x-az-public"] = false;
     $.get.responses["304"] = {
         "description": "The condition specified using HTTP conditional header(s) is not met.",
         "x-az-response-name": "ConditionNotMetError",
@@ -1273,3 +1274,15 @@ directive:
         $["202"]["x-az-response-schema-name"] = "Content";
     }
 ```
+
+### Hide PageList/PageRange/ClearRange
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.PageList["x-az-public"] = false;
+    $.PageRange["x-az-public"] = false;
+    $.ClearRange["x-az-public"] = false;
+
+
