@@ -1999,6 +1999,33 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample]
+        public const string AzureMLExecutePipelinePipeline = @"
+{
+    ""name"": ""MyAzureMLExecutePipelinePipeline"",
+    ""properties"": {
+        ""activities"": [
+            {
+                ""name"": ""MyAzureMLExecutePipelineActivity"",
+                ""type"": ""AzureMLExecutePipeline"",
+                ""typeProperties"": {
+                    ""mlPipelineId"": ""93b9ccc4-0000-0000-8968-43a0a0fe0c44"",
+                    ""experimentName"": ""myExperimentName"",
+                    ""mlPipelineParameters"": {
+                        ""param_name"": ""param_value""
+                    }
+                },
+                ""linkedServiceName"": {
+                    ""referenceName"": ""MyAzureMLServiceLinkedService"",
+                    ""type"": ""LinkedServiceReference""
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample]
         public const string AzureMLUpdateResourcePipeline = @"
 {
