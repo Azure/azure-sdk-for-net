@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Cer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates.Samples", "Azure.Security.KeyVault.Certificates\samples\Azure.Security.KeyVault.Certificates.Samples.csproj", "{660BC543-0E6F-46DB-B7AA-77E906E8C4E8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\identity\Azure.Identity\tests\Azure.Identity.Tests.csproj", "{A9EE98A1-2769-4D37-A336-8418184A4448}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
@@ -80,6 +82,10 @@ Global
 		{660BC543-0E6F-46DB-B7AA-77E906E8C4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660BC543-0E6F-46DB-B7AA-77E906E8C4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660BC543-0E6F-46DB-B7AA-77E906E8C4E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9EE98A1-2769-4D37-A336-8418184A4448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9EE98A1-2769-4D37-A336-8418184A4448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9EE98A1-2769-4D37-A336-8418184A4448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9EE98A1-2769-4D37-A336-8418184A4448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
