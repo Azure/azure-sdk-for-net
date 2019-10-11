@@ -777,6 +777,7 @@ directive:
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
 ```
+
 ### /{containerName}/{blob}?comp=pagelist
 ``` yaml
 directive:
@@ -1284,5 +1285,3 @@ directive:
     $.PageList["x-az-public"] = false;
     $.PageRange["x-az-public"] = false;
     $.ClearRange["x-az-public"] = false;
-
-

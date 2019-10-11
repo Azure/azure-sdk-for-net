@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.Core.Http.ETag ETag => _pageRangesInfo.ETag;
+        public ETag ETag => _pageRangesInfo.ETag;
 
         /// <summary>
         /// The size of the blob in bytes.
@@ -77,7 +77,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static PageRangesInfo PageRangesInfo(
             System.DateTimeOffset lastModified,
-            Azure.Core.Http.ETag eTag,
+            ETag eTag,
             long blobContentLength,
             IEnumerable<HttpRange> pageRange,
             IEnumerable<HttpRange> clearRange)
