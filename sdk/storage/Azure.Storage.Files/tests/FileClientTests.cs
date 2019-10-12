@@ -766,7 +766,7 @@ namespace Azure.Storage.Files.Test
                 // Properties are equal
                 Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
                 AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.Details.ContentType);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
                 Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
                 Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
