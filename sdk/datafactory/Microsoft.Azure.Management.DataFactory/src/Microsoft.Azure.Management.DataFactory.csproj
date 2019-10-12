@@ -10,9 +10,10 @@
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
-- Add Switch activity
-- Add AzureMLExecutePipeline activity
-- Add AzureMLService linked service type
+- Added Switch activity
+- Added AzureMLExecutePipeline activity
+- Added AzureMLService linked service type
+- Added support for Expressions for Arguments property on HDInsightPig activity
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
