@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="storageLinkedServices">Storage linked service
         /// references.</param>
         /// <param name="arguments">User specified arguments to
-        /// HDInsightActivity.</param>
+        /// HDInsightActivity. Type: array (or Expression with resultType
+        /// array).</param>
         /// <param name="getDebugInfo">Debug info option. Possible values
         /// include: 'None', 'Always', 'Failure'</param>
         /// <param name="scriptPath">Script path. Type: string (or Expression
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// reference.</param>
         /// <param name="defines">Allows user to specify defines for Pig job
         /// request.</param>
-        public HDInsightPigActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), object scriptPath = default(object), LinkedServiceReference scriptLinkedService = default(LinkedServiceReference), IDictionary<string, object> defines = default(IDictionary<string, object>))
+        public HDInsightPigActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), object arguments = default(object), string getDebugInfo = default(string), object scriptPath = default(object), LinkedServiceReference scriptLinkedService = default(LinkedServiceReference), IDictionary<string, object> defines = default(IDictionary<string, object>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
@@ -79,10 +80,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IList<LinkedServiceReference> StorageLinkedServices { get; set; }
 
         /// <summary>
-        /// Gets or sets user specified arguments to HDInsightActivity.
+        /// Gets or sets user specified arguments to HDInsightActivity. Type:
+        /// array (or Expression with resultType array).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.arguments")]
-        public IList<object> Arguments { get; set; }
+        public object Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets debug info option. Possible values include: 'None',

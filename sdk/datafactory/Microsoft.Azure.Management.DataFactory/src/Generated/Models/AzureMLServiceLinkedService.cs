@@ -18,28 +18,33 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure ML Studio Web Service linked service.
+    /// Azure ML Service linked service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureML")]
+    [Newtonsoft.Json.JsonObject("AzureMLService")]
     [Rest.Serialization.JsonTransformation]
-    public partial class AzureMLLinkedService : LinkedService
+    public partial class AzureMLServiceLinkedService : LinkedService
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMLLinkedService class.
+        /// Initializes a new instance of the AzureMLServiceLinkedService
+        /// class.
         /// </summary>
-        public AzureMLLinkedService()
+        public AzureMLServiceLinkedService()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLLinkedService class.
+        /// Initializes a new instance of the AzureMLServiceLinkedService
+        /// class.
         /// </summary>
-        /// <param name="mlEndpoint">The Batch Execution REST URL for an Azure
-        /// ML Studio Web Service endpoint. Type: string (or Expression with
-        /// resultType string).</param>
-        /// <param name="apiKey">The API key for accessing the Azure ML model
-        /// endpoint.</param>
+        /// <param name="subscriptionId">Azure ML Service workspace
+        /// subscription ID. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="resourceGroupName">Azure ML Service workspace resource
+        /// group name. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="mlWorkspaceName">Azure ML Service workspace name.
+        /// Type: string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -47,16 +52,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        /// <param name="updateResourceEndpoint">The Update Resource REST URL
-        /// for an Azure ML Studio Web Service endpoint. Type: string (or
-        /// Expression with resultType string).</param>
         /// <param name="servicePrincipalId">The ID of the service principal
-        /// used to authenticate against the ARM-based updateResourceEndpoint
-        /// of an Azure ML Studio web service. Type: string (or Expression with
-        /// resultType string).</param>
+        /// used to authenticate against the endpoint of a published Azure ML
+        /// Service pipeline. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="servicePrincipalKey">The key of the service principal
-        /// used to authenticate against the ARM-based updateResourceEndpoint
-        /// of an Azure ML Studio web service.</param>
+        /// used to authenticate against the endpoint of a published Azure ML
+        /// Service pipeline.</param>
         /// <param name="tenant">The name or ID of the tenant to which the
         /// service principal belongs. Type: string (or Expression with
         /// resultType string).</param>
@@ -64,12 +66,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
+        public AzureMLServiceLinkedService(object subscriptionId, object resourceGroupName, object mlWorkspaceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
-            MlEndpoint = mlEndpoint;
-            ApiKey = apiKey;
-            UpdateResourceEndpoint = updateResourceEndpoint;
+            SubscriptionId = subscriptionId;
+            ResourceGroupName = resourceGroupName;
+            MlWorkspaceName = mlWorkspaceName;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
@@ -83,39 +85,37 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Batch Execution REST URL for an Azure ML Studio
-        /// Web Service endpoint. Type: string (or Expression with resultType
-        /// string).
+        /// Gets or sets azure ML Service workspace subscription ID. Type:
+        /// string (or Expression with resultType string).
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.mlEndpoint")]
-        public object MlEndpoint { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.subscriptionId")]
+        public object SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the API key for accessing the Azure ML model endpoint.
+        /// Gets or sets azure ML Service workspace resource group name. Type:
+        /// string (or Expression with resultType string).
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.apiKey")]
-        public SecretBase ApiKey { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.resourceGroupName")]
+        public object ResourceGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Update Resource REST URL for an Azure ML Studio
-        /// Web Service endpoint. Type: string (or Expression with resultType
-        /// string).
+        /// Gets or sets azure ML Service workspace name. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.updateResourceEndpoint")]
-        public object UpdateResourceEndpoint { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.mlWorkspaceName")]
+        public object MlWorkspaceName { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the service principal used to authenticate
-        /// against the ARM-based updateResourceEndpoint of an Azure ML Studio
-        /// web service. Type: string (or Expression with resultType string).
+        /// against the endpoint of a published Azure ML Service pipeline.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalId")]
         public object ServicePrincipalId { get; set; }
 
         /// <summary>
         /// Gets or sets the key of the service principal used to authenticate
-        /// against the ARM-based updateResourceEndpoint of an Azure ML Studio
-        /// web service.
+        /// against the endpoint of a published Azure ML Service pipeline.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
         public SecretBase ServicePrincipalKey { get; set; }
@@ -145,13 +145,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (MlEndpoint == null)
+            if (SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MlEndpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "SubscriptionId");
             }
-            if (ApiKey == null)
+            if (ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApiKey");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ResourceGroupName");
+            }
+            if (MlWorkspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MlWorkspaceName");
             }
         }
     }
