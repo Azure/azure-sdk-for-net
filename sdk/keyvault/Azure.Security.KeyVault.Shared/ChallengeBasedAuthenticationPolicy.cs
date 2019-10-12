@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
@@ -27,19 +25,19 @@ namespace Azure.Security.KeyVault
             _credential = credential;
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessCoreAsync(message, pipeline, false).GetAwaiter().GetResult();
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessCoreAsync(message, pipeline, true);
         }
 
-        private async Task ProcessCoreAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessCoreAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            HttpPipelineRequestContent originalContent = message.Request.Content;
+            RequestContent originalContent = message.Request.Content;
 
             // if this policy doesn't have _challenge cached try to get it from the static challenge cache
             _challenge ??= AuthenticationChallenge.GetChallenge(message);
@@ -95,13 +93,13 @@ namespace Azure.Security.KeyVault
             }
         }
 
-        private async Task AuthenticateRequestAsync(HttpPipelineMessage message, bool async)
+        private async Task AuthenticateRequestAsync(HttpMessage message, bool async)
         {
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {
                 AccessToken token = async ?
-                        await _credential.GetTokenAsync(_challenge.Scopes, message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(_challenge.Scopes, message.CancellationToken);
+                        await _credential.GetTokenAsync(new TokenRequestContext(_challenge.Scopes), message.CancellationToken).ConfigureAwait(false) :
+                        _credential.GetToken(new TokenRequestContext(_challenge.Scopes), message.CancellationToken);
 
                 _headerValue = "Bearer " + token.Token;
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);
@@ -129,13 +127,11 @@ namespace Azure.Security.KeyVault
                     return true;
                 }
 
-                AuthenticationChallenge other = obj as AuthenticationChallenge;
-
-                // This assumes that Scopes is always non-null and of length one.  
+                // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
-                if(other != null)
+                if (obj is AuthenticationChallenge other)
                 {
-                    return string.Equals(this.Scopes[0], other.Scopes[0], StringComparison.OrdinalIgnoreCase);
+                    return string.Equals(Scopes[0], other.Scopes[0], StringComparison.OrdinalIgnoreCase);
                 }
 
                 return false;
@@ -144,12 +140,12 @@ namespace Azure.Security.KeyVault
             public override int GetHashCode()
             {
                 // Currently the hash code is simply the hash of the first scope as this is what is used to determine equality
-                // This assumes that Scopes is always non-null and of length one.  
+                // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
-                return this.Scopes[0].GetHashCode();
+                return Scopes[0].GetHashCode();
             }
 
-            public static AuthenticationChallenge GetChallenge(HttpPipelineMessage message)
+            public static AuthenticationChallenge GetChallenge(HttpMessage message)
             {
                 AuthenticationChallenge challenge = null;
 
@@ -160,7 +156,7 @@ namespace Azure.Security.KeyVault
                     // if the challenge is non-null cache it
                     if (challenge != null)
                     {
-                        lock(_cacheLock)
+                        lock (_cacheLock)
                         {
                             _cache[GetRequestAuthority(message.Request)] = challenge;
                         }
@@ -209,20 +205,20 @@ namespace Azure.Security.KeyVault
                 // Split the trimmed challenge into a set of name=value strings that
                 // are comma separated. The value fields are expected to be within
                 // quotation characters that are stripped here.
-                String[] pairs = trimmedChallenge.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                string[] pairs = trimmedChallenge.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (pairs.Length > 0)
                 {
                     // Process the name=value string
                     for (int i = 0; i < pairs.Length; i++)
                     {
-                        String[] pair = pairs[i].Split('=');
+                        string[] pair = pairs[i].Split('=');
 
                         if (pair.Length == 2)
                         {
                             // We have a key and a value, now need to trim and decode
-                            String key = pair[0].Trim().Trim(new char[] { '\"' });
-                            String value = pair[1].Trim().Trim(new char[] { '\"' });
+                            string key = pair[0].Trim().Trim(new char[] { '\"' });
+                            string value = pair[1].Trim().Trim(new char[] { '\"' });
 
                             if (!string.IsNullOrEmpty(key))
                             {
@@ -246,7 +242,7 @@ namespace Azure.Security.KeyVault
 
             private static string GetRequestAuthority(Request request)
             {
-                Uri uri = request.UriBuilder.Uri;
+                Uri uri = request.Uri.ToUri();
 
                 string authority = uri.Authority;
 

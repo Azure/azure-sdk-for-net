@@ -18,7 +18,7 @@ Use the client library for App Configuration to:
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.ApplicationModel.Configuration -Version 1.0.0-preview.2
+Install-Package Azure.Data.AppConfiguration -Version 1.0.0-preview.2
 ```
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a [Configuration Store][configuration_store] to use this package.
@@ -85,7 +85,7 @@ Properties of a Configuration Setting:
 
     DateTimeOffset LastModified { get; }
 
-    bool Locked { get; }
+    bool ReadOnly { get; }
 
     IDictionary<string, string> Tags { get; set; }
 ```
@@ -115,37 +115,31 @@ client.Set(setting);
 
 ### Retrieve a Configuration Setting
 
-Retrieve a previously stored Configuration Setting by calling Get.
+Retrieve a previously stored Configuration Setting by calling Get.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
 ConfigurationSetting setting = client.Get("some_key");
 ```
 
 ### Update an existing Configuration Setting
 
-Update an existing Configuration Setting by calling Update.
+Update an existing Configuration Setting by calling Set.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
-ConfigurationSetting setting = client.Update("some_key", "new_value");
+ConfigurationSetting setting = client.Set("some_key", "new_value");
 ```
 
 ### Delete a Configuration Setting
 
-Delete an existing Configuration Setting by calling Delete.
+Delete an existing Configuration Setting by calling Delete.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
 ConfigurationSetting setting = client.Delete("some_key");
 ```
 

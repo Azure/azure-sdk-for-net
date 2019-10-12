@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<AzureSku> ListSkus(this IClustersOperations operations)
+            public static IEnumerable<SkuDescription> ListSkus(this IClustersOperations operations)
             {
                 return operations.ListSkusAsync().GetAwaiter().GetResult();
             }
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<AzureSku>> ListSkusAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<SkuDescription>> ListSkusAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSkusWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return authResult.AccessToken;
         }
 
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId)
+        public Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
-            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken)).ConfigureAwait(false);
+            return GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
+        public Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(resource))
@@ -277,12 +277,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
 
-            return await GetAuthResultAsyncImpl(resource, authority, cancellationToken).ConfigureAwait(false);
+            return GetAuthResultAsyncImpl(resource, authority, cancellationToken);
         }
 
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
+        public Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
         {
-            return await GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken)).ConfigureAwait(false);
+            return GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
         }
     }
 }

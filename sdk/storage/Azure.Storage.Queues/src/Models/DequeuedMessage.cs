@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -25,12 +24,12 @@ namespace Azure.Storage.Queues.Models
         /// <returns>The updated <see cref="DequeuedMessage"/>.</returns>
         public DequeuedMessage Update(UpdatedMessage updated) =>
             QueuesModelFactory.DequeuedMessage(
-                this.MessageId,
-                this.InsertionTime,
-                this.ExpirationTime,
+                MessageId,
+                InsertionTime,
+                ExpirationTime,
                 updated.PopReceipt,
                 updated.TimeNextVisible,
-                this.DequeueCount,
-                this.MessageText);
+                DequeueCount,
+                MessageText);
     }
 }

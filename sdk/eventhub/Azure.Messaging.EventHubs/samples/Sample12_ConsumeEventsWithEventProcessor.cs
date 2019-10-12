@@ -46,8 +46,8 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var client = new EventHubClient(connectionString, eventHubName))
             {
                 // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
-                // all partitions in the Event Hub, passing them to the user for processing.  It's worth mentioning that an
-                // event processor is a generic class, and it takes a partition processor as its underlying type.
+                // multiple partitions in the Event Hub, passing them to the user for processing.  It's worth mentioning that
+                // an event processor is a generic class, and it takes a partition processor as its underlying type.
                 //
                 // A partition processor is associated with a specific partition and is responsible for processing events when
                 // requested by the event processor.  In order to use it as the event processor's underlying type, two conditions
@@ -80,15 +80,30 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 var eventProcessor = new EventProcessor<SamplePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
 
-                // Once started, the event processor will start to receive events from all partitions.
+                // Once started, the event processor will start to claim partitions and receive events from them.
 
                 Console.WriteLine("Starting the event processor.");
                 Console.WriteLine();
 
                 await eventProcessor.StartAsync();
 
-                Console.WriteLine();
                 Console.WriteLine("Event processor started.");
+                Console.WriteLine();
+
+                // Wait until the event processor has claimed ownership of all partitions in the Event Hub.  There should be a single
+                // active partition processor per owned partition.  This may take some time as there's a 10 seconds interval between
+                // claims.  To be sure that we do not block forever in case the event processor fails, we will specify a fairly long
+                // time to wait and then cancel waiting.
+
+                CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(400));
+
+                var partitionsCount = (await client.GetPartitionIdsAsync()).Length;
+
+                while (SamplePartitionProcessor.ActiveInstancesCount < partitionsCount)
+                {
+                    await Task.Delay(500, cancellationSource.Token);
+                }
 
                 // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
                 // specifying a partition to send events to, so these sets may end up in different partitions.
@@ -104,7 +119,6 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 await using (EventHubProducer producer = client.CreateProducer())
                 {
-                    Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
                     Console.WriteLine();
 
@@ -142,28 +156,37 @@ namespace Azure.Messaging.EventHubs.Samples
         }
 
         /// <summary>
-        ///   A sample class derived from <see cref="BasePartitionProcessor" />.  It makes use of a static integer to count
-        ///   the amount of received events across all existing instances of this class.
+        ///   A sample class derived from <see cref="BasePartitionProcessor" />.  It makes use of static integers to count
+        ///   the amount of received events across all existing instances of this class, as well as the amount of active
+        ///   SamplePartitionProcessors.
         /// </summary>
         ///
         /// <remarks>
         ///   All implemented methods are asynchronous, which means they're expected to return a Task.  This approach is
         ///   specially useful when the processing is done by thread-blocking services.
-        ///   
         ///   The implementations found in this sample are synchronous and simply return a <see cref="Task.CompletedTask" />
         ///   to match the return type.
         /// </remarks>
-        /// 
+        ///
         private class SamplePartitionProcessor : BasePartitionProcessor
         {
+            /// <summary>Keeps track of the amount of active SamplePartitionProcessors.</summary>
+            private static int s_activeInstancesCount = 0;
+
             /// <summary>Keeps track of the amount of received events across all existing instances of this class.</summary>
             private static int s_totalEventsCount = 0;
+
+            /// <summary>
+            ///   Keeps track of the amount of active SamplePartitionProcessors.
+            /// </summary>
+            ///
+            public static int ActiveInstancesCount  => s_activeInstancesCount;
 
             /// <summary>
             ///   Keeps track of the amount of received events across all existing instances of this class.
             /// </summary>
             ///
-            public static int TotalEventsCount { get => s_totalEventsCount; }
+            public static int TotalEventsCount => s_totalEventsCount;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
@@ -187,7 +210,10 @@ namespace Azure.Messaging.EventHubs.Samples
                 // This is the last piece of code guaranteed to run before event processing, so all initialization
                 // must be done by the moment this method returns.
 
+                Interlocked.Increment(ref s_activeInstancesCount);
+
                 Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully initialized.");
+                Console.WriteLine();
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
@@ -208,6 +234,8 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                 // The code to be run when closing the partition processor.  This is the right place to dispose
                 // of objects that will no longer be used.
+
+                Interlocked.Decrement(ref s_activeInstancesCount);
 
                 Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully closed. Reason: { reason }.");
 

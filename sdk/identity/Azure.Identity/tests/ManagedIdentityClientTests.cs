@@ -41,9 +41,9 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response, response);
 
-                var options = new IdentityClientOptions() { Transport = mockTransport };
+                var options = new AzureCredentialOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default);
 
@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.Requests[mockTransport.Requests.Count - 1];
 
-                string query = request.UriBuilder.Query;
+                string query = request.Uri.Query;
 
                 Assert.IsTrue(query.Contains("api-version=2018-02-01"));
 
@@ -78,9 +78,9 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response, response);
 
-                var options = new IdentityClientOptions() { Transport = mockTransport };
+                var options = new AzureCredentialOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default, clientId: "mock-client-id");
 
@@ -88,7 +88,7 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.Requests[mockTransport.Requests.Count - 1];
 
-                string query = request.UriBuilder.Query;
+                string query = request.Uri.Query;
 
                 Assert.IsTrue(query.Contains("api-version=2018-02-01"));
 
@@ -117,9 +117,9 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new IdentityClientOptions() { Transport = mockTransport };
+                var options = new AzureCredentialOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default);
 
@@ -127,9 +127,9 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.Requests[0];
 
-                Assert.IsTrue(request.UriBuilder.ToString().StartsWith("https://mock.msi.endpoint/"));
+                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
 
-                string query = request.UriBuilder.Query;
+                string query = request.Uri.Query;
 
                 Assert.IsTrue(query.Contains("api-version=2017-09-01"));
 
@@ -156,9 +156,9 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new IdentityClientOptions() { Transport = mockTransport };
+                var options = new AzureCredentialOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default, "mock-client-id");
 
@@ -166,9 +166,9 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.Requests[0];
 
-                Assert.IsTrue(request.UriBuilder.ToString().StartsWith("https://mock.msi.endpoint/"));
+                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
 
-                string query = request.UriBuilder.Query;
+                string query = request.Uri.Query;
 
                 Assert.IsTrue(query.Contains("api-version=2017-09-01"));
 
@@ -197,9 +197,9 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new IdentityClientOptions() { Transport = mockTransport };
+                var options = new AzureCredentialOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default);
 
@@ -207,7 +207,7 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.Requests[0];
 
-                Assert.IsTrue(request.UriBuilder.ToString().StartsWith("https://mock.msi.endpoint/"));
+                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
 
                 Assert.IsTrue(request.Content.TryComputeLength(out long contentLen));
 
@@ -242,9 +242,9 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new IdentityClientOptions() { Transport = mockTransport };
+                var options = new AzureCredentialOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default, "mock-client-id");
 
@@ -252,7 +252,7 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.Requests[0];
 
-                Assert.IsTrue(request.UriBuilder.ToString().StartsWith("https://mock.msi.endpoint/"));
+                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
 
                 Assert.IsTrue(request.Content.TryComputeLength(out long contentLen));
 

@@ -1,41 +1,79 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Key is the resource consisting of name, <see cref="JsonWebKey"/> properties and its attributes inherited from <see cref="KeyBase"/>.
+    /// <see cref="Key"/> is the resource consisting of a value and its <see cref="Properties"/>.
     /// </summary>
-    public class Key : KeyBase
+    public class Key : IJsonDeserializable
     {
-        /// <summary>
-        /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
-        /// </summary>
-        public JsonWebKey KeyMaterial { get; set; }
+        private const string KeyPropertyName = "key";
 
-        internal Key() { }
+        internal Key()
+        {
+            Properties = new KeyProperties();
+        }
 
         /// <summary>
-        /// Initializes a new instance of the Key class.
+        /// Initializes a new instance of the <see cref="Key"/> class.
         /// </summary>
         /// <param name="name">The name of the key.</param>
-        public Key(string name) : base(name) { }
-
-        internal override void ReadProperties(JsonElement json)
+        public Key(string name)
         {
-            KeyMaterial = null;
+            Properties = new KeyProperties(name);
+        }
 
-            if (json.TryGetProperty("key", out JsonElement key))
+        /// <summary>
+        /// Key identifier.
+        /// </summary>
+        public Uri Id => Properties.Id;
+
+        /// <summary>
+        /// Name of the key.
+        /// </summary>
+        public string Name => Properties.Name;
+
+        /// <summary>
+        /// The cryptographic keys, the key type, and operations you can perform using the key.
+        /// </summary>
+        /// <remarks>
+        /// See http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18 for specifications of a JSON web key.
+        /// </remarks>
+        public JsonWebKey KeyMaterial { get; set; }
+
+        /// <summary>
+        /// Additional properties of the <see cref="Key"/>.
+        /// </summary>
+        public KeyProperties Properties { get; }
+
+        internal virtual void ReadProperty(JsonProperty prop)
+        {
+            switch (prop.Name)
             {
-                KeyMaterial = new JsonWebKey();
-                KeyMaterial.ReadProperties(key);
-                ParseId(KeyMaterial.KeyId);
-            }
+                case KeyPropertyName:
+                    KeyMaterial = new JsonWebKey();
+                    KeyMaterial.ReadProperties(prop.Value);
 
-            base.ReadProperties(json);
+                    Uri id = new Uri(KeyMaterial.Id);
+                    Properties.ParseId(id);
+                    break;
+
+                default:
+                    Properties.ReadProperty(prop);
+                    break;
+            }
+        }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json)
+        {
+            foreach (JsonProperty prop in json.EnumerateObject())
+            {
+                ReadProperty(prop);
+            }
         }
     }
 }

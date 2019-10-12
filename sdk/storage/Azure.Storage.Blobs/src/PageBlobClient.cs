@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -32,17 +32,15 @@ namespace Azure.Storage.Blobs.Specialized
     public class PageBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// <see cref="PageBlobPageBytes"/> indicates the number of bytes in a
-        /// page (512).
+        /// Gets the number of bytes in a page (512).
         /// </summary>
-		public const int PageBlobPageBytes = 512;
+		public virtual int PageBlobPageBytes => 512;
 
         /// <summary>
-        /// <see cref="PageBlobMaxUploadPagesBytes"/> indicates the maximum
-        /// number of bytes that can be sent in a call to the
-        /// <see cref="UploadPagesAsync"/> operation.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to the <see cref="UploadPagesAsync"/> operation.
         /// </summary>
-        public const int PageBlobMaxUploadPagesBytes = 4 * Constants.MB; // 4MB
+        public virtual int PageBlobMaxUploadPagesBytes => 4 * Constants.MB; // 4MB
 
         #region ctors
         /// <summary>
@@ -64,14 +62,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this page blob.
         /// </param>
-        public PageBlobClient(string connectionString, string containerName, string blobName)
-            : base(connectionString, containerName, blobName)
+        public PageBlobClient(string connectionString, string blobContainerName, string blobName)
+            : base(connectionString, blobContainerName, blobName)
         {
         }
 
@@ -86,7 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
         /// </param>
         /// <param name="blobName">
@@ -97,8 +95,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PageBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
-            : base(connectionString, containerName, blobName, options)
+        public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : base(connectionString, blobContainerName, blobName, options)
         {
         }
 
@@ -108,7 +106,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="options">
@@ -127,7 +125,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="credential">
@@ -149,7 +147,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="credential">
@@ -171,14 +169,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
-        /// name of the account, the name of the container, and the name of
+        /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline)
-            : base(blobUri, pipeline)
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// </param>
+        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions options = default)
+            : base(blobUri, pipeline, options)
         {
         }
         #endregion ctors
@@ -196,7 +198,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public new PageBlobClient WithSnapshot(string snapshot) => (PageBlobClient)this.WithSnapshotImpl(snapshot);
+        public new PageBlobClient WithSnapshot(string snapshot) => (PageBlobClient)WithSnapshotCore(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="PageBlobClient"/> class
@@ -205,10 +207,43 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
+        protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
-            var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new PageBlobClient(builder.Uri, this.Pipeline);
+            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            return new PageBlobClient(builder.ToUri(), Pipeline);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/> customer provided key.
+        /// </summary>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
+        public new PageBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (PageBlobClient)WithCustomerProvidedKeyCore(customerProvidedKey);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="PageBlobClient"/> class
+        /// with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/> customer provided key.
+        /// </summary>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
+        protected sealed override BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
+        {
+            var uriBuilder = new UriBuilder(Uri)
+            {
+                Scheme = Constants.Blob.Https,
+                Port = Constants.Blob.HttpsPort
+            };
+            return new PageBlobClient(
+                uriBuilder.Uri,
+                Pipeline,
+                new BlobClientOptions(customerProvidedKey: customerProvidedKey));
         }
 
         ///// <summary>
@@ -255,10 +290,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the creation of this new page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -277,15 +308,13 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateInternal(
+            CreateInternal(
                 size,
                 sequenceNumber,
                 httpHeaders,
                 metadata,
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -319,10 +348,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the creation of this new page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -341,18 +366,196 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateInternal(
+            await CreateInternal(
                 size,
                 sequenceNumber,
                 httpHeaders,
                 metadata,
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/> operation creates a new page blob
+        /// of the specified <paramref name="size"/>.  If the blob already exists, the content of
+        /// the existing blob will remain unchanged. If the blob does not already exists,
+        /// a new page blob with the specified <paramref name="size"/> will be created.
+        /// <see cref="UploadPages"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="sequenceNumber">
+        /// Optional user-controlled value that you can use to track requests.
+        /// The value of the <paramref name="sequenceNumber"/> must be between
+        /// 0 and 2^63 - 1.  The default value is 0.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new page blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this page blob.
+        /// </param>
+        /// /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// newly created page blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> CreateIfNotExists(
+            long size,
+            long? sequenceNumber = default,
+            BlobHttpHeaders? httpHeaders = default,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                size,
+                sequenceNumber,
+                httpHeaders,
+                metadata,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new page blob
+        /// of the specified <paramref name="size"/>.  If the blob already exists, the content of
+        /// the existing blob will remain unchanged. If the blob does not already exists,
+        /// a new page blob with the specified <paramref name="size"/> will be created.
+        /// <see cref="UploadPagesAsync"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="sequenceNumber">
+        /// Optional user-controlled value that you can use to track requests.
+        /// The value of the <paramref name="sequenceNumber"/> must be between
+        /// 0 and 2^63 - 1.  The default value is 0.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new page blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this page blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// newly created page blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
+            long size,
+            long? sequenceNumber = default,
+            BlobHttpHeaders? httpHeaders = default,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                size,
+                sequenceNumber,
+                httpHeaders,
+                metadata,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new page blob
+        /// of the specified <paramref name="size"/>.  If the blob already exists, the content of
+        /// the existing blob will remain unchanged. If the blob does not already exists,
+        /// a new page blob with the specified <paramref name="size"/> will be created.
+        /// To add content to the page blob, call the
+        /// <see cref="UploadPagesAsync"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="sequenceNumber">
+        /// Optional user-controlled value that you can use to track requests.
+        /// The value of the <paramref name="sequenceNumber"/> must be between
+        /// 0 and 2^63 - 1.  The default value is 0.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new page blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this page blob.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// newly created page blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobContentInfo>> CreateIfNotExistsInternal(
+            long size,
+            long? sequenceNumber,
+            BlobHttpHeaders? httpHeaders,
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            PageBlobAccessConditions accessConditions = new PageBlobAccessConditions
+            {
+                HttpAccessConditions = new HttpAccessConditions
+                {
+                    IfNoneMatch = new ETag(Constants.Wildcard)
+                }
+            };
+            try
+            {
+                return await CreateInternal(
+                    size,
+                    sequenceNumber,
+                    httpHeaders,
+                    metadata,
+                    accessConditions,
+                    async,
+                    cancellationToken,
+                    Constants.Blob.Page.CreateIfNotExistsOperationName)
+                    .ConfigureAwait(false);
+            }
+            catch (StorageRequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
+            {
+                return default;
+            }
+        }
 
         /// <summary>
         /// The <see cref="CreateInternal"/> operation creates a new page blob
@@ -383,16 +586,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the creation of this new page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
         /// </param>
         /// <returns>
         /// A <see cref="Response{BlobContentInfo}"/> describing the
@@ -408,26 +610,27 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders,
             Metadata metadata,
             PageBlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = Constants.Blob.Page.CreateOperationName)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.CreateAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         contentLength: default,
                         blobContentType: httpHeaders?.ContentType,
                         blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -436,9 +639,9 @@ namespace Azure.Storage.Blobs.Specialized
                         blobCacheControl: httpHeaders?.CacheControl,
                         metadata: metadata,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         blobContentDisposition: httpHeaders?.ContentDisposition,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -447,18 +650,18 @@ namespace Azure.Storage.Blobs.Specialized
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
                         async: async,
-                        operationName: Constants.Blob.Page.CreateOperationName,
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -493,10 +696,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on uploading pages to this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -518,15 +717,13 @@ namespace Azure.Storage.Blobs.Specialized
             long offset,
             byte[] transactionalContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadPagesInternal(
+            UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash,
                 accessConditions,
-                customerProvidedKey,
                 progressHandler,
                 false, // async
                 cancellationToken)
@@ -560,10 +757,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on uploading pages to this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -585,15 +778,13 @@ namespace Azure.Storage.Blobs.Specialized
             long offset,
             byte[] transactionalContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadPagesInternal(
+            await UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash,
                 accessConditions,
-                customerProvidedKey,
                 progressHandler,
                 true, // async
                 cancellationToken)
@@ -627,10 +818,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on uploading pages to this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -655,22 +842,21 @@ namespace Azure.Storage.Blobs.Specialized
             long offset,
             byte[] transactionalContentHash,
             PageBlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, content.Length);
@@ -683,19 +869,20 @@ namespace Azure.Storage.Blobs.Specialized
                         operation:
                             () =>
                             {
-                                this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                                Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                                 return BlobRestClient.PageBlob.UploadPagesAsync(
-                                    this.Pipeline,
-                                    this.Uri,
+                                    ClientDiagnostics,
+                                    Pipeline,
+                                    Uri,
                                     body: content,
                                     contentLength: content.Length,
                                     transactionalContentHash: transactionalContentHash,
                                     timeout: default,
                                     range: range.ToString(),
                                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                                    encryptionKey: customerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                                     ifSequenceNumberLessThanOrEqualTo: accessConditions?.IfSequenceNumberLessThanOrEqual,
                                     ifSequenceNumberLessThan: accessConditions?.IfSequenceNumberLessThan,
                                     ifSequenceNumberEqualTo: accessConditions?.IfSequenceNumberEqual,
@@ -712,12 +899,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -743,10 +930,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on clearing pages from this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -762,12 +945,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<PageInfo> ClearPages(
             HttpRange range,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.ClearPagesInternal(
+            ClearPagesInternal(
                 range,
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -791,10 +972,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on clearing pages from this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -810,12 +987,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<PageInfo>> ClearPagesAsync(
             HttpRange range,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.ClearPagesInternal(
+            await ClearPagesInternal(
                 range,
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -839,10 +1014,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on clearing pages from this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -861,30 +1032,30 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<PageInfo>> ClearPagesInternal(
             HttpRange range,
             PageBlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.ClearPagesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         contentLength: default,
                         range: range.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         ifSequenceNumberLessThanOrEqualTo: accessConditions?.IfSequenceNumberLessThanOrEqual,
                         ifSequenceNumberLessThan: accessConditions?.IfSequenceNumberLessThan,
                         ifSequenceNumberEqualTo: accessConditions?.IfSequenceNumberEqual,
@@ -899,12 +1070,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -947,7 +1118,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPageRangesInternal(
+            GetPageRangesInternal(
                 range,
                 snapshot,
                 accessConditions,
@@ -991,7 +1162,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPageRangesInternal(
+            await GetPageRangesInternal(
                 range,
                 snapshot,
                 accessConditions,
@@ -1040,19 +1211,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.PageBlob.GetPageRangesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         snapshot: snapshot,
                         range: range?.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -1067,12 +1239,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1125,7 +1297,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPageRangesDiffInternal(
+            GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -1180,7 +1352,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPageRangesDiffInternal(
+            await GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -1240,20 +1412,21 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         snapshot: snapshot,
                         prevsnapshot: previousSnapshot,
                         range: range?.ToString(),
@@ -1269,12 +1442,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1299,10 +1472,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the resize of this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1318,12 +1487,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<PageBlobInfo> Resize(
             long size,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.ResizeInternal(
+            ResizeInternal(
                 size,
                 accessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1346,10 +1513,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the resize of this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1365,12 +1528,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<PageBlobInfo>> ResizeAsync(
             long size,
             PageBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.ResizeInternal(
+            await ResizeInternal(
                 size,
                 accessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1393,10 +1554,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the resize of this page blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1415,30 +1572,30 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<PageBlobInfo>> ResizeInternal(
             long size,
             PageBlobAccessConditions? accessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.ResizeAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         blobContentLength: size,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
@@ -1450,12 +1607,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1511,7 +1668,7 @@ namespace Azure.Storage.Blobs.Specialized
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.UpdateSequenceNumberInternal(
+            UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 accessConditions,
@@ -1568,7 +1725,7 @@ namespace Azure.Storage.Blobs.Specialized
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.UpdateSequenceNumberInternal(
+            await UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 accessConditions,
@@ -1630,20 +1787,21 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(action)}: {action}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.PageBlob.UpdateSequenceNumberAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         sequenceNumberAction: action,
                         blobSequenceNumber: sequenceNumber,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -1658,12 +1816,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1761,7 +1919,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
         {
-            var response = this.StartCopyIncrementalInternal(
+            Response<BlobCopyInfo> response = StartCopyIncrementalInternal(
                 sourceUri,
                 snapshot,
                 accessConditions,
@@ -1866,7 +2024,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
         {
-            var response = await this.StartCopyIncrementalInternal(
+            Response<BlobCopyInfo> response = await StartCopyIncrementalInternal(
                 sourceUri,
                 snapshot,
                 accessConditions,
@@ -1907,7 +2065,7 @@ namespace Azure.Storage.Blobs.Specialized
              string copyId,
             CancellationToken cancellationToken = default)
         {
-            var response = this.GetProperties(null, null, cancellationToken);
+            Response<BlobProperties> response = GetProperties(null, cancellationToken);
             return new CopyFromUriOperation(
                 this,
                 copyId,
@@ -1942,7 +2100,7 @@ namespace Azure.Storage.Blobs.Specialized
            string copyId,
             CancellationToken cancellationToken = default)
         {
-            var response = await this.GetPropertiesAsync(null, null, cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await GetPropertiesAsync(null, cancellationToken).ConfigureAwait(false);
             return new CopyFromUriOperation(
                 this,
                 copyId,
@@ -2046,23 +2204,24 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     // Create copySource Uri
-                    var pageBlobUri = new PageBlobClient(sourceUri, this.Pipeline).WithSnapshot(snapshot);
+                    PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline).WithSnapshot(snapshot);
 
                     return await BlobRestClient.PageBlob.CopyIncrementalAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         copySource: pageBlobUri.Uri,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -2075,12 +2234,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -2131,10 +2290,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2154,16 +2309,14 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
             PageBlobAccessConditions? sourceAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadPagesFromUriInternal(
+            UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
                 sourceContentHash,
                 accessConditions,
                 sourceAccessConditions,
-                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2212,10 +2365,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2235,16 +2384,14 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
             PageBlobAccessConditions? sourceAccessConditions = default,
-            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadPagesFromUriInternal(
+            await UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
                 sourceContentHash,
                 accessConditions,
                 sourceAccessConditions,
-                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2293,10 +2440,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="customerProvidedKey">
-        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
-        /// server-side encryption.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2319,32 +2462,32 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             PageBlobAccessConditions? accessConditions,
             PageBlobAccessConditions? sourceAccessConditions,
-            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.UploadPagesFromUriAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         sourceUri: sourceUri,
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
                         timeout: default,
-                        encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         range: range.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifSequenceNumberLessThanOrEqualTo: accessConditions?.IfSequenceNumberLessThanOrEqual,
@@ -2365,12 +2508,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }

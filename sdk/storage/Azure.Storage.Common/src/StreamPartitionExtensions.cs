@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -20,7 +19,7 @@ namespace Azure.Storage.Common
     /// <summary>
     /// Given a source of StreamPartitions, optionally collate them.
     /// </summary>
-    static class StreamPartitionExtensions
+    internal static class StreamPartitionExtensions
     {
         public static async Task CopyToAsync(
             this IAsyncEnumerable<StreamPartition> partitions,
@@ -30,19 +29,19 @@ namespace Azure.Storage.Common
         {
             var destinationOffset = destination.Position;
 
-            await foreach (var partition in partitions)
+            await foreach (StreamPartition partition in partitions)
             {
                 if (async)
                 {
-                    await copyImpl(partition).ConfigureAwait(false);
+                    await copyCore(partition).ConfigureAwait(false);
                 }
                 else
                 {
-                    copyImpl(partition).EnsureCompleted();
+                    copyCore(partition).EnsureCompleted();
                 }
             }
 
-            async Task copyImpl(StreamPartition partition)
+            async Task copyCore(StreamPartition partition)
             {
                 // if the destination is seekable, ensure we position it correctly,
                 // else we trust the partitions are received in order and just write

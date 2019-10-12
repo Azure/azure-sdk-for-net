@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Net;
@@ -30,8 +29,8 @@ namespace Azure.Storage.Test
 
         internal class SasConstants
         {
-            public string KeyOid { get; } = "KeyOid";
-            public string KeyTid { get; } = "KeyTid";
+            public string KeyObjectId { get; } = "KeyOid";
+            public string KeyTenantId { get; } = "KeyTid";
             public string KeyService { get; } = "KeyService";
             public string KeyVersion { get; } = "KeyVersion";
             public string KeyValue { get; } = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
@@ -58,14 +57,14 @@ namespace Azure.Storage.Test
 
         public Constants(StorageTestBase test)
         {
-            this.CacheControl = test.GetNewString();
-            this.ContentDisposition = test.GetNewString();
-            this.ContentEncoding = test.GetNewString();
-            this.ContentLanguage = test.GetNewString();
-            this.ContentType = test.GetNewString();
-            this.ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16));
+            CacheControl = test.GetNewString();
+            ContentDisposition = test.GetNewString();
+            ContentEncoding = test.GetNewString();
+            ContentLanguage = test.GetNewString();
+            ContentType = test.GetNewString();
+            ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16));
 
-            this.Sas = new SasConstants
+            Sas = new SasConstants
             {
                 Version = test.GetNewString(),
                 Account = test.GetNewString(),
@@ -83,8 +82,8 @@ namespace Azure.Storage.Test
                 KeyStart = test.GetUtcNow().AddHours(-1),
                 KeyExpiry = test.GetUtcNow().AddHours(+1)
             };
-            this.Sas.IPRange = new IPRange(this.Sas.StartAddress, this.Sas.EndAddress);
-            this.Sas.SharedKeyCredential = new StorageSharedKeyCredential(this.Sas.Account, this.Sas.AccountKey);
+            Sas.IPRange = new IPRange(Sas.StartAddress, Sas.EndAddress);
+            Sas.SharedKeyCredential = new StorageSharedKeyCredential(Sas.Account, Sas.AccountKey);
         }
     }
 }

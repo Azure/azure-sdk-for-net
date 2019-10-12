@@ -22,9 +22,9 @@ namespace Azure.Identity.Tests
 
             var tenantId = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID");
 
-            var cred = new UsernamePasswordCredential(username, password.ToSecureString(), ClientId, tenantId);
+            var cred = new UsernamePasswordCredential(username, password, ClientId, tenantId);
 
-            AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.IsNotNull(token.Token);
         }

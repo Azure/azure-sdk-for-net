@@ -15,19 +15,19 @@ namespace Azure.Data.AppConfiguration.Performance
     [MemoryDiagnoser]
     public class ConfigurationClientBenchmark
     {
-        private static readonly string MockConnectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        private static readonly string s_mockConnectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
 
-        private static readonly MockClientHandler GetResponseMessage = new MockClientHandler(request => new HttpResponseMessage((HttpStatusCode)200)
+        private static readonly MockClientHandler s_getResponseMessage = new MockClientHandler(request => new HttpResponseMessage((HttpStatusCode)200)
         {
-            Content = new ByteArrayContent(GetResponseBytes)
+            Content = new ByteArrayContent(s_getResponseBytes)
         });
 
-        private static readonly ConfigurationClient ConfigurationClient = new ConfigurationClient(MockConnectionString, new ConfigurationClientOptions()
+        private static readonly ConfigurationClient s_configurationClient = new ConfigurationClient(s_mockConnectionString, new ConfigurationClientOptions()
         {
-            Transport = new HttpClientTransport(new HttpClient(GetResponseMessage))
+            Transport = new HttpClientTransport(new HttpClient(s_getResponseMessage))
         });
 
-        private static readonly byte[] GetResponseBytes = Encoding.UTF8.GetBytes(
+        private static readonly byte[] s_getResponseBytes = Encoding.UTF8.GetBytes(
 @"{
   ""etag"": ""4f6dd610dd5e4deebc7fbaef685fb903"",
   ""key"": ""key"",
@@ -45,7 +45,7 @@ namespace Azure.Data.AppConfiguration.Performance
         [Benchmark]
         public async Task GetAsync()
         {
-            await ConfigurationClient.GetAsync("key");
+            await s_configurationClient.GetAsync("key");
         }
 
 

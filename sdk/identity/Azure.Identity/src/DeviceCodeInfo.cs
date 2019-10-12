@@ -36,7 +36,7 @@ namespace Azure.Identity
         public string DeviceCode { get; private set; }
 
 #pragma warning disable CA1056 // Uri properties should not be strings
-        
+
         /// <summary>
         /// Verification URL where the user must navigate to authenticate using the device code and credentials.
         /// </summary>

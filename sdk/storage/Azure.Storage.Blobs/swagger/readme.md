@@ -123,6 +123,16 @@ directive:
         delete $.StorageServiceProperties;
         $.BlobServiceProperties.xml = { "name": "StorageServiceProperties" };
     }
+    if (!$.BlobContainerProperties) {
+        $.BlobContainerProperties = $.ContainerProperties;
+        delete $.ContainerProperties;
+    }
+    if (!$.BlobContainerItem) {
+        $.BlobContainerItem = $.ContainerItem;
+        const path = $.BlobContainerItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobContainerProperties");
+        $.BlobContainerItem.properties.Properties.$ref = path;
+        delete $.ContainerItem;
+    }
 - from: swagger-document
   where: $.parameters
   transform: >
@@ -145,6 +155,16 @@ directive:
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobServiceProperties");
         $.get.responses["200"].schema = { "$ref": path };
     }
+```
+
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
 ```
 
 ### /?restype=service&comp=stats
@@ -175,20 +195,25 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.ContainersSegment) {
-        $.ContainersSegment = $.ListContainersSegmentResponse;
+    if (!$.BlobContainersSegment) {
+        $.BlobContainersSegment = $.ListContainersSegmentResponse;
         delete $.ListContainersSegmentResponse;
-        $.ContainersSegment["x-az-public"] = false;
-        $.ContainersSegment.required.push("NextMarker");
+        $.BlobContainersSegment["x-az-public"] = false;
+        $.BlobContainersSegment.required.push("NextMarker");
+        $.BlobContainersSegment.properties.BlobContainerItems = $.BlobContainersSegment.properties.ContainerItems;
+        delete $.BlobContainersSegment.properties.ContainerItems;
+        const path = $.BlobContainersSegment.properties.BlobContainerItems.items.$ref.replace(/[#].*$/, "#/definitions/BlobContainerItem");
+        $.BlobContainersSegment.properties.BlobContainerItems.items.$ref = path;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/?comp=list"]
   transform: >
     const def = $.get.responses["200"].schema;
-    if (def && def["$ref"] && !def["$ref"].endsWith("ContainersSegment")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/ContainersSegment");
+    if (def && def["$ref"] && !def["$ref"].endsWith("BlobContainersSegment")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobContainersSegment");
         $.get.responses["200"].schema = { "$ref": path };
     }
+    $.get.operationId = "Service_ListBlobContainersSegment";
 ```
 
 ### /{containerName}?restype=container
@@ -202,7 +227,8 @@ directive:
     $.get.responses["200"].headers["x-ms-blob-public-access"]["x-ms-enum"].modelAsString = false;
     $.get.responses["200"]["x-az-response-name"] = "FlattenedContainerItem";
     $.get.responses["200"]["x-az-public"] = false;
-    $.put.responses["201"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["201"]["x-az-response-name"] = "BlobContainerInfo";
+
 ```
 
 ### BlobPublicAccess
@@ -222,6 +248,7 @@ directive:
   transform: >
     $.get.description = "Returns the sku name and account kind";
     $.get.responses["200"]["x-az-response-name"] = "AccountInfo";
+    $.get.responses["200"]["x-az-struct"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
@@ -239,7 +266,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=metadata"]
   transform: >
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 ```
 
 ### /{containerName}?restype=container&comp=acl
@@ -249,10 +276,10 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"]
   transform: >
     $.get.responses["200"].headers["x-ms-blob-public-access"]["x-ms-enum"].modelAsString = false;
-    $.get.responses["200"]["x-az-response-name"] = "ContainerAccessPolicy";
+    $.get.responses["200"]["x-az-response-name"] = "BlobContainerAccessPolicy";
     $.get.responses["200"]["x-az-response-schema-name"] = "SignedIdentifiers";
     $.put.responses["200"].description = "Success";
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 - from: swagger-document
   where: $.parameters.ContainerAcl
   transform: $["x-ms-client-name"] = "permissions"
@@ -280,7 +307,7 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?comp=lease&restype=container&release"]
   transform: >
     $.put.responses["200"].description = "Success";
-    $.put.responses["200"]["x-az-response-name"] = "ContainerInfo";
+    $.put.responses["200"]["x-az-response-name"] = "BlobContainerInfo";
 ```
 
 ### /{containerName}?comp=lease&restype=container&renew
@@ -336,7 +363,7 @@ directive:
         delete $.BlobsFlatSegment.properties.Segment;
         delete $.BlobFlatListSegment;
     }
-    $.BlobItem.required = [ "Name", "Properties" ];
+    $.BlobItem.required = [ "Name", "Properties", "Deleted" ];
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=list&flat"]
   transform: >
@@ -432,6 +459,7 @@ directive:
         delete $.BlobItemProperties.required;
         $.BlobItemProperties.properties["Content-MD5"]["x-ms-client-name"] = "ContentHash";
         $.BlobItemProperties.properties.CopySource.format = "url";
+        $.BlobItemProperties.required = ["AccessTierInferred"];
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
     }
@@ -440,6 +468,7 @@ directive:
   transform: >
     $.get.responses["200"]["x-az-response-name"] = "FlattenedDownloadProperties";
     $.get.responses["200"]["x-az-public"] = false;
+    $.get.responses["200"]["x-az-stream"] = true;
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -448,6 +477,7 @@ directive:
     $.get.responses["200"]["x-az-response-schema-name"] = "Content";
     $.get.responses["206"]["x-az-response-name"] = "FlattenedDownloadProperties";
     $.get.responses["206"]["x-az-public"] = false;
+    $.get.responses["206"]["x-az-stream"] = true;
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -539,6 +569,24 @@ directive:
     $.type = "array";
     $.collectionFormat = "csv";
     $.items = { "type": "string" };
+```
+
+### RehydratePriority
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.RehydratePriority
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+```
+
+### ArchiveStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ArchiveStatus
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
 ```
 
 ### /{containerName}/{blob}?comp=metadata
@@ -681,6 +729,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
 ```
@@ -693,6 +742,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"] = {
         "x-ms-client-name": "IsServerEncrypted",
@@ -700,6 +750,11 @@ directive:
         "x-az-demote-header": true,
         "description": "The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise."
     };
+    $.put.responses["201"].headers["x-ms-encryption-key-sha256"] = {
+          "x-ms-client-name": "EncryptionKeySha256",
+          "type": "string",
+          "description": "The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key."
+              };
 ```
 
 ### /{containerName}/{blob}?comp=page&update&fromUrl
@@ -711,6 +766,7 @@ directive:
     $.put.operationId = "PageBlob_UploadPagesFromUri";
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
+    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["304"] = {
@@ -752,6 +808,15 @@ directive:
         "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
+```
+
+### Define PageRange as struct
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.PageRange
+  transform: >
+     $["x-az-struct"] = true;
 ```
 
 ### /{containerName}/{blob}?comp=properties&Resize
@@ -929,12 +994,22 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.ContainerProperties
+  where: $.definitions.BlobContainerProperties
   transform: >
     $.required = ["Last-Modified", "ETag"];
     $.properties.ETag = $.properties.Etag;
     $.properties.ETag.xml = { "name":  "Etag" };
     delete $.properties.Etag;
+```
+
+### UserDelegationKey properties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.UserDelegationKey
+  transform: >
+    $.properties.SignedTid["x-ms-client-name"] = "SignedTenantId";
+    $.properties.SignedOid["x-ms-client-name"] = "SignedObjectId";
 ```
 
 ### Make sure everything has a type
@@ -976,18 +1051,10 @@ directive:
   where: $.parameters.ListContainersInclude
   transform: >
     $["x-az-public"] = false;
+    $["x-ms-enum"].name = "ListBlobContainersIncludeType"
 ```
 
-### Logging
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.Logging
-  transform: >
-    $["x-az-disable-warnings"] = "CA1724";
-```
-
-### Hide StorageError
+### Hide Error models
 ``` yaml
 directive:
 - from: swagger-document
@@ -997,6 +1064,10 @@ directive:
     $.properties.Code = { "type": "string" };
 - from: swagger-document
   where: $.definitions.DataLakeStorageError
+  transform: >
+    $["x-az-public"] = false;
+- from: swagger-document
+  where: $.definitions.DataLakeStorageError.properties["error"]
   transform: >
     $["x-az-public"] = false;
 ```
@@ -1033,7 +1104,7 @@ directive:
     - $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"].get.responses["200"].headers["x-ms-blob-public-access"]
   transform: >
     $.enum = [ "none", "container", "blob" ];
-    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "container", value: "container" }, { name: "blob", value: "blob" }];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "blobContainer", value: "container" }, { name: "blob", value: "blob" }];
     $["x-az-enum-skip-value"] = "none";
 - from: swagger-document
   where: $.definitions.PublicAccessType
@@ -1042,10 +1113,13 @@ directive:
 - from: swagger-document
   where: $.parameters.BlobPublicAccess
   transform: $.required = true;
-```
+- from: swagger-document
+  where: $.definitions.ContainerProperties
+  transform: $.required.push("PublicAccess");
+  ```
 
-### Make lease duration a long
-Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+### Make lease duration/break period a long
+Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
 type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
 ``` yaml
 directive:
@@ -1053,4 +1127,149 @@ directive:
   where: $.parameters.LeaseDuration
   transform: >
     $.format = "int64";
+- from: swagger-document
+  where: $.parameters.LeaseBreakPeriod
+  transform: >
+    $.format = "int64";
+```
+
+### Merge the PageBlob AccessTier type
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PremiumPageBlobAccessTierOptional
+  transform: >
+    $["x-ms-enum"].name = "AccessTier";
+```
+
+### Hide Result models relating to data lake
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&directory"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=getAccessControl&blob"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&directory"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl&blob"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?FileRename"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?resource=directory&Create"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?DirectoryDelete"]
+  transform: >
+    $.delete.responses["200"]["x-az-public"] = false;
+```
+
+### Remove XMS prefix from ContentCrc64 property in Info models
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=block&fromURL"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=blocklist"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&clear"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=page&update&fromUrl"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=appendblock"]
+  transform: >
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-client-name"] = "ContentCrc64";
+```
+
+### Rename SetTier to SetAccessTier
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=tier"]
+  transform: >
+    $.put.operationId = "Blob_SetAccessTier";
+```
+
+### Prepend Blob prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Logging["x-ms-client-name"] = "BlobAnalyticsLogging";
+    $.Logging.xml = { "name": "Logging"};
+    $.BlobServiceProperties.properties.Logging.xml = { "name": "Logging"};
+    $.Metrics["x-ms-client-name"] = "BlobMetrics";
+    $.Metrics.xml = { "name": "Metrics"};
+    $.BlobServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.BlobServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "BlobCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.BlobServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "BlobRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
+    $.BlobServiceProperties.properties.DeleteRetentionPolicy.xml = { "name": "DeleteRetentionPolicy"};
+    $.StaticWebsite["x-ms-client-name"] = "BlobStaticWebsite";
+    $.StaticWebsite.xml = { "name": "StaticWebsite"};
+    $.BlobServiceProperties.properties.StaticWebsite.xml = { "name": "StaticWebsite"};
+ ```
+
+### Hide BlockListType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlockListType
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Batch returns a 202
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/?comp=batch"].post.responses
+  transform: >
+    const response = $["200"];
+    if (response) {
+        delete $["200"];
+        $["202"] = response;
+        $["202"]["x-az-public"] = false;
+        $["202"]["x-az-response-name"] = "BlobBatchResult";
+        $["202"]["x-az-response-schema-name"] = "Content";
+    }
 ```

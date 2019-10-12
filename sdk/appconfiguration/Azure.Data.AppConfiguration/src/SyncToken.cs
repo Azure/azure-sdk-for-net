@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 namespace Azure.Data.AppConfiguration
 {
@@ -17,7 +16,7 @@ namespace Azure.Data.AppConfiguration
         public string Value { get; }
 
         /// <summary>
-        /// Token sequence number (version). Higher means newer version of the same token. 
+        /// Token sequence number (version). Higher means newer version of the same token.
         /// </summary>
         public long SequenceNumber { get; }
 

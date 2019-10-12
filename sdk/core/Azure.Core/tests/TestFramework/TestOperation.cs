@@ -10,8 +10,8 @@ namespace Azure.Core.Tests.TestFramework
     public sealed class TestOperation<T> : Operation<T>
     {
         private TimeSpan _after;
-        private T _finalResult;
-        private Response _finalResponse;
+        private readonly T _finalResult;
+        private readonly Response _finalResponse;
 
         private bool _completed;
         private DateTimeOffset _started;
@@ -30,6 +30,8 @@ namespace Azure.Core.Tests.TestFramework
             _finalResponse = finalResponse;
             _started = DateTimeOffset.UtcNow;
         }
+
+        protected override TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromMilliseconds(1);
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {

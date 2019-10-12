@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// agent upgrade available</param>
         /// <param name="isDpmUpgradeAvailable">To check if backup engine
         /// upgrade available</param>
-        /// <param name="extendedInfo">Extended info of the backup
-        /// engine</param>
+        /// <param name="extendedInfo">Extended info of the
+        /// backupengine</param>
         public DpmBackupEngine(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string backupEngineState = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), string backupEngineId = default(string), string dpmVersion = default(string), string azureBackupAgentVersion = default(string), bool? isAzureBackupAgentUpgradeAvailable = default(bool?), bool? isDpmUpgradeAvailable = default(bool?), BackupEngineExtendedInfo extendedInfo = default(BackupEngineExtendedInfo))
             : base(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo)
         {

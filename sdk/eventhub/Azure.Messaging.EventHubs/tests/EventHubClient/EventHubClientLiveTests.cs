@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -38,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientCanConnectToEventHubsUsingFullConnectionString()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -57,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientCanConnectToEventHubsUsingConnectionStringAndEventHub()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.EventHubsConnectionString;
 
@@ -76,10 +77,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientCanConnectToEventHubsUsingSharedKeyCredential()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var properties = ConnectionStringParser.Parse(connectionString);
+                ConnectionStringProperties properties = ConnectionStringParser.Parse(connectionString);
                 var credential = new EventHubSharedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
 
                 await using (var client = new EventHubClient(properties.Endpoint.Host, scope.EventHubName, credential))
@@ -97,11 +98,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientCanConnectToEventHubsUsingArguments()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var clientOptions = new EventHubClientOptions();
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var connectionProperties = ConnectionStringParser.Parse(connectionString);
+                ConnectionStringProperties connectionProperties = ConnectionStringParser.Parse(connectionString);
 
                 var credential = new SharedAccessSignatureCredential
                 (
@@ -133,13 +134,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitionCount = 4;
 
-            await using (var scope = await EventHubScope.CreateAsync(partitionCount))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
                 var connectionString = TestEnvironment.EventHubsConnectionString;
 
                 await using (var client = new EventHubClient(connectionString, scope.EventHubName, new EventHubClientOptions { TransportType = transportType }))
                 {
-                    var properties = await client.GetPropertiesAsync();
+                    EventHubProperties properties = await client.GetPropertiesAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
                     Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
@@ -161,11 +162,11 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitionCount = 4;
 
-            await using (var scope = await EventHubScope.CreateAsync(partitionCount))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
                 var clientOptions = new EventHubClientOptions();
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var connectionProperties = ConnectionStringParser.Parse(connectionString);
+                ConnectionStringProperties connectionProperties = ConnectionStringParser.Parse(connectionString);
 
                 var credential = new SharedAccessSignatureCredential
                 (
@@ -181,16 +182,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubName, credential, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                    var properties = await client.GetPropertiesAsync();
+                    EventHubProperties properties = await client.GetPropertiesAsync();
                     var partition = properties.PartitionIds.First();
-                    var partitionProperties = await client.GetPartitionPropertiesAsync(partition, cancellation.Token);
+                    PartitionProperties partitionProperties = await client.GetPartitionPropertiesAsync(partition, cancellation.Token);
 
                     Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
                     Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
                     Assert.That(partitionProperties.EventHubName, Is.EqualTo(connectionProperties.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
-                    Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(Int64)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(Int64)), "The last offset should have been populated.");
+                    Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
                 }
             }
         }
@@ -203,13 +204,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientPartitionIdsMatchPartitionProperties()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    var properties = await client.GetPropertiesAsync();
+                    EventHubProperties properties = await client.GetPropertiesAsync();
                     var partitions = await client.GetPartitionIdsAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
@@ -230,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(false)]
         public async Task ClientCannotRetrieveMetadataWhenClosed(bool sync)
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -271,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("-")]
         public async Task ClientCannotRetrievePartitionPropertiesWhenPartitionIdIsInvalid(string invalidPartition)
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -290,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientCannotRetrieveMetadataWhenProxyIsInvalid()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var clientOptions = new EventHubClientOptions

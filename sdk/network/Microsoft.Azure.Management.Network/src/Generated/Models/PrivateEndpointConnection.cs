@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// information about the state of the connection between service
         /// consumer and provider.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// private endpoint connection. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'</param>
+        /// private endpoint connection resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the provisioning state of the private endpoint
-        /// connection. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// connection resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

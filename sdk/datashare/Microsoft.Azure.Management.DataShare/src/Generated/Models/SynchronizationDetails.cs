@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="dataSetId">id of dataSet</param>
         /// <param name="dataSetType">type of DataSet. Possible values include:
         /// 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
-        /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder',
-        /// 'AdlsGen1File'</param>
+        /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
+        /// 'SqlDBTable', 'SqlDWTable'</param>
         /// <param name="durationMs">duration of dataset level copy</param>
         /// <param name="endTime">End time of dataset level copy</param>
         /// <param name="filesRead">The number of files read from the source
@@ -42,6 +42,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// sink dataset.</param>
         /// <param name="message">Error Message if any</param>
         /// <param name="name">name of dataSet</param>
+        /// <param name="rowsCopied">The number of files copied into the sink
+        /// dataset.</param>
+        /// <param name="rowsRead">The number of rows read from the source
+        /// dataset.</param>
         /// <param name="sizeRead">The size of the data read from the source
         /// dataset in bytes.</param>
         /// <param name="sizeWritten">The size of the data written into the
@@ -50,7 +54,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="status">Raw Status</param>
         /// <param name="vCore">The vCore units consumed for the dataset
         /// synchronization.</param>
-        public SynchronizationDetails(string dataSetId = default(string), string dataSetType = default(string), int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), long? filesRead = default(long?), long? filesWritten = default(long?), string message = default(string), string name = default(string), long? sizeRead = default(long?), long? sizeWritten = default(long?), System.DateTime? startTime = default(System.DateTime?), string status = default(string), long? vCore = default(long?))
+        public SynchronizationDetails(string dataSetId = default(string), string dataSetType = default(string), int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), long? filesRead = default(long?), long? filesWritten = default(long?), string message = default(string), string name = default(string), long? rowsCopied = default(long?), long? rowsRead = default(long?), long? sizeRead = default(long?), long? sizeWritten = default(long?), System.DateTime? startTime = default(System.DateTime?), string status = default(string), long? vCore = default(long?))
         {
             DataSetId = dataSetId;
             DataSetType = dataSetType;
@@ -60,6 +64,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
             FilesWritten = filesWritten;
             Message = message;
             Name = name;
+            RowsCopied = rowsCopied;
+            RowsRead = rowsRead;
             SizeRead = sizeRead;
             SizeWritten = sizeWritten;
             StartTime = startTime;
@@ -82,7 +88,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <summary>
         /// Gets type of DataSet. Possible values include: 'Blob', 'Container',
         /// 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
-        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File'
+        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'SqlDBTable',
+        /// 'SqlDWTable'
         /// </summary>
         [JsonProperty(PropertyName = "dataSetType")]
         public string DataSetType { get; private set; }
@@ -122,6 +129,18 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the number of files copied into the sink dataset.
+        /// </summary>
+        [JsonProperty(PropertyName = "rowsCopied")]
+        public long? RowsCopied { get; private set; }
+
+        /// <summary>
+        /// Gets the number of rows read from the source dataset.
+        /// </summary>
+        [JsonProperty(PropertyName = "rowsRead")]
+        public long? RowsRead { get; private set; }
 
         /// <summary>
         /// Gets the size of the data read from the source dataset in bytes.

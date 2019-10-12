@@ -34,7 +34,7 @@ namespace Azure
         /// Gets the <see cref="Response"/> that provided this
         /// <see cref="Page{T}"/>.
         /// </summary>
-        public Response GetRawResponse() => this._response;
+        public Response GetRawResponse() => _response;
 
         /// <summary>
         /// Creates a new <see cref="Page{T}"/>.
@@ -50,9 +50,9 @@ namespace Azure
         /// </param>
         public Page(IReadOnlyList<T> values, string? continuationToken, Response response)
         {
-            this.Values = values;
-            this.ContinuationToken = continuationToken;
-            this._response = response;
+            Values = values;
+            ContinuationToken = continuationToken;
+            _response = response;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object? obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="Page{T}"/>.

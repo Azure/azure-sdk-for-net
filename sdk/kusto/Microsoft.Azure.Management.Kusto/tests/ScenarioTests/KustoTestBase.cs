@@ -19,10 +19,16 @@ namespace Kusto.Tests.ScenarioTests
         private const string ObjectIdKey = "ObjectId";
         private const string LocationKey = "location";
         private const string SubIdKey = "SubId";
-        private const string ApplicationIdKey = "ApplicationId";
         public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest";
+        public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest";
+        public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Devices/IotHubs/ofertestiot";
         public string dBprincipalMail = "oflipman@microsoft.com";
         public string consumerGroupName = "$Default";
+        public readonly string tableName = "MyTest";
+        public readonly string resourceGroupForTest = "ofertestgroup";
+        public readonly string clusterForEventGridTest = "ofertestforclient";
+        public readonly string databaseForEventGridTest = "databasetest";
+        public readonly string sharedAccessPolicyNameForIotHub = "read";
 
 
         public string tenantId { get; set; }
@@ -34,6 +40,8 @@ namespace Kusto.Tests.ScenarioTests
         public string clusterName { get; internal set; }
         public string databaseName { get; internal set; }
         public string eventHubConnectionName { get; internal set; }
+        public string eventGridConnectinoName { get; internal set; }
+        public string iotHubConnectionName { get; internal set; }
         public Dictionary<string, string> tags { get; internal set; }
         public AzureSku sku1 { get; set; }
         public AzureSku sku2 { get; set; }
@@ -41,10 +49,11 @@ namespace Kusto.Tests.ScenarioTests
         public TimeSpan? hotCachePeriod1 { get; set; }
         public TimeSpan? softDeletePeriod2 { get; set; }
         public TimeSpan? hotCachePeriod2 { get; set; }
-        public string eventHubName { get; set; }
         public Cluster cluster { get; set; }
         public Database database { get; set; }
         public EventHubDataConnection eventhubConnection { get; set; }
+        public EventGridDataConnection eventGridDataConnection { get; set; }
+        public IotHubDataConnection iotHubDataConnection { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
         public string dataFormat { get; set; }
         public List<DatabasePrincipal> databasePrincipals { get; set; }
@@ -93,10 +102,12 @@ namespace Kusto.Tests.ScenarioTests
 
             clusterName = TestUtilities.GenerateName("testcluster");
             databaseName = TestUtilities.GenerateName("testdatabase");
-            eventHubConnectionName = TestUtilities.GenerateName("eventhubConection");
+            eventHubConnectionName = TestUtilities.GenerateName("eventhubConnection");
+            eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
+            iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
 
-            sku1 = new AzureSku(name: "D13_v2", capacity: 2);
-            sku2 = new AzureSku(name: "D14_v2", capacity: 2);
+            sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
+            sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
 
             trustedExternalTenants = new List<TrustedExternalTenant>(1) { new TrustedExternalTenant(this.tenantId) };
 
@@ -107,9 +118,11 @@ namespace Kusto.Tests.ScenarioTests
             softDeletePeriod2 = TimeSpan.FromDays(6);
             dataFormat = "CSV";
 
-            cluster = new Cluster(sku: new AzureSku(name: "D13_v2"), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            cluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
             database = new Database(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
+            eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName, dataFormat, location: location);
+            iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
 
             databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
             databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};

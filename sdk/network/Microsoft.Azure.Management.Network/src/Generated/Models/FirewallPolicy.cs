@@ -40,21 +40,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="ruleGroups">List of references to
-        /// FirewallPolicyRuleGroups</param>
+        /// FirewallPolicyRuleGroups.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'</param>
+        /// firewall policy resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="basePolicy">The parent firewall policy from which
         /// rules are inherited.</param>
         /// <param name="firewalls">List of references to Azure Firewalls that
-        /// this Firewall Policy is associated with</param>
+        /// this Firewall Policy is associated with.</param>
         /// <param name="childPolicies">List of references to Child Firewall
-        /// Policies</param>
+        /// Policies.</param>
         /// <param name="threatIntelMode">The operation mode for Threat
         /// Intelligence. Possible values include: 'Alert', 'Deny',
         /// 'Off'</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -74,14 +74,15 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets list of references to FirewallPolicyRuleGroups
+        /// Gets list of references to FirewallPolicyRuleGroups.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ruleGroups")]
         public IList<SubResource> RuleGroups { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
-        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+        /// Gets or sets the provisioning state of the firewall policy
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
@@ -95,13 +96,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets list of references to Azure Firewalls that this Firewall
-        /// Policy is associated with
+        /// Policy is associated with.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewalls")]
         public IList<SubResource> Firewalls { get; private set; }
 
         /// <summary>
-        /// Gets list of references to Child Firewall Policies
+        /// Gets list of references to Child Firewall Policies.
         /// </summary>
         [JsonProperty(PropertyName = "properties.childPolicies")]
         public IList<SubResource> ChildPolicies { get; private set; }

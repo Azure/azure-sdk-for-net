@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -29,6 +27,8 @@ namespace Azure.Core.Testing
 
         public override string ClientRequestId { get; set; }
 
+        public bool IsDisposed { get; private set; }
+
         public override string ToString() => $"{Status}";
 
         public void SetContent(byte[] content)
@@ -43,7 +43,7 @@ namespace Azure.Core.Testing
 
         public void AddHeader(HttpHeader header)
         {
-            if (!_headers.TryGetValue(header.Name, out var values))
+            if (!_headers.TryGetValue(header.Name, out List<string> values))
             {
                 _headers[header.Name] = values = new List<string>();
             }
@@ -56,7 +56,7 @@ namespace Azure.Core.Testing
 #endif
         protected override bool TryGetHeader(string name, out string value)
         {
-            if (_headers.TryGetValue(name, out var values))
+            if (_headers.TryGetValue(name, out List<string> values))
             {
                 value = JoinHeaderValue(values);
                 return true;
@@ -71,7 +71,7 @@ namespace Azure.Core.Testing
 #endif
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
-            var result = _headers.TryGetValue(name, out var valuesList);
+            var result = _headers.TryGetValue(name, out List<string> valuesList);
             values = valuesList;
             return result;
         }
@@ -96,6 +96,7 @@ namespace Azure.Core.Testing
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }

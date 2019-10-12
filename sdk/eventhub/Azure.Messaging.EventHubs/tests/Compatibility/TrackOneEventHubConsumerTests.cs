@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var priority = 8765;
             var identifier = "ThisIsAnAwesomeConsumer!";
             var partitionMetrics = new LastEnqueuedEventProperties(eventHub, partition);
-            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy retryPolicy = Mock.Of<EventHubRetryPolicy>();
             var mock = new ObservableReceiverMock(new ClientMock(), consumerGroup, partition, TrackOne.EventPosition.FromEnqueuedTime(position.EnqueuedTime.Value.UtcDateTime), priority, new ReceiverOptions { Identifier = identifier, EnableReceiverRuntimeMetric = true });
             var consumer = new TrackOneEventHubConsumer(_ => mock, retryPolicy, partitionMetrics);
 
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mock.ConstructedWith.Options.Identifier, Is.EqualTo(identifier), "The consumer identifier should match.");
             Assert.That(mock.ConstructedWith.Options.EnableReceiverRuntimeMetric, Is.True, "The receiver metrics should be enabled when set in the options.");
 
-            var consumerRetry = GetRetryPolicy(consumer);
+            EventHubRetryPolicy consumerRetry = GetRetryPolicy(consumer);
             Assert.That(consumerRetry, Is.SameAs(retryPolicy), "The consumer retry instance should match.");
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
             var consumer = new TrackOneEventHubConsumer(_ => mock, Mock.Of<EventHubRetryPolicy>(), null);
-            var results = await consumer.ReceiveAsync(10, default, default);
+            IEnumerable<EventData> results = await consumer.ReceiveAsync(10, default, default);
 
             Assert.That(results, Is.Not.Null, "There should have been an enumerable returned.");
             Assert.That(results.Any(), Is.False, "The result enumerable should have been empty.");
@@ -131,10 +131,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mock.ReceiveResult[1].SystemProperties = new TrackOne.EventData.SystemPropertiesCollection(6666, DateTime.Parse("1974-12-09T20:00:00Z").ToUniversalTime(), "24", null);
             mock.ReceiveResult[1].Properties["test"] = "this is a test!";
 
-            var results = await consumer.ReceiveAsync(10, default, default);
+            IEnumerable<EventData> results = await consumer.ReceiveAsync(10, default, default);
             var index = 0;
 
-            foreach (var result in results)
+            foreach (EventData result in results)
             {
                 Assert.That(TrackOneComparer.IsEventDataEquivalent(mock.ReceiveResult[index], result), Is.True, $"The transformed result at index { index } did not match the source result.");
                 ++index;
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(results.Count, Is.EqualTo(mock.ReceiveResult.Count), "There should have been the same number of translated results as there were source results.");
             Assert.That(consumer.LastEnqueuedEventInformation, Is.SameAs(metrics), "The runtime metrics should have been set.");
-            Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset, Is.EqualTo(Int64.Parse(mock.ReceiveResult[1].LastEnqueuedOffset)), "The offset should match.");
+            Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset, Is.EqualTo(long.Parse(mock.ReceiveResult[1].LastEnqueuedOffset)), "The offset should match.");
             Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber, Is.EqualTo(mock.ReceiveResult[1].LastSequenceNumber), "The sequence number should match.");
             Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.Value.UtcDateTime, Is.EqualTo(mock.ReceiveResult[1].LastEnqueuedTime), "The last enqueue time should match.");
             Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.Value.UtcDateTime, Is.EqualTo(mock.ReceiveResult[1].RetrievalTime), "The update time should match.");
@@ -227,13 +227,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProducerUpdatesTheRetryPolicyWhenTheSenderIsNotCreated()
         {
-            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
             var consumer = new TrackOneEventHubConsumer(_ => mock, newRetryPolicy, null);
 
             consumer.UpdateRetryPolicy(newRetryPolicy);
 
-            var consumerRetry = GetRetryPolicy(consumer);
+            EventHubRetryPolicy consumerRetry = GetRetryPolicy(consumer);
             Assert.That(consumerRetry, Is.SameAs(newRetryPolicy), "The consumer retry instance should match.");
         }
 
@@ -245,7 +245,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProduerUpdatesTheRetryPolicyWhenTheSenderIsCreated()
         {
-            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
             var consumer = new TrackOneEventHubConsumer(_ => mock, newRetryPolicy, null);
 
@@ -255,11 +255,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await consumer.ReceiveAsync(0, TimeSpan.Zero, default);
             consumer.UpdateRetryPolicy(newRetryPolicy);
 
-            var consumerRetry = GetRetryPolicy(consumer);
+            EventHubRetryPolicy consumerRetry = GetRetryPolicy(consumer);
             Assert.That(consumerRetry, Is.SameAs(newRetryPolicy), "The consumer retry instance should match.");
             Assert.That(mock.RetryPolicy, Is.TypeOf<TrackOneRetryPolicy>(), "The track one client retry policy should be a custom compatibility wrapper.");
 
-            var trackOnePolicy = GetSourcePolicy((TrackOneRetryPolicy)mock.RetryPolicy);
+            EventHubRetryPolicy trackOnePolicy = GetSourcePolicy((TrackOneRetryPolicy)mock.RetryPolicy);
             Assert.That(trackOnePolicy, Is.SameAs(newRetryPolicy), "The new retry policy should have been used as the source for the compatibility wrapper.");
         }
 

@@ -35,8 +35,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the CosmosDbLinkedService class.
         /// </summary>
-        /// <param name="connectionString">The connection string. Type: string,
-        /// SecureString or AzureKeyVaultSecretReference.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -44,16 +42,26 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        /// <param name="accountKey">The Azure key vault secret reference of
-        /// accountKey in connection string.</param>
+        /// <param name="connectionString">The connection string. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="accountEndpoint">The endpoint of the Azure CosmosDB
+        /// account. Type: string (or Expression with resultType
+        /// string)</param>
+        /// <param name="database">The name of the database. Type: string (or
+        /// Expression with resultType string)</param>
+        /// <param name="accountKey">The account key of the Azure CosmosDB
+        /// account. Type: SecureString or
+        /// AzureKeyVaultSecretReference.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public CosmosDbLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object encryptedCredential = default(object))
+        public CosmosDbLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object accountEndpoint = default(object), object database = default(object), SecretBase accountKey = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
+            AccountEndpoint = accountEndpoint;
+            Database = database;
             AccountKey = accountKey;
             EncryptedCredential = encryptedCredential;
             CustomInit();
@@ -72,11 +80,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object ConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure key vault secret reference of accountKey in
-        /// connection string.
+        /// Gets or sets the endpoint of the Azure CosmosDB account. Type:
+        /// string (or Expression with resultType string)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.accountEndpoint")]
+        public object AccountEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the database. Type: string (or Expression
+        /// with resultType string)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.database")]
+        public object Database { get; set; }
+
+        /// <summary>
+        /// Gets or sets the account key of the Azure CosmosDB account. Type:
+        /// SecureString or AzureKeyVaultSecretReference.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.accountKey")]
-        public AzureKeyVaultSecretReference AccountKey { get; set; }
+        public SecretBase AccountKey { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -95,14 +117,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (ConnectionString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
-            }
-            if (AccountKey != null)
-            {
-                AccountKey.Validate();
-            }
         }
     }
 }

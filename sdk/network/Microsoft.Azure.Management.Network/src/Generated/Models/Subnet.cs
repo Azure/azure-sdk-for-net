@@ -51,21 +51,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// policies.</param>
         /// <param name="privateEndpoints">An array of references to private
         /// endpoints.</param>
-        /// <param name="ipConfigurations">Gets an array of references to the
+        /// <param name="ipConfigurations">An array of references to the
         /// network interface IP configurations using subnet.</param>
         /// <param name="ipConfigurationProfiles">Array of IP configuration
         /// profiles which reference this subnet.</param>
-        /// <param name="resourceNavigationLinks">Gets an array of references
-        /// to the external resources using subnet.</param>
-        /// <param name="serviceAssociationLinks">Gets an array of references
-        /// to services injecting into this subnet.</param>
-        /// <param name="delegations">Gets an array of references to the
-        /// delegations on the subnet.</param>
+        /// <param name="resourceNavigationLinks">An array of references to the
+        /// external resources using subnet.</param>
+        /// <param name="serviceAssociationLinks">An array of references to
+        /// services injecting into this subnet.</param>
+        /// <param name="delegations">An array of references to the delegations
+        /// on the subnet.</param>
         /// <param name="purpose">A read-only string identifying the intention
         /// of use for this subnet based on delegations and other user-defined
         /// properties.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// resource.</param>
+        /// subnet resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'</param>
         /// <param name="privateEndpointNetworkPolicies">Enable or Disable
         /// apply network policies on private end point in the subnet.</param>
         /// <param name="privateLinkServiceNetworkPolicies">Enable or Disable
@@ -169,19 +170,22 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<IPConfigurationProfile> IpConfigurationProfiles { get; private set; }
 
         /// <summary>
-        /// Gets an array of references to the external resources using subnet.
+        /// Gets or sets an array of references to the external resources using
+        /// subnet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceNavigationLinks")]
         public IList<ResourceNavigationLink> ResourceNavigationLinks { get; set; }
 
         /// <summary>
-        /// Gets an array of references to services injecting into this subnet.
+        /// Gets or sets an array of references to services injecting into this
+        /// subnet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceAssociationLinks")]
         public IList<ServiceAssociationLink> ServiceAssociationLinks { get; set; }
 
         /// <summary>
-        /// Gets an array of references to the delegations on the subnet.
+        /// Gets or sets an array of references to the delegations on the
+        /// subnet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.delegations")]
         public IList<Delegation> Delegations { get; set; }
@@ -194,7 +198,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Purpose { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource.
+        /// Gets or sets the provisioning state of the subnet resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

@@ -1,22 +1,22 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+using TrackOne.Primitives;
 
 namespace TrackOne.Amqp
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-    using TrackOne.Primitives;
-
-    static class AmqpMessageConverter
+    internal static class AmqpMessageConverter
     {
-        const SectionFlag ClientAmqpPropsSetOnSendToEventHub =
+        private const SectionFlag ClientAmqpPropsSetOnSendToEventHub =
             SectionFlag.ApplicationProperties |
             SectionFlag.MessageAnnotations |
             SectionFlag.DeliveryAnnotations |
@@ -77,7 +77,7 @@ namespace TrackOne.Amqp
             }
             else if (dataCount == 1) // ??? can't be null
             {
-                var data = eventDatas.First();
+                EventData data = eventDatas.First();
 
                 // Create AMQP message if not created yet. We might have created AmqpMessage while building the EventDataBatch.
                 returnMessage = data.AmqpMessage;
@@ -115,7 +115,7 @@ namespace TrackOne.Amqp
             }
         }
 
-        static void UpdateAmqpMessageHeadersAndProperties(
+        private static void UpdateAmqpMessageHeadersAndProperties(
             AmqpMessage message,
             string publisher,
             EventData eventData,
@@ -133,10 +133,9 @@ namespace TrackOne.Amqp
                     message.ApplicationProperties = new ApplicationProperties();
                 }
 
-                foreach (var pair in eventData.Properties)
+                foreach (KeyValuePair<string, object> pair in eventData.Properties)
                 {
-                    object amqpObject;
-                    if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out amqpObject))
+                    if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out object amqpObject))
                     {
                         message.ApplicationProperties.Map[pair.Key] = amqpObject;
                     }
@@ -144,7 +143,7 @@ namespace TrackOne.Amqp
             }
         }
 
-        static void UpdateEventDataHeaderAndProperties(AmqpMessage amqpMessage, EventData data)
+        private static void UpdateEventDataHeaderAndProperties(AmqpMessage amqpMessage, EventData data)
         {
             SectionFlag sections = amqpMessage.Sections;
 
@@ -155,10 +154,9 @@ namespace TrackOne.Amqp
                     data.SystemProperties = new EventData.SystemPropertiesCollection();
                 }
 
-                foreach (var keyValuePair in amqpMessage.MessageAnnotations.Map)
+                foreach (KeyValuePair<MapKey, object> keyValuePair in amqpMessage.MessageAnnotations.Map)
                 {
-                    object netObject;
-                    if (TryGetNetObjectFromAmqpObject(keyValuePair.Value, MappingType.ApplicationProperty, out netObject))
+                    if (TryGetNetObjectFromAmqpObject(keyValuePair.Value, MappingType.ApplicationProperty, out object netObject))
                     {
                         data.SystemProperties[keyValuePair.Key.ToString()] = netObject;
                     }
@@ -167,26 +165,22 @@ namespace TrackOne.Amqp
 
             if ((sections & SectionFlag.DeliveryAnnotations) != 0)
             {
-                long lastSequenceNumber;
-                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionLastEnqueuedSequenceNumber, out lastSequenceNumber))
+                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionLastEnqueuedSequenceNumber, out long lastSequenceNumber))
                 {
                     data.LastSequenceNumber = lastSequenceNumber;
                 }
 
-                string lastEnqueuedOffset;
-                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionLastEnqueuedOffset, out lastEnqueuedOffset))
+                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionLastEnqueuedOffset, out string lastEnqueuedOffset))
                 {
                     data.LastEnqueuedOffset = lastEnqueuedOffset;
                 }
 
-                DateTime lastEnqueuedTime;
-                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionLastEnqueuedTimeUtc, out lastEnqueuedTime))
+                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionLastEnqueuedTimeUtc, out DateTime lastEnqueuedTime))
                 {
                     data.LastEnqueuedTime = lastEnqueuedTime;
                 }
 
-                DateTime retrievalTime;
-                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionRuntimeInfoRetrievalTimeUtc, out retrievalTime))
+                if (amqpMessage.DeliveryAnnotations.Map.TryGetValue(AmqpClientConstants.ManagementPartitionRuntimeInfoRetrievalTimeUtc, out DateTime retrievalTime))
                 {
                     data.RetrievalTime = retrievalTime;
                 }
@@ -201,8 +195,7 @@ namespace TrackOne.Amqp
                         data.Properties = new Dictionary<string, object>();
                     }
 
-                    object netObject;
-                    if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out netObject))
+                    if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out object netObject))
                     {
                         data.Properties[pair.Key.ToString()] = netObject;
                     }
@@ -243,7 +236,7 @@ namespace TrackOne.Amqp
             }
         }
 
-        static ArraySegment<byte> StreamToBytes(Stream stream)
+        private static ArraySegment<byte> StreamToBytes(Stream stream)
         {
             ArraySegment<byte> buffer;
 
@@ -261,7 +254,7 @@ namespace TrackOne.Amqp
             return buffer;
         }
 
-        static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
+        private static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
         {
             amqpObject = null;
             if (netObject == null)
@@ -335,7 +328,7 @@ namespace TrackOne.Amqp
             return amqpObject != null;
         }
 
-        static bool TryGetNetObjectFromAmqpObject(object amqpObject, MappingType mappingType, out object netObject)
+        private static bool TryGetNetObjectFromAmqpObject(object amqpObject, MappingType mappingType, out object netObject)
         {
             netObject = null;
             if (amqpObject == null)
@@ -410,7 +403,7 @@ namespace TrackOne.Amqp
                     {
                         AmqpMap map = (AmqpMap)amqpObject;
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                        foreach (var pair in map)
+                        foreach (KeyValuePair<MapKey, object> pair in map)
                         {
                             dictionary.Add(pair.Key.ToString(), pair.Value);
                         }

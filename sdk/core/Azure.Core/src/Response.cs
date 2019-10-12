@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Azure.Core.Http;
+using Azure.Core;
 
 namespace Azure
 {
@@ -31,5 +31,9 @@ namespace Azure
 
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
+        public static Response<T> FromValue<T>(T value, Response response)
+        {
+            return new ValueResponse<T>(response, value);
+        }
     }
 }

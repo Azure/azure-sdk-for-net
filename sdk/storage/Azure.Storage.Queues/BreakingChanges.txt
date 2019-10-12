@@ -1,6 +1,15 @@
 Breaking Changes
 ================
 
+12.0.0-preview.4 (2019-10)
+--------------------------
+- Removing Uri property from QueueUriBuilder and replacing with a ToUri method
+  that returns the Uri.
+- Added Queue prefix to all the QueueServiceClient.GetProperties return types
+- Made Pipeline property internal
+- Changed DequeueMessages and PeekMessages to return arrays
+- Removed public constructors from output only Models
+
 12.0.0-preview.1 (2019-07)
 --------------------------
 - New Azure.Storage.Queues client library.  For more information, please visit:

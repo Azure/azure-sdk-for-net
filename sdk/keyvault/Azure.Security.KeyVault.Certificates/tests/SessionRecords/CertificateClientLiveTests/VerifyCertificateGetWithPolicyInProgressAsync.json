@@ -1,0 +1,236 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/create?api-version=7.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "326",
+        "Content-Type": "application/json",
+        "traceparent": "00-1a9fce4265b41443b284e0a08f021858-25d8e1c0eb570648-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.0-dev.20190918.1\u002B6e0b0ba5c8b63c4a162293c3ad9f8275d623cdcd",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "7be073a6d53e02ba683a0e85b1bafe47",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "policy": {
+          "key_props": {
+            "kty": "RSA",
+            "reuse_key": false,
+            "exportable": true
+          },
+          "secret_props": {
+            "contentType": "application/x-pkcs12"
+          },
+          "x509_props": {
+            "subject": "CN=default",
+            "key_usage": [
+              "crlSign",
+              "dataEncipherment",
+              "digitalSignature",
+              "keyEncipherment",
+              "keyAgreement",
+              "keyCertSign"
+            ]
+          },
+          "issuer": {
+            "name": "Self",
+            "cert_transparency": false
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1282",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 23:21:33 GMT",
+        "Expires": "-1",
+        "Location": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/pending?api-version=7.0\u0026request_id=3bc87e17539f49f59ae09b19283e3ce1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.85;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.878",
+        "x-ms-request-id": "1dab0f59-f8d1-461b-8ee5-977938ba0139",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/pending",
+        "issuer": {
+          "name": "Self"
+        },
+        "csr": "MIICojCCAYoCAQAwEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAN/0uc1J89Gx4Lrbvn3qji9d\u002By8tzcNWCJv0k44QmJ1n1sZlQ0iGWxdw9HYxWyai743dtpw8PROrB5dyyNu05ynMNw3pgOHM\u002BFKrBAN0KYQUNgRuaKW0qNFxS/4tCUgNXLsHt\u002BNhjEs6gWmHaN7wVoN2Pw97IN7jTFi/Goh3xekgahFTOQf0ZBE1k5THJFrirXVi/X\u002B0rZhOg4L1U7l3rOADrSwoykdvdiMipBTcYSK4wmQkq2maKilwpGIiv902g9MkKEXSY8Js\u002BlsY8bcAmwLjpmhhkebjNM/ryuKrG4xhRgNkbxKxjqVHaJVVt2zSgdVQJXtos9LxUOLs8HQTNSECAwEAAaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgG\u002BMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQCZcdxbc\u002BXECz8Kqiq81I57zhKhzzc7FTxWajOJh32U7qqO5E6iF0s6IHgJlZJ2Uvmn7/Y3rUn8FxQsqszNr69aWAqMgcbRlUz7NvfL\u002BtC//PmpDbE75Dx1n9bCDeMNSUw5I7HgY6gyASKHpdLqjhJDR\u002BiP7sn3UHtsFIZW7oYR0CzAVjN0G10pg/KhhPMsnLKuB9KGEQ38U\u002Bnm9o0Cqnro7Ikmxul3ZD2T9SHKr\u002BJfJUu8h7x9e529oR\u002BalmGK/6OXCa6C/T5FgBb7CfDWsS76GM4skRSyXcq8qLrtuyQfC93IyHbNpXO/VZ7sdE7P\u002BjScHO9nSWsh/5XuYTpqOFQS",
+        "cancellation_requested": false,
+        "status": "inProgress",
+        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
+        "request_id": "3bc87e17539f49f59ae09b19283e3ce1"
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/certificates/417164010?api-version=7.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "traceparent": "00-8092481aaf3db7478696c4c45a286244-d08da815a46fe349-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.0-dev.20190918.1\u002B6e0b0ba5c8b63c4a162293c3ad9f8275d623cdcd",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "6f09dde3602f010a800cd180e053ee49",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2358",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 23:21:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.85;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.878",
+        "x-ms-request-id": "ce3d89ca-048d-4d73-a360-806284ca3f6e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/f08f3211b3c2451083edffe9a78d6890",
+        "kid": "https://pakrym-keyvault.vault.azure.net/keys/417164010/f08f3211b3c2451083edffe9a78d6890",
+        "sid": "https://pakrym-keyvault.vault.azure.net/secrets/417164010/f08f3211b3c2451083edffe9a78d6890",
+        "x5t": "-fo10fzasyQfbkyb4I1jKV2L8TA",
+        "cer": "MIIDKjCCAhKgAwIBAgIQHJdx07O\u002BQn6vj4UIDz6KFDANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDEwdkZWZhdWx0MB4XDTE5MDkxODIyNTExMVoXDTIwMDkxODIzMDExMVowEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKanZqcEXRgc58mGC8TT04EsdAkw7r5duWA2hYtiPsIIGa8tTV6LPdwG0U4IiP5u3FJog6mCPbLlTOpkI8nWrdTk3b7v4awxqp7kfFAR24URtAZTQw814biB49FNxvj4sitr6fdtyqqPn89l8pPOJR8L8iR\u002ByefuR0tMZ2pnzCI3vgGC\u002B7NF31jDkJ8CFvNRCJEOUA6pj5NI6PkrvEf\u002B6HecGyx/mr91ofhUoNwz6aQ2/Vy44inZiQKCaTQBP01isp34QfEeQyN3tQpsg7lsBkUI5RXowMFj5vDe1Qay5ou5EOZ5YxHQ8QjMbLQYS8EaRfFPr4YgWVz7WrNXDtQ5JWUCAwEAAaN8MHowDgYDVR0PAQH/BAQDAgG\u002BMAkGA1UdEwQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8GA1UdIwQYMBaAFLmrVKGy1ML1ikubki5DulCw\u002Bbk8MB0GA1UdDgQWBBS5q1ShstTC9YpLm5IuQ7pQsPm5PDANBgkqhkiG9w0BAQsFAAOCAQEANde0Njj6JCx8asqpux/W5/5hlCh/gprUbsa\u002BNYDjqqBOMZKy60ldTDDP0Ji9Xk8XHqpXJHe/2ec0hLqyoIaTM5Nt7i1nodjsNDfFJMmLJ4nh5NAQ6RME\u002B6NC9poGguuMUlrgaSf2xy0NzUyKo98dX6ngA0iXwRHOqPri7HjtTHRnIMnugyIeaHgEqPE3AS8CWcq2u4l2xdGYybDLGihQ11gzcTuugVK43dD0tvyTZ17fCUwJN6cZIRpV0GCO8PoR7Y\u002BvVGOcN1D27Op/IiWu9S2fyl8qJgtwI12asX/HjGqcD2FqX0pB/x0FFXwMnxHDwuvKNjAY2Oi7tTMkqMIcng==",
+        "attributes": {
+          "enabled": true,
+          "nbf": 1568847071,
+          "exp": 1600470071,
+          "created": 1568847671,
+          "updated": 1568847671,
+          "recoveryLevel": "Recoverable\u002BPurgeable"
+        },
+        "policy": {
+          "id": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/policy",
+          "key_props": {
+            "exportable": true,
+            "kty": "RSA",
+            "key_size": 2048,
+            "reuse_key": false
+          },
+          "secret_props": {
+            "contentType": "application/x-pkcs12"
+          },
+          "x509_props": {
+            "subject": "CN=default",
+            "ekus": [
+              "1.3.6.1.5.5.7.3.1",
+              "1.3.6.1.5.5.7.3.2"
+            ],
+            "key_usage": [
+              "cRLSign",
+              "dataEncipherment",
+              "digitalSignature",
+              "keyAgreement",
+              "keyCertSign",
+              "keyEncipherment"
+            ],
+            "validity_months": 12,
+            "basic_constraints": {
+              "ca": false
+            }
+          },
+          "lifetime_actions": [
+            {
+              "trigger": {
+                "lifetime_percentage": 80
+              },
+              "action": {
+                "action_type": "AutoRenew"
+              }
+            }
+          ],
+          "issuer": {
+            "name": "Self",
+            "cert_transparency": false
+          },
+          "attributes": {
+            "enabled": true,
+            "created": 1568847057,
+            "updated": 1568848893
+          }
+        },
+        "pending": {
+          "id": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/pending"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/f08f3211b3c2451083edffe9a78d6890?api-version=7.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "traceparent": "00-5c8354e1ad3abf4182f849fa0947c1a0-14352b2ee3e84845-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.0-dev.20190918.1\u002B6e0b0ba5c8b63c4a162293c3ad9f8275d623cdcd",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "bb45890872e7f6461881176ab0077bc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1578",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 Sep 2019 23:21:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.85;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.878",
+        "x-ms-request-id": "d955a814-0126-46c3-879c-3bef93337693",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://pakrym-keyvault.vault.azure.net/certificates/417164010/f08f3211b3c2451083edffe9a78d6890",
+        "kid": "https://pakrym-keyvault.vault.azure.net/keys/417164010/f08f3211b3c2451083edffe9a78d6890",
+        "sid": "https://pakrym-keyvault.vault.azure.net/secrets/417164010/f08f3211b3c2451083edffe9a78d6890",
+        "x5t": "-fo10fzasyQfbkyb4I1jKV2L8TA",
+        "cer": "MIIDKjCCAhKgAwIBAgIQHJdx07O\u002BQn6vj4UIDz6KFDANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDEwdkZWZhdWx0MB4XDTE5MDkxODIyNTExMVoXDTIwMDkxODIzMDExMVowEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKanZqcEXRgc58mGC8TT04EsdAkw7r5duWA2hYtiPsIIGa8tTV6LPdwG0U4IiP5u3FJog6mCPbLlTOpkI8nWrdTk3b7v4awxqp7kfFAR24URtAZTQw814biB49FNxvj4sitr6fdtyqqPn89l8pPOJR8L8iR\u002ByefuR0tMZ2pnzCI3vgGC\u002B7NF31jDkJ8CFvNRCJEOUA6pj5NI6PkrvEf\u002B6HecGyx/mr91ofhUoNwz6aQ2/Vy44inZiQKCaTQBP01isp34QfEeQyN3tQpsg7lsBkUI5RXowMFj5vDe1Qay5ou5EOZ5YxHQ8QjMbLQYS8EaRfFPr4YgWVz7WrNXDtQ5JWUCAwEAAaN8MHowDgYDVR0PAQH/BAQDAgG\u002BMAkGA1UdEwQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8GA1UdIwQYMBaAFLmrVKGy1ML1ikubki5DulCw\u002Bbk8MB0GA1UdDgQWBBS5q1ShstTC9YpLm5IuQ7pQsPm5PDANBgkqhkiG9w0BAQsFAAOCAQEANde0Njj6JCx8asqpux/W5/5hlCh/gprUbsa\u002BNYDjqqBOMZKy60ldTDDP0Ji9Xk8XHqpXJHe/2ec0hLqyoIaTM5Nt7i1nodjsNDfFJMmLJ4nh5NAQ6RME\u002B6NC9poGguuMUlrgaSf2xy0NzUyKo98dX6ngA0iXwRHOqPri7HjtTHRnIMnugyIeaHgEqPE3AS8CWcq2u4l2xdGYybDLGihQ11gzcTuugVK43dD0tvyTZ17fCUwJN6cZIRpV0GCO8PoR7Y\u002BvVGOcN1D27Op/IiWu9S2fyl8qJgtwI12asX/HjGqcD2FqX0pB/x0FFXwMnxHDwuvKNjAY2Oi7tTMkqMIcng==",
+        "attributes": {
+          "enabled": true,
+          "nbf": 1568847071,
+          "exp": 1600470071,
+          "created": 1568847671,
+          "updated": 1568847671,
+          "recoveryLevel": "Recoverable\u002BPurgeable"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://pakrym-keyvault.vault.azure.net/",
+    "RandomSeed": "848369138"
+  }
+}
