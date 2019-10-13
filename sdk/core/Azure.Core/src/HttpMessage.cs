@@ -10,13 +10,13 @@ using System.Threading;
 
 namespace Azure.Core
 {
-    public sealed class HttpPipelineMessage: IDisposable
+    public sealed class HttpMessage: IDisposable
     {
         private Dictionary<string, object>? _properties;
 
         private Response? _response;
 
-        public HttpPipelineMessage(Request request, ResponseClassifier responseClassifier)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
             Request = request;
             ResponseClassifier = responseClassifier;

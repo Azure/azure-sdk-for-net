@@ -13,7 +13,7 @@ namespace Azure.Core.Tests
     {
         protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
         {
-            Assert.IsInstanceOf<SynchronousHttpPipelinePolicy>(policy, "Use SyncAsyncPolicyTestBase base type for non-sync policies");
+            Assert.IsInstanceOf<HttpPipelineSynchronousPolicy>(policy, "Use SyncAsyncPolicyTestBase base type for non-sync policies");
 
             using (Request request = transport.CreateRequest())
             {

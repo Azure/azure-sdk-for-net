@@ -183,6 +183,11 @@ namespace Azure.Storage
                 public const string LogsName = "$logs";
 
                 /// <summary>
+                /// The Azure Storage name used to identify a storage account's web content container.
+                /// </summary>
+                public const string WebName = "$web";
+
+                /// <summary>
                 /// The Azure Storage error codes for Blob Container Client.
                 /// </summary>
                 public const string AlreadyExists = "ContainerAlreadyExists";

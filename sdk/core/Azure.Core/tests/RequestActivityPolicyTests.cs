@@ -162,13 +162,13 @@ namespace Azure.Core.Tests
             (string, object, object) isEnabledCall = testListener.IsEnabledCalls.Dequeue();
 
             Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
-            Assert.IsInstanceOf<HttpPipelineMessage>(startEvent.Value);
+            Assert.IsInstanceOf<HttpMessage>(startEvent.Value);
 
             Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
-            Assert.IsInstanceOf<HttpPipelineMessage>(stopEvent.Value);
+            Assert.IsInstanceOf<HttpMessage>(stopEvent.Value);
 
             Assert.AreEqual("Azure.Core.Http.Request", isEnabledCall.Item1);
-            Assert.IsInstanceOf<HttpPipelineMessage>(isEnabledCall.Item2);
+            Assert.IsInstanceOf<HttpMessage>(isEnabledCall.Item2);
         }
 
         [Test]

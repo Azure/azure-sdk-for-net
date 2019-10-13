@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional function that can be used to process the response.  It
         /// is responsible for parsing response bodies and throwing exceptions.
         /// </param>
-        public DelayedResponse(HttpPipelineMessage message, Func<Response, Response> processResponse = null)
+        public DelayedResponse(HttpMessage message, Func<Response, Response> processResponse = null)
         {
             // Have the BatchPipelineTransport associate this response with the
             // message when it's sent.

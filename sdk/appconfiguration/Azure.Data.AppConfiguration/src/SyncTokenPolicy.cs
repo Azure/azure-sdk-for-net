@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class SyncTokenPolicy : SynchronousHttpPipelinePolicy
+    internal class SyncTokenPolicy : HttpPipelineSynchronousPolicy
     {
         private const string SyncTokenHeader = "Sync-Token";
 
@@ -19,7 +19,7 @@ namespace Azure.Data.AppConfiguration
             _syncTokens = new ConcurrentDictionary<string, SyncToken>();
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             foreach (SyncToken token in _syncTokens.Values)
             {
@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        public override void OnReceivedResponse(HttpPipelineMessage message)
+        public override void OnReceivedResponse(HttpMessage message)
         {
             if (message.Response.Headers.TryGetValues(SyncTokenHeader, out IEnumerable<string> rawSyncTokens))
             {

@@ -32,11 +32,11 @@ namespace Azure.Identity.Tests
 
             AuthorizationCodeCredential cred = InstrumentClient(new AuthorizationCodeCredential(tenantId, clientId, clientSecret, authCode, options));
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }));
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.AreEqual(token.Token, expectedToken);
 
-            AccessToken token2 = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://managemnt.azure.com/.default" }));
+            AccessToken token2 = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://managemnt.azure.com/.default" }));
 
             Assert.AreEqual(token.Token, expectedToken);
         }
