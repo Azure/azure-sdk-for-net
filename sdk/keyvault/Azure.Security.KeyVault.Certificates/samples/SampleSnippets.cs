@@ -73,6 +73,17 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         [Test]
+        public async Task ListCertificates()
+        {
+            #region ListCertificates
+            await foreach (CertificateProperties listCertificates in client.GetCertificatesAsync())
+            {
+                Console.WriteLine(listCertificates.Name);
+            }
+            #endregion
+        }
+
+        [Test]
         public async Task NotFoundAsync()
         {
             #region NotFound
