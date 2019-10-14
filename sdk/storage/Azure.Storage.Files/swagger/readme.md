@@ -681,6 +681,7 @@ directive:
   where: $.definitions.AccessPolicy
   transform: >
     $["x-ms-client-name"] = "FileAccessPolicy";
+    $.xml = {"name": "AccessPolicy"};
     $.properties.StartsOn = $.properties.Start;
     $.properties.StartsOn.xml = { "name": "Start"};
     delete $.properties.Start;

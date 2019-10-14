@@ -2894,10 +2894,10 @@ namespace Azure.Storage.Queues.Models
         /// Serialize a QueueAccessPolicy instance as XML.
         /// </summary>
         /// <param name="value">The QueueAccessPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "QueueAccessPolicy".</param>
+        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueAccessPolicy value, string name = "QueueAccessPolicy", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueAccessPolicy value, string name = "AccessPolicy", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));

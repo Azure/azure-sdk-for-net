@@ -6138,10 +6138,10 @@ namespace Azure.Storage.Files.Models
         /// Serialize a FileAccessPolicy instance as XML.
         /// </summary>
         /// <param name="value">The FileAccessPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "FileAccessPolicy".</param>
+        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.FileAccessPolicy value, string name = "FileAccessPolicy", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.FileAccessPolicy value, string name = "AccessPolicy", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
