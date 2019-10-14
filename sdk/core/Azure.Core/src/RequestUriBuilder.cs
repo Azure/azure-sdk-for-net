@@ -127,6 +127,11 @@ namespace Azure.Core
 
         public void AppendQuery(string name, string value)
         {
+            AppendQuery(name, value, true);
+        }
+
+        public void AppendQuery(string name, string value, bool escapeValue)
+        {
             ResetUri();
             if (!HasQuery)
             {
@@ -140,10 +145,19 @@ namespace Azure.Core
 
             _pathAndQuery.Append(name);
             _pathAndQuery.Append('=');
+            if (escapeValue && !string.IsNullOrEmpty(value))
+            {
+                value = Uri.EscapeDataString(value);
+            }
             _pathAndQuery.Append(value);
         }
 
         public void AppendPath(string value)
+        {
+            AppendPath(value, escape: true);
+        }
+
+        public void AppendPath(string value, bool escape)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -158,12 +172,26 @@ namespace Azure.Core
             }
             if (HasQuery)
             {
-                _pathAndQuery.Insert(_queryIndex - 1, value.Substring(startIndex, value.Length - startIndex));
+                string substring = value.Substring(startIndex, value.Length - startIndex);
+                if (escape)
+                {
+                    substring = Uri.EscapeDataString(substring);
+                }
+                _pathAndQuery.Insert(_queryIndex - 1, substring);
                 _queryIndex += value.Length;
             }
             else
             {
-                _pathAndQuery.Append(value, startIndex, value.Length - startIndex);
+                if (escape)
+                {
+                    string substring = value.Substring(startIndex, value.Length - startIndex);
+                    substring = Uri.EscapeDataString(substring);
+                    _pathAndQuery.Append(substring);
+                }
+                else
+                {
+                    _pathAndQuery.Append(value, startIndex, value.Length - startIndex);
+                }
             }
         }
 
@@ -192,11 +220,11 @@ namespace Azure.Core
             // TODO: Escaping can be done in-place
             if (!HasQuery)
             {
-                stringBuilder.Append(Uri.EscapeUriString(_pathAndQuery.ToString()));
+                stringBuilder.Append(_pathAndQuery);
             }
             else
             {
-                stringBuilder.Append(Uri.EscapeUriString(_pathAndQuery.ToString(0, _queryIndex)));
+                stringBuilder.Append(_pathAndQuery.ToString(0, _queryIndex));
                 if (allowedQueryParameters == null)
                 {
                     stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));

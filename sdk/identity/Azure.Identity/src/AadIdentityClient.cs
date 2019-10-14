@@ -176,7 +176,7 @@ namespace Azure.Identity
 
             request.Uri.Reset(_options.AuthorityHost);
 
-            request.Uri.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId, true);
 
             request.Uri.AppendPath("/oauth2/v2.0/token");
 
@@ -199,7 +199,7 @@ namespace Azure.Identity
 
             request.Uri.Reset(_options.AuthorityHost);
 
-            request.Uri.AppendPath(tenantId);
+            request.Uri.AppendPath(tenantId, true);
 
             request.Uri.AppendPath("/oauth2/v2.0/token");
 

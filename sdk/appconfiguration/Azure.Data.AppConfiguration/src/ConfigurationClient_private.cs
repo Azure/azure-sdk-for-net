@@ -94,7 +94,7 @@ namespace Azure.Data.AppConfiguration
         {
             builder.Reset(_baseUri);
             builder.AppendPath(KvRoute);
-            builder.AppendPath(key);
+            builder.AppendPath(key, true);
 
             if (label != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.Data.AppConfiguration
         {
             builder.Reset(_baseUri);
             builder.AppendPath(LocksRoute);
-            builder.AppendPath(key);
+            builder.AppendPath(key, true);
 
             if (label != null)
             {
