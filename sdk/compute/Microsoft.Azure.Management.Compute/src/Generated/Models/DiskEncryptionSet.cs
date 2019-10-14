@@ -47,16 +47,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// rotation.</param>
         /// <param name="provisioningState">The disk encryption set
         /// provisioning state.</param>
-        /// <param name="uniqueId">Unique Guid identifying the
-        /// resource.</param>
-        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IList<KeyVaultAndKeyReference> previousKeys = default(IList<KeyVaultAndKeyReference>), string provisioningState = default(string), string uniqueId = default(string))
+        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IList<KeyVaultAndKeyReference> previousKeys = default(IList<KeyVaultAndKeyReference>), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
             ActiveKey = activeKey;
             PreviousKeys = previousKeys;
             ProvisioningState = provisioningState;
-            UniqueId = uniqueId;
             CustomInit();
         }
 
@@ -90,12 +87,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets unique Guid identifying the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueId")]
-        public string UniqueId { get; private set; }
 
         /// <summary>
         /// Validate the object.
