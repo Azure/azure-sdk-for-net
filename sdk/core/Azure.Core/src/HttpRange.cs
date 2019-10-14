@@ -31,8 +31,8 @@ namespace Azure
         /// <summary>
         /// Creates an instance of HttpRange
         /// </summary>
-        /// <param name="offset">null means offset is 0</param>
-        /// <param name="length">null means to the end</param>
+        /// <param name="offset">The starting offset of the <see cref="HttpRange"/>. Defaults to 0.</param>
+        /// <param name="length">The lenght of the range. null means to the end</param>
         public HttpRange(long offset = 0, long? length = default)
         {
             if (offset < 0)
