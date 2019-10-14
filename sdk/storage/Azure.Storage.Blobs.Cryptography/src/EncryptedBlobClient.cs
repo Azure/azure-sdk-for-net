@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using Azure.Core;
 using Azure.Core.Cryptography;
@@ -214,14 +213,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             metadata ??= new Dictionary<string, string>();
 
             var (encryptionStream, encryptionData) = EncryptStream(content);
-
-            using (var stream = new MemoryStream())
-            {
-                var serializer = new DataContractJsonSerializer(typeof(EncryptionData));
-                serializer.WriteObject(stream, encryptionData);
-                stream.Position = 0;
-                metadata.Add(EncryptionConstants.ENCRYPTION_DATA_KEY, new StreamReader(stream).ReadToEnd());
-            }
+            metadata.Add(EncryptionConstants.ENCRYPTION_DATA_KEY, encryptionData.Serialize());
 
             return (encryptionStream, metadata);
         }

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,11 +57,7 @@ namespace Azure.Storage.Blobs.Test
             EncryptionData encryptionData;
             if (metadata.TryGetValue(EncryptionConstants.ENCRYPTION_DATA_KEY, out string encryptedDataString))
             {
-                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(encryptedDataString)))
-                {
-                    var serializer = new DataContractJsonSerializer(typeof(EncryptionData));
-                    encryptionData = (EncryptionData)serializer.ReadObject(stream);
-                }
+                encryptionData = EncryptionData.Deserialize(encryptedDataString);
             }
             else
             {
