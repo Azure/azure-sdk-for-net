@@ -119,8 +119,8 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("restype", "service", encode: false);
-                _request.Uri.AppendQuery("comp", "properties", encode: false);
+                _request.Uri.AppendQuery("restype", "service", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "properties", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -252,8 +252,8 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("restype", "service", encode: false);
-                _request.Uri.AppendQuery("comp", "properties", encode: false);
+                _request.Uri.AppendQuery("restype", "service", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "properties", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -383,8 +383,8 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("restype", "service", encode: false);
-                _request.Uri.AppendQuery("comp", "stats", encode: false);
+                _request.Uri.AppendQuery("restype", "service", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "stats", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -534,7 +534,7 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "list", encode: false);
+                _request.Uri.AppendQuery("comp", "list", escapeValue: false);
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", prefix); }
                 if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
                 if (maxresults != null) { _request.Uri.AppendQuery("maxresults", maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -939,7 +939,7 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "metadata", encode: false);
+                _request.Uri.AppendQuery("comp", "metadata", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -1088,7 +1088,7 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "metadata", encode: false);
+                _request.Uri.AppendQuery("comp", "metadata", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -1219,7 +1219,7 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "acl", encode: false);
+                _request.Uri.AppendQuery("comp", "acl", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -1358,7 +1358,7 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "acl", encode: false);
+                _request.Uri.AppendQuery("comp", "acl", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -1940,7 +1940,7 @@ namespace Azure.Storage.Queues
                 // Set the endpoint
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("peekonly", "true", encode: false);
+                _request.Uri.AppendQuery("peekonly", "true", escapeValue: false);
                 if (numberOfMessages != null) { _request.Uri.AppendQuery("numofmessages", numberOfMessages.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 

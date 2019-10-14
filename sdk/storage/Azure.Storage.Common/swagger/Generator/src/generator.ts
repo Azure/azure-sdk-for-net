@@ -354,7 +354,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 useParameter(query, value => {
                     w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value}`);
                     if (query.skipUrlEncoding || constant) {
-                        w.write(`, encode: false`);
+                        w.write(`, escapeValue: false`);
                     }
 
                     w.write(`);`);
