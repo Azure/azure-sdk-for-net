@@ -1270,7 +1270,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <inheritdoc/>
-        Memory<byte> IKeyEncryptionKey.WrapKey(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
+        byte[] IKeyEncryptionKey.WrapKey(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
         {
             WrapResult result = WrapKey(new KeyWrapAlgorithm(algorithm), key.ToArray(), cancellationToken);
 
@@ -1278,7 +1278,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <inheritdoc/>
-        async Task<Memory<byte>> IKeyEncryptionKey.WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
+        async Task<byte[]> IKeyEncryptionKey.WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken)
         {
             WrapResult result = await WrapKeyAsync(new KeyWrapAlgorithm(algorithm), key.ToArray(), cancellationToken).ConfigureAwait(false);
 
@@ -1286,21 +1286,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <inheritdoc/>
-        Memory<byte> IKeyEncryptionKey.UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
+        byte[] IKeyEncryptionKey.UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
             byte[] buffer = MemoryMarshal.TryGetArray(encryptedKey, out ArraySegment<byte> segment) ? segment.Array : encryptedKey.ToArray();
             UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), buffer, cancellationToken);
 
-            return new Memory<byte>(result.Key);
+            return result.Key;
         }
 
         /// <inheritdoc/>
-        async Task<Memory<byte>> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
+        async Task<byte[]> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken)
         {
             byte[] buffer = MemoryMarshal.TryGetArray(encryptedKey, out ArraySegment<byte> segment) ? segment.Array : encryptedKey.ToArray();
             UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), buffer, cancellationToken).ConfigureAwait(false);
 
-            return new Memory<byte>(result.Key);
+            return result.Key;
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
