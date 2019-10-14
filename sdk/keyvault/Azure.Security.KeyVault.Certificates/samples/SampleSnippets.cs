@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         [Test]
-        public async Task ListCertificates()
+        public async Task ListCertificatesAsync()
         {
             #region ListCertificates
             await foreach (CertificateProperties listCertificates in client.GetCertificatesAsync())
