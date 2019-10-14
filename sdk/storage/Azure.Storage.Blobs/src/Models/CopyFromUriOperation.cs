@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -84,11 +85,7 @@ namespace Azure.Storage.Blobs.Models
             Id = copyId;
             _hasCompleted = hasCompleted;
             _value = value;
-
-            if (rawResponse != null)
-            {
-                _rawResponse = rawResponse;
-            }
+            _rawResponse = rawResponse;
         }
 
         /// <summary>
@@ -155,7 +152,9 @@ namespace Azure.Storage.Blobs.Models
             // Short-circuit when already completed (which improves mocking
             // scenarios that won't have a client).
             if (HasCompleted)
-            { return GetRawResponse(); }
+            {
+                return GetRawResponse();
+            }
 
             // Use our original CancellationToken if the user didn't provide one
             if (cancellationToken == default)
