@@ -18,7 +18,6 @@ namespace Azure.Core.Tests
             var range = new HttpRange(offset, count);
 
             Assert.AreEqual("bytes=" + expected, range.ToString());
-            Assert.AreEqual("Range:bytes=" + expected, range.ToRangeHeader().ToString());
         }
 
         [Test]
