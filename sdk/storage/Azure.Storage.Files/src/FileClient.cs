@@ -983,8 +983,8 @@ namespace Azure.Storage.Files
         {
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
-                range.Count.HasValue ?
-                    range.Count.Value - startOffset :
+                range.Length.HasValue ?
+                    range.Length.Value - startOffset :
                     (long?)null);
             Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
             (Response<FlattenedStorageFileProperties> response, Stream stream) =
