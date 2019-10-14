@@ -370,7 +370,11 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         private static Stream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
             EncryptionData encryptionData, byte[] iv, bool noPadding)
         {
-            switch (encryptionData.EncryptionAgent.EncryptionAlgorithm)
+            if (!Enum.TryParse(encryptionData.EncryptionAgent.EncryptionAlgorithm, out ClientsideEncryptionAlgorithm algorithm))
+            {
+                throw EncryptionErrors.BadEncryptionAlgorithm();
+            }
+            switch (algorithm)
             {
                 case ClientsideEncryptionAlgorithm.AES_CBC_256:
                     using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())

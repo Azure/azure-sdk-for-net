@@ -19,7 +19,7 @@ namespace Azure.Core.Testing
                 mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
             }
 
-            return mode;
+            return RecordedTestMode.Live;
         }
 
     }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers.Text;
 using System.Runtime.Serialization;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 

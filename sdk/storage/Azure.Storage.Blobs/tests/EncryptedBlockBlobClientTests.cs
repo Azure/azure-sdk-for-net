@@ -9,8 +9,9 @@ using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Http;
+using Azure.Core.Cryptography;
 using Azure.Core.Testing;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Storage.Blobs.Specialized.Cryptography;
 using Azure.Storage.Blobs.Specialized.Cryptography.Models;
 using Azure.Storage.Blobs.Tests;
@@ -97,13 +98,21 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        private async Task<IKeyEncryptionKey> GetKeyvaultIKeyEncryptionKey()
+        {
+            var keyClient = GetKeyClient_TargetKeyClient();
+            Security.KeyVault.Keys.Key key = await keyClient.CreateRsaKeyAsync(
+                new Security.KeyVault.Keys.RsaKeyCreateOptions($"CloudRsaKey-{Guid.NewGuid()}", false));
+            return new CryptographyClient(key.Id, GetTokenCredential_TargetKeyClient());
+        }
+
         #endregion
 
         [TestCase(16)] // a single cipher block
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks
         [TestCase(Constants.KB - 4)] // multiple unalligned blocks
-        [LiveOnly]
+        [LiveOnly] // cannot seed content encryption key
         public async Task UploadAsync(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
@@ -135,7 +144,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks
         [TestCase(Constants.KB - 4)] // multiple unalligned blocks
-        [LiveOnly]
+        [LiveOnly] // cannot seed content encryption key
         public async Task RoundtripAsync(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
@@ -168,10 +177,10 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(15, 18)] // overlap both sides
         [TestCase(31, 18)] // overlap both sides; IV not at blob start
         [TestCase(16, null)]
-        [LiveOnly]
+        [LiveOnly] // cannot seed content encryption key
         public async Task PartialDownloadAsync(int offset, int? count)
         {
-            var data = GetRandomBuffer(offset + count ?? 16 + 32); // ensure we have enough room in original data
+            var data = GetRandomBuffer(offset + (count ?? 16) + 32); // ensure we have enough room in original data
             var key = new MockKeyEncryptionKey();
             using (this.GetEncryptedBlockBlobClient(out var blob, key))
             {
@@ -199,6 +208,88 @@ namespace Azure.Storage.Blobs.Test
                     : slice;
                 var sliceArray = slice.ToArray();
                 Assert.AreEqual(sliceArray, downloadData);
+            }
+        }
+
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task Track2DownloadTrack1Blob()
+        {
+            var data = GetRandomBuffer(Constants.KB);
+            var key = new MockKeyEncryptionKey();
+            using (this.GetEncryptedBlockBlobClient(out var track2Blob, key))
+            {
+                // upload with track 1
+                var creds = GetNewSharedKeyCredentials();
+                var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
+                    track2Blob.Uri,
+                    new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.AccountKeyValue));
+                await track1Blob.UploadFromByteArrayAsync(
+                    data, 0, data.Length, default,
+                    new Microsoft.Azure.Storage.Blob.BlobRequestOptions()
+                    {
+                        EncryptionPolicy = new Microsoft.Azure.Storage.Blob.BlobEncryptionPolicy(key, key)
+                    },
+                    default, default);
+
+                // download with track 2
+                var downloadStream = new MemoryStream();
+                await track2Blob.DownloadAsync(downloadStream);
+
+                // compare original data to downloaded data
+                Assert.AreEqual(data, downloadStream.ToArray());
+            }
+        }
+
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task Track1DownloadTrack2Blob()
+        {
+            var data = GetRandomBuffer(Constants.KB); // ensure we have enough room in original data
+            var key = new MockKeyEncryptionKey();
+            using (GetEncryptedBlockBlobClient(out var track2Blob, key))
+            {
+                // upload with track 2
+                await track2Blob.UploadAsync(new MemoryStream(data));
+
+                // download with track 1
+                var creds = GetNewSharedKeyCredentials();
+                var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
+                    track2Blob.Uri,
+                    new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.AccountKeyValue));
+                var downloadData = new byte[data.Length];
+                await track1Blob.DownloadToByteArrayAsync(downloadData, 0, default,
+                    new Microsoft.Azure.Storage.Blob.BlobRequestOptions()
+                    {
+                        EncryptionPolicy = new Microsoft.Azure.Storage.Blob.BlobEncryptionPolicy(key, key)
+                    },
+                    default, default);
+
+                // compare original data to downloaded data
+                Assert.AreEqual(data, downloadData);
+            }
+        }
+
+        [Test]
+        [LiveOnly] // need access to keyvault service && cannot seed content encryption key
+        public async Task RoundtripWithKeyvaultProvider()
+        {
+            var data = GetRandomBuffer(Constants.KB);
+            IKeyEncryptionKey key = await GetKeyvaultIKeyEncryptionKey();
+            using (GetNewContainer(out var container))
+            {
+                var blob = new EncryptedBlobClient(
+                    new Uri(Path.Combine(container.Uri.ToString(), this.GetNewBlobName())),
+                    this.GetNewSharedKeyCredentials(),
+                    keyEncryptionKey: key,
+                    encryptionKeyWrapAlgorithm: "RSA-OAEP-256");
+
+                await blob.UploadAsync(new MemoryStream(data));
+
+                var downloadStream = new MemoryStream();
+                await blob.DownloadAsync(downloadStream);
+
+                Assert.AreEqual(data, downloadStream.ToArray());
             }
         }
     }

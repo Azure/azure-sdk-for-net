@@ -239,7 +239,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     ContentEncryptionIV = aesProvider.IV,
                     EncryptionAgent = new EncryptionAgent()
                     {
-                        EncryptionAlgorithm = ClientsideEncryptionAlgorithm.AES_CBC_256,
+                        EncryptionAlgorithm = Enum.GetName(typeof(ClientsideEncryptionAlgorithm), ClientsideEncryptionAlgorithm.AES_CBC_256),
                         Protocol = EncryptionConstants.ENCRYPTION_PROTOCOL_V1
                     },
                     KeyWrappingMetadata = new Dictionary<string, string>()
@@ -248,9 +248,9 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                     },
                     WrappedContentKey = new WrappedKey()
                     {
-                        Algorithm = null, // TODO
-                        EncryptedKey = this.KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey).ToArray(),
-                        KeyId = this.KeyWrapper.KeyId
+                        Algorithm = KeyWrapAlgorithm,
+                        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey).ToArray(),
+                        KeyId = KeyWrapper.KeyId
                     }
                 };
 

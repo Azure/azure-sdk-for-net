@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common.Test;
+using Azure.Storage.Common.Tests.Shared;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
@@ -113,6 +115,17 @@ namespace Azure.Storage.Test.Shared
                     options));
         }
 
+        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+            => new Security.KeyVault.Keys.KeyClient(
+                new Uri(config.VaultEndpoint),
+                GetKeyClientTokenCredential(config));
+
+        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => new Identity.ClientSecretCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret);
+
         private BlobClientOptions GetSecondaryStorageOptions(
             TenantConfiguration config,
             out TestExceptionPolicy testExceptionPolicy,
@@ -134,6 +147,12 @@ namespace Azure.Storage.Test.Shared
                     new Uri(config.BlobServiceEndpoint),
                     GetOAuthCredential(config),
                     GetOptions()));
+
+        public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
+            => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
+
+        public TokenCredential GetTokenCredential_TargetKeyClient()
+            => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
 
         public BlobServiceClient GetServiceClient_SharedKey()
             => GetServiceClientFromSharedKeyConfig(TestConfigDefault);

@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{3B14B995-1D5B-42C4-AD7F-5C9B91481039}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests", "Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj", "{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FC1F45F6-F103-48AE-8E21-D858F4689370} = {FC1F45F6-F103-48AE-8E21-D858F4689370}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files", "Azure.Storage.Files\src\Azure.Storage.Files.csproj", "{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}"
 EndProject
@@ -109,6 +112,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLak
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLake.Samples.Tests", "Azure.Storage.Files.DataLake\samples\Azure.Storage.Files.DataLake.Samples.Tests.csproj", "{E53736D7-EAF8-417C-9ADA-7ED931916502}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{FC1F45F6-F103-48AE-8E21-D858F4689370}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +196,10 @@ Global
 		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

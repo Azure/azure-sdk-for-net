@@ -7,13 +7,15 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
+using Microsoft.Azure.KeyVault.Core;
 
 namespace Azure.Storage.Blobs.Tests
 {
     /// <summary>
     /// Mock for a key encryption key. Not meant for production use.
     /// </summary>
-    internal class MockKeyEncryptionKey : IKeyEncryptionKey, IKeyEncryptionKeyResolver
+    internal class MockKeyEncryptionKey : IKeyEncryptionKey, IKeyEncryptionKeyResolver,
+        Microsoft.Azure.KeyVault.Core.IKey, Microsoft.Azure.KeyVault.Core.IKeyResolver // for track 1 compatibility tests
     {
         public ReadOnlyMemory<byte> KeyEncryptionKey { get; }
 
@@ -83,5 +85,49 @@ namespace Azure.Storage.Blobs.Tests
         {
             return Task.FromResult(Resolve(keyId, cancellationToken));
         }
+
+        // Track 1 implementation
+
+        string IKey.DefaultEncryptionAlgorithm => throw new NotImplementedException();
+
+        string IKey.DefaultKeyWrapAlgorithm => throw new NotImplementedException();
+
+        string IKey.DefaultSignatureAlgorithm => throw new NotImplementedException();
+
+        string IKey.Kid => KeyId;
+
+        Task<byte[]> IKey.DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, string algorithm, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Tuple<byte[], byte[], string>> IKey.EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, string algorithm, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        async Task<Tuple<byte[], string>> IKey.WrapKeyAsync(byte[] key, string algorithm, CancellationToken token)
+            => new Tuple<byte[], string>((await WrapKeyAsync(algorithm, key, token)).ToArray(), null);
+
+        async Task<byte[]> IKey.UnwrapKeyAsync(byte[] encryptedKey, string algorithm, CancellationToken token)
+            => (await UnwrapKeyAsync(algorithm, encryptedKey, token)).ToArray();
+
+        Task<Tuple<byte[], string>> IKey.SignAsync(byte[] digest, string algorithm, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IKey.VerifyAsync(byte[] digest, byte[] signature, string algorithm, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDisposable.Dispose()
+        {
+            // no-op
+        }
+
+        async Task<IKey> IKeyResolver.ResolveKeyAsync(string kid, CancellationToken token)
+            => (MockKeyEncryptionKey)await ResolveAsync(kid, token); // we know we returned `this`;
     }
 }
