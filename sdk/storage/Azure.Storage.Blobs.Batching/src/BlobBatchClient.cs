@@ -32,6 +32,12 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
         /// requests for batching without actually sending them.
         /// </summary>
@@ -57,6 +63,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Uri = client.Uri;
             Pipeline = client.Pipeline;
+            ClientDiagnostics = client.ClientDiagnostics;
             BatchOperationPipeline = client.BatchOperationPipeline;
 
             // Construct a dummy pipeline for processing batch sub-operations
@@ -234,7 +241,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             // Get the sub-operation messages to submit
-            IList<HttpPipelineMessage> messages = batch.GetMessagesToSubmit();
+            IList<HttpMessage> messages = batch.GetMessagesToSubmit();
             if (messages.Count == 0)
             {
                 throw BatchErrors.CannotSubmitEmptyBatch(nameof(batch));
@@ -252,6 +259,7 @@ namespace Azure.Storage.Blobs.Specialized
             // Send the batch request
             Response<BlobBatchResult> batchResult =
                 await BlobRestClient.Service.SubmitBatchAsync(
+                    ClientDiagnostics,
                     Pipeline,
                     Uri,
                     body: content,
@@ -297,13 +305,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// single multipart/mixed content stream and content type.
         /// </returns>
         private async Task<(Stream, string)> MergeOperationRequests(
-            IList<HttpPipelineMessage> messages,
+            IList<HttpMessage> messages,
             bool async,
             CancellationToken cancellationToken)
         {
             // Send all of the requests through a batch sub-operation pipeline
             // to prepare the requests with various headers like Authorization
-            foreach (HttpPipelineMessage message in messages)
+            foreach (HttpMessage message in messages)
             {
                 if (async)
                 {
@@ -354,7 +362,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>A Task representing the update operation.</returns>
         private static async Task UpdateOperationResponses(
-            IList<HttpPipelineMessage> messages,
+            IList<HttpMessage> messages,
             Response rawResponse,
             Stream responseContent,
             string responseContentType,

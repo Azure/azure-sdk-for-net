@@ -81,22 +81,21 @@ namespace Azure.Storage.Blobs.Specialized
     public class BlockBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// <see cref="BlockBlobMaxUploadBlobBytes"/> indicates the maximum number of bytes
-        /// that can be sent in a call to <see cref="UploadAsync"/>.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync"/>.
         /// </summary>
-        public const int BlockBlobMaxUploadBlobBytes = Constants.Blob.Block.MaxUploadBytes;
+        public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
 
         /// <summary>
-        /// <see cref="BlockBlobMaxStageBlockBytes"/> indicates the maximum
-        /// number of bytes that can be sent in a call to <see cref="StageBlockAsync"/>.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public const int BlockBlobMaxStageBlockBytes = Constants.Blob.Block.MaxStageBytes;
+        public virtual int BlockBlobMaxStageBlockBytes => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
-        /// <see cref="BlockBlobMaxBlocks"/> indicates the maximum number of
-        /// blocks allowed in a block blob.
+        /// Gets the maximum number of blocks allowed in a block blob.
         /// </summary>
-        public const int BlockBlobMaxBlocks = Constants.Blob.Block.MaxBlocks;
+        public virtual int BlockBlobMaxBlocks => Constants.Blob.Block.MaxBlocks;
 
         #region ctors
         /// <summary>
@@ -336,14 +335,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
-        /// <param name="blobHttpHeaders">
+        /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="blobAccessConditions">
+        /// <param name="accessConditions">
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on the creation of this new block blob.
         /// </param>
@@ -369,17 +368,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            BlobHttpHeaders? blobHttpHeaders = default,
+            BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? blobAccessConditions = default,
+            BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
                 content,
-                blobHttpHeaders,
+                httpHeaders,
                 metadata,
-                blobAccessConditions,
+                accessConditions,
                 accessTier: accessTier,
                 progressHandler,
                 false, // async
@@ -402,14 +401,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
-        /// <param name="blobHttpHeaders">
+        /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="blobAccessConditions">
+        /// <param name="accessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on the creation of this new block blob.
         /// </param>
@@ -435,17 +434,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders? blobHttpHeaders = default,
+            BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? blobAccessConditions = default,
+            BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadInternal(
                 content,
-                blobHttpHeaders,
+                httpHeaders,
                 metadata,
-                blobAccessConditions,
+                accessConditions,
                 accessTier: accessTier,
                 progressHandler,
                 true, // async
@@ -531,6 +530,7 @@ namespace Azure.Storage.Blobs.Specialized
                         {
                             Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                             return await BlobRestClient.BlockBlob.UploadAsync(
+                                ClientDiagnostics,
                                 Pipeline,
                                 Uri,
                                 body: content,
@@ -788,6 +788,7 @@ namespace Azure.Storage.Blobs.Specialized
                             {
                                 Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
                                 return BlobRestClient.BlockBlob.StageBlockAsync(
+                                    ClientDiagnostics,
                                     Pipeline,
                                     Uri,
                                     blockId: base64BlockId,
@@ -1058,6 +1059,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.BlockBlob.StageBlockFromUriAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
@@ -1115,14 +1117,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// block list, it will not be written as part of the blob, and a
         /// <see cref="StorageRequestFailedException"/> will be thrown.
         /// </param>
-        /// <param name="blobHttpHeaders">
+        /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="blobAccessConditions">
+        /// <param name="accessConditions">
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
         /// </param>
@@ -1144,16 +1146,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> CommitBlockList(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? blobHttpHeaders = default,
+            BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? blobAccessConditions = default,
+            BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             CommitBlockListInternal(
                 base64BlockIds,
-                blobHttpHeaders,
+                httpHeaders,
                 metadata,
-                blobAccessConditions,
+                accessConditions,
                 accessTier,
                 false, // async
                 cancellationToken)
@@ -1182,14 +1184,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// block list, it will not be written as part of the blob, and a
         /// <see cref="StorageRequestFailedException"/> will be thrown.
         /// </param>
-        /// <param name="blobHttpHeaders">
+        /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="blobAccessConditions">
+        /// <param name="accessConditions">
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
         /// </param>
@@ -1211,16 +1213,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? blobHttpHeaders = default,
+            BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? blobAccessConditions = default,
+            BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             await CommitBlockListInternal(
                 base64BlockIds,
-                blobHttpHeaders,
+                httpHeaders,
                 metadata,
-                blobAccessConditions,
+                accessConditions,
                 accessTier,
                 true, // async
                 cancellationToken)
@@ -1303,6 +1305,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         blocks,
@@ -1500,6 +1503,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return (await BlobRestClient.BlockBlob.GetBlockListAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         listType: blockListTypes.ToBlockListType(),

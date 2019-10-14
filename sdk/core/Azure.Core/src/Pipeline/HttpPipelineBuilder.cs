@@ -53,8 +53,8 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
-                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggingContentSizeLimit,
-                    diagnostics.LoggingAllowedHeaderNames.ToArray(), diagnostics.LoggingAllowedQueryParameters.ToArray()));
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
+                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
@@ -65,8 +65,7 @@ namespace Azure.Core.Pipeline
 
             return new HttpPipeline(options.Transport,
                 policies.ToArray(),
-                responseClassifier,
-                new ClientDiagnostics(isDistributedTracingEnabled));
+                responseClassifier);
         }
 
         // internal for testing

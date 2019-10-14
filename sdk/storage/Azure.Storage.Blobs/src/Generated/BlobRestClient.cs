@@ -32,10 +32,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
@@ -45,12 +47,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blobServiceProperties,
@@ -93,7 +95,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
@@ -111,7 +113,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -130,7 +132,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -171,10 +173,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -183,12 +187,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -229,7 +233,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -242,7 +246,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -300,10 +304,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -312,12 +318,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -358,7 +364,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetStatisticsAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -371,7 +377,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -433,10 +439,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainersSegment>> ListBlobContainersSegmentAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -449,12 +457,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.ListBlobContainersSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListBlobContainersSegmentAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListBlobContainersSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -503,7 +511,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.ListBlobContainersSegmentAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListBlobContainersSegmentAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListBlobContainersSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -520,7 +528,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -582,10 +590,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A user delegation key</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
@@ -595,12 +605,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetUserDelegationKey",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetUserDelegationKeyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetUserDelegationKeyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         keyInfo,
@@ -643,7 +653,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetUserDelegationKeyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetUserDelegationKeyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetUserDelegationKeyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
@@ -661,7 +671,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -680,7 +690,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -724,22 +734,24 @@ namespace Azure.Storage.Blobs
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetAccountInfo",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetAccountInfoAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetAccountInfoAsync_CreateMessage(
                         pipeline,
                         resourceUri))
                     {
@@ -776,7 +788,7 @@ namespace Azure.Storage.Blobs
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <returns>The Service.GetAccountInfoAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetAccountInfoAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetAccountInfoAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri)
             {
@@ -787,7 +799,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -858,10 +870,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult>> SubmitBatchAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -873,12 +887,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SubmitBatch",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SubmitBatchAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SubmitBatchAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -925,7 +939,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SubmitBatchAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SubmitBatchAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SubmitBatchAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -949,7 +963,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -965,7 +979,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(body);
+                _request.Content = Azure.Core.RequestContent.Create(body);
 
                 return _message;
             }
@@ -1028,10 +1042,12 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1042,12 +1058,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         access,
@@ -1092,7 +1108,7 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1107,7 +1123,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1182,10 +1198,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1195,12 +1213,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1243,7 +1261,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1257,7 +1275,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1360,10 +1378,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1375,12 +1395,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1427,7 +1447,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.DeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1443,7 +1463,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1501,10 +1521,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> SetMetadataAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1516,12 +1538,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1568,7 +1590,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1584,7 +1606,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1661,10 +1683,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerAccessPolicy}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy>> GetAccessPolicyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1674,12 +1698,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1722,7 +1746,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.GetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1736,7 +1760,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1820,10 +1844,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> SetAccessPolicyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1837,12 +1863,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         access,
@@ -1893,7 +1919,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.SetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1911,7 +1937,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1941,7 +1967,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -2001,10 +2027,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2017,12 +2045,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = AcquireLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = AcquireLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -2071,7 +2099,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.AcquireLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage AcquireLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage AcquireLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2088,7 +2116,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2168,10 +2196,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> ReleaseLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2183,12 +2213,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ReleaseLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ReleaseLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -2235,7 +2265,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ReleaseLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ReleaseLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ReleaseLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2255,7 +2285,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2330,10 +2360,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2345,12 +2377,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = RenewLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = RenewLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -2397,7 +2429,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.RenewLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage RenewLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage RenewLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2417,7 +2449,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2496,10 +2528,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2511,12 +2545,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = BreakLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = BreakLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -2563,7 +2597,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.BreakLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage BreakLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage BreakLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2579,7 +2613,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2659,10 +2693,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2675,12 +2711,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ChangeLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ChangeLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -2729,7 +2765,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ChangeLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ChangeLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ChangeLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2754,7 +2790,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2835,10 +2871,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2851,12 +2889,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsFlatSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListBlobsFlatSegmentAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListBlobsFlatSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -2905,7 +2943,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ListBlobsFlatSegmentAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListBlobsFlatSegmentAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListBlobsFlatSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2922,7 +2960,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2989,10 +3027,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -3006,12 +3046,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsHierarchySegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListBlobsHierarchySegmentAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListBlobsHierarchySegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -3062,7 +3102,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ListBlobsHierarchySegmentAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListBlobsHierarchySegmentAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListBlobsHierarchySegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -3080,7 +3120,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3163,10 +3203,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)> DownloadAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3187,12 +3229,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DownloadAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DownloadAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -3259,7 +3301,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.DownloadAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DownloadAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DownloadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3284,7 +3326,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3309,7 +3351,7 @@ namespace Azure.Storage.Blobs
                 }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -3626,10 +3668,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3647,12 +3691,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -3711,7 +3755,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3733,7 +3777,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3747,7 +3791,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -3959,10 +4003,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3978,12 +4024,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -4038,7 +4084,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.DeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -4058,7 +4104,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4125,10 +4171,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>> SetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4146,12 +4194,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetAccessControlAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4210,7 +4258,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetAccessControlAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetAccessControlAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4232,7 +4280,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4314,10 +4362,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>> GetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4332,12 +4382,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetAccessControlAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4390,7 +4440,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.GetAccessControlAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetAccessControlAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4409,7 +4459,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4522,10 +4572,12 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>> RenameAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -4554,12 +4606,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = RenameAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = RenameAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         renameSource,
@@ -4640,7 +4692,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.RenameAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage RenameAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage RenameAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -4677,7 +4729,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4767,10 +4819,12 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> UndeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4779,12 +4833,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.Undelete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UndeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UndeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4825,7 +4879,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.UndeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UndeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UndeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4838,7 +4892,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4901,10 +4955,12 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4924,12 +4980,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetHttpHeaders",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetHttpHeadersAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetHttpHeadersAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4992,7 +5048,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetHttpHeadersAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetHttpHeadersAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetHttpHeadersAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5016,7 +5072,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5117,10 +5173,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5138,12 +5196,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -5202,7 +5260,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5224,7 +5282,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5244,7 +5302,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -5319,10 +5377,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5337,12 +5397,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = AcquireLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = AcquireLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -5395,7 +5455,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.AcquireLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage AcquireLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage AcquireLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5414,7 +5474,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5497,10 +5557,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5514,12 +5576,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ReleaseLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ReleaseLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -5570,7 +5632,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.ReleaseLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ReleaseLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ReleaseLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5592,7 +5654,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5670,10 +5732,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5687,12 +5751,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = RenewLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = RenewLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -5743,7 +5807,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.RenewLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage RenewLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage RenewLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5765,7 +5829,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5848,10 +5912,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5866,12 +5932,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ChangeLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ChangeLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         leaseId,
@@ -5924,7 +5990,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.ChangeLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ChangeLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ChangeLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5951,7 +6017,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6034,10 +6100,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6051,12 +6119,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = BreakLeaseAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = BreakLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -6107,7 +6175,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.BreakLeaseAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage BreakLeaseAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage BreakLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6125,7 +6193,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6211,10 +6279,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6232,12 +6302,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateSnapshotAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateSnapshotAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -6296,7 +6366,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.CreateSnapshotAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateSnapshotAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateSnapshotAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6318,7 +6388,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6337,7 +6407,7 @@ namespace Azure.Storage.Blobs
                 }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -6420,10 +6490,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6445,12 +6517,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.StartCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = StartCopyFromUriAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = StartCopyFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -6517,7 +6589,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage StartCopyFromUriAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage StartCopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6547,7 +6619,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6651,10 +6723,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6675,12 +6749,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.CopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CopyFromUriAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CopyFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -6745,7 +6819,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.CopyFromUriAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CopyFromUriAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6774,7 +6848,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -6868,10 +6942,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> AbortCopyFromUriAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -6882,12 +6958,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.AbortCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = AbortCopyFromUriAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = AbortCopyFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copyId,
@@ -6932,7 +7008,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.AbortCopyFromUriAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage AbortCopyFromUriAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage AbortCopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -6951,7 +7027,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7009,10 +7085,12 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetAccessTierAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7024,12 +7102,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetAccessTierAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetAccessTierAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         tier,
@@ -7076,7 +7154,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Blob.SetAccessTierAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetAccessTierAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetAccessTierAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7092,7 +7170,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7178,10 +7256,12 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7209,12 +7289,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         contentLength,
@@ -7293,7 +7373,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7325,7 +7405,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7364,7 +7444,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7454,10 +7534,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -7482,12 +7564,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UploadPagesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UploadPagesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -7560,7 +7642,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UploadPagesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UploadPagesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UploadPagesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -7593,7 +7675,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7612,7 +7694,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -7623,7 +7705,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(body);
+                _request.Content = Azure.Core.RequestContent.Create(body);
 
                 return _message;
             }
@@ -7714,10 +7796,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7739,12 +7823,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.ClearPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ClearPagesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ClearPagesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         contentLength,
@@ -7811,7 +7895,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ClearPagesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ClearPagesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ClearPagesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7837,7 +7921,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -7854,7 +7938,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -7961,10 +8045,12 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -7994,12 +8080,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPagesFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UploadPagesFromUriAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UploadPagesFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sourceUri,
@@ -8082,7 +8168,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UploadPagesFromUriAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UploadPagesFromUriAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UploadPagesFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -8128,7 +8214,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8148,7 +8234,7 @@ namespace Azure.Storage.Blobs
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8260,10 +8346,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8279,12 +8367,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRanges",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPageRangesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPageRangesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -8339,7 +8427,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.GetPageRangesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPageRangesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPageRangesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8359,7 +8447,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8461,10 +8549,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8481,12 +8571,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRangesDiff",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPageRangesDiffAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPageRangesDiffAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         snapshot,
@@ -8543,7 +8633,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.GetPageRangesDiffAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPageRangesDiffAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPageRangesDiffAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8564,7 +8654,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8668,10 +8758,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -8689,12 +8781,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Resize",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ResizeAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ResizeAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blobContentLength,
@@ -8753,7 +8845,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ResizeAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ResizeAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ResizeAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -8775,7 +8867,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -8790,7 +8882,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -8862,10 +8954,12 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -8881,12 +8975,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UpdateSequenceNumber",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UpdateSequenceNumberAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UpdateSequenceNumberAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sequenceNumberAction,
@@ -8941,7 +9035,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UpdateSequenceNumberAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UpdateSequenceNumberAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -8961,7 +9055,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9044,10 +9138,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -9061,12 +9157,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.CopyIncremental",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CopyIncrementalAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CopyIncrementalAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -9117,7 +9213,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CopyIncrementalAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CopyIncrementalAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -9139,7 +9235,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9243,10 +9339,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -9271,12 +9369,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         contentLength,
@@ -9349,7 +9447,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -9378,7 +9476,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9415,7 +9513,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9502,10 +9600,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -9528,12 +9628,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = AppendBlockAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = AppendBlockAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -9602,7 +9702,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.AppendBlockAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage AppendBlockAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage AppendBlockAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -9633,7 +9733,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9652,7 +9752,7 @@ namespace Azure.Storage.Blobs
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9660,7 +9760,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(body);
+                _request.Content = Azure.Core.RequestContent.Create(body);
 
                 return _message;
             }
@@ -9760,10 +9860,12 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -9792,12 +9894,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = AppendBlockFromUriAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = AppendBlockFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sourceUri,
@@ -9878,7 +9980,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.AppendBlockFromUriAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage AppendBlockFromUriAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage AppendBlockFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -9915,7 +10017,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -9934,7 +10036,7 @@ namespace Azure.Storage.Blobs
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10066,10 +10168,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -10096,12 +10200,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.Upload",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UploadAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UploadAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         body,
@@ -10178,7 +10282,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.UploadAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UploadAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UploadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -10213,7 +10317,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10250,7 +10354,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10259,7 +10363,7 @@ namespace Azure.Storage.Blobs
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(body);
+                _request.Content = Azure.Core.RequestContent.Create(body);
 
                 return _message;
             }
@@ -10336,10 +10440,12 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10357,12 +10463,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = StageBlockAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = StageBlockAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blockId,
@@ -10421,7 +10527,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage StageBlockAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage StageBlockAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10451,7 +10557,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10469,11 +10575,11 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(body);
+                _request.Content = Azure.Core.RequestContent.Create(body);
 
                 return _message;
             }
@@ -10547,10 +10653,12 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10573,12 +10681,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = StageBlockFromUriAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = StageBlockFromUriAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blockId,
@@ -10647,7 +10755,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockFromUriAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage StageBlockFromUriAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage StageBlockFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10682,7 +10790,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10701,7 +10809,7 @@ namespace Azure.Storage.Blobs
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10800,10 +10908,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockLookupList blocks,
@@ -10831,12 +10941,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.CommitBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CommitBlockListAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CommitBlockListAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         blocks,
@@ -10915,7 +11025,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CommitBlockListAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CommitBlockListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockLookupList blocks,
@@ -10951,7 +11061,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -10989,7 +11099,7 @@ namespace Azure.Storage.Blobs
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
-                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11002,7 +11112,7 @@ namespace Azure.Storage.Blobs
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -11073,10 +11183,12 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockListType listType,
@@ -11088,12 +11200,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.GetBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetBlockListAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetBlockListAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         listType,
@@ -11140,7 +11252,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.GetBlockListAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetBlockListAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetBlockListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockListType listType,
@@ -11156,7 +11268,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11257,10 +11369,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11282,12 +11396,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -11354,7 +11468,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11380,7 +11494,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11485,10 +11599,12 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>> RenameAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -11518,12 +11634,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = RenameAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = RenameAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         renameSource,
@@ -11606,7 +11722,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.RenameAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage RenameAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage RenameAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -11644,7 +11760,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11746,10 +11862,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>> DeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool recursiveDirectoryDelete,
@@ -11765,12 +11883,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         recursiveDirectoryDelete,
@@ -11825,7 +11943,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.DeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool recursiveDirectoryDelete,
@@ -11845,7 +11963,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -11927,10 +12045,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>> SetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11948,12 +12068,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetAccessControlAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -12012,7 +12132,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.SetAccessControlAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetAccessControlAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -12034,7 +12154,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -12116,10 +12236,12 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>> GetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -12134,12 +12256,12 @@ namespace Azure.Storage.Blobs
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetAccessControlAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetAccessControlAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -12192,7 +12314,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Directory.GetAccessControlAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetAccessControlAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetAccessControlAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -12211,7 +12333,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -17066,7 +17188,34 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// AES256
         /// </summary>
-        AES256
+        Aes256
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.EncryptionAlgorithmType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.EncryptionAlgorithmType.Aes256 => "AES256",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.EncryptionAlgorithmType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.EncryptionAlgorithmType ParseEncryptionAlgorithmType(string value)
+            {
+                return value switch
+                {
+                    "AES256" => Azure.Storage.Blobs.Models.EncryptionAlgorithmType.Aes256,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.EncryptionAlgorithmType value.")
+                };
+            }
+        }
     }
 }
 #endregion enum EncryptionAlgorithmType
@@ -18691,27 +18840,27 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Standard_LRS
         /// </summary>
-        StandardLRS,
+        StandardLrs,
 
         /// <summary>
         /// Standard_GRS
         /// </summary>
-        StandardGRS,
+        StandardGrs,
 
         /// <summary>
         /// Standard_RAGRS
         /// </summary>
-        StandardRAGRS,
+        StandardRagrs,
 
         /// <summary>
         /// Standard_ZRS
         /// </summary>
-        StandardZRS,
+        StandardZrs,
 
         /// <summary>
         /// Premium_LRS
         /// </summary>
-        PremiumLRS
+        PremiumLrs
     }
 }
 
@@ -18725,11 +18874,11 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    Azure.Storage.Blobs.Models.SkuName.StandardLRS => "Standard_LRS",
-                    Azure.Storage.Blobs.Models.SkuName.StandardGRS => "Standard_GRS",
-                    Azure.Storage.Blobs.Models.SkuName.StandardRAGRS => "Standard_RAGRS",
-                    Azure.Storage.Blobs.Models.SkuName.StandardZRS => "Standard_ZRS",
-                    Azure.Storage.Blobs.Models.SkuName.PremiumLRS => "Premium_LRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardLrs => "Standard_LRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardGrs => "Standard_GRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardRagrs => "Standard_RAGRS",
+                    Azure.Storage.Blobs.Models.SkuName.StandardZrs => "Standard_ZRS",
+                    Azure.Storage.Blobs.Models.SkuName.PremiumLrs => "Premium_LRS",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.SkuName value.")
                 };
             }
@@ -18738,11 +18887,11 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    "Standard_LRS" => Azure.Storage.Blobs.Models.SkuName.StandardLRS,
-                    "Standard_GRS" => Azure.Storage.Blobs.Models.SkuName.StandardGRS,
-                    "Standard_RAGRS" => Azure.Storage.Blobs.Models.SkuName.StandardRAGRS,
-                    "Standard_ZRS" => Azure.Storage.Blobs.Models.SkuName.StandardZRS,
-                    "Premium_LRS" => Azure.Storage.Blobs.Models.SkuName.PremiumLRS,
+                    "Standard_LRS" => Azure.Storage.Blobs.Models.SkuName.StandardLrs,
+                    "Standard_GRS" => Azure.Storage.Blobs.Models.SkuName.StandardGrs,
+                    "Standard_RAGRS" => Azure.Storage.Blobs.Models.SkuName.StandardRagrs,
+                    "Standard_ZRS" => Azure.Storage.Blobs.Models.SkuName.StandardZrs,
+                    "Premium_LRS" => Azure.Storage.Blobs.Models.SkuName.PremiumLrs,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.SkuName value.")
                 };
             }
@@ -18815,12 +18964,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string SignedOid { get; internal set; }
+        public string SignedObjectId { get; internal set; }
 
         /// <summary>
         /// The Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string SignedTid { get; internal set; }
+        public string SignedTenantId { get; internal set; }
 
         /// <summary>
         /// The date-time the key is active
@@ -18866,12 +19015,12 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("SignedOid", ""));
             if (_child != null)
             {
-                _value.SignedOid = _child.Value;
+                _value.SignedObjectId = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("SignedTid", ""));
             if (_child != null)
             {
-                _value.SignedTid = _child.Value;
+                _value.SignedTenantId = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("SignedStart", ""));
             if (_child != null)
@@ -18914,8 +19063,8 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new UserDelegationKey instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
-            string signedOid,
-            string signedTid,
+            string signedObjectId,
+            string signedTenantId,
             System.DateTimeOffset signedStart,
             System.DateTimeOffset signedExpiry,
             string signedService,
@@ -18924,8 +19073,8 @@ namespace Azure.Storage.Blobs.Models
         {
             return new UserDelegationKey()
             {
-                SignedOid = signedOid,
-                SignedTid = signedTid,
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
                 SignedStart = signedStart,
                 SignedExpiry = signedExpiry,
                 SignedService = signedService,

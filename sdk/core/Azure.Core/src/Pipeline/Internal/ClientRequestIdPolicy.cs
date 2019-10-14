@@ -3,7 +3,7 @@
 
 namespace Azure.Core.Pipeline
 {
-    internal class ClientRequestIdPolicy : SynchronousHttpPipelinePolicy
+    internal class ClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
         private const string ClientRequestIdHeader = "x-ms-client-request-id";
         private const string EchoClientRequestId = "x-ms-return-client-request-id";
@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
 
         public static ClientRequestIdPolicy Shared { get; } = new ClientRequestIdPolicy();
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             message.Request.Headers.Add(ClientRequestIdHeader, message.Request.ClientRequestId);
             message.Request.Headers.Add(EchoClientRequestId, "true");

@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
 
             var cred = new UsernamePasswordCredential(username, password, ClientId, tenantId);
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }));
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.IsNotNull(token.Token);
         }

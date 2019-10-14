@@ -171,6 +171,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                         ProcessorEventSource.Log.EventProcessorHostWarning(this.host.HostName, retryMessage, ex.ToString());
                     }
 
+                    this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, partitionId, ex, action);
+
                     finalException = ex;
                     retryCount++;
                 }

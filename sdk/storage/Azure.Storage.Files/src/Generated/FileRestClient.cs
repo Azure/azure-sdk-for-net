@@ -31,10 +31,12 @@ namespace Azure.Storage.Files
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.Models.FileServiceProperties properties,
@@ -43,12 +45,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         properties,
@@ -89,7 +91,7 @@ namespace Azure.Storage.Files
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Service.SetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.Models.FileServiceProperties properties,
@@ -106,7 +108,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -124,7 +126,7 @@ namespace Azure.Storage.Files
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -164,10 +166,12 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage service properties.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -175,12 +179,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
@@ -219,7 +223,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Service.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -231,7 +235,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -291,10 +295,12 @@ namespace Azure.Storage.Files
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of shares.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.SharesSegment>> ListSharesSegmentAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -306,12 +312,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ServiceClient.ListSharesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListSharesSegmentAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListSharesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -358,7 +364,7 @@ namespace Azure.Storage.Files
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Service.ListSharesSegmentAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListSharesSegmentAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListSharesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -374,7 +380,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -443,10 +449,12 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -456,12 +464,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -504,7 +512,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <returns>The Share.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -518,7 +526,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -591,10 +599,12 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -603,12 +613,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
@@ -649,7 +659,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -662,7 +672,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -742,10 +752,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -755,12 +767,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
@@ -803,7 +815,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
             /// <returns>The Share.DeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -817,7 +829,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -870,10 +882,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareSnapshotInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -882,12 +896,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateSnapshotAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateSnapshotAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -928,7 +942,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <returns>The Share.CreateSnapshotAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateSnapshotAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateSnapshotAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -941,7 +955,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1018,10 +1032,12 @@ namespace Azure.Storage.Files
             /// <param name="sharePermissionJson">A permission (a security descriptor) at the share level.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.PermissionInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.PermissionInfo>> CreatePermissionAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharePermissionJson,
@@ -1030,12 +1046,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.CreatePermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreatePermissionAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreatePermissionAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharePermissionJson,
@@ -1076,7 +1092,7 @@ namespace Azure.Storage.Files
             /// <param name="sharePermissionJson">A permission (a security descriptor) at the share level.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.CreatePermissionAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreatePermissionAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreatePermissionAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharePermissionJson,
@@ -1093,7 +1109,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1110,7 +1126,7 @@ namespace Azure.Storage.Files
                 string _text = sharePermissionJson;
                 _request.Headers.SetValue("Content-Type", "application/json");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -1162,10 +1178,12 @@ namespace Azure.Storage.Files
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A permission (a security descriptor) at the share level.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<string>> GetPermissionAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string filePermissionKey,
@@ -1174,12 +1192,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetPermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPermissionAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPermissionAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         filePermissionKey,
@@ -1220,7 +1238,7 @@ namespace Azure.Storage.Files
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.GetPermissionAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPermissionAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPermissionAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string filePermissionKey,
@@ -1237,7 +1255,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1298,10 +1316,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1310,12 +1330,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetQuotaAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetQuotaAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1356,7 +1376,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <returns>The Share.SetQuotaAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetQuotaAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetQuotaAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1369,7 +1389,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1437,10 +1457,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1449,12 +1471,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -1495,7 +1517,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <returns>The Share.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1508,7 +1530,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1580,10 +1602,12 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1591,12 +1615,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetAccessPolicyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
@@ -1635,7 +1659,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.GetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetAccessPolicyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -1647,7 +1671,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1708,10 +1732,12 @@ namespace Azure.Storage.Files
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
@@ -1720,12 +1746,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetAccessPolicyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetAccessPolicyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         permissions,
@@ -1766,7 +1792,7 @@ namespace Azure.Storage.Files
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.SetAccessPolicyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetAccessPolicyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
@@ -1779,7 +1805,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1804,7 +1830,7 @@ namespace Azure.Storage.Files
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }
@@ -1859,10 +1885,12 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Stats for the share.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareStatistics>> GetStatisticsAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1870,12 +1898,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetStatisticsAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetStatisticsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
@@ -1914,7 +1942,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.GetStatisticsAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetStatisticsAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -1926,7 +1954,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -1996,10 +2024,12 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2013,12 +2043,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileAttributes,
@@ -2069,7 +2099,7 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The Directory.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2099,7 +2129,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2204,10 +2234,12 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryProperties>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -2216,12 +2248,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
@@ -2262,7 +2294,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Directory.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -2275,7 +2307,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2381,10 +2413,12 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2392,12 +2426,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
@@ -2436,7 +2470,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Directory.DeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -2448,7 +2482,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2503,10 +2537,12 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> SetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2519,12 +2555,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileAttributes,
@@ -2573,7 +2609,7 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The Directory.SetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2602,7 +2638,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2702,10 +2738,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageDirectoryInfo>> SetMetadataAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2714,12 +2752,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -2760,7 +2798,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <returns>The Directory.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2773,7 +2811,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2849,10 +2887,12 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of directories and files.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2864,12 +2904,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListFilesAndDirectoriesSegmentAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListFilesAndDirectoriesSegmentAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         prefix,
@@ -2916,7 +2956,7 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Directory.ListFilesAndDirectoriesSegmentAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListFilesAndDirectoriesSegmentAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListFilesAndDirectoriesSegmentAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2932,7 +2972,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -2996,10 +3036,12 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -3011,12 +3053,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListHandlesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         marker,
@@ -3063,7 +3105,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <returns>The Directory.ListHandlesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListHandlesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -3079,7 +3121,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3146,10 +3188,12 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -3161,12 +3205,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.DirectoryClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ForceCloseHandlesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ForceCloseHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         handleId,
@@ -3213,7 +3257,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <returns>The Directory.ForceCloseHandlesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ForceCloseHandlesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ForceCloseHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -3233,7 +3277,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3327,10 +3371,12 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> CreateAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
@@ -3351,12 +3397,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = CreateAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = CreateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileContentLength,
@@ -3421,7 +3467,7 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The File.CreateAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage CreateAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
@@ -3458,7 +3504,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3585,10 +3631,12 @@ namespace Azure.Storage.Files
             /// <param name="range">Return file data only from the specified byte range.</param>
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>, System.IO.Stream)> DownloadAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3598,12 +3646,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DownloadAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DownloadAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -3648,7 +3696,7 @@ namespace Azure.Storage.Files
             /// <param name="range">Return file data only from the specified byte range.</param>
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <returns>The File.DownloadAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DownloadAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DownloadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3662,7 +3710,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -3962,10 +4010,12 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileProperties>> GetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -3974,12 +4024,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
@@ -4020,7 +4070,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The File.GetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -4033,7 +4083,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4200,10 +4250,12 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4211,12 +4263,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = DeleteAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = DeleteAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout))
@@ -4255,7 +4307,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The File.DeleteAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage DeleteAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default)
@@ -4267,7 +4319,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4328,10 +4380,12 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> SetPropertiesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -4351,12 +4405,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetPropertiesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         fileAttributes,
@@ -4419,7 +4473,7 @@ namespace Azure.Storage.Files
             /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The File.SetPropertiesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetPropertiesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -4455,7 +4509,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4575,10 +4629,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.RawStorageFileInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.RawStorageFileInfo>> SetMetadataAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4587,12 +4643,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = SetMetadataAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetMetadataAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         timeout,
@@ -4633,7 +4689,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <returns>The File.SetMetadataAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage SetMetadataAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4646,7 +4702,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4726,10 +4782,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileUploadInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4742,12 +4800,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.UploadRange",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UploadRangeAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UploadRangeAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         range,
@@ -4796,7 +4854,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
             /// <returns>The File.UploadRangeAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UploadRangeAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UploadRangeAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4817,7 +4875,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -4834,7 +4892,7 @@ namespace Azure.Storage.Files
                 if (contentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(contentHash)); }
 
                 // Create the body
-                _request.Content = Azure.Core.HttpPipelineRequestContent.Create(optionalbody);
+                _request.Content = Azure.Core.RequestContent.Create(optionalbody);
 
                 return _message;
             }
@@ -4904,10 +4962,12 @@ namespace Azure.Storage.Files
             /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
             /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FileUploadRangeFromURLResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult>> UploadRangeFromURLAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4922,12 +4982,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.UploadRangeFromURL",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = UploadRangeFromURLAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = UploadRangeFromURLAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         range,
@@ -4980,7 +5040,7 @@ namespace Azure.Storage.Files
             /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
             /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
             /// <returns>The File.UploadRangeFromURLAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage UploadRangeFromURLAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage UploadRangeFromURLAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -5007,7 +5067,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5090,10 +5150,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileRangeInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -5103,12 +5165,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.GetRangeList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = GetRangeListAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = GetRangeListAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         sharesnapshot,
@@ -5151,7 +5213,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <returns>The File.GetRangeListAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage GetRangeListAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage GetRangeListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -5165,7 +5227,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5244,10 +5306,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileCopyInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5257,12 +5321,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.StartCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = StartCopyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = StartCopyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copySource,
@@ -5305,7 +5369,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <returns>The File.StartCopyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage StartCopyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage StartCopyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5323,7 +5387,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5403,10 +5467,12 @@ namespace Azure.Storage.Files
             /// <param name="copyId">The copy identifier provided in the x-ms-copy-id header of the original Copy File operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> AbortCopyAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -5415,12 +5481,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.AbortCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = AbortCopyAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = AbortCopyAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         copyId,
@@ -5461,7 +5527,7 @@ namespace Azure.Storage.Files
             /// <param name="copyId">The copy identifier provided in the x-ms-copy-id header of the original Copy File operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The File.AbortCopyAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage AbortCopyAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage AbortCopyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -5478,7 +5544,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5533,10 +5599,12 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -5547,12 +5615,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ListHandlesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ListHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         marker,
@@ -5597,7 +5665,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <returns>The File.ListHandlesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ListHandlesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ListHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -5612,7 +5680,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint
@@ -5673,10 +5741,12 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -5687,12 +5757,12 @@ namespace Azure.Storage.Files
                 string operationName = "Azure.Storage.Files.FileClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Diagnostics.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpPipelineMessage _message = ForceCloseHandlesAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = ForceCloseHandlesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         handleId,
@@ -5737,7 +5807,7 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <returns>The File.ForceCloseHandlesAsync Message.</returns>
-            internal static Azure.Core.HttpPipelineMessage ForceCloseHandlesAsync_CreateMessage(
+            internal static Azure.Core.HttpMessage ForceCloseHandlesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -5756,7 +5826,7 @@ namespace Azure.Storage.Files
                 }
 
                 // Create the request
-                Azure.Core.HttpPipelineMessage _message = pipeline.CreateMessage();
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
                 Azure.Core.Request _request = _message.Request;
 
                 // Set the endpoint

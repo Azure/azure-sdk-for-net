@@ -10,16 +10,16 @@ using System.Buffers;
 
 namespace Azure.Core
 {
-    public abstract class HttpPipelineRequestContent : IDisposable
+    public abstract class RequestContent : IDisposable
     {
-        public static HttpPipelineRequestContent Create(Stream stream) => new StreamContent(stream);
-        public static HttpPipelineRequestContent Create(byte[] bytes) => new ArrayContent(bytes, 0, bytes.Length);
+        public static RequestContent Create(Stream stream) => new StreamContent(stream);
+        public static RequestContent Create(byte[] bytes) => new ArrayContent(bytes, 0, bytes.Length);
 
-        public static HttpPipelineRequestContent Create(byte[] bytes, int index, int length) => new ArrayContent(bytes, index, length);
+        public static RequestContent Create(byte[] bytes, int index, int length) => new ArrayContent(bytes, index, length);
 
-        public static HttpPipelineRequestContent Create(ReadOnlyMemory<byte> bytes) => new MemoryContent(bytes);
+        public static RequestContent Create(ReadOnlyMemory<byte> bytes) => new MemoryContent(bytes);
 
-        public static HttpPipelineRequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
+        public static RequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
 
         public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
 
@@ -29,7 +29,7 @@ namespace Azure.Core
 
         public abstract void Dispose();
 
-        private sealed class StreamContent : HttpPipelineRequestContent
+        private sealed class StreamContent : RequestContent
         {
             private const int CopyToBufferSize = 81920;
 
@@ -92,7 +92,7 @@ namespace Azure.Core
             }
         }
 
-        private sealed class ArrayContent : HttpPipelineRequestContent
+        private sealed class ArrayContent : RequestContent
         {
             private readonly byte[] _bytes;
 
@@ -128,7 +128,7 @@ namespace Azure.Core
             }
         }
 
-        private sealed class MemoryContent : HttpPipelineRequestContent
+        private sealed class MemoryContent : RequestContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 
@@ -155,7 +155,7 @@ namespace Azure.Core
             }
         }
 
-        private sealed class ReadOnlySequenceContent : HttpPipelineRequestContent
+        private sealed class ReadOnlySequenceContent : RequestContent
         {
             private readonly ReadOnlySequence<byte> _bytes;
 

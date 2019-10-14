@@ -1002,6 +1002,16 @@ directive:
     delete $.properties.Etag;
 ```
 
+### UserDelegationKey properties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.UserDelegationKey
+  transform: >
+    $.properties.SignedTid["x-ms-client-name"] = "SignedTenantId";
+    $.properties.SignedOid["x-ms-client-name"] = "SignedObjectId";
+```
+
 ### Make sure everything has a type
 ``` yaml
 directive:

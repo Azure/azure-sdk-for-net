@@ -9,9 +9,9 @@ using System.Collections.Generic;
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// Properties returned when downloading a File
+    /// Details returned when downloading a File
     /// </summary>
-    public partial class StorageFileDownloadProperties
+    public partial class StorageFileDownloadDetails
     {
         /// <summary>
         /// Internal flattened property representation
@@ -115,7 +115,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
 
-        internal StorageFileDownloadProperties(FlattenedStorageFileProperties flattened)
+        internal StorageFileDownloadDetails(FlattenedStorageFileProperties flattened)
         {
             _flattened = flattened;
             SmbProperties = new FileSmbProperties(flattened);
@@ -130,7 +130,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new StorageFileDownloadProperties instance for mocking.
         /// </summary>
-        public static StorageFileDownloadProperties StorageFileDownloadProperties(
+        public static StorageFileDownloadDetails StorageFileDownloadProperties(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,
             string contentType,
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.Models
                 FileContentHash = fileContentHash,
                 IsServerEncrypted = isServiceEncrypted
             };
-            return new StorageFileDownloadProperties(flattened);
+            return new StorageFileDownloadDetails(flattened);
         }
     }
 }

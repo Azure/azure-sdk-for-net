@@ -18,7 +18,7 @@ namespace Azure.Core.Testing
 
         public bool IsDisposed { get; private set; }
 
-        public override HttpPipelineRequestContent Content
+        public override RequestContent Content
         {
             get { return base.Content; }
             set

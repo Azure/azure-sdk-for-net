@@ -32,17 +32,15 @@ namespace Azure.Storage.Blobs.Specialized
     public class PageBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// <see cref="PageBlobPageBytes"/> indicates the number of bytes in a
-        /// page (512).
+        /// Gets the number of bytes in a page (512).
         /// </summary>
-		public const int PageBlobPageBytes = 512;
+		public virtual int PageBlobPageBytes => 512;
 
         /// <summary>
-        /// <see cref="PageBlobMaxUploadPagesBytes"/> indicates the maximum
-        /// number of bytes that can be sent in a call to the
-        /// <see cref="UploadPagesAsync"/> operation.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to the <see cref="UploadPagesAsync"/> operation.
         /// </summary>
-        public const int PageBlobMaxUploadPagesBytes = 4 * Constants.MB; // 4MB
+        public virtual int PageBlobMaxUploadPagesBytes => 4 * Constants.MB; // 4MB
 
         #region ctors
         /// <summary>
@@ -630,6 +628,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
@@ -872,6 +871,7 @@ namespace Azure.Storage.Blobs.Specialized
                             {
                                 Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                                 return BlobRestClient.PageBlob.UploadPagesAsync(
+                                    ClientDiagnostics,
                                     Pipeline,
                                     Uri,
                                     body: content,
@@ -1047,6 +1047,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.ClearPagesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
@@ -1221,6 +1222,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.PageBlob.GetPageRangesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         snapshot: snapshot,
@@ -1422,6 +1424,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         snapshot: snapshot,
@@ -1585,6 +1588,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.ResizeAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         blobContentLength: size,
@@ -1795,6 +1799,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.PageBlob.UpdateSequenceNumberAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sequenceNumberAction: action,
@@ -2214,6 +2219,7 @@ namespace Azure.Storage.Blobs.Specialized
                     PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline).WithSnapshot(snapshot);
 
                     return await BlobRestClient.PageBlob.CopyIncrementalAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         copySource: pageBlobUri.Uri,
@@ -2471,6 +2477,7 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.PageBlob.UploadPagesFromUriAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sourceUri: sourceUri,

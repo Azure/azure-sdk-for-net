@@ -43,12 +43,12 @@ namespace Azure.Core.Pipeline
         private bool _logAllHeaders;
         private bool _logFullQueries;
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
-        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (!s_eventSource.IsEnabled())
             {
@@ -130,7 +130,7 @@ namespace Azure.Core.Pipeline
             return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters, RedactedPlaceholder);
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
@@ -280,7 +280,7 @@ namespace Azure.Core.Pipeline
 
             }
 
-            public async ValueTask LogAsync(string requestId, HttpPipelineRequestContent? content, Encoding? textEncoding, bool async)
+            public async ValueTask LogAsync(string requestId, RequestContent? content, Encoding? textEncoding, bool async)
             {
                 EventType eventType = EventType.Request;
 
@@ -331,7 +331,7 @@ namespace Azure.Core.Pipeline
                        (errorResponse == EventType.ErrorResponse && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All)));
             }
 
-            private async ValueTask<byte[]> FormatAsync(HttpPipelineRequestContent requestContent, bool async)
+            private async ValueTask<byte[]> FormatAsync(RequestContent requestContent, bool async)
             {
                 using var memoryStream = new MaxLengthStream(_maxLength);
 

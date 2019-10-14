@@ -25,12 +25,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Azure Storage name used to identify a storage account's root container.
         /// </summary>
-        public const string RootBlobContainerName = Constants.Blob.Container.RootName;
+        public static readonly string RootBlobContainerName = Constants.Blob.Container.RootName;
 
         /// <summary>
         /// The Azure Storage name used to identify a storage account's logs container.
         /// </summary>
-        public const string LogsBlobContainerName = Constants.Blob.Container.LogsName;
+        public static readonly string LogsBlobContainerName = Constants.Blob.Container.LogsName;
+
+        /// <summary>
+        /// The Azure Storage name used to identify a storage account's web content container.
+        /// </summary>
+        public static readonly string WebBlobContainerName = Constants.Blob.Container.WebName;
 
 #pragma warning disable IDE0032 // Use auto property
         /// <summary>
@@ -55,6 +60,18 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The Storage account name corresponding to the container client.
@@ -144,14 +161,15 @@ namespace Azure.Storage.Blobs
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
         /// class.
         /// </summary>
-        /// <param name="containerUri">
-        /// A <see cref="Uri"/> referencing the container that includes the
+        /// <param name="blobContainerUri">
+        /// A <see cref="Uri"/> referencing the blob container that includes the
         /// name of the account and the name of the container.
         /// </param>
         /// <param name="options">
@@ -159,8 +177,8 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobContainerClient(Uri containerUri, BlobClientOptions options = default)
-            : this(containerUri, (HttpPipelinePolicy)null,  options)
+        public BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
+            : this(blobContainerUri, (HttpPipelinePolicy)null,  options)
         {
         }
 
@@ -227,6 +245,7 @@ namespace Azure.Storage.Blobs
             _uri = blobContainerUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -240,10 +259,12 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = containerUri;
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctor
 
@@ -576,6 +597,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Container.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -823,6 +845,7 @@ namespace Azure.Storage.Blobs
                     }
 
                     return await BlobRestClient.Container.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -957,6 +980,7 @@ namespace Azure.Storage.Blobs
                     // GetProperties returns a flattened set of properties
                     Response<FlattenedContainerItem> response =
                         await BlobRestClient.Container.GetPropertiesAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             leaseId: leaseAccessConditions?.LeaseId,
@@ -1122,6 +1146,7 @@ namespace Azure.Storage.Blobs
                     }
 
                     return await BlobRestClient.Container.SetMetadataAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -1251,6 +1276,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Container.GetAccessPolicyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         leaseId: leaseAccessConditions?.LeaseId,
@@ -1445,6 +1471,7 @@ namespace Azure.Storage.Blobs
                     }
 
                     return await BlobRestClient.Container.SetAccessPolicyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         permissions: permissions,
@@ -1617,6 +1644,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Container.ListBlobsFlatSegmentAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,
@@ -1847,6 +1875,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Container.ListBlobsHierarchySegmentAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,

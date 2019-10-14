@@ -23,19 +23,19 @@ namespace Azure.Storage.Test.Shared
             _exceptionToRaise = exceptionToRaise;
         }
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             await InjectFaultAsync(message, isAsync: true).ConfigureAwait(false);
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
             InjectFaultAsync(message, isAsync: false).EnsureCompleted();
         }
 
-        private async Task InjectFaultAsync(HttpPipelineMessage message, bool isAsync)
+        private async Task InjectFaultAsync(HttpMessage message, bool isAsync)
         {
             if (message.Response != null)
             {

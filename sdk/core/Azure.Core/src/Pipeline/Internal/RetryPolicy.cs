@@ -31,17 +31,17 @@ namespace Azure.Core.Pipeline
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
-        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             int attempt = 0;
             List<Exception>? exceptions = null;
@@ -137,7 +137,7 @@ namespace Azure.Core.Pipeline
             cancellationToken.WaitHandle.WaitOne(time);
         }
 
-        protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
+        protected virtual TimeSpan GetServerDelay(HttpMessage message)
         {
             if (message.Response == null)
             {
@@ -168,7 +168,7 @@ namespace Azure.Core.Pipeline
             return TimeSpan.Zero;
         }
 
-        private void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        private void GetDelay(HttpMessage message, int attempted, out TimeSpan delay)
         {
             delay = TimeSpan.Zero;
 

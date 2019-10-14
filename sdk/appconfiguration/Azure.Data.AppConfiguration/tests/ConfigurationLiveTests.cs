@@ -226,7 +226,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.SetAsync(testSetting);
-                Assert.AreEqual(testSetting, setting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -245,7 +245,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddAsync(testSetting);
 
                 ConfigurationSetting setting = await service.SetAsync(testSetting);
-                Assert.AreEqual(testSetting, setting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -419,8 +419,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddAsync(testSetting);
-
-                Assert.AreEqual(testSetting, setting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -440,8 +439,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddAsync(testSettingNoLabel);
-
-                Assert.AreEqual(testSettingNoLabel, setting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
             }
             finally
             {
@@ -527,11 +525,11 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     if (value.Label.Contains("update"))
                     {
-                        Assert.AreEqual(value, testSettingUpdate);
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
                     }
                     else
                     {
-                        Assert.AreEqual(value, setting);
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, setting));
                     }
                     resultsReturned++;
                 }
@@ -560,7 +558,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSettingNoLabel);
                 // Test
                 ConfigurationSetting setting = await service.GetAsync(testSettingNoLabel.Key);
-                Assert.AreEqual(testSettingNoLabel, setting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
             }
             finally
             {
@@ -599,7 +597,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label);
-                Assert.AreEqual(testSetting, responseSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
@@ -621,7 +619,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 // TODO: add a test with a more granular timestamp.
                 ConfigurationSetting responseSetting = await service.GetAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
-                Assert.AreEqual(testSetting, responseSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
@@ -644,7 +642,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Response<ConfigurationSetting> response = await service.GetAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
                 Assert.AreEqual(200, response.GetRawResponse().Status);
-                Assert.AreEqual(modifiedSetting, response.Value);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(modifiedSetting, response.Value));
             }
             finally
             {
