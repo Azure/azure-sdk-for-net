@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
         /// <summary>
         /// Default API version of storage cache client.
         /// </summary>
-        public const string DefaultAPIVersion = "2019-08-01-preview";
+        public const string DefaultAPIVersion = "2019-11-01";
 
         /// <summary>
         /// Default prefix for resource group name.
