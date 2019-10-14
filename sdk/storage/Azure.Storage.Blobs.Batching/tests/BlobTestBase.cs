@@ -11,7 +11,7 @@ using Azure.Core.Testing;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common.Test;
+using Azure.Storage.Test;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
