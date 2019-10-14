@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2019-07-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2019-07-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2019-07-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMExtensions", "2019-07-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2019-07-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2019-07-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2019-07-01"),
@@ -50,16 +51,5 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/laurawu19/azure-rest-api-specs/blob/private-temp/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\luwu\\Documents\\october\\sdk";
-      public static readonly String GithubForkName = "laurawu19";
-      public static readonly String GithubBranchName = "private-temp";
-      public static readonly String GithubCommidId = "cbef264cc94187b8115c04c10d598383572b4eb0";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
