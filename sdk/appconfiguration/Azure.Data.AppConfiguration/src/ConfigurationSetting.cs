@@ -11,7 +11,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
-    public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
+    public sealed class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
 
@@ -83,84 +83,15 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        public bool Equals(ConfigurationSetting other)
-        {
-            if (other == null)
-                return false;
-            if (ETag != default && other.ETag != default)
-            {
-                if (ETag != other.ETag)
-                    return false;
-                if (LastModified != other.LastModified)
-                    return false;
-                if (ReadOnly != other.ReadOnly)
-                    return false;
-            }
-            if (!string.Equals(Key, other.Key, StringComparison.Ordinal))
-                return false;
-            if (!string.Equals(Value, other.Value, StringComparison.Ordinal))
-                return false;
-            if (!string.Equals(Label, other.Label, StringComparison.Ordinal))
-                return false;
-            if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal))
-                return false;
-            if (!TagsEquals(other.Tags))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Check if two ConfigurationSetting instances are equal.
-        /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            if (obj is ConfigurationSetting other)
-            {
-                return Equals(other);
-            }
-            else
-                return false;
-        }
-
-        private bool TagsEquals(IDictionary<string, string> other)
-        {
-            if (other == null)
-                return false;
-            if (Tags.Count != other.Count)
-                return false;
-            foreach (KeyValuePair<string, string> pair in Tags)
-            {
-                if (!other.TryGetValue(pair.Key, out string value))
-                    return false;
-                if (!string.Equals(value, pair.Value, StringComparison.Ordinal))
-                    return false;
-            }
-            return true;
-        }
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the ConfigurationSetting
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
-        {
-            var hashCode = new HashCodeBuilder();
-            hashCode.Add(Key, StringComparer.Ordinal);
-            hashCode.Add(Label, StringComparer.Ordinal);
-            hashCode.Add(Value, StringComparer.Ordinal);
-            hashCode.Add(ContentType, StringComparer.Ordinal);
-            hashCode.Add(LastModified);
-            hashCode.Add(ETag);
-            hashCode.Add(ReadOnly);
-            hashCode.Add(Tags);
-            return hashCode.ToHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// Creates a (Key,Value) string in reference to the ConfigurationSetting.
