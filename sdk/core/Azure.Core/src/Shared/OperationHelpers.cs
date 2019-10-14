@@ -15,7 +15,7 @@ namespace Azure
 
         public static T GetValue<T>(ref T? value) where T: class
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new InvalidOperationException("The operation has not completed yet.");
             }
