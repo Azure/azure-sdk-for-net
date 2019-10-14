@@ -13185,6 +13185,79 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobBatchResult
 
+#region class BlobBlock
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Represents a single block in a block blob.  It describes the block's ID and size.
+    /// </summary>
+    public partial class BlobBlock
+    {
+        /// <summary>
+        /// The base64 encoded block ID.
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// The block size in bytes.
+        /// </summary>
+        public int Size { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobBlock instances.
+        /// You can use BlobsModelFactory.BlobBlock instead.
+        /// </summary>
+        internal BlobBlock() { }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobBlock instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobBlock instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobBlock FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobBlock _value = new Azure.Storage.Blobs.Models.BlobBlock();
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Size", ""));
+            if (_child != null)
+            {
+                _value.Size = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobBlock value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobBlock instance for mocking.
+        /// </summary>
+        public static BlobBlock BlobBlock(
+            string name,
+            int size)
+        {
+            return new BlobBlock()
+            {
+                Name = name,
+                Size = size,
+            };
+        }
+    }
+}
+#endregion class BlobBlock
+
 #region class BlobContainerAccessPolicy
 namespace Azure.Storage.Blobs.Models
 {
@@ -16351,79 +16424,6 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobsHierarchySegment
 
-#region class Block
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Represents a single block in a block blob.  It describes the block's ID and size.
-    /// </summary>
-    public partial class Block
-    {
-        /// <summary>
-        /// The base64 encoded block ID.
-        /// </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>
-        /// The block size in bytes.
-        /// </summary>
-        public int Size { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of Block instances.
-        /// You can use BlobsModelFactory.Block instead.
-        /// </summary>
-        internal Block() { }
-
-        /// <summary>
-        /// Deserializes XML into a new Block instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Block instance.</returns>
-        internal static Azure.Storage.Blobs.Models.Block FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.Block _value = new Azure.Storage.Blobs.Models.Block();
-            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
-            if (_child != null)
-            {
-                _value.Name = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Size", ""));
-            if (_child != null)
-            {
-                _value.Size = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Block value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new Block instance for mocking.
-        /// </summary>
-        public static Block Block(
-            string name,
-            int size)
-        {
-            return new Block()
-            {
-                Name = name,
-                Size = size,
-            };
-        }
-    }
-}
-#endregion class Block
-
 #region class BlockInfo
 namespace Azure.Storage.Blobs.Models
 {
@@ -16493,12 +16493,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// CommittedBlocks
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> CommittedBlocks { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> CommittedBlocks { get; internal set; }
 
         /// <summary>
         /// UncommittedBlocks
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> UncommittedBlocks { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> UncommittedBlocks { get; internal set; }
 
         /// <summary>
         /// Creates a new BlockList instance
@@ -16516,8 +16516,8 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                CommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.Block>();
-                UncommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.Block>();
+                CommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobBlock>();
+                UncommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobBlock>();
             }
         }
 
@@ -16537,11 +16537,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.CommittedBlocks = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Block", "")),
-                        e => Azure.Storage.Blobs.Models.Block.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.BlobBlock.FromXml(e)));
             }
             else
             {
-                _value.CommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.Block>();
+                _value.CommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobBlock>();
             }
             _child = element.Element(System.Xml.Linq.XName.Get("UncommittedBlocks", ""));
             if (_child != null)
@@ -16549,11 +16549,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.UncommittedBlocks = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Block", "")),
-                        e => Azure.Storage.Blobs.Models.Block.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.BlobBlock.FromXml(e)));
             }
             else
             {
-                _value.UncommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.Block>();
+                _value.UncommittedBlocks = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobBlock>();
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -16571,8 +16571,8 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlockList instance for mocking.
         /// </summary>
         public static BlockList BlockList(
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> committedBlocks = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> uncommittedBlocks = default)
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks = default)
         {
             return new BlockList()
             {

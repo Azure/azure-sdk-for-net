@@ -1258,6 +1258,24 @@ directive:
     $["x-az-public"] = false;
 ```
 
+### Change Block to BlobBlock
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    if (!$.BlobBlock) {
+        $.BlobBlock = $.Block;
+        delete $.Block;
+        $.BlobBlock.xml = { "name": "Block" };
+        const path = $.BlockList.properties.CommittedBlocks.items.$ref.replace(/[#].*$/, "#/definitions/BlobBlock");
+        $.BlockList.properties.CommittedBlocks.items.$ref = path;
+        $.BlockList.properties.CommittedBlocks.xml.name = "CommittedBlocks";
+        $.BlockList.properties.UncommittedBlocks.items.$ref = path;
+        $.BlockList.properties.UncommittedBlocks.xml.name = "UncommittedBlocks";
+    }
+```
+
 ### Batch returns a 202
 ``` yaml
 directive:
