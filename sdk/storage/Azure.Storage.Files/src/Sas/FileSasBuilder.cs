@@ -34,14 +34,14 @@ namespace Azure.Storage.Sas
         /// start time for this call is assumed to be the time when the
         /// storage service receives the request.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public DateTimeOffset ExpiryTime { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions associated with the shared access signature. The
@@ -141,8 +141,8 @@ namespace Azure.Storage.Sas
                 Version = SasQueryParameters.DefaultSasVersion;
             }
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -167,8 +167,8 @@ namespace Azure.Storage.Sas
                 services: default,
                 resourceTypes: default,
                 protocol: Protocol,
-                startTime: StartTime,
-                expiryTime: ExpiryTime,
+                startsOn: StartsOn,
+                expiresOn: ExpiresOn,
                 ipRange: IPRange,
                 identifier: Identifier,
                 resource: resource,
@@ -225,14 +225,14 @@ namespace Azure.Storage.Sas
             ^ ContentEncoding.GetHashCode()
             ^ ContentLanguage.GetHashCode()
             ^ ContentType.GetHashCode()
-            ^ ExpiryTime.GetHashCode()
+            ^ ExpiresOn.GetHashCode()
             ^ FilePath.GetHashCode()
             ^ Identifier.GetHashCode()
             ^ IPRange.GetHashCode()
             ^ Permissions.GetHashCode()
             ^ Protocol.GetHashCode()
             ^ ShareName.GetHashCode()
-            ^ StartTime.GetHashCode()
+            ^ StartsOn.GetHashCode()
             ^ Version.GetHashCode()
             ;
 
@@ -263,14 +263,14 @@ namespace Azure.Storage.Sas
             && ContentEncoding == other.ContentEncoding
             && ContentLanguage == other.ContentEncoding
             && ContentType == other.ContentType
-            && ExpiryTime == other.ExpiryTime
+            && ExpiresOn == other.ExpiresOn
             && FilePath == other.FilePath
             && Identifier == other.Identifier
             && IPRange == other.IPRange
             && Permissions == other.Permissions
             && Protocol == other.Protocol
             && ShareName == other.ShareName
-            && StartTime == other.StartTime
+            && StartsOn == other.StartsOn
             && Version == other.Version
             ;
     }

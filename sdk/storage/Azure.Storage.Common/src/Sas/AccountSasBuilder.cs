@@ -36,14 +36,14 @@ namespace Azure.Storage.Sas
         /// start time for this call is assumed to be the time when the
         /// storage service receives the request.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public DateTimeOffset ExpiryTime { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions associated with the shared access signature. The
@@ -102,8 +102,8 @@ namespace Azure.Storage.Sas
             }
             // Make sure the permission characters are in the correct order
             Permissions = AccountSasPermissions.Parse(Permissions).ToString();
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -124,8 +124,8 @@ namespace Azure.Storage.Sas
                 Services,
                 ResourceTypes,
                 Protocol,
-                StartTime,
-                ExpiryTime,
+                StartsOn,
+                ExpiresOn,
                 IPRange,
                 null, // Identifier
                 null, // Resource
@@ -158,7 +158,7 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="AccountSasBuilder"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            ExpiryTime.GetHashCode() ^
+            ExpiresOn.GetHashCode() ^
             IPRange.GetHashCode() ^
             (Permissions?.GetHashCode() ?? 0) ^
             Protocol.GetHashCode() ^
@@ -192,13 +192,13 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasBuilder other) =>
-            ExpiryTime == other.ExpiryTime &&
+            ExpiresOn == other.ExpiresOn &&
             IPRange == other.IPRange &&
             Permissions == other.Permissions &&
             Protocol == other.Protocol &&
             ResourceTypes == other.ResourceTypes &&
             Services == other.Services &&
-            StartTime == other.StartTime &&
+            StartsOn == other.StartsOn &&
             Version == other.Version;
     }
 }

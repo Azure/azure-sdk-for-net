@@ -262,8 +262,8 @@ namespace Azure.Storage.Test.Shared
             {
                 BlobContainerName = containerName,
                 Protocol = SasProtocol.None,
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
@@ -273,8 +273,8 @@ namespace Azure.Storage.Test.Shared
             {
                 BlobContainerName = containerName,
                 Protocol = SasProtocol.None,
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
@@ -285,8 +285,8 @@ namespace Azure.Storage.Test.Shared
                 BlobContainerName = containerName,
                 BlobName = blobName,
                 Protocol = SasProtocol.None,
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
@@ -297,8 +297,8 @@ namespace Azure.Storage.Test.Shared
                 BlobContainerName = containerName,
                 BlobName = blobName,
                 Protocol = SasProtocol.None,
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
@@ -310,8 +310,8 @@ namespace Azure.Storage.Test.Shared
                 BlobName = blobName,
                 Snapshot = snapshot,
                 Protocol = SasProtocol.None,
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new SnapshotSasPermissions { Read = true, Write = true, Delete = true }.ToString(),
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());

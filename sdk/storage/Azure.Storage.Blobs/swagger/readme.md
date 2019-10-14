@@ -1037,9 +1037,30 @@ directive:
 - from: swagger-document
   where: $.definitions.KeyInfo
   transform: >
-    $.required = ["Expiry"];
-    $.properties.Start.format = $.properties.Expiry.format = "date-time-8601";
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    $.required = ["ExpiresOn"];
+    $.properties.StartsOn.format = $.properties.ExpiresOn.format = "date-time-8601";
     $["x-az-public"] = false;
+    delete $.properties.Start;
+    delete $.properties.Expiry;
+```
+
+### UserDelegationKey
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.UserDelegationKey
+  transform: >
+    $.properties.SignedExpiresOn = $.properties.SignedExpiry;
+    $.properties.SignedExpiresOn.xml = { "name": "SignedExpiry"};
+    $.properties.SignedStartsOn = $.properties.SignedStart;
+    $.properties.SignedStartsOn.xml = { "name": "SignedStart"};
+    $.required = ["SignedOid", "SignedTid", "SignedStartsOn", "SignedExpiresOn", "SignedService", "SignedVersion", "Value"];
+    delete $.properties.SignedExpiry;
+    delete $.properties.SignedStart;
 ```
 
 ### Hide various Include types
