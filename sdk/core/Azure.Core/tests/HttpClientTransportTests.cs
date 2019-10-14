@@ -369,6 +369,19 @@ namespace Azure.Core.Tests
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader)
+        {
+            var transport = new HttpClientTransport();
+            Request request = CreateRequest(transport);
+
+            Assert.False(request.Headers.TryGetValue(headerName, out string value));
+            Assert.IsNull(value);
+
+            Assert.False(request.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            Assert.IsNull(values);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
         public async Task SettingContentHeaderDoesNotSetContent(string headerName, string headerValue, bool contentHeader)
         {
             HttpContent httpMessageContent = null;
