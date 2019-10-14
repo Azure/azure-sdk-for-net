@@ -33,14 +33,14 @@ namespace Azure
         /// </summary>
         /// <param name="offset">null means offset is 0</param>
         /// <param name="length">null means to the end</param>
-        public HttpRange(long? offset = default, long? length = default)
+        public HttpRange(long offset = 0, long? length = default)
         {
-            if (offset.HasValue && offset < 0)
+            if (offset < 0)
                 throw new ArgumentOutOfRangeException(nameof(offset));
             if (length.HasValue && length <= 0)
                 throw new ArgumentOutOfRangeException(nameof(length));
 
-            Offset = offset ?? 0;
+            Offset = offset;
             Length = length;
         }
 
