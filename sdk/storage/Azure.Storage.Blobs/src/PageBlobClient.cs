@@ -1222,6 +1222,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     Response<PageRangesInfoInternal> response =  await BlobRestClient.PageBlob.GetPageRangesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         snapshot: snapshot,
@@ -1424,6 +1425,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     Response<PageRangesInfoInternal> response = await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         snapshot: snapshot,
