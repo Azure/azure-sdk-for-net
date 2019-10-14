@@ -10,8 +10,8 @@
     /// </summary>
     public class StorageAccountsHelper
     {
-        private static readonly string DefaultSkuName = SkuName.StandardGRS;
-        private static readonly string DefaultKind = Kind.Storage;
+        private static readonly string DefaultSkuName = SkuName.StandardLRS;
+        private static readonly string DefaultKind = Kind.StorageV2;
 
         /// <summary>
         /// Storage management client.
