@@ -166,7 +166,7 @@ namespace Azure.Data.AppConfiguration
 
             if (!string.IsNullOrEmpty(pageLink))
             {
-                builder.AppendQuery("after", pageLink);
+                builder.AppendQuery("after", pageLink, escapeValue: false);
             }
         }
 

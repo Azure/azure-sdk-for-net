@@ -203,7 +203,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                uriBuilder.AppendPath(append, false);
+                uriBuilder.AppendPath(append, escape: false);
             }
 
             Assert.AreEqual(expectedResult, uriBuilder.ToUri().OriginalString);

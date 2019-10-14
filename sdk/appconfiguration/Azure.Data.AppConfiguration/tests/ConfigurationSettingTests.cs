@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual(@"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual(@"http://localhost/?key=my_key%2Ckey%5C%2Ckey&label=my_label%2Clabel%5C%2Clabel", builder.ToUri().AbsoluteUri);
 
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual("http://localhost/?key=*key*&label=*label*", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual("http://localhost/?key=%2Akey%2A&label=%2Alabel%2A", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual("http://localhost/?key=*&label=%00", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual("http://localhost/?key=%2A&label=%00", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=*&label={label}", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key=%2A&label={label}", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=key&$select=key,%20value", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key=key&$select=key%2C%20value", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
