@@ -41,7 +41,7 @@ namespace Azure.Data.AppConfiguration
             return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream), response);
         }
 
-        private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
+        private static Response<ConfigurationSetting> CreateNoBodyResponse(Response response)
         {
             return new NoBodyResponse<ConfigurationSetting>(response);
         }

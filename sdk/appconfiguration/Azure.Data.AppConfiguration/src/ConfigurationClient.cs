@@ -426,7 +426,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    204 => CreateResourceModifiedResponse(response),
+                    204 => CreateNoBodyResponse(response),
                     409 => throw response.CreateRequestFailedException("The setting is read only"),
 
                     // Throws on 412 if resource was modified.
@@ -461,7 +461,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    204 => CreateResourceModifiedResponse(response),
+                    204 => CreateNoBodyResponse(response),
                     409 => throw response.CreateRequestFailedException("The setting is read only."),
 
                     // Throws on 412 if resource was modified.
@@ -578,7 +578,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    304 => CreateResourceModifiedResponse(response),
+                    304 => CreateNoBodyResponse(response),
                     _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
                 };
             }
@@ -612,7 +612,7 @@ namespace Azure.Data.AppConfiguration
                     return response.Status switch
                     {
                         200 => CreateResponse(response),
-                        304 => CreateResourceModifiedResponse(response),
+                        304 => CreateNoBodyResponse(response),
                         _ => throw response.CreateRequestFailedException(),
                     };
                 }
