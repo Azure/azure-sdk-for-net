@@ -140,8 +140,8 @@ namespace Azure.Storage.Queues.Tests
             => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Queues = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { BlobContainer = true }.ToString(),
+                Services = AccountSasServices.Queues,
+                ResourceTypes = AccountSasResourceTypes.BlobContainer,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),

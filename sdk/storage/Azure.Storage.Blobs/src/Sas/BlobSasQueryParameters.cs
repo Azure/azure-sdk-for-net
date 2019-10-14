@@ -63,8 +63,8 @@ namespace Azure.Storage.Sas
         /// </summary>
         internal BlobSasQueryParameters(
             string version,
-            string services,
-            string resourceTypes,
+            AccountSasServices services,
+            AccountSasResourceTypes resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startTime,
             DateTimeOffset expiryTime,

@@ -41,10 +41,10 @@ namespace Azure.Storage.Sas
         private readonly string _version;
 
         // ss
-        private readonly string _services;
+        private readonly AccountSasServices _services;
 
         // srt
-        private readonly string _resourceTypes;
+        private readonly AccountSasResourceTypes _resourceTypes;
 
         // spr
         private readonly SasProtocol _protocol;
@@ -96,12 +96,12 @@ namespace Azure.Storage.Sas
         /// Gets the signed services accessible with an account level shared
         /// access signature.
         /// </summary>
-        public string Services => _services ?? string.Empty;
+        public AccountSasServices Services => _services;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public string ResourceTypes => _resourceTypes ?? string.Empty;
+        public AccountSasResourceTypes ResourceTypes => _resourceTypes;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -223,8 +223,8 @@ namespace Azure.Storage.Sas
         /// </summary>
         internal SasQueryParameters(
             string version,
-            string services,
-            string resourceTypes,
+            AccountSasServices services,
+            AccountSasResourceTypes resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startTime,
             DateTimeOffset expiryTime,
@@ -247,8 +247,8 @@ namespace Azure.Storage.Sas
         {
             // Assume URL-decoded
             _version = version ?? DefaultSasVersion;
-            _services = services ?? string.Empty;
-            _resourceTypes = resourceTypes ?? string.Empty;
+            _services = services;
+            _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startTime;
             _expiryTime = expiryTime;
@@ -297,13 +297,13 @@ namespace Azure.Storage.Sas
                         _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        _services = kv.Value;
+                        _services = SasExtensions.ParseAccountServices(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = kv.Value;
+                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasProtocol.Parse(kv.Value);
+                        _protocol = SasExtensions.ParseProtocol(kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
                         _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
@@ -418,19 +418,19 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (!string.IsNullOrWhiteSpace(Services))
+            if (Services != default)
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services);
+                AddToBuilder(Constants.Sas.Parameters.Services, Services.ToServicesString());
             }
 
-            if (!string.IsNullOrWhiteSpace(ResourceTypes))
+            if (ResourceTypes != default)
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes);
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.ToResourcesString());
             }
 
-            if (Protocol != SasProtocol.None)
+            if (Protocol != default)
             {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToString());
+                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
             }
 
             if (StartTime != DateTimeOffset.MinValue)

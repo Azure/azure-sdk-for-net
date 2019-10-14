@@ -102,10 +102,10 @@ namespace Azure.Storage.Files.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to files
-                Services = new AccountSasServices() { Files = true }.ToString(),
+                Services = AccountSasServices.Files,
 
                 // Allow access to the service level APIs
-                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
+                ResourceTypes = AccountSasResourceTypes.Service,
 
                 // Allow read access
                 Permissions = new AccountSasPermissions() { Read = true }.ToString(),
