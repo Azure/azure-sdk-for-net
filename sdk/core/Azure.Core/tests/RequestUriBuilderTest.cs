@@ -253,7 +253,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("http://localhost/~%21%40%23%24%25%5E%26%2A%28%29_%2Bb%2F", uriBuilder.ToString());
             // Uri decodes some escaping
-            Assert.AreEqual("http://localhost/~!%40%23%24%25^%26*()_%2Bb%2F", uriBuilder.ToUri().ToString());
+            Assert.AreEqual("http://localhost/~%21%40%23%24%25^%26%2A%28%29_%2Bb%2F", uriBuilder.ToUri().ToString());
         }
 
         [Test]
@@ -265,7 +265,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("http://localhost/?a=~%21%40%23%24%25%5E%26%2A%28%29_%2B", uriBuilder.ToString());
             // Uri decodes some escaping
-            Assert.AreEqual("http://localhost/?a=~!%40%23%24%25^%26*()_%2B", uriBuilder.ToUri().ToString());
+            Assert.AreEqual("http://localhost/?a=~%21%40%23%24%25^%26%2A%28%29_%2B", uriBuilder.ToUri().ToString());
         }
 
         [TestCase("?a", "?a")]

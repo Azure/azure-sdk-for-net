@@ -93,8 +93,8 @@ namespace Azure.Data.AppConfiguration
         private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute);
-            builder.AppendPath(key, true);
+            builder.AppendPath(KvRoute, escape: false);
+            builder.AppendPath(key);
 
             if (label != null)
             {
@@ -105,8 +105,8 @@ namespace Azure.Data.AppConfiguration
         private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(LocksRoute);
-            builder.AppendPath(key, true);
+            builder.AppendPath(LocksRoute, escape: false);
+            builder.AppendPath(key);
 
             if (label != null)
             {
@@ -173,14 +173,14 @@ namespace Azure.Data.AppConfiguration
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute);
+            builder.AppendPath(KvRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(RevisionsRoute);
+            builder.AppendPath(RevisionsRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
