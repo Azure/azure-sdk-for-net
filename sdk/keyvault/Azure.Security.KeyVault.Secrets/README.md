@@ -156,9 +156,9 @@ This example lists all the secrets in the specified Key Vault. The value is not 
 ```C# ListSecrets
 Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
-foreach (SecretProperties secret in allSecrets)
+foreach (SecretProperties secretProperties in allSecrets)
 {
-    Console.WriteLine(secret.Name);
+    Console.WriteLine(secretProperties.Name);
 }
 ```
 

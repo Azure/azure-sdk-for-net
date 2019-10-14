@@ -138,6 +138,18 @@ Console.WriteLine(deletedCert.ScheduledPurgeDate);
 await client.PurgeDeletedCertificateAsync("MyCertificate");
 ```
 
+### List Certificates
+`GetCertificatesAsync` Enumerates the certificates in the vault, returning select properties of the
+certificate, sensative feilds of the certificate will not be returned. This operation
+requires the certificates/list permission.
+  
+```C# ListCertificates
+await foreach (CertificateProperties listCertificates in client.GetCertificatesAsync())
+{
+    Console.WriteLine(listCertificates.Name);
+}
+```
+
 ## Troubleshooting
 
 ### General
