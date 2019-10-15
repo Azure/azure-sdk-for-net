@@ -37,7 +37,7 @@ namespace Azure.Data.AppConfiguration
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        private static string CreateContentHash(HttpMessage message) 
+        private static string CreateContentHash(HttpMessage message)
         {
             using var alg = SHA256.Create();
 
@@ -50,7 +50,7 @@ namespace Azure.Data.AppConfiguration
             return Convert.ToBase64String(alg.Hash);
         }
 
-        private static async ValueTask<string> CreateContentHashAsync(HttpMessage message) 
+        private static async ValueTask<string> CreateContentHashAsync(HttpMessage message)
         {
             using var alg = SHA256.Create();
 
