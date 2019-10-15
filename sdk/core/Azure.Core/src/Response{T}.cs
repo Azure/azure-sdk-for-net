@@ -13,12 +13,15 @@ namespace Azure
 
         public static implicit operator T(Response<T> response) => response.Value;
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj) => base.Equals(obj);
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
     }

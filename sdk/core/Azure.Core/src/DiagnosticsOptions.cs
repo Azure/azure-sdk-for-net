@@ -3,9 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Azure.Core
 {
+    /// <summary>
+    ///
+    /// </summary>
     public class DiagnosticsOptions
     {
         private const int MaxApplicationIdLength = 24;
@@ -26,10 +30,21 @@ namespace Azure.Core
             LoggedQueryParameters = new List<string>();
         }
 
+        /// <summary>
+        /// Get or sets value indicating whether HTTP pipeline logging is enabled.
+        /// </summary>
         public bool IsLoggingEnabled { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets value indicating whether distributed tracing spans are going to be created for this clients methods calls and HTTP calls.
+        /// </summary>
         public bool IsDistributedTracingEnabled { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets value indicating whether the "User-Agent" header containing <see cref="ApplicationId"/>, client library package name and version, <see cref="RuntimeInformation.FrameworkDescription"/>
+        /// and <see cref="RuntimeInformation.OSDescription"/>.
+        /// The default value can be controlled process wide by setting `AZURE_TELEMETRY_DISABLED` to true, false, 1 or 0.
+        /// </summary>
         public bool IsTelemetryEnabled { get; set; }
 
         /// <summary>
@@ -52,6 +67,9 @@ namespace Azure.Core
         /// </summary>
         public IList<string> LoggedQueryParameters { get; }
 
+        /// <summary>
+        /// Gets or sets the value sent a the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
+        /// </summary>
         public string? ApplicationId
         {
             get => _applicationId;
@@ -65,6 +83,9 @@ namespace Azure.Core
             }
         }
 
+        /// <summary>
+        /// Gets or sets the default application id. Default application id would be set on all instaces
+        /// </summary>
         public static string? DefaultApplicationId { get; set; }
 
         private static bool? EnvironmentVariableToBool(string value)
