@@ -29,7 +29,10 @@ namespace Kusto.Tests.ScenarioTests
         public readonly string clusterForEventGridTest = "ofertestforclient";
         public readonly string databaseForEventGridTest = "databasetest";
         public readonly string sharedAccessPolicyNameForIotHub = "read";
-
+        public readonly string clusterForKeyVaultPropertiesTest = "ofertestforclient";
+        public readonly string KeyNameForKeyVaultPropertiesTest = "TestClientKey";
+        public readonly string KeyVersionForKeyVaultPropertiesTest = "4d294ee7ce964d8bb6d04c1245276e93";
+        public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://testforclient.vault.azure.net/";
 
         public string tenantId { get; set; }
         public string location { get; set; }
@@ -63,6 +66,7 @@ namespace Kusto.Tests.ScenarioTests
         public string dataFormat { get; set; }
         public List<DatabasePrincipal> databasePrincipals { get; set; }
         public DatabasePrincipal databasePrincipal { get; set; }
+        public KeyVaultProperties keyVaultProperties { get; set; }
 
         public KustoTestBase(MockContext context)
         {
@@ -138,6 +142,8 @@ namespace Kusto.Tests.ScenarioTests
 
             var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
             attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
+
+            keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest);
         }
 
         private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)

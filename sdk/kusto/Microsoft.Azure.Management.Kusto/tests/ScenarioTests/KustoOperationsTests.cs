@@ -532,6 +532,41 @@ namespace Kusto.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public void KustoIdentityTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                // Create cluster with an identity
+                testBase.cluster.Identity = new Identity(IdentityType.SystemAssigned);
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                Assert.Equal(IdentityType.SystemAssigned, createdCluster.Identity.Type);
+
+                // Delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoKeyVaultPropertiesTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                // Update the cluster with key vault properties
+                var cluster = testBase.client.Clusters.Update(testBase.resourceGroupForTest, testBase.clusterForKeyVaultPropertiesTest, new ClusterUpdate(keyVaultProperties: testBase.keyVaultProperties));
+
+                VerifyKeyVaultProperties(cluster.KeyVaultProperties, 
+                    testBase.KeyNameForKeyVaultPropertiesTest, 
+                    testBase.KeyVersionForKeyVaultPropertiesTest, 
+                    testBase.KeyVaultUriForKeyVaultPropertiesTest);
+            }
+        }
+
         private void TestReadonlyFollowingDatabase(KustoTestBase testBase)
         {
             var readonlyFollowingDb = testBase.client.Databases.Get(testBase.rgName, testBase.followerClusterName, testBase.databaseName) as ReadOnlyFollowingDatabase;
@@ -548,6 +583,14 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(followerDatabaseDefinition.AttachedDatabaseConfigurationName, attachedDatabaseConfigurationName);
             Assert.Equal(followerDatabaseDefinition.DatabaseName, databaseName);
             Assert.Equal(followerDatabaseDefinition.ClusterResourceId, clusterResourceId);
+        }
+
+        private void VerifyKeyVaultProperties(KeyVaultProperties keyVaultProperties, string keyName, string keyVersion, string keyVaultUri)
+        {
+            Assert.NotNull(keyVaultProperties);
+            Assert.Equal(keyVaultProperties.KeyName, keyName);
+            Assert.Equal(keyVaultProperties.KeyVersion, keyVersion);
+            Assert.Equal(keyVaultProperties.KeyVaultUri, keyVaultUri);
         }
 
         private void VerifyFollowerDatabaseDontExist(IEnumerable<FollowerDatabaseDefinition> followerDatabasesList, string attachedDatabaseConfigurationName)
