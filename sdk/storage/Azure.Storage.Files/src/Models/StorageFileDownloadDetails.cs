@@ -29,11 +29,6 @@ namespace Azure.Storage.Files.Models
         public IDictionary<string, string> Metadata => _flattened.Metadata;
 
         /// <summary>
-        /// The content type specified for the file. The default content type is 'application/octet-stream'
-        /// </summary>
-        public string ContentType => _flattened.ContentType;
-
-        /// <summary>
         /// Indicates the range of bytes returned if the client requested a subset of the file by setting the Range request header.
         /// </summary>
         public string ContentRange => _flattened.ContentRange;
