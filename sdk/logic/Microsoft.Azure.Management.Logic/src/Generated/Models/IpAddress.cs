@@ -11,31 +11,28 @@
 namespace Microsoft.Azure.Management.Logic.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A collection of workflow run action repetitions.
+    /// The ip address.
     /// </summary>
-    public partial class WorkflowRunActionRepetitionDefinitionCollection
+    public partial class IpAddress
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// WorkflowRunActionRepetitionDefinitionCollection class.
+        /// Initializes a new instance of the IpAddress class.
         /// </summary>
-        public WorkflowRunActionRepetitionDefinitionCollection()
+        public IpAddress()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// WorkflowRunActionRepetitionDefinitionCollection class.
+        /// Initializes a new instance of the IpAddress class.
         /// </summary>
-        public WorkflowRunActionRepetitionDefinitionCollection(IList<WorkflowRunActionRepetitionDefinition> value = default(IList<WorkflowRunActionRepetitionDefinition>))
+        /// <param name="address">The address.</param>
+        public IpAddress(string address = default(string))
         {
-            Value = value;
+            Address = address;
             CustomInit();
         }
 
@@ -45,9 +42,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the address.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<WorkflowRunActionRepetitionDefinition> Value { get; set; }
+        [JsonProperty(PropertyName = "address")]
+        public string Address { get; set; }
 
     }
 }

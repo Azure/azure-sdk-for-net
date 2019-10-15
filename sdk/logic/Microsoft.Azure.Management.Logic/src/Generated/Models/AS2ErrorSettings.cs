@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         /// <param name="suspendDuplicateMessage">The value indicating whether
         /// to suspend duplicate message.</param>
-        /// <param name="resendIfMdnNotReceived">The value indicating whether
+        /// <param name="resendIfMDNNotReceived">The value indicating whether
         /// to resend message If MDN is not received.</param>
-        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived)
+        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMDNNotReceived)
         {
             SuspendDuplicateMessage = suspendDuplicateMessage;
-            ResendIfMdnNotReceived = resendIfMdnNotReceived;
+            ResendIfMDNNotReceived = resendIfMDNNotReceived;
             CustomInit();
         }
 
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to resend message If MDN
         /// is not received.
         /// </summary>
-        [JsonProperty(PropertyName = "resendIfMdnNotReceived")]
-        public bool ResendIfMdnNotReceived { get; set; }
+        [JsonProperty(PropertyName = "resendIfMDNNotReceived")]
+        public bool ResendIfMDNNotReceived { get; set; }
 
         /// <summary>
         /// Validate the object.
