@@ -484,9 +484,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations)
+            /// <param name='statusOnly'>
+            /// statusOnly=true enables fetching run time status of all Virtual Machines in
+            /// the subscription.
+            /// </param>
+            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string))
             {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
+                return operations.ListAllAsync(statusOnly).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -496,12 +500,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='statusOnly'>
+            /// statusOnly=true enables fetching run time status of all Virtual Machines in
+            /// the subscription.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -712,7 +720,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to redeploy a virtual machine.
+            /// Shuts down the virtual machine, moves it to a new node, and powers it back
+            /// on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -729,7 +738,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to redeploy a virtual machine.
+            /// Shuts down the virtual machine, moves it to a new node, and powers it back
+            /// on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1298,7 +1308,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to redeploy a virtual machine.
+            /// Shuts down the virtual machine, moves it to a new node, and powers it back
+            /// on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1315,7 +1326,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to redeploy a virtual machine.
+            /// Shuts down the virtual machine, moves it to a new node, and powers it back
+            /// on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

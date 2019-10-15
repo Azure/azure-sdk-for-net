@@ -309,6 +309,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Use the nextLink property in the response to get the next page of
         /// virtual machines.
         /// </summary>
+        /// <param name='statusOnly'>
+        /// statusOnly=true enables fetching run time status of all Virtual
+        /// Machines in the subscription.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -324,7 +328,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all available virtual machine sizes to which the specified
         /// virtual machine can be resized.
@@ -447,7 +451,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to redeploy a virtual machine.
+        /// Shuts down the virtual machine, moves it to a new node, and powers
+        /// it back on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -797,7 +802,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to redeploy a virtual machine.
+        /// Shuts down the virtual machine, moves it to a new node, and powers
+        /// it back on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

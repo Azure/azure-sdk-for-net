@@ -1148,6 +1148,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Lists all of the virtual machines in the specified subscription. Use the
         /// nextLink property in the response to get the next page of virtual machines.
         /// </summary>
+        /// <param name='statusOnly'>
+        /// statusOnly=true enables fetching run time status of all Virtual Machines in
+        /// the subscription.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1169,7 +1173,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1184,6 +1188,7 @@ namespace Microsoft.Azure.Management.Compute
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("statusOnly", statusOnly);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAll", tracingParameters);
             }
@@ -1195,6 +1200,10 @@ namespace Microsoft.Azure.Management.Compute
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (statusOnly != null)
+            {
+                _queryParameters.Add(string.Format("statusOnly={0}", System.Uri.EscapeDataString(statusOnly)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1612,7 +1621,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to redeploy a virtual machine.
+        /// Shuts down the virtual machine, moves it to a new node, and powers it back
+        /// on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -3603,7 +3613,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to redeploy a virtual machine.
+        /// Shuts down the virtual machine, moves it to a new node, and powers it back
+        /// on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
