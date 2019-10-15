@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     internal partial class HttpPipelineTests
     {
