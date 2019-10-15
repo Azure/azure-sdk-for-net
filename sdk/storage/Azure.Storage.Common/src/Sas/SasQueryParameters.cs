@@ -41,10 +41,10 @@ namespace Azure.Storage.Sas
         private readonly string _version;
 
         // ss
-        private readonly AccountSasServices _services;
+        private readonly AccountSasServices? _services;
 
         // srt
-        private readonly AccountSasResourceTypes _resourceTypes;
+        private readonly AccountSasResourceTypes? _resourceTypes;
 
         // spr
         private readonly SasProtocol _protocol;
@@ -96,12 +96,12 @@ namespace Azure.Storage.Sas
         /// Gets the signed services accessible with an account level shared
         /// access signature.
         /// </summary>
-        public AccountSasServices Services => _services;
+        public AccountSasServices? Services => _services;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public AccountSasResourceTypes ResourceTypes => _resourceTypes;
+        public AccountSasResourceTypes? ResourceTypes => _resourceTypes;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -223,8 +223,8 @@ namespace Azure.Storage.Sas
         /// </summary>
         internal SasQueryParameters(
             string version,
-            AccountSasServices services,
-            AccountSasResourceTypes resourceTypes,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startTime,
             DateTimeOffset expiryTime,
@@ -418,14 +418,14 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (Services != default)
+            if (Services != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services.ToServicesString());
+                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
             }
 
-            if (ResourceTypes != default)
+            if (ResourceTypes != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.ToResourcesString());
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
             }
 
             if (Protocol != default)

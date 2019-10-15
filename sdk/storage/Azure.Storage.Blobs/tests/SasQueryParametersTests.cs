@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var version = "2018-03-28";
             AccountSasServices service = AccountSasServices.Blobs;
-            AccountSasResourceTypes resourceType = AccountSasResourceTypes.BlobContainer;
+            AccountSasResourceTypes resourceType = AccountSasResourceTypes.Container;
             SasProtocol protocol = SasProtocol.Https;
             DateTimeOffset startTime = DateTimeOffset.Now;
             DateTimeOffset expiryTime = startTime.AddDays(1);

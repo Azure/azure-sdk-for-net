@@ -250,7 +250,7 @@ namespace Azure.Storage.Test.Shared
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = AccountSasResourceTypes.BlobContainer | AccountSasResourceTypes.Object,
+                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),

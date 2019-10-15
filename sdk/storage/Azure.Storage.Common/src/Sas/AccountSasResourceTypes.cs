@@ -27,7 +27,7 @@ namespace Azure.Storage.Sas
         /// Create/Delete Queue, Create/Delete Table, Create/Delete Share, List
         /// Blobs/Files and Directories).
         /// </summary>
-        BlobContainer = 2,
+        Container = 2,
 
 #pragma warning disable CA1720 // Identifier contains type name
         /// <summary>
@@ -58,16 +58,16 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which resource types are allowed.
         /// </returns>
-        internal static string ToResourcesString(this AccountSasResourceTypes resourceTypes)
+        internal static string ToPermissionsString(this AccountSasResourceTypes resourceTypes)
         {
             var sb = new StringBuilder();
             if ((resourceTypes & AccountSasResourceTypes.Service) == AccountSasResourceTypes.Service)
             {
                 sb.Append(Constants.Sas.AccountResources.Service);
             }
-            if ((resourceTypes & AccountSasResourceTypes.BlobContainer) == AccountSasResourceTypes.BlobContainer)
+            if ((resourceTypes & AccountSasResourceTypes.Container) == AccountSasResourceTypes.Container)
             {
-                sb.Append(Constants.Sas.AccountResources.BlobContainer);
+                sb.Append(Constants.Sas.AccountResources.Container);
             }
             if ((resourceTypes & AccountSasResourceTypes.Object) == AccountSasResourceTypes.Object)
             {
@@ -94,7 +94,7 @@ namespace Azure.Storage.Sas
                 types |= ch switch
                 {
                     Constants.Sas.AccountResources.Service => AccountSasResourceTypes.Service,
-                    Constants.Sas.AccountResources.BlobContainer => AccountSasResourceTypes.BlobContainer,
+                    Constants.Sas.AccountResources.Container => AccountSasResourceTypes.Container,
                     Constants.Sas.AccountResources.Object => AccountSasResourceTypes.Object,
                     _ => throw Errors.InvalidResourceType(ch),
                 };

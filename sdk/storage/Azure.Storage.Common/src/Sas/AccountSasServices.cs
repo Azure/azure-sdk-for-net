@@ -50,7 +50,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which services are allowed.
         /// </returns>
-        internal static string ToServicesString(this AccountSasServices services)
+        internal static string ToPermissionsString(this AccountSasServices services)
         {
             var sb = new StringBuilder();
             if ((services & AccountSasServices.Blobs) == AccountSasServices.Blobs)
