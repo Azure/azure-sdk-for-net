@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Resources;
@@ -114,7 +115,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     }
                 }
             }
-            else {cache = null; }
+            else
+            {
+                cache = null;
+            }
 
             if (cache == null)
             {
@@ -166,65 +170,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         }
 
         /// <summary>
-        /// Wait for expected cache state.
-        /// </summary>
-        /// <param name="operation">Function to call.</param>
-        /// <param name="name">Name of the cache.</param>
-        /// <param name="state">Expected sate of the cache.</param>
-        /// <param name="timeout">Timeout for polling.</param>
-        /// <param name="polling_delay">Delay between polling.</param>
-        public void WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = 900, int polling_delay = 60)
-        {
-            int elapsed = 0;
-            bool reached_state = false;
-            while (elapsed <= timeout)
-            {
-                var curr_state = operation(name);
-
-                if (string.Equals(curr_state, state, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (operation == this.GetCacheProvisioningState)
-                    {
-                        this.ProvisioningState = curr_state;
-                    }
-
-                    if (operation == this.GetCacheHealthgState)
-                    {
-                        this.CacheHealth = curr_state;
-                    }
-
-                    reached_state = true;
-                    break;
-                }
-
-                if (operation == this.GetCacheProvisioningState
-                    && string.Equals(curr_state, "Failed", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new Exception(string.Format("Cache {0} failed to deploy.", name));
-                }
-                else
-                {
-                    var cache = this.Get(name);
-                    TestUtilities.Wait(new TimeSpan(0, 0, polling_delay));
-                    elapsed += polling_delay;
-                }
-            }
-
-            if (!reached_state)
-            {
-                throw new Exception(
-                    string.Format("Cache {0} did not reach cache state {1} in {2} seconds.", name, state, timeout));
-            }
-        }
-
-        /// <summary>
         /// Check both provisioning and health state of the cache.
         /// </summary>
         /// <param name="name">Name of the cache.</param>
         public void CheckCacheState(string name)
         {
-            this.WaitForCacheState(this.GetCacheProvisioningState, name, "Succeeded");
-            this.WaitForCacheState(this.GetCacheHealthgState, name, "Healthy");
+            this.WaitForCacheState(this.GetCacheProvisioningState, name, "Succeeded").GetAwaiter().GetResult();
+            this.WaitForCacheState(this.GetCacheHealthgState, name, "Healthy").GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -266,9 +218,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         /// <param name="cacheName">Storage cache name.</param>
         /// <param name="storageTargetName">Storage target name.</param>
-        public void DeleteStorageTarget(string cacheName, string storageTargetName)
+        /// <param name="testOutputHelper">Test output helper.</param>
+        public void DeleteStorageTarget(string cacheName, string storageTargetName, ITestOutputHelper testOutputHelper = null)
         {
             this.StoragecacheManagementClient.StorageTargets.Delete(this.resourceGroup.Name, cacheName, storageTargetName);
+            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Deleting", testOutputHelper).GetAwaiter().GetResult();
+            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -329,69 +284,95 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             ITestOutputHelper testOutputHelper = null)
         {
             StorageTarget storageTarget;
-            this.StoragecacheManagementClient.StorageTargets.Create(
+            storageTarget = this.StoragecacheManagementClient.StorageTargets.Create(
                 this.resourceGroup.Name,
                 cacheName,
                 storageTargetName,
                 storageTargetParameters);
 
-            storageTarget = this.WaitForStorageTargetstate(cacheName, storageTargetName, "Succeeded", testOutputHelper);
+            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
             return storageTarget;
         }
 
         /// <summary>
-        /// Wait for expected storage target state.
+        /// Blocks until storage target ProvisioningState is as expected or timeout occurs.
         /// </summary>
         /// <param name="cacheName">Name of the cache.</param>
         /// <param name="storageTargetName">Name of the storage target.</param>
         /// <param name="state">Expected sate of the storage target.</param>
-        /// <param name="testOutputHelper">test output helper.</param>
+        /// <param name="testOutputHelper">Test output helper.</param>
+        /// <param name="polling_delay">Delay between cache polling.</param>
+        /// <param name="timeout">Timeout for cache polling.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task WaitForStoragteTargetState(string cacheName, string storageTargetName, string state, ITestOutputHelper testOutputHelper, int polling_delay = 60, int timeout = -1)
+        {
+            var waitTask = Task.Run(async () =>
+            {
+                string currentState = null;
+                while (!string.Equals(currentState, state))
+                {
+                    currentState = this.GetstorageTarget(cacheName, storageTargetName).ProvisioningState;
+                    if (testOutputHelper != null)
+                    {
+                        testOutputHelper.WriteLine($"Waiting for successful deploy of storage target {storageTargetName}, current state is {currentState}");
+                    }
+
+                    if (string.Equals(currentState, "Failed"))
+                    {
+                        throw new Exception($"Storage target {storageTargetName} failed to deploy.");
+                    }
+
+                    await Task.Delay(new TimeSpan(0, 0, polling_delay));
+                }
+            });
+
+            if (waitTask != await Task.WhenAny(waitTask, Task.Delay(timeout)))
+            {
+                throw new TimeoutException();
+            }
+        }
+
+        /// <summary>
+        /// Wait for expected cache state.
+        /// </summary>
+        /// <param name="operation">Function to call.</param>
+        /// <param name="name">Name of the cache.</param>
+        /// <param name="state">Expected sate of the cache.</param>
         /// <param name="timeout">Timeout for polling.</param>
         /// <param name="polling_delay">Delay between polling.</param>
-        /// <returns>Storage target.</returns>
-        public StorageTarget WaitForStorageTargetstate(string cacheName, string storageTargetName, string state, ITestOutputHelper testOutputHelper = null, int timeout = 120, int polling_delay = 5)
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = -1, int polling_delay = 60)
         {
-            int elapsed = 0;
-            bool reached_state = false;
-            StorageTarget storageTarget = null;
-            while (elapsed <= timeout)
+            var waitTask = Task.Run(async () =>
             {
-                storageTarget = this.GetstorageTarget(cacheName, storageTargetName);
-                string currentState = storageTarget.ProvisioningState;
-
-                if (string.Equals(currentState, state, StringComparison.OrdinalIgnoreCase))
+                string curr_state = null;
+                while (!string.Equals(curr_state, state, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (testOutputHelper != null)
+                    curr_state = operation(name);
+                    if (operation == this.GetCacheProvisioningState)
                     {
-                        testOutputHelper.WriteLine($"storage target {storageTargetName} is successfully deployed.");
+                        this.ProvisioningState = curr_state;
                     }
 
-                    reached_state = true;
-                    break;
-                }
-
-                if (string.Equals(currentState, "Failed", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new Exception($"Storage target {storageTargetName} failed to deploy.");
-                }
-                else
-                {
-                    if (testOutputHelper != null)
+                    if (operation == this.GetCacheHealthgState)
                     {
-                        testOutputHelper.WriteLine($"Waiting for storage target {storageTargetName} deploy state {state}, current state is {currentState}");
+                        this.CacheHealth = curr_state;
                     }
 
-                    TestUtilities.Wait(new TimeSpan(0, 0, polling_delay));
-                    elapsed += polling_delay;
+                    if (operation == this.GetCacheProvisioningState
+                        && string.Equals(curr_state, "Failed", StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new Exception(string.Format("Cache {0} failed to deploy.", name));
+                    }
+
+                    await Task.Delay(new TimeSpan(0, 0, polling_delay));
                 }
-            }
+            });
 
-            if (!reached_state)
+            if (waitTask != await Task.WhenAny(waitTask, Task.Delay(timeout)))
             {
-                throw new Exception($"Storage target {storageTargetName} did not reach state {state} in {timeout} seconds.");
+                throw new TimeoutException();
             }
-
-            return storageTarget;
         }
     }
 }
