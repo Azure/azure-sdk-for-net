@@ -94,11 +94,11 @@ namespace Azure.Data.AppConfiguration
         {
             builder.Reset(_baseUri);
             builder.AppendPath(KvRoute);
-            builder.AppendPath(key);
+            builder.AppendPath(Uri.EscapeDataString(key));
 
             if (label != null)
             {
-                builder.AppendQuery(LabelQueryFilter, label);
+                builder.AppendQuery(LabelQueryFilter, Uri.EscapeDataString(label));
             }
         }
 
@@ -106,11 +106,11 @@ namespace Azure.Data.AppConfiguration
         {
             builder.Reset(_baseUri);
             builder.AppendPath(LocksRoute);
-            builder.AppendPath(key);
+            builder.AppendPath(Uri.EscapeDataString(key));
 
             if (label != null)
             {
-                builder.AppendQuery(LabelQueryFilter, label);
+                builder.AppendQuery(LabelQueryFilter, Uri.EscapeDataString(label));
             }
         }
 
@@ -140,20 +140,20 @@ namespace Azure.Data.AppConfiguration
                 {
                     if (key.IndexOfAny(s_reservedCharacters) != -1)
                     {
-                        keysCopy.Add(EscapeReservedCharacters(key));
+                        keysCopy.Add(Uri.EscapeDataString(EscapeReservedCharacters(key)));
                     }
                     else
                     {
-                        keysCopy.Add(key);
+                        keysCopy.Add(Uri.EscapeDataString(key));
                     }
                 }
                 var keys = string.Join(",", keysCopy);
-                builder.AppendQuery(KeyQueryFilter, Uri.EscapeDataString(keys));
+                builder.AppendQuery(KeyQueryFilter, keys);
             }
 
             if (selector.Labels.Count > 0)
             {
-                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? Uri.EscapeDataString("\0") : Uri.EscapeDataString(EscapeReservedCharacters(label)));
+                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "%00" : Uri.EscapeDataString(EscapeReservedCharacters(label)));
                 var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }

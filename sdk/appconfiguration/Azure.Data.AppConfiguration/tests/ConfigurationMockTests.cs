@@ -560,12 +560,13 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request1 = mockTransport.Requests[0];
             Assert.AreEqual(RequestMethod.Get, request1.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=*&label=*&api-version={s_version}", request1.Uri.ToString());
+            var escapedWildcard = Uri.EscapeDataString("*");
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key={escapedWildcard}&label={escapedWildcard}&api-version={s_version}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=*&label=*&after=5&api-version={s_version}", request2.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key={escapedWildcard}&label={escapedWildcard}&after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 

@@ -876,6 +876,34 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        [Test]
+        public async Task GetBatchSettingEscapedCharacters()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = new ConfigurationSetting("name-!@#$^&()-=", "value-!@#$^&()-=", "label-!@#$^&()-=");
+
+            try
+            {
+                await service.SetAsync(new ConfigurationSetting("name-!@#$^&()-=", "value-!@#$^&()-=", "label-!@#$^&()-="));
+
+                var selector = new SettingSelector();
+
+                Assert.AreEqual("*!@#$^&()-=", selector.Keys.First());
+                Assert.AreEqual("*!@#$^&()-=", selector.Labels.First());
+
+                var resultsReturned = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .Count();
+
+                //At least there should be one key available
+                Assert.GreaterOrEqual(resultsReturned, 1);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+
 
         [Test]
         public async Task SetReadOnlyOnSetting()
