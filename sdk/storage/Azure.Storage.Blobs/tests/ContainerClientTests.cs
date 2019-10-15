@@ -1391,6 +1391,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8113")]
         [Test]
         public async Task ListBlobsFlatSegmentAsync_PreservesWhitespace()
         {
