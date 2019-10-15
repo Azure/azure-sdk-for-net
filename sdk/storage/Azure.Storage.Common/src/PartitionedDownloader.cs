@@ -126,7 +126,7 @@ namespace Azure.Storage
                     parallelTransferOptions ??= new ParallelTransferOptions();
 
                     var maximumThreadCount =
-                        parallelTransferOptions.Value.MaximumThreadCount ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                        parallelTransferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
                     var maximumPartitionLength =
                         Math.Min(
                             Constants.Blob.Block.MaxDownloadBytes,
