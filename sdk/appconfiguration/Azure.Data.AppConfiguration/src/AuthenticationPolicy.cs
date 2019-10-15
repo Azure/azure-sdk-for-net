@@ -37,26 +37,30 @@ namespace Azure.Data.AppConfiguration
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        private static string CreateContentHash(HttpMessage message)
+        private static string CreateContentHash(HttpMessage message) 
         {
             using var alg = SHA256.Create();
-            using var memoryStream = new MemoryStream();
-            using var contentHashStream = new CryptoStream(memoryStream, alg, CryptoStreamMode.Write);
 
-            message.Request.Content?.WriteTo(contentHashStream, message.CancellationToken);
+            using (var memoryStream = new MemoryStream())
+            using (var contentHashStream = new CryptoStream(memoryStream, alg, CryptoStreamMode.Write))
+            {
+                message.Request.Content?.WriteTo(contentHashStream, message.CancellationToken);
+            }
 
             return Convert.ToBase64String(alg.Hash);
         }
 
-        private static async ValueTask<string> CreateContentHashAsync(HttpMessage message)
+        private static async ValueTask<string> CreateContentHashAsync(HttpMessage message) 
         {
             using var alg = SHA256.Create();
-            using var memoryStream = new MemoryStream();
-            using var contentHashStream = new CryptoStream(memoryStream, alg, CryptoStreamMode.Write);
 
-            if (message.Request.Content != null)
+            using (var memoryStream = new MemoryStream())
+            using (var contentHashStream = new CryptoStream(memoryStream, alg, CryptoStreamMode.Write))
             {
-                await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken).ConfigureAwait(false);
+                if (message.Request.Content != null)
+                {
+                    await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken).ConfigureAwait(false);
+                }
             }
 
             return Convert.ToBase64String(alg.Hash);
