@@ -1,32 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized
 {
-    internal class EncryptionConstants
+    internal static class EncryptionConstants
     {
-        public const string ENCRYPTION_PROTOCOL_V1 = "1.0";
+        public const string EncryptionProtocolV1 = "1.0";
 
-        public const string AGENT_METADATA_KEY = "EncryptionLibrary";
+        public const string AgentMetadataKey = "EncryptionLibrary";
 
-        public const string AES_CBC_PKCS5PADDING = "AES/CBC/PKCS5Padding";
+        public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";
 
-        public const string AES_CBC_NO_PADDING = "AES/CBC/NoPadding";
+        public const string AesCbcNoPadding = "AES/CBC/NoPadding";
 
-        public const string AES = "AES";
+        public const string Aes = "AES";
 
-        public const string AGENT_METADATA_VALUE = ".NETTrack22019-02-02"; // TODO determine proper value
+        public const string AgentMetadataValue = ".NETTrack22019-02-02"; // TODO determine proper value
 
-        public const string ENCRYPTION_DATA_KEY = "encryptiondata";
+        public const string EncryptionDataKey = "encryptiondata";
 
-        public const string ENCRYPTION_MODE = "FullBlob";
+        public const string EncryptionMode = "FullBlob";
 
-        public const int ENCRYPTION_BLOCK_SIZE = 16;
+        public const int EncryptionBlockSize = 16;
 
-        public const int ENCRYPTION_KEY_SIZE_BITS = 256;
+        public const int EncryptionKeySizeBits = 256;
 
-        public const int DEFAULT_ROLLING_BUFFER_SIZE = 10 * Constants.MB;
+        public const int DefaultRollingBufferSize = 10 * Constants.MB;
 
-        public static string XMsRange = "x-ms-range";
+        public const string XMsRange = "x-ms-range";
     }
 }

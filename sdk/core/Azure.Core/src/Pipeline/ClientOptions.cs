@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Azure.Core.Pipeline
 {
@@ -15,6 +16,15 @@ namespace Azure.Core.Pipeline
         {
             Retry = new RetryOptions();
             Diagnostics = new DiagnosticsOptions();
+        }
+
+        protected ClientOptions(ClientOptions other)
+        {
+            Retry = other.Retry;
+            Diagnostics = other.Diagnostics;
+            Transport = other.Transport;
+            PerCallPolicies = other.PerCallPolicies.ToList();
+            PerRetryPolicies = other.PerRetryPolicies.ToList();
         }
 
         public HttpPipelineTransport Transport

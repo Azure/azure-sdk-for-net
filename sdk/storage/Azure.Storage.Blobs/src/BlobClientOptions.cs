@@ -66,6 +66,20 @@ namespace Azure.Storage.Blobs
             this.Initialize();
         }
 
+#pragma warning disable AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter; param `other` contains the service version
+        /// <summary>
+        /// Copy constructor for an instance of the <see cref="BlobClientOptions"/> class.
+        /// </summary>
+        /// <param name="other">Instance to copy.</param>
+        protected BlobClientOptions(BlobClientOptions other)
+#pragma warning restore AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter
+            : base(other)
+        {
+            Version = other.Version;
+            CustomerProvidedKey = other.CustomerProvidedKey;
+            GeoRedundantSecondaryUri = other.GeoRedundantSecondaryUri;
+        }
+
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
         /// account is enabled for RA-GRS.

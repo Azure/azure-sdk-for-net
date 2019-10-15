@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized
 {
     using System;
     using System.IO;
@@ -14,22 +14,22 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
     internal class LengthLimitingStream : Stream
     {
         private readonly Stream _wrappedStream;
-        private long? _maxLength;
+        private readonly long? _maxLength;
         private long _bytesRead = 0;
 
         public LengthLimitingStream(Stream wrappedStream, long? length = default)
         {
-            this._wrappedStream = wrappedStream;
-            this._maxLength = length;
+            _wrappedStream = wrappedStream;
+            _maxLength = length;
         }
 
-        public override bool CanRead => this._wrappedStream.CanRead;
+        public override bool CanRead => _wrappedStream.CanRead;
 
         public override bool CanSeek => false;
 
         public override bool CanWrite => false;
 
-        public override long Length => this._maxLength.HasValue ? this._maxLength.Value : this._wrappedStream.Length;
+        public override long Length => _bytesRead;
 
         public override long Position
         {
@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             set => throw new NotSupportedException();
         }
 
-        public override void Flush() => this._wrappedStream.Flush();
+        public override void Flush() => _wrappedStream.Flush();
 
         public override void SetLength(long value) => throw new NotSupportedException();
 
@@ -45,19 +45,19 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            count = this.Clamp(count);
+            count = Clamp(count);
 
-            var result = this._wrappedStream.Read(buffer, offset, count);
-            this._bytesRead += result;
+            var result = _wrappedStream.Read(buffer, offset, count);
+            _bytesRead += result;
             return result;
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken token)
         {
-            count = this.Clamp(count);
+            count = Clamp(count);
 
             var result = await _wrappedStream.ReadAsync(buffer, offset, count, token).ConfigureAwait(false);
-            this._bytesRead += result;
+            _bytesRead += result;
             return result;
         }
 
@@ -76,9 +76,9 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <returns>The adjusted number of bytes to read.</returns>
         private int Clamp(int count)
         {
-            if (this._maxLength.HasValue)
+            if (_maxLength.HasValue)
             {
-                return (int)Math.Min(count, this._maxLength.Value - this._bytesRead);
+                return (int)Math.Min(count, _maxLength.Value - _bytesRead);
             }
 
             return count;

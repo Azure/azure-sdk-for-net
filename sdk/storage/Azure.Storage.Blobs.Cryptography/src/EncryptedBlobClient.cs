@@ -8,11 +8,11 @@ using System.Security.Cryptography;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.Specialized.Cryptography.Models;
+using Azure.Storage.Blobs.Specialized.Models;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
     /// The <see cref="EncryptedBlobClient"/> allows you to manipulate
@@ -58,18 +58,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="blobName">
         /// The name of this encrypted block blob.
         /// </param>
-        /// <param name="keyEncryptionKey">
-        /// Required for uploads. Provider to wrap the one-time content encryption key via the envelope technique.
-        /// </param>
-        /// <param name="keyResolver">
-        /// Required for downloads. Provider to get the correct <see cref="IKeyEncryptionKey"/> for a given download.
-        /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
-        /// the envelope technique.
-        /// </param>
-        /// <param name="encryptionKeyWrapAlgorithm">
-        /// Required for uploads. String identifier of the key wrapping algorithm the client should use with
-        /// <paramref name="keyEncryptionKey"/>.
-        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -79,18 +67,40 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             string connectionString,
             string containerName,
             string blobName,
-            IKeyEncryptionKey keyEncryptionKey = default,
-            IKeyEncryptionKeyResolver keyResolver = default,
-            string encryptionKeyWrapAlgorithm = default,
-            BlobClientOptions options = default)
+            EncryptedBlobClientOptions options = default)
             : base(
                   connectionString,
                   containerName,
                   blobName,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
         {
-            this.KeyWrapper = keyEncryptionKey;
-            this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
+            KeyWrapper = options.KeyEncryptionKey;
+            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public EncryptedBlobClient(
+            Uri blobUri,
+            EncryptedBlobClientOptions options = default)
+            : base(
+                  blobUri,
+                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
+        {
+            KeyWrapper = options.KeyEncryptionKey;
+            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -105,18 +115,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="credential">
         /// The shared key credential used to sign requests.
         /// </param>
-        /// <param name="keyEncryptionKey">
-        /// Required for uploads. Provider to wrap the one-time content encryption key via the envelope technique.
-        /// </param>
-        /// <param name="keyResolver">
-        /// Required for downloads. Provider to get the correct <see cref="IKeyEncryptionKey"/> for a given download.
-        /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
-        /// the envelope technique.
-        /// </param>
-        /// <param name="encryptionKeyWrapAlgorithm">
-        /// Required for uploads. String identifier of the key wrapping algorithm the client should use with
-        /// <paramref name="keyEncryptionKey"/>.
-        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -125,17 +123,14 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         public EncryptedBlobClient(
             Uri blobUri,
             StorageSharedKeyCredential credential,
-            IKeyEncryptionKey keyEncryptionKey = default,
-            IKeyEncryptionKeyResolver keyResolver = default,
-            string encryptionKeyWrapAlgorithm = default,
-            BlobClientOptions options = default)
+            EncryptedBlobClientOptions options = default)
             : base(
                   blobUri,
                   credential,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
         {
-            this.KeyWrapper = keyEncryptionKey;
-            this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
+            KeyWrapper = options.KeyEncryptionKey;
+            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -150,18 +145,6 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
-        /// <param name="keyEncryptionKey">
-        /// Required for uploads. Provider to wrap the one-time content encryption key via the envelope technique.
-        /// </param>
-        /// <param name="keyResolver">
-        /// Required for downloads. Provider to get the correct <see cref="IKeyEncryptionKey"/> for a given download.
-        /// The fetched <see cref="IKeyEncryptionKey"/> will be used to unwrap the one-time content encryption key via
-        /// the envelope technique.
-        /// </param>
-        /// <param name="encryptionKeyWrapAlgorithm">
-        /// Required for uploads. String identifier of the key wrapping algorithm the client should use with
-        /// <paramref name="keyEncryptionKey"/>.
-        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -170,78 +153,75 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
         public EncryptedBlobClient(
             Uri blobUri,
             TokenCredential credential,
-            IKeyEncryptionKey keyEncryptionKey = default,
-            IKeyEncryptionKeyResolver keyResolver = default,
-            string encryptionKeyWrapAlgorithm = default,
-            BlobClientOptions options = default)
+            EncryptedBlobClientOptions options = default)
             : base(
                   blobUri,
                   credential,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(keyResolver, keyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
         {
-            this.KeyWrapper = keyEncryptionKey;
-            this.KeyWrapAlgorithm = encryptionKeyWrapAlgorithm;
+            KeyWrapper = options.KeyEncryptionKey;
+            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobUri">
-        /// A <see cref="Uri"/> referencing the encrypted block blob that includes the
-        /// name of the account, the name of the container, and the name of
-        /// the blob.
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        internal EncryptedBlobClient(Uri blobUri, HttpPipeline pipeline)
-            : base(blobUri, pipeline)
-        {
-            //TODO make new pipeline for this one
-        }
+        // TODO to be re-added upon resolution of https://github.com/Azure/azure-sdk-for-net/issues/7713
+        // we need the ability to create a pipeline based on the given one
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        ///// class.
+        ///// </summary>
+        ///// <param name="blobUri">
+        ///// A <see cref="Uri"/> referencing the encrypted block blob that includes the
+        ///// name of the account, the name of the container, and the name of
+        ///// the blob.
+        ///// </param>
+        ///// <param name="pipeline">
+        ///// The transport pipeline used to send every request.
+        ///// </param>
+        //internal EncryptedBlobClient(Uri blobUri, HttpPipeline pipeline)
+        //    : base(blobUri, pipeline)
+        //{ }
         #endregion ctors
 
         /// <summary>
-        /// This method performs a transform on the content stream for uploads. It is a no-op by default.
+        /// Encrypts the upload stream.
         /// </summary>
         /// <param name="content">Content to transform.</param>
         /// <param name="metadata">Content metadata to transform.</param>
         /// <returns>Transformed content stream.</returns>
         internal override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
-            metadata ??= new Dictionary<string, string>();
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            var (encryptionStream, encryptionData) = EncryptStream(content);
-            metadata.Add(EncryptionConstants.ENCRYPTION_DATA_KEY, encryptionData.Serialize());
+            (Stream encryptionStream, EncryptionData encryptionData) = EncryptStream(content);
+            metadata.Add(EncryptionConstants.EncryptionDataKey, encryptionData.Serialize());
 
             return (encryptionStream, metadata);
         }
 
         private (Stream, EncryptionData) EncryptStream(Stream plaintext)
         {
-            var generatedKey = CreateKey(EncryptionConstants.ENCRYPTION_KEY_SIZE_BITS);
+            var generatedKey = CreateKey(EncryptionConstants.EncryptionKeySizeBits);
 
             using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
             {
 
                 var encryptionData = new EncryptionData()
                 {
-                    EncryptionMode = EncryptionConstants.ENCRYPTION_MODE,
+                    EncryptionMode = EncryptionConstants.EncryptionMode,
                     ContentEncryptionIV = aesProvider.IV,
                     EncryptionAgent = new EncryptionAgent()
                     {
                         EncryptionAlgorithm = Enum.GetName(typeof(ClientsideEncryptionAlgorithm), ClientsideEncryptionAlgorithm.AES_CBC_256),
-                        Protocol = EncryptionConstants.ENCRYPTION_PROTOCOL_V1
+                        Protocol = EncryptionConstants.EncryptionProtocolV1
                     },
                     KeyWrappingMetadata = new Dictionary<string, string>()
                     {
-                        { EncryptionConstants.AGENT_METADATA_KEY, EncryptionConstants.AGENT_METADATA_VALUE }
+                        { EncryptionConstants.AgentMetadataKey, EncryptionConstants.AgentMetadataValue }
                     },
                     WrappedContentKey = new WrappedKey()
                     {
                         Algorithm = KeyWrapAlgorithm,
-                        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey).ToArray(),
+                        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey).ToArray(), // TODO async-branching
                         KeyId = KeyWrapper.KeyId
                     }
                 };
@@ -249,8 +229,8 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
                 return (
                     new RollingBufferStream(
                         new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read),
-                        EncryptionConstants.DEFAULT_ROLLING_BUFFER_SIZE,
-                        plaintext.Length + (EncryptionConstants.ENCRYPTION_BLOCK_SIZE - plaintext.Length % EncryptionConstants.ENCRYPTION_BLOCK_SIZE)),
+                        EncryptionConstants.DefaultRollingBufferSize,
+                        plaintext.Length + (EncryptionConstants.EncryptionBlockSize - plaintext.Length % EncryptionConstants.EncryptionBlockSize)),
                     encryptionData);
             }
         }

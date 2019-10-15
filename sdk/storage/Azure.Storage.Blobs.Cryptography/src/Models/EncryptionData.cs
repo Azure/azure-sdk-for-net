@@ -4,12 +4,12 @@
 using System.Text.Json;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
+namespace Azure.Storage.Blobs.Specialized.Models
 {
     /// <summary>
     /// Represents the encryption data that is stored on the service.
     /// </summary>
-    public struct EncryptionData
+    public class EncryptionData
     {
         /// <summary>
         /// The blob encryption mode.

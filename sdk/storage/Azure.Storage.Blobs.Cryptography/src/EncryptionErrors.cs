@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography
+namespace Azure.Storage.Blobs.Specialized
 {
-    internal class EncryptionErrors
+    internal static class EncryptionErrors
     {
         public static ArgumentException KeyNotFound(string keyId)
             => new ArgumentException($"Could not resolve key of id `{keyId}`.");
@@ -20,7 +18,10 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography
             => new ArgumentException("Invalid Encryption Algorithm found on the resource. This version of the client" +
                 "library does not support the given encryption algorithm.");
 
-        public static ArgumentException NoKeyAccessor()
-            => new ArgumentException("Key and KeyResolver cannot both be null.");
+        public static ArgumentException NoKeyAccessor(params string[] names)
+            => new ArgumentException($"One of [{string.Join(",", names)}] must be non-null.");
+
+        public static InvalidOperationException MissingEncryptionMetadata(string field)
+            => new InvalidOperationException($"Missing field `{field}` in encryption metadata");
     }
 }

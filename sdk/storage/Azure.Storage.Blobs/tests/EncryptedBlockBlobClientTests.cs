@@ -6,13 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.Testing;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Storage.Blobs.Specialized.Cryptography;
-using Azure.Storage.Blobs.Specialized.Cryptography.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -35,49 +33,17 @@ namespace Azure.Storage.Blobs.Test
         /// <returns>The IDisposable to delete the container when finished.</returns>
         private IDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, MockKeyEncryptionKey mock)
         {
-            var disposable = this.GetNewContainer(out var container);
+            var disposable = GetNewContainer(out var container);
             blob = InstrumentClient(new EncryptedBlobClient(
-                    new Uri(Path.Combine(container.Uri.ToString(), this.GetNewBlobName())), this.GetNewSharedKeyCredentials(),
-                    keyEncryptionKey: mock,
-                    keyResolver: mock));
+                    container.GetBlobClient(GetNewBlobName()).Uri,
+                    GetNewSharedKeyCredentials(),
+                    options: new EncryptedBlobClientOptions(GetOptions())
+                    {
+                        KeyEncryptionKey = mock,
+                        KeyResolver = mock
+                    }));
 
             return disposable;
-        }
-
-        // TODO this is a copy/paste. fix that.
-        /// <summary>
-        /// Gets and validates a blob's encryption-related metadata
-        /// </summary>
-        /// <param name="metadata">The blob's metadata</param>
-        /// <returns>The relevant metadata.</returns>
-        private EncryptionData GetAndValidateEncryptionData(IDictionary<string, string> metadata)
-        {
-            _ = metadata ?? throw new InvalidOperationException();
-
-            EncryptionData encryptionData;
-            if (metadata.TryGetValue(EncryptionConstants.ENCRYPTION_DATA_KEY, out string encryptedDataString))
-            {
-                encryptionData = EncryptionData.Deserialize(encryptedDataString);
-            }
-            else
-            {
-                throw new InvalidOperationException("Encryption data does not exist.");
-            }
-
-            _ = encryptionData.ContentEncryptionIV ?? throw new NullReferenceException();
-            _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw new NullReferenceException();
-
-            // Throw if the encryption protocol on the message doesn't match the version that this client library
-            // understands
-            // and is able to decrypt.
-            if (EncryptionConstants.ENCRYPTION_PROTOCOL_V1 != encryptionData.EncryptionAgent.Protocol)
-            {
-                throw new ArgumentException(
-                    "Invalid Encryption Agent. This version of the client library does not understand the " +
-                        $"Encryption Agent set on the queue message: {encryptionData.EncryptionAgent}");
-            }
-
-            return encryptionData;
         }
 
         private byte[] LocalManualEncryption(byte[] data, byte[] key, byte[] iv)
@@ -123,7 +89,7 @@ namespace Azure.Storage.Blobs.Test
                 await normalBlob.Content.ReadAsync(encryptedData, 0, encryptedData.Length);
 
                 // encrypt original data manually for comparison
-                var encryptionMetadata = GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
+                var encryptionMetadata = ClientSideDecryptionPolicy.GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
                 byte[] expectedEncryptedData = LocalManualEncryption(
                     data,
                     (await key.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)
@@ -177,14 +143,14 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(offset + (count ?? 16) + 32); // ensure we have enough room in original data
             var key = new MockKeyEncryptionKey();
-            using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            using (GetEncryptedBlockBlobClient(out var blob, key))
             {
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download range with decryption
                 byte[] downloadData; // no overload that takes Stream and HttpRange; we must buffer read
-                var downloadStream = (await blob.DownloadAsync(new HttpRange(offset, count))).Value.Content;
+                Stream downloadStream = (await blob.DownloadAsync(new HttpRange(offset, count))).Value.Content;
                 byte[] buffer = new byte[Constants.KB];
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -276,8 +242,11 @@ namespace Azure.Storage.Blobs.Test
                 var blob = new EncryptedBlobClient(
                     new Uri(Path.Combine(container.Uri.ToString(), this.GetNewBlobName())),
                     this.GetNewSharedKeyCredentials(),
-                    keyEncryptionKey: key,
-                    encryptionKeyWrapAlgorithm: "RSA-OAEP-256");
+                    options: new EncryptedBlobClientOptions()
+                    {
+                        KeyEncryptionKey = key,
+                        EncryptionKeyWrapAlgorithm = "RSA-OAEP-256"
+                    });
 
                 await blob.UploadAsync(new MemoryStream(data));
 

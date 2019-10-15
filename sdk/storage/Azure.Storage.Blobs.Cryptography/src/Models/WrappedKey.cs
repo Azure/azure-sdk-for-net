@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
+namespace Azure.Storage.Blobs.Specialized.Models
 {
     /// <summary>
     /// Represents the envelope key details stored on the service.
     /// </summary>
-    public struct WrappedKey
+    public class WrappedKey
     {
         /// <summary>
         /// The key identifier string.

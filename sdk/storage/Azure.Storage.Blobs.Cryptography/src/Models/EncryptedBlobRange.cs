@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
+namespace Azure.Storage.Blobs.Specialized.Models
 {
     /// <summary>
     /// This is a representation of a range of bytes on an encrypted blob, which may be expanded from the requested
@@ -23,17 +23,17 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
 
         public EncryptedBlobRange(HttpRange originalRange)
         {
-            this.OriginalRange = originalRange;
+            OriginalRange = originalRange;
 
             int offsetAdjustment = 0;
             long? adjustedDownloadCount = originalRange.Count;
 
             // Calculate offsetAdjustment.
-            if (this.OriginalRange.Offset != 0)
+            if (OriginalRange.Offset != 0)
             {
                 // Align with encryption block boundary.
                 int diff;
-                if ((diff = (int)(this.OriginalRange.Offset % EncryptionConstants.ENCRYPTION_BLOCK_SIZE)) != 0)
+                if ((diff = (int)(OriginalRange.Offset % EncryptionConstants.EncryptionBlockSize)) != 0)
                 {
                     offsetAdjustment += diff;
                     if (adjustedDownloadCount != default)
@@ -43,13 +43,13 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
                 }
 
                 // Account for IV.
-                if (this.OriginalRange.Offset >= EncryptionConstants.ENCRYPTION_BLOCK_SIZE)
+                if (OriginalRange.Offset >= EncryptionConstants.EncryptionBlockSize)
                 {
-                    offsetAdjustment += EncryptionConstants.ENCRYPTION_BLOCK_SIZE;
+                    offsetAdjustment += EncryptionConstants.EncryptionBlockSize;
                     // Increment adjustedDownloadCount if necessary.
                     if (adjustedDownloadCount != default)
                     {
-                        adjustedDownloadCount += EncryptionConstants.ENCRYPTION_BLOCK_SIZE;
+                        adjustedDownloadCount += EncryptionConstants.EncryptionBlockSize;
                     }
                 }
             }
@@ -59,12 +59,12 @@ namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
             if (adjustedDownloadCount != null)
             {
                 adjustedDownloadCount += (
-                    EncryptionConstants.ENCRYPTION_BLOCK_SIZE - (int)(adjustedDownloadCount
-                    % EncryptionConstants.ENCRYPTION_BLOCK_SIZE)
-                ) % EncryptionConstants.ENCRYPTION_BLOCK_SIZE;
+                    EncryptionConstants.EncryptionBlockSize - (int)(adjustedDownloadCount
+                    % EncryptionConstants.EncryptionBlockSize)
+                ) % EncryptionConstants.EncryptionBlockSize;
             }
 
-            this.AdjustedRange = new HttpRange(this.OriginalRange.Offset - offsetAdjustment, adjustedDownloadCount);
+            AdjustedRange = new HttpRange(OriginalRange.Offset - offsetAdjustment, adjustedDownloadCount);
         }
     }
 }

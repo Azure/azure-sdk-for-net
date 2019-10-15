@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Specialized.Cryptography.Models
+namespace Azure.Storage.Blobs.Specialized.Models
 {
     /// <summary>
     /// Specifies the encryption algorithm used to encrypt a resource.

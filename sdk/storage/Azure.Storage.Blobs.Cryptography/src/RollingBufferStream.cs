@@ -57,7 +57,7 @@ namespace Azure.Storage.Common
         /// <remarks>
         /// This class is to wrap unseekable streams, which, by nature, do not have a length to read.
         /// </remarks>
-        private long? _expectedLength;
+        private readonly long? _expectedLength;
         public override long Length => _expectedLength ?? _underlyingStreamBytesRead;
 
         public override long Position
@@ -88,9 +88,9 @@ namespace Azure.Storage.Common
 
         public RollingBufferStream(Stream stream, int bufferSize, long? expectedLength = default)
         {
-            this._underlyingStream = stream;
-            this._rollingBuffer = new byte[bufferSize];
-            this._expectedLength = expectedLength;
+            _underlyingStream = stream;
+            _rollingBuffer = new byte[bufferSize];
+            _expectedLength = expectedLength;
         }
 
         public override void Flush()
