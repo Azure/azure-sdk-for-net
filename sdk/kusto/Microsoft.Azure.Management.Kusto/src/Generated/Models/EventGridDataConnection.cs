@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO'</param>
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }
