@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2MdnSettings class.
         /// </summary>
-        /// <param name="needMdn">The value indicating whether to send or
+        /// <param name="needMDN">The value indicating whether to send or
         /// request a MDN.</param>
-        /// <param name="signMdn">The value indicating whether the MDN needs to
+        /// <param name="signMDN">The value indicating whether the MDN needs to
         /// be signed or not.</param>
-        /// <param name="sendMdnAsynchronously">The value indicating whether to
+        /// <param name="sendMDNAsynchronously">The value indicating whether to
         /// send the asynchronous MDN.</param>
-        /// <param name="signOutboundMdnIfOptional">The value indicating
+        /// <param name="signOutboundMDNIfOptional">The value indicating
         /// whether to sign the outbound MDN if optional.</param>
-        /// <param name="sendInboundMdnToMessageBox">The value indicating
+        /// <param name="sendInboundMDNToMessageBox">The value indicating
         /// whether to send inbound MDN to message box.</param>
         /// <param name="micHashingAlgorithm">The signing or hashing algorithm.
         /// Possible values include: 'NotSpecified', 'None', 'MD5', 'SHA1',
@@ -47,16 +47,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="dispositionNotificationTo">The disposition
         /// notification to header value.</param>
         /// <param name="mdnText">The MDN text.</param>
-        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, string micHashingAlgorithm, string receiptDeliveryUrl = default(string), string dispositionNotificationTo = default(string), string mdnText = default(string))
+        public AS2MdnSettings(bool needMDN, bool signMDN, bool sendMDNAsynchronously, bool signOutboundMDNIfOptional, bool sendInboundMDNToMessageBox, string micHashingAlgorithm, string receiptDeliveryUrl = default(string), string dispositionNotificationTo = default(string), string mdnText = default(string))
         {
-            NeedMdn = needMdn;
-            SignMdn = signMdn;
-            SendMdnAsynchronously = sendMdnAsynchronously;
+            NeedMDN = needMDN;
+            SignMDN = signMDN;
+            SendMDNAsynchronously = sendMDNAsynchronously;
             ReceiptDeliveryUrl = receiptDeliveryUrl;
             DispositionNotificationTo = dispositionNotificationTo;
-            SignOutboundMdnIfOptional = signOutboundMdnIfOptional;
+            SignOutboundMDNIfOptional = signOutboundMDNIfOptional;
             MdnText = mdnText;
-            SendInboundMdnToMessageBox = sendInboundMdnToMessageBox;
+            SendInboundMDNToMessageBox = sendInboundMDNToMessageBox;
             MicHashingAlgorithm = micHashingAlgorithm;
             CustomInit();
         }
@@ -69,22 +69,22 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets or sets the value indicating whether to send or request a MDN.
         /// </summary>
-        [JsonProperty(PropertyName = "needMdn")]
-        public bool NeedMdn { get; set; }
+        [JsonProperty(PropertyName = "needMDN")]
+        public bool NeedMDN { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether the MDN needs to be
         /// signed or not.
         /// </summary>
-        [JsonProperty(PropertyName = "signMdn")]
-        public bool SignMdn { get; set; }
+        [JsonProperty(PropertyName = "signMDN")]
+        public bool SignMDN { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to send the asynchronous
         /// MDN.
         /// </summary>
-        [JsonProperty(PropertyName = "sendMdnAsynchronously")]
-        public bool SendMdnAsynchronously { get; set; }
+        [JsonProperty(PropertyName = "sendMDNAsynchronously")]
+        public bool SendMDNAsynchronously { get; set; }
 
         /// <summary>
         /// Gets or sets the receipt delivery URL.
@@ -102,8 +102,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to sign the outbound MDN
         /// if optional.
         /// </summary>
-        [JsonProperty(PropertyName = "signOutboundMdnIfOptional")]
-        public bool SignOutboundMdnIfOptional { get; set; }
+        [JsonProperty(PropertyName = "signOutboundMDNIfOptional")]
+        public bool SignOutboundMDNIfOptional { get; set; }
 
         /// <summary>
         /// Gets or sets the MDN text.
@@ -115,8 +115,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to send inbound MDN to
         /// message box.
         /// </summary>
-        [JsonProperty(PropertyName = "sendInboundMdnToMessageBox")]
-        public bool SendInboundMdnToMessageBox { get; set; }
+        [JsonProperty(PropertyName = "sendInboundMDNToMessageBox")]
+        public bool SendInboundMDNToMessageBox { get; set; }
 
         /// <summary>
         /// Gets or sets the signing or hashing algorithm. Possible values

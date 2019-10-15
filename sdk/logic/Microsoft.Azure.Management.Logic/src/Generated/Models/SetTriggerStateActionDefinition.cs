@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The set trigger state action definition.
+    /// </summary>
     public partial class SetTriggerStateActionDefinition
     {
         /// <summary>
@@ -29,6 +32,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the SetTriggerStateActionDefinition
         /// class.
         /// </summary>
+        /// <param name="source">The source.</param>
         public SetTriggerStateActionDefinition(WorkflowTrigger source)
         {
             Source = source;
@@ -41,6 +45,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the source.
         /// </summary>
         [JsonProperty(PropertyName = "source")]
         public WorkflowTrigger Source { get; set; }

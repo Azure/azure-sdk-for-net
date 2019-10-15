@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// settings has to be applied.</param>
         /// <param name="enforceCharacterSet">The value indicating whether to
         /// validate character Set.</param>
-        /// <param name="validateEdiTypes">The value indicating whether to
+        /// <param name="validateEDITypes">The value indicating whether to
         /// validate EDI types.</param>
-        /// <param name="validateXsdTypes">The value indicating whether to
+        /// <param name="validateXSDTypes">The value indicating whether to
         /// validate XSD types.</param>
         /// <param name="allowLeadingAndTrailingSpacesAndZeroes">The value
         /// indicating whether to allow leading and trailing spaces and
@@ -47,12 +47,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="trimLeadingAndTrailingSpacesAndZeroes">The value
         /// indicating whether to trim leading and trailing spaces and
         /// zeroes.</param>
-        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, string trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes)
+        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, string trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes)
         {
             MessageId = messageId;
             EnforceCharacterSet = enforceCharacterSet;
-            ValidateEdiTypes = validateEdiTypes;
-            ValidateXsdTypes = validateXsdTypes;
+            ValidateEDITypes = validateEDITypes;
+            ValidateXSDTypes = validateXSDTypes;
             AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
             TrailingSeparatorPolicy = trailingSeparatorPolicy;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
@@ -81,14 +81,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets or sets the value indicating whether to validate EDI types.
         /// </summary>
-        [JsonProperty(PropertyName = "validateEdiTypes")]
-        public bool ValidateEdiTypes { get; set; }
+        [JsonProperty(PropertyName = "validateEDITypes")]
+        public bool ValidateEDITypes { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to validate XSD types.
         /// </summary>
-        [JsonProperty(PropertyName = "validateXsdTypes")]
-        public bool ValidateXsdTypes { get; set; }
+        [JsonProperty(PropertyName = "validateXSDTypes")]
+        public bool ValidateXSDTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to allow leading and

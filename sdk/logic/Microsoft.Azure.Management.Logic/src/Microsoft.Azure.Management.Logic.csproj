@@ -12,6 +12,7 @@
 		<![CDATA[
 	  - Bug fix for updating Logic Apps that have an attached Integration Account
 	  - Added WorkflowRunActionRequestHistories, WorkflowRunActionRepetitionsRequestHistories
+	  - Added Integration Service Environment reference in Workflow
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

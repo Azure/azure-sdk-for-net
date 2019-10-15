@@ -615,12 +615,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
-            /// </param>
-            public static void ValidateByLocation(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow workflow)
+            public static void ValidateByLocation(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName)
             {
-                operations.ValidateByLocationAsync(resourceGroupName, location, workflowName, workflow).GetAwaiter().GetResult();
+                operations.ValidateByLocationAsync(resourceGroupName, location, workflowName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -638,15 +635,55 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ValidateByLocationAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ValidateByLocationWithHttpMessagesAsync(resourceGroupName, location, workflowName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Moves an existing workflow.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='move'>
+            /// The workflow to move.
+            /// </param>
+            public static void BeginMove(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move)
+            {
+                operations.BeginMoveAsync(resourceGroupName, workflowName, move).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Moves an existing workflow.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='move'>
+            /// The workflow to move.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ValidateByLocationAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow workflow, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginMoveAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ValidateByLocationWithHttpMessagesAsync(resourceGroupName, location, workflowName, workflow, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginMoveWithHttpMessagesAsync(resourceGroupName, workflowName, move, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
