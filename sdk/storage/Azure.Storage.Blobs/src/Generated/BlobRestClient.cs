@@ -8349,8 +8349,8 @@ namespace Azure.Storage.Blobs
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal>> GetPageRangesAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8474,8 +8474,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.GetPageRangesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetPageRangesAsync_CreateResponse(
+            /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -8485,7 +8485,7 @@ namespace Azure.Storage.Blobs
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.PageRangesInfo _value = new Azure.Storage.Blobs.Models.PageRangesInfo();
+                        Azure.Storage.Blobs.Models.PageRangesInfoInternal _value = new Azure.Storage.Blobs.Models.PageRangesInfoInternal();
                         _value.Body = Azure.Storage.Blobs.Models.PageList.FromXml(_xml.Root);
 
                         // Get response headers
@@ -8552,8 +8552,8 @@ namespace Azure.Storage.Blobs
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8682,8 +8682,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.GetPageRangesDiffAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetPageRangesDiffAsync_CreateResponse(
+            /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesDiffAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -8693,7 +8693,7 @@ namespace Azure.Storage.Blobs
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.PageRangesInfo _value = new Azure.Storage.Blobs.Models.PageRangesInfo();
+                        Azure.Storage.Blobs.Models.PageRangesInfoInternal _value = new Azure.Storage.Blobs.Models.PageRangesInfoInternal();
                         _value.Body = Azure.Storage.Blobs.Models.PageList.FromXml(_xml.Root);
 
                         // Get response headers
@@ -16750,7 +16750,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// ClearRange
     /// </summary>
-    public partial class ClearRange
+    internal partial class ClearRange
     {
         /// <summary>
         /// Start
@@ -16793,26 +16793,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ClearRange value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ClearRange instance for mocking.
-        /// </summary>
-        public static ClearRange ClearRange(
-            long start,
-            long end)
-        {
-            return new ClearRange()
-            {
-                Start = start,
-                End = end,
-            };
-        }
     }
 }
 #endregion class ClearRange
@@ -18230,7 +18210,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// the list of pages
     /// </summary>
-    public partial class PageList
+    internal partial class PageList
     {
         /// <summary>
         /// PageRange
@@ -18286,26 +18266,6 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.PageList value);
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new PageList instance for mocking.
-        /// </summary>
-        public static PageList PageList(
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.PageRange> pageRange = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ClearRange> clearRange = default)
-        {
-            return new PageList()
-            {
-                PageRange = pageRange,
-                ClearRange = clearRange,
-            };
-        }
-    }
 }
 #endregion class PageList
 
@@ -18315,7 +18275,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// PageRange
     /// </summary>
-    public readonly partial struct PageRange: System.IEquatable<PageRange>
+    internal readonly partial struct PageRange: System.IEquatable<PageRange>
     {
         /// <summary>
         /// Start
@@ -18408,32 +18368,16 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.PageRange value);
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new PageRange instance for mocking.
-        /// </summary>
-        public static PageRange PageRange(
-            long start,
-            long end)
-        {
-            return new PageRange(start, end);
-        }
-    }
 }
 #endregion struct PageRange
 
-#region class PageRangesInfo
+#region class PageRangesInfoInternal
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// PageRangesInfo
+    /// PageRangesInfoInternal
     /// </summary>
-    public partial class PageRangesInfo
+    internal partial class PageRangesInfoInternal
     {
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -18456,39 +18400,15 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.PageList Body { get; internal set; }
 
         /// <summary>
-        /// Creates a new PageRangesInfo instance
+        /// Creates a new PageRangesInfoInternal instance
         /// </summary>
-        public PageRangesInfo()
+        public PageRangesInfoInternal()
         {
             Body = new Azure.Storage.Blobs.Models.PageList();
         }
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new PageRangesInfo instance for mocking.
-        /// </summary>
-        public static PageRangesInfo PageRangesInfo(
-            System.DateTimeOffset lastModified,
-            Azure.ETag eTag,
-            long blobContentLength,
-            Azure.Storage.Blobs.Models.PageList body)
-        {
-            return new PageRangesInfo()
-            {
-                LastModified = lastModified,
-                ETag = eTag,
-                BlobContentLength = blobContentLength,
-                Body = body,
-            };
-        }
-    }
 }
-#endregion class PageRangesInfo
+#endregion class PageRangesInfoInternal
 
 #region enum PathRenameMode
 namespace Azure.Storage.Blobs.Models
