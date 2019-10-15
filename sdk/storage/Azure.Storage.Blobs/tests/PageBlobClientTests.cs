@@ -731,11 +731,11 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(2, result.Value.PageRanges.Count());
                 HttpRange range1 = result.Value.PageRanges.First();
                 Assert.AreEqual(0, range1.Offset);
-                Assert.AreEqual(Constants.KB, range1.Offset + range1.Count);
+                Assert.AreEqual(Constants.KB, range1.Offset + range1.Length);
 
                 HttpRange range2 = result.Value.PageRanges.ElementAt(1);
                 Assert.AreEqual(2 * Constants.KB, range2.Offset);
-                Assert.AreEqual(3 * Constants.KB, range2.Offset + range2.Count);
+                Assert.AreEqual(3 * Constants.KB, range2.Offset + range2.Length);
             }
         }
 
@@ -775,11 +775,11 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(2, result.Value.PageRanges.Count());
                 HttpRange pageRange1 = result.Value.PageRanges.First();
                 Assert.AreEqual(0, pageRange1.Offset);
-                Assert.AreEqual(2 * Constants.KB, pageRange1.Offset + pageRange1.Count);
+                Assert.AreEqual(2 * Constants.KB, pageRange1.Offset + pageRange1.Length);
 
                 HttpRange pageRange2 = result.Value.PageRanges.ElementAt(1);
                 Assert.AreEqual(5 * Constants.KB, pageRange2.Offset); // since the first part of the page was cleared, it should start at 5 rather than 4 KB
-                Assert.AreEqual(6 * Constants.KB, pageRange2.Offset + pageRange2.Count);
+                Assert.AreEqual(6 * Constants.KB, pageRange2.Offset + pageRange2.Length);
 
                 Assert.AreEqual(1, diff.Value.ClearRanges.Count());
                 HttpRange clearRange = diff.Value.ClearRanges.First(); // ClearRange is only populated by GetPageRangesDiff API, and only if passing previous snapshot parameter
@@ -904,7 +904,7 @@ namespace Azure.Storage.Blobs.Test
                 HttpRange range = result.Value.PageRanges.First();
 
                 Assert.AreEqual(2 * Constants.KB, range.Offset);
-                Assert.AreEqual(3 * Constants.KB, range.Offset + range.Count);
+                Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
             }
         }
 
