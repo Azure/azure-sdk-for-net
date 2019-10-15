@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs
             ServiceVersion version = LatestVersion,
             CustomerProvidedKey? customerProvidedKey = default)
         {
-            Version = (int)version == 1? version: throw Errors.ArgumentNotSupported(nameof(version));
+            Version = version == ServiceVersion.V2018_11_09 ? version: throw Errors.VersionNotSupported(nameof(version));
             CustomerProvidedKey = customerProvidedKey;
             this.Initialize();
         }

@@ -51,7 +51,7 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = (int)version == 1 ? version : throw Errors.ArgumentNotSupported(nameof(version));
+            Version = version == ServiceVersion.V2018_11_09 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
         }
 
