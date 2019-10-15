@@ -2722,93 +2722,84 @@ namespace Azure.Storage.Queues.Models
     /// <summary>
     /// The status of the secondary location
     /// </summary>
-    public partial struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
+    public readonly struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// live
-        /// </summary>
-        public static Azure.Storage.Queues.Models.GeoReplicationStatus Live { get; } = @"live";
-
-        /// <summary>
-        /// bootstrap
-        /// </summary>
-        public static Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap { get; } = @"bootstrap";
-
-        /// <summary>
-        /// unavailable
-        /// </summary>
-        public static Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable { get; } = @"unavailable";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
         /// <summary>
         /// The GeoReplicationStatus value.
         /// </summary>
         private readonly string _value;
 
         /// <summary>
-        /// Creates a new GeoReplicationStatus instance.
+        /// Initializes a new instance of the <see cref="GeoReplicationStatus"/> structure.
         /// </summary>
-        /// <param name="value">The GeoReplicationStatus value.</param>
-        private GeoReplicationStatus(string value) { _value = value; }
+        /// <param name="value">The string value of the instance.</param>
+        public GeoReplicationStatus(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
 
         /// <summary>
-        /// Check if two GeoReplicationStatus instances are equal.
+        /// live
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Live = new GeoReplicationStatus(@"live");
 
         /// <summary>
-        /// Check if two GeoReplicationStatus instances are equal.
+        /// bootstrap
         /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.GeoReplicationStatus other && Equals(other);
+        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap = new GeoReplicationStatus(@"bootstrap");
 
         /// <summary>
-        /// Get a hash code for the GeoReplicationStatus.
+        /// unavailable
         /// </summary>
-        /// <returns>Hash code for the GeoReplicationStatus.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
+        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable = new GeoReplicationStatus(@"unavailable");
 
         /// <summary>
-        /// Convert the GeoReplicationStatus to a string.
+        /// Determines if two <see cref="GeoReplicationStatus"/> values are the same.
         /// </summary>
-        /// <returns>String representation of the GeoReplicationStatus.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a GeoReplicationStatus.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The GeoReplicationStatus value.</returns>
-        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an GeoReplicationStatus to a string.
-        /// </summary>
-        /// <param name="value">The GeoReplicationStatus value.</param>
-        /// <returns>String representation of the GeoReplicationStatus value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus value) => value._value;
-
-        /// <summary>
-        /// Check if two GeoReplicationStatus instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
+        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
         public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
 
         /// <summary>
-        /// Check if two GeoReplicationStatus instances are not equal.
+        /// Determines if two <see cref="GeoReplicationStatus"/> values are different.
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
+        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="GeoReplicationStatus"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The GeoReplicationStatus value.</returns>
+        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
+
+        /// <summary>
+        /// Check if two <see cref="GeoReplicationStatus"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Queues.Models.GeoReplicationStatus other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="GeoReplicationStatus"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="GeoReplicationStatus"/>.
+        /// </summary>
+        /// <returns>Hash code for the GeoReplicationStatus.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="GeoReplicationStatus"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the GeoReplicationStatus.</returns>
+        public override string ToString() => _value;
     }
 }
 #endregion enum strings GeoReplicationStatus
@@ -3213,363 +3204,354 @@ namespace Azure.Storage.Queues.Models
     /// <summary>
     /// Error codes returned by the service
     /// </summary>
-    public partial struct QueueErrorCode : System.IEquatable<QueueErrorCode>
+    public readonly struct QueueErrorCode : System.IEquatable<QueueErrorCode>
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// AccountAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists { get; } = @"AccountAlreadyExists";
-
-        /// <summary>
-        /// AccountBeingCreated
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated { get; } = @"AccountBeingCreated";
-
-        /// <summary>
-        /// AccountIsDisabled
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled { get; } = @"AccountIsDisabled";
-
-        /// <summary>
-        /// AuthenticationFailed
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed { get; } = @"AuthenticationFailed";
-
-        /// <summary>
-        /// AuthorizationFailure
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure { get; } = @"AuthorizationFailure";
-
-        /// <summary>
-        /// ConditionHeadersNotSupported
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported { get; } = @"ConditionHeadersNotSupported";
-
-        /// <summary>
-        /// ConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet { get; } = @"ConditionNotMet";
-
-        /// <summary>
-        /// EmptyMetadataKey
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey { get; } = @"EmptyMetadataKey";
-
-        /// <summary>
-        /// InsufficientAccountPermissions
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions { get; } = @"InsufficientAccountPermissions";
-
-        /// <summary>
-        /// InternalError
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InternalError { get; } = @"InternalError";
-
-        /// <summary>
-        /// InvalidAuthenticationInfo
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo { get; } = @"InvalidAuthenticationInfo";
-
-        /// <summary>
-        /// InvalidHeaderValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue { get; } = @"InvalidHeaderValue";
-
-        /// <summary>
-        /// InvalidHttpVerb
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb { get; } = @"InvalidHttpVerb";
-
-        /// <summary>
-        /// InvalidInput
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidInput { get; } = @"InvalidInput";
-
-        /// <summary>
-        /// InvalidMd5
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 { get; } = @"InvalidMd5";
-
-        /// <summary>
-        /// InvalidMetadata
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata { get; } = @"InvalidMetadata";
-
-        /// <summary>
-        /// InvalidQueryParameterValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue { get; } = @"InvalidQueryParameterValue";
-
-        /// <summary>
-        /// InvalidRange
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidRange { get; } = @"InvalidRange";
-
-        /// <summary>
-        /// InvalidResourceName
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName { get; } = @"InvalidResourceName";
-
-        /// <summary>
-        /// InvalidUri
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidUri { get; } = @"InvalidUri";
-
-        /// <summary>
-        /// InvalidXmlDocument
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument { get; } = @"InvalidXmlDocument";
-
-        /// <summary>
-        /// InvalidXmlNodeValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue { get; } = @"InvalidXmlNodeValue";
-
-        /// <summary>
-        /// Md5Mismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch { get; } = @"Md5Mismatch";
-
-        /// <summary>
-        /// MetadataTooLarge
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge { get; } = @"MetadataTooLarge";
-
-        /// <summary>
-        /// MissingContentLengthHeader
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader { get; } = @"MissingContentLengthHeader";
-
-        /// <summary>
-        /// MissingRequiredQueryParameter
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter { get; } = @"MissingRequiredQueryParameter";
-
-        /// <summary>
-        /// MissingRequiredHeader
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader { get; } = @"MissingRequiredHeader";
-
-        /// <summary>
-        /// MissingRequiredXmlNode
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode { get; } = @"MissingRequiredXmlNode";
-
-        /// <summary>
-        /// MultipleConditionHeadersNotSupported
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported { get; } = @"MultipleConditionHeadersNotSupported";
-
-        /// <summary>
-        /// OperationTimedOut
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut { get; } = @"OperationTimedOut";
-
-        /// <summary>
-        /// OutOfRangeInput
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput { get; } = @"OutOfRangeInput";
-
-        /// <summary>
-        /// OutOfRangeQueryParameterValue
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue { get; } = @"OutOfRangeQueryParameterValue";
-
-        /// <summary>
-        /// RequestBodyTooLarge
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge { get; } = @"RequestBodyTooLarge";
-
-        /// <summary>
-        /// ResourceTypeMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch { get; } = @"ResourceTypeMismatch";
-
-        /// <summary>
-        /// RequestUrlFailedToParse
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse { get; } = @"RequestUrlFailedToParse";
-
-        /// <summary>
-        /// ResourceAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists { get; } = @"ResourceAlreadyExists";
-
-        /// <summary>
-        /// ResourceNotFound
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound { get; } = @"ResourceNotFound";
-
-        /// <summary>
-        /// ServerBusy
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode ServerBusy { get; } = @"ServerBusy";
-
-        /// <summary>
-        /// UnsupportedHeader
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader { get; } = @"UnsupportedHeader";
-
-        /// <summary>
-        /// UnsupportedXmlNode
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode { get; } = @"UnsupportedXmlNode";
-
-        /// <summary>
-        /// UnsupportedQueryParameter
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter { get; } = @"UnsupportedQueryParameter";
-
-        /// <summary>
-        /// UnsupportedHttpVerb
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb { get; } = @"UnsupportedHttpVerb";
-
-        /// <summary>
-        /// InvalidMarker
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker { get; } = @"InvalidMarker";
-
-        /// <summary>
-        /// MessageNotFound
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound { get; } = @"MessageNotFound";
-
-        /// <summary>
-        /// MessageTooLarge
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge { get; } = @"MessageTooLarge";
-
-        /// <summary>
-        /// PopReceiptMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch { get; } = @"PopReceiptMismatch";
-
-        /// <summary>
-        /// QueueAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists { get; } = @"QueueAlreadyExists";
-
-        /// <summary>
-        /// QueueBeingDeleted
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted { get; } = @"QueueBeingDeleted";
-
-        /// <summary>
-        /// QueueDisabled
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled { get; } = @"QueueDisabled";
-
-        /// <summary>
-        /// QueueNotEmpty
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty { get; } = @"QueueNotEmpty";
-
-        /// <summary>
-        /// QueueNotFound
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound { get; } = @"QueueNotFound";
-
-        /// <summary>
-        /// AuthorizationSourceIPMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
-
-        /// <summary>
-        /// AuthorizationProtocolMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
-
-        /// <summary>
-        /// AuthorizationPermissionMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
-
-        /// <summary>
-        /// AuthorizationServiceMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
-
-        /// <summary>
-        /// AuthorizationResourceTypeMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
-
-        /// <summary>
-        /// FeatureVersionMismatch
-        /// </summary>
-        public static Azure.Storage.Queues.Models.QueueErrorCode FeatureVersionMismatch { get; } = @"FeatureVersionMismatch";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
         /// <summary>
         /// The QueueErrorCode value.
         /// </summary>
         private readonly string _value;
 
         /// <summary>
-        /// Creates a new QueueErrorCode instance.
+        /// Initializes a new instance of the <see cref="QueueErrorCode"/> structure.
         /// </summary>
-        /// <param name="value">The QueueErrorCode value.</param>
-        private QueueErrorCode(string value) { _value = value; }
+        /// <param name="value">The string value of the instance.</param>
+        public QueueErrorCode(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
 
         /// <summary>
-        /// Check if two QueueErrorCode instances are equal.
+        /// AccountAlreadyExists
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists = new QueueErrorCode(@"AccountAlreadyExists");
 
         /// <summary>
-        /// Check if two QueueErrorCode instances are equal.
+        /// AccountBeingCreated
         /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.QueueErrorCode other && Equals(other);
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated = new QueueErrorCode(@"AccountBeingCreated");
 
         /// <summary>
-        /// Get a hash code for the QueueErrorCode.
+        /// AccountIsDisabled
         /// </summary>
-        /// <returns>Hash code for the QueueErrorCode.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled = new QueueErrorCode(@"AccountIsDisabled");
 
         /// <summary>
-        /// Convert the QueueErrorCode to a string.
+        /// AuthenticationFailed
         /// </summary>
-        /// <returns>String representation of the QueueErrorCode.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a QueueErrorCode.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The QueueErrorCode value.</returns>
-        public static implicit operator QueueErrorCode(string value) => new Azure.Storage.Queues.Models.QueueErrorCode(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed = new QueueErrorCode(@"AuthenticationFailed");
 
         /// <summary>
-        /// Convert an QueueErrorCode to a string.
+        /// AuthorizationFailure
         /// </summary>
-        /// <param name="value">The QueueErrorCode value.</param>
-        /// <returns>String representation of the QueueErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode value) => value._value;
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure = new QueueErrorCode(@"AuthorizationFailure");
 
         /// <summary>
-        /// Check if two QueueErrorCode instances are equal.
+        /// ConditionHeadersNotSupported
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported = new QueueErrorCode(@"ConditionHeadersNotSupported");
+
+        /// <summary>
+        /// ConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet = new QueueErrorCode(@"ConditionNotMet");
+
+        /// <summary>
+        /// EmptyMetadataKey
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey = new QueueErrorCode(@"EmptyMetadataKey");
+
+        /// <summary>
+        /// InsufficientAccountPermissions
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions = new QueueErrorCode(@"InsufficientAccountPermissions");
+
+        /// <summary>
+        /// InternalError
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InternalError = new QueueErrorCode(@"InternalError");
+
+        /// <summary>
+        /// InvalidAuthenticationInfo
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo = new QueueErrorCode(@"InvalidAuthenticationInfo");
+
+        /// <summary>
+        /// InvalidHeaderValue
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue = new QueueErrorCode(@"InvalidHeaderValue");
+
+        /// <summary>
+        /// InvalidHttpVerb
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb = new QueueErrorCode(@"InvalidHttpVerb");
+
+        /// <summary>
+        /// InvalidInput
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidInput = new QueueErrorCode(@"InvalidInput");
+
+        /// <summary>
+        /// InvalidMd5
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 = new QueueErrorCode(@"InvalidMd5");
+
+        /// <summary>
+        /// InvalidMetadata
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata = new QueueErrorCode(@"InvalidMetadata");
+
+        /// <summary>
+        /// InvalidQueryParameterValue
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue = new QueueErrorCode(@"InvalidQueryParameterValue");
+
+        /// <summary>
+        /// InvalidRange
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidRange = new QueueErrorCode(@"InvalidRange");
+
+        /// <summary>
+        /// InvalidResourceName
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName = new QueueErrorCode(@"InvalidResourceName");
+
+        /// <summary>
+        /// InvalidUri
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidUri = new QueueErrorCode(@"InvalidUri");
+
+        /// <summary>
+        /// InvalidXmlDocument
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument = new QueueErrorCode(@"InvalidXmlDocument");
+
+        /// <summary>
+        /// InvalidXmlNodeValue
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue = new QueueErrorCode(@"InvalidXmlNodeValue");
+
+        /// <summary>
+        /// Md5Mismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch = new QueueErrorCode(@"Md5Mismatch");
+
+        /// <summary>
+        /// MetadataTooLarge
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge = new QueueErrorCode(@"MetadataTooLarge");
+
+        /// <summary>
+        /// MissingContentLengthHeader
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader = new QueueErrorCode(@"MissingContentLengthHeader");
+
+        /// <summary>
+        /// MissingRequiredQueryParameter
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter = new QueueErrorCode(@"MissingRequiredQueryParameter");
+
+        /// <summary>
+        /// MissingRequiredHeader
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader = new QueueErrorCode(@"MissingRequiredHeader");
+
+        /// <summary>
+        /// MissingRequiredXmlNode
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode = new QueueErrorCode(@"MissingRequiredXmlNode");
+
+        /// <summary>
+        /// MultipleConditionHeadersNotSupported
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported = new QueueErrorCode(@"MultipleConditionHeadersNotSupported");
+
+        /// <summary>
+        /// OperationTimedOut
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut = new QueueErrorCode(@"OperationTimedOut");
+
+        /// <summary>
+        /// OutOfRangeInput
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput = new QueueErrorCode(@"OutOfRangeInput");
+
+        /// <summary>
+        /// OutOfRangeQueryParameterValue
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue = new QueueErrorCode(@"OutOfRangeQueryParameterValue");
+
+        /// <summary>
+        /// RequestBodyTooLarge
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge = new QueueErrorCode(@"RequestBodyTooLarge");
+
+        /// <summary>
+        /// ResourceTypeMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch = new QueueErrorCode(@"ResourceTypeMismatch");
+
+        /// <summary>
+        /// RequestUrlFailedToParse
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse = new QueueErrorCode(@"RequestUrlFailedToParse");
+
+        /// <summary>
+        /// ResourceAlreadyExists
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists = new QueueErrorCode(@"ResourceAlreadyExists");
+
+        /// <summary>
+        /// ResourceNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound = new QueueErrorCode(@"ResourceNotFound");
+
+        /// <summary>
+        /// ServerBusy
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode ServerBusy = new QueueErrorCode(@"ServerBusy");
+
+        /// <summary>
+        /// UnsupportedHeader
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader = new QueueErrorCode(@"UnsupportedHeader");
+
+        /// <summary>
+        /// UnsupportedXmlNode
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode = new QueueErrorCode(@"UnsupportedXmlNode");
+
+        /// <summary>
+        /// UnsupportedQueryParameter
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter = new QueueErrorCode(@"UnsupportedQueryParameter");
+
+        /// <summary>
+        /// UnsupportedHttpVerb
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb = new QueueErrorCode(@"UnsupportedHttpVerb");
+
+        /// <summary>
+        /// InvalidMarker
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker = new QueueErrorCode(@"InvalidMarker");
+
+        /// <summary>
+        /// MessageNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound = new QueueErrorCode(@"MessageNotFound");
+
+        /// <summary>
+        /// MessageTooLarge
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge = new QueueErrorCode(@"MessageTooLarge");
+
+        /// <summary>
+        /// PopReceiptMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch = new QueueErrorCode(@"PopReceiptMismatch");
+
+        /// <summary>
+        /// QueueAlreadyExists
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists = new QueueErrorCode(@"QueueAlreadyExists");
+
+        /// <summary>
+        /// QueueBeingDeleted
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted = new QueueErrorCode(@"QueueBeingDeleted");
+
+        /// <summary>
+        /// QueueDisabled
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled = new QueueErrorCode(@"QueueDisabled");
+
+        /// <summary>
+        /// QueueNotEmpty
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty = new QueueErrorCode(@"QueueNotEmpty");
+
+        /// <summary>
+        /// QueueNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound = new QueueErrorCode(@"QueueNotFound");
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthorizationSourceIPMismatch = new QueueErrorCode(@"AuthorizationSourceIPMismatch");
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthorizationProtocolMismatch = new QueueErrorCode(@"AuthorizationProtocolMismatch");
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthorizationPermissionMismatch = new QueueErrorCode(@"AuthorizationPermissionMismatch");
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthorizationServiceMismatch = new QueueErrorCode(@"AuthorizationServiceMismatch");
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode AuthorizationResourceTypeMismatch = new QueueErrorCode(@"AuthorizationResourceTypeMismatch");
+
+        /// <summary>
+        /// FeatureVersionMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.QueueErrorCode FeatureVersionMismatch = new QueueErrorCode(@"FeatureVersionMismatch");
+
+        /// <summary>
+        /// Determines if two <see cref="QueueErrorCode"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="QueueErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="QueueErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
         public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => left.Equals(right);
 
         /// <summary>
-        /// Check if two QueueErrorCode instances are not equal.
+        /// Determines if two <see cref="QueueErrorCode"/> values are different.
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
+        /// <param name="left">The first <see cref="QueueErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="QueueErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="QueueErrorCode"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The QueueErrorCode value.</returns>
+        public static implicit operator QueueErrorCode(string value) => new Azure.Storage.Queues.Models.QueueErrorCode(value);
+
+        /// <summary>
+        /// Check if two <see cref="QueueErrorCode"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Queues.Models.QueueErrorCode other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="QueueErrorCode"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="QueueErrorCode"/>.
+        /// </summary>
+        /// <returns>Hash code for the QueueErrorCode.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="QueueErrorCode"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the QueueErrorCode.</returns>
+        public override string ToString() => _value;
     }
 }
 #endregion enum strings QueueErrorCode

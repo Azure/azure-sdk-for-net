@@ -6636,7 +6636,7 @@ namespace Azure.Storage.Blobs
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
-                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -6866,7 +6866,7 @@ namespace Azure.Storage.Blobs
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
-                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfMatch != null) { _request.Headers.SetValue("x-ms-source-if-match", sourceIfMatch.Value.ToString()); }
@@ -7180,7 +7180,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-access-tier", tier);
+                _request.Headers.SetValue("x-ms-access-tier", tier.ToString());
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
@@ -7418,7 +7418,7 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
                 if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
@@ -10355,7 +10355,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
-                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -11100,7 +11100,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
-                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
+                if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -12515,148 +12515,139 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Indicates the tier to be set on the blob.
     /// </summary>
-    public partial struct AccessTier : System.IEquatable<AccessTier>
+    public readonly struct AccessTier : System.IEquatable<AccessTier>
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// P4
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P4 { get; } = @"P4";
-
-        /// <summary>
-        /// P6
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P6 { get; } = @"P6";
-
-        /// <summary>
-        /// P10
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P10 { get; } = @"P10";
-
-        /// <summary>
-        /// P15
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P15 { get; } = @"P15";
-
-        /// <summary>
-        /// P20
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P20 { get; } = @"P20";
-
-        /// <summary>
-        /// P30
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P30 { get; } = @"P30";
-
-        /// <summary>
-        /// P40
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P40 { get; } = @"P40";
-
-        /// <summary>
-        /// P50
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P50 { get; } = @"P50";
-
-        /// <summary>
-        /// P60
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P60 { get; } = @"P60";
-
-        /// <summary>
-        /// P70
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P70 { get; } = @"P70";
-
-        /// <summary>
-        /// P80
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier P80 { get; } = @"P80";
-
-        /// <summary>
-        /// Hot
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier Hot { get; } = @"Hot";
-
-        /// <summary>
-        /// Cool
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier Cool { get; } = @"Cool";
-
-        /// <summary>
-        /// Archive
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTier Archive { get; } = @"Archive";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
         /// <summary>
         /// The AccessTier value.
         /// </summary>
         private readonly string _value;
 
         /// <summary>
-        /// Creates a new AccessTier instance.
+        /// Initializes a new instance of the <see cref="AccessTier"/> structure.
         /// </summary>
-        /// <param name="value">The AccessTier value.</param>
-        private AccessTier(string value) { _value = value; }
+        /// <param name="value">The string value of the instance.</param>
+        public AccessTier(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
 
         /// <summary>
-        /// Check if two AccessTier instances are equal.
+        /// P4
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.AccessTier other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P4 = new AccessTier(@"P4");
 
         /// <summary>
-        /// Check if two AccessTier instances are equal.
+        /// P6
         /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.AccessTier other && Equals(other);
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P6 = new AccessTier(@"P6");
 
         /// <summary>
-        /// Get a hash code for the AccessTier.
+        /// P10
         /// </summary>
-        /// <returns>Hash code for the AccessTier.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P10 = new AccessTier(@"P10");
 
         /// <summary>
-        /// Convert the AccessTier to a string.
+        /// P15
         /// </summary>
-        /// <returns>String representation of the AccessTier.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a AccessTier.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The AccessTier value.</returns>
-        public static implicit operator AccessTier(string value) => new Azure.Storage.Blobs.Models.AccessTier(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P15 = new AccessTier(@"P15");
 
         /// <summary>
-        /// Convert an AccessTier to a string.
+        /// P20
         /// </summary>
-        /// <param name="value">The AccessTier value.</param>
-        /// <returns>String representation of the AccessTier value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTier value) => value._value;
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P20 = new AccessTier(@"P20");
 
         /// <summary>
-        /// Check if two AccessTier instances are equal.
+        /// P30
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P30 = new AccessTier(@"P30");
+
+        /// <summary>
+        /// P40
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P40 = new AccessTier(@"P40");
+
+        /// <summary>
+        /// P50
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P50 = new AccessTier(@"P50");
+
+        /// <summary>
+        /// P60
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P60 = new AccessTier(@"P60");
+
+        /// <summary>
+        /// P70
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P70 = new AccessTier(@"P70");
+
+        /// <summary>
+        /// P80
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier P80 = new AccessTier(@"P80");
+
+        /// <summary>
+        /// Hot
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier Hot = new AccessTier(@"Hot");
+
+        /// <summary>
+        /// Cool
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier Cool = new AccessTier(@"Cool");
+
+        /// <summary>
+        /// Archive
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.AccessTier Archive = new AccessTier(@"Archive");
+
+        /// <summary>
+        /// Determines if two <see cref="AccessTier"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="AccessTier"/> to compare.</param>
+        /// <param name="right">The second <see cref="AccessTier"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
         public static bool operator ==(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => left.Equals(right);
 
         /// <summary>
-        /// Check if two AccessTier instances are not equal.
+        /// Determines if two <see cref="AccessTier"/> values are different.
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
+        /// <param name="left">The first <see cref="AccessTier"/> to compare.</param>
+        /// <param name="right">The second <see cref="AccessTier"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Blobs.Models.AccessTier left, Azure.Storage.Blobs.Models.AccessTier right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="AccessTier"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The AccessTier value.</returns>
+        public static implicit operator AccessTier(string value) => new Azure.Storage.Blobs.Models.AccessTier(value);
+
+        /// <summary>
+        /// Check if two <see cref="AccessTier"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Blobs.Models.AccessTier other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="AccessTier"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Blobs.Models.AccessTier other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="AccessTier"/>.
+        /// </summary>
+        /// <returns>Hash code for the AccessTier.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="AccessTier"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the AccessTier.</returns>
+        public override string ToString() => _value;
     }
 }
 #endregion enum strings AccessTier
@@ -13908,628 +13899,619 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Error codes returned by the service
     /// </summary>
-    public partial struct BlobErrorCode : System.IEquatable<BlobErrorCode>
+    public readonly struct BlobErrorCode : System.IEquatable<BlobErrorCode>
     {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// AccountAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountAlreadyExists { get; } = @"AccountAlreadyExists";
-
-        /// <summary>
-        /// AccountBeingCreated
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountBeingCreated { get; } = @"AccountBeingCreated";
-
-        /// <summary>
-        /// AccountIsDisabled
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountIsDisabled { get; } = @"AccountIsDisabled";
-
-        /// <summary>
-        /// AuthenticationFailed
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthenticationFailed { get; } = @"AuthenticationFailed";
-
-        /// <summary>
-        /// AuthorizationFailure
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationFailure { get; } = @"AuthorizationFailure";
-
-        /// <summary>
-        /// ConditionHeadersNotSupported
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionHeadersNotSupported { get; } = @"ConditionHeadersNotSupported";
-
-        /// <summary>
-        /// ConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionNotMet { get; } = @"ConditionNotMet";
-
-        /// <summary>
-        /// EmptyMetadataKey
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get; } = @"EmptyMetadataKey";
-
-        /// <summary>
-        /// InsufficientAccountPermissions
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InsufficientAccountPermissions { get; } = @"InsufficientAccountPermissions";
-
-        /// <summary>
-        /// InternalError
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InternalError { get; } = @"InternalError";
-
-        /// <summary>
-        /// InvalidAuthenticationInfo
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidAuthenticationInfo { get; } = @"InvalidAuthenticationInfo";
-
-        /// <summary>
-        /// InvalidHeaderValue
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHeaderValue { get; } = @"InvalidHeaderValue";
-
-        /// <summary>
-        /// InvalidHttpVerb
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHttpVerb { get; } = @"InvalidHttpVerb";
-
-        /// <summary>
-        /// InvalidInput
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidInput { get; } = @"InvalidInput";
-
-        /// <summary>
-        /// InvalidMd5
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMd5 { get; } = @"InvalidMd5";
-
-        /// <summary>
-        /// InvalidMetadata
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMetadata { get; } = @"InvalidMetadata";
-
-        /// <summary>
-        /// InvalidQueryParameterValue
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue { get; } = @"InvalidQueryParameterValue";
-
-        /// <summary>
-        /// InvalidRange
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange { get; } = @"InvalidRange";
-
-        /// <summary>
-        /// InvalidResourceName
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName { get; } = @"InvalidResourceName";
-
-        /// <summary>
-        /// InvalidUri
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidUri { get; } = @"InvalidUri";
-
-        /// <summary>
-        /// InvalidXmlDocument
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlDocument { get; } = @"InvalidXmlDocument";
-
-        /// <summary>
-        /// InvalidXmlNodeValue
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlNodeValue { get; } = @"InvalidXmlNodeValue";
-
-        /// <summary>
-        /// Md5Mismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode Md5Mismatch { get; } = @"Md5Mismatch";
-
-        /// <summary>
-        /// MetadataTooLarge
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MetadataTooLarge { get; } = @"MetadataTooLarge";
-
-        /// <summary>
-        /// MissingContentLengthHeader
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingContentLengthHeader { get; } = @"MissingContentLengthHeader";
-
-        /// <summary>
-        /// MissingRequiredQueryParameter
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter { get; } = @"MissingRequiredQueryParameter";
-
-        /// <summary>
-        /// MissingRequiredHeader
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredHeader { get; } = @"MissingRequiredHeader";
-
-        /// <summary>
-        /// MissingRequiredXmlNode
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode { get; } = @"MissingRequiredXmlNode";
-
-        /// <summary>
-        /// MultipleConditionHeadersNotSupported
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported { get; } = @"MultipleConditionHeadersNotSupported";
-
-        /// <summary>
-        /// OperationTimedOut
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut { get; } = @"OperationTimedOut";
-
-        /// <summary>
-        /// OutOfRangeInput
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeInput { get; } = @"OutOfRangeInput";
-
-        /// <summary>
-        /// OutOfRangeQueryParameterValue
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeQueryParameterValue { get; } = @"OutOfRangeQueryParameterValue";
-
-        /// <summary>
-        /// RequestBodyTooLarge
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestBodyTooLarge { get; } = @"RequestBodyTooLarge";
-
-        /// <summary>
-        /// ResourceTypeMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceTypeMismatch { get; } = @"ResourceTypeMismatch";
-
-        /// <summary>
-        /// RequestUrlFailedToParse
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestUrlFailedToParse { get; } = @"RequestUrlFailedToParse";
-
-        /// <summary>
-        /// ResourceAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceAlreadyExists { get; } = @"ResourceAlreadyExists";
-
-        /// <summary>
-        /// ResourceNotFound
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceNotFound { get; } = @"ResourceNotFound";
-
-        /// <summary>
-        /// ServerBusy
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy { get; } = @"ServerBusy";
-
-        /// <summary>
-        /// UnsupportedHeader
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHeader { get; } = @"UnsupportedHeader";
-
-        /// <summary>
-        /// UnsupportedXmlNode
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedXmlNode { get; } = @"UnsupportedXmlNode";
-
-        /// <summary>
-        /// UnsupportedQueryParameter
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedQueryParameter { get; } = @"UnsupportedQueryParameter";
-
-        /// <summary>
-        /// UnsupportedHttpVerb
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHttpVerb { get; } = @"UnsupportedHttpVerb";
-
-        /// <summary>
-        /// AppendPositionConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AppendPositionConditionNotMet { get; } = @"AppendPositionConditionNotMet";
-
-        /// <summary>
-        /// BlobAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists { get; } = @"BlobAlreadyExists";
-
-        /// <summary>
-        /// BlobNotFound
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound { get; } = @"BlobNotFound";
-
-        /// <summary>
-        /// BlobOverwritten
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten { get; } = @"BlobOverwritten";
-
-        /// <summary>
-        /// BlobTierInadequateForContentLength
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength { get; } = @"BlobTierInadequateForContentLength";
-
-        /// <summary>
-        /// BlockCountExceedsLimit
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit { get; } = @"BlockCountExceedsLimit";
-
-        /// <summary>
-        /// BlockListTooLong
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong { get; } = @"BlockListTooLong";
-
-        /// <summary>
-        /// CannotChangeToLowerTier
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier { get; } = @"CannotChangeToLowerTier";
-
-        /// <summary>
-        /// CannotVerifyCopySource
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotVerifyCopySource { get; } = @"CannotVerifyCopySource";
-
-        /// <summary>
-        /// ContainerAlreadyExists
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerAlreadyExists { get; } = @"ContainerAlreadyExists";
-
-        /// <summary>
-        /// ContainerBeingDeleted
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerBeingDeleted { get; } = @"ContainerBeingDeleted";
-
-        /// <summary>
-        /// ContainerDisabled
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerDisabled { get; } = @"ContainerDisabled";
-
-        /// <summary>
-        /// ContainerNotFound
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerNotFound { get; } = @"ContainerNotFound";
-
-        /// <summary>
-        /// ContentLengthLargerThanTierLimit
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContentLengthLargerThanTierLimit { get; } = @"ContentLengthLargerThanTierLimit";
-
-        /// <summary>
-        /// CopyAcrossAccountsNotSupported
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported { get; } = @"CopyAcrossAccountsNotSupported";
-
-        /// <summary>
-        /// CopyIdMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch { get; } = @"CopyIdMismatch";
-
-        /// <summary>
-        /// FeatureVersionMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get; } = @"FeatureVersionMismatch";
-
-        /// <summary>
-        /// IncrementalCopyBlobMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get; } = @"IncrementalCopyBlobMismatch";
-
-        /// <summary>
-        /// IncrementalCopyOfEralierVersionSnapshotNotAllowed
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = @"IncrementalCopyOfEralierVersionSnapshotNotAllowed";
-
-        /// <summary>
-        /// IncrementalCopySourceMustBeSnapshot
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot { get; } = @"IncrementalCopySourceMustBeSnapshot";
-
-        /// <summary>
-        /// InfiniteLeaseDurationRequired
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InfiniteLeaseDurationRequired { get; } = @"InfiniteLeaseDurationRequired";
-
-        /// <summary>
-        /// InvalidBlobOrBlock
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobOrBlock { get; } = @"InvalidBlobOrBlock";
-
-        /// <summary>
-        /// InvalidBlobTier
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobTier { get; } = @"InvalidBlobTier";
-
-        /// <summary>
-        /// InvalidBlobType
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobType { get; } = @"InvalidBlobType";
-
-        /// <summary>
-        /// InvalidBlockId
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockId { get; } = @"InvalidBlockId";
-
-        /// <summary>
-        /// InvalidBlockList
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockList { get; } = @"InvalidBlockList";
-
-        /// <summary>
-        /// InvalidOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidOperation { get; } = @"InvalidOperation";
-
-        /// <summary>
-        /// InvalidPageRange
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange { get; } = @"InvalidPageRange";
-
-        /// <summary>
-        /// InvalidSourceBlobType
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType { get; } = @"InvalidSourceBlobType";
-
-        /// <summary>
-        /// InvalidSourceBlobUrl
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl { get; } = @"InvalidSourceBlobUrl";
-
-        /// <summary>
-        /// InvalidVersionForPageBlobOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidVersionForPageBlobOperation { get; } = @"InvalidVersionForPageBlobOperation";
-
-        /// <summary>
-        /// LeaseAlreadyPresent
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyPresent { get; } = @"LeaseAlreadyPresent";
-
-        /// <summary>
-        /// LeaseAlreadyBroken
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyBroken { get; } = @"LeaseAlreadyBroken";
-
-        /// <summary>
-        /// LeaseIdMismatchWithBlobOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithBlobOperation { get; } = @"LeaseIdMismatchWithBlobOperation";
-
-        /// <summary>
-        /// LeaseIdMismatchWithContainerOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithContainerOperation { get; } = @"LeaseIdMismatchWithContainerOperation";
-
-        /// <summary>
-        /// LeaseIdMismatchWithLeaseOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithLeaseOperation { get; } = @"LeaseIdMismatchWithLeaseOperation";
-
-        /// <summary>
-        /// LeaseIdMissing
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMissing { get; } = @"LeaseIdMissing";
-
-        /// <summary>
-        /// LeaseIsBreakingAndCannotBeAcquired
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeAcquired { get; } = @"LeaseIsBreakingAndCannotBeAcquired";
-
-        /// <summary>
-        /// LeaseIsBreakingAndCannotBeChanged
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeChanged { get; } = @"LeaseIsBreakingAndCannotBeChanged";
-
-        /// <summary>
-        /// LeaseIsBrokenAndCannotBeRenewed
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBrokenAndCannotBeRenewed { get; } = @"LeaseIsBrokenAndCannotBeRenewed";
-
-        /// <summary>
-        /// LeaseLost
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseLost { get; } = @"LeaseLost";
-
-        /// <summary>
-        /// LeaseNotPresentWithBlobOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithBlobOperation { get; } = @"LeaseNotPresentWithBlobOperation";
-
-        /// <summary>
-        /// LeaseNotPresentWithContainerOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithContainerOperation { get; } = @"LeaseNotPresentWithContainerOperation";
-
-        /// <summary>
-        /// LeaseNotPresentWithLeaseOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithLeaseOperation { get; } = @"LeaseNotPresentWithLeaseOperation";
-
-        /// <summary>
-        /// MaxBlobSizeConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet { get; } = @"MaxBlobSizeConditionNotMet";
-
-        /// <summary>
-        /// NoPendingCopyOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { get; } = @"NoPendingCopyOperation";
-
-        /// <summary>
-        /// OperationNotAllowedOnIncrementalCopyBlob
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob { get; } = @"OperationNotAllowedOnIncrementalCopyBlob";
-
-        /// <summary>
-        /// PendingCopyOperation
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PendingCopyOperation { get; } = @"PendingCopyOperation";
-
-        /// <summary>
-        /// PreviousSnapshotCannotBeNewer
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotCannotBeNewer { get; } = @"PreviousSnapshotCannotBeNewer";
-
-        /// <summary>
-        /// PreviousSnapshotNotFound
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotNotFound { get; } = @"PreviousSnapshotNotFound";
-
-        /// <summary>
-        /// PreviousSnapshotOperationNotSupported
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotOperationNotSupported { get; } = @"PreviousSnapshotOperationNotSupported";
-
-        /// <summary>
-        /// SequenceNumberConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet { get; } = @"SequenceNumberConditionNotMet";
-
-        /// <summary>
-        /// SequenceNumberIncrementTooLarge
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge { get; } = @"SequenceNumberIncrementTooLarge";
-
-        /// <summary>
-        /// SnapshotCountExceeded
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded { get; } = @"SnapshotCountExceeded";
-
-        /// <summary>
-        /// SnaphotOperationRateExceeded
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded { get; } = @"SnaphotOperationRateExceeded";
-
-        /// <summary>
-        /// SnapshotsPresent
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent { get; } = @"SnapshotsPresent";
-
-        /// <summary>
-        /// SourceConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SourceConditionNotMet { get; } = @"SourceConditionNotMet";
-
-        /// <summary>
-        /// SystemInUse
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SystemInUse { get; } = @"SystemInUse";
-
-        /// <summary>
-        /// TargetConditionNotMet
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode TargetConditionNotMet { get; } = @"TargetConditionNotMet";
-
-        /// <summary>
-        /// UnauthorizedBlobOverwrite
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnauthorizedBlobOverwrite { get; } = @"UnauthorizedBlobOverwrite";
-
-        /// <summary>
-        /// BlobBeingRehydrated
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated { get; } = @"BlobBeingRehydrated";
-
-        /// <summary>
-        /// BlobArchived
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived { get; } = @"BlobArchived";
-
-        /// <summary>
-        /// BlobNotArchived
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived { get; } = @"BlobNotArchived";
-
-        /// <summary>
-        /// AuthorizationSourceIPMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationSourceIPMismatch { get; } = @"AuthorizationSourceIPMismatch";
-
-        /// <summary>
-        /// AuthorizationProtocolMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationProtocolMismatch { get; } = @"AuthorizationProtocolMismatch";
-
-        /// <summary>
-        /// AuthorizationPermissionMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationPermissionMismatch { get; } = @"AuthorizationPermissionMismatch";
-
-        /// <summary>
-        /// AuthorizationServiceMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationServiceMismatch { get; } = @"AuthorizationServiceMismatch";
-
-        /// <summary>
-        /// AuthorizationResourceTypeMismatch
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch { get; } = @"AuthorizationResourceTypeMismatch";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
         /// <summary>
         /// The BlobErrorCode value.
         /// </summary>
         private readonly string _value;
 
         /// <summary>
-        /// Creates a new BlobErrorCode instance.
+        /// Initializes a new instance of the <see cref="BlobErrorCode"/> structure.
         /// </summary>
-        /// <param name="value">The BlobErrorCode value.</param>
-        private BlobErrorCode(string value) { _value = value; }
+        /// <param name="value">The string value of the instance.</param>
+        public BlobErrorCode(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
 
         /// <summary>
-        /// Check if two BlobErrorCode instances are equal.
+        /// AccountAlreadyExists
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.BlobErrorCode other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AccountAlreadyExists = new BlobErrorCode(@"AccountAlreadyExists");
 
         /// <summary>
-        /// Check if two BlobErrorCode instances are equal.
+        /// AccountBeingCreated
         /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.BlobErrorCode other && Equals(other);
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AccountBeingCreated = new BlobErrorCode(@"AccountBeingCreated");
 
         /// <summary>
-        /// Get a hash code for the BlobErrorCode.
+        /// AccountIsDisabled
         /// </summary>
-        /// <returns>Hash code for the BlobErrorCode.</returns>
-        public override int GetHashCode() => _value.GetHashCode();
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AccountIsDisabled = new BlobErrorCode(@"AccountIsDisabled");
 
         /// <summary>
-        /// Convert the BlobErrorCode to a string.
+        /// AuthenticationFailed
         /// </summary>
-        /// <returns>String representation of the BlobErrorCode.</returns>
-        public override string ToString() => _value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a BlobErrorCode.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The BlobErrorCode value.</returns>
-        public static implicit operator BlobErrorCode(string value) => new Azure.Storage.Blobs.Models.BlobErrorCode(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthenticationFailed = new BlobErrorCode(@"AuthenticationFailed");
 
         /// <summary>
-        /// Convert an BlobErrorCode to a string.
+        /// AuthorizationFailure
         /// </summary>
-        /// <param name="value">The BlobErrorCode value.</param>
-        /// <returns>String representation of the BlobErrorCode value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode value) => value._value;
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationFailure = new BlobErrorCode(@"AuthorizationFailure");
 
         /// <summary>
-        /// Check if two BlobErrorCode instances are equal.
+        /// ConditionHeadersNotSupported
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ConditionHeadersNotSupported = new BlobErrorCode(@"ConditionHeadersNotSupported");
+
+        /// <summary>
+        /// ConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ConditionNotMet = new BlobErrorCode(@"ConditionNotMet");
+
+        /// <summary>
+        /// EmptyMetadataKey
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey = new BlobErrorCode(@"EmptyMetadataKey");
+
+        /// <summary>
+        /// InsufficientAccountPermissions
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InsufficientAccountPermissions = new BlobErrorCode(@"InsufficientAccountPermissions");
+
+        /// <summary>
+        /// InternalError
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InternalError = new BlobErrorCode(@"InternalError");
+
+        /// <summary>
+        /// InvalidAuthenticationInfo
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidAuthenticationInfo = new BlobErrorCode(@"InvalidAuthenticationInfo");
+
+        /// <summary>
+        /// InvalidHeaderValue
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidHeaderValue = new BlobErrorCode(@"InvalidHeaderValue");
+
+        /// <summary>
+        /// InvalidHttpVerb
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidHttpVerb = new BlobErrorCode(@"InvalidHttpVerb");
+
+        /// <summary>
+        /// InvalidInput
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidInput = new BlobErrorCode(@"InvalidInput");
+
+        /// <summary>
+        /// InvalidMd5
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidMd5 = new BlobErrorCode(@"InvalidMd5");
+
+        /// <summary>
+        /// InvalidMetadata
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidMetadata = new BlobErrorCode(@"InvalidMetadata");
+
+        /// <summary>
+        /// InvalidQueryParameterValue
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue = new BlobErrorCode(@"InvalidQueryParameterValue");
+
+        /// <summary>
+        /// InvalidRange
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange = new BlobErrorCode(@"InvalidRange");
+
+        /// <summary>
+        /// InvalidResourceName
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName = new BlobErrorCode(@"InvalidResourceName");
+
+        /// <summary>
+        /// InvalidUri
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidUri = new BlobErrorCode(@"InvalidUri");
+
+        /// <summary>
+        /// InvalidXmlDocument
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlDocument = new BlobErrorCode(@"InvalidXmlDocument");
+
+        /// <summary>
+        /// InvalidXmlNodeValue
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlNodeValue = new BlobErrorCode(@"InvalidXmlNodeValue");
+
+        /// <summary>
+        /// Md5Mismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode Md5Mismatch = new BlobErrorCode(@"Md5Mismatch");
+
+        /// <summary>
+        /// MetadataTooLarge
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MetadataTooLarge = new BlobErrorCode(@"MetadataTooLarge");
+
+        /// <summary>
+        /// MissingContentLengthHeader
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MissingContentLengthHeader = new BlobErrorCode(@"MissingContentLengthHeader");
+
+        /// <summary>
+        /// MissingRequiredQueryParameter
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter = new BlobErrorCode(@"MissingRequiredQueryParameter");
+
+        /// <summary>
+        /// MissingRequiredHeader
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredHeader = new BlobErrorCode(@"MissingRequiredHeader");
+
+        /// <summary>
+        /// MissingRequiredXmlNode
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode = new BlobErrorCode(@"MissingRequiredXmlNode");
+
+        /// <summary>
+        /// MultipleConditionHeadersNotSupported
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported = new BlobErrorCode(@"MultipleConditionHeadersNotSupported");
+
+        /// <summary>
+        /// OperationTimedOut
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut = new BlobErrorCode(@"OperationTimedOut");
+
+        /// <summary>
+        /// OutOfRangeInput
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeInput = new BlobErrorCode(@"OutOfRangeInput");
+
+        /// <summary>
+        /// OutOfRangeQueryParameterValue
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeQueryParameterValue = new BlobErrorCode(@"OutOfRangeQueryParameterValue");
+
+        /// <summary>
+        /// RequestBodyTooLarge
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode RequestBodyTooLarge = new BlobErrorCode(@"RequestBodyTooLarge");
+
+        /// <summary>
+        /// ResourceTypeMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ResourceTypeMismatch = new BlobErrorCode(@"ResourceTypeMismatch");
+
+        /// <summary>
+        /// RequestUrlFailedToParse
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode RequestUrlFailedToParse = new BlobErrorCode(@"RequestUrlFailedToParse");
+
+        /// <summary>
+        /// ResourceAlreadyExists
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ResourceAlreadyExists = new BlobErrorCode(@"ResourceAlreadyExists");
+
+        /// <summary>
+        /// ResourceNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ResourceNotFound = new BlobErrorCode(@"ResourceNotFound");
+
+        /// <summary>
+        /// ServerBusy
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy = new BlobErrorCode(@"ServerBusy");
+
+        /// <summary>
+        /// UnsupportedHeader
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHeader = new BlobErrorCode(@"UnsupportedHeader");
+
+        /// <summary>
+        /// UnsupportedXmlNode
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedXmlNode = new BlobErrorCode(@"UnsupportedXmlNode");
+
+        /// <summary>
+        /// UnsupportedQueryParameter
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedQueryParameter = new BlobErrorCode(@"UnsupportedQueryParameter");
+
+        /// <summary>
+        /// UnsupportedHttpVerb
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHttpVerb = new BlobErrorCode(@"UnsupportedHttpVerb");
+
+        /// <summary>
+        /// AppendPositionConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AppendPositionConditionNotMet = new BlobErrorCode(@"AppendPositionConditionNotMet");
+
+        /// <summary>
+        /// BlobAlreadyExists
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists = new BlobErrorCode(@"BlobAlreadyExists");
+
+        /// <summary>
+        /// BlobNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound = new BlobErrorCode(@"BlobNotFound");
+
+        /// <summary>
+        /// BlobOverwritten
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten = new BlobErrorCode(@"BlobOverwritten");
+
+        /// <summary>
+        /// BlobTierInadequateForContentLength
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength = new BlobErrorCode(@"BlobTierInadequateForContentLength");
+
+        /// <summary>
+        /// BlockCountExceedsLimit
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit = new BlobErrorCode(@"BlockCountExceedsLimit");
+
+        /// <summary>
+        /// BlockListTooLong
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong = new BlobErrorCode(@"BlockListTooLong");
+
+        /// <summary>
+        /// CannotChangeToLowerTier
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier = new BlobErrorCode(@"CannotChangeToLowerTier");
+
+        /// <summary>
+        /// CannotVerifyCopySource
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode CannotVerifyCopySource = new BlobErrorCode(@"CannotVerifyCopySource");
+
+        /// <summary>
+        /// ContainerAlreadyExists
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ContainerAlreadyExists = new BlobErrorCode(@"ContainerAlreadyExists");
+
+        /// <summary>
+        /// ContainerBeingDeleted
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ContainerBeingDeleted = new BlobErrorCode(@"ContainerBeingDeleted");
+
+        /// <summary>
+        /// ContainerDisabled
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ContainerDisabled = new BlobErrorCode(@"ContainerDisabled");
+
+        /// <summary>
+        /// ContainerNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ContainerNotFound = new BlobErrorCode(@"ContainerNotFound");
+
+        /// <summary>
+        /// ContentLengthLargerThanTierLimit
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode ContentLengthLargerThanTierLimit = new BlobErrorCode(@"ContentLengthLargerThanTierLimit");
+
+        /// <summary>
+        /// CopyAcrossAccountsNotSupported
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported = new BlobErrorCode(@"CopyAcrossAccountsNotSupported");
+
+        /// <summary>
+        /// CopyIdMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch = new BlobErrorCode(@"CopyIdMismatch");
+
+        /// <summary>
+        /// FeatureVersionMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch = new BlobErrorCode(@"FeatureVersionMismatch");
+
+        /// <summary>
+        /// IncrementalCopyBlobMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch = new BlobErrorCode(@"IncrementalCopyBlobMismatch");
+
+        /// <summary>
+        /// IncrementalCopyOfEralierVersionSnapshotNotAllowed
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed = new BlobErrorCode(@"IncrementalCopyOfEralierVersionSnapshotNotAllowed");
+
+        /// <summary>
+        /// IncrementalCopySourceMustBeSnapshot
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot = new BlobErrorCode(@"IncrementalCopySourceMustBeSnapshot");
+
+        /// <summary>
+        /// InfiniteLeaseDurationRequired
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InfiniteLeaseDurationRequired = new BlobErrorCode(@"InfiniteLeaseDurationRequired");
+
+        /// <summary>
+        /// InvalidBlobOrBlock
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobOrBlock = new BlobErrorCode(@"InvalidBlobOrBlock");
+
+        /// <summary>
+        /// InvalidBlobTier
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobTier = new BlobErrorCode(@"InvalidBlobTier");
+
+        /// <summary>
+        /// InvalidBlobType
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobType = new BlobErrorCode(@"InvalidBlobType");
+
+        /// <summary>
+        /// InvalidBlockId
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockId = new BlobErrorCode(@"InvalidBlockId");
+
+        /// <summary>
+        /// InvalidBlockList
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockList = new BlobErrorCode(@"InvalidBlockList");
+
+        /// <summary>
+        /// InvalidOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidOperation = new BlobErrorCode(@"InvalidOperation");
+
+        /// <summary>
+        /// InvalidPageRange
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange = new BlobErrorCode(@"InvalidPageRange");
+
+        /// <summary>
+        /// InvalidSourceBlobType
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType = new BlobErrorCode(@"InvalidSourceBlobType");
+
+        /// <summary>
+        /// InvalidSourceBlobUrl
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl = new BlobErrorCode(@"InvalidSourceBlobUrl");
+
+        /// <summary>
+        /// InvalidVersionForPageBlobOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode InvalidVersionForPageBlobOperation = new BlobErrorCode(@"InvalidVersionForPageBlobOperation");
+
+        /// <summary>
+        /// LeaseAlreadyPresent
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyPresent = new BlobErrorCode(@"LeaseAlreadyPresent");
+
+        /// <summary>
+        /// LeaseAlreadyBroken
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyBroken = new BlobErrorCode(@"LeaseAlreadyBroken");
+
+        /// <summary>
+        /// LeaseIdMismatchWithBlobOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithBlobOperation = new BlobErrorCode(@"LeaseIdMismatchWithBlobOperation");
+
+        /// <summary>
+        /// LeaseIdMismatchWithContainerOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithContainerOperation = new BlobErrorCode(@"LeaseIdMismatchWithContainerOperation");
+
+        /// <summary>
+        /// LeaseIdMismatchWithLeaseOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithLeaseOperation = new BlobErrorCode(@"LeaseIdMismatchWithLeaseOperation");
+
+        /// <summary>
+        /// LeaseIdMissing
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMissing = new BlobErrorCode(@"LeaseIdMissing");
+
+        /// <summary>
+        /// LeaseIsBreakingAndCannotBeAcquired
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeAcquired = new BlobErrorCode(@"LeaseIsBreakingAndCannotBeAcquired");
+
+        /// <summary>
+        /// LeaseIsBreakingAndCannotBeChanged
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeChanged = new BlobErrorCode(@"LeaseIsBreakingAndCannotBeChanged");
+
+        /// <summary>
+        /// LeaseIsBrokenAndCannotBeRenewed
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBrokenAndCannotBeRenewed = new BlobErrorCode(@"LeaseIsBrokenAndCannotBeRenewed");
+
+        /// <summary>
+        /// LeaseLost
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseLost = new BlobErrorCode(@"LeaseLost");
+
+        /// <summary>
+        /// LeaseNotPresentWithBlobOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithBlobOperation = new BlobErrorCode(@"LeaseNotPresentWithBlobOperation");
+
+        /// <summary>
+        /// LeaseNotPresentWithContainerOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithContainerOperation = new BlobErrorCode(@"LeaseNotPresentWithContainerOperation");
+
+        /// <summary>
+        /// LeaseNotPresentWithLeaseOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithLeaseOperation = new BlobErrorCode(@"LeaseNotPresentWithLeaseOperation");
+
+        /// <summary>
+        /// MaxBlobSizeConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet = new BlobErrorCode(@"MaxBlobSizeConditionNotMet");
+
+        /// <summary>
+        /// NoPendingCopyOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation = new BlobErrorCode(@"NoPendingCopyOperation");
+
+        /// <summary>
+        /// OperationNotAllowedOnIncrementalCopyBlob
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob = new BlobErrorCode(@"OperationNotAllowedOnIncrementalCopyBlob");
+
+        /// <summary>
+        /// PendingCopyOperation
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode PendingCopyOperation = new BlobErrorCode(@"PendingCopyOperation");
+
+        /// <summary>
+        /// PreviousSnapshotCannotBeNewer
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotCannotBeNewer = new BlobErrorCode(@"PreviousSnapshotCannotBeNewer");
+
+        /// <summary>
+        /// PreviousSnapshotNotFound
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotNotFound = new BlobErrorCode(@"PreviousSnapshotNotFound");
+
+        /// <summary>
+        /// PreviousSnapshotOperationNotSupported
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotOperationNotSupported = new BlobErrorCode(@"PreviousSnapshotOperationNotSupported");
+
+        /// <summary>
+        /// SequenceNumberConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet = new BlobErrorCode(@"SequenceNumberConditionNotMet");
+
+        /// <summary>
+        /// SequenceNumberIncrementTooLarge
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge = new BlobErrorCode(@"SequenceNumberIncrementTooLarge");
+
+        /// <summary>
+        /// SnapshotCountExceeded
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded = new BlobErrorCode(@"SnapshotCountExceeded");
+
+        /// <summary>
+        /// SnaphotOperationRateExceeded
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded = new BlobErrorCode(@"SnaphotOperationRateExceeded");
+
+        /// <summary>
+        /// SnapshotsPresent
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent = new BlobErrorCode(@"SnapshotsPresent");
+
+        /// <summary>
+        /// SourceConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SourceConditionNotMet = new BlobErrorCode(@"SourceConditionNotMet");
+
+        /// <summary>
+        /// SystemInUse
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode SystemInUse = new BlobErrorCode(@"SystemInUse");
+
+        /// <summary>
+        /// TargetConditionNotMet
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode TargetConditionNotMet = new BlobErrorCode(@"TargetConditionNotMet");
+
+        /// <summary>
+        /// UnauthorizedBlobOverwrite
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode UnauthorizedBlobOverwrite = new BlobErrorCode(@"UnauthorizedBlobOverwrite");
+
+        /// <summary>
+        /// BlobBeingRehydrated
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated = new BlobErrorCode(@"BlobBeingRehydrated");
+
+        /// <summary>
+        /// BlobArchived
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived = new BlobErrorCode(@"BlobArchived");
+
+        /// <summary>
+        /// BlobNotArchived
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived = new BlobErrorCode(@"BlobNotArchived");
+
+        /// <summary>
+        /// AuthorizationSourceIPMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationSourceIPMismatch = new BlobErrorCode(@"AuthorizationSourceIPMismatch");
+
+        /// <summary>
+        /// AuthorizationProtocolMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationProtocolMismatch = new BlobErrorCode(@"AuthorizationProtocolMismatch");
+
+        /// <summary>
+        /// AuthorizationPermissionMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationPermissionMismatch = new BlobErrorCode(@"AuthorizationPermissionMismatch");
+
+        /// <summary>
+        /// AuthorizationServiceMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationServiceMismatch = new BlobErrorCode(@"AuthorizationServiceMismatch");
+
+        /// <summary>
+        /// AuthorizationResourceTypeMismatch
+        /// </summary>
+        public static readonly Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch = new BlobErrorCode(@"AuthorizationResourceTypeMismatch");
+
+        /// <summary>
+        /// Determines if two <see cref="BlobErrorCode"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="BlobErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="BlobErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
         public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => left.Equals(right);
 
         /// <summary>
-        /// Check if two BlobErrorCode instances are not equal.
+        /// Determines if two <see cref="BlobErrorCode"/> values are different.
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
+        /// <param name="left">The first <see cref="BlobErrorCode"/> to compare.</param>
+        /// <param name="right">The second <see cref="BlobErrorCode"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
         public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="BlobErrorCode"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The BlobErrorCode value.</returns>
+        public static implicit operator BlobErrorCode(string value) => new Azure.Storage.Blobs.Models.BlobErrorCode(value);
+
+        /// <summary>
+        /// Check if two <see cref="BlobErrorCode"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Blobs.Models.BlobErrorCode other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="BlobErrorCode"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Blobs.Models.BlobErrorCode other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="BlobErrorCode"/>.
+        /// </summary>
+        /// <returns>Hash code for the BlobErrorCode.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="BlobErrorCode"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the BlobErrorCode.</returns>
+        public override string ToString() => _value;
     }
 }
 #endregion enum strings BlobErrorCode
