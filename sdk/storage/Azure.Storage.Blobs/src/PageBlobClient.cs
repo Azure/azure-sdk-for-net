@@ -1221,7 +1221,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.GetPageRangesAsync(
+                    Response<PageRangesInfoInternal> response =  await BlobRestClient.PageBlob.GetPageRangesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1236,6 +1236,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: Constants.Blob.Page.GetPageRangesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    return Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1423,7 +1424,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
+                    Response<PageRangesInfoInternal> response = await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1439,6 +1440,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: Constants.Blob.Page.GetPageRangesDiffOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    return Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

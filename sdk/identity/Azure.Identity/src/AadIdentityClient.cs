@@ -178,7 +178,7 @@ namespace Azure.Identity
 
             request.Uri.AppendPath(tenantId);
 
-            request.Uri.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token", escape: false);
 
             var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
 
@@ -201,7 +201,7 @@ namespace Azure.Identity
 
             request.Uri.AppendPath(tenantId);
 
-            request.Uri.AppendPath("/oauth2/v2.0/token");
+            request.Uri.AppendPath("/oauth2/v2.0/token", escape: false);
 
             string clientAssertion = CreateClientAssertionJWT(clientId, request.Uri.ToString(), clientCertficate);
 

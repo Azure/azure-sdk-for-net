@@ -352,10 +352,12 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;
                 useParameter(query, value => {
-                    if (!query.skipUrlEncoding && !constant) {
-                        value = `System.Uri.EscapeDataString(${value})`
+                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value}`);
+                    if (query.skipUrlEncoding || constant) {
+                        w.write(`, escapeValue: false`);
                     }
-                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value});`);
+
+                    w.write(`);`);
                 });
             }
         }

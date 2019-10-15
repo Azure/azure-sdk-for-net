@@ -371,11 +371,11 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", resource);
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", clientId);
             }
 
             return request;
@@ -396,11 +396,11 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
 
-            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", resource);
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", clientId);
             }
 
             return request;

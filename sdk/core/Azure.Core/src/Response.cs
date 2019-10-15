@@ -25,7 +25,7 @@ namespace Azure
 
         protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
 
-        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
+        protected internal abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
 
         protected internal abstract bool ContainsHeader(string name);
 

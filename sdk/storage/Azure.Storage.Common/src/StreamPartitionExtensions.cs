@@ -29,7 +29,7 @@ namespace Azure.Storage.Common
         {
             var destinationOffset = destination.Position;
 
-            await foreach (StreamPartition partition in partitions)
+            await foreach (StreamPartition partition in partitions.ConfigureAwait(false))
             {
                 if (async)
                 {

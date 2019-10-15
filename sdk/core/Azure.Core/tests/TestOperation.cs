@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Tests.TestFramework
 {
-    public sealed class TestOperation<T> : Operation<T>
+    internal sealed class TestOperation<T> : Operation<T> where T: struct
     {
         private TimeSpan _after;
         private readonly T _finalResult;
@@ -16,22 +16,25 @@ namespace Azure.Core.Tests.TestFramework
         private bool _completed;
         private DateTimeOffset _started;
 
-        public override bool HasCompleted => _completed;
+        private T? _value;
+        private Response _rawResponse;
 
+        public override string Id { get; }
+        public override bool HasCompleted => _completed;
         public override bool HasValue => _completed;
+        public override Response GetRawResponse() => _rawResponse;
+        public override T Value => OperationHelpers.GetValue(ref _value);
 
         public Action UpdateCalled { get; set; }
 
         internal TestOperation(string id, TimeSpan after, T finalResult, Response finalResponse)
-            : base(id)
         {
+            Id = id;
             _after = after;
             _finalResult = finalResult;
             _finalResponse = finalResponse;
             _started = DateTimeOffset.UtcNow;
         }
-
-        protected override TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromMilliseconds(1);
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
@@ -46,10 +49,16 @@ namespace Azure.Core.Tests.TestFramework
             if (DateTimeOffset.UtcNow - _started > _after)
             {
                 _completed = true;
-                Value = _finalResult;
-                SetRawResponse(_finalResponse);
+                _value = _finalResult;
+                _rawResponse = _finalResponse;
             }
             return null;
         }
+
+        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(cancellationToken);
+
+        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }
