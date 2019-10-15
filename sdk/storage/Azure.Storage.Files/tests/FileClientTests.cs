@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.Test
             var builder3 = new FileUriBuilder(uri3);
             var fileClient3 = new FileClient(uri3);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient3.Name);
-            TestHelper.AssertCacheableProperty("dir1/file.txt/", () => fileClient3.Path);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient3.Path);
             Assert.AreEqual("file.txt", builder3.LastDirectoryOrFileName);
 
             // no directories
