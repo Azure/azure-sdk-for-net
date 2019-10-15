@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
                 AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
-                Assert.AreEqual(BlobType.PageBlob, getPropertiesResponse.Value.BlobType);
+                Assert.AreEqual(BlobType.Page, getPropertiesResponse.Value.BlobType);
             }
         }
 

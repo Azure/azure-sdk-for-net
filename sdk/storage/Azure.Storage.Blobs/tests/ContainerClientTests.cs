@@ -1607,7 +1607,7 @@ namespace Azure.Storage.Blobs.Test
                 using var stream = new MemoryStream(GetRandomBuffer(100));
                 await container.UploadBlobAsync(name, stream);
                 Response<BlobProperties> properties = await InstrumentClient(container.GetBlobClient(name)).GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 

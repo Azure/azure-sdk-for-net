@@ -1120,6 +1120,20 @@ directive:
   transform: $.required.push("PublicAccess");
   ```
 
+  ### Remove `Blob` suffix in BlobType enum values
+``` yaml
+directive:
+- from: swagger-document
+  where:
+    - $.definitions.BlobItemProperties.properties.BlobType
+    - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["200"].headers["x-ms-blob-type"]
+    - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["206"].headers["x-ms-blob-type"]
+    - $["x-ms-paths"]["/{containerName}/{blob}"].head.responses["200"].headers["x-ms-blob-type"]
+  transform: >
+    $.enum = [ "Block", "Page", "Append" ];
+    $["x-ms-enum"].values = [ { name: "Block", value: "BlockBlob" }, { name: "Page", value: "PageBlob" }, { name: "Append", value: "AppendBlob" }];
+  ```
+
 ### Make lease duration/break period a long
 Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
 type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
