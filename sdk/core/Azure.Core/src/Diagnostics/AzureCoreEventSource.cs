@@ -16,6 +16,7 @@ namespace Azure.Core.Diagnostics
         private const int RequestContentTextEvent = 17;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
+        private const int RequestDelayEvent = 7;
         private const int ResponseContentTextEvent = 13;
         private const int ResponseContentBlockEvent = 11;
         private const int ResponseContentTextBlockEvent = 15;
@@ -112,6 +113,12 @@ namespace Azure.Core.Diagnostics
         public void RequestRetrying(string requestId, int retryNumber)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber);
+        }
+
+        [Event(RequestDelayEvent, Level = EventLevel.Warning, Message = "Request [{0}] took {1:00.0}s")]
+        public void ResponseDelay(string requestId, double seconds)
+        {
+            WriteEvent(RequestDelayEvent, requestId, seconds);
         }
     }
 }

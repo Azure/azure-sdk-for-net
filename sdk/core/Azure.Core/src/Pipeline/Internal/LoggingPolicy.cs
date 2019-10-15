@@ -28,6 +28,7 @@ namespace Azure.Core.Pipeline
 
         private const string LogAllValue = "*";
         private const string RedactedPlaceholder = "REDACTED";
+        private const double RequestTooLongTime = 3.0; // sec
 
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
@@ -115,6 +116,11 @@ namespace Azure.Core.Pipeline
             else
             {
                 await logWrapper.LogAsync(response.ClientRequestId, isError, response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
+            }
+
+            if (elapsed > RequestTooLongTime)
+            {
+                s_eventSource.ResponseDelay(response.ClientRequestId, elapsed);
             }
         }
 
