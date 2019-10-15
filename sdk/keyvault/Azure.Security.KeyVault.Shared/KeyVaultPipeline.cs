@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path);
+            firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             return firstPage.ToUri();
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path);
+            firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             foreach ((string, string) tuple in queryParams)
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault
 
             foreach (var p in path)
             {
-                request.Uri.AppendPath(p);
+                request.Uri.AppendPath(p, escape: false);
             }
 
             request.Uri.AppendQuery("api-version", ApiVersion);
