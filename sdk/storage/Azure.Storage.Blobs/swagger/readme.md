@@ -297,7 +297,7 @@ directive:
   transform: >
     $.put.responses["201"].description = "The lease operation completed successfully.";
     $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
-    $.put.responses["201"]["x-az-response-name"] = "Lease";
+    $.put.responses["201"]["x-az-response-name"] = "BlobLease";
 ```
 
 ### /{containerName}?comp=lease&restype=container&release
@@ -318,7 +318,7 @@ directive:
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
 ```
 
 ### /{containerName}?comp=lease&restype=container&break
@@ -339,7 +339,7 @@ directive:
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
 ```
 
 ### /{containerName}?restype=container&comp=list&flat
@@ -605,7 +605,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=lease&acquire"]
   transform: >
-    $.put.responses["201"]["x-az-response-name"] = "Lease";
+    $.put.responses["201"]["x-az-response-name"] = "BlobLease";
     $.put.responses["201"].description = "The lease operation completed successfully.";
     $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
@@ -626,7 +626,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=lease&renew"]
   transform: >
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
@@ -637,7 +637,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=lease&change"]
   transform: >
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
