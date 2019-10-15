@@ -320,8 +320,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.StorageHandle) {
-        $.StorageHandle = $.HandleItem;
+    if (!$.StorageFileHandle) {
+        $.StorageFileHandle = $.HandleItem;
         delete $.HandleItem;
     }
     if (!$.StorageHandlesSegment) {
@@ -331,7 +331,7 @@ directive:
         const path = $.StorageHandlesSegment.properties.HandleList.items.$ref.replace(/[#].*$/, "#/definitions/");
         $.StorageHandlesSegment.properties.Handles = {
             "type": "array",
-            "items": { "$ref": path + "StorageHandle" },
+            "items": { "$ref": path + "StorageFileHandle" },
             "xml": { "name": "Entries", "wrapped": true }
         };
         delete $.StorageHandlesSegment.properties.HandleList;

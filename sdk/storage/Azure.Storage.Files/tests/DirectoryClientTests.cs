@@ -501,7 +501,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                IList<StorageHandle> handles = await directory.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await directory.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);

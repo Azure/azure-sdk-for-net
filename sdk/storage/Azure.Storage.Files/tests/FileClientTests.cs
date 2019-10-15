@@ -1108,7 +1108,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                IList<StorageHandle> handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
@@ -1122,7 +1122,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                IList<StorageHandle> handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
