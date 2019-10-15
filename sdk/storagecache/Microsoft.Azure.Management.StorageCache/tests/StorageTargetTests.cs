@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 Assert.Equal(id, storageTarget.Id, ignoreCase: true);
                 Assert.Equal("clfs", storageTarget.TargetType);
                 Assert.Equal(clfsTarget, storageTarget.Clfs.Target);
-                Assert.Equal("/" + this.fixture.ResourceGroup.Name, storageTarget.Junctions[0].NamespacePath);
+                Assert.Equal("/junction", storageTarget.Junctions[0].NamespacePath);
                 Assert.Equal("/", storageTarget.Junctions[0].TargetPath);
             }
         }
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageTarget = this.AddClfsStorageAccount(context, "4");
-                this.fixture.CacheHelper.DeleteStorageTarget(this.fixture.Cache.Name, storageTarget.Name);
+                this.fixture.CacheHelper.DeleteStorageTarget(this.fixture.Cache.Name, storageTarget.Name, this.testOutputHelper);
                 TestUtilities.Wait(new TimeSpan(0, 0, 60));
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.fixture.CacheHelper.GetstorageTarget(this.fixture.Cache.Name, storageTarget.Name, true));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                     storageAccount.Name,
                     blobContainer.Name,
-                    "");
+                    string.Empty);
                 storageTargetParameters.Junctions = new List<NamespaceJunction>() { };
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
                 Assert.Contains("InvalidParameter", ex.Body.Error.Code);
-                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+                Assert.Equal("storageTarget.junctions", ex.Body.Error.Target);
             }
         }
 
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
                 Assert.Contains("InvalidParameter", ex.Body.Error.Code);
-                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+                Assert.Equal("storageTarget.junctions.namespacePath", ex.Body.Error.Target);
             }
         }
 
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             string storageAccountName = prefix;
             string blobContainerName = "bc-" + prefix;
             string storageTargetName = "st-" + prefix;
-            string junction = prefix;
+            string junction = "/junction" + suffix;
             var storageAccount = storageAccountsHelper.CreateStorageAccount(storageAccountName);
             var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, blobContainerName);
             StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
