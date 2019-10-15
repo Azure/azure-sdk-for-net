@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -87,7 +86,7 @@ namespace Azure.Core.Tests
                 request.Uri.Reset(new Uri("https://contoso.a.io/api-version=5"));
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
-                request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
             });
 
@@ -138,12 +137,12 @@ namespace Azure.Core.Tests
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
-                request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(ErrorResponseEvent);
-            Assert.AreEqual(EventLevel.Error, e.Level);
+            Assert.AreEqual(EventLevel.Warning, e.Level);
             Assert.AreEqual("ErrorResponse", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 500);
@@ -169,7 +168,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
             });
@@ -198,7 +197,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
             });
 
@@ -219,7 +218,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
             });
 
             AssertNoContentLogged();
@@ -240,7 +239,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
             });
 
             AssertNoContentLogged();
@@ -430,7 +429,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
+                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
             });
@@ -486,7 +485,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Headers.Add("Secret-Custom-Header", "Value");
-                request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
             });
 
@@ -529,7 +528,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Headers.Add("Secret-Custom-Header", "Value");
-                request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
             });
 

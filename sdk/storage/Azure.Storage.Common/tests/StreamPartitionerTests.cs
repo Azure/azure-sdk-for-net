@@ -8,10 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     [TestFixture]
     public class StreamPartitionerTests
@@ -133,7 +132,7 @@ namespace Azure.Storage.Common.Test
                         }
                     }
 
-                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
+                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Storage.Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
                 }
                 while (true);
             }
@@ -144,8 +143,8 @@ namespace Azure.Storage.Common.Test
             //logger.LogInformation($"{nameof(memoryStart)} = {memoryStart}; {nameof(memoryEnd)} = {memoryEnd}");
             //logger.LogInformation($"delta = {memoryEnd - memoryStart}");
 
-            Assert.AreEqual(Math.Ceiling(1d * length / Constants.DefaultBufferSize), buffersRead);
-            Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
+            Assert.AreEqual(Math.Ceiling(1d * length / Storage.Constants.DefaultBufferSize), buffersRead);
+            Assert.IsTrue(memoryEnd - memoryStart < 8 * Storage.Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
         }
 
         [Test]
@@ -190,7 +189,7 @@ namespace Azure.Storage.Common.Test
                         }
                     }
 
-                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
+                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Storage.Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
                 }
                 while (true);
             }
@@ -201,8 +200,8 @@ namespace Azure.Storage.Common.Test
             //logger.LogInformation($"{nameof(memoryStart)} = {memoryStart}; {nameof(memoryEnd)} = {memoryEnd}");
             //logger.LogInformation($"delta = {memoryEnd - memoryStart}");
 
-            Assert.AreEqual(Math.Ceiling(1d * length / Constants.DefaultBufferSize), buffersRead);
-            Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
+            Assert.AreEqual(Math.Ceiling(1d * length / Storage.Constants.DefaultBufferSize), buffersRead);
+            Assert.IsTrue(memoryEnd - memoryStart < 8 * Storage.Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
         }
 
         [Test]

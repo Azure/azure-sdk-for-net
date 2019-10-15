@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
             int size = 100;
             var source = new MemoryStream(size);
             var destination = new MemoryStream(size);
-            var content = HttpPipelineRequestContent.Create(source);
+            var content = RequestContent.Create(source);
             var cancellation = new CancellationTokenSource();
             cancellation.Cancel();
             Assert.Throws<OperationCanceledException>(() => { content.WriteTo(destination, cancellation.Token); });
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
 
             var source = new MemoryStream(sourceArray);
             var destination = new MemoryStream(destinationArray);
-            var content = HttpPipelineRequestContent.Create(source);
+            var content = RequestContent.Create(source);
 
             content.WriteTo(destination, default);
 

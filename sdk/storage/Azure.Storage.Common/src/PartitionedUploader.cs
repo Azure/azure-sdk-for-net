@@ -6,7 +6,6 @@ using System.Buffers;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Common;
 
 namespace Azure.Storage
 {
@@ -123,7 +122,7 @@ namespace Azure.Storage
                                 async,
                                 cancellationToken
                                 )
-                            )
+                            .ConfigureAwait(false))
                         {
                             // execute on background task
 

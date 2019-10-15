@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Http;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -11,7 +10,7 @@ namespace Azure.Core.Tests
     {
         [Test, Sequential]
         public void ToString(
-            [Values(null, null, 50, 200, 0)] long? offset,
+            [Values(0, 0, 50, 200, 0)] long offset,
             [Values(null, 100, null, 100, 1)] long? count,
             [Values("0-", "0-99", "50-", "200-299", "0-0")] string expected
         )
@@ -19,14 +18,13 @@ namespace Azure.Core.Tests
             var range = new HttpRange(offset, count);
 
             Assert.AreEqual("bytes=" + expected, range.ToString());
-            Assert.AreEqual("Range:bytes=" + expected, range.ToRangeHeader().ToString());
         }
 
         [Test]
         public void Equality()
         {
-            var nullRange = new HttpRange(null, null);
-            var nullStart = new HttpRange(null, 5);
+            var nullRange = new HttpRange(0, null);
+            var nullStart = new HttpRange(0, 5);
             var nullEnd = new HttpRange(5, null);
             var r5_10 = new HttpRange(5, 10);
             var r5_10_copy = new HttpRange(5, 10);
@@ -45,7 +43,7 @@ namespace Azure.Core.Tests
 
         [Test, Sequential]
         public void Errors(
-        [Values(0, 0, -1)] long? offset,
+        [Values(0, 0, -1)] long offset,
         [Values(0, -1, 3)] long? count
         )
         {

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             uriBuilder.Reset(VaultUri);
 
-            uriBuilder.AppendPath($"/keys/");
+            uriBuilder.AppendPath($"/keys/", escape: false);
 
             uriBuilder.AppendPath(Recording.GenerateId());
 
@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             uriBuilder.Reset(VaultUri);
 
-            uriBuilder.AppendPath($"/secrets/");
+            uriBuilder.AppendPath($"/secrets/", escape: false);
 
             uriBuilder.AppendPath(Recording.GenerateId());
 

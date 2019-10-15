@@ -19,9 +19,9 @@ namespace Azure.Identity.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrowserAsync()
         {
-            var cred = new InteractiveBrowserCredential(MultiTenantClientId);
+            var cred = new InteractiveBrowserCredential();
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
         }
@@ -30,11 +30,11 @@ namespace Azure.Identity.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public void AuthenticateBrowserCancellationAsync()
         {
-            var cred = new InteractiveBrowserCredential(MultiTenantClientId);
+            var cred = new InteractiveBrowserCredential();
 
             var cancelSource = new CancellationTokenSource();
 
-            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
+            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
 
             cancelSource.Cancel();
 
@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests
         {
             var cred = new InteractiveBrowserCredential(SingleTenantClientId, TenantId);
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequest(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
         }

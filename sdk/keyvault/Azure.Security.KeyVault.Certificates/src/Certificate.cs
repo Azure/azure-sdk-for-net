@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateContentType ContentType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the attributes of the <see cref="Certificate"/>.
+        /// Additional properties of the <see cref="Certificate"/>.
         /// </summary>
         public CertificateProperties Properties { get; } = new CertificateProperties();
 

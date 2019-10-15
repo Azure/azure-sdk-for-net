@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="recoveryType">Type of this recovery. Possible values
         /// include: 'Invalid', 'OriginalLocation', 'AlternateLocation',
-        /// 'RestoreDisks'</param>
+        /// 'RestoreDisks', 'Offline'</param>
         /// <param name="sourceResourceId">Source storage account ARM
         /// Id</param>
         /// <param name="copyOptions">Options to resolve copy conflicts.
@@ -65,7 +65,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets type of this recovery. Possible values include:
-        /// 'Invalid', 'OriginalLocation', 'AlternateLocation', 'RestoreDisks'
+        /// 'Invalid', 'OriginalLocation', 'AlternateLocation', 'RestoreDisks',
+        /// 'Offline'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryType")]
         public string RecoveryType { get; set; }

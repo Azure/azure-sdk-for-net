@@ -144,7 +144,7 @@ namespace Azure.Storage
             messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
-            foreach (Core.Http.HttpHeader responseHeader in response.Headers)
+            foreach (HttpHeader responseHeader in response.Headers)
             {
                 messageBuilder
                     .Append(responseHeader.Name)

@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -37,6 +36,17 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -104,6 +114,7 @@ namespace Azure.Storage.Queues
             _uri = conn.QueueEndpoint;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -183,6 +194,7 @@ namespace Azure.Storage.Queues
             _uri = serviceUri;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -195,10 +207,12 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = serviceUri;
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -215,7 +229,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, ClientDiagnostics);
 
         #region GetQueues
         /// <summary>
@@ -310,6 +324,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.ListQueuesSegmentAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,
@@ -393,6 +408,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -488,6 +504,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.SetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         properties: properties,
@@ -574,6 +591,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.GetStatisticsAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,

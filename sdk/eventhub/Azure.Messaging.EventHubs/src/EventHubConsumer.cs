@@ -625,19 +625,5 @@ namespace Azure.Messaging.EventHubs
                 _channelSyncRoot.Release();
             }
         }
-
-        /// <summary>
-        ///   Creates an empty <see cref="IAsyncEnumerable{T}" />.
-        /// </summary>
-        ///
-        /// <typeparam name="T">The type of data represented by the empty enumerable.</typeparam>
-        ///
-        /// <returns>An empty asynchronous enumerable.</returns>
-        ///
-        private async IAsyncEnumerable<T> CreateEmptyAsyncEnumerable<T>()
-        {
-            await Task.Delay(0).ConfigureAwait(false);
-            yield break;
-        }
     }
 }

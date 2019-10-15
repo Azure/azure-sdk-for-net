@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Tests
     /// Mock for a key encryption key. Not meant for production use.
     /// </summary>
     internal class MockKeyEncryptionKey : IKeyEncryptionKey, IKeyEncryptionKeyResolver,
-        Microsoft.Azure.KeyVault.Core.IKey, Microsoft.Azure.KeyVault.Core.IKeyResolver // for track 1 compatibility tests
+        IKey, IKeyResolver // for track 1 compatibility tests
     {
         public ReadOnlyMemory<byte> KeyEncryptionKey { get; }
 
@@ -35,22 +35,22 @@ namespace Azure.Storage.Blobs.Tests
             }
         }
 
-        public Memory<byte> UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken = default)
+        public byte[] UnwrapKey(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken = default)
         {
             return Xor(encryptedKey.ToArray(), KeyEncryptionKey.ToArray());
         }
 
-        public Task<Memory<byte>> UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken = default)
+        public Task<byte[]> UnwrapKeyAsync(string algorithm, ReadOnlyMemory<byte> encryptedKey, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(UnwrapKey(algorithm, encryptedKey, cancellationToken));
         }
 
-        public Memory<byte> WrapKey(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken = default)
+        public byte[] WrapKey(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken = default)
         {
             return Xor(key.ToArray(), KeyEncryptionKey.ToArray());
         }
 
-        public Task<Memory<byte>> WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken = default)
+        public Task<byte[]> WrapKeyAsync(string algorithm, ReadOnlyMemory<byte> key, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(WrapKey(algorithm, key, cancellationToken));
         }
@@ -107,10 +107,10 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         async Task<Tuple<byte[], string>> IKey.WrapKeyAsync(byte[] key, string algorithm, CancellationToken token)
-            => new Tuple<byte[], string>((await WrapKeyAsync(algorithm, key, token)).ToArray(), null);
+            => new Tuple<byte[], string>((await WrapKeyAsync(algorithm, key, token)), null);
 
         async Task<byte[]> IKey.UnwrapKeyAsync(byte[] encryptedKey, string algorithm, CancellationToken token)
-            => (await UnwrapKeyAsync(algorithm, encryptedKey, token)).ToArray();
+            => await UnwrapKeyAsync(algorithm, encryptedKey, token);
 
         Task<Tuple<byte[], string>> IKey.SignAsync(byte[] digest, string algorithm, CancellationToken token)
         {

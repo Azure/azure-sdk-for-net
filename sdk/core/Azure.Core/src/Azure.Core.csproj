@@ -6,7 +6,9 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Minor improvements and bug fixes.
+      Added console and trace logger listener.
+      Added additional content and header logging options.
+      Moved commonly used types to Azure namespace.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>
@@ -26,5 +28,16 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shared\*.cs"/>
+    <Compile Include="Shared\Argument.cs"/>
+    <Compile Include="Shared\EventSourceEventFormatting.cs"/>
+    <Compile Include="Shared\HashCodeBuilder.cs"/>
+    <Compile Include="Shared\NullableAttributes.cs"/>
+    <Compile Include="Shared\ContentTypeUtilities.cs"/>
+    <Compile Include="Shared\ClientDiagnostics.cs"/>
+    <Compile Include="Shared\DiagnosticScope.cs"/>
   </ItemGroup>
 </Project>

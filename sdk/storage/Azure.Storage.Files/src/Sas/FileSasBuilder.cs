@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Sas
 {

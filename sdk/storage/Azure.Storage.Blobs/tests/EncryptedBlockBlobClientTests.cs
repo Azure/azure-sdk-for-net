@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs.Test
                 await normalBlob.Content.ReadAsync(encryptedData, 0, encryptedData.Length);
 
                 // encrypt original data manually for comparison
-                var encryptionMetadata = ClientSideDecryptionPolicy.GetAndValidateEncryptionData(normalBlob.Properties.Metadata);
+                var encryptionMetadata = ClientSideDecryptionPolicy.GetAndValidateEncryptionData(normalBlob.Details.Metadata);
                 byte[] expectedEncryptedData = LocalManualEncryption(
                     data,
                     (await key.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)

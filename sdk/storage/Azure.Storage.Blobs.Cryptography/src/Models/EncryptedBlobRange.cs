@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
             OriginalRange = originalRange;
 
             int offsetAdjustment = 0;
-            long? adjustedDownloadCount = originalRange.Count;
+            long? adjustedDownloadCount = originalRange.Length;
 
             // Calculate offsetAdjustment.
             if (OriginalRange.Offset != 0)

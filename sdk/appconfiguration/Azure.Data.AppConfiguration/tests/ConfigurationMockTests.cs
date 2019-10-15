@@ -6,15 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -72,7 +69,7 @@ namespace Azure.Data.AppConfiguration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -90,7 +87,7 @@ namespace Azure.Data.AppConfiguration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -137,7 +134,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
-            Assert.AreEqual(responseSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting));
         }
 
         [Test]
@@ -159,8 +156,17 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
             Assert.AreEqual(304, response.GetRawResponse().Status);
-            ResponseBodyNotFoundException exception = Assert.Throws<ResponseBodyNotFoundException>(() => { ConfigurationSetting setting = response.Value; });
-            Assert.AreEqual(304, exception.Status);
+            bool throws = false;
+            try
+            {
+                ConfigurationSetting setting = response.Value;
+            }
+            catch
+            {
+                throws = true;
+            }
+
+            Assert.True(throws);
         }
 
         [Test]
@@ -199,7 +205,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions { IfMatch = new ETag("v1") };
+            var requestOptions = new MatchConditions { IfMatch = new ETag("v1") };
 
             ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label, default, requestOptions);
 
@@ -209,7 +215,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
-            Assert.AreEqual(testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             Assert.False(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime));
             Assert.False(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
         }
@@ -232,7 +238,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -266,7 +272,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -308,7 +314,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
             AssertContent(SerializationHelpers.Serialize(requestSetting, SerializeRequestSetting), request);
-            Assert.AreEqual(responseSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting));
         }
 
         [Test]
@@ -352,7 +358,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions
+            var requestOptions = new MatchConditions
             {
                 IfNoneMatch = new ETag("v1"),
                 IfMatch = new ETag("v2")
@@ -369,7 +375,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v2\"", ifMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -501,7 +507,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var requestOptions = new ConditionalRequestOptions
+            var requestOptions = new MatchConditions
             {
                 IfNoneMatch = new ETag("v1"),
                 IfMatch = new ETag("v2")
@@ -554,12 +560,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request1 = mockTransport.Requests[0];
             Assert.AreEqual(RequestMethod.Get, request1.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=*&label=*&api-version={s_version}", request1.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=%2A&label=%2A&api-version={s_version}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=*&label=*&after=5&api-version={s_version}", request2.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/?key=%2A&label=%2A&after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -578,7 +584,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient client = CreateClient<ConfigurationClient>(s_connectionString, options);
 
             ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
             Assert.AreEqual(2, mockTransport.Requests.Count);
         }
 
@@ -662,7 +668,7 @@ namespace Azure.Data.AppConfiguration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
-            Assert.AreEqual(testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -691,7 +697,7 @@ namespace Azure.Data.AppConfiguration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
-            Assert.AreEqual(testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -735,7 +741,7 @@ namespace Azure.Data.AppConfiguration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
-            Assert.AreEqual(testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -764,7 +770,7 @@ namespace Azure.Data.AppConfiguration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
             Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
-            Assert.AreEqual(testSetting, setting);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]

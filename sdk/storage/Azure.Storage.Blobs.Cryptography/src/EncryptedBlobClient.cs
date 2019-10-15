@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs.Specialized
                     WrappedContentKey = new WrappedKey()
                     {
                         Algorithm = KeyWrapAlgorithm,
-                        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey).ToArray(), // TODO async-branching
+                        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey), // TODO async-branching
                         KeyId = KeyWrapper.KeyId
                     }
                 };

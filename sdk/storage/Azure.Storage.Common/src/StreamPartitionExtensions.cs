@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// Given a source of StreamPartitions, optionally collate them.
@@ -29,7 +29,7 @@ namespace Azure.Storage.Common
         {
             var destinationOffset = destination.Position;
 
-            await foreach (StreamPartition partition in partitions)
+            await foreach (StreamPartition partition in partitions.ConfigureAwait(false))
             {
                 if (async)
                 {

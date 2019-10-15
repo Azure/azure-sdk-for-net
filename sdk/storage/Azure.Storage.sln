@@ -112,6 +112,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLak
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{FC1F45F6-F103-48AE-8E21-D858F4689370}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching", "Azure.Storage.Blobs.Batching\src\Azure.Storage.Blobs.Batching.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batching", "Batching", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Blobs.Batching\BreakingChanges.txt = Azure.Storage.Blobs.Batching\BreakingChanges.txt
+		Azure.Storage.Blobs.Batching\Changelog.txt = Azure.Storage.Blobs.Batching\Changelog.txt
+		Azure.Storage.Blobs.Batching\README.md = Azure.Storage.Blobs.Batching\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching.Tests", "Azure.Storage.Blobs.Batching\tests\Azure.Storage.Blobs.Batching.Tests.csproj", "{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -194,6 +205,14 @@ Global
 		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,6 +223,7 @@ Global
 		{6EEF892F-E4EE-4610-9C94-4B206D9E7152} = {F4218B06-A246-4762-984D-5BC852B62889}
 		{9B235463-7D89-471E-87CA-A392661255E4} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
 		{9260EB26-0D9A-4D71-B588-7106999C745B} = {F4218B06-A246-4762-984D-5BC852B62889}
+		{610DBA57-60FD-4115-8D74-F13A8428973E} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F236F49-3FED-4E35-AF93-48BA7EB0D42A}

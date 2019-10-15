@@ -48,7 +48,7 @@ namespace Microsoft.Rest.Azure
                 RequestId = response.RequestId,
                 Response = response.Response
             };
-            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken);
+            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken).ConfigureAwait(false);
             return new AzureOperationResponse<TBody>
             {
                 Body = longRunningResponse.Body,
@@ -75,8 +75,8 @@ namespace Microsoft.Rest.Azure
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
             IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
-            await lro.BeginLROAsync();
-            return await lro.GetLROResults();
+            await lro.BeginLROAsync().ConfigureAwait(false);
+            return await lro.GetLROResults().ConfigureAwait(false);
 
             //return await LegacyLro<TBody, THeader>(client, response, customHeaders, cancellationToken);
         }
@@ -136,7 +136,7 @@ namespace Microsoft.Rest.Azure
             };
 
             var azureOperationResponse = await client.GetLongRunningOperationResultAsync(
-                newResponse, customHeaders, cancellationToken);
+                newResponse, customHeaders, cancellationToken).ConfigureAwait(false);
 
             return new AzureOperationResponse
             {
@@ -172,7 +172,7 @@ namespace Microsoft.Rest.Azure
                 RequestId = response.RequestId,
                 Response = response.Response
             };
-            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken);
+            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken).ConfigureAwait(false);
             return new AzureOperationHeaderResponse<THeader>
             {
                 Headers = longRunningResponse.Headers,
@@ -202,7 +202,7 @@ namespace Microsoft.Rest.Azure
             CancellationToken cancellationToken) where TBody : class
         {
             return await client.GetLongRunningOperationResultAsync(
-                response, customHeaders, cancellationToken);
+                response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Microsoft.Rest.Azure
             CancellationToken cancellationToken)
         {
             return await client.GetLongRunningOperationResultAsync(
-                response, customHeaders, cancellationToken);
+                response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -261,7 +261,7 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where THeader : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
         {
-            return await client.GetLongRunningOperationResultAsync(response, customHeaders, cancellationToken);
+            return await client.GetLongRunningOperationResultAsync(response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -336,7 +336,7 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
-            var result = await GetRawAsync(client, operationUrl, customHeaders, cancellationToken);
+            var result = await GetRawAsync(client, operationUrl, customHeaders, cancellationToken).ConfigureAwait(false);
 
             TBody body = null;
             if (result.Body != null)
@@ -536,16 +536,16 @@ namespace Microsoft.Rest.Azure
 
                 if (!string.IsNullOrEmpty(pollingState.AzureAsyncOperationHeaderLink))
                 {
-                    await UpdateStateFromAzureAsyncOperationHeader(client, pollingState, customHeaders, cancellationToken, initialRequestMethod);
+                    await UpdateStateFromAzureAsyncOperationHeader(client, pollingState, customHeaders, cancellationToken, initialRequestMethod).ConfigureAwait(false);
                 }
                 else if (!string.IsNullOrEmpty(pollingState.LocationHeaderLink))
                 {
-                    await UpdateStateFromLocationHeader(client, pollingState, customHeaders, cancellationToken, initialRequestMethod);
+                    await UpdateStateFromLocationHeader(client, pollingState, customHeaders, cancellationToken, initialRequestMethod).ConfigureAwait(false);
                 }
                 else if (initialRequestMethod == HttpMethod.Put)
                 {
                     await UpdateStateFromGetResourceOperation(client, pollingState, getOperationUrl,
-                        customHeaders, cancellationToken, initialRequestMethod);
+                        customHeaders, cancellationToken, initialRequestMethod).ConfigureAwait(false);
                 }
                 else
                 {

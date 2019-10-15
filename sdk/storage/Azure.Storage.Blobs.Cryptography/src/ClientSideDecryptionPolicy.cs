@@ -7,8 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized.Models;
 using Azure.Storage.Common;
@@ -60,9 +60,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// If the request is fetching a specific range from the blob, adjust that range to download the extra bytes
         /// needed for decryption. On return, pipe the content through a CryptoStream to decrypt the data.
         /// </summary>
-        /// <param name="message">The <see cref="HttpPipelineMessage"/> this policy would be applied to.</param>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             EncryptedBlobRange encryptedRange = default;
             if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
@@ -95,22 +95,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// If the request is fetching a specific range from the blob, adjust that range to download the extra bytes
         /// needed for decryption. On return, pipe the content through a CryptoStream to decrypt the data.
         /// </summary>
-        /// <param name="message">The <see cref="HttpPipelineMessage"/> this policy would be applied to.</param>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         /// <returns></returns>
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             EncryptedBlobRange encryptedRange = default;
             if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
             {
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-                message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
+                message.Request.Headers.SetValue(HttpHeader.Names.Range, encryptedRange.AdjustedRange.ToString());
             }
             else if (message.Request.Headers.TryGetValue(EncryptionConstants.XMsRange, out range))
             {
                 encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-                message.Request.Headers.Remove(EncryptionConstants.XMsRange); // the next line puts "Range", not "x-ms-range"
-                message.Request.Headers.Add(encryptedRange.AdjustedRange.ToRangeHeader());
+                message.Request.Headers.SetValue(EncryptionConstants.XMsRange, encryptedRange.AdjustedRange.ToString());
             }
 
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -231,7 +230,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
 
-            return new LengthLimitingStream(plaintext, encryptedBlobRange.OriginalRange.Count);
+            return new LengthLimitingStream(plaintext, encryptedBlobRange.OriginalRange.Length);
         }
 
         private static Metadata ExtractMetadata(ResponseHeaders headers)

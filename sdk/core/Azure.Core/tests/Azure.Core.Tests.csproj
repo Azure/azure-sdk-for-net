@@ -22,7 +22,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />
     <Compile Include="..\src\Shared\ContentTypeUtilities.cs" />
+    <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" />
+    <Compile Include="..\src\Shared\RetriableStream.cs" />
+    <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
+    <Compile Include="..\src\Shared\ResponseExceptionExtensions.cs" />
+    <Compile Include="..\src\Shared\OperationHelpers.cs"/>
   </ItemGroup>
 
 </Project>

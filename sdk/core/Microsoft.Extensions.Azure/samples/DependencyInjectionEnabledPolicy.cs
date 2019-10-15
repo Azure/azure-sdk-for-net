@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Microsoft.Extensions.Azure.Samples
 {
-    internal class DependencyInjectionEnabledPolicy : SynchronousHttpPipelinePolicy
+    internal class DependencyInjectionEnabledPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly IHostingEnvironment _environment;
 
@@ -15,7 +16,7 @@ namespace Microsoft.Extensions.Azure.Samples
             this._environment = environment;
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             message.Request.Headers.Add("application-name", _environment.ApplicationName);
             base.OnSendingRequest(message);

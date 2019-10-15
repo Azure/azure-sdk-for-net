@@ -25,7 +25,7 @@ namespace Microsoft.Azure.EventGrid.Models
         public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             request.Headers.Add("aeg-sas-key", this.topicKey);
-            await base.ProcessHttpRequestAsync(request, cancellationToken);
+            await base.ProcessHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
     }
 }
