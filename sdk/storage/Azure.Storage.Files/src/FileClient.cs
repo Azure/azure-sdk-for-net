@@ -108,6 +108,23 @@ namespace Azure.Storage.Files
             }
         }
 
+        /// <summary>
+        /// The path of the file.
+        /// </summary>
+        private string _path;
+
+        /// <summary>
+        /// Gets the path of the file.
+        /// </summary>
+        public virtual string Path
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _path;
+            }
+        }
+
         //const string fileType = "file";
 
         //// FileMaxUploadRangeBytes indicates the maximum number of bytes that can be sent in a call to UploadRange.
@@ -292,12 +309,13 @@ namespace Azure.Storage.Files
         /// </summary>
         private void SetNameFieldsIfNull()
         {
-            if (_name == null || _shareName == null || _accountName == null)
+            if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new FileUriBuilder(Uri);
                 _name = builder.LastDirectoryOrFileName;
                 _shareName = builder.ShareName;
                 _accountName = builder.AccountName;
+                _path = builder.DirectoryOrFilePath;
             }
         }
 
