@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs
             /// The 2018-11-09 service version described at
             /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2018-11-09" />
             /// </summary>
-            V2018_11_09 = 0
+            V2018_11_09 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs
             ServiceVersion version = LatestVersion,
             CustomerProvidedKey? customerProvidedKey = default)
         {
-            Version = version;
+            Version = (int)version == 1? version: throw Errors.ArgumentNotSupported(nameof(version));
             CustomerProvidedKey = customerProvidedKey;
             this.Initialize();
         }
