@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002faaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89",
+      "RequestUri": "http://jolovstorage.queue.core.windows.net/aaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|ef385efb-4771f0c8af167685.",
+        "traceparent": "00-d370fd71bd437743b94d1d7e51afef5e-8ec3e7b19dd0d543-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "4a8d2cb8-d47f-80b6-86cd-6cd1a8d66ce8",
-        "x-ms-date": "Thu, 12 Sep 2019 22:23:19 GMT",
+        "x-ms-date": "Wed, 16 Oct 2019 21:57:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -19,27 +19,27 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 22:23:19 GMT",
+        "Date": "Wed, 16 Oct 2019 21:57:26 GMT",
         "Server": [
-          "Windows-Azure-Queue\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "769b72c1-a003-0020-61b8-69e99c000000",
+        "x-ms-request-id": "8cb39007-0003-0068-0f6c-84affe000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002f?comp=list\u0026prefix=aaa\u0026include=",
+      "RequestUri": "http://jolovstorage.queue.core.windows.net/?comp=list\u0026prefix=aaa",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "9fb27e1b-947b-f509-5d36-07ab6b82593b",
-        "x-ms-date": "Thu, 12 Sep 2019 22:23:19 GMT",
+        "x-ms-date": "Wed, 16 Oct 2019 21:57:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -47,30 +47,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Type": "application\u002fxml",
-        "Date": "Thu, 12 Sep 2019 22:23:19 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Wed, 16 Oct 2019 21:57:26 GMT",
         "Server": [
-          "Windows-Azure-Queue\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "769b72c3-a003-0020-62b8-69e99c000000",
+        "x-ms-request-id": "8cb39014-0003-0068-1a6c-84affe000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cEnumerationResults ServiceEndpoint=\u0022http:\u002f\u002fgapradev.queue.core.windows.net\u002f\u0022\u003e\u003cPrefix\u003eaaa\u003c\u002fPrefix\u003e\u003cQueues\u003e\u003cQueue\u003e\u003cName\u003eaaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89\u003c\u002fName\u003e\u003c\u002fQueue\u003e\u003c\u002fQueues\u003e\u003cNextMarker \u002f\u003e\u003c\u002fEnumerationResults\u003e"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://jolovstorage.queue.core.windows.net/\u0022\u003E\u003CPrefix\u003Eaaa\u003C/Prefix\u003E\u003CQueues\u003E\u003CQueue\u003E\u003CName\u003Eaaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89\u003C/Name\u003E\u003C/Queue\u003E\u003C/Queues\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002faaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89",
+      "RequestUri": "http://jolovstorage.queue.core.windows.net/aaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|ef385efc-4771f0c8af167685.",
+        "traceparent": "00-bd7d76315180ac4da53d99d6d96b58a8-25efe0f317b7934d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2ab553bc-cc24-f46c-5267-075d47f4da74",
-        "x-ms-date": "Thu, 12 Sep 2019 22:23:19 GMT",
+        "x-ms-date": "Wed, 16 Oct 2019 21:57:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -78,12 +78,12 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 12 Sep 2019 22:23:19 GMT",
+        "Date": "Wed, 16 Oct 2019 21:57:26 GMT",
         "Server": [
-          "Windows-Azure-Queue\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "769b72c5-a003-0020-63b8-69e99c000000",
+        "x-ms-request-id": "8cb3901f-0003-0068-256c-84affe000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
@@ -91,6 +91,6 @@
   ],
   "Variables": {
     "RandomSeed": "36925754",
-    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp:\u002f\u002fgapradev.blob.core.windows.net\nhttp:\u002f\u002fgapradev.file.core.windows.net\nhttp:\u002f\u002fgapradev.queue.core.windows.net\nhttp:\u002f\u002fgapradev.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fgapradev-secondary.blob.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.file.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.queue.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fgapradev.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fgapradev.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fgapradev.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fgapradev.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.file.core.windows.net\u002f;AccountName=gapradev;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttp://jolovstorage.blob.core.windows.net\nhttp://jolovstorage.file.core.windows.net\nhttp://jolovstorage.queue.core.windows.net\nhttp://jolovstorage.table.core.windows.net\n\n\n\n\nhttp://jolovstorage-secondary.blob.core.windows.net\n\nhttp://jolovstorage-secondary.queue.core.windows.net\nhttp://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://jolovstorage.blob.core.windows.net/;QueueEndpoint=http://jolovstorage.queue.core.windows.net/;TableEndpoint=http://jolovstorage.table.core.windows.net/;FileEndpoint=http://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=http://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://jolovstorage-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://jolovstorage-secondary.table.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized"
   }
 }
