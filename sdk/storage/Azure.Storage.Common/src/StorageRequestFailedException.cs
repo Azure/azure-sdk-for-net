@@ -67,7 +67,7 @@ namespace Azure.Storage
             IDictionary<string, string> additionalInfo = null)
             : base(
                   response?.Status ?? throw Errors.ArgumentNull(nameof(response)),
-                  CreateMessage(response, message ?? response?.ReasonPhrase, errorCode, additionalInfo),
+                  CreateMessage(response, message ?? response?.ReasonPhrase, GetErrorCode(response, errorCode), additionalInfo),
                   GetErrorCode(response, errorCode), innerException)
         {
             if (additionalInfo != null)
