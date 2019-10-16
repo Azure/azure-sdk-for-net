@@ -92,7 +92,7 @@ namespace Azure.Storage.Sas
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            if (ExpiryTime == default || string.IsNullOrEmpty(Permissions) || ResourceTypes == default || Services == default)
+            if (ExpiresOn == default || string.IsNullOrEmpty(Permissions) || ResourceTypes == default || Services == default)
             {
                 throw Errors.AccountSasMissingData();
             }
@@ -164,7 +164,7 @@ namespace Azure.Storage.Sas
             Protocol.GetHashCode() ^
             ResourceTypes.GetHashCode() ^
             (Services.GetHashCode()) ^
-            StartTime.GetHashCode() ^
+            StartsOn.GetHashCode() ^
             (Version?.GetHashCode() ?? 0);
 
         /// <summary>
