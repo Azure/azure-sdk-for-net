@@ -40,12 +40,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Let's Get the Cloud RSA Key from the Key Vault.
             KeyVaultKey cloudRsaKey = await client.GetKeyAsync(rsaKeyName);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.Key.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 
             // After one year, the Cloud RSA Key is still required, we need to update the expiry time of the key.
             // The update method can be used to update the expiry attribute of the key.
             cloudRsaKey.Properties.ExpiresOn.Value.AddYears(1);
-            KeyVaultKey updatedKey = await client.UpdateKeyPropertiesAsync(cloudRsaKey.Properties, cloudRsaKey.Key.KeyOps);
+            KeyVaultKey updatedKey = await client.UpdateKeyPropertiesAsync(cloudRsaKey.Properties, cloudRsaKey.KeyOperations);
             Debug.WriteLine($"Key's updated expiry time is {updatedKey.Properties.ExpiresOn}");
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure

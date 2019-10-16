@@ -345,10 +345,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Encrypts the specified key material.
+        /// Encrypts the specified key.
         /// </summary>
         /// <param name="algorithm">The <see cref="KeyWrapAlgorithm"/> to use.</param>
-        /// <param name="key">The key material to encrypt.</param>
+        /// <param name="key">The key to encrypt.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the wrap operation. The returned <see cref="WrapResult"/> contains the wrapped key
@@ -398,10 +398,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Encrypts the specified key material.
+        /// Encrypts the specified key.
         /// </summary>
         /// <param name="algorithm">The <see cref="KeyWrapAlgorithm"/> to use.</param>
-        /// <param name="key">The key material to encrypt.</param>
+        /// <param name="key">The key to encrypt.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the wrap operation. The returned <see cref="WrapResult"/> contains the wrapped key
@@ -451,10 +451,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Decrypts the specified encrypted key material.
+        /// Decrypts the specified encrypted key.
         /// </summary>
         /// <param name="algorithm">The <see cref="KeyWrapAlgorithm"/> to use.</param>
-        /// <param name="encryptedKey">The encrypted key material.</param>
+        /// <param name="encryptedKey">The encrypted key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the unwrap operation. The returned <see cref="UnwrapResult"/> contains the key
@@ -504,10 +504,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Decrypts the specified encrypted key material.
+        /// Decrypts the specified encrypted key.
         /// </summary>
         /// <param name="algorithm">The <see cref="KeyWrapAlgorithm"/> to use.</param>
-        /// <param name="encryptedKey">The encrypted key material.</param>
+        /// <param name="encryptedKey">The encrypted key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the unwrap operation. The returned <see cref="UnwrapResult"/> contains the key

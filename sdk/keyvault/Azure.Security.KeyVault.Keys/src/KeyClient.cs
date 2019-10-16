@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Gets the <see cref="Uri"/> used to create this instance of the <see cref="KeyClient"/>.
+        /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="KeyClient"/>.
         /// </summary>
         public Uri VaultEndpoint => _pipeline.VaultEndpoint;
 
@@ -328,7 +328,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// The get key operation is applicable to all key types. If the requested key
-        /// is symmetric, then no key material is released in the response. This
+        /// is symmetric, then no key is released in the response. This
         /// operation requires the keys/get permission.
         /// </remarks>
         /// <param name="name">The name of the key.</param>
@@ -361,7 +361,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// The get key operation is applicable to all key types. If the requested key
-        /// is symmetric, then no key material is released in the response. This
+        /// is symmetric, then no key is released in the response. This
         /// operation requires the keys/get permission.
         /// </remarks>
         /// <param name="name">The name of the key.</param>
@@ -781,8 +781,8 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// The Key Backup operation exports a key from Azure Key Vault in a protected
-        /// form. Note that this operation does NOT return key material in a form that
-        /// can be used outside the Azure Key Vault system, the returned key material
+        /// form. Note that this operation does NOT return the actual key in a form that
+        /// can be used outside the Azure Key Vault system, the returned key
         /// is either protected to a Azure Key Vault HSM or to Azure Key Vault itself.
         /// The intent of this operation is to allow a client to GENERATE a key in one
         /// Azure Key Vault instance, BACKUP the key, and then RESTORE it into another
@@ -825,8 +825,8 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// The Key Backup operation exports a key from Azure Key Vault in a protected
-        /// form. Note that this operation does NOT return key material in a form that
-        /// can be used outside the Azure Key Vault system, the returned key material
+        /// form. Note that this operation does NOT return the actual key in a form that
+        /// can be used outside the Azure Key Vault system, the returned key
         /// is either protected to a Azure Key Vault HSM or to Azure Key Vault itself.
         /// The intent of this operation is to allow a client to GENERATE a key in one
         /// Azure Key Vault instance, BACKUP the key, and then RESTORE it into another

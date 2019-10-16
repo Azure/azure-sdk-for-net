@@ -251,7 +251,7 @@ namespace Azure.Security.KeyVault.Test
             DeletedSecret deletedSecret = await Client.DeleteSecretAsync(secretName);
 
             AssertSecretPropertiesEqual(secret.Properties, deletedSecret.Properties);
-            Assert.NotNull(deletedSecret.DeletedDate);
+            Assert.NotNull(deletedSecret.DeletedOn);
             Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetSecretAsync(secretName));
@@ -278,7 +278,7 @@ namespace Azure.Security.KeyVault.Test
 
             DeletedSecret polledSecret = await Client.GetDeletedSecretAsync(secretName);
 
-            Assert.NotNull(deletedSecret.DeletedDate);
+            Assert.NotNull(deletedSecret.DeletedOn);
             Assert.NotNull(deletedSecret.RecoveryId);
             Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 

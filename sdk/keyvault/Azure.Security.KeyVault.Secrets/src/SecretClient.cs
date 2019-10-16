@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Gets the <see cref="Uri"/> used to create this instance of the <see cref="SecretClient"/>.
+        /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="SecretClient"/>.
         /// </summary>
         public Uri VaultEndpoint => _pipeline.VaultEndpoint;
 

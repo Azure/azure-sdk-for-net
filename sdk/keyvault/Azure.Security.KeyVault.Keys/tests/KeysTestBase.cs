@@ -82,13 +82,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _keysToCleanup.Enqueue((name, delete));
         }
 
-        protected void AssertKeysEqual(KeyVaultKey exp, KeyVaultKey act)
+        protected void AssertKeyVaultKeysEqual(KeyVaultKey exp, KeyVaultKey act)
         {
-            AssertKeyMaterialEqual(exp.Key, act.Key);
+            AssertKeysEqual(exp.Key, act.Key);
             AssertKeyPropertiesEqual(exp.Properties, act.Properties);
         }
 
-        private void AssertKeyMaterialEqual(JsonWebKey exp, JsonWebKey act)
+        private void AssertKeysEqual(JsonWebKey exp, JsonWebKey act)
         {
             Assert.AreEqual(exp.Id, act.Id);
             Assert.AreEqual(exp.KeyType, act.KeyType);

@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys
     public class DeletedKey : KeyVaultKey
     {
         private const string RecoveryIdPropertyName = "recoveryId";
-        private const string DeletedDatePropertyName = "deletedDate";
+        private const string DeletedOnPropertyName = "deletedDate";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
 
         private string _recoveryId;
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The time when the key was deleted, in UTC.
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; internal set; }
+        public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// The time when the key is scheduled to be purged, in UTC
@@ -52,8 +52,8 @@ namespace Azure.Security.KeyVault.Keys
                     _recoveryId = prop.Value.GetString();
                     break;
 
-                case DeletedDatePropertyName:
-                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
 
                 case ScheduledPurgeDatePropertyName:

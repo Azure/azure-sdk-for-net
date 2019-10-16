@@ -90,10 +90,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void ImportKeyArgumentValidation()
         {
-            var keyMaterial = new JsonWebKey();
+            var jwk = new JsonWebKey();
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(string.Empty, keyMaterial));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, keyMaterial));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(string.Empty, jwk));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, jwk));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, null));
         }
 

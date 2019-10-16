@@ -65,14 +65,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="properties">Sets the <see cref="Secrets.KeyVaultSecret.Properties"/> property, which provides the <see cref="Secrets.KeyVaultSecret.Id"/> and <see cref="Secrets.KeyVaultSecret.Name"/> properties.</param>
         /// <param name="value">Sets the <see cref="Secrets.KeyVaultSecret.Value"/> property.</param>
         /// <param name="recoveryId">Sets the <see cref="Secrets.DeletedSecret.RecoveryId"/> property.</param>
-        /// <param name="deletedDate">Sets the <see cref="Secrets.DeletedSecret.DeletedDate"/> property.</param>
+        /// <param name="deletedOn">Sets the <see cref="Secrets.DeletedSecret.DeletedOn"/> property.</param>
         /// <param name="scheduledPurgeDate">Sets the <see cref="Secrets.DeletedSecret.ScheduledPurgeDate"/> property.</param>
         /// <returns>A new instance of the <see cref="Secrets.DeletedSecret"/> for mocking purposes.</returns>
-        public static DeletedSecret DeletedSecret(SecretProperties properties, string value = default, Uri recoveryId = default, DateTimeOffset? deletedDate = default, DateTimeOffset? scheduledPurgeDate = default) => new DeletedSecret(properties)
+        public static DeletedSecret DeletedSecret(SecretProperties properties, string value = default, Uri recoveryId = default, DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeDate = default) => new DeletedSecret(properties)
         {
             Value = value,
             RecoveryId = recoveryId,
-            DeletedDate = deletedDate,
+            DeletedOn = deletedOn,
             ScheduledPurgeDate = scheduledPurgeDate,
         };
     }

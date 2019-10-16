@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 NotBefore = key.NotBefore.Value;
             }
-            if (key.Tags != null)
+            if (key.Tags != null && key.Tags.Count > 0)
             {
                 Tags = new Dictionary<string, string>(key.Tags);
             }
@@ -76,11 +76,11 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     NotBefore = options.NotBefore.Value;
                 }
-                if (options.KeyOperations != null)
+                if (options.KeyOperations != null && options.KeyOperations.Count > 0)
                 {
                     KeyOperations = new List<KeyOperation>(options.KeyOperations);
                 }
-                if (options.Tags != null)
+                if (options.Tags != null && options.Tags.Count > 0)
                 {
                     Tags = new Dictionary<string, string>(options.Tags);
                 }
@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault.Keys
 
                 json.WriteEndObject();
             }
-            if (KeyOperations != null)
+            if (KeyOperations != null && KeyOperations.Count > 0)
             {
                 json.WriteStartArray(s_keyOpsPropertyNameBytes);
                 foreach (KeyOperation operation in KeyOperations)

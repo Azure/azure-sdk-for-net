@@ -12,6 +12,7 @@
 - `VaultUri` properties and `vaultUri` parameters have been renamed to `VaultEndpoint` and `vaultEndpoint` respectively.
 - `Hsm` properties and `hsm` parameters have been renamed to `HardwareProtected` and `hardwareProtected` respectively.
 - On `KeyProperties`, `Expires`, `Created`, and `Updated` have been renamed to `ExpiresOn`, `CreatedOn`, and `UpdatedOn` respectively.
+- On `DeletedKey`, `DeletedDate` has been renamed to `DeletedOn`.
 - `KeyClient.GetKeys` and `KeyClient.GetKeyVersions` have been renamed to `KeyClient.GetPropertiesOfKeys` and `KeyClient.GetPropertiesOfKeyVersions` respectively.
 - `KeyClient.RestoreKey` has been renamed to `KeyClient.RestoreKeyBackup` to better associate it with `KeyClient.BackupKey`.
 - `KeyCreateOptions` has been renamed to `CreateKeyOptions`.

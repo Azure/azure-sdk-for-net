@@ -12,11 +12,11 @@ namespace Azure.Security.KeyVault.Secrets
     public class DeletedSecret : KeyVaultSecret
     {
         private const string RecoveryIdPropertyName = "recoveryId";
-        private const string DeletedDatePropertyName = "deletedDate";
+        private const string DeletedOnPropertyName = "deletedDate";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
 
         private static readonly JsonEncodedText s_recoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
-        private static readonly JsonEncodedText s_deletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
+        private static readonly JsonEncodedText s_deletedOnPropertyNameBytes = JsonEncodedText.Encode(DeletedOnPropertyName);
         private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
 
         private string _recoveryId;
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// The time when the secret was deleted, in UTC.
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; internal set; }
+        public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// The time when the secret is scheduled to be purged, in UTC
@@ -52,8 +52,8 @@ namespace Azure.Security.KeyVault.Secrets
                     _recoveryId = prop.Value.GetString();
                     break;
 
-                case DeletedDatePropertyName:
-                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
 
                 case ScheduledPurgeDatePropertyName:
@@ -75,9 +75,9 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId.ToString());
             }
 
-            if (DeletedDate.HasValue)
+            if (DeletedOn.HasValue)
             {
-                json.WriteNumber(s_deletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_deletedOnPropertyNameBytes, DeletedOn.Value.ToUnixTimeSeconds());
             }
 
             if (ScheduledPurgeDate.HasValue)

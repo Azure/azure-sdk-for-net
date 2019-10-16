@@ -50,12 +50,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // You need to check the type of keys that already exist in your Key Vault.
             // Let's list the keys and print their types.
-            // List operations don't return the keys with key material information.
-            // So, for each returned key we call GetKey to get the key with its key material information.
+            // List operations don't return the actual key, but only properties of the key.
+            // So, for each returned key we call GetKey to get the actual key.
             await foreach (KeyProperties key in client.GetPropertiesOfKeysAsync())
             {
                 KeyVaultKey keyWithType = await client.GetKeyAsync(key.Name);
-                Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.Key.KeyType}");
+                Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyType}");
             }
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure

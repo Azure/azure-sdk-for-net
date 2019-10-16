@@ -57,21 +57,21 @@ namespace Azure.Security.KeyVault.Keys.Samples
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.Key.KeyType);
+            Console.WriteLine(key.KeyType);
 
             // Create a software RSA key
             var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
             KeyVaultKey rsaKey = client.CreateRsaKey(rsaCreateKey);
 
             Console.WriteLine(rsaKey.Name);
-            Console.WriteLine(rsaKey.Key.KeyType);
+            Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
             Console.WriteLine(ecKey.Name);
-            Console.WriteLine(ecKey.Key.KeyType);
+            Console.WriteLine(ecKey.KeyType);
             #endregion
         }
 
@@ -83,21 +83,21 @@ namespace Azure.Security.KeyVault.Keys.Samples
             KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.Key.KeyType);
+            Console.WriteLine(key.KeyType);
 
             // Create a software RSA key
             var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
             KeyVaultKey rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
 
             Console.WriteLine(rsaKey.Name);
-            Console.WriteLine(rsaKey.Key.KeyType);
+            Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
             Console.WriteLine(ecKey.Name);
-            Console.WriteLine(ecKey.Key.KeyType);
+            Console.WriteLine(ecKey.KeyType);
             #endregion
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             KeyVaultKey key = client.GetKey("key-name");
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.Key.KeyType);
+            Console.WriteLine(key.KeyType);
             #endregion
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // You can specify additional application-specific metadata in the form of tags.
             key.Properties.Tags["foo"] = "updated tag";
 
-            KeyVaultKey updatedKey = client.UpdateKeyProperties(key.Properties, key.Key.KeyOps);
+            KeyVaultKey updatedKey = client.UpdateKeyProperties(key.Properties);
 
             Console.WriteLine(updatedKey.Name);
             Console.WriteLine(updatedKey.Properties.Version);
@@ -181,7 +181,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeletedKey key = client.DeleteKey("key-name");
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.DeletedDate);
+            Console.WriteLine(key.DeletedOn);
             #endregion
 
             DeletedKey rsaKey = client.DeleteKey("rsa-key-name");

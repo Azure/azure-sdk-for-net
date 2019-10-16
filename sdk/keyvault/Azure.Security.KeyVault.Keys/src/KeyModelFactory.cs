@@ -121,14 +121,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="properties">Sets the <see cref="Keys.KeyVaultKey.Properties"/> property, which provides the <see cref="Keys.KeyVaultKey.Id"/> and <see cref="Keys.KeyVaultKey.Name"/> properties.</param>
         /// <param name="key">Sets the <see cref="Keys.KeyVaultKey.Key"/> property, which provides the <see cref="Keys.KeyVaultKey.KeyType"/> and <see cref="Keys.KeyVaultKey.KeyOperations"/> properties.</param>
         /// <param name="recoveryId">Sets the <see cref="Keys.DeletedKey.RecoveryId"/> property.</param>
-        /// <param name="deletedDate">Sets the <see cref="Keys.DeletedKey.DeletedDate"/> property.</param>
+        /// <param name="deletedOn">Sets the <see cref="Keys.DeletedKey.DeletedOn"/> property.</param>
         /// <param name="scheduledPurgeDate">Sets the <see cref="Keys.DeletedKey.ScheduledPurgeDate"/> property.</param>
         /// <returns>A new instance of the <see cref="Keys.DeletedKey"/> for mocking purposes.</returns>
-        public static DeletedKey DeletedKey(KeyProperties properties, JsonWebKey key, Uri recoveryId = default, DateTimeOffset? deletedDate = default, DateTimeOffset? scheduledPurgeDate = default) => new DeletedKey(properties)
+        public static DeletedKey DeletedKey(KeyProperties properties, JsonWebKey key, Uri recoveryId = default, DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeDate = default) => new DeletedKey(properties)
         {
             Key = key,
             RecoveryId = recoveryId,
-            DeletedDate = deletedDate,
+            DeletedOn = deletedOn,
             ScheduledPurgeDate = scheduledPurgeDate,
         };
     }

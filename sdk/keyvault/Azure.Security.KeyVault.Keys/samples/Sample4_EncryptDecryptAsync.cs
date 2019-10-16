@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             };
 
             KeyVaultKey cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.Key.KeyType}");
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 
             // Then we create the CryptographyClient which can perform cryptographic operations with the key we just created.
             // Again we are using the default Azure credential as above.

@@ -6,6 +6,8 @@
 
 - `Secret` has been renamed to `KeyVaultSecret` to avoid ambiquity with other libraries and to yield better search results.
 - `VaultUri` properties and `vaultUri` parameters have been renamed to `VaultEndpoint` and `vaultEndpoint` respectively.
+- On `SecretProperties`, `Expires`, `Created`, and `Updated` have been renamed to `ExpiresOn`, `CreatedOn`, and `UpdatedOn` respectively.
+- On `DeletedSecret`, `DeletedDate` has been renamed to `DeletedOn`.
 - `SecretClient.GetSecrets` and `SecretClient.GetSecretVersions` have been renamed to `SecretClient.GetPropertiesOfSecrets` and `SecretClient.GetPropertiesOfSecretVersions` respectively.
 - `SecretClient.RestoreSecret` has been renamed to `SecretClient.RestoreSecretBackup` to better associate it with `SecretClient.BackupSecret`.
 
