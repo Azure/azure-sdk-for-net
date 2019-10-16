@@ -26,12 +26,10 @@ namespace Azure.Core.Pipeline
             _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
         }
 
-        private const long DelayWarningThreshold = 3000; // 3000ms
-
         private const string LogAllValue = "*";
         private const string RedactedPlaceholder = "REDACTED";
+        private const double RequestTooLongTime = 3.0; // sec
 
-        private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
         private readonly bool _logContent;
@@ -40,8 +38,8 @@ namespace Azure.Core.Pipeline
         private readonly HashSet<string> _allowedHeaderNames;
         private readonly string[] _allowedQueryParameters;
 
-        private bool _logAllHeaders;
-        private bool _logFullQueries;
+        private readonly bool _logAllHeaders;
+        private readonly bool _logFullQueries;
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -100,13 +98,15 @@ namespace Azure.Core.Pipeline
                                        response.ContentStream?.CanSeek == false &&
                                        logWrapper.IsEnabled(isError);
 
+            double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
             if (isError)
             {
-                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
+                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
             }
             else
             {
-                s_eventSource.Response(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
+                s_eventSource.Response(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
             }
 
             if (wrapResponseContent)
@@ -118,10 +118,9 @@ namespace Azure.Core.Pipeline
                 await logWrapper.LogAsync(response.ClientRequestId, isError, response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
             }
 
-            var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
-            if (elapsedMilliseconds > DelayWarningThreshold)
+            if (elapsed > RequestTooLongTime)
             {
-                s_eventSource.ResponseDelay(response.ClientRequestId, elapsedMilliseconds);
+                s_eventSource.ResponseDelay(response.ClientRequestId, elapsed);
             }
         }
 

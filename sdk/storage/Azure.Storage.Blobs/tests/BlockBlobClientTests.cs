@@ -1427,7 +1427,7 @@ namespace Azure.Storage.Blobs.Test
 
                 Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
                 AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
-                Assert.AreEqual(BlobType.BlockBlob, getPropertiesResponse.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, getPropertiesResponse.Value.BlobType);
 
                 Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
                 var actual = new MemoryStream();

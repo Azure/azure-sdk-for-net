@@ -9,7 +9,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     /// <summary>
     /// Base class for Common tests

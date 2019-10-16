@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 
@@ -289,7 +289,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 

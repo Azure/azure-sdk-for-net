@@ -297,7 +297,7 @@ directive:
   transform: >
     $.put.responses["201"].description = "The lease operation completed successfully.";
     $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
-    $.put.responses["201"]["x-az-response-name"] = "Lease";
+    $.put.responses["201"]["x-az-response-name"] = "BlobLease";
 ```
 
 ### /{containerName}?comp=lease&restype=container&release
@@ -318,7 +318,7 @@ directive:
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
 ```
 
 ### /{containerName}?comp=lease&restype=container&break
@@ -339,7 +339,7 @@ directive:
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
 ```
 
 ### /{containerName}?restype=container&comp=list&flat
@@ -605,7 +605,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=lease&acquire"]
   transform: >
-    $.put.responses["201"]["x-az-response-name"] = "Lease";
+    $.put.responses["201"]["x-az-response-name"] = "BlobLease";
     $.put.responses["201"].description = "The lease operation completed successfully.";
     $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
@@ -626,7 +626,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=lease&renew"]
   transform: >
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
@@ -637,7 +637,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=lease&change"]
   transform: >
-    $.put.responses["200"]["x-az-response-name"] = "Lease";
+    $.put.responses["200"]["x-az-response-name"] = "BlobLease";
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
@@ -1120,6 +1120,20 @@ directive:
   transform: $.required.push("PublicAccess");
   ```
 
+  ### Remove `Blob` suffix in BlobType enum values
+``` yaml
+directive:
+- from: swagger-document
+  where:
+    - $.definitions.BlobItemProperties.properties.BlobType
+    - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["200"].headers["x-ms-blob-type"]
+    - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["206"].headers["x-ms-blob-type"]
+    - $["x-ms-paths"]["/{containerName}/{blob}"].head.responses["200"].headers["x-ms-blob-type"]
+  transform: >
+    $.enum = [ "Block", "Page", "Append" ];
+    $["x-ms-enum"].values = [ { name: "Block", value: "BlockBlob" }, { name: "Page", value: "PageBlob" }, { name: "Append", value: "AppendBlob" }];
+  ```
+
 ### Make lease duration/break period a long
 Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
 type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
@@ -1258,6 +1272,24 @@ directive:
   where: $.parameters.BlockListType
   transform: >
     $["x-az-public"] = false;
+```
+
+### Change Block to BlobBlock
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    if (!$.BlobBlock) {
+        $.BlobBlock = $.Block;
+        delete $.Block;
+        $.BlobBlock.xml = { "name": "Block" };
+        const path = $.BlockList.properties.CommittedBlocks.items.$ref.replace(/[#].*$/, "#/definitions/BlobBlock");
+        $.BlockList.properties.CommittedBlocks.items.$ref = path;
+        $.BlockList.properties.CommittedBlocks.xml.name = "CommittedBlocks";
+        $.BlockList.properties.UncommittedBlocks.items.$ref = path;
+        $.BlockList.properties.UncommittedBlocks.xml.name = "UncommittedBlocks";
+    }
 ```
 
 ### Batch returns a 202

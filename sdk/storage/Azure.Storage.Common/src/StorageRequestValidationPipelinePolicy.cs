@@ -6,7 +6,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id

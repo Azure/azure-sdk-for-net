@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     [TestFixture]
     public class StorageRequestFailedExceptionTests

@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
-using Azure.Storage.Common;
-using Azure.Storage.Common.Test;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;

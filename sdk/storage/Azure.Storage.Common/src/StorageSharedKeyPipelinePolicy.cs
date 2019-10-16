@@ -9,12 +9,12 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
     /// </summary>
-    public sealed class StorageSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
+    internal sealed class StorageSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Whether to always add the x-ms-date header.
