@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search
     internal partial class IndexersOperations
     {
         /// <summary>
-        /// Creates a new Azure Search indexer or updates an indexer if it already
+        /// Creates a new indexer or updates an indexer if it already
         /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given indexer exists in the Azure Search service.
+        /// Determines whether or not the given indexer exists in the search service.
         /// </summary>
         /// <param name="indexerName">
         /// The name of the indexer.

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search.Models.Internal
     /// Compares two <c cref="SearchContinuationToken">SearchContinuationToken</c> instances for equality.
     /// </summary>
     /// <para>
-    /// This class is part of the internal implementation of the Azure Search .NET SDK. It is not intended to be used directly by
+    /// This class is part of the internal implementation of the Azure Cognitive Search .NET SDK. It is not intended to be used directly by
     /// application code.
     /// </para>
     public class SearchContinuationTokenComparer : IEqualityComparer<SearchContinuationToken>
