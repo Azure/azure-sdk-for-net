@@ -178,8 +178,8 @@ namespace Azure.Storage.Sas
 
             var p = new BlobSasQueryParameters(
                 version: Version,
-                services: null,
-                resourceTypes: null,
+                services: default,
+                resourceTypes: default,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,
@@ -247,8 +247,8 @@ namespace Azure.Storage.Sas
 
             var p = new BlobSasQueryParameters(
                 version: Version,
-                services: null,
-                resourceTypes: null,
+                services: default,
+                resourceTypes: default,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,

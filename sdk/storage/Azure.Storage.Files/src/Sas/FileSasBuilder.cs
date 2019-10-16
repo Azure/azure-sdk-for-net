@@ -164,8 +164,8 @@ namespace Azure.Storage.Sas
 
             var p = new SasQueryParameters(
                 version: Version,
-                services: null,
-                resourceTypes: null,
+                services: default,
+                resourceTypes: default,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,

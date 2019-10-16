@@ -249,8 +249,8 @@ namespace Azure.Storage.Test.Shared
             => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Blobs = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { BlobContainer = true, Object = true }.ToString(),
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),

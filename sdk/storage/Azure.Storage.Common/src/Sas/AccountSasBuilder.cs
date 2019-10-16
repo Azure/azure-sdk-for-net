@@ -65,19 +65,15 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The services associated with the shared access signature. The
-        /// user is restricted to operations with the specified services. The
-        /// <see cref="AccountSasServices"/> type can be used to create the
-        /// services string.
+        /// user is restricted to operations with the specified services.
         /// </summary>
-        public string Services { get; set; }
+        public AccountSasServices Services { get; set; }
 
         /// <summary>
         /// The resource types associated with the shared access signature. The
-        /// user is restricted to operations on the specified resources. The
-        /// <see cref="AccountSasResourceTypes"/> type can be used to create
-        /// the resource types string.
+        /// user is restricted to operations on the specified resources.
         /// </summary>
-        public string ResourceTypes { get; set; }
+        public AccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -96,7 +92,7 @@ namespace Azure.Storage.Sas
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            if (ExpiryTime == default || string.IsNullOrEmpty(Permissions) || string.IsNullOrEmpty(ResourceTypes) || string.IsNullOrEmpty(Services))
+            if (ExpiryTime == default || string.IsNullOrEmpty(Permissions) || ResourceTypes == default || Services == default)
             {
                 throw Errors.AccountSasMissingData();
             }
@@ -113,12 +109,12 @@ namespace Azure.Storage.Sas
             var stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
-                Services,
-                ResourceTypes,
+                Services.ToPermissionsString(),
+                ResourceTypes.ToPermissionsString(),
                 startTime,
                 expiryTime,
                 IPRange.ToString(),
-                Protocol.ToString(),
+                Protocol.ToProtocolString(),
                 Version,
                 "");  // That's right, the account SAS requires a terminating extra newline
 
@@ -166,8 +162,8 @@ namespace Azure.Storage.Sas
             IPRange.GetHashCode() ^
             (Permissions?.GetHashCode() ?? 0) ^
             Protocol.GetHashCode() ^
-            (ResourceTypes?.GetHashCode() ?? 0) ^
-            (Services?.GetHashCode() ?? 0) ^
+            ResourceTypes.GetHashCode() ^
+            (Services.GetHashCode()) ^
             StartTime.GetHashCode() ^
             (Version?.GetHashCode() ?? 0);
 
