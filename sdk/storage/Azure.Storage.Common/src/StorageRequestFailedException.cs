@@ -20,11 +20,6 @@ namespace Azure.Storage
 #pragma warning restore CA1032 // Implement standard exception constructors
     {
         /// <summary>
-        /// Well known error codes for common failure conditions
-        /// </summary>
-        public string ErrorCode { get; private set; }
-
-        /// <summary>
         /// Additional information helpful in debugging errors.
         /// </summary>
         public IDictionary<string, string> AdditionalInformation { get; private set; } = new Dictionary<string, string>();
@@ -73,14 +68,10 @@ namespace Azure.Storage
             : base(
                   response?.Status ?? throw Errors.ArgumentNull(nameof(response)),
                   CreateMessage(response, message ?? response?.ReasonPhrase, errorCode, additionalInfo),
-                  innerException)
+                  GetErrorCode(response, errorCode), innerException)
         {
             // Get the error code, if it wasn't provided
-            if (string.IsNullOrEmpty(errorCode))
-            {
-                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
-            }
-            ErrorCode = errorCode;
+            GetErrorCode(response, errorCode);
 
             if (additionalInfo != null)
             {
@@ -89,6 +80,16 @@ namespace Azure.Storage
 
             // Include the RequestId
             RequestId = response.Headers.TryGetValue(Constants.HeaderNames.RequestId, out var value) ? value : null;
+        }
+
+        private static string GetErrorCode(Response response, string errorCode)
+        {
+            if (string.IsNullOrEmpty(errorCode))
+            {
+                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
+            }
+
+            return errorCode;
         }
 
         /// <summary>
