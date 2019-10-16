@@ -8,7 +8,7 @@ namespace Azure
     /// <summary>
     /// Specifies HTTP options for conditional requests based on modification time.
     /// </summary>
-    public class ModifiedSinceConditions : MatchConditions
+    public class RequestConditions : MatchConditions
     {
         /// <summary>
         /// Optionally limit requests to resources that have only been

@@ -1105,7 +1105,7 @@ function generateSerialize(w: IndentWriter, service: IService, type: IObjectType
         const properties = <IProperty[]>Object.values(type.properties);
         for (const property of properties) {
             let current = elementName;
-            const { xname: childName } = getXmlShape(property.name, { ...type.xml, name: property.name });
+            const { xname: childName } = getXmlShape(property.name, property.xml);
             if (!property.required) {
                 w.line(`if (value.${naming.property(property.name)} != null)`);
                 w.pushScope('{');

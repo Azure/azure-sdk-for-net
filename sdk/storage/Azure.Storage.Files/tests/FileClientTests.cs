@@ -57,6 +57,7 @@ namespace Azure.Storage.Files.Test
             var builder1 = new FileUriBuilder(uri1);
             var fileClient1 = new FileClient(uri1);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient1.Name);
+            TestHelper.AssertCacheableProperty("dir1/dir2/file.txt", () => fileClient1.Path);
             Assert.AreEqual("file.txt", builder1.LastDirectoryOrFileName);
 
             // one directory
@@ -64,6 +65,7 @@ namespace Azure.Storage.Files.Test
             var builder2 = new FileUriBuilder(uri2);
             var fileClient2 = new FileClient(uri2);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient2.Name);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient2.Path);
             Assert.AreEqual("file.txt", builder2.LastDirectoryOrFileName);
 
             // trailing slash
@@ -71,6 +73,7 @@ namespace Azure.Storage.Files.Test
             var builder3 = new FileUriBuilder(uri3);
             var fileClient3 = new FileClient(uri3);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient3.Name);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient3.Path);
             Assert.AreEqual("file.txt", builder3.LastDirectoryOrFileName);
 
             // no directories
@@ -78,6 +81,7 @@ namespace Azure.Storage.Files.Test
             var builder4 = new FileUriBuilder(uri4);
             var fileClient4 = new FileClient(uri4);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Name);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Path);
             Assert.AreEqual("file.txt", builder4.LastDirectoryOrFileName);
 
             // no directories or files
@@ -85,6 +89,7 @@ namespace Azure.Storage.Files.Test
             var builder5 = new FileUriBuilder(uri5);
             var fileClient5 = new FileClient(uri5);
             TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Name);
+            TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Path);
             Assert.AreEqual(string.Empty, builder5.LastDirectoryOrFileName);
         }
 
@@ -1108,7 +1113,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                IList<StorageHandle> handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
@@ -1122,7 +1127,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                IList<StorageHandle> handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);

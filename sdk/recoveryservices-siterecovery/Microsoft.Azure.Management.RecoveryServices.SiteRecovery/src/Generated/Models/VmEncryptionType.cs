@@ -8,16 +8,16 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
 
     /// <summary>
-    /// Defines values for DirectoryServiceOptions.
+    /// Defines values for VmEncryptionType.
     /// </summary>
-    public static class DirectoryServiceOptions
+    public static class VmEncryptionType
     {
-        public const string None = "None";
-        public const string AADDS = "AADDS";
-        public const string AD = "AD";
+        public const string NotEncrypted = "NotEncrypted";
+        public const string OnePassEncrypted = "OnePassEncrypted";
+        public const string TwoPassEncrypted = "TwoPassEncrypted";
     }
 }

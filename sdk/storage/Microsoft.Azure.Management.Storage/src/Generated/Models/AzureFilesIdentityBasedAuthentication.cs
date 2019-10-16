@@ -33,10 +33,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// AzureFilesIdentityBasedAuthentication class.
         /// </summary>
         /// <param name="directoryServiceOptions">Indicates the directory
-        /// service used. Possible values include: 'None', 'AADDS'</param>
-        public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions)
+        /// service used. Possible values include: 'None', 'AADDS',
+        /// 'AD'</param>
+        /// <param name="activeDirectoryProperties">Required if choose
+        /// AD.</param>
+        public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties = default(ActiveDirectoryProperties))
         {
             DirectoryServiceOptions = directoryServiceOptions;
+            ActiveDirectoryProperties = activeDirectoryProperties;
             CustomInit();
         }
 
@@ -47,10 +51,16 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets indicates the directory service used. Possible values
-        /// include: 'None', 'AADDS'
+        /// include: 'None', 'AADDS', 'AD'
         /// </summary>
         [JsonProperty(PropertyName = "directoryServiceOptions")]
         public string DirectoryServiceOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets required if choose AD.
+        /// </summary>
+        [JsonProperty(PropertyName = "activeDirectoryProperties")]
+        public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -63,6 +73,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (DirectoryServiceOptions == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DirectoryServiceOptions");
+            }
+            if (ActiveDirectoryProperties != null)
+            {
+                ActiveDirectoryProperties.Validate();
             }
         }
     }

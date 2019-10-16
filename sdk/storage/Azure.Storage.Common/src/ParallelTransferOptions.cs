@@ -17,9 +17,9 @@ namespace Azure.Storage
         public int? MaximumTransferLength { get; set; }
 
         /// <summary>
-        /// The maximum number of threads that may be used in a parallel transfer.
+        /// The maximum number of workers that may be used in a parallel transfer.
         /// </summary>
-        public int? MaximumThreadCount { get; set; }
+        public int? MaximumConcurrency { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -39,7 +39,7 @@ namespace Azure.Storage
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
             => MaximumTransferLength.GetHashCode()
-            ^ MaximumThreadCount.GetHashCode()
+            ^ MaximumConcurrency.GetHashCode()
             ;
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.Storage
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(ParallelTransferOptions obj)
             => MaximumTransferLength == obj.MaximumTransferLength
-            && MaximumThreadCount == obj.MaximumThreadCount
+            && MaximumConcurrency == obj.MaximumConcurrency
             ;
     }
 }

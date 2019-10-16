@@ -12423,92 +12423,6 @@ namespace Azure.Storage.Blobs
 #endregion Service
 
 #region Models
-#region class AccessPolicy
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// An Access policy
-    /// </summary>
-    public partial class AccessPolicy
-    {
-        /// <summary>
-        /// the date-time the policy is active
-        /// </summary>
-        public System.DateTimeOffset Start { get; set; }
-
-        /// <summary>
-        /// the date-time the policy expires
-        /// </summary>
-        public System.DateTimeOffset Expiry { get; set; }
-
-        /// <summary>
-        /// the permissions for the acl policy
-        /// </summary>
-        public string Permission { get; set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of AccessPolicy instances.
-        /// You can use BlobsModelFactory.AccessPolicy instead.
-        /// </summary>
-        internal AccessPolicy() { }
-
-        /// <summary>
-        /// Serialize a AccessPolicy instance as XML.
-        /// </summary>
-        /// <param name="value">The AccessPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.AccessPolicy value, string name = "AccessPolicy", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Start", ""),
-                value.Start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Expiry", ""),
-                value.Expiry.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Permission", ""),
-                value.Permission));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new AccessPolicy instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized AccessPolicy instance.</returns>
-        internal static Azure.Storage.Blobs.Models.AccessPolicy FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.AccessPolicy _value = new Azure.Storage.Blobs.Models.AccessPolicy();
-            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
-            if (_child != null)
-            {
-                _value.Start = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
-            if (_child != null)
-            {
-                _value.Expiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
-            if (_child != null)
-            {
-                _value.Permission = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.AccessPolicy value);
-    }
-}
-#endregion class AccessPolicy
-
 #region enum strings AccessTier
 namespace Azure.Storage.Blobs.Models
 {
@@ -12925,6 +12839,92 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobSetAccessControlResult
+
+#region class BlobAccessPolicy
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// An Access policy
+    /// </summary>
+    public partial class BlobAccessPolicy
+    {
+        /// <summary>
+        /// the date-time the policy is active
+        /// </summary>
+        public System.DateTimeOffset StartsOn { get; set; }
+
+        /// <summary>
+        /// the date-time the policy expires
+        /// </summary>
+        public System.DateTimeOffset ExpiresOn { get; set; }
+
+        /// <summary>
+        /// the permissions for the acl policy
+        /// </summary>
+        public string Permissions { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobAccessPolicy instances.
+        /// You can use BlobsModelFactory.BlobAccessPolicy instead.
+        /// </summary>
+        internal BlobAccessPolicy() { }
+
+        /// <summary>
+        /// Serialize a BlobAccessPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobAccessPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobAccessPolicy value, string name = "AccessPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Start", ""),
+                value.StartsOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Expiry", ""),
+                value.ExpiresOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Permission", ""),
+                value.Permissions));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobAccessPolicy instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobAccessPolicy instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobAccessPolicy FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobAccessPolicy _value = new Azure.Storage.Blobs.Models.BlobAccessPolicy();
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.StartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
+            if (_child != null)
+            {
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
+            if (_child != null)
+            {
+                _value.Permissions = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobAccessPolicy value);
+    }
+}
+#endregion class BlobAccessPolicy
 
 #region class BlobAnalyticsLogging
 namespace Azure.Storage.Blobs.Models
@@ -17688,12 +17688,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The date-time the key is active in ISO 8601 UTC time
         /// </summary>
-        public System.DateTimeOffset? Start { get; set; }
+        public System.DateTimeOffset? StartsOn { get; set; }
 
         /// <summary>
         /// The date-time the key expires in ISO 8601 UTC time
         /// </summary>
-        public System.DateTimeOffset Expiry { get; set; }
+        public System.DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// Prevent direct instantiation of KeyInfo instances.
@@ -17712,15 +17712,15 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.Start != null)
+            if (value.StartsOn != null)
             {
                 _element.Add(new System.Xml.Linq.XElement(
                     System.Xml.Linq.XName.Get("Start", ""),
-                    value.Start.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
+                    value.StartsOn.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
             }
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Expiry", ""),
-                value.Expiry.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
+                value.ExpiresOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
             return _element;
         }
     }
@@ -18693,7 +18693,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// An Access policy
         /// </summary>
-        public Azure.Storage.Blobs.Models.AccessPolicy AccessPolicy { get; set; }
+        public Azure.Storage.Blobs.Models.BlobAccessPolicy AccessPolicy { get; set; }
 
         /// <summary>
         /// Creates a new SignedIdentifier instance
@@ -18711,7 +18711,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                AccessPolicy = new Azure.Storage.Blobs.Models.AccessPolicy();
+                AccessPolicy = new Azure.Storage.Blobs.Models.BlobAccessPolicy();
             }
         }
 
@@ -18729,7 +18729,7 @@ namespace Azure.Storage.Blobs.Models
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Id", ""),
                 value.Id));
-            _element.Add(Azure.Storage.Blobs.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            _element.Add(Azure.Storage.Blobs.Models.BlobAccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
             return _element;
         }
 
@@ -18751,7 +18751,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
             if (_child != null)
             {
-                _value.AccessPolicy = Azure.Storage.Blobs.Models.AccessPolicy.FromXml(_child);
+                _value.AccessPolicy = Azure.Storage.Blobs.Models.BlobAccessPolicy.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -18905,16 +18905,6 @@ namespace Azure.Storage.Blobs.Models
         public string SignedTenantId { get; internal set; }
 
         /// <summary>
-        /// The date-time the key is active
-        /// </summary>
-        public System.DateTimeOffset SignedStart { get; internal set; }
-
-        /// <summary>
-        /// The date-time the key expires
-        /// </summary>
-        public System.DateTimeOffset SignedExpiry { get; internal set; }
-
-        /// <summary>
         /// Abbreviation of the Azure Storage service that accepts the key
         /// </summary>
         public string SignedService { get; internal set; }
@@ -18928,6 +18918,16 @@ namespace Azure.Storage.Blobs.Models
         /// The key as a base64 string
         /// </summary>
         public string Value { get; internal set; }
+
+        /// <summary>
+        /// The date-time the key expires
+        /// </summary>
+        public System.DateTimeOffset SignedExpiresOn { get; internal set; }
+
+        /// <summary>
+        /// The date-time the key is active
+        /// </summary>
+        public System.DateTimeOffset SignedStartsOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of UserDelegationKey instances.
@@ -18955,16 +18955,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.SignedTenantId = _child.Value;
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("SignedStart", ""));
-            if (_child != null)
-            {
-                _value.SignedStart = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("SignedExpiry", ""));
-            if (_child != null)
-            {
-                _value.SignedExpiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("SignedService", ""));
             if (_child != null)
             {
@@ -18979,6 +18969,16 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.Value = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedExpiry", ""));
+            if (_child != null)
+            {
+                _value.SignedExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SignedStart", ""));
+            if (_child != null)
+            {
+                _value.SignedStartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -18998,21 +18998,21 @@ namespace Azure.Storage.Blobs.Models
         public static UserDelegationKey UserDelegationKey(
             string signedObjectId,
             string signedTenantId,
-            System.DateTimeOffset signedStart,
-            System.DateTimeOffset signedExpiry,
             string signedService,
             string signedVersion,
-            string value)
+            string value,
+            System.DateTimeOffset signedExpiresOn,
+            System.DateTimeOffset signedStartsOn)
         {
             return new UserDelegationKey()
             {
                 SignedObjectId = signedObjectId,
                 SignedTenantId = signedTenantId,
-                SignedStart = signedStart,
-                SignedExpiry = signedExpiry,
                 SignedService = signedService,
                 SignedVersion = signedVersion,
                 Value = value,
+                SignedExpiresOn = signedExpiresOn,
+                SignedStartsOn = signedStartsOn,
             };
         }
     }
