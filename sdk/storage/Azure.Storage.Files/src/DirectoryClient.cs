@@ -1136,7 +1136,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<StorageHandle> GetHandles(
+        public virtual Pageable<StorageFileHandle> GetHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             new GetDirectoryHandlesAsyncCollection(this, recursive).ToSyncCollection(cancellationToken);
@@ -1164,7 +1164,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<StorageHandle> GetHandlesAsync(
+        public virtual AsyncPageable<StorageFileHandle> GetHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             new GetDirectoryHandlesAsyncCollection(this, recursive).ToAsyncCollection(cancellationToken);

@@ -8822,6 +8822,151 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class StorageFileCopyInfo
 
+#region class StorageFileHandle
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// A listed Azure Storage handle item.
+    /// </summary>
+    public partial class StorageFileHandle
+    {
+        /// <summary>
+        /// XSMB service handle ID
+        /// </summary>
+        public string HandleId { get; internal set; }
+
+        /// <summary>
+        /// File or directory name including full path starting from share root
+        /// </summary>
+        public string Path { get; internal set; }
+
+        /// <summary>
+        /// FileId uniquely identifies the file or directory.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// ParentId uniquely identifies the parent directory of the object.
+        /// </summary>
+        public string ParentId { get; internal set; }
+
+        /// <summary>
+        /// SMB session ID in context of which the file handle was opened
+        /// </summary>
+        public string SessionId { get; internal set; }
+
+        /// <summary>
+        /// Client IP that opened the handle
+        /// </summary>
+        public string ClientIp { get; internal set; }
+
+        /// <summary>
+        /// Time when the session that previously opened the handle has last been reconnected. (UTC)
+        /// </summary>
+        public System.DateTimeOffset OpenTime { get; internal set; }
+
+        /// <summary>
+        /// Time handle was last connected to (UTC)
+        /// </summary>
+        public System.DateTimeOffset? LastReconnectTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of StorageFileHandle instances.
+        /// You can use FilesModelFactory.StorageFileHandle instead.
+        /// </summary>
+        internal StorageFileHandle() { }
+
+        /// <summary>
+        /// Deserializes XML into a new StorageFileHandle instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized StorageFileHandle instance.</returns>
+        internal static Azure.Storage.Files.Models.StorageFileHandle FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.StorageFileHandle _value = new Azure.Storage.Files.Models.StorageFileHandle();
+            _child = element.Element(System.Xml.Linq.XName.Get("HandleId", ""));
+            if (_child != null)
+            {
+                _value.HandleId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Path", ""));
+            if (_child != null)
+            {
+                _value.Path = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("FileId", ""));
+            if (_child != null)
+            {
+                _value.FileId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ParentId", ""));
+            if (_child != null)
+            {
+                _value.ParentId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("SessionId", ""));
+            if (_child != null)
+            {
+                _value.SessionId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ClientIp", ""));
+            if (_child != null)
+            {
+                _value.ClientIp = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("OpenTime", ""));
+            if (_child != null)
+            {
+                _value.OpenTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
+            if (_child != null)
+            {
+                _value.LastReconnectTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageFileHandle value);
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileHandle instance for mocking.
+        /// </summary>
+        public static StorageFileHandle StorageFileHandle(
+            string handleId,
+            string path,
+            string fileId,
+            string sessionId,
+            string clientIp,
+            System.DateTimeOffset openTime,
+            string parentId = default,
+            System.DateTimeOffset? lastReconnectTime = default)
+        {
+            return new StorageFileHandle()
+            {
+                HandleId = handleId,
+                Path = path,
+                FileId = fileId,
+                SessionId = sessionId,
+                ClientIp = clientIp,
+                OpenTime = openTime,
+                ParentId = parentId,
+                LastReconnectTime = lastReconnectTime,
+            };
+        }
+    }
+}
+#endregion class StorageFileHandle
+
 #region class StorageFileRangeInfo
 namespace Azure.Storage.Files.Models
 {
@@ -8948,151 +9093,6 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class StorageFileUploadInfo
 
-#region class StorageHandle
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// A listed Azure Storage handle item.
-    /// </summary>
-    public partial class StorageHandle
-    {
-        /// <summary>
-        /// XSMB service handle ID
-        /// </summary>
-        public string HandleId { get; internal set; }
-
-        /// <summary>
-        /// File or directory name including full path starting from share root
-        /// </summary>
-        public string Path { get; internal set; }
-
-        /// <summary>
-        /// FileId uniquely identifies the file or directory.
-        /// </summary>
-        public string FileId { get; internal set; }
-
-        /// <summary>
-        /// ParentId uniquely identifies the parent directory of the object.
-        /// </summary>
-        public string ParentId { get; internal set; }
-
-        /// <summary>
-        /// SMB session ID in context of which the file handle was opened
-        /// </summary>
-        public string SessionId { get; internal set; }
-
-        /// <summary>
-        /// Client IP that opened the handle
-        /// </summary>
-        public string ClientIp { get; internal set; }
-
-        /// <summary>
-        /// Time when the session that previously opened the handle has last been reconnected. (UTC)
-        /// </summary>
-        public System.DateTimeOffset OpenTime { get; internal set; }
-
-        /// <summary>
-        /// Time handle was last connected to (UTC)
-        /// </summary>
-        public System.DateTimeOffset? LastReconnectTime { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of StorageHandle instances.
-        /// You can use FilesModelFactory.StorageHandle instead.
-        /// </summary>
-        internal StorageHandle() { }
-
-        /// <summary>
-        /// Deserializes XML into a new StorageHandle instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized StorageHandle instance.</returns>
-        internal static Azure.Storage.Files.Models.StorageHandle FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.StorageHandle _value = new Azure.Storage.Files.Models.StorageHandle();
-            _child = element.Element(System.Xml.Linq.XName.Get("HandleId", ""));
-            if (_child != null)
-            {
-                _value.HandleId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Path", ""));
-            if (_child != null)
-            {
-                _value.Path = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("FileId", ""));
-            if (_child != null)
-            {
-                _value.FileId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ParentId", ""));
-            if (_child != null)
-            {
-                _value.ParentId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("SessionId", ""));
-            if (_child != null)
-            {
-                _value.SessionId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ClientIp", ""));
-            if (_child != null)
-            {
-                _value.ClientIp = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("OpenTime", ""));
-            if (_child != null)
-            {
-                _value.OpenTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
-            if (_child != null)
-            {
-                _value.LastReconnectTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandle value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageHandle instance for mocking.
-        /// </summary>
-        public static StorageHandle StorageHandle(
-            string handleId,
-            string path,
-            string fileId,
-            string sessionId,
-            string clientIp,
-            System.DateTimeOffset openTime,
-            string parentId = default,
-            System.DateTimeOffset? lastReconnectTime = default)
-        {
-            return new StorageHandle()
-            {
-                HandleId = handleId,
-                Path = path,
-                FileId = fileId,
-                SessionId = sessionId,
-                ClientIp = clientIp,
-                OpenTime = openTime,
-                ParentId = parentId,
-                LastReconnectTime = lastReconnectTime,
-            };
-        }
-    }
-}
-#endregion class StorageHandle
-
 #region class StorageHandlesSegment
 namespace Azure.Storage.Files.Models
 {
@@ -9109,7 +9109,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Handles
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> Handles { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageFileHandle> Handles { get; internal set; }
 
         /// <summary>
         /// Creates a new StorageHandlesSegment instance
@@ -9127,7 +9127,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
+                Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageFileHandle>();
             }
         }
 
@@ -9152,11 +9152,11 @@ namespace Azure.Storage.Files.Models
                 _value.Handles = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Handle", "")),
-                        e => Azure.Storage.Files.Models.StorageHandle.FromXml(e)));
+                        e => Azure.Storage.Files.Models.StorageFileHandle.FromXml(e)));
             }
             else
             {
-                _value.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
+                _value.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageFileHandle>();
             }
             CustomizeFromXml(element, _value);
             return _value;
