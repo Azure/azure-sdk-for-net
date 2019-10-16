@@ -535,7 +535,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseHandlesAsync();
+                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseAllHandlesAsync();
 
                 // Assert
                 Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
@@ -550,7 +550,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseHandlesAsync(recursive: true);
+                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseAllHandlesAsync(recursive: true);
 
                 // Assert
                 Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
@@ -568,9 +568,24 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    directory.ForceCloseHandlesAsync(),
+                    directory.ForceCloseAllHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
+            }
+        }
+
+        [Test]
+        public async Task ForceCloseHandle_Error()
+        {
+            // Arrange
+            using (GetNewShare(out ShareClient share))
+            {
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                AsyncPageable<StorageHandle> handles = directory.GetHandlesAsync();
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    directory.ForceCloseHandleAsync("nonExistantHandleId"),
+                    actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
             }
         }
 

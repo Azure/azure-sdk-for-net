@@ -1268,10 +1268,8 @@ namespace Azure.Storage.Files
 
         #region ForceCloseHandles
         /// <summary>
-        /// The <see cref="ForceCloseHandles"/> operation closes a handle or handles opened on a directory
-        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or
-        /// directory or closing all handles opened on that resource. It optionally supports recursively closing
-        /// handles on subresources when the resource is a directory.
+        /// The <see cref="ForceCloseHandle"/> operation closes a handle opened on a directory
+        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/>.
         ///
         /// This API is intended to be used alongside <see cref="GetHandles"/> to force close handles that
         /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
@@ -1282,11 +1280,87 @@ namespace Azure.Storage.Files
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
         /// </summary>
         /// <param name="handleId">
-        /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.
+        /// Specifies the handle ID to be closed.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageClosedHandlesSegment}"/> describing a
+        /// segment of the handles closed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageClosedHandlesSegment> ForceCloseHandle(
+            string handleId,
+            CancellationToken cancellationToken = default) =>
+            ForceCloseHandlesInternal(
+                handleId,
+                null,
+                null,
+                false, // async
+                cancellationToken,
+                Constants.File.Directory.ForceCloseHandleOperationName)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ForceCloseHandle"/> operation closes a handle opened on a directory
+        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/>.
+        ///
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
+        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
+        /// or alternative for SMB close.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// </summary>
+        /// <param name="handleId">
+        /// Specifies the handle ID to be closed.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageClosedHandlesSegment}"/> describing a
+        /// segment of the handles closed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandleAsync(
+            string handleId,
+            CancellationToken cancellationToken = default) =>
+            await ForceCloseHandlesInternal(
+                handleId,
+                null,
+                null,
+                true, // async
+                cancellationToken,
+                Constants.File.Directory.ForceCloseHandleOperationName)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ForceCloseAllHandles"/> operation closes all handles opened on a directory
+        /// or a file at the service. It optionally supports recursively closing handles on subresources
+        /// when the resource is a directory.
+        ///
+        /// This API is intended to be used alongside <see cref="GetHandles"/> to force close handles that
+        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
+        /// or alternative for SMB close.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// </summary>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the handles
-        /// to be closed with the next call to <see cref="ForceCloseHandles"/>.  The
+        /// to be closed with the next call to <see cref="ForceCloseAllHandles"/>.  The
         /// operation returns a non-empty <see cref="StorageClosedHandlesSegment.Marker"/>
         /// if the operation did not return all items remaining to be
         /// closed with the current segment.  The NextMarker value can
@@ -1308,13 +1382,12 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<StorageClosedHandlesSegment> ForceCloseHandles(
-            string handleId = Constants.CloseAllHandles,
+        public virtual Response<StorageClosedHandlesSegment> ForceCloseAllHandles(
             string marker = default,
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             ForceCloseHandlesInternal(
-                handleId,
+                Constants.CloseAllHandles,
                 marker,
                 recursive,
                 false, // async
@@ -1322,10 +1395,9 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory
-        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or
-        /// directory or closing all handles opened on that resource. It optionally supports recursively closing
-        /// handles on subresources when the resource is a directory.
+        /// The <see cref="ForceCloseAllHandles"/> operation closes all handles opened on a directory
+        /// or a file at the service. It optionally supports recursively closing handles on subresources
+        /// when the resource is a directory.
         ///
         /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
         /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
@@ -1335,12 +1407,9 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
         /// </summary>
-        /// <param name="handleId">
-        /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.
-        /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the handles
-        /// to be closed with the next call to <see cref="ForceCloseHandlesAsync"/>.  The
+        /// to be closed with the next call to <see cref="ForceCloseAllHandlesAsync"/>.  The
         /// operation returns a non-empty <see cref="StorageClosedHandlesSegment.Marker"/>
         /// if the operation did not return all items remaining to be
         /// closed with the current segment.  The NextMarker value can
@@ -1362,13 +1431,12 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
-            string handleId = Constants.CloseAllHandles,
+        public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseAllHandlesAsync(
             string marker = default,
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             await ForceCloseHandlesInternal(
-                handleId,
+                Constants.CloseAllHandles,
                 marker,
                 recursive,
                 true, // async
@@ -1376,7 +1444,7 @@ namespace Azure.Storage.Files
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory
+        /// The <see cref="ForceCloseAllHandlesAsync"/> operation closes a handle or handles opened on a directory
         /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or
         /// directory or closing all handles opened on that resource. It optionally supports recursively closing
         /// handles on subresources when the resource is a directory.
@@ -1394,7 +1462,7 @@ namespace Azure.Storage.Files
         /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the handles
-        /// to be closed with the next call to <see cref="ForceCloseHandlesAsync"/>.  The
+        /// to be closed with the next call to <see cref="ForceCloseAllHandlesAsync"/>.  The
         /// operation returns a non-empty <see cref="StorageClosedHandlesSegment.Marker"/>
         /// if the operation did not return all items remaining to be
         /// closed with the current segment.  The NextMarker value can
@@ -1411,6 +1479,9 @@ namespace Azure.Storage.Files
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. Used to indicate the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{StorageClosedHandlesSegment}"/> describing a
         /// segment of the handles closed.
@@ -1424,7 +1495,8 @@ namespace Azure.Storage.Files
             string marker,
             bool? recursive,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = Constants.File.Directory.ForceCloseAllHandlesOperationName)
         {
             // TODO Support share snapshot
 
@@ -1447,7 +1519,7 @@ namespace Azure.Storage.Files
                         handleId: handleId,
                         recursive: recursive,
                         async: async,
-                        operationName: Constants.File.Directory.ForceCloseHandlesOperationName,
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
