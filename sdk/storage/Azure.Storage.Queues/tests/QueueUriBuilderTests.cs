@@ -160,7 +160,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsFalse(queueUriBuilder.Messages);
             Assert.AreEqual("", queueUriBuilder.MessageId);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiryTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", queueUriBuilder.Sas.Identifier);
             Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.IPRange);
             Assert.AreEqual("rw", queueUriBuilder.Sas.Permissions);
@@ -169,7 +169,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(queueUriBuilder.Sas.ResourceTypes);
             Assert.IsNull(queueUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", queueUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), queueUriBuilder.Sas.StartTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), queueUriBuilder.Sas.StartsOn);
             Assert.AreEqual("2015-04-05", queueUriBuilder.Sas.Version);
 
             Assert.AreEqual("", queueUriBuilder.Query);
@@ -347,7 +347,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsFalse(queueUriBuilder.Messages);
             Assert.AreEqual("", queueUriBuilder.MessageId);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiryTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", queueUriBuilder.Sas.Identifier);
             Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.IPRange);
             Assert.AreEqual("rw", queueUriBuilder.Sas.Permissions);
@@ -356,7 +356,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(queueUriBuilder.Sas.ResourceTypes);
             Assert.IsNull(queueUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", queueUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), queueUriBuilder.Sas.StartTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), queueUriBuilder.Sas.StartsOn);
             Assert.AreEqual("2015-04-05", queueUriBuilder.Sas.Version);
 
             Assert.AreEqual("", queueUriBuilder.Query);

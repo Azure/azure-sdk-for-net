@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.Samples
                 Permissions = new AccountSasPermissions() { Read = true }.ToString(),
 
                 // Access expires in 1 hour!
-                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
