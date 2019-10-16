@@ -8,6 +8,11 @@ using System.Threading;
 
 namespace Azure
 {
+    /// <summary>
+    /// A collection of values that may take multiple service requests to
+    /// iterate over.
+    /// </summary>
+    /// <typeparam name="T">The type of the values.</typeparam>
     public abstract class Pageable<T> : IEnumerable<T> where T : notnull
     {
         /// <summary>

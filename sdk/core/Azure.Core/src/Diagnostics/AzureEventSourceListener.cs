@@ -15,7 +15,13 @@ namespace Azure.Core.Diagnostics
     /// </summary>
     public class AzureEventSourceListener: EventListener
     {
+        /// <summary>
+        /// The trait name that has to be present on all event sources collected by this listener
+        /// </summary>
         public const string TraitName = "AzureEventSource";
+        /// <summary>
+        /// The trait value that has to be present on all event sources collected by this listener
+        /// </summary>
         public const string TraitValue = "true";
 
         private readonly List<EventSource> _eventSources = new List<EventSource>();
@@ -42,6 +48,7 @@ namespace Azure.Core.Diagnostics
             _eventSources.Clear();
         }
 
+        /// <inheritdoc />
         protected sealed override void OnEventSourceCreated(EventSource eventSource)
         {
             base.OnEventSourceCreated(eventSource);
@@ -57,6 +64,7 @@ namespace Azure.Core.Diagnostics
             }
         }
 
+        /// <inheritdoc />
         protected sealed override void OnEventWritten(EventWrittenEventArgs eventData)
         {
             _log(eventData, EventSourceEventFormatting.Format(eventData));

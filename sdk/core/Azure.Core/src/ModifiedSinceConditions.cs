@@ -5,6 +5,9 @@ using System;
 
 namespace Azure
 {
+    /// <summary>
+    /// Specifies HTTP options for conditional requests based on modification time.
+    /// </summary>
     public class ModifiedSinceConditions : MatchConditions
     {
         /// <summary>
