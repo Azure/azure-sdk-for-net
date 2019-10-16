@@ -581,7 +581,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewShare(out ShareClient share))
             {
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-                AsyncPageable<StorageHandle> handles = directory.GetHandlesAsync();
+                AsyncPageable<StorageFileHandle> handles = directory.GetHandlesAsync();
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     directory.ForceCloseHandleAsync("nonExistantHandleId"),
