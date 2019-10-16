@@ -192,11 +192,11 @@ namespace Azure.Storage.Queues.Tests
                 {
                     Id = GetNewString(),
                     AccessPolicy =
-                        new AccessPolicy
+                        new QueueAccessPolicy
                         {
-                            Start =  Recording.UtcNow.AddHours(-1),
-                            Expiry =  Recording.UtcNow.AddHours(1),
-                            Permission = "raup"
+                            StartsOn =  Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "raup"
                         }
                 }
             };

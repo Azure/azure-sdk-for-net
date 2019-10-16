@@ -389,11 +389,11 @@ namespace Azure.Storage.Test.Shared
                 {
                     Id = GetNewString(),
                     AccessPolicy =
-                        new AccessPolicy
+                        new BlobAccessPolicy
                         {
-                            Start = Recording.UtcNow.AddHours(-1),
-                            Expiry =  Recording.UtcNow.AddHours(1),
-                            Permission = "rw"
+                            StartsOn = Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "rw"
                         }
                 }
             };

@@ -2306,101 +2306,6 @@ namespace Azure.Storage.Queues
 #endregion Service
 
 #region Models
-#region class AccessPolicy
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// An Access policy
-    /// </summary>
-    public partial class AccessPolicy
-    {
-        /// <summary>
-        /// the date-time the policy is active
-        /// </summary>
-        public System.DateTimeOffset? Start { get; set; }
-
-        /// <summary>
-        /// the date-time the policy expires
-        /// </summary>
-        public System.DateTimeOffset? Expiry { get; set; }
-
-        /// <summary>
-        /// the permissions for the acl policy
-        /// </summary>
-        public string Permission { get; set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of AccessPolicy instances.
-        /// You can use QueuesModelFactory.AccessPolicy instead.
-        /// </summary>
-        internal AccessPolicy() { }
-
-        /// <summary>
-        /// Serialize a AccessPolicy instance as XML.
-        /// </summary>
-        /// <param name="value">The AccessPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.AccessPolicy value, string name = "AccessPolicy", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.Start != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Start", ""),
-                    value.Start.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            }
-            if (value.Expiry != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Expiry", ""),
-                    value.Expiry.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            }
-            if (value.Permission != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Permission", ""),
-                    value.Permission));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new AccessPolicy instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized AccessPolicy instance.</returns>
-        internal static Azure.Storage.Queues.Models.AccessPolicy FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.AccessPolicy _value = new Azure.Storage.Queues.Models.AccessPolicy();
-            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
-            if (_child != null)
-            {
-                _value.Start = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
-            if (_child != null)
-            {
-                _value.Expiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
-            if (_child != null)
-            {
-                _value.Permission = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.AccessPolicy value);
-    }
-}
-#endregion class AccessPolicy
-
 #region class DequeuedMessage
 namespace Azure.Storage.Queues.Models
 {
@@ -2955,6 +2860,92 @@ namespace Azure.Storage.Queues.Models
     }
 }
 #endregion class PeekedMessage
+
+#region class QueueAccessPolicy
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// An Access policy
+    /// </summary>
+    public partial class QueueAccessPolicy
+    {
+        /// <summary>
+        /// the date-time the policy is active
+        /// </summary>
+        public System.DateTimeOffset StartsOn { get; set; }
+
+        /// <summary>
+        /// the date-time the policy expires
+        /// </summary>
+        public System.DateTimeOffset ExpiresOn { get; set; }
+
+        /// <summary>
+        /// the permissions for the acl policy
+        /// </summary>
+        public string Permissions { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of QueueAccessPolicy instances.
+        /// You can use QueuesModelFactory.QueueAccessPolicy instead.
+        /// </summary>
+        internal QueueAccessPolicy() { }
+
+        /// <summary>
+        /// Serialize a QueueAccessPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The QueueAccessPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueAccessPolicy value, string name = "AccessPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Start", ""),
+                value.StartsOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Expiry", ""),
+                value.ExpiresOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Permission", ""),
+                value.Permissions));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new QueueAccessPolicy instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized QueueAccessPolicy instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueAccessPolicy FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.QueueAccessPolicy _value = new Azure.Storage.Queues.Models.QueueAccessPolicy();
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.StartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
+            if (_child != null)
+            {
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
+            if (_child != null)
+            {
+                _value.Permissions = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueAccessPolicy value);
+    }
+}
+#endregion class QueueAccessPolicy
 
 #region class QueueAnalyticsLogging
 namespace Azure.Storage.Queues.Models
@@ -4274,7 +4265,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// An Access policy
         /// </summary>
-        public Azure.Storage.Queues.Models.AccessPolicy AccessPolicy { get; set; }
+        public Azure.Storage.Queues.Models.QueueAccessPolicy AccessPolicy { get; set; }
 
         /// <summary>
         /// Creates a new SignedIdentifier instance
@@ -4292,7 +4283,7 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                AccessPolicy = new Azure.Storage.Queues.Models.AccessPolicy();
+                AccessPolicy = new Azure.Storage.Queues.Models.QueueAccessPolicy();
             }
         }
 
@@ -4310,7 +4301,7 @@ namespace Azure.Storage.Queues.Models
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Id", ""),
                 value.Id));
-            _element.Add(Azure.Storage.Queues.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            _element.Add(Azure.Storage.Queues.Models.QueueAccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
             return _element;
         }
 
@@ -4332,7 +4323,7 @@ namespace Azure.Storage.Queues.Models
             _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
             if (_child != null)
             {
-                _value.AccessPolicy = Azure.Storage.Queues.Models.AccessPolicy.FromXml(_child);
+                _value.AccessPolicy = Azure.Storage.Queues.Models.QueueAccessPolicy.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
