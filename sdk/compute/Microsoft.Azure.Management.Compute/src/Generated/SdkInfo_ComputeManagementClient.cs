@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/laurawu19/azure-rest-api-specs/blob/private-temp/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\luwu\\Documents\\october\\sdk";
       public static readonly String GithubForkName = "laurawu19";
       public static readonly String GithubBranchName = "private-temp";
-      public static readonly String GithubCommidId = "cbef264cc94187b8115c04c10d598383572b4eb0";
+      public static readonly String GithubCommidId = "2d7036a4e6a37b41365c336ec8fd1c1ac96edf8c";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

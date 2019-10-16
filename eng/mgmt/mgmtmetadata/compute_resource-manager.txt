@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/laurawu19/azure-rest-api-specs/blob/private-temp/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Users\luwu\Documents\october\sdk
-2019-10-10 22:36:34 UTC
+2019-10-16 00:23:08 UTC
 Azure-rest-api-specs repository information
 GitHub fork: laurawu19
 Branch:      private-temp
-Commit:      cbef264cc94187b8115c04c10d598383572b4eb0
+Commit:      2d7036a4e6a37b41365c336ec8fd1c1ac96edf8c
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
