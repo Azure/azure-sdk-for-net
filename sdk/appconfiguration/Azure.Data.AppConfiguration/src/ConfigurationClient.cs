@@ -703,7 +703,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return PageResponseEnumerator.CreatePage(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -736,7 +736,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return PageResponseEnumerator.CreatePage(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -784,7 +784,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return PageResponseEnumerator.CreatePage(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -817,7 +817,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return PageResponseEnumerator.CreatePage(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }

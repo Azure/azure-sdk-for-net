@@ -25,6 +25,11 @@ namespace Azure.Storage
             return new StorageAsyncPageable(this, cancellationToken);
         }
 
+        protected Page<T> CreatePage(IReadOnlyList<T> values, string continuationToken, Response response)
+        {
+            return new StoragePage(values, continuationToken, response);
+        }
+
         /// <summary>
         /// Abstract the Storage pattern for async iteration
         /// </summary>
@@ -237,6 +242,22 @@ namespace Azure.Storage
                 } while (CanContinue(continuationToken));
             }
 
+        }
+
+        private class StoragePage : Page<T>
+        {
+            private readonly Response _response;
+
+            public StoragePage(IReadOnlyList<T> values, string continuationToken, Response response)
+            {
+                _response = response;
+                Values = values;
+                ContinuationToken = continuationToken;
+            }
+
+            public override IReadOnlyList<T> Values { get; }
+            public override string ContinuationToken { get; }
+            public override Response GetRawResponse() => _response;
         }
     }
 }

@@ -11,49 +11,25 @@ namespace Azure
     /// zero or more <see cref="Page{T}"/>s of values.
     /// </summary>
     /// <typeparam name="T">The type of values.</typeparam>
-    public readonly struct Page<T>
+    public abstract class Page<T>
     {
         /// <summary>
         /// Gets the values in this <see cref="Page{T}"/>.
         /// </summary>
-        public IReadOnlyList<T> Values { get; }
+        public abstract IReadOnlyList<T> Values { get; }
 
         /// <summary>
         /// Gets the continuation token used to request the next
         /// <see cref="Page{T}"/>.  The continuation token may be null or
         /// empty when there are no more pages.
         /// </summary>
-        public string? ContinuationToken { get; }
-
-        /// <summary>
-        /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
-        /// </summary>
-        private readonly Response _response;
+        public abstract string? ContinuationToken { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> that provided this
         /// <see cref="Page{T}"/>.
         /// </summary>
-        public Response GetRawResponse() => _response;
-
-        /// <summary>
-        /// Creates a new <see cref="Page{T}"/>.
-        /// </summary>
-        /// <param name="values">
-        /// The values in this <see cref="Page{T}"/>.
-        /// </param>
-        /// <param name="continuationToken">
-        /// The continuation token used to request the next <see cref="Page{T}"/>.
-        /// </param>
-        /// <param name="response">
-        /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
-        /// </param>
-        public Page(IReadOnlyList<T> values, string? continuationToken, Response response)
-        {
-            Values = values;
-            ContinuationToken = continuationToken;
-            _response = response;
-        }
+        public abstract Response GetRawResponse();
 
         /// <summary>
         /// Creates a string representation of an <see cref="Page{T}"/>.

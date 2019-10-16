@@ -11,6 +11,10 @@ namespace Azure.Core
 {
     internal static class PageResponseEnumerator
     {
+        public static Page<T> CreatePage<T>(IReadOnlyList<T> values, string continuationToken, Response response)
+        {
+            return new PageCore<T>(values, continuationToken, response);
+        }
 
         public static FuncPageable<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
@@ -70,6 +74,22 @@ namespace Azure.Core
                     continuationToken = pageResponse.ContinuationToken;
                 } while (continuationToken != null);
             }
+        }
+
+        private class PageCore<T> : Page<T>
+        {
+            private readonly Response _response;
+
+            public PageCore(IReadOnlyList<T> values, string continuationToken, Response response)
+            {
+                _response = response;
+                Values = values;
+                ContinuationToken = continuationToken;
+            }
+
+            public override IReadOnlyList<T> Values { get; }
+            public override string ContinuationToken { get; }
+            public override Response GetRawResponse() => _response;
         }
     }
 }
