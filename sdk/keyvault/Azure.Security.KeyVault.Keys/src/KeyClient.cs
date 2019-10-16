@@ -17,12 +17,12 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public class KeyClient
     {
+        internal const string KeysPath = "/keys/";
+        internal const string DeletedKeysPath = "/deletedkeys/";
+
         private readonly KeyVaultPipeline _pipeline;
 
         private readonly ClientDiagnostics _clientDiagnostics;
-
-        private const string KeysPath = "/keys/";
-        private const string DeletedKeysPath = "/deletedkeys/";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyClient"/> class for mocking.
@@ -546,20 +546,22 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="DeleteKeyOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<DeletedKey> DeleteKey(string name, CancellationToken cancellationToken = default)
+        public virtual DeleteKeyOperation StartDeleteKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.DeleteKey");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.StartDeleteKey");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
+                Response<DeletedKey> response = _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
+                return new DeleteKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -580,20 +582,22 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="DeleteKeyOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<DeletedKey>> DeleteKeyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<DeleteKeyOperation> StartDeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.DeleteKey");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.StartDeleteKey");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
+                Response<DeletedKey> response = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
+                return new DeleteKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -720,20 +724,22 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecoverDeletedKeyOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyVaultKey> RecoverDeletedKey(string name, CancellationToken cancellationToken = default)
+        public virtual RecoverDeletedKeyOperation StartRecoverDeletedKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.RecoverDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.StartRecoverDeletedKey");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover");
+                Response<KeyVaultKey> response = _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover");
+                return new RecoverDeletedKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -754,20 +760,22 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecoverDeletedKeyOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyVaultKey>> RecoverDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<RecoverDeletedKeyOperation> StartRecoverDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.RecoverDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.StartRecoverDeletedKey");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover").ConfigureAwait(false);
+                Response<KeyVaultKey> response = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover").ConfigureAwait(false);
+                return new RecoverDeletedKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {

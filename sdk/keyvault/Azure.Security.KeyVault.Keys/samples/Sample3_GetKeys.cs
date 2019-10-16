@@ -82,12 +82,17 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // The Cloud RSA Key and the Cloud EC Key are no longer needed.
             // You need to delete them from the Key Vault.
-            client.DeleteKey(rsaKeyName);
-            client.DeleteKey(ecKeyName);
+            DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey(rsaKeyName);
+            DeleteKeyOperation ecKeyOperation = client.StartDeleteKey(ecKeyName);
 
             // To ensure secrets are deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(client, rsaKeyName));
-            Assert.IsTrue(WaitForDeletedKey(client, ecKeyName));
+            while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
+            {
+                Thread.Sleep(5000);
+
+                rsaKeyOperation.UpdateStatus();
+                ecKeyOperation.UpdateStatus();
+            }
 
             // You can list all the deleted and non-purged keys, assuming Key Vault is soft-delete enabled.
             IEnumerable<DeletedKey> keysDeleted = client.GetDeletedKeys();
@@ -99,24 +104,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
             client.PurgeDeletedKey(rsaKeyName);
             client.PurgeDeletedKey(ecKeyName);
-        }
-
-        private bool WaitForDeletedKey(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedKey(keyName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }

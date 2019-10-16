@@ -16,10 +16,10 @@ namespace Azure.Security.KeyVault.Secrets
     /// </summary>
     public class SecretClient
     {
-        private readonly KeyVaultPipeline _pipeline;
+        internal const string SecretsPath = "/secrets/";
+        internal const string DeletedSecretsPath = "/deletedsecrets/";
 
-        private const string SecretsPath = "/secrets/";
-        private const string DeletedSecretsPath = "/deletedsecrets/";
+        private readonly KeyVaultPipeline _pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for mocking.
@@ -359,17 +359,19 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<DeletedSecret>> DeleteSecretAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.</returns>
+        public virtual async Task<DeleteSecretOperation> StartDeleteSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.DeleteSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartDeleteSecret");
             scope.AddAttribute("secret", name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name).ConfigureAwait(false);
+                Response<DeletedSecret> response = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name).ConfigureAwait(false);
+                return new DeleteSecretOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -388,17 +390,19 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<DeletedSecret> DeleteSecret(string name, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.</returns>
+        public virtual DeleteSecretOperation StartDeleteSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.DeleteSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartDeleteSecret");
             scope.AddAttribute("secret", name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name);
+                Response<DeletedSecret> response = _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name);
+                return new DeleteSecretOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -505,17 +509,19 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<SecretProperties>> RecoverDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="RecoverDeletedSecretOperation"/> to wait on this long-running operation.</returns>
+        public virtual async Task<RecoverDeletedSecretOperation> StartRecoverDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.RecoverDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartRecoverDeletedSecret");
             scope.AddAttribute("secret", name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, () => new SecretProperties(), cancellationToken, DeletedSecretsPath, name, "/recover").ConfigureAwait(false);
+                Response<SecretProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new SecretProperties(), cancellationToken, DeletedSecretsPath, name, "/recover").ConfigureAwait(false);
+                return new RecoverDeletedSecretOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -534,17 +540,19 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<SecretProperties> RecoverDeletedSecret(string name, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="RecoverDeletedSecretOperation"/> to wait on this long-running operation.</returns>
+        public virtual RecoverDeletedSecretOperation StartRecoverDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.RecoverDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartRecoverDeletedSecret");
             scope.AddAttribute("secret", name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, () => new SecretProperties(), cancellationToken, DeletedSecretsPath, name, "/recover");
+                Response<SecretProperties> response = _pipeline.SendRequest(RequestMethod.Post, () => new SecretProperties(), cancellationToken, DeletedSecretsPath, name, "/recover");
+                return new RecoverDeletedSecretOperation(_pipeline, response);
             }
             catch (Exception e)
             {

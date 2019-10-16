@@ -57,32 +57,14 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
 
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
-            await keyClient.DeleteKeyAsync(rsaKeyName);
+            DeleteKeyOperation operation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
 
             // To ensure key is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedKeyAsync(keyClient, rsaKeyName));
+            await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             await keyClient.PurgeDeletedKeyAsync(rsaKeyName);
 
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedKeyAsync(keyName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
         }
     }
 }

@@ -49,10 +49,15 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             File.WriteAllBytes(backupPath, client.BackupSecret(secretName));
 
             // The storage account secret is no longer in use, so you delete it.
-            client.DeleteSecret(secretName);
+            DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 
             // To ensure secret is deleted on server side.
-            Assert.IsTrue(WaitForDeletedSecret(client, secretName));
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(5000);
+
+                operation.UpdateStatus();
+            }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             client.PurgeDeletedSecret(secretName);
@@ -61,24 +66,6 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             SecretProperties restoreSecret = client.RestoreSecretBackup(File.ReadAllBytes(backupPath));
 
             AssertSecretsEqual(storedSecret.Properties, restoreSecret);
-        }
-
-        private bool WaitForDeletedSecret(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedSecret(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
 
         private void AssertSecretsEqual(SecretProperties exp, SecretProperties act)

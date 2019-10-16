@@ -141,11 +141,17 @@ Console.WriteLine(updatedSecretProperties.ContentType);
 ```
 
 ### Delete a Secret
-`Delete` deletes a secret previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the secret.
+`StartDeleteSecret` starts a long-running operation to deletes a secret previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the secret.
 
 ```C# DeleteSecret
-DeletedSecret secret = client.DeleteSecret("secret-name");
+DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
+while (!operation.HasCompleted)
+{
+    Thread.Sleep(5000);
+}
+
+DeletedSecret secret = operation.Value;
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
 ```

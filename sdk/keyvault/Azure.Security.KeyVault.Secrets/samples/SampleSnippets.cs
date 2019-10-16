@@ -131,37 +131,27 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public void DeleteSecret()
         {
             #region DeleteSecret
-            DeletedSecret secret = client.DeleteSecret("secret-name");
+            DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(5000);
+
+                operation.UpdateStatus();
+            }
+
+            DeletedSecret secret = operation.Value;
             Console.WriteLine(secret.Name);
             Console.WriteLine(secret.Value);
             #endregion
 
             try
             {
-                // Deleting a secret when soft delete is enabled may not happen immediately.
-                WaitForDeletedSecret(secret.Name);
-
                 client.PurgeDeletedSecret(secret.Name);
             }
             catch
             {
                 // Merely attempt to purge a deleted secret since the Key Vault may not have soft delete enabled.
-            }
-        }
-        private void WaitForDeletedSecret(string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedSecret(secretName);
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
             }
         }
     }

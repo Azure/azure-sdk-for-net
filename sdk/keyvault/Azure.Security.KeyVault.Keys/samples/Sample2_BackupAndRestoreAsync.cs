@@ -50,10 +50,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 memoryStream.Write(byteKey, 0, byteKey.Length);
 
                 // The storage account key is no longer in use, so you delete it.
-                await client.DeleteKeyAsync(rsaKeyName);
+                DeleteKeyOperation operation = await client.StartDeleteKeyAsync(rsaKeyName);
 
                 // To ensure the key is deleted on server side.
-                Assert.IsTrue(await WaitForDeletedKeyAsync(client, rsaKeyName));
+                await operation.WaitForCompletionAsync();
 
                 // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
                 await client.PurgeDeletedKeyAsync(rsaKeyName);
@@ -63,24 +63,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
                 AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
             }
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedKeyAsync(keyName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
         }
     }
 }

@@ -178,45 +178,41 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void DeleteKey()
         {
             #region DeleteKey
-            DeletedKey key = client.DeleteKey("key-name");
+            DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(5000);
+
+                operation.UpdateStatus();
+            }
+
+            DeletedKey key = operation.Value;
             Console.WriteLine(key.Name);
             Console.WriteLine(key.DeletedOn);
             #endregion
 
-            DeletedKey rsaKey = client.DeleteKey("rsa-key-name");
-            DeletedKey ecKey = client.DeleteKey("ec-key-name");
+            DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey("rsa-key-name");
+            DeleteKeyOperation ecKeyOperation = client.StartDeleteKey("ec-key-name");
 
             try
             {
                 // Deleting a key when soft delete is enabled may not happen immediately.
-                WaitForDeletedKey(key.Name);
-                WaitForDeletedKey(rsaKey.Name);
-                WaitForDeletedKey(ecKey.Name);
+                while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
+                {
+                    Thread.Sleep(5000);
+
+                    rsaKeyOperation.UpdateStatus();
+                    ecKeyOperation.UpdateStatus();
+                }
 
                 client.PurgeDeletedKey(key.Name);
-                client.PurgeDeletedKey(rsaKey.Name);
-                client.PurgeDeletedKey(ecKey.Name);
+                client.PurgeDeletedKey(rsaKeyOperation.Value.Name);
+                client.PurgeDeletedKey(ecKeyOperation.Value.Name);
             }
             catch
             {
                 // Merely attempt to purge a deleted key since the Key Vault may not have soft delete enabled.
-            }
-        }
-
-        private void WaitForDeletedKey(string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedKey(keyName);
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
             }
         }
     }

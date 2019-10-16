@@ -6,7 +6,6 @@ using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
@@ -76,12 +75,13 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // The bank account was closed. You need to delete its credentials from the key vault.
             // You also want to delete the information of your storage account.
-            await client.DeleteSecretAsync(bankSecretName);
-            await client.DeleteSecretAsync(storageSecretName);
+            DeleteSecretOperation bankSecretOperation = await client.StartDeleteSecretAsync(bankSecretName);
+            DeleteSecretOperation storageSecretOperation = await client.StartDeleteSecretAsync(storageSecretName);
 
             // To ensure secrets are deleted on server side.
-            Assert.IsTrue(await WaitForDeletedSecretAsync(client, bankSecretName));
-            Assert.IsTrue(await WaitForDeletedSecretAsync(client, storageSecretName));
+            Task.WaitAll(
+                bankSecretOperation.WaitForCompletionAsync().AsTask(),
+                storageSecretOperation.WaitForCompletionAsync().AsTask());
 
             // You can list all the deleted and non-purged secrets, assuming key vault is soft-delete enabled.
             await foreach (DeletedSecret secret in client.GetDeletedSecretsAsync())
@@ -92,24 +92,6 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             await client.PurgeDeletedSecretAsync(bankSecretName);
             await client.PurgeDeletedSecretAsync(storageSecretName);
-        }
-
-        private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedSecretAsync(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }

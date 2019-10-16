@@ -6,7 +6,6 @@ using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
@@ -55,10 +54,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             // The storage account secret is no longer in use, so you delete it.
-            await client.DeleteSecretAsync(secretName);
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync(secretName);
 
             // To ensure secret is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedSecretAsync(client, secretName));
+            await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             await client.PurgeDeletedSecretAsync(secretName);
@@ -73,24 +72,6 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             AssertSecretsEqual(storedSecret.Properties, restoreSecret);
-        }
-
-        private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedSecretAsync(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }

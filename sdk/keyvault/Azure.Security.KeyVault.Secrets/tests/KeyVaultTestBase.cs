@@ -47,13 +47,14 @@ namespace Azure.Security.KeyVault.Test
         [TearDown]
         public async Task Cleanup()
         {
+            // TODO: Change to OneTimeTearDown at end of TestFixture and await the LRO for deleting a secret.
             try
             {
                 foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     if (cleanupItem.Delete)
                     {
-                        await Client.DeleteSecretAsync(cleanupItem.Name);
+                        await Client.StartDeleteSecretAsync(cleanupItem.Name);
                     }
                 }
 

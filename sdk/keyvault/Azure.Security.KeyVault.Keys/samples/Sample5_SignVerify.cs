@@ -108,34 +108,21 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 
             // The Cloud Keys are no longer needed, need to delete them from the Key Vault.
-            keyClient.DeleteKey(rsaKeyName);
-            keyClient.DeleteKey(ecKeyName);
+            DeleteKeyOperation rsaKeyOperation = keyClient.StartDeleteKey(rsaKeyName);
+            DeleteKeyOperation ecKeyOperation = keyClient.StartDeleteKey(ecKeyName);
 
             // To ensure the keys are deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(keyClient, rsaKeyName));
-            Assert.IsTrue(WaitForDeletedKey(keyClient, ecKeyName));
+            while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
+            {
+                Thread.Sleep(5000);
+
+                rsaKeyOperation.UpdateStatus();
+                ecKeyOperation.UpdateStatus();
+            }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);
             keyClient.PurgeDeletedKey(ecKeyName);
-        }
-
-        private bool WaitForDeletedKey(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedKey(keyName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }

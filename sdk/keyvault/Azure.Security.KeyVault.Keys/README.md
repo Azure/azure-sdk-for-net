@@ -165,11 +165,17 @@ Console.WriteLine(updatedKey.Properties.UpdatedOn);
 ```
 
 ### Delete a Key
-`DeleteKey` deletes a key previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
+`StartDeleteKey` starts a long-running operation to delete a key previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
 
 ```C# DeleteKey
-DeletedKey key = client.DeleteKey("key-name");
+DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
+while (!operation.HasCompleted)
+{
+    Thread.Sleep(5000);
+}
+
+DeletedKey key = operation.Value;
 Console.WriteLine(key.Name);
 Console.WriteLine(key.DeletedDate);
 ```
