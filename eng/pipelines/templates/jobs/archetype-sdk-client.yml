@@ -29,6 +29,7 @@ jobs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
+    condition: ne(variables['Skip.Analyze'], true)
     variables:
       - template: ../variables/globals.yml
     dependsOn:
@@ -77,6 +78,7 @@ jobs:
           artifactName: reports
           path: $(Build.ArtifactStagingDirectory)/dependencies.html
   - job: "Test"
+    condition: ne(variables['Skip.Test'], true)
     variables:
       - template: ../variables/globals.yml
     strategy:

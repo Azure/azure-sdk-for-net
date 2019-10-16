@@ -3,7 +3,7 @@
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>-preview.10</VersionSuffix>
+    <VersionSuffix>preview.10</VersionSuffix>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
