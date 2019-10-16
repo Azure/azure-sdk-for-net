@@ -56,7 +56,7 @@ namespace Azure.Storage.Sas
         private readonly DateTimeOffset _expiryTime;
 
         // sip
-        private readonly IPRange _ipRange;
+        private readonly SasIPRange _sasIpRange;
 
         // si
         private readonly string _identifier;
@@ -128,7 +128,7 @@ namespace Azure.Storage.Sas
         /// to accept requests.  When specifying a range, note that the range
         /// is inclusive.
         /// </summary>
-        public IPRange IPRange => _ipRange;
+        public SasIPRange SasIPRange => _sasIpRange;
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
@@ -228,7 +228,7 @@ namespace Azure.Storage.Sas
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,
-            IPRange ipRange,
+            SasIPRange sasIpRange,
             string identifier,
             string resource,
             string permissions,
@@ -252,7 +252,7 @@ namespace Azure.Storage.Sas
             _protocol = protocol;
             _startTime = startsOn;
             _expiryTime = expiresOn;
-            _ipRange = ipRange;
+            _sasIpRange = sasIpRange;
             _identifier = identifier ?? string.Empty;
             _resource = resource ?? string.Empty;
             _permissions = permissions ?? string.Empty;
@@ -311,8 +311,8 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.ExpiryTimeUpper:
                         _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Constants.Sas.Parameters.IPRangeUpper:
-                        _ipRange = IPRange.Parse(kv.Value);
+                    case Constants.Sas.Parameters.SasIPRangeUpper:
+                        _sasIpRange = SasIPRange.Parse(kv.Value);
                         break;
                     case Constants.Sas.Parameters.IdentifierUpper:
                         _identifier = kv.Value;
@@ -443,10 +443,10 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            var ipr = IPRange.ToString();
+            var ipr = SasIPRange.ToString();
             if (ipr.Length > 0)
             {
-                AddToBuilder(Constants.Sas.Parameters.IPRange, ipr);
+                AddToBuilder(Constants.Sas.Parameters.SasIPRange, ipr);
             }
 
             if (!string.IsNullOrWhiteSpace(Identifier))

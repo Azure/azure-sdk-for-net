@@ -61,7 +61,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange SasIPRange { get; set; }
 
         /// <summary>
         /// The services associated with the shared access signature. The
@@ -113,7 +113,7 @@ namespace Azure.Storage.Sas
                 ResourceTypes.ToPermissionsString(),
                 startTime,
                 expiryTime,
-                IPRange.ToString(),
+                SasIPRange.ToString(),
                 Protocol.ToProtocolString(),
                 Version,
                 "");  // That's right, the account SAS requires a terminating extra newline
@@ -126,7 +126,7 @@ namespace Azure.Storage.Sas
                 Protocol,
                 StartsOn,
                 ExpiresOn,
-                IPRange,
+                SasIPRange,
                 null, // Identifier
                 null, // Resource
                 Permissions,
@@ -159,7 +159,7 @@ namespace Azure.Storage.Sas
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             ExpiresOn.GetHashCode() ^
-            IPRange.GetHashCode() ^
+            SasIPRange.GetHashCode() ^
             (Permissions?.GetHashCode() ?? 0) ^
             Protocol.GetHashCode() ^
             ResourceTypes.GetHashCode() ^
@@ -193,7 +193,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasBuilder other) =>
             ExpiresOn == other.ExpiresOn &&
-            IPRange == other.IPRange &&
+            SasIPRange == other.SasIPRange &&
             Permissions == other.Permissions &&
             Protocol == other.Protocol &&
             ResourceTypes == other.ResourceTypes &&

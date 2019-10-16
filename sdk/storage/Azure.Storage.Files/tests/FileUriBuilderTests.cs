@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.Test
 
             Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), fileUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", fileUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), fileUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), fileUriBuilder.Sas.SasIPRange);
             Assert.AreEqual("rw", fileUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, fileUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", fileUriBuilder.Sas.Resource);

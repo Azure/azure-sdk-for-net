@@ -162,7 +162,7 @@ namespace Azure.Storage.Queues.Test
 
             Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", queueUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.SasIPRange);
             Assert.AreEqual("rw", queueUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, queueUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", queueUriBuilder.Sas.Resource);
@@ -349,7 +349,7 @@ namespace Azure.Storage.Queues.Test
 
             Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", queueUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.SasIPRange);
             Assert.AreEqual("rw", queueUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, queueUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", queueUriBuilder.Sas.Resource);

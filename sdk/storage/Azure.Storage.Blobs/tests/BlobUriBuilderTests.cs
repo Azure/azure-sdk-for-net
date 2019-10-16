@@ -171,7 +171,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", blobUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.SasIPRange);
             Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
@@ -332,7 +332,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", blobUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.SasIPRange);
             Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", blobUriBuilder.Sas.Resource);

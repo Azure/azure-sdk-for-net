@@ -254,7 +254,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -265,7 +265,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsContainer(string containerName, UserDelegationKey userDelegationKey, string accountName)
@@ -276,7 +276,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -288,7 +288,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
@@ -300,7 +300,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsSnapshot(string containerName, string blobName, string snapshot, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -313,7 +313,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new SnapshotSasPermissions { Read = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)

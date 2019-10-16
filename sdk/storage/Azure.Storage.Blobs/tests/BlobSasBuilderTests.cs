@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.Container, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
             Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
             Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -144,7 +144,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
             Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
             Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
@@ -178,7 +178,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
             Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
             Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
@@ -241,7 +241,7 @@ namespace Azure.Storage.Blobs.Test
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
                 Permissions = Permissions,
-                IPRange = constants.Sas.IPRange,
+                SasIPRange = constants.Sas.SasIPRange,
                 Identifier = constants.Sas.Identifier,
                 BlobContainerName = containerName,
                 BlobName = includeBlob ? blobName : null,
@@ -275,7 +275,7 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 canonicalName,
                 constants.Sas.Identifier,
-                constants.Sas.IPRange.ToString(),
+                constants.Sas.SasIPRange.ToString(),
                 constants.Sas.Protocol.ToString(),
                 SasQueryParameters.DefaultSasVersion,
                 resource,
@@ -316,7 +316,7 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
-                constants.Sas.IPRange.ToString(),
+                constants.Sas.SasIPRange.ToString(),
                 constants.Sas.Protocol.ToString(),
                 SasQueryParameters.DefaultSasVersion,
                 resource,

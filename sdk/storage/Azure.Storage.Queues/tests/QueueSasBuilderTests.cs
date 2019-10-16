@@ -37,7 +37,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(string.Empty, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -63,7 +63,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(string.Empty, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -91,7 +91,7 @@ namespace Azure.Storage.Queues.Test
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
                 Permissions = Permissions,
-                IPRange = constants.Sas.IPRange,
+                SasIPRange = constants.Sas.SasIPRange,
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
             };
@@ -112,7 +112,7 @@ namespace Azure.Storage.Queues.Test
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 "/queue/" + constants.Sas.Account + "/" + queueName,
                 constants.Sas.Identifier,
-                constants.Sas.IPRange.ToString(),
+                constants.Sas.SasIPRange.ToString(),
                 SasProtocol.Https.ToString(),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
 

@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.Tests
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new FileAccountSasPermissions { Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
         public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -142,7 +142,7 @@ namespace Azure.Storage.Files.Tests
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new ShareSasPermissions { Read = true, Write = true, List = true, Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Tests
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new FileSasPermissions { Read = true, Write = true, Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         public SignedIdentifier[] BuildSignedIdentifiers() =>

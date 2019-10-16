@@ -144,7 +144,7 @@ namespace Azure.Storage.Queues.Tests
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
         public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -155,7 +155,7 @@ namespace Azure.Storage.Queues.Tests
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Update = true, Process = true, Add = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+                SasIPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         private class DisposingQueue : IDisposable
