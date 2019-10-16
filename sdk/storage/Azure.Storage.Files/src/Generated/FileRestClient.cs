@@ -7446,7 +7446,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// ListSharesIncludeType values
     /// </summary>
-    public enum ListSharesIncludeType
+    internal enum ListSharesIncludeType
     {
         /// <summary>
         /// snapshots

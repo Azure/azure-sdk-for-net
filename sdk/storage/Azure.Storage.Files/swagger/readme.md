@@ -148,6 +148,15 @@ directive:
     }
 ```
 
+### Hide ListSharesIncludeType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ListSharesInclude
+  transform: >
+    $.items["x-az-public"] = false;
+```
+
 ### /{shareName}?restype=share
 ``` yaml
 directive:
