@@ -148,12 +148,12 @@ namespace Azure.Data.AppConfiguration
                     }
                 }
                 var keys = string.Join(",", keysCopy);
-                builder.AppendQuery(KeyQueryFilter, Uri.EscapeDataString(keys));
+                builder.AppendQuery(KeyQueryFilter, keys);
             }
 
             if (selector.Labels.Count > 0)
             {
-                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? Uri.EscapeDataString("\0") : Uri.EscapeDataString(EscapeReservedCharacters(label)));
+                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
                 var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }
