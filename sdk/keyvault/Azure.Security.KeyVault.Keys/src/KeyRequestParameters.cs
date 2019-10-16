@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys
         public IList<KeyOperation> KeyOperations { get; set; }
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
-        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+        public DateTimeOffset? Expires { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
 
@@ -41,9 +41,9 @@ namespace Azure.Security.KeyVault.Keys
             {
                 Enabled = key.Enabled.Value;
             }
-            if (key.Expires.HasValue)
+            if (key.ExpiresOn.HasValue)
             {
-                Expires = key.Expires.Value;
+                Expires = key.ExpiresOn.Value;
             }
             if (key.NotBefore.HasValue)
             {
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal KeyRequestParameters(KeyType type, KeyCreateOptions options = default)
+        internal KeyRequestParameters(KeyType type, CreateKeyOptions options = default)
         {
             KeyType = type;
             if (options != null)
@@ -68,9 +68,9 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     Enabled = options.Enabled.Value;
                 }
-                if (options.Expires.HasValue)
+                if (options.ExpiresOn.HasValue)
                 {
-                    Expires = options.Expires.Value;
+                    Expires = options.ExpiresOn.Value;
                 }
                 if (options.NotBefore.HasValue)
                 {
@@ -87,16 +87,16 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal KeyRequestParameters(EcKeyCreateOptions ecKey)
+        internal KeyRequestParameters(CreateEcKeyOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            if (ecKey.Curve.HasValue)
+            if (ecKey.CurveName.HasValue)
             {
-                Curve = ecKey.Curve.Value;
+                Curve = ecKey.CurveName.Value;
             }
         }
 
-        internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
+        internal KeyRequestParameters(CreateRsaKeyOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
             if (rsaKey.KeySize.HasValue)

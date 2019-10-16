@@ -7,17 +7,17 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// <see cref="Secret"/> is the resource consisting of a value and its <see cref="Properties"/>.
+    /// <see cref="KeyVaultSecret"/> is the resource consisting of a value and its <see cref="Properties"/>.
     /// </summary>
-    public class Secret : IJsonDeserializable, IJsonSerializable
+    public class KeyVaultSecret : IJsonDeserializable, IJsonSerializable
     {
         private const string ValuePropertyName = "value";
 
         private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
 
-        internal Secret()
+        internal KeyVaultSecret(SecretProperties properties = null)
         {
-            Properties = new SecretProperties();
+            Properties = properties ?? new SecretProperties();
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="value">The value of the secret.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="value"/> is null.</exception>
-        public Secret(string name, string value)
+        public KeyVaultSecret(string name, string value)
         {
             Properties = new SecretProperties(name);
             Value = value ?? throw new ArgumentNullException(nameof(value));
@@ -44,14 +44,14 @@ namespace Azure.Security.KeyVault.Secrets
         public string Name => Properties.Name;
 
         /// <summary>
-        /// Additional properties of the <see cref="Secret"/>.
+        /// Additional properties of the <see cref="KeyVaultSecret"/>.
         /// </summary>
         public SecretProperties Properties { get; }
 
         /// <summary>
         /// The value of the secret.
         /// </summary>
-        public string Value { get; private set; }
+        public string Value { get; internal set; }
 
         internal virtual void ReadProperty(JsonProperty prop)
         {

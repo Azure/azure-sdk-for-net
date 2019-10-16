@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClient Client { get; set; }
 
-        public Uri VaultUri { get; set; }
+        public Uri VaultEndpoint { get; set; }
 
         private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
 
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Test
             base.StartTestRecording();
 
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultEndpoint = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
         [TearDown]
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Test
             _secretsToCleanup.Enqueue((name, delete));
         }
 
-        protected void AssertSecretsEqual(Secret exp, Secret act)
+        protected void AssertSecretsEqual(KeyVaultSecret exp, KeyVaultSecret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
             AssertSecretPropertiesEqual(exp.Properties, act.Properties);
@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Test
             Assert.AreEqual(exp.Managed, act.Managed);
 
             Assert.AreEqual(exp.Enabled, act.Enabled);
-            Assert.AreEqual(exp.Expires, act.Expires);
+            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
         }
 

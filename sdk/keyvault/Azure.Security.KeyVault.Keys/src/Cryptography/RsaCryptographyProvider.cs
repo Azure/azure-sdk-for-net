@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RsaCryptographyProvider : LocalCryptographyProvider
     {
-        internal RsaCryptographyProvider(Key key) : base(key)
+        internal RsaCryptographyProvider(KeyVaultKey key) : base(key)
         {
         }
 

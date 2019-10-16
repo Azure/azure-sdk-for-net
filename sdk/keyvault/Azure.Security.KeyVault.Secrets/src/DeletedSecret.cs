@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// <summary>
     /// Represents a KeyVault secret that has been deleted, allowing it to be recovered, if needed.
     /// </summary>
-    public class DeletedSecret : Secret
+    public class DeletedSecret : KeyVaultSecret
     {
         private const string RecoveryIdPropertyName = "recoveryId";
         private const string DeletedDatePropertyName = "deletedDate";
@@ -21,24 +21,28 @@ namespace Azure.Security.KeyVault.Secrets
 
         private string _recoveryId;
 
-        internal DeletedSecret()
+        internal DeletedSecret(SecretProperties properties = null) : base(properties)
         {
         }
 
         /// <summary>
         /// The identifier of the deleted secret. This is used to recover the secret.
         /// </summary>
-        public Uri RecoveryId => new Uri(_recoveryId);
+        public Uri RecoveryId
+        {
+            get => _recoveryId is null ? null : new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
 
         /// <summary>
         /// The time when the secret was deleted, in UTC.
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
+        public DateTimeOffset? DeletedDate { get; internal set; }
 
         /// <summary>
         /// The time when the secret is scheduled to be purged, in UTC
         /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {

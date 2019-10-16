@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class AesCryptographyProvider : LocalCryptographyProvider
     {
-        internal AesCryptographyProvider(Key key) : base(key)
+        internal AesCryptographyProvider(KeyVaultKey key) : base(key)
         {
         }
 

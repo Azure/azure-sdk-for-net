@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Argument.AssertNotNull(keyId, nameof(keyId));
 
-                Key key = GetKey(keyId, cancellationToken);
+                KeyVaultKey key = GetKey(keyId, cancellationToken);
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Argument.AssertNotNull(keyId, nameof(keyId));
 
-                Key key = await GetKeyAsync(keyId, cancellationToken).ConfigureAwait(false);
+                KeyVaultKey key = await GetKeyAsync(keyId, cancellationToken).ConfigureAwait(false);
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
@@ -135,22 +135,22 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return await ((KeyResolver)this).ResolveAsync(new Uri(keyId), cancellationToken).ConfigureAwait(false);
         }
 
-        private Key GetKey(Uri keyId, CancellationToken cancellationToken)
+        private KeyVaultKey GetKey(Uri keyId, CancellationToken cancellationToken)
         {
             using Request request = CreateGetRequest(keyId);
 
             Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (Key)ParseResponse(response, new SecretKey()) : ParseResponse(response, new Key());
+            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (KeyVaultKey)ParseResponse(response, new SecretKey()) : ParseResponse(response, new KeyVaultKey());
         }
 
-        private async Task<Key> GetKeyAsync(Uri keyId, CancellationToken cancellationToken)
+        private async Task<KeyVaultKey> GetKeyAsync(Uri keyId, CancellationToken cancellationToken)
         {
             using Request request = CreateGetRequest(keyId);
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (Key)ParseResponse(response, new SecretKey()) : ParseResponse(response, new Key());
+            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (KeyVaultKey)ParseResponse(response, new SecretKey()) : ParseResponse(response, new KeyVaultKey());
         }
 
         private Response<T> ParseResponse<T>(Response response, T result)
