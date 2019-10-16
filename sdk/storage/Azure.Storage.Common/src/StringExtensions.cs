@@ -4,7 +4,7 @@
 using System;
 using System.Globalization;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     internal static class StringExtensions
     {

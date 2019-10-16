@@ -169,7 +169,7 @@ namespace Azure.Data.AppConfiguration
             BuildUriForKvRoute(request.Uri, setting);
 
             MatchConditions requestOptions = new MatchConditions();
-            requestOptions.SetIfNotExistsCondition();
+            requestOptions.IfNoneMatch = ETag.All;
             ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
 
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
@@ -220,7 +220,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return await SetAsync(setting, requestOptions, cancellationToken).ConfigureAwait(false);
@@ -241,7 +241,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return Set(setting, requestOptions, cancellationToken);
@@ -373,7 +373,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return await DeleteAsync(setting.Key, setting.Label, requestOptions, cancellationToken).ConfigureAwait(false);
@@ -394,7 +394,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return Delete(setting.Key, setting.Label, requestOptions, cancellationToken);
@@ -523,7 +523,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfChanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfModifiedCondition(setting.ETag);
+                requestOptions.IfNoneMatch = setting.ETag;
             }
 
             return await GetAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
@@ -544,7 +544,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfChanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfModifiedCondition(setting.ETag);
+                requestOptions.IfNoneMatch = setting.ETag;
             }
 
             return Get(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
@@ -703,7 +703,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -736,7 +736,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -784,7 +784,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -817,7 +817,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }

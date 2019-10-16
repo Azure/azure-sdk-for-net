@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// Holds information about the progress data transfers for both request and response streams in a single operation.
