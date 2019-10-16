@@ -132,7 +132,7 @@ Console.WriteLine(rsaKey.KeyMaterial.KeyType);
 
 // Create a hardware Elliptic Curve key
 // Because only premium key vault supports HSM backed keys , please ensure your key vault
-// SKU is premium while you set "hsm" value to true
+// SKU is premium when you set "hsm" value to true
 var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
 Key ecKey = client.CreateEcKey(echsmkey);
 
@@ -220,7 +220,7 @@ Console.WriteLine(rsaKey.KeyMaterial.KeyType);
 
 // Create a hardware Elliptic Curve key
 // Because only premium key vault supports HSM backed keys , please ensure your key vault
-// SKU is premium while you set "hsm" value to true
+// SKU is premium when you set "hsm" value to true
 var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
 Key ecKey = await client.CreateEcKeyAsync(echsmkey);
 
