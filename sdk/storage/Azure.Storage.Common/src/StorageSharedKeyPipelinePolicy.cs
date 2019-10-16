@@ -95,10 +95,10 @@ namespace Azure.Storage
             var sb = new StringBuilder();
             foreach (var headerName in
                 message.Request.Headers
-                .Select(h => h.Name)
+                .Select(h => h.Name.ToLowerInvariant())
                 .Where(name => name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
 #pragma warning disable CA1308 // Normalize strings to uppercase
-                .OrderBy(name => name.Trim().ToLowerInvariant()))
+                .OrderBy(name => name.Trim()))
 #pragma warning restore CA1308 // Normalize strings to uppercase
             {
                 if (sb.Length > 0)
