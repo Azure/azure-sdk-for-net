@@ -20,6 +20,7 @@ namespace Azure.Core
             {
                 "x-ms-client-request-id",
                 "x-ms-return-client-request-id",
+                "traceparent",
 
                 "Accept",
                 "Cache-Control",
