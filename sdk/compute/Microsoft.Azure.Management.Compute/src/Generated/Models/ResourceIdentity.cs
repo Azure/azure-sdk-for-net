@@ -35,12 +35,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// values include: 'SystemAssigned'</param>
         /// <param name="principalId">The object id of the Managed Identity
         /// Resource. This will be sent to the RP from ARM via the
-        /// x-ms-client-tenant-id header in the PUT request if the resource has
-        /// a systemAssigned(implicit) identity</param>
-        /// <param name="tenantId">The tenant id of the Managed Identity
-        /// Resource. This will be sent to the RP from ARM via the
         /// x-ms-identity-principal-id header in the PUT request if the
         /// resource has a systemAssigned(implicit) identity</param>
+        /// <param name="tenantId">The tenant id of the Managed Identity
+        /// Resource. This will be sent to the RP from ARM via the
+        /// x-ms-client-tenant-id header in the PUT request if the resource has
+        /// a systemAssigned(implicit) identity</param>
         public ResourceIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string))
         {
             Type = type;
@@ -63,22 +63,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the object id of the Managed Identity Resource. This
-        /// will be sent to the RP from ARM via the x-ms-client-tenant-id
-        /// header in the PUT request if the resource has a
-        /// systemAssigned(implicit) identity
+        /// Gets the object id of the Managed Identity Resource. This will be
+        /// sent to the RP from ARM via the x-ms-identity-principal-id header
+        /// in the PUT request if the resource has a systemAssigned(implicit)
+        /// identity
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; set; }
+        public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the tenant id of the Managed Identity Resource. This
-        /// will be sent to the RP from ARM via the x-ms-identity-principal-id
-        /// header in the PUT request if the resource has a
-        /// systemAssigned(implicit) identity
+        /// Gets the tenant id of the Managed Identity Resource. This will be
+        /// sent to the RP from ARM via the x-ms-client-tenant-id header in the
+        /// PUT request if the resource has a systemAssigned(implicit) identity
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
+        public string TenantId { get; private set; }
 
     }
 }
