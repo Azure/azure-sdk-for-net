@@ -593,7 +593,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.CloseAsync();
                     }
 
-                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<EventHubsClientClosedException>().Or.TypeOf<ObjectDisposedException>());
                 }
             }
         }

@@ -51,6 +51,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
 
         /// <summary>
+        ///   The amount of time to allow an AMQP connection to be idle before considering
+        ///   it to be timed out.
+        /// </summary>
+        ///
+        private static TimeSpan ConnectionIdleTimeout { get; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
         ///   The amount of buffer to apply to account for clock skew when
         ///   refreshing authorization.  Authorization will be refreshed earlier
         ///   than the expected expiration by this amount.
@@ -891,6 +898,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             var connectionSettings = new AmqpConnectionSettings
             {
+                IdleTimeOut = (uint)ConnectionIdleTimeout.TotalMilliseconds,
                 MaxFrameSize = AmqpConstants.DefaultMaxFrameSize,
                 ContainerId = identifier,
                 HostName = hostName

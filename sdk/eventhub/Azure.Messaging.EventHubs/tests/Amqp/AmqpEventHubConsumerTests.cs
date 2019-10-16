@@ -321,7 +321,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new AmqpEventHubConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy, null);
             await consumer.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
