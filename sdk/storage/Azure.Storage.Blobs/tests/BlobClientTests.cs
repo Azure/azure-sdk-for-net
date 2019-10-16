@@ -113,7 +113,7 @@ namespace Azure.Storage.Blobs.Test
 
                 using (var stream = new MemoryStream(data))
                 {
-                    var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
+                    var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
 
                     await Verify(stream => blob.UploadAsync(stream, parallelTransferOptions: options));
 
@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
+                        var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
 
                         await Verify(blob.UploadAsync(file, parallelTransferOptions: options));
 
@@ -349,7 +349,7 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
+                        var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
 
                         // Assert
                         await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -569,7 +569,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadStreamAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
         [Test]
@@ -592,7 +592,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
+            await UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
         #endregion Upload
