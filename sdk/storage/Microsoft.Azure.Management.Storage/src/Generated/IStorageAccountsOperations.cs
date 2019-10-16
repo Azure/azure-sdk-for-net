@@ -231,7 +231,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<StorageAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the access keys for the specified storage account.
+        /// Lists the access keys or Kerberos keys (if active directory
+        /// enabled) for the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -241,6 +242,10 @@ namespace Microsoft.Azure.Management.Storage
         /// The name of the storage account within the specified resource
         /// group. Storage account names must be between 3 and 24 characters in
         /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='expand'>
+        /// Specifies type of the key to be listed. Possible value is kerb.
+        /// Possible values include: 'kerb'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -257,10 +262,10 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageAccountListKeysResult>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountListKeysResult>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, ListKeyExpand? expand = default(ListKeyExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerates one of the access keys for the specified storage
-        /// account.
+        /// Regenerates one of the access keys or Kerberos keys for the
+        /// specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -273,7 +278,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='keyName'>
         /// The name of storage keys that want to be regenerated, possible
-        /// values are key1, key2.
+        /// values are key1, key2, kerb1, kerb2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
