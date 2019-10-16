@@ -501,6 +501,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnServerConfigurationsAssociatedWithVirtualWanOperations VpnServerConfigurationsAssociatedWithVirtualWan { get; }
 
         /// <summary>
+        /// Gets the IVirtualHubRouteTableV2sOperations.
+        /// </summary>
+        IVirtualHubRouteTableV2sOperations VirtualHubRouteTableV2s { get; }
+
+        /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.
         /// </summary>
         IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }

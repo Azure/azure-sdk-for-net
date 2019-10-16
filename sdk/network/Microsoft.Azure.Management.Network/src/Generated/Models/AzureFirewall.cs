@@ -115,12 +115,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<AzureFirewallIPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the Azure firewall resource.
+        /// Gets the provisioning state of the Azure firewall resource.
         /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
         /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the operation mode for Threat Intelligence. Possible

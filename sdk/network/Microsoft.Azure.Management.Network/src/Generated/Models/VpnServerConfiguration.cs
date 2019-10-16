@@ -189,11 +189,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<P2SVpnGateway> P2SVpnGateways { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.etag")]
-        public string VpnServerConfigurationPropertiesEtag { get; set; }
+        public string VpnServerConfigurationPropertiesEtag { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

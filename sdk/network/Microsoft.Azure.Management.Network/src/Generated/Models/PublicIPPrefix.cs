@@ -109,16 +109,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? PrefixLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the allocated Prefix.
+        /// Gets the allocated Prefix.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipPrefix")]
-        public string IpPrefix { get; set; }
+        public string IpPrefix { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of all referenced PublicIPAddresses.
+        /// Gets the list of all referenced PublicIPAddresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddresses")]
-        public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; set; }
+        public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; private set; }
 
         /// <summary>
         /// Gets the reference to load balancer frontend IP configuration
@@ -128,26 +128,25 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource LoadBalancerFrontendIpConfiguration { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the public IP prefix
-        /// resource.
+        /// Gets the resource GUID property of the public IP prefix resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the public IP prefix
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the public IP prefix resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting the IP allocated

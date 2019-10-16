@@ -62,10 +62,10 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of AdvertisedPublicPrefixes.
+        /// Gets the reference of AdvertisedPublicPrefixes.
         /// </summary>
         [JsonProperty(PropertyName = "advertisedPublicPrefixes")]
-        public IList<string> AdvertisedPublicPrefixes { get; set; }
+        public IList<string> AdvertisedPublicPrefixes { get; private set; }
 
         /// <summary>
         /// Gets or sets the communities of bgp peering. Specified for
