@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -105,6 +104,23 @@ namespace Azure.Storage.Files
             {
                 SetNameFieldsIfNull();
                 return _name;
+            }
+        }
+
+        /// <summary>
+        /// The path of the file.
+        /// </summary>
+        private string _path;
+
+        /// <summary>
+        /// Gets the path of the file.
+        /// </summary>
+        public virtual string Path
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _path;
             }
         }
 
@@ -292,12 +308,13 @@ namespace Azure.Storage.Files
         /// </summary>
         private void SetNameFieldsIfNull()
         {
-            if (_name == null || _shareName == null || _accountName == null)
+            if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new FileUriBuilder(Uri);
                 _name = builder.LastDirectoryOrFileName;
                 _shareName = builder.ShareName;
                 _accountName = builder.AccountName;
+                _path = builder.DirectoryOrFilePath;
             }
         }
 
@@ -2266,7 +2283,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<StorageHandle> GetHandles(
+        public virtual Pageable<StorageFileHandle> GetHandles(
             CancellationToken cancellationToken = default) =>
             new GetFileHandlesAsyncCollection(this).ToSyncCollection(cancellationToken);
 
@@ -2290,7 +2307,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<StorageHandle> GetHandlesAsync(
+        public virtual AsyncPageable<StorageFileHandle> GetHandlesAsync(
             CancellationToken cancellationToken = default) =>
             new GetFileHandlesAsyncCollection(this).ToAsyncCollection(cancellationToken);
 

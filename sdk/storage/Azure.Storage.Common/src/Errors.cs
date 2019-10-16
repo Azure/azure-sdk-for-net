@@ -60,6 +60,9 @@ namespace Azure.Storage
         public static ArgumentException InvalidResourceType(char s)
             => new ArgumentException($"Invalid resource type: '{s}'");
 
+        public static ArgumentException VersionNotSupported(string paramName)
+           => new ArgumentException($"The version specified by {paramName} is not supported by this library.");
+
         public static ArgumentException AccountMismatch(string accountNameCredential, string accountNameValue)
             => new ArgumentException(string.Format(
                 CultureInfo.CurrentCulture,

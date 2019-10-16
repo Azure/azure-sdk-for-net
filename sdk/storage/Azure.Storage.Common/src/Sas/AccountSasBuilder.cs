@@ -36,14 +36,14 @@ namespace Azure.Storage.Sas
         /// start time for this call is assumed to be the time when the
         /// storage service receives the request.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public DateTimeOffset ExpiryTime { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions associated with the shared access signature. The
@@ -65,19 +65,15 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The services associated with the shared access signature. The
-        /// user is restricted to operations with the specified services. The
-        /// <see cref="AccountSasServices"/> type can be used to create the
-        /// services string.
+        /// user is restricted to operations with the specified services.
         /// </summary>
-        public string Services { get; set; }
+        public AccountSasServices Services { get; set; }
 
         /// <summary>
         /// The resource types associated with the shared access signature. The
-        /// user is restricted to operations on the specified resources. The
-        /// <see cref="AccountSasResourceTypes"/> type can be used to create
-        /// the resource types string.
+        /// user is restricted to operations on the specified resources.
         /// </summary>
-        public string ResourceTypes { get; set; }
+        public AccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -96,7 +92,7 @@ namespace Azure.Storage.Sas
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            if (ExpiryTime == default || string.IsNullOrEmpty(Permissions) || string.IsNullOrEmpty(ResourceTypes) || string.IsNullOrEmpty(Services))
+            if (ExpiresOn == default || string.IsNullOrEmpty(Permissions) || ResourceTypes == default || Services == default)
             {
                 throw Errors.AccountSasMissingData();
             }
@@ -106,19 +102,19 @@ namespace Azure.Storage.Sas
             }
             // Make sure the permission characters are in the correct order
             Permissions = AccountSasPermissions.Parse(Permissions).ToString();
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
-                Services,
-                ResourceTypes,
+                Services.ToPermissionsString(),
+                ResourceTypes.ToPermissionsString(),
                 startTime,
                 expiryTime,
                 IPRange.ToString(),
-                Protocol.ToString(),
+                Protocol.ToProtocolString(),
                 Version,
                 "");  // That's right, the account SAS requires a terminating extra newline
 
@@ -128,8 +124,8 @@ namespace Azure.Storage.Sas
                 Services,
                 ResourceTypes,
                 Protocol,
-                StartTime,
-                ExpiryTime,
+                StartsOn,
+                ExpiresOn,
                 IPRange,
                 null, // Identifier
                 null, // Resource
@@ -162,13 +158,13 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="AccountSasBuilder"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            ExpiryTime.GetHashCode() ^
+            ExpiresOn.GetHashCode() ^
             IPRange.GetHashCode() ^
             (Permissions?.GetHashCode() ?? 0) ^
             Protocol.GetHashCode() ^
-            (ResourceTypes?.GetHashCode() ?? 0) ^
-            (Services?.GetHashCode() ?? 0) ^
-            StartTime.GetHashCode() ^
+            ResourceTypes.GetHashCode() ^
+            (Services.GetHashCode()) ^
+            StartsOn.GetHashCode() ^
             (Version?.GetHashCode() ?? 0);
 
         /// <summary>
@@ -196,13 +192,13 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasBuilder other) =>
-            ExpiryTime == other.ExpiryTime &&
+            ExpiresOn == other.ExpiresOn &&
             IPRange == other.IPRange &&
             Permissions == other.Permissions &&
             Protocol == other.Protocol &&
             ResourceTypes == other.ResourceTypes &&
             Services == other.Services &&
-            StartTime == other.StartTime &&
+            StartsOn == other.StartsOn &&
             Version == other.Version;
     }
 }

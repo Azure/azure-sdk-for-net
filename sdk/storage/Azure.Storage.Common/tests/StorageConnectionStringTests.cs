@@ -7,7 +7,7 @@ using System.Linq;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     [TestFixture]
     public class StorageConnectionStringTests

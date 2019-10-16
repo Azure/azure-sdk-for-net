@@ -12,7 +12,7 @@ using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionar
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     internal class StorageConnectionString
     {

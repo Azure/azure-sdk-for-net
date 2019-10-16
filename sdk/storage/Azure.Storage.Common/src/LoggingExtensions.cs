@@ -12,7 +12,7 @@ using System.Runtime.ExceptionServices;
 using System.Web;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     internal static class LoggingExtensions
     {
