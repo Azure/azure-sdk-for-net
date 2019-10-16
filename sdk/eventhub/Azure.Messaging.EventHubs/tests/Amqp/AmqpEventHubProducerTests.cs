@@ -338,7 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new AmqpEventHubProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubRetryPolicy>());
             await producer.CloseAsync(CancellationToken.None);
 
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
 
             await producer.Object.CloseAsync(CancellationToken.None);
-            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, new SendOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, new SendOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>

@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await client.GetPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(async () => await client.GetPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", cancellationSource.Token), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), mockRetryPolicy);
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, new EventHubConsumerOptions(), mockRetryPolicy), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, new EventHubConsumerOptions(), mockRetryPolicy), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), mockRetryPolicy);
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateProducer(new EventHubProducerOptions(), mockRetryPolicy), Throws.InstanceOf<EventHubsObjectClosedException>());
+            Assert.That(() => client.CreateProducer(new EventHubProducerOptions(), mockRetryPolicy), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>

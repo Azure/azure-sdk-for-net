@@ -442,7 +442,7 @@ namespace Azure.Messaging.EventHubs
             {
                 case TransportType.AmqpTcp:
                 case TransportType.AmqpWebSockets:
-                    return new TrackOneEventHubClient(fullyQualifiedNamespace, eventHubName, credential, options, defaultRetryPolicy);
+                    return new AmqpEventHubClient(fullyQualifiedNamespace, eventHubName, credential, options, defaultRetryPolicy);
 
                 default:
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));

@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
                     Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
                     Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedAt, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(10)), "The Event Hub should have been created just about now.");
+                    Assert.That(properties.CreatedAt, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
                 }
             }
         }
@@ -254,9 +254,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
-                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
-                    Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
-                    Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<EventHubsObjectClosedException>().Or.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsClientClosedException>().Or.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<EventHubsClientClosedException>().Or.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<EventHubsClientClosedException>().Or.TypeOf<ObjectDisposedException>());
                 }
             }
         }
