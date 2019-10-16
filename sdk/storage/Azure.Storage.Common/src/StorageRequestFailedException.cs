@@ -70,9 +70,6 @@ namespace Azure.Storage
                   CreateMessage(response, message ?? response?.ReasonPhrase, errorCode, additionalInfo),
                   GetErrorCode(response, errorCode), innerException)
         {
-            // Get the error code, if it wasn't provided
-            GetErrorCode(response, errorCode);
-
             if (additionalInfo != null)
             {
                 AdditionalInformation = additionalInfo;
