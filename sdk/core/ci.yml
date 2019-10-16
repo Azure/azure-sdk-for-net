@@ -34,6 +34,11 @@ pr:
     include:
     - sdk/core/
 
+variables:
+  Skip.Release: true
+  Skip.Test: true
+  Skip.Analyze: true
+
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
