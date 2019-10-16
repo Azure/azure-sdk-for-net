@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An error encountered by the Batch service when deleting a certificate.
+    /// An error encountered by the Batch service when deleting a Certificate.
     /// </summary>
     public partial class DeleteCertificateError
     {
@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the DeleteCertificateError class.
         /// </summary>
-        /// <param name="code">An identifier for the certificate deletion
+        /// <param name="code">An identifier for the Certificate deletion
         /// error. Codes are invariant and are intended to be consumed
         /// programmatically.</param>
-        /// <param name="message">A message describing the certificate deletion
+        /// <param name="message">A message describing the Certificate deletion
         /// error, intended to be suitable for display in a user
         /// interface.</param>
         /// <param name="values">A list of additional error details related to
-        /// the certificate deletion error.</param>
+        /// the Certificate deletion error.</param>
         public DeleteCertificateError(string code = default(string), string message = default(string), IList<NameValuePair> values = default(IList<NameValuePair>))
         {
             Code = code;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an identifier for the certificate deletion error.
+        /// Gets or sets an identifier for the Certificate deletion error.
         /// Codes are invariant and are intended to be consumed
         /// programmatically.
         /// </summary>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message describing the certificate deletion error,
+        /// Gets or sets a message describing the Certificate deletion error,
         /// intended to be suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
@@ -69,12 +69,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of additional error details related to the
-        /// certificate deletion error.
+        /// Certificate deletion error.
         /// </summary>
         /// <remarks>
-        /// This list includes details such as the active pools and nodes
-        /// referencing this certificate. However, if a large number of
-        /// resources reference the certificate, the list contains only about
+        /// This list includes details such as the active Pools and Compute
+        /// Nodes referencing this Certificate. However, if a large number of
+        /// resources reference the Certificate, the list contains only about
         /// the first hundred.
         /// </remarks>
         [JsonProperty(PropertyName = "values")]

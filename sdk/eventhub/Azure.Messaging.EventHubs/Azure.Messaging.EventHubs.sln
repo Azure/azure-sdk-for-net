@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Tests", "tests\Azure.Messaging.EventHubs.Tests.csproj", "{51A23FD9-A32D-4390-9A5B-1EA7A045F0F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs.Samples", "samples\Azure.Messaging.EventHubs.Samples.csproj", "{AD33C619-AC51-4F29-937B-184B4F785F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Samples", "samples\Azure.Messaging.EventHubs.Samples.csproj", "{AD33C619-AC51-4F29-937B-184B4F785F57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

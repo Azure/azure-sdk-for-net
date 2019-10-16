@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Resource usage statistics for a task.
+    /// Resource usage statistics for a Task.
     /// </summary>
     public partial class TaskStatistics
     {
@@ -36,26 +36,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// last updated. All statistics are limited to the range between
         /// startTime and lastUpdateTime.</param>
         /// <param name="userCPUTime">The total user mode CPU time (summed
-        /// across all cores and all compute nodes) consumed by the
-        /// task.</param>
+        /// across all cores and all Compute Nodes) consumed by the
+        /// Task.</param>
         /// <param name="kernelCPUTime">The total kernel mode CPU time (summed
-        /// across all cores and all compute nodes) consumed by the
-        /// task.</param>
+        /// across all cores and all Compute Nodes) consumed by the
+        /// Task.</param>
         /// <param name="wallClockTime">The total wall clock time of the
-        /// task.</param>
+        /// Task.</param>
         /// <param name="readIOps">The total number of disk read operations
-        /// made by the task.</param>
+        /// made by the Task.</param>
         /// <param name="writeIOps">The total number of disk write operations
-        /// made by the task.</param>
+        /// made by the Task.</param>
         /// <param name="readIOGiB">The total gibibytes read from disk by the
-        /// task.</param>
+        /// Task.</param>
         /// <param name="writeIOGiB">The total gibibytes written to disk by the
-        /// task.</param>
-        /// <param name="waitTime">The total wait time of the task. The wait
-        /// time for a task is defined as the elapsed time between the creation
-        /// of the task and the start of task execution. (If the task is
+        /// Task.</param>
+        /// <param name="waitTime">The total wait time of the Task. The wait
+        /// time for a Task is defined as the elapsed time between the creation
+        /// of the Task and the start of Task execution. (If the Task is
         /// retried due to failures, the wait time is the time to the most
-        /// recent task execution.)</param>
+        /// recent Task execution.)</param>
         public TaskStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan userCPUTime, System.TimeSpan kernelCPUTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, System.TimeSpan waitTime)
         {
             Url = url;
@@ -100,62 +100,62 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the total user mode CPU time (summed across all cores
-        /// and all compute nodes) consumed by the task.
+        /// and all Compute Nodes) consumed by the Task.
         /// </summary>
         [JsonProperty(PropertyName = "userCPUTime")]
         public System.TimeSpan UserCPUTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total kernel mode CPU time (summed across all
-        /// cores and all compute nodes) consumed by the task.
+        /// cores and all Compute Nodes) consumed by the Task.
         /// </summary>
         [JsonProperty(PropertyName = "kernelCPUTime")]
         public System.TimeSpan KernelCPUTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the total wall clock time of the task.
+        /// Gets or sets the total wall clock time of the Task.
         /// </summary>
         /// <remarks>
-        /// The wall clock time is the elapsed time from when the task started
-        /// running on a compute node to when it finished (or to the last time
-        /// the statistics were updated, if the task had not finished by then).
-        /// If the task was retried, this includes the wall clock time of all
-        /// the task retries.
+        /// The wall clock time is the elapsed time from when the Task started
+        /// running on a Compute Node to when it finished (or to the last time
+        /// the statistics were updated, if the Task had not finished by then).
+        /// If the Task was retried, this includes the wall clock time of all
+        /// the Task retries.
         /// </remarks>
         [JsonProperty(PropertyName = "wallClockTime")]
         public System.TimeSpan WallClockTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk read operations made by the
-        /// task.
+        /// Task.
         /// </summary>
         [JsonProperty(PropertyName = "readIOps")]
         public long ReadIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk write operations made by the
-        /// task.
+        /// Task.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOps")]
         public long WriteIOps { get; set; }
 
         /// <summary>
-        /// Gets or sets the total gibibytes read from disk by the task.
+        /// Gets or sets the total gibibytes read from disk by the Task.
         /// </summary>
         [JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the total gibibytes written to disk by the task.
+        /// Gets or sets the total gibibytes written to disk by the Task.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the total wait time of the task. The wait time for a
-        /// task is defined as the elapsed time between the creation of the
-        /// task and the start of task execution. (If the task is retried due
-        /// to failures, the wait time is the time to the most recent task
+        /// Gets or sets the total wait time of the Task. The wait time for a
+        /// Task is defined as the elapsed time between the creation of the
+        /// Task and the start of Task execution. (If the Task is retried due
+        /// to failures, the wait time is the time to the most recent Task
         /// execution.)
         /// </summary>
         [JsonProperty(PropertyName = "waitTime")]

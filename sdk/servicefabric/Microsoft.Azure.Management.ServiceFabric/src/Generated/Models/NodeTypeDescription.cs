@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// . Possible values include: 'Bronze', 'Silver', 'Gold'</param>
         /// <param name="applicationPorts">The range of ports from which
         /// cluster assigned port to Service Fabric applications.</param>
-        /// <param name="ephemeralPorts">The range of empheral ports that nodes
-        /// in this node type should be configured with.</param>
+        /// <param name="ephemeralPorts">The range of ephemeral ports that
+        /// nodes in this node type should be configured with.</param>
         /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
         /// proxy.</param>
         public NodeTypeDescription(string name, int clientConnectionEndpointPort, int httpGatewayEndpointPort, bool isPrimary, int vmInstanceCount, IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), string durabilityLevel = default(string), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), int? reverseProxyEndpointPort = default(int?))
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public EndpointRangeDescription ApplicationPorts { get; set; }
 
         /// <summary>
-        /// Gets or sets the range of empheral ports that nodes in this node
+        /// Gets or sets the range of ephemeral ports that nodes in this node
         /// type should be configured with.
         /// </summary>
         [JsonProperty(PropertyName = "ephemeralPorts")]

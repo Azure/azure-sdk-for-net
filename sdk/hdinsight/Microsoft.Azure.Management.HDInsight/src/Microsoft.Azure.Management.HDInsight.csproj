@@ -7,18 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.0.0</Version>
+		<Version>5.1.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release contains some important changes to allow for more fine-grained role-based access to obtain sensitive credentials. As part of these changes, ACTION MAY BE REQUIRED if you are using one of the affected methods: 
-1) ConfigurationOperationsExtensions.Get will NO LONGER RETURN SENSITIVE PARAMETERS like storage keys (core-site) or HTTP credentials (gateway). 
-- To retrieve all configurations, including sensitive parameters, use ConfigurationOperationsExtensions.List going forward.  Note that users with the 'Reader' role will not be able to use this method to allow for fine-grained control over which users can access cluster secrets. 
-- To retrieve just HTTP gateway credentials, use ClusterOperationsExtensions.GetGatewaySettings. 
-2) ConfigurationsOperationsExtensions.Update is now deprecated and has been replaced by ClusterOperationsExtensions.UpdateGatewaySettings. 
-3) ConfigurationsOperationsExtensions.EnableHttp and DisableHttp are now deprecated. Http is now always enabled, so these methods are no longer needed. 
-
-For more information, please visit https://aka.ms/hdi-config-update
+This release adds a few new features:
+1) Added a new API, LocationsOperationsExtensions.GetCapabilities, to get capabilities for a specific location/region.
+2) Add a new API, LocationsOperationsExtensions.ListBillingSpecs, to list billing specs for a specific location/region.
+3) Added support for creating clusters with Autoscale (load-based and schedule-based) applied to the workernode role. For more details, please see the definition of Microsoft.Azure.Management.HDInsight.Models.Role.AutoscaleConfiguration.
       ]]>
 		</PackageReleaseNotes>
     

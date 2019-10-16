@@ -18,6 +18,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     {
         public const string Amd64 = "amd64";
         public const string X86 = "x86";
+        public const string ThreeEightSix = "386";
         public const string Arm = "arm";
+        public const string Arm64 = "arm64";
     }
 }

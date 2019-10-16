@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.</param>
         /// <param name="select">An OData $select clause.</param>
         /// <param name="maxResults">The maximum number of items to return in
-        /// the response. A maximum of 1000 nodes can be returned.</param>
+        /// the response. A maximum of 1000 Compute Nodes can be
+        /// returned.</param>
         /// <param name="timeout">The maximum time that the server can spend
         /// processing the request, in seconds. The default is 30
         /// seconds.</param>
@@ -81,7 +82,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
-        /// A maximum of 1000 nodes can be returned.
+        /// A maximum of 1000 Compute Nodes can be returned.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public int? MaxResults { get; set; }

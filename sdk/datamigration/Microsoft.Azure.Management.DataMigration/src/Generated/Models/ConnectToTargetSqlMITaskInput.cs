@@ -35,9 +35,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         /// <param name="targetConnectionInfo">Connection information for
         /// target SQL Server</param>
-        public ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo)
+        /// <param name="collectLogins">Flag for whether to collect logins from
+        /// target SQL MI server.</param>
+        /// <param name="collectAgentJobs">Flag for whether to collect agent
+        /// jobs from target SQL MI server.</param>
+        /// <param name="validateSsisCatalogOnly">Flag for whether to validate
+        /// SSIS catalog is reachable on the target SQL MI server.</param>
+        public ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo, bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?), bool? validateSsisCatalogOnly = default(bool?))
         {
             TargetConnectionInfo = targetConnectionInfo;
+            CollectLogins = collectLogins;
+            CollectAgentJobs = collectAgentJobs;
+            ValidateSsisCatalogOnly = validateSsisCatalogOnly;
             CustomInit();
         }
 
@@ -51,6 +60,27 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetConnectionInfo")]
         public SqlConnectionInfo TargetConnectionInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to collect logins from target SQL MI
+        /// server.
+        /// </summary>
+        [JsonProperty(PropertyName = "collectLogins")]
+        public bool? CollectLogins { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to collect agent jobs from target SQL
+        /// MI server.
+        /// </summary>
+        [JsonProperty(PropertyName = "collectAgentJobs")]
+        public bool? CollectAgentJobs { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to validate SSIS catalog is reachable
+        /// on the target SQL MI server.
+        /// </summary>
+        [JsonProperty(PropertyName = "validateSsisCatalogOnly")]
+        public bool? ValidateSsisCatalogOnly { get; set; }
 
         /// <summary>
         /// Validate the object.

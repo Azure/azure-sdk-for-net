@@ -37,11 +37,15 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="maxComplexCollectionFieldsPerIndex">The maximum number
         /// of fields of type Collection(Edm.ComplexType) allowed in an
         /// index.</param>
-        public ServiceLimits(int? maxFieldsPerIndex = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?))
+        /// <param name="maxComplexObjectsInCollectionsPerDocument">The maximum
+        /// number of objects in complex collections allowed per
+        /// document.</param>
+        public ServiceLimits(int? maxFieldsPerIndex = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?), int? maxComplexObjectsInCollectionsPerDocument = default(int?))
         {
             MaxFieldsPerIndex = maxFieldsPerIndex;
             MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
             MaxComplexCollectionFieldsPerIndex = maxComplexCollectionFieldsPerIndex;
+            MaxComplexObjectsInCollectionsPerDocument = maxComplexObjectsInCollectionsPerDocument;
             CustomInit();
         }
 
@@ -70,6 +74,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxComplexCollectionFieldsPerIndex")]
         public int? MaxComplexCollectionFieldsPerIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of objects in complex collections
+        /// allowed per document.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxComplexObjectsInCollectionsPerDocument")]
+        public int? MaxComplexObjectsInCollectionsPerDocument { get; set; }
 
     }
 }

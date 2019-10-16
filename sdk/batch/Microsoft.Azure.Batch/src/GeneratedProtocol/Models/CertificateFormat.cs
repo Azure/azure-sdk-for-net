@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum CertificateFormat
     {
         /// <summary>
-        /// The certificate is a PFX (PKCS#12) formatted certificate or
-        /// certificate chain.
+        /// The Certificate is a PFX (PKCS#12) formatted Certificate or
+        /// Certificate chain.
         /// </summary>
         [EnumMember(Value = "pfx")]
         Pfx,
         /// <summary>
-        /// The certificate is a base64-encoded X.509 certificate.
+        /// The Certificate is a base64-encoded X.509 Certificate.
         /// </summary>
         [EnumMember(Value = "cer")]
         Cer

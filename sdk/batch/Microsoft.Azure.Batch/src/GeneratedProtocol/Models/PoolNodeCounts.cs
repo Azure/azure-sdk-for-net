@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The number of nodes in each state for a pool.
+    /// The number of Compute Nodes in each state for a Pool.
     /// </summary>
     public partial class PoolNodeCounts
     {
@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolNodeCounts class.
         /// </summary>
-        /// <param name="poolId">The ID of the pool.</param>
-        /// <param name="dedicated">The number of dedicated nodes in each
-        /// state.</param>
-        /// <param name="lowPriority">The number of low priority nodes in each
-        /// state.</param>
+        /// <param name="poolId">The ID of the Pool.</param>
+        /// <param name="dedicated">The number of dedicated Compute Nodes in
+        /// each state.</param>
+        /// <param name="lowPriority">The number of low priority Compute Nodes
+        /// in each state.</param>
         public PoolNodeCounts(string poolId, NodeCounts dedicated = default(NodeCounts), NodeCounts lowPriority = default(NodeCounts))
         {
             PoolId = poolId;
@@ -48,19 +48,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the pool.
+        /// Gets or sets the ID of the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of dedicated nodes in each state.
+        /// Gets or sets the number of dedicated Compute Nodes in each state.
         /// </summary>
         [JsonProperty(PropertyName = "dedicated")]
         public NodeCounts Dedicated { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of low priority nodes in each state.
+        /// Gets or sets the number of low priority Compute Nodes in each
+        /// state.
         /// </summary>
         [JsonProperty(PropertyName = "lowPriority")]
         public NodeCounts LowPriority { get; set; }

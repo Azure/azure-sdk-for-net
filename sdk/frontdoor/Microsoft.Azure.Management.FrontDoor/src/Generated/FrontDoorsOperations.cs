@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -770,7 +770,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 customDomainProperties.Validate();
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1004,7 +1004,11 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "frontDoorParameters");
             }
-            string apiVersion = "2019-04-01";
+            if (frontDoorParameters != null)
+            {
+                frontDoorParameters.Validate();
+            }
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1263,7 +1267,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

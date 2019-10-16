@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Xunit.Abstractions;
 using Microsoft.Azure.Management.StorSimple8000Series;
 using Microsoft.Azure.Management.StorSimple8000Series.Models;

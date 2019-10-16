@@ -36,9 +36,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void BatchReadFileTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "BatchReadFileTest");
+                HttpMockServer.Initialize(this.GetType(), "BatchReadFileTest");
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 
@@ -77,9 +77,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void BatchReadFileInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "BatchReadFileInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "BatchReadFileInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
@@ -116,9 +116,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void BatchReadPdfFileInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "BatchReadPdfFileInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "BatchReadPdfFileInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("menu.pdf"), FileMode.Open))

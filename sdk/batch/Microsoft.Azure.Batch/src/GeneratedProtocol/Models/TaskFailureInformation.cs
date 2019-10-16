@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about a task failure.
+    /// Information about a Task failure.
     /// </summary>
     public partial class TaskFailureInformation
     {
@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskFailureInformation class.
         /// </summary>
-        /// <param name="category">The category of the task error.</param>
-        /// <param name="code">An identifier for the task error. Codes are
+        /// <param name="category">The category of the Task error.</param>
+        /// <param name="code">An identifier for the Task error. Codes are
         /// invariant and are intended to be consumed programmatically.</param>
-        /// <param name="message">A message describing the task error, intended
+        /// <param name="message">A message describing the Task error, intended
         /// to be suitable for display in a user interface.</param>
         /// <param name="details">A list of additional details related to the
         /// error.</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the category of the task error.
+        /// Gets or sets the category of the Task error.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'userError', 'serverError'
@@ -62,14 +62,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public ErrorCategory Category { get; set; }
 
         /// <summary>
-        /// Gets or sets an identifier for the task error. Codes are invariant
+        /// Gets or sets an identifier for the Task error. Codes are invariant
         /// and are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message describing the task error, intended to be
+        /// Gets or sets a message describing the Task error, intended to be
         /// suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]

@@ -10,12 +10,12 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionTagTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void TagImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TagImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "TagImageInStreamTest");
 
                 const string Chinese = "zh";
 
@@ -24,19 +24,20 @@ namespace ComputerVisionSDK.Tests
                 {
                     TagResult result = client.TagImageInStreamAsync(stream, Chinese).Result;
 
-                    Assert.Equal(
-                        new string[] { "草", "户外", "天空", "屋子", "建筑", "绿色", "草坪", "住宅", "绿色的", "家", "房子", "屋顶", "平房", "车库", "历史" },
-                        result.Tags.Select(tag => tag.Name).ToArray());
+                    var expects = new string[] { "草", "户外", "天空", "屋子", "建筑", "绿色", "草坪", "住宅", "绿色的", "家", "房子" };
+                    var intersect = expects.Intersect(result.Tags.Select(tag => tag.Name).ToArray()).ToArray();
+
+                    Assert.True(intersect.Length == expects.Length);
                 }
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void TagImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TagImageTest");
+                HttpMockServer.Initialize(this.GetType(), "TagImageTest");
 
                 string imageUrl = GetTestImageUrl("house.jpg");
 
@@ -44,9 +45,10 @@ namespace ComputerVisionSDK.Tests
                 {
                     TagResult result = client.TagImageAsync(imageUrl).Result;
 
-                    Assert.Equal(
-                        new string[] { "grass", "outdoor", "sky", "house", "building", "green", "lawn", "residential", "grassy", "home", "roof", "bungalow", "garage" , "historic" },
-                        result.Tags.Select(tag => tag.Name).ToArray());
+                    var expects = new string[] { "grass", "outdoor", "sky", "house", "building", "green", "lawn", "residential", "grassy", "home" };
+                    var intersect = expects.Intersect(result.Tags.Select(tag => tag.Name).ToArray()).ToArray();
+
+                    Assert.True(intersect.Length == expects.Length);
 
                     // Confirm tags are in descending confidence order
                     var orignalConfidences = result.Tags.Select(tag => tag.Confidence).ToArray();

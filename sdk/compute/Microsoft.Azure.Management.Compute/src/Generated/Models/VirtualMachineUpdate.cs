@@ -67,11 +67,35 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
         /// availability set at creation time. An existing VM cannot be added
-        /// to an availability set.</param>
+        /// to an availability set. &lt;br&gt;&lt;br&gt;This property cannot
+        /// exist along with a non-null properties.virtualMachineScaleSet
+        /// reference.</param>
+        /// <param name="virtualMachineScaleSet">Specifies information about
+        /// the virtual machine scale set that the virtual machine should be
+        /// assigned to. Virtual machines specified in the same virtual machine
+        /// scale set are allocated to different nodes to maximize
+        /// availability. Currently, a VM can only be added to virtual machine
+        /// scale set at creation time. An existing VM cannot be added to a
+        /// virtual machine scale set. &lt;br&gt;&lt;br&gt;This property cannot
+        /// exist along with a non-null properties.availabilitySet reference.
+        /// &lt;br&gt;&lt;br&gt;Minimum api‐version: 2019‐03‐01</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the virtual machine should be
         /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2018-04-01.</param>
+        /// <param name="priority">Specifies the priority for the virtual
+        /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
+        /// Possible values include: 'Regular', 'Low'</param>
+        /// <param name="evictionPolicy">Specifies the eviction policy for the
+        /// low priority virtual machine. Only supported value is 'Deallocate'.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. Possible
+        /// values include: 'Deallocate', 'Delete'</param>
+        /// <param name="billingProfile">Specifies the billing related details
+        /// of a low priority virtual machine. &lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2019-03-01.</param>
+        /// <param name="host">Specifies information about the dedicated host
+        /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2018-10-01.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine instance
@@ -93,7 +117,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -104,7 +128,12 @@ namespace Microsoft.Azure.Management.Compute.Models
             NetworkProfile = networkProfile;
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
+            VirtualMachineScaleSet = virtualMachineScaleSet;
             ProximityPlacementGroup = proximityPlacementGroup;
+            Priority = priority;
+            EvictionPolicy = evictionPolicy;
+            BillingProfile = billingProfile;
+            Host = host;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             LicenseType = licenseType;
@@ -188,9 +217,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
         /// added to availability set at creation time. An existing VM cannot
         /// be added to an availability set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
+        /// along with a non-null properties.virtualMachineScaleSet reference.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the virtual machine scale
+        /// set that the virtual machine should be assigned to. Virtual
+        /// machines specified in the same virtual machine scale set are
+        /// allocated to different nodes to maximize availability. Currently, a
+        /// VM can only be added to virtual machine scale set at creation time.
+        /// An existing VM cannot be added to a virtual machine scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
+        /// along with a non-null properties.availabilitySet reference.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api‐version: 2019‐03‐01
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualMachineScaleSet")]
+        public SubResource VirtualMachineScaleSet { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
@@ -200,6 +245,41 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the priority for the virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01. Possible values include: 'Regular', 'Low'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.priority")]
+        public string Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the eviction policy for the low priority
+        /// virtual machine. Only supported value is 'Deallocate'.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01. Possible values include: 'Deallocate', 'Delete'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.evictionPolicy")]
+        public string EvictionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the billing related details of a low
+        /// priority virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingProfile")]
+        public BillingProfile BillingProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the dedicated host that
+        /// the virtual machine resides in.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2018-10-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.host")]
+        public SubResource Host { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.

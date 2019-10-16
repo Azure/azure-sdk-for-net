@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
@@ -13,7 +13,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void CreateAndDelete()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
 
                 this.Initialize(context);
@@ -89,7 +89,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void UpdateSku()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
                 string testName = "unitTestingDPSUpdateSku";
@@ -125,7 +125,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         //[Fact]
         public void CreateFailure()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
 
                 this.Initialize(context);
@@ -143,7 +143,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
                 var badCall = new Func<ProvisioningServiceDescription>(() => this.provisioningClient.IotDpsResource.CreateOrUpdate(
                     testName,
-                    $"1ñ1{testName}!!!", //We dont't allow most punctuation, leading numbers, etc
+                    $"1�1{testName}!!!", //We dont't allow most punctuation, leading numbers, etc
                     createServiceDescription));
 
                 Assert.Throws<ErrorDetailsException>(badCall);

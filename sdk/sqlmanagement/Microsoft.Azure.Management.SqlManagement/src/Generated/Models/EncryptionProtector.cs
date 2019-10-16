@@ -65,11 +65,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kind of encryption protector. This is metadata used
-        /// for the Azure portal experience.
+        /// Gets kind of encryption protector. This is metadata used for the
+        /// Azure portal experience.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
+        public string Kind { get; private set; }
 
         /// <summary>
         /// Gets resource location.

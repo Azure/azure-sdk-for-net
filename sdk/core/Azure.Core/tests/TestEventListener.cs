@@ -6,13 +6,14 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using Azure.Core.Shared;
 
 namespace Azure.Core.Testing
 {
     public class TestEventListener : EventListener
     {
         private volatile bool _disposed;
-        private ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
+        private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
 
         public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
@@ -20,6 +21,8 @@ namespace Azure.Core.Testing
         {
             if (!_disposed)
             {
+                // Make sure we can format the event
+                EventSourceEventFormatting.Format(eventData);
                 _events.Enqueue(eventData);
             }
         }
@@ -39,11 +42,5 @@ namespace Azure.Core.Testing
             _disposed = true;
             base.Dispose();
         }
-    }
-
-    public static class TestEventListenerExtensions
-    {
-        public static T GetProperty<T>(this EventWrittenEventArgs data, string propName)
-            => (T)data.Payload[data.PayloadNames.IndexOf(propName)];
     }
 }

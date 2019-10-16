@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of nodes in each state, grouped by pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of nodes in each state, grouped by pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of nodes in each state, grouped by pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of nodes in each state, grouped by pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

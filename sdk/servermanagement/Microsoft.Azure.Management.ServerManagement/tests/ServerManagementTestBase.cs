@@ -357,7 +357,7 @@ namespace ServerManagement.Tests
                 if (TestingInteractively && !_once)
                 {
                     _once = true;
-                    using (var context = MockContext.Start("ServerManagement.Tests.Ignore"))
+                    using (var context = MockContext.Start("Ignore"))
                     {
                         var client = GetServerManagementClient(context);
                         await RemoveAllNodes(client);

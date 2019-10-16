@@ -57,12 +57,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deprovisioning'</param>
         /// <param name="serviceProviderNotes">Additional read only notes set
         /// by the connectivity provider.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// express route cross connection resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="peerings">The list of peerings.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public ExpressRouteCrossConnection(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), int? sTag = default(int?), string peeringLocation = default(string), int? bandwidthInMbps = default(int?), ExpressRouteCircuitReference expressRouteCircuit = default(ExpressRouteCircuitReference), string serviceProviderProvisioningState = default(string), string serviceProviderNotes = default(string), string provisioningState = default(string), IList<ExpressRouteCrossConnectionPeering> peerings = default(IList<ExpressRouteCrossConnectionPeering>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -86,13 +86,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name of the primary  port.
+        /// Gets the name of the primary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryAzurePort")]
         public string PrimaryAzurePort { get; private set; }
 
         /// <summary>
-        /// Gets the name of the secondary  port.
+        /// Gets the name of the secondary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryAzurePort")]
         public string SecondaryAzurePort { get; private set; }
@@ -137,8 +137,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ServiceProviderNotes { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the express route cross connection
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Resource usage statistics for a job schedule.
+    /// Resource usage statistics for a Job Schedule.
     /// </summary>
     public partial class JobScheduleStatistics
     {
@@ -36,37 +36,37 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// last updated. All statistics are limited to the range between
         /// startTime and lastUpdateTime.</param>
         /// <param name="userCPUTime">The total user mode CPU time (summed
-        /// across all cores and all compute nodes) consumed by all tasks in
-        /// all jobs created under the schedule.</param>
+        /// across all cores and all Compute Nodes) consumed by all Tasks in
+        /// all Jobs created under the schedule.</param>
         /// <param name="kernelCPUTime">The total kernel mode CPU time (summed
-        /// across all cores and all compute nodes) consumed by all tasks in
-        /// all jobs created under the schedule.</param>
+        /// across all cores and all Compute Nodes) consumed by all Tasks in
+        /// all Jobs created under the schedule.</param>
         /// <param name="wallClockTime">The total wall clock time of all the
-        /// tasks in all the jobs created under the schedule.</param>
+        /// Tasks in all the Jobs created under the schedule.</param>
         /// <param name="readIOps">The total number of disk read operations
-        /// made by all tasks in all jobs created under the schedule.</param>
+        /// made by all Tasks in all Jobs created under the schedule.</param>
         /// <param name="writeIOps">The total number of disk write operations
-        /// made by all tasks in all jobs created under the schedule.</param>
+        /// made by all Tasks in all Jobs created under the schedule.</param>
         /// <param name="readIOGiB">The total gibibytes read from disk by all
-        /// tasks in all jobs created under the schedule.</param>
+        /// Tasks in all Jobs created under the schedule.</param>
         /// <param name="writeIOGiB">The total gibibytes written to disk by all
-        /// tasks in all jobs created under the schedule.</param>
-        /// <param name="numSucceededTasks">The total number of tasks
-        /// successfully completed during the given time range in jobs created
-        /// under the schedule. A task completes successfully if it returns
+        /// Tasks in all Jobs created under the schedule.</param>
+        /// <param name="numSucceededTasks">The total number of Tasks
+        /// successfully completed during the given time range in Jobs created
+        /// under the schedule. A Task completes successfully if it returns
         /// exit code 0.</param>
-        /// <param name="numFailedTasks">The total number of tasks that failed
-        /// during the given time range in jobs created under the schedule. A
-        /// task fails if it exhausts its maximum retry count without returning
+        /// <param name="numFailedTasks">The total number of Tasks that failed
+        /// during the given time range in Jobs created under the schedule. A
+        /// Task fails if it exhausts its maximum retry count without returning
         /// exit code 0.</param>
         /// <param name="numTaskRetries">The total number of retries during the
-        /// given time range on all tasks in all jobs created under the
+        /// given time range on all Tasks in all Jobs created under the
         /// schedule.</param>
-        /// <param name="waitTime">The total wait time of all tasks in all jobs
-        /// created under the schedule. The wait time for a task is defined as
-        /// the elapsed time between the creation of the task and the start of
-        /// task execution. (If the task is retried due to failures, the wait
-        /// time is the time to the most recent task execution.)</param>
+        /// <param name="waitTime">The total wait time of all Tasks in all Jobs
+        /// created under the schedule. The wait time for a Task is defined as
+        /// the elapsed time between the creation of the Task and the start of
+        /// Task execution. (If the Task is retried due to failures, the wait
+        /// time is the time to the most recent Task execution.)</param>
         public JobScheduleStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan userCPUTime, System.TimeSpan kernelCPUTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, System.TimeSpan waitTime)
         {
             Url = url;
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the total user mode CPU time (summed across all cores
-        /// and all compute nodes) consumed by all tasks in all jobs created
+        /// and all Compute Nodes) consumed by all Tasks in all Jobs created
         /// under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "userCPUTime")]
@@ -122,65 +122,65 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the total kernel mode CPU time (summed across all
-        /// cores and all compute nodes) consumed by all tasks in all jobs
+        /// cores and all Compute Nodes) consumed by all Tasks in all Jobs
         /// created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "kernelCPUTime")]
         public System.TimeSpan KernelCPUTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the total wall clock time of all the tasks in all the
-        /// jobs created under the schedule.
+        /// Gets or sets the total wall clock time of all the Tasks in all the
+        /// Jobs created under the schedule.
         /// </summary>
         /// <remarks>
-        /// The wall clock time is the elapsed time from when the task started
-        /// running on a compute node to when it finished (or to the last time
-        /// the statistics were updated, if the task had not finished by then).
-        /// If a task was retried, this includes the wall clock time of all the
-        /// task retries.
+        /// The wall clock time is the elapsed time from when the Task started
+        /// running on a Compute Node to when it finished (or to the last time
+        /// the statistics were updated, if the Task had not finished by then).
+        /// If a Task was retried, this includes the wall clock time of all the
+        /// Task retries.
         /// </remarks>
         [JsonProperty(PropertyName = "wallClockTime")]
         public System.TimeSpan WallClockTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk read operations made by all
-        /// tasks in all jobs created under the schedule.
+        /// Tasks in all Jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "readIOps")]
         public long ReadIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk write operations made by all
-        /// tasks in all jobs created under the schedule.
+        /// Tasks in all Jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOps")]
         public long WriteIOps { get; set; }
 
         /// <summary>
-        /// Gets or sets the total gibibytes read from disk by all tasks in all
-        /// jobs created under the schedule.
+        /// Gets or sets the total gibibytes read from disk by all Tasks in all
+        /// Jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the total gibibytes written to disk by all tasks in
-        /// all jobs created under the schedule.
+        /// Gets or sets the total gibibytes written to disk by all Tasks in
+        /// all Jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the total number of tasks successfully completed
-        /// during the given time range in jobs created under the schedule. A
-        /// task completes successfully if it returns exit code 0.
+        /// Gets or sets the total number of Tasks successfully completed
+        /// during the given time range in Jobs created under the schedule. A
+        /// Task completes successfully if it returns exit code 0.
         /// </summary>
         [JsonProperty(PropertyName = "numSucceededTasks")]
         public long NumSucceededTasks { get; set; }
 
         /// <summary>
-        /// Gets or sets the total number of tasks that failed during the given
-        /// time range in jobs created under the schedule. A task fails if it
+        /// Gets or sets the total number of Tasks that failed during the given
+        /// time range in Jobs created under the schedule. A Task fails if it
         /// exhausts its maximum retry count without returning exit code 0.
         /// </summary>
         [JsonProperty(PropertyName = "numFailedTasks")]
@@ -188,21 +188,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the total number of retries during the given time
-        /// range on all tasks in all jobs created under the schedule.
+        /// range on all Tasks in all Jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "numTaskRetries")]
         public long NumTaskRetries { get; set; }
 
         /// <summary>
-        /// Gets or sets the total wait time of all tasks in all jobs created
-        /// under the schedule. The wait time for a task is defined as the
-        /// elapsed time between the creation of the task and the start of task
-        /// execution. (If the task is retried due to failures, the wait time
-        /// is the time to the most recent task execution.)
+        /// Gets or sets the total wait time of all Tasks in all Jobs created
+        /// under the schedule. The wait time for a Task is defined as the
+        /// elapsed time between the creation of the Task and the start of Task
+        /// execution. (If the Task is retried due to failures, the wait time
+        /// is the time to the most recent Task execution.)
         /// </summary>
         /// <remarks>
-        /// This value is only reported in the account lifetime statistics; it
-        /// is not included in the job statistics.
+        /// This value is only reported in the Account lifetime statistics; it
+        /// is not included in the Job statistics.
         /// </remarks>
         [JsonProperty(PropertyName = "waitTime")]
         public System.TimeSpan WaitTime { get; set; }

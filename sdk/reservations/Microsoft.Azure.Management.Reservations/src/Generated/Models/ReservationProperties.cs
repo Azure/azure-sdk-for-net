@@ -31,7 +31,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the ReservationProperties class.
         /// </summary>
         /// <param name="reservedResourceType">Possible values include:
-        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb'</param>
+        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb',
+        /// 'RedHat', 'SqlDataWarehouse', 'VMwareCloudSimple',
+        /// 'RedHatOsa'</param>
         /// <param name="instanceFlexibility">Possible values include: 'On',
         /// 'Off'</param>
         /// <param name="displayName">Friendly name for user to easily identify
@@ -48,7 +50,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// expire.</param>
         /// <param name="skuDescription">Description of the SKU in
         /// english.</param>
-        public ReservationProperties(string reservedResourceType = default(string), string instanceFlexibility = default(string), string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), string skuDescription = default(string), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties))
+        /// <param name="billingPlan">Possible values include: 'Upfront',
+        /// 'Monthly'</param>
+        /// <param name="renewSource">Reservation Id of the reservation from
+        /// which this reservation is renewed. Format of the resource Id is
+        /// /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}.</param>
+        /// <param name="renewDestination">Reservation Id of the reservation
+        /// which is purchased because of renew. Format of the resource Id is
+        /// /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}.</param>
+        /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
+        public ReservationProperties(string reservedResourceType = default(string), string instanceFlexibility = default(string), string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), string skuDescription = default(string), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), string billingPlan = default(string), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties), string billingScopeId = default(string), bool? renew = default(bool?), string renewSource = default(string), string renewDestination = default(string), RenewPropertiesResponse renewProperties = default(RenewPropertiesResponse), string term = default(string))
         {
             ReservedResourceType = reservedResourceType;
             InstanceFlexibility = instanceFlexibility;
@@ -62,8 +73,15 @@ namespace Microsoft.Azure.Management.Reservations.Models
             ExpiryDate = expiryDate;
             SkuDescription = skuDescription;
             ExtendedStatusInfo = extendedStatusInfo;
+            BillingPlan = billingPlan;
             SplitProperties = splitProperties;
             MergeProperties = mergeProperties;
+            BillingScopeId = billingScopeId;
+            Renew = renew;
+            RenewSource = renewSource;
+            RenewDestination = renewDestination;
+            RenewProperties = renewProperties;
+            Term = term;
             CustomInit();
         }
 
@@ -74,7 +92,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'VirtualMachines',
-        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb'
+        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat',
+        /// 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
         /// </summary>
         [JsonProperty(PropertyName = "reservedResourceType")]
         public string ReservedResourceType { get; set; }
@@ -146,6 +165,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public ExtendedStatusInfo ExtendedStatusInfo { get; set; }
 
         /// <summary>
+        /// Gets or sets possible values include: 'Upfront', 'Monthly'
+        /// </summary>
+        [JsonProperty(PropertyName = "billingPlan")]
+        public string BillingPlan { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "splitProperties")]
         public ReservationSplitProperties SplitProperties { get; set; }
@@ -154,6 +179,43 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "mergeProperties")]
         public ReservationMergeProperties MergeProperties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "billingScopeId")]
+        public string BillingScopeId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "renew")]
+        public bool? Renew { get; set; }
+
+        /// <summary>
+        /// Gets or sets reservation Id of the reservation from which this
+        /// reservation is renewed. Format of the resource Id is
+        /// /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}.
+        /// </summary>
+        [JsonProperty(PropertyName = "renewSource")]
+        public string RenewSource { get; set; }
+
+        /// <summary>
+        /// Gets or sets reservation Id of the reservation which is purchased
+        /// because of renew. Format of the resource Id is
+        /// /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}.
+        /// </summary>
+        [JsonProperty(PropertyName = "renewDestination")]
+        public string RenewDestination { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "renewProperties")]
+        public RenewPropertiesResponse RenewProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'P1Y', 'P3Y'
+        /// </summary>
+        [JsonProperty(PropertyName = "term")]
+        public string Term { get; set; }
 
     }
 }

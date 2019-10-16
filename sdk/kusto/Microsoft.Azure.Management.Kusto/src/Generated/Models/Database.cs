@@ -10,15 +10,12 @@
 
 namespace Microsoft.Azure.Management.Kusto.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Class representing a Kusto database.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class Database : ProxyResource
     {
         /// <summary>
@@ -39,22 +36,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
-        /// <param name="provisioningState">The provisioned state of the
-        /// resource. Possible values include: 'Running', 'Creating',
-        /// 'Deleting', 'Succeeded', 'Failed'</param>
-        /// <param name="softDeletePeriod">The time the data should be kept
-        /// before it stops being accessible to queries in TimeSpan.</param>
-        /// <param name="hotCachePeriod">The time the data that should be kept
-        /// in cache for fast queries in TimeSpan.</param>
-        /// <param name="statistics">The statistics of the database.</param>
-        public Database(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), DatabaseStatistics statistics = default(DatabaseStatistics))
+        public Database(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
             : base(id, name, type)
         {
             Location = location;
-            ProvisioningState = provisioningState;
-            SoftDeletePeriod = softDeletePeriod;
-            HotCachePeriod = hotCachePeriod;
-            Statistics = statistics;
             CustomInit();
         }
 
@@ -68,33 +53,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
-
-        /// <summary>
-        /// Gets the provisioned state of the resource. Possible values
-        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the time the data should be kept before it stops being
-        /// accessible to queries in TimeSpan.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.softDeletePeriod")]
-        public System.TimeSpan? SoftDeletePeriod { get; set; }
-
-        /// <summary>
-        /// Gets or sets the time the data that should be kept in cache for
-        /// fast queries in TimeSpan.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hotCachePeriod")]
-        public System.TimeSpan? HotCachePeriod { get; set; }
-
-        /// <summary>
-        /// Gets or sets the statistics of the database.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.statistics")]
-        public DatabaseStatistics Statistics { get; set; }
 
     }
 }

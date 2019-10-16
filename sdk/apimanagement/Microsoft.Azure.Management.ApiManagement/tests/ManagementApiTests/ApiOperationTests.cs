@@ -20,7 +20,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -41,7 +41,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     api.Name);
 
-                Assert.NotNull(listResponse);;
+                Assert.NotNull(listResponse); ;
                 Assert.Equal(6, listResponse.Count());
                 Assert.Null(listResponse.NextPageLink);
                 foreach (var operationContract in listResponse)

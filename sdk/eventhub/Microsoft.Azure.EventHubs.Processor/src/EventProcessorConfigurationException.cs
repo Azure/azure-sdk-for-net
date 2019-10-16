@@ -16,7 +16,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         internal EventProcessorConfigurationException(string message, Exception innerException)
-            : base(false, message, innerException)
+            : base(false, message, innerException, ErrorSourceType.UserError)
         {
         }
     }

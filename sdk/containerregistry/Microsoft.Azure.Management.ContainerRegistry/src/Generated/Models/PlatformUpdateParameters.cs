@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="os">The operating system type required for the run.
         /// Possible values include: 'Windows', 'Linux'</param>
         /// <param name="architecture">The OS architecture. Possible values
-        /// include: 'amd64', 'x86', 'arm'</param>
+        /// include: 'amd64', 'x86', '386', 'arm', 'arm64'</param>
         /// <param name="variant">Variant of the CPU. Possible values include:
         /// 'v6', 'v7', 'v8'</param>
         public PlatformUpdateParameters(string os = default(string), string architecture = default(string), string variant = default(string))
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets the OS architecture. Possible values include: 'amd64',
-        /// 'x86', 'arm'
+        /// 'x86', '386', 'arm', 'arm64'
         /// </summary>
         [JsonProperty(PropertyName = "architecture")]
         public string Architecture { get; set; }

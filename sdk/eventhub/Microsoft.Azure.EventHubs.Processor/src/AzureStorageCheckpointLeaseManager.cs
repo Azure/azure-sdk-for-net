@@ -9,8 +9,8 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
     using Newtonsoft.Json;
-    using WindowsAzure.Storage;
-    using WindowsAzure.Storage.Blob;
+    using Microsoft.Azure.Storage;
+    using Microsoft.Azure.Storage.Blob;
 
     class AzureStorageCheckpointLeaseManager : ICheckpointManager, ILeaseManager
     {
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                     null,
                     continuationToken,
                     null,
-                    this.operationContext);
+                    this.operationContext).ConfigureAwait(false);
 
                 foreach (CloudBlockBlob leaseBlob in leaseBlobsResult.Results)
                 {
@@ -450,7 +450,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 await leaseBlob.SetMetadataAsync(
                     AccessCondition.GenerateLeaseCondition(leaseId),
                     null,
-                    this.operationContext);
+                    this.operationContext).ConfigureAwait(false);
 
                 await leaseBlob.UploadTextAsync(
                     JsonConvert.SerializeObject(releasedCopy),

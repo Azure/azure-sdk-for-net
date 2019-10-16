@@ -14,9 +14,9 @@ namespace SearchSDK.Tests
         // [Fact]
         public void LocalSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "LocalSearch");
+                HttpMockServer.Initialize(this.GetType(), "LocalSearch");
 
                 ILocalSearchClient client = new LocalSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

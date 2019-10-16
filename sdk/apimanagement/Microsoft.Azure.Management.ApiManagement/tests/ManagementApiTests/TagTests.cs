@@ -20,7 +20,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteApiTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -121,14 +121,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         echoApi.Name,
                         tagId);
-                    
+
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Tag.GetByApi(
                             testBase.rgName,
                             testBase.serviceName,
                             echoApi.Name,
                             tagId));
-                    
+
                     var tagEtag = await testBase.client.Tag.GetEntityStateAsync(
                         testBase.rgName,
                         testBase.serviceName,
@@ -163,7 +163,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteProductTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -208,7 +208,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         starterProduct.Name,
                         tagId);
                     Assert.NotNull(tagContract);
-                                        
+
                     // Tag list by Prod
                     var tagsInProduct = await testBase.client.Tag.ListByProductAsync(
                         testBase.rgName,
@@ -226,7 +226,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         tagId);
                     Assert.NotNull(tagOnProduct);
                     Assert.Equal(tagDisplayName, tagOnProduct.DisplayName);
-                                        
+
                     // get the tag resources for the service.
                     var tagResources = await testBase.client.TagResource.ListByServiceAsync(
                         testBase.rgName,
@@ -296,7 +296,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteOperationTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -313,14 +313,14 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.Single(apis);
                 var api = apis.Single();
-                
+
                 // list paged 
                 var listResponse = testBase.client.ApiOperation.ListByApi(
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name,
                     new Microsoft.Rest.Azure.OData.ODataQuery<OperationContract> { Top = 1 });
-                
+
                 var firstOperation = listResponse.First();
 
                 string tagId = TestUtilities.GenerateName("operationTag");

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
     /// <summary>
     /// Contains utilization and resource usage statistics for the lifetime of
-    /// a pool.
+    /// a Pool.
     /// </summary>
     public partial class PoolStatistics
     {
@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="lastUpdateTime">The time at which the statistics were
         /// last updated. All statistics are limited to the range between
         /// startTime and lastUpdateTime.</param>
-        /// <param name="usageStats">Statistics related to pool usage, such as
+        /// <param name="usageStats">Statistics related to Pool usage, such as
         /// the amount of core-time used.</param>
         /// <param name="resourceStats">Statistics related to resource
-        /// consumption by compute nodes in the pool.</param>
+        /// consumption by Compute Nodes in the Pool.</param>
         public PoolStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, UsageStatistics usageStats = default(UsageStatistics), ResourceStatistics resourceStats = default(ResourceStatistics))
         {
             Url = url;
@@ -77,15 +77,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
-        /// Gets or sets statistics related to pool usage, such as the amount
+        /// Gets or sets statistics related to Pool usage, such as the amount
         /// of core-time used.
         /// </summary>
         [JsonProperty(PropertyName = "usageStats")]
         public UsageStatistics UsageStats { get; set; }
 
         /// <summary>
-        /// Gets or sets statistics related to resource consumption by compute
-        /// nodes in the pool.
+        /// Gets or sets statistics related to resource consumption by Compute
+        /// Nodes in the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "resourceStats")]
         public ResourceStatistics ResourceStats { get; set; }

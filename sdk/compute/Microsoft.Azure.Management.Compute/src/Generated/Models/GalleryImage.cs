@@ -41,9 +41,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// managed image. &lt;br&gt;&lt;br&gt; Possible values are:
         /// &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**.
         /// Possible values include: 'Windows', 'Linux'</param>
-        /// <param name="osState">The allowed values for OS State are
-        /// 'Generalized'. Possible values include: 'Generalized',
-        /// 'Specialized'</param>
+        /// <param name="osState">This property allows the user to specify
+        /// whether the virtual machines created under this image are
+        /// 'Generalized' or 'Specialized'. Possible values include:
+        /// 'Generalized', 'Specialized'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -55,12 +56,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="privacyStatementUri">The privacy statement
         /// uri.</param>
         /// <param name="releaseNoteUri">The release note uri.</param>
+        /// <param name="hyperVGeneration">The hypervisor generation of the
+        /// Virtual Machine. Applicable to OS disks only. Possible values
+        /// include: 'V1', 'V2'</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// Image Definition. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the gallery
         /// Image Definition.</param>
-        public GalleryImage(string location, OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
+        public GalleryImage(string location, OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             Description = description;
@@ -69,6 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ReleaseNoteUri = releaseNoteUri;
             OsType = osType;
             OsState = osState;
+            HyperVGeneration = hyperVGeneration;
             EndOfLifeDate = endOfLifeDate;
             Identifier = identifier;
             Recommended = recommended;
@@ -120,11 +125,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         public OperatingSystemTypes OsType { get; set; }
 
         /// <summary>
-        /// Gets or sets the allowed values for OS State are 'Generalized'.
-        /// Possible values include: 'Generalized', 'Specialized'
+        /// Gets or sets this property allows the user to specify whether the
+        /// virtual machines created under this image are 'Generalized' or
+        /// 'Specialized'. Possible values include: 'Generalized',
+        /// 'Specialized'
         /// </summary>
         [JsonProperty(PropertyName = "properties.osState")]
         public OperatingSystemStateTypes OsState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hypervisor generation of the Virtual Machine.
+        /// Applicable to OS disks only. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
 
         /// <summary>
         /// Gets or sets the end of life date of the gallery Image Definition.

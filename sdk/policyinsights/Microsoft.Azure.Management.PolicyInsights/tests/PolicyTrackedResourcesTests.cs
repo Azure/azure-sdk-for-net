@@ -71,7 +71,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyTrackedResources_ManagementGroupScopeQueries()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -139,7 +139,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyTrackedResources_SubscriptionScopeQueries()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -207,7 +207,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyTrackedResources_RsourceGroupScopeQueries()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -275,7 +275,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyTrackedResources_RsourceScopeQueries()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 

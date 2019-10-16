@@ -50,15 +50,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="batchSize">Specifies the number of documents to return
         /// in each batch of the response from MongoDB instance. In most cases,
         /// modifying the batch size will not affect the user or the
-        /// application. This property�s main purpose is to avoid hit the
+        /// application. This property's main purpose is to avoid hit the
         /// limitation of response size. Type: integer (or Expression with
         /// resultType integer).</param>
-        public MongoDbV2Source(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object))
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        public MongoDbV2Source(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object), object queryTimeout = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Filter = filter;
             CursorMethods = cursorMethods;
             BatchSize = batchSize;
+            QueryTimeout = queryTimeout;
             CustomInit();
         }
 
@@ -86,12 +90,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets specifies the number of documents to return in each
         /// batch of the response from MongoDB instance. In most cases,
         /// modifying the batch size will not affect the user or the
-        /// application. This property�s main purpose is to avoid hit the
+        /// application. This property's main purpose is to avoid hit the
         /// limitation of response size. Type: integer (or Expression with
         /// resultType integer).
         /// </summary>
         [JsonProperty(PropertyName = "batchSize")]
         public object BatchSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets query timeout. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "queryTimeout")]
+        public object QueryTimeout { get; set; }
 
     }
 }

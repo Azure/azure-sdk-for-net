@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The remote login settings for a compute node.
+    /// The remote login settings for a Compute Node.
     /// </summary>
     public partial class ComputeNodeGetRemoteLoginSettingsResult
     {
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// ComputeNodeGetRemoteLoginSettingsResult class.
         /// </summary>
         /// <param name="remoteLoginIPAddress">The IP address used for remote
-        /// login to the compute node.</param>
+        /// login to the Compute Node.</param>
         /// <param name="remoteLoginPort">The port used for remote login to the
-        /// compute node.</param>
+        /// Compute Node.</param>
         public ComputeNodeGetRemoteLoginSettingsResult(string remoteLoginIPAddress, int remoteLoginPort)
         {
             RemoteLoginIPAddress = remoteLoginIPAddress;
@@ -48,14 +48,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the IP address used for remote login to the compute
-        /// node.
+        /// Gets or sets the IP address used for remote login to the Compute
+        /// Node.
         /// </summary>
         [JsonProperty(PropertyName = "remoteLoginIPAddress")]
         public string RemoteLoginIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the port used for remote login to the compute node.
+        /// Gets or sets the port used for remote login to the Compute Node.
         /// </summary>
         [JsonProperty(PropertyName = "remoteLoginPort")]
         public int RemoteLoginPort { get; set; }

@@ -16,7 +16,7 @@ namespace StreamAnalytics.Tests
         [Fact]
         public async Task TransformationOperationsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName("sjrg");
                 string jobName = TestUtilities.GenerateName("sj");

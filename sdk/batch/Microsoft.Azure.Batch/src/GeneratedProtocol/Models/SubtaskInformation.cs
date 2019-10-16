@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the SubtaskInformation class.
         /// </summary>
         /// <param name="id">The ID of the subtask.</param>
-        /// <param name="nodeInfo">Information about the compute node on which
+        /// <param name="nodeInfo">Information about the Compute Node on which
         /// the subtask ran.</param>
         /// <param name="startTime">The time at which the subtask started
         /// running. If the subtask has been restarted or retried, this is the
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="exitCode">The exit code of the program specified on
         /// the subtask command line.</param>
         /// <param name="containerInfo">Information about the container under
-        /// which the task is executing.</param>
-        /// <param name="failureInfo">Information describing the task failure,
+        /// which the Task is executing.</param>
+        /// <param name="failureInfo">Information describing the Task failure,
         /// if any.</param>
         /// <param name="state">The current state of the subtask.</param>
         /// <param name="stateTransitionTime">The time at which the subtask
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// subtask.</param>
         /// <param name="previousStateTransitionTime">The time at which the
         /// subtask entered its previous state.</param>
-        /// <param name="result">The result of the task execution.</param>
+        /// <param name="result">The result of the Task execution.</param>
         public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskContainerExecutionInformation containerInfo = default(TaskContainerExecutionInformation), TaskFailureInformation failureInfo = default(TaskFailureInformation), SubtaskState? state = default(SubtaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), SubtaskState? previousState = default(SubtaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             Id = id;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the compute node on which the
+        /// Gets or sets information about the Compute Node on which the
         /// subtask ran.
         /// </summary>
         [JsonProperty(PropertyName = "nodeInfo")]
@@ -121,20 +121,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the container under which the task
+        /// Gets or sets information about the container under which the Task
         /// is executing.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task runs in a container context.
+        /// This property is set only if the Task runs in a container context.
         /// </remarks>
         [JsonProperty(PropertyName = "containerInfo")]
         public TaskContainerExecutionInformation ContainerInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets information describing the task failure, if any.
+        /// Gets or sets information describing the Task failure, if any.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task is in the completed state and
+        /// This property is set only if the Task is in the completed state and
         /// encountered a failure.
         /// </remarks>
         [JsonProperty(PropertyName = "failureInfo")]
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the result of the task execution.
+        /// Gets or sets the result of the Task execution.
         /// </summary>
         /// <remarks>
         /// If the value is 'failed', then the details of the failure can be

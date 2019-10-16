@@ -12,10 +12,10 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        public const string vnet = "sdk-net-tests-rg-wus-vnet";
+        public const string vnet = "sdk-net-tests-rg-cys-vnet";
         public const string subsId = "0661b131-4a11-479b-96bf-2f95acca2f73";
         public const string location = "westcentralus";
-        public const string resourceGroup = "sdk-net-tests-rg-wus";
+        public const string resourceGroup = "sdk-net-tests-rg-cys";
         public const string accountName1 = "sdk-net-tests-acc-1";
         public const string accountName2 = "sdk-net-tests-acc-2";
         public const string poolName1 = "sdk-net-tests-pool-1";
@@ -41,7 +41,7 @@ namespace NetApp.Tests.Helpers
             UnixReadWrite = true,
             Cifs = false,
             Nfsv3 = true,
-            Nfsv4 = false,
+            Nfsv41 = false,
             AllowedClients = "0.0.0.0/0"
         };
 
@@ -56,7 +56,7 @@ namespace NetApp.Tests.Helpers
         };
 
         private const int delay = 5000;
-        private const int retryAttempts = 3;
+        private const int retryAttempts = 4;
 
         public static NetAppAccount CreateAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, ActiveDirectory activeDirectory = null)
         {
@@ -195,8 +195,11 @@ namespace NetApp.Tests.Helpers
                 // find and delete all nested resources - not implemented
             }
 
-            // now delete the pool - with retry for test robustness due to ARM caching
-            // (arm continues to tidy up even after the awaited async op has returned)
+            // now delete the pool - with retry for test robustness due to
+            //   - ARM caching (ARM continues to tidy up even after the awaited async op
+            //     has returned)
+            //   - other async actions in RP/SDE/NRP
+            // e.g. snapshot deletion might not be complete and therefore pool has child resource
             while (retry == true)
             {
                 Thread.Sleep(delay);
@@ -227,8 +230,11 @@ namespace NetApp.Tests.Helpers
                 // find and delete all nested resources - not implemented
             }
 
-            // now delete the volume - with retry for test robustness due to ARM caching
-            // (arm continues to tidy up even after the awaited async op has returned)
+            // now delete the volume - with retry for test robustness due to
+            //   - ARM caching (ARM continues to tidy up even after the awaited async op
+            //     has returned)
+            //   - other async actions in RP/SDE/NRP
+            // e.g. snapshot deletion might not be complete and therefore volume has child resource
             while (retry == true)
             {
                 Thread.Sleep(delay);
@@ -259,8 +265,12 @@ namespace NetApp.Tests.Helpers
                 // find and delete all nested resources - not implemented
             }
 
-            // now delete the snapshot - with retry for test robustness due to ARM caching
-            // (arm continues to tidy up even after the awaited async op has returned)
+            // now delete the snapshot - with retry for test robustness due to
+            //   - ARM caching (ARM continues to tidy up even after the awaited async op
+            //     has returned)
+            //   - other async actions in RP/SDE/NRP
+            // e.g. snapshot deletion might fail if the actual creation is not complete at 
+            // all levels
             while (retry == true)
             {
                 Thread.Sleep(delay);

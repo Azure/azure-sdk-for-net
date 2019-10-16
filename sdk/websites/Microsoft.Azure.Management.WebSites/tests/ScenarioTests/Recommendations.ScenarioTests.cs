@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -19,7 +19,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void ListRecommendationsRoundTrip()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -84,3 +84,4 @@ namespace WebSites.Tests.ScenarioTests
         }
     }
 }
+

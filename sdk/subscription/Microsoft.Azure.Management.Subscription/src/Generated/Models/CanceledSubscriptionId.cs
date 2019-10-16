@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// Canceled Subscription Id
+    /// The ID of the canceled subscription
     /// </summary>
     public partial class CanceledSubscriptionId
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// <summary>
         /// Initializes a new instance of the CanceledSubscriptionId class.
         /// </summary>
-        /// <param name="value">Canceled Subscription Id</param>
+        /// <param name="value">The ID of the canceled subscription</param>
         public CanceledSubscriptionId(string value = default(string))
         {
             Value = value;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets canceled Subscription Id
+        /// Gets the ID of the canceled subscription
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; private set; }

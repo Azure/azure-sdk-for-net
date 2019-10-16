@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options for changing the size of a pool.
+    /// Options for changing the size of a Pool.
     /// </summary>
     public partial class PoolResizeParameter
     {
@@ -30,14 +30,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolResizeParameter class.
         /// </summary>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
-        /// compute nodes in the pool.</param>
+        /// Compute Nodes in the Pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority compute nodes in the pool.</param>
-        /// <param name="resizeTimeout">The timeout for allocation of compute
-        /// nodes to the pool or removal of compute nodes from the
-        /// pool.</param>
+        /// low-priority Compute Nodes in the Pool.</param>
+        /// <param name="resizeTimeout">The timeout for allocation of Nodes to
+        /// the Pool or removal of Compute Nodes from the Pool.</param>
         /// <param name="nodeDeallocationOption">Determines what to do with a
-        /// node and its running task(s) if the pool size is
+        /// Compute Node and its running task(s) if the Pool size is
         /// decreasing.</param>
         public PoolResizeParameter(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
@@ -54,22 +53,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the desired number of dedicated compute nodes in the
-        /// pool.
+        /// Gets or sets the desired number of dedicated Compute Nodes in the
+        /// Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetDedicatedNodes")]
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority compute nodes in
-        /// the pool.
+        /// Gets or sets the desired number of low-priority Compute Nodes in
+        /// the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetLowPriorityNodes")]
         public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout for allocation of compute nodes to the
-        /// pool or removal of compute nodes from the pool.
+        /// Gets or sets the timeout for allocation of Nodes to the Pool or
+        /// removal of Compute Nodes from the Pool.
         /// </summary>
         /// <remarks>
         /// The default value is 15 minutes. The minimum value is 5 minutes. If
@@ -81,8 +80,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets determines what to do with a node and its running
-        /// task(s) if the pool size is decreasing.
+        /// Gets or sets determines what to do with a Compute Node and its
+        /// running task(s) if the Pool size is decreasing.
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',

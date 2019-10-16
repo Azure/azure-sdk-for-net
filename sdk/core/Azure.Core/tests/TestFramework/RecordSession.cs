@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.Core.Http;
 
 namespace Azure.Core.Testing
 {
@@ -93,7 +92,11 @@ namespace Azure.Core.Testing
                 return false;
             }
 
-            return session.Variables.SequenceEqual(Variables) &&
+            // The DateTimeOffsetNow variable is updated any time it's used so
+            // we only care that both sessions use it or both sessions don't.
+            var now = TestRecording.DateTimeOffsetNowVariableKey;
+            return session.Variables.TryGetValue(now, out string _) == Variables.TryGetValue(now, out string _) &&
+                   session.Variables.Where(v => v.Key != now).SequenceEqual(Variables.Where(v => v.Key != now)) &&
                    session.Entries.SequenceEqual(Entries, new EntryEquivalentComparer(matcher));
         }
 
@@ -108,7 +111,7 @@ namespace Azure.Core.Testing
 
             public bool Equals(RecordEntry x, RecordEntry y)
             {
-                return _matcher.IsEquivalentResponse(x, y);
+                return _matcher.IsEquivalentRecord(x, y);
             }
 
             public int GetHashCode(RecordEntry obj)

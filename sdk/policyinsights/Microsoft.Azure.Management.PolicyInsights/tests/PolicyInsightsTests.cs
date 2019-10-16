@@ -181,7 +181,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ManagementGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForManagementGroup(ManagementGroupName, DefaultQueryOptions);
@@ -192,7 +192,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_SubscriptionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForSubscription(SubscriptionId, DefaultQueryOptions);
@@ -203,7 +203,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ResourceGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResourceGroup(SubscriptionId, ResourceGroupName, DefaultQueryOptions);
@@ -214,7 +214,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ResourceScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResource(ResourceId, DefaultQueryOptions);
@@ -225,7 +225,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_PolicySetDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForPolicySetDefinition(SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
@@ -236,7 +236,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_PolicyDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForPolicyDefinition(SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
@@ -247,7 +247,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_SubscriptionLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForSubscriptionLevelPolicyAssignment(SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
@@ -258,7 +258,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ResourceGroupLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResourceGroupLevelPolicyAssignment(SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
@@ -273,7 +273,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestManagementGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Latest, ManagementGroupName, DefaultQueryOptions);
@@ -284,7 +284,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestSubscriptionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, DefaultQueryOptions);
@@ -295,7 +295,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroup(PolicyStatesResource.Latest, SubscriptionId, ResourceGroupName, DefaultQueryOptions);
@@ -306,7 +306,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Latest, ResourceId, DefaultQueryOptions);
@@ -317,7 +317,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceScopeExpandPolicyEvaluationDetails()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Latest, ResourceId, new QueryOptions { Top = 10, Expand = "PolicyEvaluationDetails" });
@@ -328,7 +328,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestPolicySetDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicySetDefinition(PolicyStatesResource.Latest, SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
@@ -339,7 +339,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestPolicyDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicyDefinition(PolicyStatesResource.Latest, SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
@@ -350,7 +350,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestSubscriptionLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionLevelPolicyAssignment(PolicyStatesResource.Latest, SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
@@ -361,7 +361,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceGroupLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroupLevelPolicyAssignment(PolicyStatesResource.Latest, SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
@@ -376,7 +376,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultManagementGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Default, ManagementGroupName, DefaultQueryOptions);
@@ -387,7 +387,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultSubscriptionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Default, SubscriptionId, DefaultQueryOptions);
@@ -398,7 +398,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroup(PolicyStatesResource.Default, SubscriptionId, ResourceGroupName, DefaultQueryOptions);
@@ -409,7 +409,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Default, ResourceId, DefaultQueryOptions);
@@ -420,7 +420,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceScopeExpandPolicyEvaluationDetails()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Default, ResourceId, new QueryOptions { Top = 10, Expand = "PolicyEvaluationDetails" });
@@ -431,7 +431,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultPolicySetDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicySetDefinition(PolicyStatesResource.Default, SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
@@ -442,7 +442,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultPolicyDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicyDefinition(PolicyStatesResource.Default, SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
@@ -453,7 +453,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultSubscriptionLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionLevelPolicyAssignment(PolicyStatesResource.Default, SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
@@ -464,7 +464,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceGroupLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroupLevelPolicyAssignment(PolicyStatesResource.Default, SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
@@ -479,7 +479,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeManagementGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForManagementGroup(ManagementGroupName, DefaultQueryOptions);
@@ -490,7 +490,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeSubscriptionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForSubscription(SubscriptionId, DefaultQueryOptions);
@@ -501,7 +501,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeResourceGroupScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroup(SubscriptionId, ResourceGroupName, DefaultQueryOptions);
@@ -512,7 +512,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeResourceScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResource(ResourceId, DefaultQueryOptions);
@@ -523,7 +523,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizePolicySetDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForPolicySetDefinition(SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
@@ -534,7 +534,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizePolicyDefinitionScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForPolicyDefinition(SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
@@ -545,7 +545,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeSubscriptionLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForSubscriptionLevelPolicyAssignment(SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
@@ -556,7 +556,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeResourceGroupLevelPolicyAssignmentScope()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroupLevelPolicyAssignment(SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
@@ -571,7 +571,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithFrom()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { FromProperty = DefaultQueryOptions.FromProperty };
@@ -583,7 +583,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithTo()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { To = DefaultQueryOptions.To };
@@ -595,7 +595,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithTop()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Top = 10 };
@@ -609,7 +609,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithOrderBy()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { OrderBy = "PolicyAssignmentId desc" };
@@ -621,7 +621,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithSelect()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Select = "Timestamp, ResourceId, PolicyAssignmentId, PolicyDefinitionId, IsCompliant, SubscriptionId, PolicyDefinitionAction" };
@@ -633,7 +633,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithFilter()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Filter = "IsCompliant eq false and PolicyDefinitionAction eq 'deny'" };
@@ -645,7 +645,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithApply()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Apply = "groupby((PolicyAssignmentId, PolicyDefinitionId, ResourceId))/groupby((PolicyAssignmentId, PolicyDefinitionId), aggregate($count as NumResources))" };

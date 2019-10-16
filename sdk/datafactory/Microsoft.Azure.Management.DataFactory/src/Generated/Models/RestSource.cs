@@ -41,6 +41,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="requestMethod">The HTTP method used to call the
+        /// RESTful API. The default is GET. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="requestBody">The HTTP request body to the RESTful API
+        /// if requestMethod is POST. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="additionalHeaders">The additional HTTP headers in the
+        /// request to the RESTful API. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="paginationRules">The pagination rules to compose next
+        /// page requests. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
         /// HTTP response. It is the timeout to get a response, not the timeout
         /// to read response data. Default value: 00:01:40. Type: string (or
@@ -48,9 +60,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="requestInterval">The time to await before sending next
         /// page request. </param>
-        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object))
+        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object paginationRules = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
+            RequestMethod = requestMethod;
+            RequestBody = requestBody;
+            AdditionalHeaders = additionalHeaders;
+            PaginationRules = paginationRules;
             HttpRequestTimeout = httpRequestTimeout;
             RequestInterval = requestInterval;
             CustomInit();
@@ -60,6 +76,36 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the HTTP method used to call the RESTful API. The
+        /// default is GET. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "requestMethod")]
+        public object RequestMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP request body to the RESTful API if
+        /// requestMethod is POST. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "requestBody")]
+        public object RequestBody { get; set; }
+
+        /// <summary>
+        /// Gets or sets the additional HTTP headers in the request to the
+        /// RESTful API. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalHeaders")]
+        public object AdditionalHeaders { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pagination rules to compose next page requests.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "paginationRules")]
+        public object PaginationRules { get; set; }
 
         /// <summary>
         /// Gets or sets the timeout (TimeSpan) to get an HTTP response. It is

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An inbound endpoint on a compute node.
+    /// An inbound endpoint on a Compute Node.
     /// </summary>
     public partial class InboundEndpoint
     {
@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="name">The name of the endpoint.</param>
         /// <param name="protocol">The protocol of the endpoint.</param>
-        /// <param name="publicIPAddress">The public IP address of the compute
-        /// node.</param>
+        /// <param name="publicIPAddress">The public IP address of the Compute
+        /// Node.</param>
         /// <param name="publicFQDN">The public fully qualified domain name for
-        /// the compute node.</param>
+        /// the Compute Node.</param>
         /// <param name="frontendPort">The public port number of the
         /// endpoint.</param>
         /// <param name="backendPort">The backend port number of the
@@ -71,14 +71,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public InboundEndpointProtocol Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the public IP address of the compute node.
+        /// Gets or sets the public IP address of the Compute Node.
         /// </summary>
         [JsonProperty(PropertyName = "publicIPAddress")]
         public string PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the public fully qualified domain name for the compute
-        /// node.
+        /// Gets or sets the public fully qualified domain name for the Compute
+        /// Node.
         /// </summary>
         [JsonProperty(PropertyName = "publicFQDN")]
         public string PublicFQDN { get; set; }

@@ -6,7 +6,15 @@
     <VersionPrefix>4.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault Keys</PackageTags>
     <PackageReleaseNotes>
-      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
+      <![CDATA[
+      Refactored several classes based on feedback, including:
+      * KeyBase is now KeyProperties.
+      * Key contains a Properties property of type KeyProperties.
+      * Enumeration members have been renamed to reflect general naming guidelines consistent with .NET.
+      * Enumerations have been changed to structures to allow additions by the server to support new algorithms.
+
+      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Keys/ChangeLog.md for more details.
+      ]]>
     </PackageReleaseNotes>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -14,6 +22,11 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
   </PropertyGroup>
+
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+  </ItemGroup>
 
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
@@ -26,8 +39,11 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponse.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
   </ItemGroup>
 
 </Project>

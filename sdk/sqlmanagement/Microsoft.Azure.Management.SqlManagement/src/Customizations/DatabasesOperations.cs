@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql
                         serverName,
                         newName)),
                 customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
         }
     }
 }

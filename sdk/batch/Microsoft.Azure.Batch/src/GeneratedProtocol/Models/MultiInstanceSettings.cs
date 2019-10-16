@@ -16,13 +16,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings which specify how to run a multi-instance task.
+    /// Settings which specify how to run a multi-instance Task.
     /// </summary>
     /// <remarks>
-    /// Multi-instance tasks are commonly used to support MPI tasks. In the MPI
+    /// Multi-instance Tasks are commonly used to support MPI Tasks. In the MPI
     /// case, if any of the subtasks fail (for example due to exiting with a
-    /// non-zero exit code) the entire multi-instance task fails. The
-    /// multi-instance task is then terminated and retried, up to its retry
+    /// non-zero exit code) the entire multi-instance Task fails. The
+    /// multi-instance Task is then terminated and retried, up to its retry
     /// limit.
     /// </remarks>
     public partial class MultiInstanceSettings
@@ -39,10 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the MultiInstanceSettings class.
         /// </summary>
         /// <param name="coordinationCommandLine">The command line to run on
-        /// all the compute nodes to enable them to coordinate when the primary
-        /// runs the main task command.</param>
-        /// <param name="numberOfInstances">The number of compute nodes
-        /// required by the task.</param>
+        /// all the Compute Nodes to enable them to coordinate when the primary
+        /// runs the main Task command.</param>
+        /// <param name="numberOfInstances">The number of Compute Nodes
+        /// required by the Task.</param>
         /// <param name="commonResourceFiles">A list of files that the Batch
         /// service will download before running the coordination command
         /// line.</param>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of compute nodes required by the task.
+        /// Gets or sets the number of Compute Nodes required by the Task.
         /// </summary>
         /// <remarks>
         /// If omitted, the default is 1.
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? NumberOfInstances { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line to run on all the compute nodes to
-        /// enable them to coordinate when the primary runs the main task
+        /// Gets or sets the command line to run on all the Compute Nodes to
+        /// enable them to coordinate when the primary runs the main Task
         /// command.
         /// </summary>
         /// <remarks>
@@ -86,12 +86,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// before running the coordination command line.
         /// </summary>
         /// <remarks>
-        /// The difference between common resource files and task resource
+        /// The difference between common resource files and Task resource
         /// files is that common resource files are downloaded for all subtasks
-        /// including the primary, whereas task resource files are downloaded
+        /// including the primary, whereas Task resource files are downloaded
         /// only for the primary. Also note that these resource files are not
-        /// downloaded to the task working directory, but instead are
-        /// downloaded to the task root directory (one directory above the
+        /// downloaded to the Task working directory, but instead are
+        /// downloaded to the Task root directory (one directory above the
         /// working directory).  There is a maximum size for the list of
         /// resource files.  When the max size is exceeded, the request will
         /// fail and the response error code will be RequestEntityTooLarge. If

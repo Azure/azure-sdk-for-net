@@ -16,8 +16,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
-    public class TrackOneGenericTokenTokenTests
+    public class TrackOneGenericTokenTests
     {
         /// <summary>
         ///   Verifies functionality of the constructor.
@@ -60,16 +59,16 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesInitializesProperties()
         {
-            var expiration = DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime();
+            DateTime expiration = DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime();
             var resource = "the-audience";
             var jwtToken = "TOkEn!";
-            var credential = Mock.Of<TokenCredential>();
+            TokenCredential credential = Mock.Of<TokenCredential>();
             var token = new TrackOneGenericToken(credential, jwtToken, resource, expiration);
 
             Assert.That(token.Audience, Is.EqualTo(resource), "The audience for the token should match.");
             Assert.That(token.TokenValue, Is.EqualTo(jwtToken), "The JWT token value should match.");
             Assert.That(token.Credential, Is.EqualTo(credential), "The credential should match.");
-            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration), "The expiration shoud match.");
+            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration), "The expiration should match.");
             Assert.That(token.TokenType, Is.EqualTo(ClientConstants.JsonWebTokenType), "The token type should identify a generic JWT.");
         }
     }

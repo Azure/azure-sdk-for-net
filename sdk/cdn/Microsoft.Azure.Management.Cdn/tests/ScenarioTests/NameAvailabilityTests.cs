@@ -20,7 +20,7 @@ namespace Cdn.Tests.ScenarioTests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
@@ -28,7 +28,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Generate new endpoint name
                 string endpointName = TestUtilities.GenerateName("endpoint-unique");
-                
+
 
                 // CheckNameAvailability should return true
                 var output = cdnMgmtClient.CheckNameAvailability(endpointName);

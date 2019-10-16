@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about a file or directory on a compute node.
+    /// Information about a file or directory on a Compute Node.
     /// </summary>
     public partial class NodeFile
     {

@@ -125,12 +125,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         void SetRenewCbsTokenTimer(ActiveClientLinkObject activeClientLinkObject)
         {
-            if (activeClientLinkObject.AuthorizationValidUntilUtc < DateTime.UtcNow)
+            var utcNow = DateTime.UtcNow;
+            if (activeClientLinkObject.AuthorizationValidUntilUtc < utcNow)
             {
                 return;
             }
 
-            var interval = activeClientLinkObject.AuthorizationValidUntilUtc.Subtract(DateTime.UtcNow) - ActiveClientLinkManager.TokenRefreshBuffer;
+            var interval = activeClientLinkObject.AuthorizationValidUntilUtc.Subtract(utcNow) - ActiveClientLinkManager.TokenRefreshBuffer;
+            if (interval < ActiveClientLinkManager.TokenRefreshBuffer)
+                interval = TimeSpan.Zero;
+
             interval = TimeoutHelper.Min(interval, ActiveClientLinkManager.MaxTokenRefreshTime);
 
             this.ChangeRenewTimer(activeClientLinkObject, interval);

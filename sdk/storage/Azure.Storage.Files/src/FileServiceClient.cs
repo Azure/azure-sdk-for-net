@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 
 namespace Azure.Storage.Files
@@ -28,7 +27,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Gets the file service's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public virtual Uri Uri => this._uri;
+        public virtual Uri Uri => _uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -40,7 +39,39 @@ namespace Azure.Storage.Files
         /// Gets tghe <see cref="HttpPipeline"/> transport pipeline used to
         /// send every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => this._pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
+        /// The Storage account name corresponding to the file service client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the file service client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    _accountName = new FileUriBuilder(Uri).AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -85,9 +116,11 @@ namespace Azure.Storage.Files
         /// </param>
         public FileServiceClient(string connectionString, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            this._uri = conn.FileEndpoint;
-            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+            _uri = conn.FileEndpoint;
+            _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -144,8 +177,10 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
-            this._uri = serviceUri;
-            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+            options ??= new FileClientOptions();
+            _uri = serviceUri;
+            _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -158,10 +193,12 @@ namespace Azure.Storage.Files
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal FileServiceClient(Uri serviceUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal FileServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
-            this._uri = serviceUri;
-            this._pipeline = pipeline;
+            _uri = serviceUri;
+            _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -177,7 +214,7 @@ namespace Azure.Storage.Files
         /// <returns>
         /// A <see cref="ShareClient"/> for the desired share.
         /// </returns>
-        public virtual ShareClient GetShareClient(string shareName) => new ShareClient(this.Uri.AppendToPath(shareName), this.Pipeline);
+        public virtual ShareClient GetShareClient(string shareName) => new ShareClient(Uri.AppendToPath(shareName), Pipeline, ClientDiagnostics);
 
         #region GetShares
         /// <summary>
@@ -204,10 +241,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual IEnumerable<Response<ShareItem>> GetShares(
+        public virtual Pageable<ShareItem> GetShares(
             GetSharesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options, cancellationToken);
+            new GetSharesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesAsync"/> operation returns an async collection
@@ -226,17 +263,17 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{ShareItem}"/> describing the shares in
+        /// A <see cref="AsyncPageable{T}"/> describing the shares in
         /// the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncCollection<ShareItem> GetSharesAsync(
+        public virtual AsyncPageable<ShareItem> GetSharesAsync(
             GetSharesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options, cancellationToken);
+            new GetSharesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesInternal"/> operation returns a
@@ -288,19 +325,20 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileServiceClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileServiceClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileServiceClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(options)}: {options}");
                 try
                 {
                     return await FileRestClient.Service.ListSharesSegmentAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         marker: marker,
                         prefix: options?.Prefix,
                         maxresults: pageSizeHint,
@@ -311,12 +349,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileServiceClient));
+                    Pipeline.LogMethodExit(nameof(FileServiceClient));
                 }
             }
         }
@@ -344,7 +382,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<FileServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesInternal(
+            GetPropertiesInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -370,7 +408,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<FileServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesInternal(
+            await GetPropertiesInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -401,28 +439,30 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileServiceClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileServiceClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileServiceClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Service.GetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         async: async,
+                        operationName: Constants.File.Service.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileServiceClient));
+                    Pipeline.LogMethodExit(nameof(FileServiceClient));
                 }
             }
         }
@@ -454,7 +494,7 @@ namespace Azure.Storage.Files
         public virtual Response SetProperties(
             FileServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            this.SetPropertiesInternal(
+            SetPropertiesInternal(
                 properties,
                 false, // async
                 cancellationToken)
@@ -485,7 +525,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response> SetPropertiesAsync(
             FileServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            await this.SetPropertiesInternal(
+            await SetPropertiesInternal(
                 properties,
                 true, // async
                 cancellationToken)
@@ -521,29 +561,31 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(FileServiceClient)))
+            using (Pipeline.BeginLoggingScope(nameof(FileServiceClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(FileServiceClient),
-                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                    message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Service.SetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
                         properties: properties,
                         async: async,
+                        operationName: Constants.File.Service.SetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(FileServiceClient));
+                    Pipeline.LogMethodExit(nameof(FileServiceClient));
                 }
             }
         }
@@ -578,15 +620,16 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<ShareClient> CreateShare(
             string shareName,
             IDictionary<string, string> metadata = default,
             int? quotaInBytes = default,
             CancellationToken cancellationToken = default)
         {
-            var share = this.GetShareClient(shareName);
-            var response = share.Create(metadata, quotaInBytes, cancellationToken);
-            return new Response<ShareClient>(response.GetRawResponse(), share);
+            ShareClient share = GetShareClient(shareName);
+            Response<ShareInfo> response = share.Create(metadata, quotaInBytes, cancellationToken);
+            return Response.FromValue(share, response.GetRawResponse());
         }
 
         /// <summary>
@@ -617,15 +660,16 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
             int? quotaInBytes = default,
             CancellationToken cancellationToken = default)
         {
-            var share = this.GetShareClient(shareName);
-            var response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
-            return new Response<ShareClient>(response.GetRawResponse(), share);
+            ShareClient share = GetShareClient(shareName);
+            Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(share, response.GetRawResponse());
         }
         #endregion CreateShare
 
@@ -652,10 +696,11 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteShare(
             string shareName,
             CancellationToken cancellationToken = default) =>
-            this.GetShareClient(shareName).Delete(cancellationToken: cancellationToken);
+            GetShareClient(shareName).Delete(cancellationToken: cancellationToken);
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
@@ -679,10 +724,11 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
             CancellationToken cancellationToken = default) =>
-            await this.GetShareClient(shareName)
+            await GetShareClient(shareName)
                 .DeleteAsync(cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteShare

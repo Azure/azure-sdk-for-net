@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
 		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>2.2.0-preview</Version>
+		<Version>2.4.1-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Resource Manager SDK. This release introduces support for new API version 2019-05-10. 
+        This is a public release of the Azure Resource Manager SDK. This release introduces support for deployment what-if at subscription scope and resource group scope.  
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

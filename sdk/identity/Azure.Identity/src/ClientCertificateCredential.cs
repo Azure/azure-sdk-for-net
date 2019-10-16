@@ -17,10 +17,22 @@ namespace Azure.Identity
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
-        private string _tenantId;
-        private string _clientId;
-        private X509Certificate2 _clientCertificate;
-        private AadIdentityClient _client;
+        /// <summary>
+        /// Gets the Azure Active Directory tenant (directory) Id of the service principal
+        /// </summary>
+        public string TenantId { get; }
+
+        /// <summary>
+        /// Gets the client (application) ID of the service principal
+        /// </summary>
+        public string ClientId { get; }
+
+        /// <summary>
+        /// Gets the authentication X509 Certificate of the service principal
+        /// </summary>
+        public X509Certificate2 ClientCertificate { get; }
+
+        private readonly AadIdentityClient _client;
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -40,13 +52,13 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, IdentityClientOptions options)
+        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, AzureCredentialOptions options)
         {
-            _tenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
+            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            _clientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
+            ClientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
 
             _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
         }
@@ -54,23 +66,23 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return _client.Authenticate(_tenantId, _clientId, _clientCertificate, scopes, cancellationToken);
+            return _client.Authenticate(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken);
         }
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await _client.AuthenticateAsync(_tenantId, _clientId, _clientCertificate, scopes, cancellationToken).ConfigureAwait(false);
+            return await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
         }
     }
 }

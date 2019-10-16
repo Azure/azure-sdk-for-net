@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options when terminating a job.
+    /// Options when terminating a Job.
     /// </summary>
     public partial class JobTerminateParameter
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobTerminateParameter class.
         /// </summary>
         /// <param name="terminateReason">The text you want to appear as the
-        /// job's TerminateReason. The default is 'UserTerminate'.</param>
+        /// Job's TerminateReason. The default is 'UserTerminate'.</param>
         public JobTerminateParameter(string terminateReason = default(string))
         {
             TerminateReason = terminateReason;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the text you want to appear as the job's
+        /// Gets or sets the text you want to appear as the Job's
         /// TerminateReason. The default is 'UserTerminate'.
         /// </summary>
         [JsonProperty(PropertyName = "terminateReason")]

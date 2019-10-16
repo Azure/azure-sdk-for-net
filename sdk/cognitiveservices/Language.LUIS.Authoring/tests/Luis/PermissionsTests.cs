@@ -4,6 +4,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class PermissionsTests : BaseTest
     {
         [Fact]
@@ -34,7 +35,7 @@
                 };
                 await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
 
-                Assert.Equal("owner.user@microsoft.com", result.Owner);
+                Assert.Equal(OwnerEmail, result.Owner);
                 Assert.Equal(new string[] { "guest@outlook.com", "invited.user@live.com" }, result.Emails);
             });
         }

@@ -40,10 +40,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// image.</param>
         /// <param name="version">The version of the Azure Virtual Machines
         /// Marketplace image.</param>
-        /// <param name="id">The ARM resource identifier of the virtual machine
-        /// image. Computes nodes of the pool will be created using this custom
-        /// image. This is of the form
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}</param>
+        /// <param name="id">The ARM resource identifier of the Virtual Machine
+        /// Image or Shared Image Gallery Image. Compute Nodes of the Pool will
+        /// be created using this Image Id. This is of either the form
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
+        /// for Virtual Machine Image or
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}
+        /// for SIG image.</param>
         public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string id = default(string))
         {
             Publisher = publisher;
@@ -84,7 +87,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// image.
         /// </summary>
         /// <remarks>
-        /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
+        /// For example, 18.04-LTS or 2019-Datacenter.
         /// </remarks>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
@@ -101,18 +104,22 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM resource identifier of the virtual machine
-        /// image. Computes nodes of the pool will be created using this custom
-        /// image. This is of the form
+        /// Gets or sets the ARM resource identifier of the Virtual Machine
+        /// Image or Shared Image Gallery Image. Compute Nodes of the Pool will
+        /// be created using this Image Id. This is of either the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
+        /// for Virtual Machine Image or
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}
+        /// for SIG image.
         /// </summary>
         /// <remarks>
-        /// This property is mutually exclusive with other properties. The
-        /// virtual machine image must be in the same region and subscription
-        /// as the Azure Batch account. For information about the firewall
-        /// settings for Batch node agent to communicate with Batch service see
-        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
-        /// .
+        /// This property is mutually exclusive with other properties. For
+        /// Virtual Machine Image it must be in the same region and
+        /// subscription as the Azure Batch account. For SIG image it must have
+        /// replicas in the same region as the Azure Batch account. For
+        /// information about the firewall settings for the Batch node agent to
+        /// communicate with the Batch service see
+        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

@@ -1,5 +1,9 @@
 variables:
-  DotNetCoreSDKVersion: '3.0.100-preview5-011568'
+  DotNetCoreSDKVersion: '3.0.100'
   DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
   skipComponentGovernanceDetection: true
+  ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+    BuildConfiguration: 'Debug'
+  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    BuildConfiguration: 'Release'

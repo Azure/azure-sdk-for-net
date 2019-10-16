@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.Batch
             Certificate = new CertificateOperations(this);
             Pool = new PoolOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01";
+            ApiVersion = "2019-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

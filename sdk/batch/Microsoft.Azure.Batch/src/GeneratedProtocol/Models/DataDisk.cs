@@ -14,8 +14,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings which will be used by the data disks associated to compute
-    /// nodes in the pool.
+    /// Settings which will be used by the data disks associated to Compute
+    /// Nodes in the Pool. When using attached data disks, you need to mount
+    /// and format the disks from within a VM to use them.
     /// </summary>
     public partial class DataDisk
     {
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// gigabytes.</param>
         /// <param name="caching">The type of caching to be enabled for the
         /// data disks.</param>
-        /// <param name="storageAccountType">The storage account type to be
+        /// <param name="storageAccountType">The storage Account type to be
         /// used for the data disk.</param>
         public DataDisk(int lun, int diskSizeGB, CachingType? caching = default(CachingType?), StorageAccountType? storageAccountType = default(StorageAccountType?))
         {
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int DiskSizeGB { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account type to be used for the data disk.
+        /// Gets or sets the storage Account type to be used for the data disk.
         /// </summary>
         /// <remarks>
         /// If omitted, the default is "standard_lrs". Possible values include:

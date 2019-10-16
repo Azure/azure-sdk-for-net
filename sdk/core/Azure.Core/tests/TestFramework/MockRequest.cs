@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -18,7 +16,9 @@ namespace Azure.Core.Testing
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public override HttpPipelineRequestContent Content
+        public bool IsDisposed { get; private set; }
+
+        public override RequestContent Content
         {
             get { return base.Content; }
             set
@@ -38,11 +38,11 @@ namespace Azure.Core.Testing
 
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override void AddHeader(string name, string value)
         {
-            if (!_headers.TryGetValue(name, out var values))
+            if (!_headers.TryGetValue(name, out List<string> values))
             {
                 _headers[name] = values = new List<string>();
             }
@@ -51,11 +51,11 @@ internal
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool TryGetHeader(string name, out string value)
         {
-            if (_headers.TryGetValue(name, out var values))
+            if (_headers.TryGetValue(name, out List<string> values))
             {
                 value = JoinHeaderValue(values);
                 return true;
@@ -66,17 +66,17 @@ internal
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
-            var result = _headers.TryGetValue(name, out var valuesList);
+            var result = _headers.TryGetValue(name, out List<string> valuesList);
             values = valuesList;
             return result;
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool ContainsHeader(string name)
         {
@@ -84,7 +84,7 @@ internal
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool RemoveHeader(string name)
         {
@@ -92,7 +92,7 @@ internal
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
 
@@ -103,10 +103,11 @@ internal
 
         public override string ClientRequestId { get; set; }
 
-        public override string ToString() => $"{Method} {UriBuilder}";
+        public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }

@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A specification for uploading files from an Azure Batch node to another
-    /// location after the Batch service has finished executing the task
-    /// process.
+    /// A specification for uploading files from an Azure Batch Compute Node to
+    /// another location after the Batch service has finished executing the
+    /// Task process.
     /// </summary>
     public partial class OutputFile
     {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// Both relative and absolute paths are supported. Relative paths are
-        /// relative to the task working directory. The following wildcards are
+        /// relative to the Task working directory. The following wildcards are
         /// supported: * matches 0 or more characters (for example pattern abc*
         /// would match abc or abcdef), ** matches any directory, ? matches any
         /// single character, [abc] matches one character in the brackets, and
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// "." it is ignored by default but may be matched by specifying it
         /// explicitly (for example *.gif will not match .a.gif, but .*.gif
         /// will). A simple example: **\*.txt matches any file that does not
-        /// start in '.' and ends with .txt in the task working directory or
+        /// start in '.' and ends with .txt in the Task working directory or
         /// any subdirectory. If the filename contains a wildcard character it
         /// can be escaped using brackets (for example abc[*] would match a
         /// file named abc*). Note that both \ and / are treated as directory

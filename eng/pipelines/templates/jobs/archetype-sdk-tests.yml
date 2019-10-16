@@ -4,10 +4,9 @@ parameters:
   MaxParallel: 0
 
 jobs:
-
-  - job: 'Test'
+  - job: "Test"
     variables:
-    - template: ../variables/globals.yml
+      - template: ../variables/globals.yml
 
     # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
     # https://github.com/Azure/azure-sdk-for-net/issues/5982
@@ -17,38 +16,30 @@ jobs:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
         Linux:
-          OSName: 'Linux'
-          OSVmImage: 'ubuntu-16.04'
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSName: "Windows"
-          OSVmImage: "vs2017-win2016"
+          OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
         Windows_NetFramework:
           OSName: "Windows"
-          OSVmImage: "vs2017-win2016"
+          OSVmImage: "windows-2019"
           TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
           OSVmImage: "macOS-10.13"
           TestTargetFramework: netcoreapp2.1
     pool:
-      vmImage: '$(OSVmImage)'
+      vmImage: "$(OSVmImage)"
 
     steps:
       - ${{ parameters.PreSteps }}
 
-      - powershell: |
-          Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
-          -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
-        workingDirectory: '$(Build.BinariesDirectory)'
-        displayName: 'Download Tools Archive From Github Release and Extract it'
-
-      - task: PythonScript@0
-        displayName: 'Run VerifyAgentOS script'
-        inputs:
-          scriptPath: '$(Build.BinariesDirectory)/sdk-tools/scripts/python/verify_agent_os.py'
-          arguments: $(OSName)
+      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
+        parameters:
+          OSName: $(OSName)
 
       - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
@@ -62,8 +53,8 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false
-        displayName: 'Build & Test (all tests for $(TestTargetFramework))'
+      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false
+        displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -75,7 +66,7 @@ jobs:
         condition: succeededOrFailed()
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
-          testResultsFiles: '**/$(TestTargetFramework)*.trx'
-          testRunTitle: '$(OSName) $(TestTargetFramework)'
-          testResultsFormat: 'VSTest'
+          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testResultsFormat: "VSTest"
           mergeTestResults: true

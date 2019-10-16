@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.NetApp
             MountTargets = new MountTargetsOperations(this);
             Snapshots = new SnapshotsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01";
+            ApiVersion = "2019-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

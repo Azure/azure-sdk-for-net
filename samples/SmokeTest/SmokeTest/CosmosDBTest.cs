@@ -1,14 +1,13 @@
-﻿using Azure.Storage.Blobs.Models;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmokeTest
@@ -34,7 +33,7 @@ namespace SmokeTest
     class CosmosDBTest
     {
         private static DocumentClient client;
-        private const string DataBaseName = "netSolarSystemDB";
+        private static string DataBaseName = $"netSolarSystemDB-{Guid.NewGuid()}";
         private const string CollectionName = "PlanetsCollection";
         private static List<Planet> planets = new List<Planet>();
 
@@ -135,7 +134,7 @@ namespace SmokeTest
             Console.Write("Querying... ");
             IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
 
-            var planetsSet = new HashSet<string>(planets.Count);
+            var planetsSet = new HashSet<string>();
             foreach(Planet planet in planets)
             {
                 planetsSet.Add(planet.ToString());

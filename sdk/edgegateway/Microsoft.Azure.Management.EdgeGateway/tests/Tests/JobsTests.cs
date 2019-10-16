@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.EdgeGateway;
+using Microsoft.Azure.Management.EdgeGateway;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -31,3 +31,4 @@ namespace EdgeGateway.Tests
         #endregion Test Methods
     }
 }
+

@@ -60,6 +60,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// its globally default value.
         /// But keep in mind, the default value doesn't mean "false". It varies
         /// in terms of different FeatureFlags.</param>
+        /// <param name="cors">Cross-Origin Resource Sharing (CORS)
+        /// settings.</param>
         /// <param name="provisioningState">Provisioning state of the resource.
         /// Possible values include: 'Unknown', 'Succeeded', 'Failed',
         /// 'Canceled', 'Running', 'Creating', 'Updating', 'Deleting',
@@ -76,12 +78,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// usage.</param>
         /// <param name="version">Version of the SignalR resource. Probably you
         /// need the same or higher version of client SDKs.</param>
-        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string))
+        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             HostNamePrefix = hostNamePrefix;
             Features = features;
+            Cors = cors;
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
             HostName = hostName;
@@ -125,6 +128,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.features")]
         public IList<SignalRFeature> Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets cross-Origin Resource Sharing (CORS) settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cors")]
+        public SignalRCorsSettings Cors { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the resource. Possible values include:

@@ -34,16 +34,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// contains adult-oriented content.</param>
         /// <param name="isRacyContent">A value indicating if the image is
         /// racy.</param>
+        /// <param name="isGoryContent">A value indicating if the image is
+        /// gory.</param>
         /// <param name="adultScore">Score from 0 to 1 that indicates how much
         /// the content is considered adult-oriented within the image.</param>
         /// <param name="racyScore">Score from 0 to 1 that indicates how
         /// suggestive is the image.</param>
-        public AdultInfo(bool isAdultContent = default(bool), bool isRacyContent = default(bool), double adultScore = default(double), double racyScore = default(double))
+        /// <param name="goreScore">Score from 0 to 1 that indicates how gory
+        /// is the image.</param>
+        public AdultInfo(bool isAdultContent = default(bool), bool isRacyContent = default(bool), bool isGoryContent = default(bool), double adultScore = default(double), double racyScore = default(double), double goreScore = default(double))
         {
             IsAdultContent = isAdultContent;
             IsRacyContent = isRacyContent;
+            IsGoryContent = isGoryContent;
             AdultScore = adultScore;
             RacyScore = racyScore;
+            GoreScore = goreScore;
             CustomInit();
         }
 
@@ -66,6 +72,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public bool IsRacyContent { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating if the image is gory.
+        /// </summary>
+        [JsonProperty(PropertyName = "isGoryContent")]
+        public bool IsGoryContent { get; set; }
+
+        /// <summary>
         /// Gets or sets score from 0 to 1 that indicates how much the content
         /// is considered adult-oriented within the image.
         /// </summary>
@@ -78,6 +90,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "racyScore")]
         public double RacyScore { get; set; }
+
+        /// <summary>
+        /// Gets or sets score from 0 to 1 that indicates how gory is the
+        /// image.
+        /// </summary>
+        [JsonProperty(PropertyName = "goreScore")]
+        public double GoreScore { get; set; }
 
     }
 }

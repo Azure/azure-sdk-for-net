@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// Get the status of Attestation Provider.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='providerName'>
         /// Name of the attestation service instance
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResultException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// Creates or updates the Attestation Provider.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='providerName'>
         /// Name of the attestation service
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResultException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// Delete Attestation Service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='providerName'>
         /// Name of the attestation service
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResultException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResultException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// Returns attestation providers list in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResultException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

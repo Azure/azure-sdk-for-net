@@ -30,7 +30,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanCreateListDeleteWorkspace()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
@@ -59,7 +59,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanPerformWorkspaceActions()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
@@ -121,7 +121,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public async void CanEnableDisableListIntelligencePacks()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);

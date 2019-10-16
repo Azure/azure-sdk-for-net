@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum AutoUserScope
     {
         /// <summary>
-        /// Specifies that the service should create a new user for the task.
+        /// Specifies that the service should create a new user for the Task.
         /// </summary>
         [EnumMember(Value = "task")]
         Task,
         /// <summary>
-        /// Specifies that the task runs as the common auto user account which
-        /// is created on every node in a pool.
+        /// Specifies that the Task runs as the common auto user Account which
+        /// is created on every Compute Node in a Pool.
         /// </summary>
         [EnumMember(Value = "pool")]
         Pool

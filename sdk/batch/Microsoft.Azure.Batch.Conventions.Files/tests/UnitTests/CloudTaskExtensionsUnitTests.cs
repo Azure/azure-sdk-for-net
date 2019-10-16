@@ -52,5 +52,24 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
                 Assert.Equal("storageAccount", ex.ParamName);
             }
         }
+
+        [Fact]
+        public void GetTaskOutputStoragePathReturnsExpectedValue()
+        {
+            const string taskId = "test-task";
+            var task = new CloudTask(taskId, "test");
+
+            var taskLogPath = task.GetOutputStoragePath(TaskOutputKind.TaskLog);
+            Assert.Equal($"{taskId}/${TaskOutputKind.TaskLog.ToString()}", taskLogPath);
+
+            taskLogPath = task.GetOutputStoragePath(TaskOutputKind.TaskOutput);
+            Assert.Equal($"{taskId}/${TaskOutputKind.TaskOutput.ToString()}", taskLogPath);
+
+            taskLogPath = task.GetOutputStoragePath(TaskOutputKind.TaskPreview);
+            Assert.Equal($"{taskId}/${TaskOutputKind.TaskPreview.ToString()}", taskLogPath);
+
+            taskLogPath = task.GetOutputStoragePath(TaskOutputKind.Custom("foo"));
+            Assert.Equal($"{taskId}/${TaskOutputKind.Custom("foo").ToString()}", taskLogPath);
+        }
     }
 }

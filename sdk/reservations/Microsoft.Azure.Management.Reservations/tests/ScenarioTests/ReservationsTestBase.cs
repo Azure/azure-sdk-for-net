@@ -1,20 +1,19 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Reservations.Tests.Helpers;
-using Microsoft.Azure.Management.Reservations;
-using Microsoft.Azure.Management.Reservations.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using Xunit;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Microsoft.Azure.Management.Reservations;
+using Microsoft.Azure.Management.Reservations.Models;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Reservations.Tests.Helpers;
+using Xunit;
 
 namespace Reservations.Tests.ScenarioTests
 {
@@ -40,18 +39,18 @@ namespace Reservations.Tests.ScenarioTests
             Assert.NotNull(Reservation.Properties);
             Assert.NotNull(Reservation.Sku);
             Assert.NotNull(Reservation.Type);
-
             Assert.NotNull(Reservation.Properties.InstanceFlexibility);
             Assert.NotNull(Reservation.Properties.ReservedResourceType);
             Assert.NotNull(Reservation.Properties.SkuDescription);
+            Assert.NotNull(Reservation.Properties.Renew);
         }
 
-        private PurchaseRequest CreatePurchaseRequestBody()
+        public PurchaseRequest CreatePurchaseRequestBody()
         {
             return new PurchaseRequest
             {
-                Sku = new SkuName { Name = "Standard_F1" },
-                Location = "eastus",
+                Sku = new SkuName { Name = "Standard_D1" },
+                Location = "westus",
                 ReservedResourceType = "VirtualMachines",
                 BillingScopeId = $"/subscriptions/{SubscriptionId}",
                 Term = "P1Y",
@@ -60,18 +59,39 @@ namespace Reservations.Tests.ScenarioTests
                 AppliedScopeType = "Single",
                 AppliedScopes = new List<string> { $"/subscriptions/{SubscriptionId}" },
                 ReservedResourceProperties =
-                    new PurchaseRequestPropertiesReservedResourceProperties { InstanceFlexibility = "On" }
+                    new PurchaseRequestPropertiesReservedResourceProperties { InstanceFlexibility = "On" },
+                Renew = false
+            };
+        }
+
+        public PurchaseRequest CreateBillingPlanRequestBody()
+        {
+            return new PurchaseRequest
+            {
+                Sku = new SkuName { Name = "Standard_D1" },
+                Location = "westus",
+                ReservedResourceType = "VirtualMachines",
+                BillingScopeId = $"/subscriptions/{SubscriptionId}",
+                Term = "P1Y",
+                BillingPlan = "Monthly",
+                Quantity = 3,
+                DisplayName = "TestPurchaseBillingPlanReservation",
+                AppliedScopeType = "Single",
+                AppliedScopes = new List<string> { $"/subscriptions/{SubscriptionId}" },
+                ReservedResourceProperties =
+                    new PurchaseRequestPropertiesReservedResourceProperties { InstanceFlexibility = "On" },
+                Renew = false
             };
         }
 
         protected ReservationOrderResponse PurchaseReservationOrder()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var calculateRequest = CreatePurchaseRequestBody();
+                var calculateRequest = CreateBillingPlanRequestBody();
                 var calculateResponse = reservationsClient.ReservationOrder.Calculate(calculateRequest);
 
                 var reservationOrderId = calculateResponse?.Properties?.ReservationOrderId;

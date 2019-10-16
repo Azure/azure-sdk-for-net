@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A job schedule that allows recurring jobs by specifying when to run
-    /// jobs and a specification used to create each job.
+    /// A Job Schedule that allows recurring Jobs by specifying when to run
+    /// Jobs and a specification used to create each Job.
     /// </summary>
     public partial class JobScheduleAddParameter
     {
@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobScheduleAddParameter class.
         /// </summary>
         /// <param name="id">A string that uniquely identifies the schedule
-        /// within the account.</param>
-        /// <param name="schedule">The schedule according to which jobs will be
+        /// within the Account.</param>
+        /// <param name="schedule">The schedule according to which Jobs will be
         /// created.</param>
-        /// <param name="jobSpecification">The details of the jobs to be
+        /// <param name="jobSpecification">The details of the Jobs to be
         /// created on this schedule.</param>
         /// <param name="displayName">The display name for the
         /// schedule.</param>
@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the schedule within
-        /// the account.
+        /// the Account.
         /// </summary>
         /// <remarks>
         /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than 64
         /// characters. The ID is case-preserving and case-insensitive (that
-        /// is, you may not have two IDs within an account that differ only by
+        /// is, you may not have two IDs within an Account that differ only by
         /// case).
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
@@ -83,13 +83,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the schedule according to which jobs will be created.
+        /// Gets or sets the schedule according to which Jobs will be created.
         /// </summary>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
-        /// Gets or sets the details of the jobs to be created on this
+        /// Gets or sets the details of the Jobs to be created on this
         /// schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobSpecification")]

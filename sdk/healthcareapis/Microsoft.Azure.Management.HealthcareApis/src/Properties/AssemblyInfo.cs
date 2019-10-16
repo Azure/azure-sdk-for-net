@@ -4,11 +4,11 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure AlertsManagement Library")]
-[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Alerts Management Platform.")]
+[assembly: AssemblyTitle("Microsoft Azure Management HealthcareApis Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure HealthcareApis Management Platform.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.1.0")]
+[assembly: AssemblyVersion("1.0.2.0")]
+[assembly: AssemblyFileVersion("1.0.2.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

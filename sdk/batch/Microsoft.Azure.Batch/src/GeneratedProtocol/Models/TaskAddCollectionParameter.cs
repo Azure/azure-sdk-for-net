@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A collection of Azure Batch tasks to add.
+    /// A collection of Azure Batch Tasks to add.
     /// </summary>
     public partial class TaskAddCollectionParameter
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionParameter class.
         /// </summary>
-        /// <param name="value">The collection of tasks to add. The maximum
-        /// count of tasks is 100.</param>
+        /// <param name="value">The collection of Tasks to add. The maximum
+        /// count of Tasks is 100.</param>
         public TaskAddCollectionParameter(IList<TaskAddParameter> value)
         {
             Value = value;
@@ -45,15 +45,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of tasks to add. The maximum count of
-        /// tasks is 100.
+        /// Gets or sets the collection of Tasks to add. The maximum count of
+        /// Tasks is 100.
         /// </summary>
         /// <remarks>
         /// The total serialized size of this collection must be less than 1MB.
-        /// If it is greater than 1MB (for example if each task has 100's of
+        /// If it is greater than 1MB (for example if each Task has 100's of
         /// resource files or environment variables), the request will fail
         /// with code 'RequestBodyTooLarge' and should be retried again with
-        /// fewer tasks.
+        /// fewer Tasks.
         /// </remarks>
         [JsonProperty(PropertyName = "value")]
         public IList<TaskAddParameter> Value { get; set; }

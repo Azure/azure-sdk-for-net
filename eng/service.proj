@@ -4,20 +4,24 @@
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
     <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
     <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
+    <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
   </PropertyGroup>
 
   <ItemGroup>
-    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
+    <ExcludeMgmtLib Include="..\sdk\*\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
-    <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects)" />
+    <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
+    <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
     <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
+    <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'" />
     <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
   <Target Name="CheckProjects" AfterTargets="Build">
-    <Error Condition="'@(ProjectReference)' == ''"
+    <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
+    <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\**\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
 </Project>

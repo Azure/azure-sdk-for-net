@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// A handler interface for the receive operation. Use any implementation of this interface to specify
     /// user action when using <see cref="PartitionReceiver.SetReceiveHandler(IPartitionReceiveHandler, bool)"/>.

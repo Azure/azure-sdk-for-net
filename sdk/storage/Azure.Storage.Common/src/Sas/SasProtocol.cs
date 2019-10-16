@@ -1,9 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
-
-using System;
-using System.ComponentModel;
+// Licensed under the MIT License.
 
 namespace Azure.Storage.Sas
 {
@@ -11,108 +7,69 @@ namespace Azure.Storage.Sas
     /// Defines the protocols permitted for Storage requests made with a shared
     /// access signature.
     /// </summary>
-    public readonly struct SasProtocol : IEquatable<SasProtocol>
+    public enum SasProtocol
+    {
+        /// <summary>
+        /// No protocol has been specified. If no value is specified,
+        /// the service will default to HttpsAndHttp.
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// Only requests issued over HTTPS or HTTP will be permitted.
+        /// </summary>
+        HttpsAndHttp = 1,
+
+        /// <summary>
+        /// Only requests issued over HTTPS will be permitted.
+        /// </summary>
+        Https = 2
+    }
+
+    /// <summary>
+    /// Extension methods for AccountSasResourceTypes enum
+    /// </summary>
+    internal static partial class SasExtensions
     {
         private const string NoneName = null;
         private const string HttpsName = "https";
         private const string HttpsAndHttpName = "https,http";
 
         /// <summary>
-        /// No protocol has been specified.
-        /// </summary>
-        public static SasProtocol None => new SasProtocol(NoneName);
-
-        /// <summary>
-        /// Only requests issued over HTTPS will be permitted.
-        /// </summary>
-        public static SasProtocol Https => new SasProtocol(HttpsName);
-
-        /// <summary>
-        /// Only requests issued over HTTPS or HTTP will be permitted.  This is
-        /// the default value.
-        /// </summary>
-        public static SasProtocol HttpsAndHttp => new SasProtocol(HttpsAndHttpName);
-
-        /// <summary>
-        /// Gets the name of the protocol.
-        /// </summary>
-        public string Value { get; }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="SasProtocol"/> type.
-        /// </summary>
-        /// <param name="name">A string representation of the protocol.</param>
-        SasProtocol(string name) =>
-            this.Value = name;
-
-        /// <summary>
         /// Gets a string representation of the protocol.
         /// </summary>
         /// <returns>A string representation of the protocol.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() =>
-            this.Value ?? "";
-
-        /// <summary>
-        /// Check if two <see cref="SasProtocol"/> instances are equal.
-        /// </summary>
-        /// <param name="o1">The first instance to compare.</param>
-        /// <param name="o2">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(SasProtocol o1, SasProtocol o2) =>
-            o1.Value == o2.Value;
-
-        /// <summary>
-        /// Check if two <see cref="SasProtocol"/> instances are not equal.
-        /// </summary>
-        /// <param name="o1">The first instance to compare.</param>
-        /// <param name="o2">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(SasProtocol o1, SasProtocol o2) =>
-            o1.Value != o2.Value;
-
-        /// <summary>
-        /// Get a hash code for the <see cref="SasProtocol"/>.
-        /// </summary>
-        /// <returns>Hash code for the <see cref="SasProtocol"/>.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            this.Value?.GetHashCode() ?? 0;
-
-        /// <summary>
-        /// Check if two <see cref="SasProtocol"/> instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SasProtocol other && this.Equals(other);
-
-        /// <summary>
-        /// Check if two <see cref="SasProtocol"/> instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(SasProtocol other)
-            => this.Value == other.Value;
+        internal static string ToProtocolString(this SasProtocol protocol)
+        {
+            switch (protocol)
+            {
+                case SasProtocol.Https:
+                    return HttpsName;
+                case SasProtocol.HttpsAndHttp:
+                    return HttpsAndHttpName;
+                case SasProtocol.None:
+                default:
+                    return null;
+            }
+        }
 
         /// <summary>
         /// Parse a string representation of a protocol.
         /// </summary>
         /// <param name="s">A string representation of a protocol.</param>
         /// <returns>A <see cref="SasProtocol"/>.</returns>
-        public static SasProtocol Parse(string s)
+        public static SasProtocol ParseProtocol(string s)
         {
             switch (s)
             {
-                case null:
+                case NoneName:
                 case "":
-                    return None;
+                    return SasProtocol.None;
                 case HttpsName:
-                    return Https;
+                    return SasProtocol.Https;
                 case HttpsAndHttpName:
-                    return HttpsAndHttp;
+                    return SasProtocol.HttpsAndHttp;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(s), $"Invalid {nameof(SasProtocol)} value");
+                    throw Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));
             }
         }
     }

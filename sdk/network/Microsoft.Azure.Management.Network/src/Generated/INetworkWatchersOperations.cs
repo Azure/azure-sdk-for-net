@@ -341,8 +341,8 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<TroubleshootingResult>> GetTroubleshootingResultWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Configures flow log  and traffic analytics (optional) on a
-        /// specified resource.
+        /// Configures flow log and traffic analytics (optional) on a specified
+        /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='parameters'>
         /// Parameters that define a resource to query flow log and traffic
-        /// analytics (optional)  status.
+        /// analytics (optional) status.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -489,7 +489,13 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<AvailableProvidersList>> ListAvailableProvidersWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get network configuration diagnostic.
+        /// Gets Network Configuration Diagnostic data to help customers
+        /// understand and debug network behavior. It provides detailed
+        /// information on what security rules were applied to a specified
+        /// traffic flow and the result of evaluating these rules. Customers
+        /// must provide details of a flow like source, destination, protocol,
+        /// etc. The API returns whether traffic was allowed or denied, the
+        /// rules evaluated for the specified flow and the evaluation results.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -683,8 +689,8 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<TroubleshootingResult>> BeginGetTroubleshootingResultWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Configures flow log  and traffic analytics (optional) on a
-        /// specified resource.
+        /// Configures flow log and traffic analytics (optional) on a specified
+        /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -723,7 +729,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='parameters'>
         /// Parameters that define a resource to query flow log and traffic
-        /// analytics (optional)  status.
+        /// analytics (optional) status.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -831,7 +837,13 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<AvailableProvidersList>> BeginListAvailableProvidersWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get network configuration diagnostic.
+        /// Gets Network Configuration Diagnostic data to help customers
+        /// understand and debug network behavior. It provides detailed
+        /// information on what security rules were applied to a specified
+        /// traffic flow and the result of evaluating these rules. Customers
+        /// must provide details of a flow like source, destination, protocol,
+        /// etc. The API returns whether traffic was allowed or denied, the
+        /// rules evaluated for the specified flow and the evaluation results.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The task counts for a job.
+    /// The Task counts for a Job.
     /// </summary>
     public partial class TaskCounts
     {
@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskCounts class.
         /// </summary>
-        /// <param name="active">The number of tasks in the active
+        /// <param name="active">The number of Tasks in the active
         /// state.</param>
-        /// <param name="running">The number of tasks in the running or
+        /// <param name="running">The number of Tasks in the running or
         /// preparing state.</param>
-        /// <param name="completed">The number of tasks in the completed
+        /// <param name="completed">The number of Tasks in the completed
         /// state.</param>
-        /// <param name="succeeded">The number of tasks which succeeded. A task
+        /// <param name="succeeded">The number of Tasks which succeeded. A Task
         /// succeeds if its result (found in the executionInfo property) is
         /// 'success'.</param>
-        /// <param name="failed">The number of tasks which failed. A task fails
+        /// <param name="failed">The number of Tasks which failed. A Task fails
         /// if its result (found in the executionInfo property) is
         /// 'failure'.</param>
         public TaskCounts(int active, int running, int completed, int succeeded, int failed)
@@ -57,32 +57,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of tasks in the active state.
+        /// Gets or sets the number of Tasks in the active state.
         /// </summary>
         [JsonProperty(PropertyName = "active")]
         public int Active { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of tasks in the running or preparing state.
+        /// Gets or sets the number of Tasks in the running or preparing state.
         /// </summary>
         [JsonProperty(PropertyName = "running")]
         public int Running { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of tasks in the completed state.
+        /// Gets or sets the number of Tasks in the completed state.
         /// </summary>
         [JsonProperty(PropertyName = "completed")]
         public int Completed { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of tasks which succeeded. A task succeeds
+        /// Gets or sets the number of Tasks which succeeded. A Task succeeds
         /// if its result (found in the executionInfo property) is 'success'.
         /// </summary>
         [JsonProperty(PropertyName = "succeeded")]
         public int Succeeded { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of tasks which failed. A task fails if its
+        /// Gets or sets the number of Tasks which failed. A Task fails if its
         /// result (found in the executionInfo property) is 'failure'.
         /// </summary>
         [JsonProperty(PropertyName = "failed")]

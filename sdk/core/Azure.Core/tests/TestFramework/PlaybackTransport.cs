@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
@@ -25,7 +24,7 @@ namespace Azure.Core.Testing
             _random = random;
         }
 
-        public override void Process(HttpPipelineMessage message)
+        public override void Process(HttpMessage message)
         {
             // Some tests will check if the Request Content is being read (to
             // verify their Progress handling) so we'll just copy it to a
@@ -43,7 +42,7 @@ namespace Azure.Core.Testing
             message.Response = GetResponse(_session.Lookup(message.Request, _matcher));
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpMessage message)
         {
             // Some tests will check if the Request Content is being read (to
             // verify their Progress handling) so we'll just copy it to a

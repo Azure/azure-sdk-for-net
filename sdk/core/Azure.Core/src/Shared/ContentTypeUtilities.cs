@@ -1,12 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Text;
 
 namespace Azure.Core.Pipeline
 {
+#if !TESTFRAMEWORK
     internal static class ContentTypeUtilities
+#else
+#pragma warning disable SA1649 // File name should match first type name
+    internal static class TestFrameworkContentTypeUtilities
+#pragma warning restore SA1649 // File name should match first type name
+#endif
     {
         public static bool TryGetTextEncoding(string contentType, out Encoding encoding)
         {
