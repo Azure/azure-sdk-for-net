@@ -12,11 +12,11 @@
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release are the following changes: 
-		1) Addition of Automatic Repairs Policy for Virtual Machine Scale Sets.
-		2) Addition of ScaleInPolicy for Virtual Machine Scale Sets. 
-		3) Addition of RequireGuestProvisionSignal property in OSProfile 
-		4) Addition of doNotRunExtensionsOnOverprovisionedVMs property for Virtual Machine ScaleSet Update. 
-		5) HealthProbe property in VirtualMachineScaleSetUpdateNetworkProfile
+            1) Addition of Automatic Repairs Policy for Virtual Machine Scale Sets.
+            2) Addition of ScaleInPolicy for Virtual Machine Scale Sets. 
+            3) Addition of RequireGuestProvisionSignal property in OSProfile 
+            4) Addition of doNotRunExtensionsOnOverprovisionedVMs property for Virtual Machine ScaleSet Update. 
+            5) HealthProbe property in VirtualMachineScaleSetUpdateNetworkProfile
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
