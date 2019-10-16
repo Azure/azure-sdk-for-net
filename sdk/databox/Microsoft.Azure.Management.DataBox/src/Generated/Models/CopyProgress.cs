@@ -31,18 +31,42 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="storageAccountName">Name of the storage account where
         /// the data needs to be uploaded.</param>
+        /// <param name="dataDestinationType">Data Destination Type. Possible
+        /// values include: 'StorageAccount', 'ManagedDisk'</param>
         /// <param name="accountId">Id of the account where the data needs to
         /// be uploaded.</param>
         /// <param name="bytesSentToCloud">Amount of data uploaded by the job
         /// as of now.</param>
         /// <param name="totalBytesToProcess">Total amount of data to be
         /// processed by the job.</param>
-        public CopyProgress(string storageAccountName = default(string), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?))
+        /// <param name="filesProcessed">Number of files processed by the job
+        /// as of now.</param>
+        /// <param name="totalFilesToProcess">Total number of files to be
+        /// processed by the job.</param>
+        /// <param name="invalidFilesProcessed">Number of files not adhering to
+        /// azure naming conventions which were processed by automatic
+        /// renaming</param>
+        /// <param name="invalidFileBytesUploaded">Total amount of data not
+        /// adhering to azure naming conventions which were processed by
+        /// automatic renaming</param>
+        /// <param name="renamedContainerCount">Number of folders not adhering
+        /// to azure naming conventions which were processed by automatic
+        /// renaming</param>
+        /// <param name="filesErroredOut">Number of files which could not be
+        /// copied</param>
+        public CopyProgress(string storageAccountName = default(string), DataDestinationType? dataDestinationType = default(DataDestinationType?), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?))
         {
             StorageAccountName = storageAccountName;
+            DataDestinationType = dataDestinationType;
             AccountId = accountId;
             BytesSentToCloud = bytesSentToCloud;
             TotalBytesToProcess = totalBytesToProcess;
+            FilesProcessed = filesProcessed;
+            TotalFilesToProcess = totalFilesToProcess;
+            InvalidFilesProcessed = invalidFilesProcessed;
+            InvalidFileBytesUploaded = invalidFileBytesUploaded;
+            RenamedContainerCount = renamedContainerCount;
+            FilesErroredOut = filesErroredOut;
             CustomInit();
         }
 
@@ -57,6 +81,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountName")]
         public string StorageAccountName { get; private set; }
+
+        /// <summary>
+        /// Gets data Destination Type. Possible values include:
+        /// 'StorageAccount', 'ManagedDisk'
+        /// </summary>
+        [JsonProperty(PropertyName = "dataDestinationType")]
+        public DataDestinationType? DataDestinationType { get; private set; }
 
         /// <summary>
         /// Gets id of the account where the data needs to be uploaded.
@@ -75,6 +106,45 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "totalBytesToProcess")]
         public long? TotalBytesToProcess { get; private set; }
+
+        /// <summary>
+        /// Gets number of files processed by the job as of now.
+        /// </summary>
+        [JsonProperty(PropertyName = "filesProcessed")]
+        public long? FilesProcessed { get; private set; }
+
+        /// <summary>
+        /// Gets total number of files to be processed by the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalFilesToProcess")]
+        public long? TotalFilesToProcess { get; private set; }
+
+        /// <summary>
+        /// Gets number of files not adhering to azure naming conventions which
+        /// were processed by automatic renaming
+        /// </summary>
+        [JsonProperty(PropertyName = "invalidFilesProcessed")]
+        public long? InvalidFilesProcessed { get; private set; }
+
+        /// <summary>
+        /// Gets total amount of data not adhering to azure naming conventions
+        /// which were processed by automatic renaming
+        /// </summary>
+        [JsonProperty(PropertyName = "invalidFileBytesUploaded")]
+        public long? InvalidFileBytesUploaded { get; private set; }
+
+        /// <summary>
+        /// Gets number of folders not adhering to azure naming conventions
+        /// which were processed by automatic renaming
+        /// </summary>
+        [JsonProperty(PropertyName = "renamedContainerCount")]
+        public long? RenamedContainerCount { get; private set; }
+
+        /// <summary>
+        /// Gets number of files which could not be copied
+        /// </summary>
+        [JsonProperty(PropertyName = "filesErroredOut")]
+        public long? FilesErroredOut { get; private set; }
 
     }
 }

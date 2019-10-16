@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     public enum CopyStatus
     {
         /// <summary>
-        /// Data copy hasnt started yet.
+        /// Data copy hasn't started yet.
         /// </summary>
         [EnumMember(Value = "NotStarted")]
         NotStarted,
@@ -50,7 +50,32 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// No copy triggered as device was not returned.
         /// </summary>
         [EnumMember(Value = "NotReturned")]
-        NotReturned
+        NotReturned,
+        /// <summary>
+        /// The Device has hit hardware issues.
+        /// </summary>
+        [EnumMember(Value = "HardwareError")]
+        HardwareError,
+        /// <summary>
+        /// Data copy failed. The Device was formatted by user.
+        /// </summary>
+        [EnumMember(Value = "DeviceFormatted")]
+        DeviceFormatted,
+        /// <summary>
+        /// Data copy failed. Device metadata was modified by user.
+        /// </summary>
+        [EnumMember(Value = "DeviceMetadataModified")]
+        DeviceMetadataModified,
+        /// <summary>
+        /// Data copy failed. Storage Account was not accessible during copy.
+        /// </summary>
+        [EnumMember(Value = "StorageAccountNotAccessible")]
+        StorageAccountNotAccessible,
+        /// <summary>
+        /// Data copy failed. The Device data content is not supported.
+        /// </summary>
+        [EnumMember(Value = "UnsupportedData")]
+        UnsupportedData
     }
     internal static class CopyStatusEnumExtension
     {
@@ -75,6 +100,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "Failed";
                 case CopyStatus.NotReturned:
                     return "NotReturned";
+                case CopyStatus.HardwareError:
+                    return "HardwareError";
+                case CopyStatus.DeviceFormatted:
+                    return "DeviceFormatted";
+                case CopyStatus.DeviceMetadataModified:
+                    return "DeviceMetadataModified";
+                case CopyStatus.StorageAccountNotAccessible:
+                    return "StorageAccountNotAccessible";
+                case CopyStatus.UnsupportedData:
+                    return "UnsupportedData";
             }
             return null;
         }
@@ -95,6 +130,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return CopyStatus.Failed;
                 case "NotReturned":
                     return CopyStatus.NotReturned;
+                case "HardwareError":
+                    return CopyStatus.HardwareError;
+                case "DeviceFormatted":
+                    return CopyStatus.DeviceFormatted;
+                case "DeviceMetadataModified":
+                    return CopyStatus.DeviceMetadataModified;
+                case "StorageAccountNotAccessible":
+                    return CopyStatus.StorageAccountNotAccessible;
+                case "UnsupportedData":
+                    return CopyStatus.UnsupportedData;
             }
             return null;
         }
