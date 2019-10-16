@@ -24,11 +24,13 @@ namespace Azure.Security.KeyVault.Certificates
         private Dictionary<string, string> _tags;
 
         /// <summary>
-        /// Creates a certificate import used to import a certificate into Azure Key Vault.
+        /// Initializes a new instance of the <see cref="CertificateImportOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
         /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.</param>
         /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="policy"/>, or <paramref name="value"/> is null.</exception>
         public CertificateImportOptions(string name, byte[] value, CertificatePolicy policy)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -101,7 +103,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (_tags != null && _tags.Count > 0)
+            if (!_tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

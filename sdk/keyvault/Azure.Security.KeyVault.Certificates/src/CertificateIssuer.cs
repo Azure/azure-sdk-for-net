@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// A certificate issuer used to sign certificates managed by Azure Key Vault
     /// </summary>
-    public class Issuer : IJsonDeserializable, IJsonSerializable
+    public class CertificateIssuer : IJsonDeserializable, IJsonSerializable
     {
         private const string CredentialsPropertyName = "credentials";
         private const string OrgDetailsPropertyName = "org_details";
@@ -35,16 +35,16 @@ namespace Azure.Security.KeyVault.Certificates
 
         private List<AdministratorDetails> _administrators;
 
-        internal Issuer()
+        internal CertificateIssuer()
         {
             Properties = new IssuerProperties();
         }
 
         /// <summary>
-        /// Creates an issuer with the specified name
+        /// Initializes a new instance of the <see cref="CertificateContact"/> class with the given <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name of the issuer</param>
-        public Issuer(string name)
+        public CertificateIssuer(string name)
         {
             Properties = new IssuerProperties(name);
         }
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the attributes of the <see cref="Issuer"/>.
+        /// Gets or sets the attributes of the <see cref="CertificateIssuer"/>.
         /// </summary>
         public IssuerProperties Properties { get; }
 
@@ -205,7 +205,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (!string.IsNullOrEmpty(OrganizationId) || (_administrators != null && _administrators.Count > 0))
+            if (!string.IsNullOrEmpty(OrganizationId) || !_administrators.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
@@ -244,7 +244,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
-            if (_administrators != null && _administrators.Count > 0)
+            if (!_administrators.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 

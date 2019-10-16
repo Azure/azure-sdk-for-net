@@ -23,6 +23,10 @@ namespace Azure.Security.KeyVault.Certificates
         private const string TargetPropertyName = "target";
         private const string ErrorPropertyName = "error";
 
+        internal CertificateOperationProperties()
+        {
+        }
+
         /// <summary>
         /// The Id of the certificate operation
         /// </summary>
@@ -39,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri VaultUri { get; private set; }
 
         /// <summary>
-        /// The name of the <see cref="Issuer"/> for the certificate to which the operation applies
+        /// The name of the <see cref="CertificateIssuer"/> for the certificate to which the operation applies
         /// </summary>
         public string IssuerName { get; private set; }
 
@@ -76,7 +80,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Errors encountered, if any, during the processing of the certificate operation
         /// </summary>
-        public Error Error { get; private set; }
+        public CertificateError Error { get; private set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -119,7 +123,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case ErrorPropertyName:
-                        Error = new Error();
+                        Error = new CertificateError();
                         ((IJsonDeserializable)Error).ReadProperties(prop.Value);
                         break;
                 }

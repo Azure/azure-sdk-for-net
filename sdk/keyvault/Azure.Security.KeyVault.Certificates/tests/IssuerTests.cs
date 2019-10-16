@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void UninitializedAdministrators()
         {
-            Issuer issuer = new Issuer("test")
+            CertificateIssuer issuer = new CertificateIssuer("test")
             {
                 AccountId = "accountId",
             };
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void InitializedAdministrators()
         {
-            Issuer issuer = new Issuer("test")
+            CertificateIssuer issuer = new CertificateIssuer("test")
             {
                 AccountId = "accountId",
                 Administrators =

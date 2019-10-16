@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // already exists in the Key Vault, then a new version of the key is created.
             string certName = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp = client.StartCreateCertificate(certName);
+            CertificateOperation certOp = client.StartCreateCertificate(certName, CertificatePolicy.Default);
 
             // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // Let's get the created certificate along with it's policy from the Key Vault.
-            CertificateWithPolicy certificate = client.GetCertificate(certName);
+            KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateProperties certificateProperties = certificate.Properties;
             certificateProperties.Enabled = false;
 
-            Certificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
+            KeyVaultCertificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
 
             Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 

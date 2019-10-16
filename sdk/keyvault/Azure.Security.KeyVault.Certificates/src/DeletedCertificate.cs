@@ -9,13 +9,17 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// A certificate which has been deleted from the vault
     /// </summary>
-    public class DeletedCertificate : CertificateWithPolicy
+    public class DeletedCertificate : KeyVaultCertificateWithPolicy
     {
         private const string RecoveryIdPropertyName = "recoveryId";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private const string DeletedDatePropertyName = "deletedDate";
+        private const string DeletedOnPropertyName = "deletedDate";
 
         private string _recoveryId;
+
+        internal DeletedCertificate()
+        {
+        }
 
         /// <summary>
         /// Id identifying the deleted certificate
@@ -25,7 +29,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The time the certificate was deleted in UTC
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
+        public DateTimeOffset? DeletedOn { get; private set; }
 
         /// <summary>
         /// The time the certificate is scheduled to be permanently deleted in UTC
@@ -40,8 +44,8 @@ namespace Azure.Security.KeyVault.Certificates
                     _recoveryId = prop.Value.GetString();
                     break;
 
-                case DeletedDatePropertyName:
-                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
 
                 case ScheduledPurgeDatePropertyName:

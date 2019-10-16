@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="Certificate"/>.
+    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="KeyVaultCertificate"/>.
     /// </summary>
     public class CertificateProperties : IJsonDeserializable
     {

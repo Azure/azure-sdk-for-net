@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -21,10 +22,12 @@ namespace Azure.Security.KeyVault.Certificates
         private Dictionary<string, string> _tags;
 
         /// <summary>
-        /// Creates an instance of the <see cref="CertificateMergeOptions"/> class.
+        /// Initializes a new instance of the <see cref="CertificateContact"/> class.
         /// </summary>
         /// <param name="name">The name of the certificate.</param>
         /// <param name="x509certificates">The certificate or certificate chain to merge.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="x509certificates"/> is null.</exception>
         public CertificateMergeOptions(string name, IEnumerable<byte[]> x509certificates)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -65,7 +68,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (_tags != null && _tags.Count > 0)
+            if (!_tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

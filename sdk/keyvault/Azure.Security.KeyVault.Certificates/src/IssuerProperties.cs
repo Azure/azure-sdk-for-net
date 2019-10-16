@@ -20,10 +20,6 @@ namespace Azure.Security.KeyVault.Certificates
         {
         }
 
-        /// <summary>
-        /// Creates a new Issuer with the specified name
-        /// </summary>
-        /// <param name="name">The name of the issuer</param>
         internal IssuerProperties(string name)
         {
             Name = name;

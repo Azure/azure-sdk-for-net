@@ -13,6 +13,9 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificatePolicy : IJsonSerializable, IJsonDeserializable
     {
+        private const string DefaultSubject = "CN=DefaultPolicy";
+        private const string DefaultIssuerName = "Self";
+
         private const string KeyTypePropertyName = "kty";
         private const string ReuseKeyPropertyName = "reuse_key";
         private const string ExportablePropertyName = "exportable";
@@ -96,6 +99,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
+        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
+        /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
+        /// </summary>
+        public static CertificatePolicy Default => new CertificatePolicy(DefaultSubject, DefaultIssuerName);
+
+        /// <summary>
         /// The type of backing key to be generated when issuing new certificates
         /// </summary>
         public CertificateKeyType? KeyType { get; set; }
@@ -173,17 +182,17 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The allowed usages for the key of the certificate
         /// </summary>
-        public IList<CertificateKeyUsage> KeyUsage { get; set; }
+        public IList<CertificateKeyUsage> KeyUsage { get; } = new List<CertificateKeyUsage>();
 
         /// <summary>
         /// The allowed enhanced key usages (EKUs) of the certificate
         /// </summary>
-        public IList<string> EnhancedKeyUsage { get; set; }
+        public IList<string> EnhancedKeyUsage { get; } = new List<string>();
 
         /// <summary>
         /// Actions to be executed at specified points in the certificates lifetime
         /// </summary>
-        public IList<LifetimeAction> LifetimeActions { get; set; }
+        public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -212,7 +221,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case LifetimeActionsPropertyName:
-                        LifetimeActions = new List<LifetimeAction>();
                         foreach (JsonElement actionElem in prop.Value.EnumerateArray())
                         {
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
@@ -246,7 +254,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             // X509 Props
-            if (Subject != null || SubjectAlternativeNames != null || KeyUsage != null || EnhancedKeyUsage != null || ValidityInMonths.HasValue)
+            if (Subject != null || SubjectAlternativeNames != null || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
             {
                 json.WriteStartObject(s_x509PropsPropertyNameBytes);
 
@@ -274,7 +282,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (LifetimeActions != null)
+            if (!LifetimeActions.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_lifetimeActionsPropertyNameBytes);
 
@@ -383,7 +391,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case KeyUsagePropertyName:
-                        KeyUsage = new List<CertificateKeyUsage>();
                         foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             KeyUsage.Add(usageElem.GetString());
@@ -391,7 +398,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case EkusPropertyName:
-                        EnhancedKeyUsage = new List<string>();
                         foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             EnhancedKeyUsage.Add(usageElem.GetString());
@@ -421,7 +427,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (KeyUsage != null)
+            if (!KeyUsage.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_keyUsagePropertyNameBytes);
                 foreach (CertificateKeyUsage usage in KeyUsage)
@@ -431,7 +437,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndArray();
             }
 
-            if (EnhancedKeyUsage != null)
+            if (!EnhancedKeyUsage.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_ekusPropertyNameBytes);
                 foreach (var usage in EnhancedKeyUsage)

@@ -8,9 +8,13 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// A certificate along with its current policy
     /// </summary>
-    public class CertificateWithPolicy : Certificate
+    public class KeyVaultCertificateWithPolicy : KeyVaultCertificate
     {
         private const string PolicyPropertyName = "policy";
+
+        internal KeyVaultCertificateWithPolicy()
+        {
+        }
 
         /// <summary>
         /// The current policy for the certificate

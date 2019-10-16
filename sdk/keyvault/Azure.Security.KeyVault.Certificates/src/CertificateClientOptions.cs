@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
 using System;
 using Azure.Core;
 
@@ -54,11 +53,6 @@ namespace Azure.Security.KeyVault.Certificates
 
             this.ConfigureLogging();
         }
-
-        /// <summary>
-        /// The default <see cref="CertificatePolicy"/> to be used when creating certificates with the client
-        /// </summary>
-        public CertificatePolicy DefaultPolicy { get; set; }
 
         internal string GetVersionString()
         {

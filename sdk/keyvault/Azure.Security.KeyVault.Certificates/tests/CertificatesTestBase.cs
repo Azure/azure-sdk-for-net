@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             await Client.PurgeDeletedCertificateAsync(name);
         }
 
-        protected async Task<CertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
+        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
             TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
 

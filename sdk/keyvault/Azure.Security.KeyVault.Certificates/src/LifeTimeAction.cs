@@ -23,6 +23,13 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_actionTypePropertyNameBytes = JsonEncodedText.Encode(ActionTypePropertyName);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LifetimeAction"/> class.
+        /// </summary>
+        public LifetimeAction()
+        {
+        }
+
+        /// <summary>
         /// Specifies the action should be performed the specified number of days before the certificate will expire
         /// </summary>
         public int? DaysBeforeExpiry { get; set; }
@@ -35,7 +42,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The action to be performed
         /// </summary>
-        public Action Action { get; set; }
+        public CertificatePolicyAction Action { get; set; }
 
         internal static LifetimeAction FromJsonObject(JsonElement json)
         {

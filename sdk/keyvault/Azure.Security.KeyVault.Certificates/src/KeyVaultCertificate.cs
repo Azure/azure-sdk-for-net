@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// An Azure Key Vault certificate.
     /// </summary>
-    public class Certificate : IJsonDeserializable
+    public class KeyVaultCertificate : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string SecretIdPropertyName = "sid";
@@ -18,6 +18,10 @@ namespace Azure.Security.KeyVault.Certificates
 
         private string _keyId;
         private string _secretId;
+
+        internal KeyVaultCertificate()
+        {
+        }
 
         /// <summary>
         /// The Id of the certificate.
@@ -45,14 +49,14 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateContentType ContentType { get; private set; }
 
         /// <summary>
-        /// Additional properties of the <see cref="Certificate"/>.
+        /// Additional properties of the <see cref="KeyVaultCertificate"/>.
         /// </summary>
         public CertificateProperties Properties { get; } = new CertificateProperties();
 
         /// <summary>
         /// The CER formatted public X509 certificate
         /// </summary>
-        public byte[] CER { get; private set; }
+        public byte[] Cer { get; private set; }
 
         internal virtual void ReadProperty(JsonProperty prop)
         {
@@ -71,7 +75,7 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 case CERPropertyName:
-                    CER = Base64Url.Decode(prop.Value.GetString());
+                    Cer = Base64Url.Decode(prop.Value.GetString());
                     break;
 
                 default:
