@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
     /// </summary>
-    public sealed class StorageSharedKeyPipelinePolicy : SynchronousHttpPipelinePolicy
+    internal sealed class StorageSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Whether to always add the x-ms-date header.
@@ -37,7 +37,7 @@ namespace Azure.Storage.Common
         /// Sign the request using the shared key credentials.
         /// </summary>
         /// <param name="message">The message with the request to sign.</param>
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
 
@@ -55,7 +55,7 @@ namespace Azure.Storage.Common
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
-        private string BuildStringToSign(HttpPipelineMessage message)
+        private string BuildStringToSign(HttpMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
 
@@ -84,11 +84,11 @@ namespace Azure.Storage.Common
                 ifUnmodifiedSince ?? "",
                 range ?? "",
                 BuildCanonicalizedHeaders(message),
-                BuildCanonicalizedResource(message.Request.UriBuilder.Uri));
+                BuildCanonicalizedResource(message.Request.Uri.ToUri()));
             return stringToSign;
         }
 
-        private static string BuildCanonicalizedHeaders(HttpPipelineMessage message)
+        private static string BuildCanonicalizedHeaders(HttpMessage message)
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).

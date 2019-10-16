@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -259,7 +258,7 @@ namespace Azure.Core.Tests
         {
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com");
+            request.Uri.Reset(new Uri("https://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;
         }

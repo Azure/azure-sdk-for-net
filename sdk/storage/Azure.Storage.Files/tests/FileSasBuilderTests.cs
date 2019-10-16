@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Storage.Files.Tests;
@@ -34,8 +33,8 @@ namespace Azure.Storage.Files.Test
 
             // Assert
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
-            Assert.AreEqual(string.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(string.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -62,8 +61,8 @@ namespace Azure.Storage.Files.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(string.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(string.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);

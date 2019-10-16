@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Linq;
@@ -76,7 +75,7 @@ namespace Azure.Storage.Queues.Test
                 await queue.EnqueueMessageAsync(GetNewString());
 
                 // Act
-                Response<System.Collections.Generic.IEnumerable<Models.DequeuedMessage>> response = await queue.DequeueMessagesAsync(
+                Response<Models.DequeuedMessage[]> response = await queue.DequeueMessagesAsync(
                     maxMessages: 2,
                     visibilityTimeout: new TimeSpan(1, 0, 0));
 
@@ -96,7 +95,7 @@ namespace Azure.Storage.Queues.Test
                 await queue.EnqueueMessageAsync(GetNewString());
 
                 // Act
-                Response<System.Collections.Generic.IEnumerable<Models.DequeuedMessage>> response = await queue.DequeueMessagesAsync();
+                Response<Models.DequeuedMessage[]> response = await queue.DequeueMessagesAsync();
 
                 // Assert
                 Assert.AreEqual(1, response.Value.Count());
@@ -129,7 +128,7 @@ namespace Azure.Storage.Queues.Test
                 await queue.EnqueueMessageAsync(GetNewString());
 
                 // Act
-                Response<System.Collections.Generic.IEnumerable<Models.PeekedMessage>> response = await queue.PeekMessagesAsync(maxMessages: 2);
+                Response<Models.PeekedMessage[]> response = await queue.PeekMessagesAsync(maxMessages: 2);
 
                 // Assert
                 Assert.AreEqual(2, response.Value.Count());
@@ -147,7 +146,7 @@ namespace Azure.Storage.Queues.Test
                 await queue.EnqueueMessageAsync(GetNewString());
 
                 // Act
-                Response<System.Collections.Generic.IEnumerable<Models.PeekedMessage>> response = await queue.PeekMessagesAsync();
+                Response<Models.PeekedMessage[]> response = await queue.PeekMessagesAsync();
 
                 // Assert
                 Assert.AreEqual(1, response.Value.Count());

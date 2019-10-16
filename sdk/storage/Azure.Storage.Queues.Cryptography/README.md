@@ -17,7 +17,7 @@ a storage account.
 Install the Azure Storage Queues Cryptography client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Queues.Cryptography --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Queues.Cryptography --version 12.0.0-preview.4
 ```
 
 ### Prerequisites

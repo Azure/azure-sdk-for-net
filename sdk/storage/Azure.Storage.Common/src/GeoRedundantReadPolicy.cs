@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
-    /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage 
+    /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage
     /// accounts configured with RA-GRS to retry GET or HEAD requests against the secondary storage Uri.
     /// </summary>
-    internal class GeoRedundantReadPolicy : SynchronousHttpPipelinePolicy
+    internal class GeoRedundantReadPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _secondaryStorageHost;
 
@@ -24,7 +24,7 @@ namespace Azure.Storage.Common
             _secondaryStorageHost = secondaryStorageUri.Host;
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             if (message.Request.Method != RequestMethod.Get && message.Request.Method != RequestMethod.Head)
             {
@@ -58,9 +58,9 @@ namespace Azure.Storage.Common
                 return;
             }
 
-            // If alternateHost was not null that means the message is being retried. Hence what is stored in the Host 
+            // If alternateHost was not null that means the message is being retried. Hence what is stored in the Host
             // property of UriBuilder is actually the host from the last try.
-            var lastTriedHost = message.Request.UriBuilder.Host;
+            var lastTriedHost = message.Request.Uri.Host;
 
             // If necessary, set the flag to indicate that the resource has not yet been propagated to the secondary host.
             if (message.HasResponse
@@ -72,7 +72,7 @@ namespace Azure.Storage.Common
 
             // Toggle the host set in the request to use the alternate host for the upcoming attempt, and update the
             // the property for the AlternateHostKey to be the host used in the last try.
-            message.Request.UriBuilder.Host = alternateHost;
+            message.Request.Uri.Host = alternateHost;
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, lastTriedHost);
         }
     }

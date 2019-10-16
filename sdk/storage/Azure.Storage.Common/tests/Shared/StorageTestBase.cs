@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -10,8 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
-using Azure.Storage.Common;
-using Azure.Storage.Common.Test;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
@@ -185,7 +182,7 @@ namespace Azure.Storage.Test.Shared
                 appId,
                 secret,
                 Recording.InstrumentClientOptions(
-                    new IdentityClientOptions() { AuthorityHost = authorityHost }));
+                    new AzureCredentialOptions() { AuthorityHost = authorityHost }));
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
@@ -309,8 +306,8 @@ namespace Azure.Storage.Test.Shared
             bool responseReceived = false;
             T response = default;
             // end time of 16 minutes from now to allow for propagation to secondary host
-            DateTimeOffset endTime = DateTimeOffset.Now.AddMinutes(16); 
-            while (!responseReceived && DateTimeOffset.Now < endTime) 
+            DateTimeOffset endTime = DateTimeOffset.Now.AddMinutes(16);
+            while (!responseReceived && DateTimeOffset.Now < endTime)
             {
                 response = await getResponse();
                 if (!hasResponse(response))

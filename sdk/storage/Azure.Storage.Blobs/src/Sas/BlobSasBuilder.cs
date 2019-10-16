@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
@@ -53,7 +52,7 @@ namespace Azure.Storage.Sas
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
         /// stored access policy.  The <see cref="BlobSasPermissions"/>,
-        /// <see cref="ContainerSasPermissions"/>, and
+        /// <see cref="BlobContainerSasPermissions"/>, and
         /// <see cref="SnapshotSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
@@ -76,9 +75,9 @@ namespace Azure.Storage.Sas
         public string Identifier { get; set; }
 
         /// <summary>
-        /// The name of the container being made accessible.
+        /// The name of the blob container being made accessible.
         /// </summary>
-        public string ContainerName { get; set; }
+        public string BlobContainerName { get; set; }
 
         /// <summary>
         /// The name of the blob being made accessible, or
@@ -99,7 +98,7 @@ namespace Azure.Storage.Sas
         /// Specify b if the shared resource is a blob. This grants access to
         /// the content and metadata of the blob.
         ///
-        /// Specify c if the shared resource is a container. This grants
+        /// Specify c if the shared resource is a blob container. This grants
         /// access to the content and metadata of any blob in the container,
         /// and to the list of blobs in the container.
         ///
@@ -162,7 +161,7 @@ namespace Azure.Storage.Sas
                 Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, ContainerName ?? String.Empty, BlobName ?? String.Empty),
+                GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
                 Identifier,
                 IPRange.ToString(),
                 Protocol.ToString(),
@@ -179,8 +178,8 @@ namespace Azure.Storage.Sas
 
             var p = new BlobSasQueryParameters(
                 version: Version,
-                services: null,
-                resourceTypes: null,
+                services: default,
+                resourceTypes: default,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,
@@ -226,9 +225,9 @@ namespace Azure.Storage.Sas
                 Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(accountName, ContainerName ?? String.Empty, BlobName ?? String.Empty),
-                userDelegationKey.SignedOid,
-                userDelegationKey.SignedTid,
+                GetCanonicalName(accountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
+                userDelegationKey.SignedObjectId,
+                userDelegationKey.SignedTenantId,
                 signedStart,
                 signedExpiry,
                 userDelegationKey.SignedService,
@@ -248,8 +247,8 @@ namespace Azure.Storage.Sas
 
             var p = new BlobSasQueryParameters(
                 version: Version,
-                services: null,
-                resourceTypes: null,
+                services: default,
+                resourceTypes: default,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,
@@ -257,8 +256,8 @@ namespace Azure.Storage.Sas
                 identifier: null,
                 resource: Resource,
                 permissions: Permissions,
-                keyOid: userDelegationKey.SignedOid,
-                keyTid: userDelegationKey.SignedTid,
+                keyOid: userDelegationKey.SignedObjectId,
+                keyTid: userDelegationKey.SignedTenantId,
                 keyStart: userDelegationKey.SignedStart,
                 keyExpiry: userDelegationKey.SignedExpiry,
                 keyService: userDelegationKey.SignedService,
@@ -281,7 +280,7 @@ namespace Azure.Storage.Sas
         /// <param name="containerName">The name of the container.</param>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>The canonical resource name.</returns>
-        static string GetCanonicalName(string account, string containerName, string blobName)
+        private static string GetCanonicalName(string account, string containerName, string blobName)
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
@@ -296,7 +295,7 @@ namespace Azure.Storage.Sas
         /// </param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
             Convert.ToBase64String(
                 new HMACSHA256(
                     Convert.FromBase64String(userDelegationKeyValue))
@@ -312,7 +311,7 @@ namespace Azure.Storage.Sas
             if (String.IsNullOrEmpty(BlobName))
             {
                 // Make sure the permission characters are in the correct order
-                Permissions = ContainerSasPermissions.Parse(Permissions).ToString();
+                Permissions = BlobContainerSasPermissions.Parse(Permissions).ToString();
                 Resource = Constants.Sas.Resource.Container;
             }
 
@@ -366,7 +365,7 @@ namespace Azure.Storage.Sas
         public override int GetHashCode() =>
             BlobName.GetHashCode() ^
             CacheControl.GetHashCode() ^
-            ContainerName.GetHashCode() ^
+            BlobContainerName.GetHashCode() ^
             ContentDisposition.GetHashCode() ^
             ContentEncoding.GetHashCode() ^
             ContentLanguage.GetHashCode() ^
@@ -405,7 +404,7 @@ namespace Azure.Storage.Sas
         public bool Equals(BlobSasBuilder other) =>
             BlobName == other.BlobName &&
             CacheControl == other.CacheControl &&
-            ContainerName == other.ContainerName &&
+            BlobContainerName == other.BlobContainerName &&
             ContentDisposition == other.ContentDisposition &&
             ContentEncoding == other.ContentEncoding &&
             ContentLanguage == other.ContentEncoding &&

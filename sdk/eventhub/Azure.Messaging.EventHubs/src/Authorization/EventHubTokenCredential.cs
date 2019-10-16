@@ -63,25 +63,25 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(TokenRequest request,
-                                             CancellationToken cancellationToken) => Credential.GetToken(request, cancellationToken);
+        public override AccessToken GetToken(TokenRequestContext requestContext,
+                                             CancellationToken cancellationToken) => Credential.GetToken(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override Task<AccessToken> GetTokenAsync(TokenRequest request,
-                                                        CancellationToken cancellationToken) => Credential.GetTokenAsync(request, cancellationToken);
+        public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
+                                                        CancellationToken cancellationToken) => Credential.GetTokenAsync(requestContext, cancellationToken);
     }
 }

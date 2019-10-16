@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Queues.Specialized
 {
@@ -137,8 +138,9 @@ namespace Azure.Storage.Queues.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal EncryptedQueueClient(Uri queueUri, HttpPipeline pipeline)
-            : base(queueUri, pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal EncryptedQueueClient(Uri queueUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+            : base(queueUri, pipeline, clientDiagnostics)
         {
         }
         #endregion ctors
@@ -165,6 +167,6 @@ namespace Azure.Storage.Queues.Specialized
         public static EncryptedQueueClient GetEncryptedQueueClient(
             this QueueServiceClient client,
             string queueName)
-            => new EncryptedQueueClient(client.Uri.AppendToPath(queueName), client.Pipeline);
+            => new EncryptedQueueClient(client.Uri.AppendToPath(queueName), client.Pipeline, client.ClientDiagnostics);
     }
 }

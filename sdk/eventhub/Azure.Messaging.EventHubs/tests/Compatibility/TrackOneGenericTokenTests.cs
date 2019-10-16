@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    public class TrackOneGenericTokenTokenTests
+    public class TrackOneGenericTokenTests
     {
         /// <summary>
         ///   Verifies functionality of the constructor.

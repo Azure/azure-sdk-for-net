@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters to restore file/folders API.
+    /// Parameters to Provision ILR API.
     /// </summary>
     public partial class ILRRequest
     {

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the SubscriptionScopeProperties
         /// class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        public SubscriptionScopeProperties(ScopeProperties scopes = default(ScopeProperties))
         {
             Scopes = scopes;
             CustomInit();
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ScopeProperties Scopes { get; set; }
 
     }
 }

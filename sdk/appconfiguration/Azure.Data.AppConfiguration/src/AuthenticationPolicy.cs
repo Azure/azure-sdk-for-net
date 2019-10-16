@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
@@ -22,14 +23,14 @@ namespace Azure.Data.AppConfiguration
             _secret = secret;
         }
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, async: true).ConfigureAwait(false);
 
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        private async ValueTask ProcessAsync(HttpPipelineMessage message, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, bool async)
         {
             string contentHash;
 
@@ -56,7 +57,7 @@ namespace Azure.Data.AppConfiguration
 
             using (var hmac = new HMACSHA256(_secret))
             {
-                Uri uri = message.Request.UriBuilder.Uri;
+                Uri uri = message.Request.Uri.ToUri();
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 
@@ -74,7 +75,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, async: false).GetAwaiter().GetResult();
 

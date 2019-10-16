@@ -8,6 +8,17 @@ namespace Azure.Security.KeyVault.Secrets
 {
     internal struct VaultAttributes
     {
+        private const string EnabledPropertyName = "enabled";
+        private const string NotBeforePropertyName = "nbf";
+        private const string ExpiresPropertyName = "exp";
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+        private const string RecoveryLevelPropertyName = "recoveryLevel";
+
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
+        private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+
         /// <summary>
         /// Specifies whether the secret is enabled and useable.
         /// </summary>
@@ -46,34 +57,34 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal void ReadProperties(JsonElement json)
         {
-            if (json.TryGetProperty("enabled", out JsonElement enabled))
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
-                Enabled = enabled.GetBoolean();
-            }
+                switch (prop.Name)
+                {
+                    case EnabledPropertyName:
+                        Enabled = prop.Value.GetBoolean();
+                        break;
 
-            if (json.TryGetProperty("nbf", out JsonElement nbf))
-            {
-                NotBefore = DateTimeOffset.FromUnixTimeSeconds(nbf.GetInt64());
-            }
+                    case NotBeforePropertyName:
+                        NotBefore = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
 
-            if (json.TryGetProperty("exp", out JsonElement exp))
-            {
-                Expires = DateTimeOffset.FromUnixTimeSeconds(exp.GetInt64());
-            }
+                    case ExpiresPropertyName:
+                        Expires = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
 
-            if (json.TryGetProperty("created", out JsonElement created))
-            {
-                Created = DateTimeOffset.FromUnixTimeSeconds(created.GetInt64());
-            }
+                    case CreatedPropertyName:
+                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
 
-            if (json.TryGetProperty("updated", out JsonElement updated))
-            {
-                Updated = DateTimeOffset.FromUnixTimeSeconds(updated.GetInt64());
-            }
+                    case UpdatedPropertyName:
+                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
 
-            if (json.TryGetProperty("recoveryLevel", out JsonElement recoveryLevel))
-            {
-                RecoveryLevel = recoveryLevel.GetString();
+                    case RecoveryLevelPropertyName:
+                        RecoveryLevel = prop.Value.GetString();
+                        break;
+                }
             }
         }
 
@@ -81,17 +92,17 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (Enabled.HasValue)
             {
-                json.WriteBoolean("enabled", Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
             }
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_notBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
             }
 
             if (Expires.HasValue)
             {
-                json.WriteNumber("exp", Expires.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_expiresPropertyNameBytes, Expires.Value.ToUnixTimeSeconds());
             }
 
             // Created is read-only don't serialize

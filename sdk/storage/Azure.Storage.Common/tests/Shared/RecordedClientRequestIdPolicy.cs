@@ -1,22 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 
 namespace Azure.Storage.Test.Shared
 {
     /// <summary>
-    /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id 
+    /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
     /// headers that are echoed back from a request match.
     /// </summary>
-    public class RecordedClientRequestIdPolicy : SynchronousHttpPipelinePolicy
+    public class RecordedClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly TestRecording _testRecording;
         private readonly string _parallelRangePrefix = null;
@@ -38,7 +37,7 @@ namespace Azure.Storage.Test.Shared
         /// x-ms-client-return-request-id is an echo of x-mis-client-request-id.
         /// </summary>
         /// <param name="message">The message that was sent</param>
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             if (_parallelRangePrefix != null &&
                 message.Request.Headers.TryGetValue("x-ms-range", out string range))
@@ -47,10 +46,10 @@ namespace Azure.Storage.Test.Shared
                 // the same prefix and use the range to differentiate each message
                 message.Request.ClientRequestId = _parallelRangePrefix + range;
             }
-            else if(_parallelRangePrefix != null &&
-                message.Request.UriBuilder.Query.Contains("blockid="))
+            else if (_parallelRangePrefix != null &&
+                message.Request.Uri.Query.Contains("blockid="))
             {
-                var queryParameters = message.Request.UriBuilder.Query.Split('&');
+                var queryParameters = message.Request.Uri.Query.Split('&');
                 var blockIdParameter = queryParameters.Where(s => s.Contains("blockid=")).First();
                 var blockIdValue = blockIdParameter.Split('=')[1];
 

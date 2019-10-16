@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -43,7 +41,53 @@ namespace Azure.Storage.Files
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
+        /// The Storage account name corresponding to the share client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the share client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the share.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the share.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -94,10 +138,12 @@ namespace Azure.Storage.Files
         /// </param>
         public ShareClient(string connectionString, string shareName, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            _uri = builder.Uri;
-            _pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+            _uri = builder.ToUri();
+            _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -157,8 +203,10 @@ namespace Azure.Storage.Files
         /// </param>
         internal ShareClient(Uri shareUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
+            options ??= new FileClientOptions();
             _uri = shareUri;
-            _pipeline = (options ?? new FileClientOptions()).Build(authentication);
+            _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -172,10 +220,13 @@ namespace Azure.Storage.Files
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal ShareClient(Uri shareUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = shareUri;
             _pipeline = pipeline;
+
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -198,7 +249,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.Uri, Pipeline);
+            return new ShareClient(p.ToUri(), Pipeline, ClientDiagnostics);
         }
 
         /// <summary>
@@ -210,7 +261,7 @@ namespace Azure.Storage.Files
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetDirectoryClient(string directoryName)
-            => new DirectoryClient(Uri.AppendToPath(directoryName), Pipeline);
+            => new DirectoryClient(Uri.AppendToPath(directoryName), Pipeline, ClientDiagnostics);
 
         /// <summary>
         /// Create a <see cref="DirectoryClient"/> object for the root of the
@@ -220,6 +271,19 @@ namespace Azure.Storage.Files
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetRootDirectoryClient()
             => GetDirectoryClient("");
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new FileUriBuilder(Uri);
+                _name = builder.ShareName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>
@@ -338,6 +402,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -455,6 +520,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.CreateSnapshotAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -579,6 +645,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sharesnapshot: shareSnapshot,
@@ -703,6 +770,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sharesnapshot: shareSnapshot,
@@ -815,6 +883,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.SetQuotaAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         quota: quotaInBytes,
@@ -934,6 +1003,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.SetMetadataAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -1042,6 +1112,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.GetAccessPolicyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -1166,6 +1237,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.SetAccessPolicyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         permissions: permissions,
@@ -1268,6 +1340,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.GetStatisticsAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -1348,6 +1421,7 @@ namespace Azure.Storage.Files
                     // Get the permission as a JSON object
                     Response<string> jsonResponse =
                         await FileRestClient.Share.GetPermissionAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             Uri,
                             filePermissionKey: filePermissionKey,
@@ -1367,9 +1441,7 @@ namespace Azure.Storage.Files
                     var permission = permissionProperty.GetString();
 
                     // Return the Permission string
-                    return new Response<string>(
-                        jsonResponse.GetRawResponse(),
-                        permission);
+                    return Response.FromValue(permission, jsonResponse.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1386,12 +1458,12 @@ namespace Azure.Storage.Files
 
         #region CreatePermission
         /// <summary>
-        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
-        /// can be used for the files/directories in the share. 
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
-        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
-        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
         /// </param>
         /// <param name="cancellationToken">
@@ -1411,12 +1483,12 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
-        /// can be used for the files/directories in the share. 
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
-        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
-        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
         /// </param>
         /// <param name="cancellationToken">
@@ -1464,6 +1536,7 @@ namespace Azure.Storage.Files
                     var json = Encoding.UTF8.GetString(stream.ToArray());
 
                     return await FileRestClient.Share.CreatePermissionAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sharePermissionJson: json,
@@ -1530,7 +1603,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken);
-            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+            return Response.FromValue(directory, response.GetRawResponse());
         }
 
         /// <summary>
@@ -1577,7 +1650,7 @@ namespace Azure.Storage.Files
                 smbProperties,
                 filePermission,
                 cancellationToken).ConfigureAwait(false);
-            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+            return Response.FromValue(directory, response.GetRawResponse());
         }
         #endregion CreateDirectory
 

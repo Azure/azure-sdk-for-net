@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
@@ -22,7 +22,7 @@ namespace TrackOne
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            string accessToken = await s_azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.AadEventHubsAudience);
+            string accessToken = await s_azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.AadEventHubsAudience).ConfigureAwait(false);
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }

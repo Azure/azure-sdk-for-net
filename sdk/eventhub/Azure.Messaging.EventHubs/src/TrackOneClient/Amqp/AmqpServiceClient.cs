@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
@@ -206,7 +206,7 @@ namespace TrackOne.Amqp.Management
 
                 await link.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
-                // Redirected scenario requires entityPath as the audience, otherwise we 
+                // Redirected scenario requires entityPath as the audience, otherwise we
                 // should always use the full EndpointUri as audience.
                 return new ActiveClientRequestResponseLink(
                     link,

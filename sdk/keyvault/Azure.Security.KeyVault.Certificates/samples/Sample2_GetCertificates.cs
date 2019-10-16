@@ -47,18 +47,18 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 certOp1.UpdateStatus();
 
-                Thread.Sleep(certOp1.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             while (!certOp2.HasCompleted)
             {
                 certOp2.UpdateStatus();
 
-                Thread.Sleep(certOp2.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's list the certificates which exist in the vault along with their thumbprints
-            foreach (CertificateBase cert in client.GetCertificates())
+            foreach (CertificateProperties cert in client.GetCertificates())
             {
                 Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
             }
@@ -70,11 +70,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(newCertOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's print all the versions of this certificate
-            foreach (CertificateBase cert in client.GetCertificateVersions(certName1))
+            foreach (CertificateProperties cert in client.GetCertificateVersions(certName1))
             {
                 Debug.WriteLine($"Certificate {cert.Name} with name {cert.Version}");
             }

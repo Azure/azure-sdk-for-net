@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
-using Azure.Storage.Common.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -98,7 +97,7 @@ namespace Azure.Storage.Queues.Tests
         private QueueClient GetSecondaryReadQueueClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
             QueueClientOptions options = getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
-            
+
             return InstrumentClient(
                  new QueueClient(
                     new Uri(config.QueueServiceEndpoint).AppendToPath(GetNewQueueName()),
@@ -140,8 +139,8 @@ namespace Azure.Storage.Queues.Tests
             => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Queues = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
+                Services = AccountSasServices.Queues,
+                ResourceTypes = AccountSasResourceTypes.Container,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),

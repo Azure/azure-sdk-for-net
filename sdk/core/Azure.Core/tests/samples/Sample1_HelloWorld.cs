@@ -18,11 +18,11 @@ namespace Azure.Core.Samples
         {
             var pipeline = new HttpPipeline(new HttpClientTransport());
 
-            Http.Request request = pipeline.CreateRequest();
+            Request request = pipeline.CreateRequest();
 
             var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/README.md");
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = uri;
+            request.Uri.Reset(uri);
             request.Headers.Add("Host", uri.Host);
 
             Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);

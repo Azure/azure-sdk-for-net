@@ -96,6 +96,11 @@ namespace Microsoft.Azure.Management.Network
         IAvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations { get; }
 
         /// <summary>
+        /// Gets the IAvailableServiceAliasesOperations.
+        /// </summary>
+        IAvailableServiceAliasesOperations AvailableServiceAliases { get; }
+
+        /// <summary>
         /// Gets the IAzureFirewallsOperations.
         /// </summary>
         IAzureFirewallsOperations AzureFirewalls { get; }

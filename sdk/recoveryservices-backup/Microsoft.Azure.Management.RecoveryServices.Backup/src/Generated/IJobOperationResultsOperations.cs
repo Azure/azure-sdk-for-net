@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
         /// <summary>
         /// Fetches the result of any operation.
-        /// the operation.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

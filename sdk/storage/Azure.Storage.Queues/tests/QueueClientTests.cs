@@ -1,17 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
-using Azure.Storage.Common;
-using Azure.Storage.Common.Test;
+using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
@@ -94,8 +91,12 @@ namespace Azure.Storage.Queues.Test
             try
             {
                 Response<QueueClient> result = await service.CreateQueueAsync(name);
-                Response<Models.QueueProperties> properties = await result.Value.GetPropertiesAsync();
+                QueueClient queue = result.Value;
+                Response<QueueProperties> properties = await queue.GetPropertiesAsync();
                 Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
+                var accountName = new QueueUriBuilder(service.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => queue.AccountName);
+                TestHelper.AssertCacheableProperty(name, () => queue.Name);
             }
             finally
             {

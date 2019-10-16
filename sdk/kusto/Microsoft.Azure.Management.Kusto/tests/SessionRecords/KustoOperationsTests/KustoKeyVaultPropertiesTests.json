@@ -1,0 +1,357 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c1b2efbc-65c4-4961-a2dd-88966e45f9cc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "0c897798-bd08-4273-922c-3fe903499899"
+        ],
+        "x-ms-correlation-request-id": [
+          "0c897798-bd08-4273-922c-3fe903499899"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20191015T121355Z:0c897798-bd08-4273-922c-3fe903499899"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Oct 2019 12:13:54 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "5579"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto\",\r\n  \"namespace\": \"Microsoft.Kusto\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"2746ea77-4702-4b45-80ca-3c97e680e8b7\",\r\n      \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037c\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/eventhubconnections\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/dataconnections\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/attacheddatabaseconfigurations\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourcegroups/sdktestrg4839?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQ4Mzk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7daebdbe-2ec8-470b-b936-be940f3f5528"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "80411f8b-798f-4bef-b5d5-718e93033368"
+        ],
+        "x-ms-correlation-request-id": [
+          "80411f8b-798f-4bef-b5d5-718e93033368"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20191015T121358Z:80411f8b-798f-4bef-b5d5-718e93033368"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Oct 2019 12:13:57 GMT"
+        ],
+        "Content-Length": [
+          "182"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4839\",\r\n  \"name\": \"sdktestrg4839\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2019-09-07",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDE5LTA5LTA3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\",\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ce82c9f8-1b04-4c28-bb90-f66725dd0230"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/3.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "219"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"\""
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2019-09-07&operationResultResponseType=Location"
+        ],
+        "x-ms-request-id": [
+          "c2d3b0a8-36a3-46a1-acbc-082b460dd7fe"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2019-09-07"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=f8efa2d44f4f61144c8c03d4c5b5a5e933cd99e4fb3c36abf43f050b1eae54d5;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "199"
+        ],
+        "x-ms-correlation-request-id": [
+          "4f1510fa-6865-4736-9790-0493cf6afdd2"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20191015T121359Z:4f1510fa-6865-4736-9790-0493cf6afdd2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Oct 2019 12:13:59 GMT"
+        ],
+        "Content-Length": [
+          "1051"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Kusto/Clusters/ofertestforclient\",\r\n  \"name\": \"ofertestforclient\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"Dev(No SLA)_Standard_D11_v2\",\r\n    \"tier\": \"Basic\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"uri\": \"https://ofertestforclient.centralus.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-ofertestforclient.centralus.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": {\r\n      \"version\": 1,\r\n      \"isEnabled\": false,\r\n      \"minimum\": 1,\r\n      \"maximum\": 1\r\n    },\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\",\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\"\r\n    },\r\n    \"provisioningState\": \"Accepted\"\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"22aa465d-7d3a-4f54-b0a1-8092bc583771\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\",\r\n    \"userAssignedIdentities\": {}\r\n  }\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2019-09-07",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzE5YWI5Mzk0LTNkODQtNGNkZC04ZWY2LWExNjA5MWQxNTAzYT9hcGktdmVyc2lvbj0yMDE5LTA5LTA3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "299"
+        ],
+        "x-ms-request-id": [
+          "23468b3e-7807-4d37-a028-713ef13afc2f"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=3afece78d18a01c40dada722ca97ed90078102060b84b73a66e9795b86ad3fa8;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "926c97a9-3c22-4dbe-8431-039528edc796"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20191015T121430Z:926c97a9-3c22-4dbe-8431-039528edc796"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Oct 2019 12:14:29 GMT"
+        ],
+        "Content-Length": [
+          "553"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/19ab9394-3d84-4cdd-8ef6-a16091d1503a\",\r\n  \"name\": \"19ab9394-3d84-4cdd-8ef6-a16091d1503a\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-10-15T12:13:59.5627156Z\",\r\n  \"endTime\": \"2019-10-15T12:14:11.4848654Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ServiceConfigurationAlter\",\r\n    \"RootActivityId\": \"5232de3a-1778-471c-8183-b0d2d4abfd88\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"error\": {\r\n    \"code\": \"PartiallySucceeded\",\r\n    \"message\": \"Internal Server Error\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2019-09-07",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDE5LTA5LTA3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"\""
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "299"
+        ],
+        "x-ms-request-id": [
+          "080b8b16-2939-42d3-88fa-bd4f992dc773"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=20a1717378e36ca6eef5d7a9ef01b04cdb43003687b1d2f915704ceec819965a;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "720f31f8-eed3-4c9d-bca2-869440534e20"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20191015T121430Z:720f31f8-eed3-4c9d-bca2-869440534e20"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Oct 2019 12:14:30 GMT"
+        ],
+        "Content-Length": [
+          "1052"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Kusto/Clusters/ofertestforclient\",\r\n  \"name\": \"ofertestforclient\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"Dev(No SLA)_Standard_D11_v2\",\r\n    \"tier\": \"Basic\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"uri\": \"https://ofertestforclient.centralus.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-ofertestforclient.centralus.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": {\r\n      \"version\": 1,\r\n      \"isEnabled\": false,\r\n      \"minimum\": 1,\r\n      \"maximum\": 1\r\n    },\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": {\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\",\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"22aa465d-7d3a-4f54-b0a1-8092bc583771\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\",\r\n    \"userAssignedIdentities\": {}\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "Initialize": [
+      "sdktestrg4839",
+      "testcluster8834",
+      "testfollower1917",
+      "testdatabase9606",
+      "testattacheddatabaseconfiguration3404",
+      "eventhubConnection955",
+      "eventGridConnection8303",
+      "iothubConnection9899"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "11d5f159-a21d-4a6c-8053-c3aae30057cf",
+    "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "SubId": "11d5f159-a21d-4a6c-8053-c3aae30057cf"
+  }
+}

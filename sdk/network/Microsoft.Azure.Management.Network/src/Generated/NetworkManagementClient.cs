@@ -99,6 +99,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IAvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations { get; private set; }
 
         /// <summary>
+        /// Gets the IAvailableServiceAliasesOperations.
+        /// </summary>
+        public virtual IAvailableServiceAliasesOperations AvailableServiceAliases { get; private set; }
+
+        /// <summary>
         /// Gets the IAzureFirewallsOperations.
         /// </summary>
         public virtual IAzureFirewallsOperations AzureFirewalls { get; private set; }
@@ -748,6 +753,7 @@ namespace Microsoft.Azure.Management.Network
             ApplicationSecurityGroups = new ApplicationSecurityGroupsOperations(this);
             AvailableDelegations = new AvailableDelegationsOperations(this);
             AvailableResourceGroupDelegations = new AvailableResourceGroupDelegationsOperations(this);
+            AvailableServiceAliases = new AvailableServiceAliasesOperations(this);
             AzureFirewalls = new AzureFirewallsOperations(this);
             AzureFirewallFqdnTags = new AzureFirewallFqdnTagsOperations(this);
             BastionHosts = new BastionHostsOperations(this);

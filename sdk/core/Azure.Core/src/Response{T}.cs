@@ -5,24 +5,16 @@ using System.ComponentModel;
 
 namespace Azure
 {
-    public class Response<T>
+    public abstract class Response<T>
     {
-        private readonly Response _rawResponse;
+        public abstract Response GetRawResponse();
 
-        public Response(Response response, T parsed)
-        {
-            _rawResponse = response;
-            Value = parsed;
-        }
-
-        public virtual Response GetRawResponse() => _rawResponse;
-
-        public virtual T Value { get; }
+        public abstract T Value { get; }
 
         public static implicit operator T(Response<T> response) => response.Value;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object? obj) => base.Equals(obj);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();

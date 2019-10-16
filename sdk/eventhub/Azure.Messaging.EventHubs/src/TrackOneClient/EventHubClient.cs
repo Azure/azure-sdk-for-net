@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -355,7 +355,7 @@ namespace TrackOne
                 throw Fx.Exception.Argument(nameof(eventDataBatch), Resources.EventDataListIsNullOrEmpty);
             }
 
-            await SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey);
+            await SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey).ConfigureAwait(false);
         }
 
         /// <summary>

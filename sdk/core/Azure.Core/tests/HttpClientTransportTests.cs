@@ -10,7 +10,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -21,15 +20,15 @@ namespace Azure.Core.Tests
         public static object[] ContentWithLength =>
             new object[]
             {
-                new object[] { HttpPipelineRequestContent.Create(new byte[10]), 10 },
-                new object[] { HttpPipelineRequestContent.Create(new byte[10], 5, 5), 5 },
-                new object[] { HttpPipelineRequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
-                new object[] { HttpPipelineRequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
-                new object[] { HttpPipelineRequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
+                new object[] { RequestContent.Create(new byte[10]), 10 },
+                new object[] { RequestContent.Create(new byte[10], 5, 5), 5 },
+                new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
+                new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
+                new object[] { RequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
             };
 
         [TestCaseSource(nameof(ContentWithLength))]
-        public async Task ContentLengthIsSetForArrayContent(HttpPipelineRequestContent content, int expectedLength)
+        public async Task ContentLengthIsSetForArrayContent(RequestContent content, int expectedLength)
         {
             long contentLength = 0;
             var mockHandler = new MockHttpClientHandler(
@@ -39,7 +38,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com");
+            request.Uri.Reset(new Uri("https://example.com"));
             request.Content = content;
 
             await ExecuteRequest(request, transport);
@@ -57,8 +56,8 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com");
-            request.Content = HttpPipelineRequestContent.Create(new byte[10]);
+            request.Uri.Reset(new Uri("https://example.com"));
+            request.Content = RequestContent.Create(new byte[10]);
             request.Headers.Add("Content-Length", "50");
 
             await ExecuteRequest(request, transport);
@@ -81,7 +80,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com:340");
+            request.Uri.Reset(new Uri("http://example.com:340"));
 
             await ExecuteRequest(request, transport);
 
@@ -103,7 +102,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
             request.Headers.Add("Host", "example.org");
 
             await ExecuteRequest(request, transport);
@@ -128,7 +127,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
 
@@ -163,7 +162,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = method;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Assert.AreEqual(method, request.Method);
 
@@ -186,9 +185,9 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = expectedUri;
+            request.Uri.Reset(expectedUri);
 
-            Assert.AreEqual(expectedUri.ToString(), request.UriBuilder.ToString());
+            Assert.AreEqual(expectedUri.ToString(), request.Uri.ToString());
 
             await ExecuteRequest(request, transport);
 
@@ -206,11 +205,11 @@ namespace Azure.Core.Tests
                 });
 
             var bytes = Encoding.ASCII.GetBytes("Hello world");
-            var content = HttpPipelineRequestContent.Create(bytes);
+            var content = RequestContent.Create(bytes);
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
             request.Content = content;
 
             Assert.AreEqual(content, request.Content);
@@ -356,7 +355,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
 
@@ -370,6 +369,19 @@ namespace Azure.Core.Tests
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader)
+        {
+            var transport = new HttpClientTransport();
+            Request request = CreateRequest(transport);
+
+            Assert.False(request.Headers.TryGetValue(headerName, out string value));
+            Assert.IsNull(value);
+
+            Assert.False(request.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            Assert.IsNull(values);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
         public async Task SettingContentHeaderDoesNotSetContent(string headerName, string headerValue, bool contentHeader)
         {
             HttpContent httpMessageContent = null;
@@ -378,7 +390,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
             request.Headers.Add(headerName, headerValue);
 
             await ExecuteRequest(request, transport);
@@ -455,7 +467,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
 
@@ -494,7 +506,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
             response.ContentStream = new MemoryStream();
@@ -515,8 +527,8 @@ namespace Azure.Core.Tests
         {
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
-            request.Content = HttpPipelineRequestContent.Create(bytes ?? Array.Empty<byte>());
+            request.Uri.Reset(new Uri("https://example.com:340"));
+            request.Content = RequestContent.Create(bytes ?? Array.Empty<byte>());
             return request;
         }
 
@@ -530,7 +542,7 @@ namespace Azure.Core.Tests
             Assert.IsNotEmpty(request.ClientRequestId);
             Assert.True(Guid.TryParse(request.ClientRequestId, out _));
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
             Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
@@ -546,7 +558,7 @@ namespace Azure.Core.Tests
 
             request.ClientRequestId = "123";
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
             Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
@@ -568,7 +580,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
 
@@ -610,7 +622,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
 
@@ -632,7 +644,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
 
@@ -653,9 +665,9 @@ namespace Azure.Core.Tests
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
-            request.Content = HttpPipelineRequestContent.Create(new MemoryStream(new byte[] { 1, 2, 3 }));
+            request.Content = RequestContent.Create(new MemoryStream(new byte[] { 1, 2, 3 }));
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.Uri.Reset(new Uri("https://example.com:340"));
 
             await ExecuteRequest(request, transport);
             await ExecuteRequest(request, transport);
@@ -682,7 +694,7 @@ namespace Azure.Core.Tests
             {
                 request.Content = disposeTrackingContent;
                 request.Method = RequestMethod.Get;
-                request.UriBuilder.Uri = new Uri("https://example.com:340");
+                request.Uri.Reset(new Uri("https://example.com:340"));
 
                 await ExecuteRequest(request, transport);
                 Assert.False(disposeTrackingContent.IsDisposed);
@@ -691,7 +703,7 @@ namespace Azure.Core.Tests
             Assert.True(disposeTrackingContent.IsDisposed);
         }
 
-        public class DisposeTrackingContent : HttpPipelineRequestContent
+        public class DisposeTrackingContent : RequestContent
         {
             public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {

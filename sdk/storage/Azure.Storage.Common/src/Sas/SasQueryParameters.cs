@@ -1,6 +1,5 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -15,9 +14,8 @@ namespace Azure.Storage.Sas
     /// A <see cref="SasQueryParameters"/> object represents the components
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  It includes components used by all Azure Storage resources
-    /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
+    /// (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
-    /// 
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public partial class SasQueryParameters
@@ -43,10 +41,10 @@ namespace Azure.Storage.Sas
         private readonly string _version;
 
         // ss
-        private readonly string _services;
+        private readonly AccountSasServices? _services;
 
         // srt
-        private readonly string _resourceTypes;
+        private readonly AccountSasResourceTypes? _resourceTypes;
 
         // spr
         private readonly SasProtocol _protocol;
@@ -96,14 +94,14 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared
-        /// access signature. 
+        /// access signature.
         /// </summary>
-        public string Services => _services ?? string.Empty;
+        public AccountSasServices? Services => _services;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public string ResourceTypes => _resourceTypes ?? string.Empty;
+        public AccountSasResourceTypes? ResourceTypes => _resourceTypes;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -134,7 +132,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
-        /// correlates to an access policy specified for the container, queue,
+        /// correlates to an access policy specified for the blob container, queue,
         /// or share.
         /// </summary>
         public string Identifier => _identifier ?? string.Empty;
@@ -153,13 +151,13 @@ namespace Azure.Storage.Sas
         public string Permissions => _permissions ?? string.Empty;
 
         /// <summary>
-        /// Gets the Cache-Control response header, which allows for 
+        /// Gets the Cache-Control response header, which allows for
         /// specifying the client-side caching to be used for blob and file downloads.
         /// </summary>
         public string CacheControl => _cacheControl ?? string.Empty;
 
         /// <summary>
-        /// Gets the Content-Disposition response header, which allows for 
+        /// Gets the Content-Disposition response header, which allows for
         /// specifying the way that the blob or file content can be displayed in the browser.
         /// </summary>
         public string ContentDisposition => _contentDisposition ?? string.Empty;
@@ -171,13 +169,13 @@ namespace Azure.Storage.Sas
         public string ContentEncoding => _contentEncoding ?? string.Empty;
 
         /// <summary>
-        /// Gets the Content-Language response header, which allows for specifying the 
+        /// Gets the Content-Language response header, which allows for specifying the
         /// language of the downloaded blob or file content.
         /// </summary>
         public string ContentLanguage => _contentLanguage ?? string.Empty;
 
         /// <summary>
-        /// Gets the Content-Type response header, which allows for specifying the 
+        /// Gets the Content-Type response header, which allows for specifying the
         /// type of the downloaded blob or file content.
         /// </summary>
         public string ContentType => _contentType ?? string.Empty;
@@ -220,13 +218,13 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type.
-        /// 
+        ///
         /// Expects decoded values.
         /// </summary>
         internal SasQueryParameters(
             string version,
-            string services,
-            string resourceTypes,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startTime,
             DateTimeOffset expiryTime,
@@ -249,8 +247,8 @@ namespace Azure.Storage.Sas
         {
             // Assume URL-decoded
             _version = version ?? DefaultSasVersion;
-            _services = services ?? string.Empty;
-            _resourceTypes = resourceTypes ?? string.Empty;
+            _services = services;
+            _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startTime;
             _expiryTime = expiryTime;
@@ -299,13 +297,13 @@ namespace Azure.Storage.Sas
                         _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        _services = kv.Value;
+                        _services = SasExtensions.ParseAccountServices(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = kv.Value;
+                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasProtocol.Parse(kv.Value);
+                        _protocol = SasExtensions.ParseProtocol(kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
                         _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
@@ -345,11 +343,11 @@ namespace Azure.Storage.Sas
                         break;
 
                     // Optionally include Blob parameters
-                    case Constants.Sas.Parameters.KeyOidUpper:
+                    case Constants.Sas.Parameters.KeyObjectIdUpper:
                         if (includeBlobParameters) { _keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
-                    case Constants.Sas.Parameters.KeyTidUpper:
+                    case Constants.Sas.Parameters.KeyTenantIdUpper:
                         if (includeBlobParameters) { _keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
@@ -420,19 +418,19 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (!string.IsNullOrWhiteSpace(Services))
+            if (Services != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services);
+                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
             }
 
-            if (!string.IsNullOrWhiteSpace(ResourceTypes))
+            if (ResourceTypes != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes);
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
             }
 
-            if (Protocol != SasProtocol.None)
+            if (Protocol != default)
             {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToString());
+                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
             }
 
             if (StartTime != DateTimeOffset.MinValue)
@@ -495,12 +493,12 @@ namespace Azure.Storage.Sas
             {
                 if (!string.IsNullOrWhiteSpace(_keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyOid, _keyObjectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyObjectId);
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTid, _keyTenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyTenantId);
                 }
 
                 if (_keyStart != DateTimeOffset.MinValue)

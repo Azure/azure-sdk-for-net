@@ -1,80 +1,92 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// Supported JsonWebKey key types (kty)
     /// </summary>
-    public struct CertificateKeyType
+    public readonly struct CertificateKeyType : IEquatable<CertificateKeyType>
     {
+        internal const string EcValue = "EC";
+        internal const string EcHsmValue = "EC-HSM";
+        internal const string RsaValue = "RSA";
+        internal const string RsaHsmValue = "RSA-HSM";
+        internal const string OctValue = "oct";
+
         private readonly string _value;
-        internal const string EC_KTY = "EC";
-        internal const string EC_HSM_KTY = "EC-HSM";
-        internal const string RSA_KTY = "RSA";
-        internal const string RSA_HSM_KTY = "RSA-HSM";
-        internal const string OCT_KTY = "oct";
 
         /// <summary>
-        /// Creats a CertificateKeyType with the specified value
+        /// Initializes a new instance of the <see cref="CertificateKeyType"/> structure.
         /// </summary>
-        /// <param name="keyType"></param>
-        public CertificateKeyType(string keyType)
+        /// <param name="value">The string value of the instance.</param>
+        public CertificateKeyType(string value)
         {
-            _value = keyType;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
         /// An EC (EllipticCurve) key
         /// </summary>
-        public static readonly CertificateKeyType EllipticCurve = new CertificateKeyType(EC_KTY);
+        public static readonly CertificateKeyType Ec = new CertificateKeyType(EcValue);
 
         /// <summary>
         /// An HSM protected EC (EllipticCurve) key
         /// </summary>
-        public static readonly CertificateKeyType EllipticCurveHsm = new CertificateKeyType(EC_HSM_KTY);
+        public static readonly CertificateKeyType EcHsm = new CertificateKeyType(EcHsmValue);
 
         /// <summary>
         /// A RSA key
         /// </summary>
-        public static readonly CertificateKeyType Rsa = new CertificateKeyType(RSA_KTY);
+        public static readonly CertificateKeyType Rsa = new CertificateKeyType(RsaValue);
 
         /// <summary>
         /// An HSM protected RSA key
         /// </summary>
-        public static readonly CertificateKeyType RsaHsm = new CertificateKeyType(RSA_HSM_KTY);
+        public static readonly CertificateKeyType RsaHsm = new CertificateKeyType(RsaHsmValue);
 
         /// <summary>
         /// A octal (Symmetric) key
         /// </summary>
-        public static readonly CertificateKeyType Oct = new CertificateKeyType(OCT_KTY);
+        public static readonly CertificateKeyType Oct = new CertificateKeyType(OctValue);
 
-        public override bool Equals(object obj)
-        {
-            return obj is CertificateKeyType && Equals((CertificateKeyType)obj);
-        }
+        /// <summary>
+        /// Determines if two <see cref="CertificateKeyType"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="CertificateKeyType"/> to compare.</param>
+        /// <param name="right">The second <see cref="CertificateKeyType"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(CertificateKeyType left, CertificateKeyType right) => left.Equals(right);
 
-        public bool Equals(CertificateKeyType other)
-        {
-            return string.CompareOrdinal(_value, other._value) == 0;
-        }
+        /// <summary>
+        /// Determines if two <see cref="CertificateKeyType"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="CertificateKeyType"/> to compare.</param>
+        /// <param name="right">The second <see cref="CertificateKeyType"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(CertificateKeyType left, CertificateKeyType right) => !left.Equals(right);
 
-        public override int GetHashCode()
-        {
-            return _value?.GetHashCode() ?? 0;
-        }
-
-        public override string ToString()
-        {
-            return _value;
-        }
-
-        public static bool operator ==(CertificateKeyType a, CertificateKeyType b) => a.Equals(b);
-
-        public static bool operator !=(CertificateKeyType a, CertificateKeyType b) => !a.Equals(b);
-
+        /// <summary>
+        /// Converts a string to a <see cref="CertificateKeyType"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
         public static implicit operator CertificateKeyType(string value) => new CertificateKeyType(value);
 
-        public static implicit operator string(CertificateKeyType o) => o._value;
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is CertificateKeyType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(CertificateKeyType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

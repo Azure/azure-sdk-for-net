@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -105,6 +104,13 @@ namespace Azure.Storage.Test
             {
                 assertion(expectedException, actualException);
             }
+        }
+
+        public static void AssertCacheableProperty<T>(T expected, Func<T> property)
+        {
+            T actual = property();
+            Assert.AreEqual(expected, actual); // first call calculates and caches value
+            Assert.AreSame(actual, property()); // subsequent calls use cached value
         }
     }
 }

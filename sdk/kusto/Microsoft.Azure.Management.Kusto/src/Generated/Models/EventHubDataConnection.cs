@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO'</param>
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'</param>
         /// <param name="eventSystemProperties">System properties of the event
         /// hub</param>
         public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>))
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -49,18 +47,64 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the HttpPipeline used to send REST requests.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
-        public const int MaxMessagesPeek = Constants.Queue.MaxMessagesDequeue;
+        public virtual int MaxMessagesPeek => Constants.Queue.MaxMessagesDequeue;
 
         /// <summary>
-        /// QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
+        /// Gets the maximum number of bytes allowed for a message's UTF-8 text.
         /// </summary>
-        public const int MessageMaxBytes = Constants.Queue.QueueMessageMaxBytes;
+        public virtual int MessageMaxBytes => Constants.Queue.QueueMessageMaxBytes;
+
+        /// <summary>
+        /// The Storage account name corresponding to the queue client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the queue client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the queue.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the queue.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
 
         #region ctors
         /// <summary>
@@ -117,10 +161,11 @@ namespace Azure.Storage.Queues
                 {
                     QueueName = queueName
                 };
-            _uri = builder.Uri;
+            _uri = builder.ToUri();
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -205,6 +250,7 @@ namespace Azure.Storage.Queues
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -218,13 +264,28 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal QueueClient(Uri queueUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal QueueClient(Uri queueUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _accountName == null)
+            {
+                var builder = new QueueUriBuilder(Uri);
+                _name = builder.QueueName;
+                _accountName = builder.AccountName;
+            }
+        }
 
         #region Create
         /// <summary>
@@ -303,6 +364,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Queue.CreateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -383,6 +445,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Queue.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -465,6 +528,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Queue.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -558,6 +622,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Queue.SetMetadataAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         metadata: metadata,
@@ -641,6 +706,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Queue.GetAccessPolicyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -734,6 +800,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Queue.SetAccessPolicyAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         permissions: permissions,
@@ -814,6 +881,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Messages.ClearAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
                         async: async,
@@ -943,6 +1011,7 @@ namespace Azure.Storage.Queues
                 {
                     Response<IEnumerable<EnqueuedMessage>> messages =
                         await QueueRestClient.Messages.EnqueueAsync(
+                            ClientDiagnostics,
                             Pipeline,
                             MessagesUri,
                             message: new QueueMessage { MessageText = messageText },
@@ -954,9 +1023,7 @@ namespace Azure.Storage.Queues
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
                     // sequence only ever has one value so we'll unwrap it
-                    return new Response<EnqueuedMessage>(
-                        messages.GetRawResponse(),
-                        messages.Value.FirstOrDefault());
+                    return Response.FromValue(messages.Value.FirstOrDefault(), messages.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -987,9 +1054,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
         /// </returns>
-        public virtual Response<IEnumerable<DequeuedMessage>> DequeueMessages(
+        public virtual Response<DequeuedMessage[]> DequeueMessages(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
@@ -1015,9 +1082,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
         /// </returns>
-        public virtual async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesAsync(
+        public virtual async Task<Response<DequeuedMessage[]>> DequeueMessagesAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
@@ -1046,9 +1113,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
         /// </returns>
-        private async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesInternal(
+        private async Task<Response<DequeuedMessage[]>> DequeueMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
             bool async,
@@ -1064,7 +1131,8 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    return await QueueRestClient.Messages.DequeueAsync(
+                    var dequeuedMessage = await QueueRestClient.Messages.DequeueAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
                         numberOfMessages: maxMessages,
@@ -1073,6 +1141,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.DequeueMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    return Response.FromValue(dequeuedMessage.Value.ToArray(), dequeuedMessage.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1100,9 +1169,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
-        public virtual Response<IEnumerable<PeekedMessage>> PeekMessages(
+        public virtual Response<PeekedMessage[]> PeekMessages(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
@@ -1123,9 +1192,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
-        public virtual async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesAsync(
+        public virtual async Task<Response<PeekedMessage[]>> PeekMessagesAsync(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
@@ -1149,9 +1218,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
-        private async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesInternal(
+        private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
             bool async,
             CancellationToken cancellationToken)
@@ -1165,7 +1234,8 @@ namespace Azure.Storage.Queues
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
-                    return await QueueRestClient.Messages.PeekAsync(
+                    var peekedMessages = await QueueRestClient.Messages.PeekAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
                         numberOfMessages: maxMessages,
@@ -1173,6 +1243,7 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    return Response.FromValue(peekedMessages.Value.ToArray(), peekedMessages.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1280,6 +1351,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.MessageId.DeleteAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         uri,
                         popReceipt: popReceipt,
@@ -1421,6 +1493,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.MessageId.UpdateAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         uri,
                         message: new QueueMessage { MessageText = messageText },

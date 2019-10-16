@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault
 {
@@ -14,11 +14,14 @@ namespace Azure.Security.KeyVault
     {
         private readonly Uri _vaultUri;
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
-        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline)
+        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _vaultUri = vaultUri;
             _pipeline = pipeline;
+
+            _clientDiagnostics = clientDiagnostics;
 
             ApiVersion = apiVersion;
         }
@@ -27,25 +30,21 @@ namespace Azure.Security.KeyVault
 
         public Uri CreateFirstPageUri(string path)
         {
-            var firstPage = new RequestUriBuilder
-            {
-                Uri = _vaultUri,
-            };
+            var firstPage = new RequestUriBuilder();
+            firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path);
+            firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
-            return firstPage.Uri;
+            return firstPage.ToUri();
         }
 
         public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
         {
-            var firstPage = new RequestUriBuilder
-            {
-                Uri = _vaultUri,
-            };
+            var firstPage = new RequestUriBuilder();
+            firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path);
+            firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             foreach ((string, string) tuple in queryParams)
@@ -53,7 +52,7 @@ namespace Azure.Security.KeyVault
                 firstPage.AppendQuery(tuple.Item1, tuple.Item2);
             }
 
-            return firstPage.Uri;
+            return firstPage.ToUri();
         }
 
         public Request CreateRequest(RequestMethod method, Uri uri)
@@ -63,7 +62,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.UriBuilder.Uri = uri;
+            request.Uri.Reset(uri);
 
             return request;
         }
@@ -75,14 +74,14 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.UriBuilder.Uri = _vaultUri;
+            request.Uri.Reset(_vaultUri);
 
             foreach (var p in path)
             {
-                request.UriBuilder.AppendPath(p);
+                request.Uri.AppendPath(p, escape: false);
             }
 
-            request.UriBuilder.AppendQuery("api-version", ApiVersion);
+            request.Uri.AppendQuery("api-version", ApiVersion);
 
             return request;
         }
@@ -91,18 +90,18 @@ namespace Azure.Security.KeyVault
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
-            return new Response<T>(response, result);
+            return Response.FromValue(result, response);
         }
 
         public DiagnosticScope CreateScope(string name)
         {
-            return _pipeline.Diagnostics.CreateScope(name);
+            return _clientDiagnostics.CreateScope(name);
         }
 
         public async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -133,7 +132,7 @@ namespace Azure.Security.KeyVault
         public Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -166,7 +165,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -178,7 +177,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = SendRequest(request, cancellationToken);
 

@@ -1,16 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// An <see cref="Operation{Int64}"/> for tracking the status of a 
+    /// An <see cref="Operation{Int64}"/> for tracking the status of a
     /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
     /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
     /// completion will be the number of bytes copied.
@@ -33,21 +35,42 @@ namespace Azure.Storage.Blobs.Models
         private bool _hasCompleted;
 
         /// <summary>
+        /// Gets the number of bytes copied by the operation.
+        /// </summary>
+        private long? _value;
+
+        private Response _rawResponse;
+
+        /// <summary>
         /// Gets a value indicating whether the operation has completed.
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
-
-        /// <summary>
-        /// Whether the operation completed succesfully.
-        /// </summary>
-        private bool _hasValue;
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
         /// succesfully produced a value.  The <see cref="Operation{Int64}.Value"/>
         /// property is the number of bytes copied by the operation.
         /// </summary>
-        public override bool HasValue => _hasValue;
+        public override bool HasValue => _value.HasValue;
+
+        /// <inheritdoc />
+        public override string Id { get; }
+
+        /// <summary>
+        /// Gets the number of bytes copied by the operation.
+        /// </summary>
+        public override long Value => OperationHelpers.GetValue(ref _value);
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _rawResponse;
+
+        /// <inheritdoc />
+        public override ValueTask<Response<long>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<long>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
         /// Initializes a new <see cref="CopyFromUriOperation"/> instance for
@@ -58,22 +81,11 @@ namespace Azure.Storage.Blobs.Models
             bool hasCompleted,
             long? value = default,
             Response rawResponse = default)
-            : base(copyId)
         {
+            Id = copyId;
             _hasCompleted = hasCompleted;
-            if (value != null)
-            {
-                _hasValue = true;
-                Value = value.Value;
-            }
-            else
-            {
-                _hasValue = false;
-            }
-            if (rawResponse != null)
-            {
-                SetRawResponse(rawResponse);
-            }
+            _value = value;
+            _rawResponse = rawResponse;
         }
 
         /// <summary>
@@ -96,11 +108,10 @@ namespace Azure.Storage.Blobs.Models
             string copyId,
             Response initialResponse,
             CancellationToken cancellationToken)
-            : base(copyId)
+            : this(copyId, false, null, initialResponse)
         {
             _client = client;
             _cancellationToken = cancellationToken;
-            SetRawResponse(initialResponse);
         }
 
         /// <summary>
@@ -141,7 +152,9 @@ namespace Azure.Storage.Blobs.Models
             // Short-circuit when already completed (which improves mocking
             // scenarios that won't have a client).
             if (HasCompleted)
-            { return GetRawResponse(); }
+            {
+                return GetRawResponse();
+            }
 
             // Use our original CancellationToken if the user didn't provide one
             if (cancellationToken == default)
@@ -166,14 +179,13 @@ namespace Azure.Storage.Blobs.Models
             if (Id == update.Value.CopyId &&
                 update.Value.CopyStatus == CopyStatus.Success)
             {
-                Value = update.Value.ContentLength;
-                _hasValue = true;
+                _value = update.Value.ContentLength;
             }
 
             // Save this update as the latest raw response indicating the state
             // of the copy operation
             Response response = update.GetRawResponse();
-            SetRawResponse(response);
+            _rawResponse = response;
             return response;
         }
     }

@@ -433,6 +433,11 @@ namespace Storage.Tests
                 StorageAccount account2 = accounts.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName2));
                 StorageManagementTestUtilities.VerifyAccountProperties(account2, true);
+
+                while(accounts.NextPageLink != null)
+                {
+                    accounts = storageMgmtClient.StorageAccounts.ListNext(accounts.NextPageLink);
+                }
             }
         }
 
@@ -2005,6 +2010,39 @@ namespace Storage.Tests
                 Assert.NotNull(account.GeoReplicationStats.Status);
                 Assert.NotNull(account.GeoReplicationStats.LastSyncTime);
                 Assert.NotNull(account.GeoReplicationStats.CanFailover);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountLargeFileSharesStateTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "westeurope",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    LargeFileSharesState = LargeFileSharesState.Enabled
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
+                Assert.Equal(LargeFileSharesState.Enabled, account.LargeFileSharesState);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
+                Assert.Equal(LargeFileSharesState.Enabled, account.LargeFileSharesState);
             }
         }
     }

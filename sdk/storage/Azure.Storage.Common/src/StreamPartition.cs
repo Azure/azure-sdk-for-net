@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -13,7 +12,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     internal sealed class StreamPartition : Stream
     {
@@ -49,11 +48,11 @@ namespace Azure.Storage.Common
             _disposeAction = disposeAction;
             //this.disposalTaskCompletionSource = new ManualResetEventSlim(false);
             _disposalTaskCompletionSource = new SemaphoreSlim(0);
-            DisposalTask = DisposalTaskImpl(ct);
+            DisposalTask = DisposalTaskCore(ct);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task DisposalTaskImpl(CancellationToken ct)
+        private async Task DisposalTaskCore(CancellationToken ct)
         {
             //Console.WriteLine($"Waiting for partition {this.ParentPosition}");
 

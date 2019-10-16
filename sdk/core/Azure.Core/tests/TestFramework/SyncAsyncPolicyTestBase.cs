@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -18,11 +17,11 @@ namespace Azure.Core.Testing
         {
         }
 
-        protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, bool bufferResponse = true, CancellationToken cancellationToken = default)
+        protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<Request> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            HttpPipelineMessage message = pipeline.CreateMessage();
+            HttpMessage message = pipeline.CreateMessage();
             message.BufferResponse = bufferResponse;
-            message.Request = request;
+            requestAction(message.Request);
 
             if (IsAsync)
             {
@@ -36,20 +35,21 @@ namespace Azure.Core.Testing
             return message.Response;
         }
 
-        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Request request, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
         {
             await Task.Yield();
 
             var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
-            return await SendRequestAsync(pipeline, request, bufferResponse, CancellationToken.None);
+            return await SendRequestAsync(pipeline, requestAction, bufferResponse, CancellationToken.None);
         }
 
         protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
         {
-            using Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
-            return await SendRequestAsync(transport, request, policy, responseClassifier, bufferResponse);
+            return await SendRequestAsync(transport, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+            }, policy, responseClassifier, bufferResponse);
         }
     }
 }

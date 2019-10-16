@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Sas
 {
@@ -166,8 +164,8 @@ namespace Azure.Storage.Sas
 
             var p = new SasQueryParameters(
                 version: Version,
-                services: null,
-                resourceTypes: null,
+                services: default,
+                resourceTypes: default,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,

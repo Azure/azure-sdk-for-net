@@ -7,6 +7,13 @@
     <PackageTags>Microsoft Azure Application Configuration</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
+      - Enabled conditional requests.
+      - Added support for setting x-ms-client-request-id, x-ms-correlation-request-id, and correlation-context headers.
+      - Added SetReadOnly/ClearReadOnly methods.
+      - Enabled setting service version.
+      - Added support for Sync-Token headers.
+      - Updated authorization header format.
+      - Removed Update methods.
       ]]>
     </PackageReleaseNotes>
 
@@ -24,9 +31,16 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConditionalRequestOptionsExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
   </ItemGroup>
 
 </Project>

@@ -247,6 +247,32 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureMLServiceLinkedService = @"
+{
+    name: ""Test-AzureMLService-LinkedService"",
+    properties:
+    {
+        type: ""AzureMLService"",
+        connectVia: {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties:
+        {
+            subscriptionId: ""1e42591f-0000-0000-0000-a268f6105ec5"",
+            resourceGroupName: ""MyResourceGroupName"",
+            mlWorkspaceName: ""MyMLWorkspaceName"",
+            servicePrincipalId: ""fakeSPID"",
+            servicePrincipalKey: {
+                value: ""fakeSPKey"",
+                type: ""SecureString""
+            },
+            tenant: ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureMLLinkedServiceWithOptionalPropertyJson = @"
 {
     name: ""Test-ML-LinkedService"",
@@ -499,6 +525,24 @@ namespace DataFactory.Tests.JsonSamples
         type: ""CosmosDb"",
         typeProperties: {
             connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CosmosDbLinkedServiceWithoutConnectionString = @"
+{
+    name: ""LinkedService-CosmosDb"",
+    properties:
+    {
+        type: ""CosmosDb"",
+        typeProperties: {
+            accountEndpoint: ""https://fakecosmosdb.documents.azure.com:443/"",
+            database: ""testdb"",
+            accountKey: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
             }
@@ -2259,6 +2303,45 @@ namespace DataFactory.Tests.JsonSamples
             },
             ""database"": ""MyDatabase"",
             ""tenant"": ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedService = @"
+{
+    name: ""AzureFileStorageLinkedService"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            host : ""fakehost"",
+            userId : ""fakeaccess"",
+            password : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleCloudStorageLinkedService = @"
+{
+    name: ""GoogleCloudStorageLinkedService"",
+    properties:
+    {
+        type: ""GoogleCloudStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
         }
     }
 }";

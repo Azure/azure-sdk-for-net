@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -19,8 +19,8 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void IsRetriableResponse_404OnSecondary_ShouldBeTrue()
         {
-            HttpPipelineMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
-            message.Request.UriBuilder.Host = MockSecondaryUri.Host;
+            HttpMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
+            message.Request.Uri.Host = MockSecondaryUri.Host;
 
             Assert.IsTrue(classifier.IsRetriableResponse(message));
         }
@@ -31,8 +31,8 @@ namespace Azure.Storage.Common.Tests
         [TestCase(503)]
         public void IsRetriableResponse_OtherStatusCodeOnSecondary_ShouldMatchBase(int statusCode)
         {
-            HttpPipelineMessage message = BuildMessage(new MockResponse(statusCode));
-            message.Request.UriBuilder.Host = MockSecondaryUri.Host;
+            HttpMessage message = BuildMessage(new MockResponse(statusCode));
+            message.Request.Uri.Host = MockSecondaryUri.Host;
 
             Assert.AreEqual(new ResponseClassifier().IsRetriableResponse(message), classifier.IsRetriableResponse(message));
         }
@@ -40,15 +40,15 @@ namespace Azure.Storage.Common.Tests
         [Test]
         public void IsRetriableResponse_404OnPrimary_ShouldBeFalse()
         {
-            HttpPipelineMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
-            message.Request.UriBuilder.Host = MockPrimaryUri.Host;
+            HttpMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
+            message.Request.Uri.Host = MockPrimaryUri.Host;
 
             Assert.IsFalse(classifier.IsRetriableResponse(message));
         }
 
-        private HttpPipelineMessage BuildMessage(Response response)
+        private HttpMessage BuildMessage(Response response)
         {
-            return new HttpPipelineMessage(
+            return new HttpMessage(
                 new MockRequest()
                 {
                     Method = RequestMethod.Get

@@ -671,6 +671,10 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

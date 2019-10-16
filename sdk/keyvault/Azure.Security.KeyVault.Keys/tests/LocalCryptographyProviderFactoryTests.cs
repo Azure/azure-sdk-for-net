@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 
@@ -16,33 +14,53 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetCreateData))]
         public void Create(JsonWebKey jwk, Type clientType)
         {
-            ICryptographyProvider client = LocalCryptographyProviderFactory.Create(jwk);
-            Assert.IsInstanceOf(clientType, client, "Key {0} of type {1} did not yield client type {2}", jwk.KeyId, jwk.KeyType, clientType.Name);
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(new Key { KeyMaterial = jwk });
+            Assert.IsInstanceOf(clientType, provider, "Key {0} of type {1} did not yield client type {2}", jwk.Id, jwk.KeyType, clientType.Name);
         }
 
         [Test]
-        public void CreateThrows()
+        public void NotSupported()
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyId = "invalid",
+                Id = "test",
                 KeyType = new KeyType("invalid"),
             };
 
-            Assert.Throws<NotSupportedException>(() => LocalCryptographyProviderFactory.Create(jwk));
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(new Key { KeyMaterial = jwk });
+            Assert.IsNull(provider);
+        }
+
+        [Test]
+        public void NoKey()
+        {
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(null);
+            Assert.IsNull(provider);
+        }
+
+        [Test]
+        public void NoKeyMaterial()
+        {
+            Key key = new Key();
+
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(key);
+            Assert.IsNull(provider);
         }
 
         private static IEnumerable<object[]> GetCreateData()
         {
+            Aes aes = Aes.Create();
+            yield return new object[] { new JsonWebKey(aes) { Id = nameof(aes) }, typeof(AesCryptographyProvider) };
+
 #if !NET461
             ECDsa ecdsa = ECDsa.Create();
-            yield return new object[] { new JsonWebKey(ecdsa, false) { KeyId = "ecdsaPublic" }, typeof(EcCryptographyProvider) };
-            yield return new object[] { new JsonWebKey(ecdsa, true) { KeyId = "ecdsaPrivate" }, typeof(EcCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(ecdsa, false) { Id = "ecdsaPublic" }, typeof(EcCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(ecdsa, true) { Id = "ecdsaPrivate" }, typeof(EcCryptographyProvider) };
 #endif
 
             RSA rsa = RSA.Create();
-            yield return new object[] { new JsonWebKey(rsa, false) { KeyId = "rsaPublic" }, typeof(RsaCryptographyProvider) };
-            yield return new object[] { new JsonWebKey(rsa, true) { KeyId = "rsaPrivate" }, typeof(RsaCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(rsa, false) { Id = "rsaPublic" }, typeof(RsaCryptographyProvider) };
+            yield return new object[] { new JsonWebKey(rsa, true) { Id = "rsaPrivate" }, typeof(RsaCryptographyProvider) };
         }
     }
 }

@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -31,7 +30,7 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 100; i++)
             {
                 using Request request = httpPipeline.CreateRequest();
-                request.UriBuilder.Uri = testServer.Address;
+                request.Uri.Reset(testServer.Address);
 
                 using Response response = await httpPipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -59,9 +58,9 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 100; i++)
             {
                 Stream extractedStream;
-                using (HttpPipelineMessage message = httpPipeline.CreateMessage())
+                using (HttpMessage message = httpPipeline.CreateMessage())
                 {
-                    message.Request.UriBuilder.Uri = testServer.Address;
+                    message.Request.Uri.Reset(testServer.Address);
                     message.BufferResponse = false;
 
                     await httpPipeline.SendAsync(message, CancellationToken.None);

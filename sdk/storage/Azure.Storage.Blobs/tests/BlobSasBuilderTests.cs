@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Security.Cryptography;
@@ -23,11 +22,11 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        static UserDelegationKey GetUserDelegationKey(TestConstants constants)
+        private static UserDelegationKey GetUserDelegationKey(TestConstants constants)
             => new UserDelegationKey
             {
-                SignedOid = constants.Sas.KeyOid,
-                SignedTid = constants.Sas.KeyTid,
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
                 SignedStart = constants.Sas.KeyStart,
                 SignedExpiry = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
@@ -50,8 +49,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -78,15 +77,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
-            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyObjectId);
-            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTenantId);
+            Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
             Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStart);
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiry);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
@@ -112,8 +111,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -140,15 +139,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
-            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyObjectId);
-            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTenantId);
+            Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
             Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStart);
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiry);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
@@ -174,8 +173,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -202,15 +201,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
-            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyObjectId);
-            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTenantId);
+            Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
             Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStart);
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiry);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
@@ -244,7 +243,7 @@ namespace Azure.Storage.Blobs.Test
                 Permissions = Permissions,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 BlobName = includeBlob ? blobName : null,
                 Snapshot = includeSnapshot ? Snapshot : null,
                 CacheControl = constants.Sas.CacheControl,
@@ -311,8 +310,8 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.StartTime),
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 canonicalName,
-                constants.Sas.KeyOid,
-                constants.Sas.KeyTid,
+                constants.Sas.KeyObjectId,
+                constants.Sas.KeyTenantId,
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.KeyStart),
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
                 constants.Sas.KeyService,

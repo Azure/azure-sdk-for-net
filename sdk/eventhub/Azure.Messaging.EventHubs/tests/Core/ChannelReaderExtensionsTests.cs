@@ -456,4 +456,3 @@ namespace Azure.Messaging.EventHubs.Tests
         }
     }
 }
-

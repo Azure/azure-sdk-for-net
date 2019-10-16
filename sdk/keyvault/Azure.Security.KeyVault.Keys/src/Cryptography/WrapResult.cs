@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -14,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string EncryptedKeyPropertyName = "value";
 
         /// <summary>
-        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to wrap the <see cref="EncryptedKey"/>. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to wrap the <see cref="EncryptedKey"/>. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
         /// </summary>
         public string KeyId { get; internal set; }
 

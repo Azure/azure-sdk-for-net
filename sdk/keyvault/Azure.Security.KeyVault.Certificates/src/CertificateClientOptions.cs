@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -50,6 +51,8 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
             Version = version;
+
+            this.ConfigureLogging();
         }
 
         /// <summary>

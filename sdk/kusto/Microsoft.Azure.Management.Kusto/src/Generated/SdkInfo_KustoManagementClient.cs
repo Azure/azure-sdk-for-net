@@ -19,23 +19,13 @@ namespace Microsoft.Azure.Management.Kusto
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Kusto", "Clusters", "2019-05-15"),
-                new Tuple<string, string, string>("Kusto", "DataConnections", "2019-05-15"),
-                new Tuple<string, string, string>("Kusto", "Databases", "2019-05-15"),
-                new Tuple<string, string, string>("Kusto", "Operations", "2019-05-15"),
+                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2019-09-07"),
+                new Tuple<string, string, string>("Kusto", "Clusters", "2019-09-07"),
+                new Tuple<string, string, string>("Kusto", "DataConnections", "2019-09-07"),
+                new Tuple<string, string, string>("Kusto", "Databases", "2019-09-07"),
+                new Tuple<string, string, string>("Kusto", "Operations", "2019-09-07"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azure-kusto/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Git\\Clients\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "8fff657a61cd85b0a9ce9a42d17dc4f536d9f7a8";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -14,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string PlaintextPropertyName = "value";
 
         /// <summary>
-        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to decrypt
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to decrypt
         /// </summary>
         public string KeyId { get; internal set; }
 

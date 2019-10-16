@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     public class TestExceptionPolicy : HttpPipelinePolicy
     {
@@ -33,7 +33,7 @@ namespace Azure.Storage.Common.Test
             TrackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             if (!SimulateFailure(message))
             {
@@ -41,7 +41,7 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             if (!SimulateFailure(message))
             {
@@ -49,15 +49,15 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        private bool SimulateFailure(HttpPipelineMessage message)
+        private bool SimulateFailure(HttpMessage message)
         {
             if (TrackedRequestMethods.Contains(message.Request.Method))
             {
                 CurrentInvocationNumber++;
-                HostsSetInRequests.Add(message.Request.UriBuilder.Host);
+                HostsSetInRequests.Add(message.Request.Uri.Host);
                 if (CurrentInvocationNumber <= NumberOfReadFailuresToSimulate)
                 {
-                    message.Response = new MockResponse(Simulate404 && message.Request.UriBuilder.Host == SecondaryUri.Host ? 404 : 429);
+                    message.Response = new MockResponse(Simulate404 && message.Request.Uri.Host == SecondaryUri.Host ? 404 : 429);
                     return true;
                 }
             }

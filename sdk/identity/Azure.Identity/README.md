@@ -213,6 +213,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [queues_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues
 [eventhubs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
-[identity_api_docs]: https://azure.github.io/azure-sdk-for-net/api/Identity/Azure.Identity.html
+[identity_api_docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Identity.html
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FFREADME.png)

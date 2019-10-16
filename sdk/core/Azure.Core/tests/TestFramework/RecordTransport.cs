@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
@@ -32,19 +31,19 @@ namespace Azure.Core.Testing
             _session = session;
         }
 
-        public override void Process(HttpPipelineMessage message)
+        public override void Process(HttpMessage message)
         {
             _innerTransport.Process(message);
             Record(message);
         }
 
-        public override async ValueTask ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpMessage message)
         {
             await _innerTransport.ProcessAsync(message);
             Record(message);
         }
 
-        private void Record(HttpPipelineMessage message)
+        private void Record(HttpMessage message)
         {
             RecordEntry recordEntry = CreateEntry(message.Request, message.Response);
             if (_filter(recordEntry))
@@ -70,7 +69,7 @@ namespace Azure.Core.Testing
         {
             var entry = new RecordEntry
             {
-                RequestUri = request.UriBuilder.ToString(),
+                RequestUri = request.Uri.ToString(),
                 RequestMethod = request.Method,
                 RequestHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
                 ResponseHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
@@ -119,7 +118,7 @@ namespace Azure.Core.Testing
             return memoryStream.ToArray();
         }
 
-        private byte[] ReadToEnd(HttpPipelineRequestContent requestContent)
+        private byte[] ReadToEnd(RequestContent requestContent)
         {
             if (requestContent == null)
             {

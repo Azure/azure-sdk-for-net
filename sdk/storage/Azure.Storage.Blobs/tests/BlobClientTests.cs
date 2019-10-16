@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
@@ -46,11 +44,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
 
-            Assert.AreEqual(containerName, builder1.ContainerName);
+            Assert.AreEqual(containerName, builder1.BlobContainerName);
             Assert.AreEqual(blobName, builder1.BlobName);
             Assert.AreEqual("accountName", builder1.AccountName);
 
-            Assert.AreEqual(containerName, builder2.ContainerName);
+            Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
         }
@@ -71,9 +69,9 @@ namespace Azure.Storage.Blobs.Test
                     await blob.UploadAsync(stream);
                 }
 
-                System.Collections.Generic.IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                System.Collections.Generic.IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(name, blobs.First().Value.Name);
+                Assert.AreEqual(name, blobs.First().Name);
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync();
                 using var actual = new MemoryStream();
@@ -96,7 +94,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 
@@ -134,7 +132,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 
@@ -196,9 +194,9 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
 
-                System.Collections.Generic.IList<Response<BlobItem>> blobs = await container.GetBlobsAsync().ToListAsync();
+                System.Collections.Generic.IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
                 Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(name, blobs.First().Value.Name);
+                Assert.AreEqual(name, blobs.First().Name);
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync();
                 using var actual = new MemoryStream();
@@ -237,7 +235,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 
@@ -291,7 +289,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
         }
 

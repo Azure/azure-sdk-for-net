@@ -50,16 +50,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets UTC time at which data directory info was captured
+        /// Gets UTC time at which data directory info was captured
         /// </summary>
         [JsonProperty(PropertyName = "dataDirectoryTimeInUTC")]
-        public System.DateTime? DataDirectoryTimeInUTC { get; set; }
+        public System.DateTime? DataDirectoryTimeInUTC { get; private set; }
 
         /// <summary>
-        /// Gets or sets list of data directory paths during restore operation.
+        /// Gets list of data directory paths during restore operation.
         /// </summary>
         [JsonProperty(PropertyName = "dataDirectoryPaths")]
-        public IList<SQLDataDirectory> DataDirectoryPaths { get; set; }
+        public IList<SQLDataDirectory> DataDirectoryPaths { get; private set; }
 
     }
 }

@@ -62,12 +62,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="namespaceAddress">The address of the namespace to be authorized.</param>
         /// <param name="appliesTo">The resource to which the token should apply.</param>
         /// <param name="requiredClaims">The set of claims that are required for authorization.</param>
-        /// 
         /// <returns>The token to use for authorization.</returns>
         ///
-        public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress, string appliesTo, string[] requiredClaims)
+        public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress,
+                                                  string appliesTo,
+                                                  string[] requiredClaims)
         {
-            AccessToken token = await _credential.GetTokenAsync(new TokenRequest(requiredClaims), _cancellationToken);
+            AccessToken token = await _credential.GetTokenAsync(new TokenRequestContext(requiredClaims), _cancellationToken).ConfigureAwait(false);
             return new CbsToken(token.Token, _tokenType, token.ExpiresOn.UtcDateTime);
         }
     }

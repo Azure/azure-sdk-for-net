@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -20,7 +18,7 @@ namespace Azure.Core.Testing
 
         public bool IsDisposed { get; private set; }
 
-        public override HttpPipelineRequestContent Content
+        public override RequestContent Content
         {
             get { return base.Content; }
             set
@@ -105,7 +103,7 @@ namespace Azure.Core.Testing
 
         public override string ClientRequestId { get; set; }
 
-        public override string ToString() => $"{Method} {UriBuilder}";
+        public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()
         {

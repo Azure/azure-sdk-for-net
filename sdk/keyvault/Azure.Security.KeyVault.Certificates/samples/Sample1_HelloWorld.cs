@@ -41,19 +41,22 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 certOp.UpdateStatus();
 
-                Thread.Sleep(certOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's get the created certificate along with it's policy from the Key Vault.
-            CertificateWithPolicy certificate = client.GetCertificateWithPolicy(certName);
+            CertificateWithPolicy certificate = client.GetCertificate(certName);
 
-            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Expires}");
+            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
-            Certificate updatedCert = client.UpdateCertificate(certName, certificate.Version, enabled: false);
+            CertificateProperties certificateProperties = certificate.Properties;
+            certificateProperties.Enabled = false;
 
-            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Enabled}'");
+            Certificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
+
+            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 
             // We need to create a new version of the certificate that applications can use to replace the compromised certificate.
             // Creating a certificate with the same name and policy as the compromised certificate will create another version of the
@@ -64,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(newCertOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // The certificate is no longer needed, need to delete it from the Key Vault.

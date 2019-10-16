@@ -98,6 +98,16 @@ directive:
     }
 ```
 
+### Make CORS allow null values
+It should be possible to pass null for CORS to update service properties without changing existing rules.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.QueueServiceProperties
+  transform: >
+    $.properties.Cors["x-az-nullable-array"] = true;
+```
+
 ### QueueServiceStatistics
 ``` yaml
 directive:
@@ -175,14 +185,6 @@ directive:
   where: $.definitions.GeoReplication.properties.Status
   transform: >
     $["x-ms-enum"].name = "GeoReplicationStatus";
-```
-
-### Logging disable warning
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.Logging
-  transform: $["x-az-disable-warnings"] = "CA1724"
 ```
 
 ### StorageError
@@ -285,6 +287,15 @@ directive:
     $.name = "permissions";
 ```
 
+### Set Start/Expiry nullable in AccessPolicy 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+     delete $.required;
+```
+
 ### Url
 ``` yaml
 directive:
@@ -310,4 +321,22 @@ directive:
 - from: swagger-document
   where: $.parameters.ApiVersionParameter
   transform: $.enum = [ "2018-11-09" ];
+```
+
+### Prepend Queue prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Logging["x-ms-client-name"] = "QueueAnalyticsLogging";
+    $.Logging.xml = { "name": "Logging"};
+    $.QueueServiceProperties.properties.Logging.xml = { "name": "Logging"};
+    $.Metrics["x-ms-client-name"] = "QueueMetrics";
+    $.Metrics.xml = { "name": "Metrics" };
+    $.QueueServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
 ```
