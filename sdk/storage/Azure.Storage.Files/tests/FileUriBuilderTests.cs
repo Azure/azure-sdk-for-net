@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Assert.AreEqual("path/", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
         }
 
