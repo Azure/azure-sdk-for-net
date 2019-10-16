@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Test
     public class FileClientTests : FileTestBase
     {
         public FileClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -1126,6 +1126,8 @@ namespace Azure.Storage.Files.Test
             // Arrange
             using (GetNewFile(out FileClient file))
             {
+                await file.DownloadAsync();
+                await file.GetPropertiesAsync();
                 // Act
                 IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
@@ -1157,10 +1159,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await file.ForceCloseAllHandlesAsync();
+                int handlesClosed = await file.ForceCloseAllHandlesAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
             }
         }
 

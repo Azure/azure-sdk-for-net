@@ -535,10 +535,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseAllHandlesAsync();
+                int handlesClosed = await directory.ForceCloseAllHandlesAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
 
             }
         }
@@ -550,10 +550,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseAllHandlesAsync(recursive: true);
+                int handlesClosed = await directory.ForceCloseAllHandlesAsync(recursive: true);
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
 
             }
         }
