@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Models
             var items = new List<StorageFileItem>();
             items.AddRange(response.Value.DirectoryItems.Select(d => new StorageFileItem(true, d.Name)));
             items.AddRange(response.Value.FileItems.Select(f => new StorageFileItem(false, f.Name, f.Properties?.ContentLength)));
-            return CreatePage(
+            return Page<StorageFileItem>.FromValues(
                 items.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

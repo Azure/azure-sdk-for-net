@@ -36,7 +36,7 @@ namespace Azure.Storage.Queues.Models
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
-            return CreatePage(
+            return Page<QueueItem>.FromValues(
                 response.Value.QueueItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

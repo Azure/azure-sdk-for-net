@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Models
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
-            return CreatePage(
+            return Page<BlobItem>.FromValues(
                 response.Value.BlobItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
