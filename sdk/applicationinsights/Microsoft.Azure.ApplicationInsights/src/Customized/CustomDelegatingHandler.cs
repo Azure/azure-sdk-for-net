@@ -27,7 +27,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
             request.Headers.Add("x-ms-client-request-id", Client.RequestId ?? Guid.NewGuid().ToString());
 
             // Call the inner handler.
-            var response = await base.SendAsync(request, cancellationToken);
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             return response;
         }

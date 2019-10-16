@@ -764,22 +764,22 @@ namespace Azure.Storage.Files.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
 
                 // Properties are equal
-                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Properties.LastModified);
-                AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Properties.Metadata);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.Properties.ContentType);
-                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Properties.ETag);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Properties.ContentEncoding);
-                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Properties.CacheControl);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Properties.ContentDisposition);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Properties.ContentLanguage);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletionTime, downloadResponse.Value.Properties.CopyCompletionTime);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Properties.CopyStatusDescription);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Properties.CopyId);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Properties.CopyProgress);
-                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Properties.CopySource);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Properties.CopyStatus);
-                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Properties.IsServerEncrypted);
-                Assert.AreEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Properties.SmbProperties);
+                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
+                AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
+                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
+                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Details.ContentDisposition);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Details.ContentLanguage);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletionTime, downloadResponse.Value.Details.CopyCompletionTime);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Details.CopyStatusDescription);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Details.CopyId);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Details.CopyProgress);
+                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Details.CopySource);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Details.CopyStatus);
+                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Details.IsServerEncrypted);
+                Assert.AreEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
             }
         }
 

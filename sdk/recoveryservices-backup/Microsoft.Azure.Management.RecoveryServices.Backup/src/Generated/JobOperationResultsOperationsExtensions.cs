@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
             /// <summary>
             /// Fetches the result of any operation.
-            /// the operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,7 +47,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Fetches the result of any operation.
-            /// the operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

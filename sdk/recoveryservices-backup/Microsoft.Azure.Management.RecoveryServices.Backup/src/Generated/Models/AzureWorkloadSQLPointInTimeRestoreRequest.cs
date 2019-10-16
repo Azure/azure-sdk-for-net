@@ -34,13 +34,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureWorkloadSQLPointInTimeRestoreRequest class.
         /// </summary>
-        /// <param name="recoveryType">OLR/ALR, RestoreDisks is invalid option.
-        /// Possible values include: 'Invalid', 'OriginalLocation',
-        /// 'AlternateLocation', 'RestoreDisks'</param>
+        /// <param name="recoveryType">Type of this recovery. Possible values
+        /// include: 'Invalid', 'OriginalLocation', 'AlternateLocation',
+        /// 'RestoreDisks', 'Offline'</param>
         /// <param name="sourceResourceId">Fully qualified ARM ID of the VM on
         /// which workload that was running is being recovered.</param>
         /// <param name="propertyBag">Workload specific property bag.</param>
         /// <param name="targetInfo">Details of target database</param>
+        /// <param name="recoveryMode">Defines whether the current recovery
+        /// mode is file restore or database restore. Possible values include:
+        /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
         /// <param name="shouldUseAlternateTargetLocation">Default option set
         /// to true. If this is set to false, alternate data directory must be
         /// provided</param>
@@ -49,8 +52,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="alternateDirectoryPaths">Data directory
         /// details</param>
         /// <param name="pointInTime">PointInTime value</param>
-        public AzureWorkloadSQLPointInTimeRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), bool? shouldUseAlternateTargetLocation = default(bool?), bool? isNonRecoverable = default(bool?), IList<SQLDataDirectoryMapping> alternateDirectoryPaths = default(IList<SQLDataDirectoryMapping>), System.DateTime? pointInTime = default(System.DateTime?))
-            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
+        public AzureWorkloadSQLPointInTimeRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), bool? shouldUseAlternateTargetLocation = default(bool?), bool? isNonRecoverable = default(bool?), IList<SQLDataDirectoryMapping> alternateDirectoryPaths = default(IList<SQLDataDirectoryMapping>), System.DateTime? pointInTime = default(System.DateTime?))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
         {
             PointInTime = pointInTime;
             CustomInit();

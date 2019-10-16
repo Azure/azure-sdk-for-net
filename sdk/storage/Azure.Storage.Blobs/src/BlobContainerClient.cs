@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -25,12 +24,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Azure Storage name used to identify a storage account's root container.
         /// </summary>
-        public const string RootBlobContainerName = Constants.Blob.Container.RootName;
+        public static readonly string RootBlobContainerName = Constants.Blob.Container.RootName;
 
         /// <summary>
         /// The Azure Storage name used to identify a storage account's logs container.
         /// </summary>
-        public const string LogsBlobContainerName = Constants.Blob.Container.LogsName;
+        public static readonly string LogsBlobContainerName = Constants.Blob.Container.LogsName;
+
+        /// <summary>
+        /// The Azure Storage name used to identify a storage account's web content container.
+        /// </summary>
+        public static readonly string WebBlobContainerName = Constants.Blob.Container.WebName;
 
 #pragma warning disable IDE0032 // Use auto property
         /// <summary>
@@ -163,8 +167,8 @@ namespace Azure.Storage.Blobs
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
         /// class.
         /// </summary>
-        /// <param name="containerUri">
-        /// A <see cref="Uri"/> referencing the container that includes the
+        /// <param name="blobContainerUri">
+        /// A <see cref="Uri"/> referencing the blob container that includes the
         /// name of the account and the name of the container.
         /// </param>
         /// <param name="options">
@@ -172,8 +176,8 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobContainerClient(Uri containerUri, BlobClientOptions options = default)
-            : this(containerUri, (HttpPipelinePolicy)null,  options)
+        public BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
+            : this(blobContainerUri, (HttpPipelinePolicy)null,  options)
         {
         }
 

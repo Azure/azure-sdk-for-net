@@ -11,7 +11,7 @@ using Azure.Core.Testing;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common.Test;
+using Azure.Storage.Test;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
@@ -248,8 +248,8 @@ namespace Azure.Storage.Test.Shared
             => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Blobs = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { BlobContainer = true, Object = true }.ToString(),
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
@@ -362,7 +362,7 @@ namespace Azure.Storage.Test.Shared
         //TODO consider removing this.
         public async Task<string> SetupBlobLeaseCondition(BlobBaseClient blob, string leaseId, string garbageLeaseId)
         {
-            Lease lease = null;
+            BlobLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
                 lease = await InstrumentClient(blob.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
@@ -373,7 +373,7 @@ namespace Azure.Storage.Test.Shared
         //TODO consider removing this.
         public async Task<string> SetupContainerLeaseCondition(BlobContainerClient container, string leaseId, string garbageLeaseId)
         {
-            Lease lease = null;
+            BlobLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
                 lease = await InstrumentClient(container.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);

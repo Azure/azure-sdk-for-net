@@ -183,6 +183,11 @@ namespace Azure.Storage
                 public const string LogsName = "$logs";
 
                 /// <summary>
+                /// The Azure Storage name used to identify a storage account's web content container.
+                /// </summary>
+                public const string WebName = "$web";
+
+                /// <summary>
                 /// The Azure Storage error codes for Blob Container Client.
                 /// </summary>
                 public const string AlreadyExists = "ContainerAlreadyExists";
@@ -459,7 +464,7 @@ namespace Azure.Storage
             internal static class AccountResources
             {
                 public const char Service = 's';
-                public const char BlobContainer = 'c';
+                public const char Container = 'c';
                 public const char Object = 'o';
             }
         }
@@ -475,8 +480,8 @@ namespace Azure.Storage
 
         internal static class GeoRedundantRead
         {
-            internal const string AlternateHostKey = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
-            internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
+            internal const string AlternateHostKey = "Azure.Storage.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string ResourceNotReplicated = "Azure.Storage.GeoRedundantReadPolicy.ResourceNotReplicated";
         }
 
         internal static class HttpStatusCode

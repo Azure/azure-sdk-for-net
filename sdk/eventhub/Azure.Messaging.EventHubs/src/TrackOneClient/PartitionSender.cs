@@ -148,7 +148,7 @@ namespace TrackOne
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            await SendAsync(eventDataBatch.ToEnumerable());
+            await SendAsync(eventDataBatch.ToEnumerable()).ConfigureAwait(false);
         }
 
         /// <summary>

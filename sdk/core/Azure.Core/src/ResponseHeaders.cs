@@ -47,7 +47,7 @@ namespace Azure.Core
             return _response.TryGetHeader(name, out value);
         }
 
-        public bool TryGetValues(string name, out IEnumerable<string> values)
+        public bool TryGetValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
             return _response.TryGetHeaderValues(name, out values);
         }

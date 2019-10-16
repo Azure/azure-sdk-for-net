@@ -46,24 +46,20 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
-            this.Version = version;
+            Version = version;
+            this.ConfigureLogging();
         }
 
         internal string GetVersionString()
         {
-            string version = string.Empty;
-
-            switch (this.Version)
+            switch (Version)
             {
                 case ServiceVersion.V1_0:
-                    version = "1.0";
-                    break;
+                    return "1.0";
 
                 default:
-                    throw new ArgumentException(this.Version.ToString());
+                    throw new ArgumentException(Version.ToString());
             }
-
-            return version;
         }
     }
 }

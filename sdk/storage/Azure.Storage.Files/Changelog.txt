@@ -3,7 +3,7 @@ Release History
 
 12.0.0-preview.4 (2019-10)
 --------------------------
-- Added FileClient.PutRangeFromUri
+- Added FileClient.PutRangeFromUri operation
 - Verification of echoed client request IDs
 - Added convenient resource Name properties on all clients
 

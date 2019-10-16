@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -33,16 +32,15 @@ namespace Azure.Storage.Blobs.Specialized
     public class AppendBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// <see cref="AppendBlobMaxAppendBlockBytes"/> indicates the maximum
-        /// number of bytes that can be sent in a call to AppendBlock.
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to AppendBlock.
         /// </summary>
-        public const int AppendBlobMaxAppendBlockBytes = Constants.Blob.Append.MaxAppendBlockBytes;
+        public virtual int AppendBlobMaxAppendBlockBytes => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
-        /// <see cref="AppendBlobMaxBlocks"/> indicates the maximum number of
-        /// blocks allowed in an append blob.
+        /// Gets the maximum number of blocks allowed in an append blob.
         /// </summary>
-        public const int AppendBlobMaxBlocks = Constants.Blob.Append.MaxBlocks;
+        public virtual int AppendBlobMaxBlocks => Constants.Blob.Append.MaxBlocks;
 
         #region ctors
         /// <summary>

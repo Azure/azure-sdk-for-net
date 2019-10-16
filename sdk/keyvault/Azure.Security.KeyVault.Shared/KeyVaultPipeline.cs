@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path);
+            firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             return firstPage.ToUri();
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path);
+            firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             foreach ((string, string) tuple in queryParams)
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault
 
             foreach (var p in path)
             {
-                request.Uri.AppendPath(p);
+                request.Uri.AppendPath(p, escape: false);
             }
 
             request.Uri.AppendQuery("api-version", ApiVersion);
@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -177,7 +177,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
+            request.Content = RequestContent.Create(content.Serialize());
 
             Response response = SendRequest(request, cancellationToken);
 

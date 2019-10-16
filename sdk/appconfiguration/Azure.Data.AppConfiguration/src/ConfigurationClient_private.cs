@@ -93,24 +93,24 @@ namespace Azure.Data.AppConfiguration
         private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute);
-            builder.AppendPath(Uri.EscapeDataString(key));
+            builder.AppendPath(KvRoute, escape: false);
+            builder.AppendPath(key);
 
             if (label != null)
             {
-                builder.AppendQuery(LabelQueryFilter, Uri.EscapeDataString(label));
+                builder.AppendQuery(LabelQueryFilter, label);
             }
         }
 
         private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(LocksRoute);
-            builder.AppendPath(Uri.EscapeDataString(key));
+            builder.AppendPath(LocksRoute, escape: false);
+            builder.AppendPath(key);
 
             if (label != null)
             {
-                builder.AppendQuery(LabelQueryFilter, Uri.EscapeDataString(label));
+                builder.AppendQuery(LabelQueryFilter, label);
             }
         }
 
@@ -140,11 +140,11 @@ namespace Azure.Data.AppConfiguration
                 {
                     if (key.IndexOfAny(s_reservedCharacters) != -1)
                     {
-                        keysCopy.Add(Uri.EscapeDataString(EscapeReservedCharacters(key)));
+                        keysCopy.Add(EscapeReservedCharacters(key));
                     }
                     else
                     {
-                        keysCopy.Add(Uri.EscapeDataString(key));
+                        keysCopy.Add(key);
                     }
                 }
                 var keys = string.Join(",", keysCopy);
@@ -153,7 +153,7 @@ namespace Azure.Data.AppConfiguration
 
             if (selector.Labels.Count > 0)
             {
-                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "%00" : Uri.EscapeDataString(EscapeReservedCharacters(label)));
+                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
                 var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }
@@ -166,21 +166,21 @@ namespace Azure.Data.AppConfiguration
 
             if (!string.IsNullOrEmpty(pageLink))
             {
-                builder.AppendQuery("after", pageLink);
+                builder.AppendQuery("after", pageLink, escapeValue: false);
             }
         }
 
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute);
+            builder.AppendPath(KvRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(RevisionsRoute);
+            builder.AppendPath(RevisionsRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 

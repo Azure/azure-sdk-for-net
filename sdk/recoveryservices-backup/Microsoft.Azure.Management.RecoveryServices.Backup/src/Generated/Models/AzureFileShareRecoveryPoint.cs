@@ -37,11 +37,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// created.</param>
         /// <param name="fileShareSnapshotUri">Contains Url to the snapshot of
         /// fileshare, if applicable</param>
-        public AzureFileShareRecoveryPoint(string recoveryPointType = default(string), System.DateTime? recoveryPointTime = default(System.DateTime?), string fileShareSnapshotUri = default(string))
+        /// <param name="recoveryPointSizeInGB">Contains recovery point
+        /// size</param>
+        public AzureFileShareRecoveryPoint(string recoveryPointType = default(string), System.DateTime? recoveryPointTime = default(System.DateTime?), string fileShareSnapshotUri = default(string), int? recoveryPointSizeInGB = default(int?))
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointTime = recoveryPointTime;
             FileShareSnapshotUri = fileShareSnapshotUri;
+            RecoveryPointSizeInGB = recoveryPointSizeInGB;
             CustomInit();
         }
 
@@ -51,24 +54,29 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of the backup copy. Specifies whether it is a
-        /// crash consistent backup or app consistent.
+        /// Gets type of the backup copy. Specifies whether it is a crash
+        /// consistent backup or app consistent.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public string RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; private set; }
 
         /// <summary>
-        /// Gets or sets time at which this backup copy was created.
+        /// Gets time at which this backup copy was created.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointTime")]
-        public System.DateTime? RecoveryPointTime { get; set; }
+        public System.DateTime? RecoveryPointTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets contains Url to the snapshot of fileshare, if
-        /// applicable
+        /// Gets contains Url to the snapshot of fileshare, if applicable
         /// </summary>
         [JsonProperty(PropertyName = "fileShareSnapshotUri")]
-        public string FileShareSnapshotUri { get; set; }
+        public string FileShareSnapshotUri { get; private set; }
+
+        /// <summary>
+        /// Gets contains recovery point size
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryPointSizeInGB")]
+        public int? RecoveryPointSizeInGB { get; private set; }
 
     }
 }
