@@ -185,10 +185,10 @@ namespace Azure.Storage.Queues.Tests
             }
         }
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public QueueSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new QueueSignedIdentifier
                 {
                     Id = GetNewString(),
                     AccessPolicy =

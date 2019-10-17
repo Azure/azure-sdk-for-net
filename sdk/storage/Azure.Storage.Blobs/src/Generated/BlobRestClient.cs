@@ -1798,7 +1798,7 @@ namespace Azure.Storage.Blobs
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
                                     _xml.Element(System.Xml.Linq.XName.Get("SignedIdentifiers", "")).Elements(System.Xml.Linq.XName.Get("SignedIdentifier", "")),
-                                    Azure.Storage.Blobs.Models.SignedIdentifier.FromXml));
+                                    Azure.Storage.Blobs.Models.BlobSignedIdentifier.FromXml));
 
                         // Get response headers
                         string _header;
@@ -1853,7 +1853,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
-                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> permissions = default,
                 int? timeout = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -1923,7 +1923,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
-                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> permissions = default,
                 int? timeout = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -1959,9 +1959,9 @@ namespace Azure.Storage.Blobs
                 System.Xml.Linq.XElement _body = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("SignedIdentifiers", ""));
                 if (permissions != null)
                 {
-                    foreach (Azure.Storage.Blobs.Models.SignedIdentifier _child in permissions)
+                    foreach (Azure.Storage.Blobs.Models.BlobSignedIdentifier _child in permissions)
                     {
-                        _body.Add(Azure.Storage.Blobs.Models.SignedIdentifier.ToXml(_child));
+                        _body.Add(Azure.Storage.Blobs.Models.BlobSignedIdentifier.ToXml(_child));
                     }
                 }
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
@@ -13305,14 +13305,14 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// a collection of signed identifiers
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> SignedIdentifiers { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> SignedIdentifiers { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobContainerAccessPolicy instance
         /// </summary>
         public BlobContainerAccessPolicy()
         {
-            SignedIdentifiers = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.SignedIdentifier>();
+            SignedIdentifiers = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobSignedIdentifier>();
         }
     }
 
@@ -13328,7 +13328,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> signedIdentifiers)
         {
             return new BlobContainerAccessPolicy()
             {
@@ -14618,6 +14618,138 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion enum strings BlobErrorCode
+
+#region class BlobGeoReplication
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Geo-Replication information for the Secondary Storage Service
+    /// </summary>
+    public partial class BlobGeoReplication
+    {
+        /// <summary>
+        /// The status of the secondary location
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobGeoReplicationStatus Status { get; internal set; }
+
+        /// <summary>
+        /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
+        /// </summary>
+        public System.DateTimeOffset LastSyncTime { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobGeoReplication instances.
+        /// You can use BlobsModelFactory.BlobGeoReplication instead.
+        /// </summary>
+        internal BlobGeoReplication() { }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobGeoReplication instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobGeoReplication instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobGeoReplication FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobGeoReplication _value = new Azure.Storage.Blobs.Models.BlobGeoReplication();
+            _child = element.Element(System.Xml.Linq.XName.Get("Status", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.Status = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseBlobGeoReplicationStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LastSyncTime", ""));
+            if (_child != null)
+            {
+                _value.LastSyncTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobGeoReplication value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobGeoReplication instance for mocking.
+        /// </summary>
+        public static BlobGeoReplication BlobGeoReplication(
+            Azure.Storage.Blobs.Models.BlobGeoReplicationStatus status,
+            System.DateTimeOffset lastSyncTime)
+        {
+            return new BlobGeoReplication()
+            {
+                Status = status,
+                LastSyncTime = lastSyncTime,
+            };
+        }
+    }
+}
+#endregion class BlobGeoReplication
+
+#region enum BlobGeoReplicationStatus
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// The status of the secondary location
+    /// </summary>
+    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
+    public enum BlobGeoReplicationStatus
+    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
+    {
+        /// <summary>
+        /// live
+        /// </summary>
+        Live,
+
+        /// <summary>
+        /// bootstrap
+        /// </summary>
+        Bootstrap,
+
+        /// <summary>
+        /// unavailable
+        /// </summary>
+        Unavailable
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.BlobGeoReplicationStatus value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.BlobGeoReplicationStatus.Live => "live",
+                    Azure.Storage.Blobs.Models.BlobGeoReplicationStatus.Bootstrap => "bootstrap",
+                    Azure.Storage.Blobs.Models.BlobGeoReplicationStatus.Unavailable => "unavailable",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.BlobGeoReplicationStatus value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.BlobGeoReplicationStatus ParseBlobGeoReplicationStatus(string value)
+            {
+                return value switch
+                {
+                    "live" => Azure.Storage.Blobs.Models.BlobGeoReplicationStatus.Live,
+                    "bootstrap" => Azure.Storage.Blobs.Models.BlobGeoReplicationStatus.Bootstrap,
+                    "unavailable" => Azure.Storage.Blobs.Models.BlobGeoReplicationStatus.Unavailable,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.BlobGeoReplicationStatus value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum BlobGeoReplicationStatus
 
 #region class BlobInfo
 namespace Azure.Storage.Blobs.Models
@@ -15967,7 +16099,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Geo-Replication information for the Secondary Storage Service
         /// </summary>
-        public Azure.Storage.Blobs.Models.GeoReplication GeoReplication { get; internal set; }
+        public Azure.Storage.Blobs.Models.BlobGeoReplication GeoReplication { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobServiceStatistics instance
@@ -15985,7 +16117,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                GeoReplication = new Azure.Storage.Blobs.Models.GeoReplication();
+                GeoReplication = new Azure.Storage.Blobs.Models.BlobGeoReplication();
             }
         }
 
@@ -16002,7 +16134,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("GeoReplication", ""));
             if (_child != null)
             {
-                _value.GeoReplication = Azure.Storage.Blobs.Models.GeoReplication.FromXml(_child);
+                _value.GeoReplication = Azure.Storage.Blobs.Models.BlobGeoReplication.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -16020,7 +16152,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobServiceStatistics instance for mocking.
         /// </summary>
         public static BlobServiceStatistics BlobServiceStatistics(
-            Azure.Storage.Blobs.Models.GeoReplication geoReplication = default)
+            Azure.Storage.Blobs.Models.BlobGeoReplication geoReplication = default)
         {
             return new BlobServiceStatistics()
             {
@@ -16030,6 +16162,91 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobServiceStatistics
+
+#region class BlobSignedIdentifier
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// signed identifier
+    /// </summary>
+    public partial class BlobSignedIdentifier
+    {
+        /// <summary>
+        /// a unique id
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// An Access policy
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobAccessPolicy AccessPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new BlobSignedIdentifier instance
+        /// </summary>
+        public BlobSignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobSignedIdentifier instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobSignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                AccessPolicy = new Azure.Storage.Blobs.Models.BlobAccessPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a BlobSignedIdentifier instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobSignedIdentifier instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobSignedIdentifier value, string name = "SignedIdentifier", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Id", ""),
+                value.Id));
+            _element.Add(Azure.Storage.Blobs.Models.BlobAccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobSignedIdentifier instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobSignedIdentifier instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobSignedIdentifier FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobSignedIdentifier _value = new Azure.Storage.Blobs.Models.BlobSignedIdentifier(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Id", ""));
+            if (_child != null)
+            {
+                _value.Id = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
+            if (_child != null)
+            {
+                _value.AccessPolicy = Azure.Storage.Blobs.Models.BlobAccessPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobSignedIdentifier value);
+    }
+}
+#endregion class BlobSignedIdentifier
 
 #region class BlobSnapshotInfo
 namespace Azure.Storage.Blobs.Models
@@ -17531,138 +17748,6 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class FlattenedDownloadProperties
 
-#region class GeoReplication
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Geo-Replication information for the Secondary Storage Service
-    /// </summary>
-    public partial class GeoReplication
-    {
-        /// <summary>
-        /// The status of the secondary location
-        /// </summary>
-        public Azure.Storage.Blobs.Models.GeoReplicationStatus Status { get; internal set; }
-
-        /// <summary>
-        /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
-        /// </summary>
-        public System.DateTimeOffset LastSyncTime { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of GeoReplication instances.
-        /// You can use BlobsModelFactory.GeoReplication instead.
-        /// </summary>
-        internal GeoReplication() { }
-
-        /// <summary>
-        /// Deserializes XML into a new GeoReplication instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized GeoReplication instance.</returns>
-        internal static Azure.Storage.Blobs.Models.GeoReplication FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.GeoReplication _value = new Azure.Storage.Blobs.Models.GeoReplication();
-            _child = element.Element(System.Xml.Linq.XName.Get("Status", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.Status = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseGeoReplicationStatus(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LastSyncTime", ""));
-            if (_child != null)
-            {
-                _value.LastSyncTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.GeoReplication value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new GeoReplication instance for mocking.
-        /// </summary>
-        public static GeoReplication GeoReplication(
-            Azure.Storage.Blobs.Models.GeoReplicationStatus status,
-            System.DateTimeOffset lastSyncTime)
-        {
-            return new GeoReplication()
-            {
-                Status = status,
-                LastSyncTime = lastSyncTime,
-            };
-        }
-    }
-}
-#endregion class GeoReplication
-
-#region enum GeoReplicationStatus
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// The status of the secondary location
-    /// </summary>
-    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
-    public enum GeoReplicationStatus
-    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
-    {
-        /// <summary>
-        /// live
-        /// </summary>
-        Live,
-
-        /// <summary>
-        /// bootstrap
-        /// </summary>
-        Bootstrap,
-
-        /// <summary>
-        /// unavailable
-        /// </summary>
-        Unavailable
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.GeoReplicationStatus value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.GeoReplicationStatus.Live => "live",
-                    Azure.Storage.Blobs.Models.GeoReplicationStatus.Bootstrap => "bootstrap",
-                    Azure.Storage.Blobs.Models.GeoReplicationStatus.Unavailable => "unavailable",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.GeoReplicationStatus value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.GeoReplicationStatus ParseGeoReplicationStatus(string value)
-            {
-                return value switch
-                {
-                    "live" => Azure.Storage.Blobs.Models.GeoReplicationStatus.Live,
-                    "bootstrap" => Azure.Storage.Blobs.Models.GeoReplicationStatus.Bootstrap,
-                    "unavailable" => Azure.Storage.Blobs.Models.GeoReplicationStatus.Unavailable,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.GeoReplicationStatus value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum GeoReplicationStatus
-
 #region class GetBlockListOperation
 namespace Azure.Storage.Blobs.Models
 {
@@ -18636,91 +18721,6 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class SetMetadataOperation
-
-#region class SignedIdentifier
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// signed identifier
-    /// </summary>
-    public partial class SignedIdentifier
-    {
-        /// <summary>
-        /// a unique id
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// An Access policy
-        /// </summary>
-        public Azure.Storage.Blobs.Models.BlobAccessPolicy AccessPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new SignedIdentifier instance
-        /// </summary>
-        public SignedIdentifier()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new SignedIdentifier instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SignedIdentifier(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                AccessPolicy = new Azure.Storage.Blobs.Models.BlobAccessPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a SignedIdentifier instance as XML.
-        /// </summary>
-        /// <param name="value">The SignedIdentifier instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Id", ""),
-                value.Id));
-            _element.Add(Azure.Storage.Blobs.Models.BlobAccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new SignedIdentifier instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SignedIdentifier instance.</returns>
-        internal static Azure.Storage.Blobs.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.SignedIdentifier _value = new Azure.Storage.Blobs.Models.SignedIdentifier(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Id", ""));
-            if (_child != null)
-            {
-                _value.Id = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
-            if (_child != null)
-            {
-                _value.AccessPolicy = Azure.Storage.Blobs.Models.BlobAccessPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.SignedIdentifier value);
-    }
-}
-#endregion class SignedIdentifier
 
 #region enum SkuName
 namespace Azure.Storage.Blobs.Models

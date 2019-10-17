@@ -294,14 +294,14 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
                 Response setResult = await queue.SetAccessPolicyAsync(signedIdentifiers);
 
                 // Assert
-                Response<IEnumerable<Models.SignedIdentifier>> result = await queue.GetAccessPolicyAsync();
-                Models.SignedIdentifier acl = result.Value.First();
+                Response<IEnumerable<Models.QueueSignedIdentifier>> result = await queue.GetAccessPolicyAsync();
+                Models.QueueSignedIdentifier acl = result.Value.First();
 
                 Assert.AreEqual(1, result.Value.Count());
                 Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
@@ -331,7 +331,7 @@ namespace Azure.Storage.Queues.Test
         {
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 Response result = await queue.SetAccessPolicyAsync(signedIdentifiers);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(result.Headers.RequestId));
             }
@@ -345,7 +345,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
