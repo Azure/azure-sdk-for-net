@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
@@ -822,6 +823,29 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(correlationContext, "CorrelationContextValue1,CorrelationContextValue2");
             Assert.IsFalse(request.Headers.TryGetValue("x-ms-random-id", out string randomId));
         }
+
+        [Test]
+        public async Task AuthorizationHeadersAddedOnceWithRetries()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(new MockResponse(503), response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label);
+
+            var retriedRequest = mockTransport.Requests[1];
+
+            AssertRequestCommon(retriedRequest);
+            Assert.True(retriedRequest.Headers.TryGetValues("Date", out var dateHeaders));
+            Assert.True(retriedRequest.Headers.TryGetValues("x-ms-content-sha256", out var contentHashHeaders));
+            Assert.True(retriedRequest.Headers.TryGetValues("Authorization", out var authorizationHeaders));
+            Assert.AreEqual(1, dateHeaders.Count());
+            Assert.AreEqual(1, contentHashHeaders.Count());
+            Assert.AreEqual(1, authorizationHeaders.Count());
+        }
+
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
