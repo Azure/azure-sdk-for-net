@@ -14,7 +14,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage container or blob.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public struct BlobSasBuilder : IEquatable<BlobSasBuilder>
+    public class BlobSasBuilder : IEquatable<BlobSasBuilder>
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
