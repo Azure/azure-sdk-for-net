@@ -1273,6 +1273,9 @@ directive:
     $.BlobServiceProperties.properties.Logging.xml = { "name": "Logging"};
     $.Metrics["x-ms-client-name"] = "BlobMetrics";
     $.Metrics.xml = { "name": "Metrics"};
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.BlobServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.BlobServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "BlobCorsRule";
