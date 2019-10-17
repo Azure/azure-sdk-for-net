@@ -2,27 +2,28 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// <see cref="Key"/> is the resource consisting of a value and its <see cref="Properties"/>.
+    /// <see cref="KeyVaultKey"/> is the resource consisting of a value and its <see cref="Properties"/>.
     /// </summary>
-    public class Key : IJsonDeserializable
+    public class KeyVaultKey : IJsonDeserializable
     {
         private const string KeyPropertyName = "key";
 
-        internal Key()
+        internal KeyVaultKey(KeyProperties properties = null)
         {
-            Properties = new KeyProperties();
+            Properties = properties ?? new KeyProperties();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Key"/> class.
+        /// Initializes a new instance of the <see cref="KeyVaultKey"/> class.
         /// </summary>
         /// <param name="name">The name of the key.</param>
-        public Key(string name)
+        public KeyVaultKey(string name)
         {
             Properties = new KeyProperties(name);
         }
@@ -43,10 +44,20 @@ namespace Azure.Security.KeyVault.Keys
         /// <remarks>
         /// See http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18 for specifications of a JSON web key.
         /// </remarks>
-        public JsonWebKey KeyMaterial { get; set; }
+        public JsonWebKey Key { get; internal set; }
 
         /// <summary>
-        /// Additional properties of the <see cref="Key"/>.
+        /// Gets or sets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
+        /// </summary>
+        public KeyType KeyType => Key.KeyType;
+
+        /// <summary>
+        /// Gets supported key operations.
+        /// </summary>
+        public IReadOnlyCollection<KeyOperation> KeyOperations => Key.KeyOps;
+
+        /// <summary>
+        /// Additional properties of the <see cref="KeyVaultKey"/>.
         /// </summary>
         public KeyProperties Properties { get; }
 
@@ -55,10 +66,10 @@ namespace Azure.Security.KeyVault.Keys
             switch (prop.Name)
             {
                 case KeyPropertyName:
-                    KeyMaterial = new JsonWebKey();
-                    KeyMaterial.ReadProperties(prop.Value);
+                    Key = new JsonWebKey();
+                    Key.ReadProperties(prop.Value);
 
-                    Uri id = new Uri(KeyMaterial.Id);
+                    Uri id = new Uri(Key.Id);
                     Properties.ParseId(id);
                     break;
 

@@ -63,18 +63,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(KeyWrapAlgorithm a, KeyWrapAlgorithm b) => a.Equals(b);
+        /// <param name="left">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(KeyWrapAlgorithm left, KeyWrapAlgorithm right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are different.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
-        public static bool operator !=(KeyWrapAlgorithm a, KeyWrapAlgorithm b) => !a.Equals(b);
+        /// <param name="left">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(KeyWrapAlgorithm left, KeyWrapAlgorithm right) => !left.Equals(right);
 
         /// <summary>
         /// Converts a string to a <see cref="KeyWrapAlgorithm"/>.

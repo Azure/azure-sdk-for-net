@@ -71,10 +71,10 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 ```C# CreateClient
 // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+var client = new SecretClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
 // Create a new secret using the secret client
-Secret secret = client.SetSecret("secret-name", "secret-value");
+KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
 ```
 
 ## Key concepts
@@ -103,7 +103,7 @@ The following section provides several code snippets using the [above created](#
 `Set` creates a Secret to be stored in the Azure Key Vault. If a secret with the same name already exists, then a new version of the secret is created.
 
 ```C# CreateSecret
-Secret secret = client.SetSecret("secret-name", "secret-value");
+KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -115,7 +115,7 @@ Console.WriteLine(secret.Properties.Enabled);
 `Get` retrieves a secret previously stored in the Key Vault.
 
 ```C# RetrieveSecret
-Secret secret = client.GetSecret("secret-name");
+KeyVaultSecret secret = client.GetSecret("secret-name");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -125,7 +125,7 @@ Console.WriteLine(secret.Value);
 `Update` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.Set` on a `Secret` with the same name.
 
 ```C# UpdateSecret
-Secret secret = client.GetSecret("secret-name");
+KeyVaultSecret secret = client.GetSecret("secret-name");
 
 // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
 secret.Properties.ContentType = "text/plain";
@@ -154,11 +154,11 @@ Console.WriteLine(secret.Value);
 This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.Get` to retrive the value.
 
 ```C# ListSecrets
-Pageable<SecretProperties> allSecrets = client.GetSecrets();
+Pageable<SecretProperties> allSecrets = client.GetPropertiesOfSecrets();
 
-foreach (SecretProperties secret in allSecrets)
+foreach (SecretProperties secretProperties in allSecrets)
 {
-    Console.WriteLine(secret.Name);
+    Console.WriteLine(secretProperties.Name);
 }
 ```
 
@@ -168,7 +168,7 @@ Async APIs are identical to their synchronous counterparts. Note that all method
 This example creates a secret in the Key Vault with the specified optional arguments.
 
 ```C# CreateSecretAsync
-Secret secret = await client.SetSecretAsync("secret-name", "secret-value");
+KeyVaultSecret secret = await client.SetSecretAsync("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -184,7 +184,7 @@ For example, if you try to retrieve a Secret that doesn't exist in your Key Vaul
 ```C# NotFound
 try
 {
-    Secret secret = client.GetSecret("some_secret");
+    KeyVaultSecret secret = client.GetSecret("some_secret");
 }
 catch (RequestFailedException ex)
 {

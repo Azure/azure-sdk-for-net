@@ -35,19 +35,19 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             string bankSecretName = $"BankAccountPassword-{Guid.NewGuid()}";
             string storageSecretName = $"StorageAccountPasswor{Guid.NewGuid()}";
 
-            var bankSecret = new Secret(bankSecretName, "f4G34fMh8v")
+            var bankSecret = new KeyVaultSecret(bankSecretName, "f4G34fMh8v")
             {
                 Properties =
                 {
-                    Expires = DateTimeOffset.Now.AddYears(1)
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
                 }
             };
 
-            var storageSecret = new Secret(storageSecretName, "f4G34fMh8v547")
+            var storageSecret = new KeyVaultSecret(storageSecretName, "f4G34fMh8v547")
             {
                 Properties =
                 {
-                    Expires = DateTimeOffset.Now.AddYears(1)
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
                 }
             };
 
@@ -58,10 +58,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // List operations don't return the secrets with value information.
             // So, for each returned secret we call Get to get the secret with its value information.
 
-            IEnumerable<SecretProperties> secrets = client.GetSecrets();
+            IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
             foreach (SecretProperties secret in secrets)
             {
-                Secret secretWithValue = client.GetSecret(secret.Name);
+                KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
                 Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
             }
 
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
-            IEnumerable<SecretProperties> secretVersions = client.GetSecretVersions(bankSecretName);
+            IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
             foreach (SecretProperties secret in secretVersions)
             {
                 Debug.WriteLine($"Secret's version {secret.Version} with name {secret.Name}");

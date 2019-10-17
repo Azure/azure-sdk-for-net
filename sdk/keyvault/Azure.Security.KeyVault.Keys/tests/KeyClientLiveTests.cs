@@ -37,12 +37,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task CreateKey()
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(keyName);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
-            AssertKeysEqual(key, keyReturned);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
         [Test]
@@ -51,89 +51,97 @@ namespace Azure.Security.KeyVault.Keys.Tests
             var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
             DateTimeOffset nbf = exp.AddDays(-30);
 
-            var keyOptions = new KeyCreateOptions()
+            var keyOptions = new CreateKeyOptions()
             {
-                KeyOperations = new List<KeyOperation>() { KeyOperation.Verify },
+                KeyOperations = { KeyOperation.Verify },
                 Enabled = false,
-                Expires = exp,
+                ExpiresOn = exp,
                 NotBefore = nbf,
             };
 
-            Key key = await Client.CreateKeyAsync(Recording.GenerateId(), KeyType.Ec, keyOptions);
+            KeyVaultKey key = await Client.CreateKeyAsync(Recording.GenerateId(), KeyType.Ec, keyOptions);
             RegisterForCleanup(key.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(key.Name);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(key.Name);
 
-            AssertKeysEqual(key, keyReturned);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6551")]
         public async Task CreateEcHsmKey()
         {
-            var echsmkey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: true);
-            Key keyHsm = await Client.CreateEcKeyAsync(echsmkey);
+            var echsmkey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
+            KeyVaultKey keyHsm = await Client.CreateEcKeyAsync(echsmkey);
             RegisterForCleanup(keyHsm.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(keyHsm.Name);
-            AssertKeysEqual(keyHsm, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyHsm.Name);
+            AssertKeyVaultKeysEqual(keyHsm, keyReturned);
         }
 
         [Test]
         public async Task CreateEcKey()
         {
-            var eckey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false);
-            Key keyNoHsm = await Client.CreateEcKeyAsync(eckey);
+            var eckey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false);
+            KeyVaultKey keyNoHsm = await Client.CreateEcKeyAsync(eckey);
             RegisterForCleanup(keyNoHsm.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
-            AssertKeysEqual(keyNoHsm, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
+            AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
         }
 
         [Test]
-        public async Task CreateEcWithCurveKey([Fields]KeyCurveName curve)
+        public async Task CreateEcWithCurveKey([Fields]KeyCurveName curveName)
         {
-            var ecCurveKey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false, curve);
-            Key keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+            var ecCurveKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false)
+            {
+                CurveName = curveName,
+            };
+
+            KeyVaultKey keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
 
             RegisterForCleanup(keyNoHsmCurve.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(ecCurveKey.Name);
-            AssertKeysEqual(keyNoHsmCurve, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(ecCurveKey.Name);
+            AssertKeyVaultKeysEqual(keyNoHsmCurve, keyReturned);
         }
 
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6551")]
         public async Task CreateRsaHsmKey()
         {
-            var rsaHsmkey = new RsaKeyCreateOptions(Recording.GenerateId(), hsm: true);
-            Key keyHsm = await Client.CreateRsaKeyAsync(rsaHsmkey);
+            var rsaHsmkey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
+            KeyVaultKey keyHsm = await Client.CreateRsaKeyAsync(rsaHsmkey);
             RegisterForCleanup(keyHsm.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(keyHsm.Name);
-            AssertKeysEqual(keyHsm, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyHsm.Name);
+            AssertKeyVaultKeysEqual(keyHsm, keyReturned);
         }
 
         [Test]
         public async Task CreateRsaKey()
         {
-            var rsaKey = new RsaKeyCreateOptions(Recording.GenerateId(), hsm: false);
-            Key key = await Client.CreateRsaKeyAsync(rsaKey);
+            var rsaKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: false);
+            KeyVaultKey key = await Client.CreateRsaKeyAsync(rsaKey);
             RegisterForCleanup(key.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(key.Name);
-            AssertKeysEqual(key, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(key.Name);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
         [Test]
         public async Task CreateRsaWithSizeKey()
         {
-            var rsaSizeKey = new RsaKeyCreateOptions(name: Recording.GenerateId(), hsm: false, keySize: 2048);
-            Key key = await Client.CreateRsaKeyAsync(rsaSizeKey);
+            var rsaSizeKey = new CreateRsaKeyOptions(name: Recording.GenerateId(), hardwareProtected: false)
+            {
+                KeySize = 2048,
+            };
+
+            KeyVaultKey key = await Client.CreateRsaKeyAsync(rsaSizeKey);
             RegisterForCleanup(key.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(rsaSizeKey.Name);
-            AssertKeysEqual(key, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(rsaSizeKey.Name);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
         [Test]
@@ -141,13 +149,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key.Name);
 
-            key.Properties.Expires = key.Properties.Created;
-            Key updateResult = await Client.UpdateKeyPropertiesAsync(key.Properties, key.KeyMaterial.KeyOps);
+            key.Properties.ExpiresOn = key.Properties.CreatedOn;
+            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(key.Properties, key.KeyOperations);
 
-            AssertKeysEqual(key, updateResult);
+            AssertKeyVaultKeysEqual(key, updateResult);
         }
 
         [Test]
@@ -155,26 +163,26 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key.Name);
 
             key.Properties.Enabled = false;
-            Key updateResult = await Client.UpdateKeyPropertiesAsync(key.Properties, key.KeyMaterial.KeyOps);
-            Key keyReturned = await Client.GetKeyAsync(keyName);
+            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(key.Properties, key.KeyOperations);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
-            AssertKeysEqual(keyReturned, updateResult);
+            AssertKeyVaultKeysEqual(keyReturned, updateResult);
         }
 
         [Test]
         public async Task GetKey()
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(keyName);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
-            AssertKeysEqual(key, keyReturned);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
         [Test]
@@ -187,12 +195,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetKeyWithVersion()
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key.Name);
 
-            Key keyReturned = await Client.GetKeyAsync(keyName, key.Properties.Version);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName, key.Properties.Version);
 
-            AssertKeysEqual(key, keyReturned);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
         [Test]
@@ -200,16 +208,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             RegisterForCleanup(key.Name, delete: false);
 
             DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
 
-            Assert.NotNull(deletedKey.DeletedDate);
+            Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
             Assert.NotNull(deletedKey.ScheduledPurgeDate);
-            AssertKeysEqual(key, deletedKey);
+            AssertKeyVaultKeysEqual(key, deletedKey);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
@@ -225,7 +233,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             RegisterForCleanup(key.Name, delete: false);
 
@@ -235,12 +243,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
-            Assert.NotNull(deletedKey.DeletedDate);
+            Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
             Assert.NotNull(deletedKey.ScheduledPurgeDate);
 
-            AssertKeysEqual(deletedKey, polledSecret);
-            AssertKeysEqual(key, polledSecret);
+            AssertKeyVaultKeysEqual(deletedKey, polledSecret);
+            AssertKeyVaultKeysEqual(key, polledSecret);
         }
 
         [Test]
@@ -254,7 +262,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
 
@@ -262,17 +270,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
-            Key recoverKeyResult = await Client.RecoverDeletedKeyAsync(keyName);
+            KeyVaultKey recoverKeyResult = await Client.RecoverDeletedKeyAsync(keyName);
 
             await PollForKey(keyName);
 
-            Key recoveredKey = await Client.GetKeyAsync(keyName);
+            KeyVaultKey recoveredKey = await Client.GetKeyAsync(keyName);
 
             RegisterForCleanup(recoveredKey.Name);
 
-            AssertKeysEqual(key, deletedKey);
-            AssertKeysEqual(key, recoverKeyResult);
-            AssertKeysEqual(key, recoveredKey);
+            AssertKeyVaultKeysEqual(key, deletedKey);
+            AssertKeyVaultKeysEqual(key, recoverKeyResult);
+            AssertKeyVaultKeysEqual(key, recoveredKey);
         }
 
         [Test]
@@ -286,7 +294,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             RegisterForCleanup(key.Name);
 
@@ -303,11 +311,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6514")]
-        public async Task RestoreKey()
+        public async Task RestoreKeyBackup()
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             byte[] backup = await Client.BackupKeyAsync(keyName);
 
@@ -319,35 +327,35 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
-            Key restoredResult = await Client.RestoreKeyAsync(backup);
+            KeyVaultKey restoredResult = await Client.RestoreKeyBackupAsync(backup);
             RegisterForCleanup(restoredResult.Name);
 
-            AssertKeysEqual(key, restoredResult);
+            AssertKeyVaultKeysEqual(key, restoredResult);
         }
 
         [Test]
         public void RestoreKeyNonExisting()
         {
             byte[] backupMalformed = Encoding.ASCII.GetBytes("non-existing");
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.RestoreKeyAsync(backupMalformed));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.RestoreKeyBackupAsync(backupMalformed));
         }
 
         [Test]
-        public async Task GetKeys()
+        public async Task GetPropertiesOfKeys()
         {
             string keyName = Recording.GenerateId();
 
-            List<Key> createdKeys = new List<Key>();
+            List<KeyVaultKey> createdKeys = new List<KeyVaultKey>();
             for (int i = 0; i < PagedKeyCount; i++)
             {
-                Key key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
+                KeyVaultKey key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
                 createdKeys.Add(key);
                 RegisterForCleanup(key.Name);
             }
 
-            List<KeyProperties> allKeys = await Client.GetKeysAsync().ToEnumerableAsync();
+            List<KeyProperties> allKeys = await Client.GetPropertiesOfKeysAsync().ToEnumerableAsync();
 
-            foreach (Key createdKey in createdKeys)
+            foreach (KeyVaultKey createdKey in createdKeys)
             {
                 KeyProperties returnedKey = allKeys.Single(s => s.Name == createdKey.Name);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey);
@@ -359,46 +367,46 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            List<Key> createdKeys = new List<Key>();
+            List<KeyVaultKey> createdKeys = new List<KeyVaultKey>();
             for (int i = 0; i < PagedKeyCount; i++)
             {
-                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
+                KeyVaultKey Key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
                 createdKeys.Add(Key);
                 await Client.DeleteKeyAsync(keyName + i);
 
                 RegisterForCleanup(Key.Name, delete: false);
             }
 
-            foreach (Key deletedKey in createdKeys)
+            foreach (KeyVaultKey deletedKey in createdKeys)
             {
                 await WaitForDeletedKey(deletedKey.Name);
             }
 
             List<DeletedKey> allKeys = await Client.GetDeletedKeysAsync().ToEnumerableAsync();
 
-            foreach (Key createdKey in createdKeys)
+            foreach (KeyVaultKey createdKey in createdKeys)
             {
-                Key returnedKey = allKeys.Single(s => s.Properties.Name == createdKey.Name);
+                KeyVaultKey returnedKey = allKeys.Single(s => s.Properties.Name == createdKey.Name);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey.Properties);
             }
         }
 
         [Test]
-        public async Task GetKeysVersions()
+        public async Task GetPropertiesOfKeyVersions()
         {
             string keyName = Recording.GenerateId();
 
-            List<Key> createdKeys = new List<Key>();
+            List<KeyVaultKey> createdKeys = new List<KeyVaultKey>();
             for (int i = 0; i < PagedKeyCount; i++)
             {
-                Key Key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
+                KeyVaultKey Key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
                 createdKeys.Add(Key);
             }
             RegisterForCleanup(createdKeys.First().Name);
 
-            List<KeyProperties> allKeys = await Client.GetKeyVersionsAsync(keyName).ToEnumerableAsync();
+            List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(keyName).ToEnumerableAsync();
 
-            foreach (Key createdKey in createdKeys)
+            foreach (KeyVaultKey createdKey in createdKeys)
             {
                 KeyProperties returnedKey = allKeys.Single(s => s.Version == createdKey.Properties.Version);
                 AssertKeyPropertiesEqual(createdKey.Properties, returnedKey);
@@ -406,10 +414,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task GetKeysVersionsNonExisting()
+        public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
             int count = 0;
-            List<KeyProperties> allKeys = await Client.GetKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
+            List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
             foreach (KeyProperties key in allKeys)
             {
                 count++;

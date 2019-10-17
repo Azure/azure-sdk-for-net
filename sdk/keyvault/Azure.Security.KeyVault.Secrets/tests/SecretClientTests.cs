@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public void RestoreArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RestoreSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RestoreSecretBackupAsync(null));
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public void GetSecretVersionsArgumentValidation()
         {
-            Assert.Throws<ArgumentNullException>(() => Client.GetSecretVersionsAsync(null));
-            Assert.Throws<ArgumentException>(() => Client.GetSecretVersionsAsync(""));
+            Assert.Throws<ArgumentNullException>(() => Client.GetPropertiesOfSecretVersionsAsync(null));
+            Assert.Throws<ArgumentException>(() => Client.GetPropertiesOfSecretVersionsAsync(""));
         }
     }
 }

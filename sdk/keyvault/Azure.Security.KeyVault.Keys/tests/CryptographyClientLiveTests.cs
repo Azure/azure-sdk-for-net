@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
         {
-            Key key = await CreateTestKey(algorithm);
+            KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task WrapUnwrapRoundTrip([Fields(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
-            Key key = await CreateTestKey(algorithm);
+            KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
-            Key key = await CreateTestKey(algorithm);
+            KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
-            Key key = await CreateTestKey(algorithm);
+            KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 #endif
 
-            Key key = await CreateTestKeyWithKeyMaterial(algorithm);
+            KeyVaultKey key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key.Name);
 
             (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key);
@@ -209,14 +209,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
+            Assert.AreEqual(key.Key.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
+            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.Ignore("RSA-PSS is supported on .NET Core so local tests will pass. This test method is to test that on .NET Framework RSA-PSS sign/verify attempts fall back to the remote client.");
 #endif
 
-            Key key = await CreateTestKeyWithKeyMaterial(algorithm);
+            KeyVaultKey key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key.Name);
 
             (CryptographyClient client, ICryptographyProvider remoteClient) = GetCryptoClient(key);
@@ -243,14 +243,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
+            Assert.AreEqual(key.Key.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
+            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 #endif
 
-            Key key = await CreateTestKey(algorithm);
+            KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
             CryptographyClient client = GetCryptoClient(key.Id);
@@ -286,14 +286,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
+            Assert.AreEqual(key.Key.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
+            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.Ignore("RSA-PSS is supported on .NET Core so local tests will pass. This test method is to test that on .NET Framework RSA-PSS sign/verify attempts fall back to the remote client.");
 #endif
 
-            Key key = await CreateTestKey(algorithm);
+            KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
             CryptographyClient client = GetCryptoClient(key.Properties.Id);
@@ -320,18 +320,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, signResult.KeyId);
+            Assert.AreEqual(key.Key.Id, signResult.KeyId);
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.KeyMaterial.Id, verifyResult.KeyId);
+            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
             Assert.IsTrue(verifyResult.IsValid);
         }
 
-        private async Task<Key> CreateTestKey(EncryptionAlgorithm algorithm)
+        private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 
@@ -346,7 +346,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        private async Task<Key> CreateTestKey(KeyWrapAlgorithm algorithm)
+        private async Task<KeyVaultKey> CreateTestKey(KeyWrapAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 
@@ -369,7 +369,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(client);
         }
 
-        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(Key key, TestRecording recording = null)
+        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key, TestRecording recording = null)
         {
             recording ??= Recording;
 
@@ -385,7 +385,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return (clientProxy, remoteClientProxy);
         }
 
-        private async Task<Key> CreateTestKey(SignatureAlgorithm algorithm)
+        private async Task<KeyVaultKey> CreateTestKey(SignatureAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 
@@ -399,19 +399,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case SignatureAlgorithm.PS512Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
                 case SignatureAlgorithm.ES256Value:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P256));
+                    return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P256 });
                 case SignatureAlgorithm.ES256KValue:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P256K));
+                    return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P256K });
                 case SignatureAlgorithm.ES384Value:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P384));
+                    return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P384 });
                 case SignatureAlgorithm.ES512Value:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P521));
+                    return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P521 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
         }
 
-        private async Task<Key> CreateTestKeyWithKeyMaterial(SignatureAlgorithm algorithm)
+        private async Task<KeyVaultKey> CreateTestKeyWithKeyMaterial(SignatureAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 
@@ -547,10 +547,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
 
-            Key key = await Client.ImportKeyAsync(keyName, keyMaterial);
+            KeyVaultKey key = await Client.ImportKeyAsync(keyName, keyMaterial);
 
-            keyMaterial.Id = key.KeyMaterial.Id;
-            key.KeyMaterial = keyMaterial;
+            keyMaterial.Id = key.Key.Id;
+            key.Key = keyMaterial;
 
             return key;
         }
