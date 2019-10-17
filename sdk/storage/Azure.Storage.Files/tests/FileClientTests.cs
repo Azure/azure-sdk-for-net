@@ -205,9 +205,9 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 AssertValidStorageFileInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -483,9 +483,9 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 AssertValidStorageFileInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 

@@ -339,7 +339,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<StorageDirectoryInfo> Create(
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<StorageDirectoryInfo>> CreateAsync(
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
@@ -422,7 +422,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<StorageDirectoryInfo>> CreateInternal(
             Metadata metadata,
-            FileSmbProperties? smbProperties,
+            FileSmbProperties smbProperties,
             string filePermission,
             bool async,
             CancellationToken cancellationToken)
@@ -731,7 +731,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageDirectoryInfo> SetHttpHeaders(
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
@@ -766,7 +766,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageDirectoryInfo>> SetHttpHeadersAsync(
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
@@ -804,7 +804,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageDirectoryInfo>> SetHttpHeadersInternal(
-            FileSmbProperties? smbProperties,
+            FileSmbProperties smbProperties,
             string filePermission,
             bool async,
             CancellationToken cancellationToken)
@@ -1481,7 +1481,7 @@ namespace Azure.Storage.Files
         public virtual Response<DirectoryClient> CreateSubdirectory(
             string subdirectoryName,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default)
         {
@@ -1526,7 +1526,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<DirectoryClient>> CreateSubdirectoryAsync(
             string subdirectoryName,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default)
         {
@@ -1632,9 +1632,9 @@ namespace Azure.Storage.Files
         public virtual Response<FileClient> CreateFile(
             string fileName,
             long maxSize,
-            FileHttpHeaders? httpHeaders = default,
+            FileHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default)
         {
@@ -1689,9 +1689,9 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<FileClient>> CreateFileAsync(
             string fileName,
             long maxSize,
-            FileHttpHeaders? httpHeaders = default,
+            FileHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default)
         {

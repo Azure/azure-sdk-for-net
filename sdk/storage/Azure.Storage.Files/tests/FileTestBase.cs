@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(storageFileInfo.LastModified);
             Assert.IsNotNull(storageFileInfo.IsServerEncrypted);
             Assert.IsNotNull(storageFileInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageFileInfo.SmbProperties.Value);
+            AssertValidFileSmbProperties(storageFileInfo.SmbProperties);
         }
 
         public static void AssertValidStorageDirectoryInfo(StorageDirectoryInfo storageDirectoryInfo)
@@ -187,7 +187,7 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(storageDirectoryInfo.ETag);
             Assert.IsNotNull(storageDirectoryInfo.LastModified);
             Assert.IsNotNull(storageDirectoryInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties.Value);
+            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties);
         }
 
         public static void AssertValidFileSmbProperties(FileSmbProperties fileSmbProperties)

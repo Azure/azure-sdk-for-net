@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// NTFS file attributes for Files and Directories.
     /// </summary>
-    public struct NtfsFileAttributes : IEquatable<NtfsFileAttributes>
+    public class NtfsFileAttributes
     {
         /// <summary>
         /// The File or Directory has no NTFS attributes.
@@ -88,40 +88,11 @@ namespace Azure.Storage.Files.Models
             => other is NtfsFileAttributes attributes && Equals(attributes);
 
         /// <summary>
-        /// Checks if two FileNtfsAttributes are equal to each other.
-        /// </summary>
-        /// <param name="other">TThe other instance to compare to.</param>
-        /// <returns></returns>
-        public bool Equals(NtfsFileAttributes other)
-            => None == other.None
-            && ReadOnly == other.ReadOnly
-            && Hidden == other.Hidden
-            && System == other.System
-            && Normal == other.Normal
-            && Directory == other.Directory
-            && Archive == other.Archive
-            && Temporary == other.Temporary
-            && Offline == other.Offline
-            && NotContentIndexed == other.NotContentIndexed
-            && NoScrubData == other.NoScrubData;
-
-        /// <summary>
         /// Get a hash code for the FileNtfsAttributes.
         /// </summary>
         /// <returns>Hash code for the FileNtfsAttributes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            (None ? 0b00000000001 : 0) +
-            (ReadOnly ? 0b00000000010 : 0) +
-            (Hidden ? 0b00000000100 : 0) +
-            (System ? 0b00000001000 : 0) +
-            (Normal ? 0b00000010000 : 0) +
-            (Directory ? 0b00000100000 : 0) +
-            (Archive ? 0b00001000000 : 0) +
-            (Temporary ? 0b00010000000 : 0) +
-            (Offline ? 0b00100000000 : 0) +
-            (NotContentIndexed ? 0b01000000000 : 0) +
-            (NoScrubData ? 0b10000000000 : 0);
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// ToString
@@ -199,7 +170,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="attributesString">string to parse</param>
         /// <returns></returns>
-        public static NtfsFileAttributes? Parse(string attributesString)
+        public static NtfsFileAttributes Parse(string attributesString)
         {
             if (attributesString == null)
             {
