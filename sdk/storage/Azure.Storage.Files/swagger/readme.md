@@ -693,3 +693,13 @@ directive:
     delete $.properties.Permission;
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
+
+### Define Range as struct
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.Range
+  transform: >
+    $["x-ms-client-name"] = "FileRange";
+    $["x-az-struct"] = true;
+```

@@ -5264,7 +5264,7 @@ namespace Azure.Storage.Files
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
                                     _xml.Element(System.Xml.Linq.XName.Get("Ranges", "")).Elements(System.Xml.Linq.XName.Get("Range", "")),
-                                    Azure.Storage.Files.Models.Range.FromXml));
+                                    Azure.Storage.Files.Models.FileRange.FromXml));
 
                         // Get response headers
                         string _header;
@@ -6937,6 +6937,96 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class FileProperty
 
+#region struct FileRange
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// An Azure Storage file range.
+    /// </summary>
+    public readonly partial struct FileRange: System.IEquatable<FileRange>
+    {
+        /// <summary>
+        /// Start of the range.
+        /// </summary>
+        public long Start { get; }
+
+        /// <summary>
+        /// End of the range.
+        /// </summary>
+        public long End { get; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileRange instances.
+        /// You can use FilesModelFactory.FileRange instead.
+        /// </summary>
+        internal FileRange(
+            long start,
+            long end)
+            {
+                Start = start;
+                End = end;
+            }
+
+        /// <summary>
+        /// Check if two FileRange instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public bool Equals(FileRange other)
+        {
+            if (!Start.Equals(other.Start))
+            {
+                return false;
+            }
+            if (!End.Equals(other.End))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two FileRange instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override bool Equals(object obj) => obj is FileRange && Equals((FileRange)obj);
+
+        /// <summary>
+        /// Get a hash code for the FileRange.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override int GetHashCode()
+        {
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(Start);
+            hashCode.Add(End);
+
+            return hashCode.ToHashCode();
+        }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileRange instance for mocking.
+        /// </summary>
+        public static FileRange FileRange(
+            long start,
+            long end)
+        {
+            return new FileRange(start, end);
+        }
+    }
+}
+#endregion struct FileRange
+
 #region enum FileRangeWriteType
 namespace Azure.Storage.Files.Models
 {
@@ -7520,79 +7610,6 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class PermissionInfo
-
-#region class Range
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// An Azure Storage file range.
-    /// </summary>
-    public partial class Range
-    {
-        /// <summary>
-        /// Start of the range.
-        /// </summary>
-        public long Start { get; internal set; }
-
-        /// <summary>
-        /// End of the range.
-        /// </summary>
-        public long End { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of Range instances.
-        /// You can use FilesModelFactory.Range instead.
-        /// </summary>
-        internal Range() { }
-
-        /// <summary>
-        /// Deserializes XML into a new Range instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Range instance.</returns>
-        internal static Azure.Storage.Files.Models.Range FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.Range _value = new Azure.Storage.Files.Models.Range();
-            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
-            if (_child != null)
-            {
-                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
-            if (_child != null)
-            {
-                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.Range value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new Range instance for mocking.
-        /// </summary>
-        public static Range Range(
-            long start,
-            long end)
-        {
-            return new Range()
-            {
-                Start = start,
-                End = end,
-            };
-        }
-    }
-}
-#endregion class Range
 
 #region class RawStorageDirectoryInfo
 namespace Azure.Storage.Files.Models
@@ -8984,14 +9001,14 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// A list of non-overlapping valid ranges, sorted by increasing address range.
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> Ranges { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileRange> Ranges { get; internal set; }
 
         /// <summary>
         /// Creates a new StorageFileRangeInfo instance
         /// </summary>
         public StorageFileRangeInfo()
         {
-            Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.Range>();
+            Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.FileRange>();
         }
     }
 
@@ -9007,7 +9024,7 @@ namespace Azure.Storage.Files.Models
             System.DateTimeOffset lastModified,
             Azure.ETag eTag,
             long fileContentLength,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> ranges)
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileRange> ranges)
         {
             return new StorageFileRangeInfo()
             {
