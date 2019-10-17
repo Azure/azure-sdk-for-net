@@ -1914,7 +1914,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This can be determined by performing a <see cref="GetPageRangesDiff"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual Operation<long> StartCopyIncremental(
+        public virtual CopyFromUriOperation StartCopyIncremental(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
