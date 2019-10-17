@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Test
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToString(),
+                constants.Sas.Protocol.ToProtocolString(),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
