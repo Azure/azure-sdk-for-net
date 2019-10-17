@@ -35,7 +35,7 @@ pr:
     - sdk/core/
 
 variables:
-  Skip.Release: true
+  Skip.Release: false
   Skip.Test: true
   Skip.Analyze: true
 
