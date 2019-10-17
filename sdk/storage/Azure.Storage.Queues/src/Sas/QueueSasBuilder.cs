@@ -62,7 +62,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange SasIPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -107,7 +107,7 @@ namespace Azure.Storage.Sas
                 expiryTime,
                 GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
                 Identifier,
-                SasIPRange.ToString(),
+                IPRange.ToString(),
                 Protocol.ToString(),
                 Version);
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
@@ -118,7 +118,7 @@ namespace Azure.Storage.Sas
                 protocol: Protocol,
                 startsOn: StartsOn,
                 expiresOn: ExpiresOn,
-                sasIpRange: SasIPRange,
+                ipRange: IPRange,
                 identifier: Identifier,
                 resource: null,
                 permissions: Permissions,
@@ -167,7 +167,7 @@ namespace Azure.Storage.Sas
         public override int GetHashCode() =>
             ExpiresOn.GetHashCode() ^
             Identifier.GetHashCode() ^
-            SasIPRange.GetHashCode() ^
+            IPRange.GetHashCode() ^
             Permissions.GetHashCode() ^
             Protocol.GetHashCode() ^
             QueueName.GetHashCode() ^
@@ -201,7 +201,7 @@ namespace Azure.Storage.Sas
         public bool Equals(QueueSasBuilder other) =>
             ExpiresOn == other.ExpiresOn &&
             Identifier == other.Identifier &&
-            SasIPRange == other.SasIPRange &&
+            IPRange == other.IPRange &&
             Permissions == other.Permissions &&
             Protocol == other.Protocol &&
             QueueName == other.QueueName &&

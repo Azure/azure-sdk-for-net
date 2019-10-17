@@ -411,8 +411,8 @@ namespace Azure.Storage
                 public const string StartTimeUpper = "ST";
                 public const string ExpiryTime = "se";
                 public const string ExpiryTimeUpper = "SE";
-                public const string SasIPRange = "sip";
-                public const string SasIPRangeUpper = "SIP";
+                public const string IPRange = "sip";
+                public const string IPRangeUpper = "SIP";
                 public const string Identifier = "si";
                 public const string IdentifierUpper = "SI";
                 public const string Resource = "sr";

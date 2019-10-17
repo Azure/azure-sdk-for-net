@@ -66,7 +66,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange SasIPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -163,7 +163,7 @@ namespace Azure.Storage.Sas
                 expiryTime,
                 GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
                 Identifier,
-                SasIPRange.ToString(),
+                IPRange.ToString(),
                 Protocol.ToString(),
                 Version,
                 Resource,
@@ -183,7 +183,7 @@ namespace Azure.Storage.Sas
                 protocol: Protocol,
                 startsOn: StartsOn,
                 expiresOn: ExpiresOn,
-                sasIpRange: SasIPRange,
+                ipRange: IPRange,
                 identifier: Identifier,
                 resource: Resource,
                 permissions: Permissions,
@@ -232,7 +232,7 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
-                SasIPRange.ToString(),
+                IPRange.ToString(),
                 Protocol.ToString(),
                 Version,
                 Resource,
@@ -252,7 +252,7 @@ namespace Azure.Storage.Sas
                 protocol: Protocol,
                 startsOn: StartsOn,
                 expiresOn: ExpiresOn,
-                sasIpRange: SasIPRange,
+                ipRange: IPRange,
                 identifier: null,
                 resource: Resource,
                 permissions: Permissions,
@@ -372,7 +372,7 @@ namespace Azure.Storage.Sas
             ContentType.GetHashCode() ^
             ExpiresOn.GetHashCode() ^
             Identifier.GetHashCode() ^
-            SasIPRange.GetHashCode() ^
+            IPRange.GetHashCode() ^
             Permissions.GetHashCode() ^
             Protocol.GetHashCode() ^
             StartsOn.GetHashCode() ^
@@ -411,7 +411,7 @@ namespace Azure.Storage.Sas
             ContentType == other.ContentType &&
             ExpiresOn == other.ExpiresOn &&
             Identifier == other.Identifier &&
-            SasIPRange == other.SasIPRange &&
+            IPRange == other.IPRange &&
             Permissions == other.Permissions &&
             Protocol == other.Protocol &&
             StartsOn == other.StartsOn &&

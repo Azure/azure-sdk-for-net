@@ -61,7 +61,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange SasIPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -151,7 +151,7 @@ namespace Azure.Storage.Sas
                 expiryTime,
                 GetCanonicalName(sharedKeyCredential.AccountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
                 Identifier,
-                SasIPRange.ToString(),
+                IPRange.ToString(),
                 Protocol.ToString(),
                 Version,
                 CacheControl,
@@ -169,7 +169,7 @@ namespace Azure.Storage.Sas
                 protocol: Protocol,
                 startsOn: StartsOn,
                 expiresOn: ExpiresOn,
-                sasIpRange: SasIPRange,
+                ipRange: IPRange,
                 identifier: Identifier,
                 resource: resource,
                 permissions: Permissions,
@@ -228,7 +228,7 @@ namespace Azure.Storage.Sas
             ^ ExpiresOn.GetHashCode()
             ^ FilePath.GetHashCode()
             ^ Identifier.GetHashCode()
-            ^ SasIPRange.GetHashCode()
+            ^ IPRange.GetHashCode()
             ^ Permissions.GetHashCode()
             ^ Protocol.GetHashCode()
             ^ ShareName.GetHashCode()
@@ -266,7 +266,7 @@ namespace Azure.Storage.Sas
             && ExpiresOn == other.ExpiresOn
             && FilePath == other.FilePath
             && Identifier == other.Identifier
-            && SasIPRange == other.SasIPRange
+            && IPRange == other.IPRange
             && Permissions == other.Permissions
             && Protocol == other.Protocol
             && ShareName == other.ShareName

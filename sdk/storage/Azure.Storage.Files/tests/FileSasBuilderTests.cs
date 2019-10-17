@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
+            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.SasIPRange, sasQueryParameters.SasIPRange);
+            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.Share, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
@@ -96,7 +96,7 @@ namespace Azure.Storage.Files.Test
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
                 Permissions = Permissions,
-                SasIPRange = constants.Sas.SasIPRange,
+                IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 ShareName = shareName,
                 FilePath = "",
@@ -134,7 +134,7 @@ namespace Azure.Storage.Files.Test
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 canonicalName,
                 constants.Sas.Identifier,
-                constants.Sas.SasIPRange.ToString(),
+                constants.Sas.IPRange.ToString(),
                 constants.Sas.Protocol.ToString(),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
