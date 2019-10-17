@@ -1305,6 +1305,7 @@ directive:
         $.BlobBlock = $.Block;
         delete $.Block;
         $.BlobBlock.xml = { "name": "Block" };
+        $.BlobBlock["x-az-struct"] = true;
         const path = $.BlockList.properties.CommittedBlocks.items.$ref.replace(/[#].*$/, "#/definitions/BlobBlock");
         $.BlockList.properties.CommittedBlocks.items.$ref = path;
         $.BlockList.properties.CommittedBlocks.xml.name = "CommittedBlocks";

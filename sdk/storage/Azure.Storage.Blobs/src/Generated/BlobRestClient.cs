@@ -13176,29 +13176,79 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobBatchResult
 
-#region class BlobBlock
+#region struct BlobBlock
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Represents a single block in a block blob.  It describes the block's ID and size.
     /// </summary>
-    public partial class BlobBlock
+    public readonly partial struct BlobBlock: System.IEquatable<BlobBlock>
     {
         /// <summary>
         /// The base64 encoded block ID.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// The block size in bytes.
         /// </summary>
-        public int Size { get; internal set; }
+        public int Size { get; }
 
         /// <summary>
         /// Prevent direct instantiation of BlobBlock instances.
         /// You can use BlobsModelFactory.BlobBlock instead.
         /// </summary>
-        internal BlobBlock() { }
+        internal BlobBlock(
+            string name,
+            int size)
+            {
+                Name = name;
+                Size = size;
+            }
+
+        /// <summary>
+        /// Check if two BlobBlock instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public bool Equals(BlobBlock other)
+        {
+            if (!System.StringComparer.Ordinal.Equals(Name, other.Name))
+            {
+                return false;
+            }
+            if (!Size.Equals(other.Size))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two BlobBlock instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override bool Equals(object obj) => obj is BlobBlock && Equals((BlobBlock)obj);
+
+        /// <summary>
+        /// Get a hash code for the BlobBlock.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override int GetHashCode()
+        {
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            if (Name != null)
+            {
+                hashCode.Add(Name, System.StringComparer.Ordinal);
+            }
+            hashCode.Add(Size);
+
+            return hashCode.ToHashCode();
+        }
 
         /// <summary>
         /// Deserializes XML into a new BlobBlock instance.
@@ -13209,17 +13259,19 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.BlobBlock _value = new Azure.Storage.Blobs.Models.BlobBlock();
+            string name = default;
+            int size = default;
             _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
             if (_child != null)
             {
-                _value.Name = _child.Value;
+                name = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Size", ""));
             if (_child != null)
             {
-                _value.Size = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                size = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            Azure.Storage.Blobs.Models.BlobBlock _value = new Azure.Storage.Blobs.Models.BlobBlock(name, size);
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -13239,15 +13291,11 @@ namespace Azure.Storage.Blobs.Models
             string name,
             int size)
         {
-            return new BlobBlock()
-            {
-                Name = name,
-                Size = size,
-            };
+            return new BlobBlock(name, size);
         }
     }
 }
-#endregion class BlobBlock
+#endregion struct BlobBlock
 
 #region class BlobContainerAccessPolicy
 namespace Azure.Storage.Blobs.Models
