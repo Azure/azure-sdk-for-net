@@ -2411,7 +2411,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobInfo> SetHttpHeaders(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
@@ -2447,7 +2447,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetHttpHeadersAsync(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
@@ -2486,7 +2486,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobInfo>> SetHttpHeadersInternal(
-            BlobHttpHeaders? httpHeaders,
+            BlobHttpHeaders httpHeaders,
             BlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)

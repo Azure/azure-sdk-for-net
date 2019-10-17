@@ -357,9 +357,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<StorageFileInfo> Create(
             long maxSize,
-            FileHttpHeaders? httpHeaders = default,
+            FileHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
@@ -410,9 +410,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<StorageFileInfo>> CreateAsync(
             long maxSize,
-            FileHttpHeaders? httpHeaders = default,
+            FileHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
@@ -466,9 +466,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<StorageFileInfo>> CreateInternal(
             long maxSize,
-            FileHttpHeaders? httpHeaders,
+            FileHttpHeaders httpHeaders,
             Metadata metadata,
-            FileSmbProperties? smbProperties,
+            FileSmbProperties smbProperties,
             string filePermission,
             bool async,
             CancellationToken cancellationToken)
@@ -1282,8 +1282,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<StorageFileInfo> SetHttpHeaders(
             long? newSize = default,
-            FileHttpHeaders? httpHeaders = default,
-            FileSmbProperties? smbProperties = default,
+            FileHttpHeaders httpHeaders = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
@@ -1330,8 +1330,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
             long? newSize = default,
-            FileHttpHeaders? httpHeaders = default,
-            FileSmbProperties? smbProperties = default,
+            FileHttpHeaders httpHeaders = default,
+            FileSmbProperties smbProperties = default,
             string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
@@ -1381,8 +1381,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<StorageFileInfo>> SetHttpHeadersInternal(
             long? newSize,
-            FileHttpHeaders? httpHeaders,
-            FileSmbProperties? smbProperties,
+            FileHttpHeaders httpHeaders,
+            FileSmbProperties smbProperties,
             string filePermission,
             bool async,
             CancellationToken cancellationToken)

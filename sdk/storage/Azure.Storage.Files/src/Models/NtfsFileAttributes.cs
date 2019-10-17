@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// NTFS file attributes for Files and Directories.
     /// </summary>
-    public struct NtfsFileAttributes : IEquatable<NtfsFileAttributes>
+    public class NtfsFileAttributes
     {
         /// <summary>
         /// The File or Directory has no NTFS attributes.
@@ -94,16 +94,16 @@ namespace Azure.Storage.Files.Models
         /// <returns></returns>
         public bool Equals(NtfsFileAttributes other)
             => None == other.None
-            && ReadOnly == other.ReadOnly
-            && Hidden == other.Hidden
-            && System == other.System
-            && Normal == other.Normal
-            && Directory == other.Directory
-            && Archive == other.Archive
-            && Temporary == other.Temporary
-            && Offline == other.Offline
-            && NotContentIndexed == other.NotContentIndexed
-            && NoScrubData == other.NoScrubData;
+               && ReadOnly == other.ReadOnly
+               && Hidden == other.Hidden
+               && System == other.System
+               && Normal == other.Normal
+               && Directory == other.Directory
+               && Archive == other.Archive
+               && Temporary == other.Temporary
+               && Offline == other.Offline
+               && NotContentIndexed == other.NotContentIndexed
+               && NoScrubData == other.NoScrubData;
 
         /// <summary>
         /// Get a hash code for the FileNtfsAttributes.
@@ -199,7 +199,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="attributesString">string to parse</param>
         /// <returns></returns>
-        public static NtfsFileAttributes? Parse(string attributesString)
+        public static NtfsFileAttributes Parse(string attributesString)
         {
             if (attributesString == null)
             {
