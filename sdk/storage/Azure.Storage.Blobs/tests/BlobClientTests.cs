@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                    await Verify(stream => blob.UploadAsync(stream, storageTransferOptions: options));
+                    await Verify(stream => blob.UploadAsync(stream, transferOptions: options));
 
                     async Task Verify(Func<Stream, Task<Response<BlobContentInfo>>> upload)
                     {
@@ -264,7 +264,7 @@ namespace Azure.Storage.Blobs.Test
 
                         var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                        await Verify(blob.UploadAsync(file, storageTransferOptions: options));
+                        await Verify(blob.UploadAsync(file, transferOptions: options));
 
                         async Task Verify(Task<Response<BlobContentInfo>> upload)
                         {
@@ -355,7 +355,7 @@ namespace Azure.Storage.Blobs.Test
                         await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                             blob.UploadAsync(
                             file,
-                            storageTransferOptions: options,
+                            transferOptions: options,
                             accessTier: AccessTier.P10),
                             e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
 
@@ -418,7 +418,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task UploadStreamAndVerify(
             long size,
             long singleBlockThreshold,
-            StorageTransferOptions storageTransferOptions)
+            StorageTransferOptions transferOptions)
         {
             var data = GetRandomBuffer(size);
             using (GetNewContainer(out BlobContainerClient container))
@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs.Test
                         blobAccessConditions: default,
                         progressHandler: default,
                         singleBlockThreshold: singleBlockThreshold,
-                        storageTransferOptions: storageTransferOptions,
+                        transferOptions: transferOptions,
                         async: true);
                 }
 
@@ -464,7 +464,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task UploadFileAndVerify(
             long size,
             long singleBlockThreshold,
-            StorageTransferOptions storageTransferOptions)
+            StorageTransferOptions transferOptions)
         {
             var data = GetRandomBuffer(size);
             var path = Path.GetTempFileName();
@@ -489,7 +489,7 @@ namespace Azure.Storage.Blobs.Test
                             blobAccessConditions: default,
                             progressHandler: default,
                             singleBlockThreshold: singleBlockThreshold,
-                            storageTransferOptions: storageTransferOptions,
+                            transferOptions: transferOptions,
                             async: true);
                     }
 

@@ -471,7 +471,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="storageTransferOptions">
+        /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
@@ -495,7 +495,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            StorageTransferOptions storageTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -504,7 +504,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                storageTransferOptions: storageTransferOptions,
+                transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -544,7 +544,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="storageTransferOptions">
+        /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
@@ -568,7 +568,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            StorageTransferOptions storageTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -577,7 +577,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                storageTransferOptions: storageTransferOptions,
+                transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -609,7 +609,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="storageTransferOptions">
+        /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
@@ -641,7 +641,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            StorageTransferOptions storageTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -650,7 +650,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                storageTransferOptions: storageTransferOptions,
+                transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -689,7 +689,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="storageTransferOptions">
+        /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
@@ -713,7 +713,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            StorageTransferOptions storageTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -722,7 +722,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                storageTransferOptions: storageTransferOptions,
+                transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -758,7 +758,7 @@ namespace Azure.Storage.Blobs
         /// The maximum size stream that we'll upload as a single block.  The
         /// default value is 256MB.
         /// </param>
-        /// <param name="storageTransferOptions">
+        /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
@@ -784,7 +784,7 @@ namespace Azure.Storage.Blobs
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
             long? singleBlockThreshold = default,
-            StorageTransferOptions storageTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -802,7 +802,7 @@ namespace Azure.Storage.Blobs
                 threshold => TryGetStreamLength(content, out var length) && length < threshold,
                 memoryPool => new StreamPartitioner(content, memoryPool),
                 singleBlockThreshold.Value,
-                storageTransferOptions,
+                transferOptions,
                 async,
                 cancellationToken);
             return async ?
@@ -932,7 +932,7 @@ namespace Azure.Storage.Blobs
         /// The maximum size stream that we'll upload as a single block.  The
         /// default value is 256MB.
         /// </param>
-        /// <param name="storageTransferOptions">
+        /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
@@ -958,7 +958,7 @@ namespace Azure.Storage.Blobs
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
             long? singleBlockThreshold = default,
-            StorageTransferOptions storageTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -975,7 +975,7 @@ namespace Azure.Storage.Blobs
                 threshold => file.Length < threshold,
                 memoryPool => new StreamPartitioner(file, memoryPool),
                 singleBlockThreshold.Value,
-                storageTransferOptions,
+                transferOptions,
                 async,
                 cancellationToken);
             return async ?

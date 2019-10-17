@@ -399,7 +399,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task ParallelDownloadFileAndVerify(
             long size,
             long singleBlockThreshold,
-            StorageTransferOptions storageTransferOptions)
+            StorageTransferOptions transferOptions)
         {
             var data = GetRandomBuffer(size);
             var path = Path.GetTempFileName();
@@ -428,7 +428,7 @@ namespace Azure.Storage.Blobs.Test
                     await downloadingBlob.StagedDownloadAsync(
                         destination,
                         singleBlockThreshold: singleBlockThreshold,
-                        storageTransferOptions: storageTransferOptions
+                        transferOptions: transferOptions
                         );
 
                     using (FileStream resultStream = destination.OpenRead())
