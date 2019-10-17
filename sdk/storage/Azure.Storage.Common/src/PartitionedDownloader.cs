@@ -55,8 +55,8 @@ namespace Azure.Storage
         /// The maximum size of the stream to allow using
         /// <paramref name="downloadStreamAsync"/>.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="storageTransferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -76,7 +76,7 @@ namespace Azure.Storage
             Func<ETag, HttpRange, bool, CancellationToken, Task<Response<P>>> downloadPartitionAsync,
             Func<Response<P>, Stream, bool, CancellationToken, Task> writePartitionAsync,
             long singleDownloadThreshold,
-            ParallelTransferOptions? parallelTransferOptions = default,
+            StorageTransferOptions? storageTransferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -123,14 +123,14 @@ namespace Azure.Storage
                 {
                     // Split the source content into ranges and download by range
 
-                    parallelTransferOptions ??= new ParallelTransferOptions();
+                    storageTransferOptions ??= new StorageTransferOptions();
 
                     var maximumThreadCount =
-                        parallelTransferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                        storageTransferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
                     var maximumPartitionLength =
                         Math.Min(
                             Constants.Blob.Block.MaxDownloadBytes,
-                            parallelTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
+                            storageTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
                             );
 
                     var maximumActivePartitionCount = maximumThreadCount;

@@ -47,8 +47,8 @@ namespace Azure.Storage
         /// The maximum size of the stream to allow using
         /// <paramref name="uploadStreamAsync"/>.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="storageTransferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -69,7 +69,7 @@ namespace Azure.Storage
             Func<long, bool> uploadAsSinglePartition,
             Func<MemoryPool<byte>, StreamPartitioner> getStreamPartitioner,
             long singleUploadThreshold,
-            ParallelTransferOptions? parallelTransferOptions = default,
+            StorageTransferOptions? storageTransferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -87,14 +87,14 @@ namespace Azure.Storage
             {
                 // Split the stream into partitions and upload in parallel
 
-                parallelTransferOptions ??= new ParallelTransferOptions();
+                storageTransferOptions ??= new StorageTransferOptions();
 
                 var maximumThreadCount =
-                    parallelTransferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                    storageTransferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
                 var maximumBlockLength =
                     Math.Min(
                         Constants.Blob.Block.MaxStageBytes,
-                        parallelTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
+                        storageTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
                         );
 
                 var maximumActivePartitionCount = maximumThreadCount;

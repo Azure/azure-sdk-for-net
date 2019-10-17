@@ -399,7 +399,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task ParallelDownloadFileAndVerify(
             long size,
             long singleBlockThreshold,
-            ParallelTransferOptions parallelTransferOptions)
+            StorageTransferOptions storageTransferOptions)
         {
             var data = GetRandomBuffer(size);
             var path = Path.GetTempFileName();
@@ -428,7 +428,7 @@ namespace Azure.Storage.Blobs.Test
                     await downloadingBlob.StagedDownloadAsync(
                         destination,
                         singleBlockThreshold: singleBlockThreshold,
-                        parallelTransferOptions: parallelTransferOptions
+                        storageTransferOptions: storageTransferOptions
                         );
 
                     using (FileStream resultStream = destination.OpenRead())
@@ -458,7 +458,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(501 * Constants.KB)]
         public async Task DownloadFileAsync_Parallel_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await ParallelDownloadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
+            await ParallelDownloadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Ignore("These tests currently take 40 mins for little additional coverage")]
         [Test]
@@ -483,7 +483,7 @@ namespace Azure.Storage.Blobs.Test
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             if (Mode == RecordedTestMode.Live)
             {
-                await ParallelDownloadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
+                await ParallelDownloadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
             }
         }
 
