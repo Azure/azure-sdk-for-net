@@ -308,7 +308,7 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> Create(
@@ -344,7 +344,7 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> CreateAsync(
@@ -383,7 +383,7 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> CreateInternal(
@@ -443,7 +443,7 @@ namespace Azure.Storage.Files
         /// created snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareSnapshotInfo> CreateSnapshot(
@@ -472,7 +472,7 @@ namespace Azure.Storage.Files
         /// created snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareSnapshotInfo>> CreateSnapshotAsync(
@@ -504,7 +504,7 @@ namespace Azure.Storage.Files
         /// created snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareSnapshotInfo>> CreateSnapshotInternal(
@@ -562,7 +562,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
@@ -593,7 +593,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
@@ -627,7 +627,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
@@ -687,7 +687,7 @@ namespace Azure.Storage.Files
         /// share's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareProperties> GetProperties(
@@ -718,7 +718,7 @@ namespace Azure.Storage.Files
         /// share's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareProperties>> GetPropertiesAsync(
@@ -752,7 +752,7 @@ namespace Azure.Storage.Files
         /// share's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareProperties>> GetPropertiesInternal(
@@ -808,7 +808,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetQuota(
@@ -835,7 +835,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
@@ -865,7 +865,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
@@ -924,7 +924,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetMetadata(
@@ -954,7 +954,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
@@ -987,7 +987,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> SetMetadataInternal(
@@ -1042,7 +1042,7 @@ namespace Azure.Storage.Files
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<IEnumerable<SignedIdentifier>> GetAccessPolicy(
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Files
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
@@ -1097,7 +1097,7 @@ namespace Azure.Storage.Files
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyInternal(
@@ -1154,7 +1154,7 @@ namespace Azure.Storage.Files
         /// updated share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetAccessPolicy(
@@ -1186,7 +1186,7 @@ namespace Azure.Storage.Files
         /// updated share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
@@ -1221,7 +1221,7 @@ namespace Azure.Storage.Files
         /// updated share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> SetAccessPolicyInternal(
@@ -1274,7 +1274,7 @@ namespace Azure.Storage.Files
         /// share statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareStatistics> GetStatistics(
@@ -1298,7 +1298,7 @@ namespace Azure.Storage.Files
         /// share statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(
@@ -1325,7 +1325,7 @@ namespace Azure.Storage.Files
         /// share statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareStatistics>> GetStatisticsInternal(
@@ -1586,7 +1586,7 @@ namespace Azure.Storage.Files
         /// newly created directory.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
@@ -1633,7 +1633,7 @@ namespace Azure.Storage.Files
         /// newly created directory.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]

@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
                         var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
 
                         // Assert
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.UploadAsync(
                             file,
                             parallelTransferOptions: options,

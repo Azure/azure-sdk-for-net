@@ -45,7 +45,7 @@ TODO: Add Examples
 ## Troubleshooting
 
 All Azure Storage Queue service operations will throw a
-[StorageRequestFailedException][StorageRequestFailedException] on failure with
+[RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
 TODO: Update sample
@@ -61,7 +61,7 @@ try
 {
     queue.Create();
 }
-catch (StorageRequestFailedException ex)
+catch (RequestFailedException ex)
     when (ex.ErrorCode == QueueErrorCode.QueueAlreadyExists)
 {
     // Ignore any errors if the queue already exists
@@ -104,7 +104,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [storage_ad]: https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
-[StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-error-codes
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Test
                 await directory.CreateAsync();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.CreateAsync(),
                     e => Assert.AreEqual("ResourceAlreadyExists", e.ErrorCode.Split('\n')[0]));
             }
@@ -247,7 +247,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.DeleteAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -281,7 +281,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.GetPropertiesAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -407,7 +407,7 @@ namespace Azure.Storage.Files.Test
                 IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.SetMetadataAsync(metadata),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -473,7 +473,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.GetFilesAndDirectoriesAsync().ToListAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -521,7 +521,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
@@ -567,7 +567,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.ForceCloseHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
@@ -595,7 +595,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient subdir = (await dir.CreateSubdirectoryAsync(name)).Value;
 
                 await dir.DeleteSubdirectoryAsync(name);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await subdir.GetPropertiesAsync());
             }
         }
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = (await dir.CreateFileAsync(name, 1024)).Value;
 
                 await dir.DeleteFileAsync(name);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await file.GetPropertiesAsync());
             }
         }

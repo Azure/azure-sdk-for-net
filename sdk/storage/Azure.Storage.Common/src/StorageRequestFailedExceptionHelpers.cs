@@ -14,69 +14,27 @@ namespace Azure.Storage
 {
     /// <summary>
     /// Provide helpful information about errors calling Azure Storage endpoints.
-    /// </summary>
-#pragma warning disable CA1032 // Implement standard exception constructors
-    public partial class StorageRequestFailedException : RequestFailedException
-#pragma warning restore CA1032 // Implement standard exception constructors
+    /// </summary>S
+    internal class StorageRequestFailedExceptionHelpers
     {
-        /// <summary>
-        /// Additional information helpful in debugging errors.
-        /// </summary>
-        public IDictionary<string, string> AdditionalInformation { get; private set; } = new Dictionary<string, string>();
-
-        /// <summary>
-        /// Gets the x-ms-request-id header that uniquely identifies the
-        /// request that was made and can be used for troubleshooting.
-        /// </summary>
-        public string RequestId { get; private set; }
-
-        /// <summary>
-        /// Create a new StorageRequestFailedException.
-        /// </summary>
-        /// <param name="response">Response of the failed request.</param>
-        /// <param name="message">Summary of the failure.</param>
-        public StorageRequestFailedException(Response response, string message = null)
-            : this(response, message ?? response?.ReasonPhrase, null)
+        public static RequestFailedException CreateException(Response response, string message = null, Exception innerException = null, string errorCode = null, IDictionary<string, string> additionalInfo = null)
         {
-        }
+            int status = response?.Status ?? throw Errors.ArgumentNull(nameof(response));
+            string code = GetErrorCode(response, errorCode);
 
-        /// <summary>
-        /// Create a new StorageRequestFailedException.
-        /// </summary>
-        /// <param name="response">Response of the failed request.</param>
-        /// <param name="message">Summary of the failure.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public StorageRequestFailedException(Response response, string message, Exception innerException)
-            : this(response, message ?? response?.ReasonPhrase, innerException, null)
-        {
-        }
+            var exception = new RequestFailedException(status,
+                CreateMessage(response, message ?? response.ReasonPhrase, code, additionalInfo),
+                code, innerException);
 
-        /// <summary>
-        /// Create a new StorageRequestFailedException.
-        /// </summary>
-        /// <param name="response">Response of the failed request.</param>
-        /// <param name="message">Summary of the failure.</param>
-        /// <param name="innerException">Inner exception.</param>
-        /// <param name="errorCode">Optional error code of the failure.</param>
-        /// <param name="additionalInfo">Optional additional info about the failure.</param>
-        internal StorageRequestFailedException(
-            Response response,
-            string message,
-            Exception innerException,
-            string errorCode,
-            IDictionary<string, string> additionalInfo = null)
-            : base(
-                  response?.Status ?? throw Errors.ArgumentNull(nameof(response)),
-                  CreateMessage(response, message ?? response?.ReasonPhrase, GetErrorCode(response, errorCode), additionalInfo),
-                  GetErrorCode(response, errorCode), innerException)
-        {
             if (additionalInfo != null)
             {
-                AdditionalInformation = additionalInfo;
+                foreach (KeyValuePair<string, string> pair in additionalInfo)
+                {
+                    exception.Data.Add(pair.Key, pair.Value);
+                }
             }
 
-            // Include the RequestId
-            RequestId = response.Headers.TryGetValue(Constants.HeaderNames.RequestId, out var value) ? value : null;
+            return exception;
         }
 
         private static string GetErrorCode(Response response, string errorCode)
