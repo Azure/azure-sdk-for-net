@@ -84,7 +84,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets or sets the default application id. Default application id would be set on all instaces.
+        /// Gets or sets the default application id. Default application id would be set on all instances.
         /// </summary>
         public static string? DefaultApplicationId { get; set; }
 
