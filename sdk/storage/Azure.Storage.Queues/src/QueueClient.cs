@@ -902,7 +902,7 @@ namespace Azure.Storage.Queues
         }
         #endregion ClearMessages
 
-        #region EnqueueMessage
+        #region SendMessage
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
@@ -921,14 +921,14 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Response{EnqueuedMessage}"/>
+        /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
-        public virtual Response<EnqueuedMessage> EnqueueMessage(
+        public virtual Response<SendMessageResult> SendMessage(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
-            EnqueueMessageInternal(
+            SendMessageInternal(
                 messageText,
                 visibilityTimeout,
                 timeToLive,
@@ -954,14 +954,14 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Response{EnqueuedMessage}"/>
+        /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
-        public virtual async Task<Response<EnqueuedMessage>> EnqueueMessageAsync(
+        public virtual async Task<Response<SendMessageResult>> SendMessageAsync(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
-            await EnqueueMessageInternal(
+            await SendMessageInternal(
                 messageText,
                 visibilityTimeout,
                 timeToLive,
@@ -990,9 +990,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Response{EnqueuedMessage}"/>
+        /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
-        private async Task<Response<EnqueuedMessage>> EnqueueMessageInternal(
+        private async Task<Response<SendMessageResult>> SendMessageInternal(
             string messageText,
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
@@ -1009,7 +1009,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(timeToLive)}: {timeToLive}");
                 try
                 {
-                    Response<IEnumerable<EnqueuedMessage>> messages =
+                    Response<IEnumerable<SendMessageResult>> messages =
                         await QueueRestClient.Messages.EnqueueAsync(
                             ClientDiagnostics,
                             Pipeline,
@@ -1018,7 +1018,7 @@ namespace Azure.Storage.Queues
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
-                            operationName: Constants.Queue.EnqueueMessageOperationName,
+                            operationName: Constants.Queue.SendMessageOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1036,11 +1036,11 @@ namespace Azure.Storage.Queues
                 }
             }
         }
-        #endregion EnqueueMessage
+        #endregion SendMessage
 
-        #region DequeueMessages
+        #region ReceivesMessages
         /// <summary>
-        /// Retrieves one or more messages from the front of the queue.
+        /// Receives one or more messages from the front of the queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
@@ -1054,13 +1054,13 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessageItem"/>
         /// </returns>
-        public virtual Response<DequeuedMessage[]> DequeueMessages(
+        public virtual Response<QueueMessageItem[]> ReceiveMessages(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
-            DequeueMessagesInternal(
+            ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
                 false, // async
@@ -1082,13 +1082,13 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessageItem"/>
         /// </returns>
-        public virtual async Task<Response<DequeuedMessage[]>> DequeueMessagesAsync(
+        public virtual async Task<Response<QueueMessageItem[]>> ReceiveMessagesAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
-            await DequeueMessagesInternal(
+            await ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
                 true, // async
@@ -1113,9 +1113,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is an array of <see cref="DequeuedMessage"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessageItem"/>
         /// </returns>
-        private async Task<Response<DequeuedMessage[]>> DequeueMessagesInternal(
+        private async Task<Response<QueueMessageItem[]>> ReceiveMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
             bool async,
@@ -1131,17 +1131,17 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    var dequeuedMessage = await QueueRestClient.Messages.DequeueAsync(
+                    var receivedMessage = await QueueRestClient.Messages.DequeueAsync(
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: Constants.Queue.DequeueMessageOperationName,
+                        operationName: Constants.Queue.ReceiveMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return Response.FromValue(dequeuedMessage.Value.ToArray(), dequeuedMessage.GetRawResponse());
+                    return Response.FromValue(receivedMessage.Value.ToArray(), receivedMessage.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1154,7 +1154,7 @@ namespace Azure.Storage.Queues
                 }
             }
         }
-        #endregion DequeueMessages
+        #endregion ReceiveMessages
 
         #region PeekMessages
         /// <summary>
@@ -1169,9 +1169,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessageItem"/>
         /// </returns>
-        public virtual Response<PeekedMessage[]> PeekMessages(
+        public virtual Response<PeekedMessageItem[]> PeekMessages(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
@@ -1192,9 +1192,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessageItem"/>
         /// </returns>
-        public virtual async Task<Response<PeekedMessage[]>> PeekMessagesAsync(
+        public virtual async Task<Response<PeekedMessageItem[]>> PeekMessagesAsync(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
@@ -1218,9 +1218,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessageItem"/>
         /// </returns>
-        private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
+        private async Task<Response<PeekedMessageItem[]>> PeekMessagesInternal(
             int? maxMessages,
             bool async,
             CancellationToken cancellationToken)
@@ -1394,9 +1394,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Response{UpdatedMessage}"/>.
+        /// <see cref="Response{UpdateMessageResult}"/>.
         /// </returns>
-        public virtual Response<UpdatedMessage> UpdateMessage(
+        public virtual Response<UpdateMessageResult> UpdateMessage(
             string messageText,
             string messageId,
             string popReceipt,
@@ -1431,9 +1431,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Response{UpdatedMessage}"/>.
+        /// <see cref="Response{UpdateMessageResult}"/>.
         /// </returns>
-        public virtual async Task<Response<UpdatedMessage>> UpdateMessageAsync(
+        public virtual async Task<Response<UpdateMessageResult>> UpdateMessageAsync(
             string messageText,
             string messageId,
             string popReceipt,
@@ -1471,9 +1471,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Response{UpdatedMessage}"/>.
+        /// <see cref="Response{UpdateMessageResult}"/>.
         /// </returns>
-        private async Task<Response<UpdatedMessage>> UpdateMessageInternal(
+        private async Task<Response<UpdateMessageResult>> UpdateMessageInternal(
             string messageText,
             string messageId,
             string popReceipt,

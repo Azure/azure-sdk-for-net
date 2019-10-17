@@ -13,17 +13,17 @@ namespace Azure.Storage.Queues.Models
     /// The object returned in the QueueMessageList array when calling Get
     /// Messages on a Queue.
     /// </summary>
-    public partial class DequeuedMessage
+    public partial class QueueMessageItem
     {
         /// <summary>
-        /// Update a <see cref="DequeuedMessage"/> after calling
+        /// Update a <see cref="UpdateMessageResult"/> after calling
         /// <see cref="QueueClient.UpdateMessageAsync"/> with the resulting
-        /// <see cref="UpdatedMessage"/>.
+        /// <see cref="UpdateMessageResult"/>.
         /// </summary>
         /// <param name="updated">The message details.</param>
-        /// <returns>The updated <see cref="DequeuedMessage"/>.</returns>
-        public DequeuedMessage Update(UpdatedMessage updated) =>
-            QueuesModelFactory.DequeuedMessage(
+        /// <returns>The updated <see cref="QueueMessageItem"/>.</returns>
+        public QueueMessageItem Update(UpdateMessageResult updated) =>
+            QueuesModelFactory.QueueMessageItem(
                 MessageId,
                 InsertionTime,
                 ExpirationTime,

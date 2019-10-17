@@ -166,7 +166,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{queueName}/messages/{messageid}?popreceipt={popReceipt}&visibilitytimeout={visibilityTimeout}"]
   transform: >
-    $.put.responses["204"]["x-az-response-name"] = "UpdatedMessage";
+    $.put.responses["204"]["x-az-response-name"] = "UpdateMessageResult";
 ```
 
 ### QueueErrorCode
@@ -237,36 +237,36 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.DequeuedMessage) {
-        $.DequeuedMessage = $.DequeuedMessageItem;
+    if (!$.QueueMessageItem) {
+        $.QueueMessageItem = $.DequeuedMessageItem;
         delete $.DequeuedMessageItem;
     }
 - from: swagger-document
   where: $.definitions.DequeuedMessagesList
   transform: >
     const def = $.items;
-    if (!def["$ref"].endsWith("DequeuedMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/DequeuedMessage");
+    if (!def["$ref"].endsWith("QueueMessageItem")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueMessageItem");
         $.items = { "$ref": path };
     }
 ```
 
-### PeekedMessage
+### EnqueuedMessage
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.PeekedMessage) {
-        $.PeekedMessage = $.PeekedMessageItem;
-        delete $.PeekedMessageItem;
+    if (!$.SendMessageResult) {
+        $.SendMessageResult = $.EnqueuedMessage;
+        delete $.EnqueuedMessage;
     }
 - from: swagger-document
-  where: $.definitions.PeekedMessagesList
+  where: $.definitions.EnqueuedMessageList
   transform: >
     const def = $.items;
-    if (!def["$ref"].endsWith("PeekedMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/PeekedMessage");
+    if (!def["$ref"].endsWith("SendMessageResult")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/SendMessageResult");
         $.items = { "$ref": path };
     }
 ```

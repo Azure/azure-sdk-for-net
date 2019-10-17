@@ -25,7 +25,7 @@ namespace Azure.Storage.Queues.Test
             using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                Response<Models.EnqueuedMessage> response = await queue.EnqueueMessageAsync(
+                Response<Models.SendMessageResult> response = await queue.SendMessageAsync(
                     messageText: GetNewString(),
                     visibilityTimeout: new TimeSpan(0, 0, 1),
                     timeToLive: new TimeSpan(1, 0, 0));
@@ -42,7 +42,7 @@ namespace Azure.Storage.Queues.Test
             using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                Response<Models.EnqueuedMessage> response = await queue.EnqueueMessageAsync(string.Empty);
+                Response<Models.SendMessageResult> response = await queue.SendMessageAsync(string.Empty);
 
                 // Assert
                 Assert.NotNull(response.Value);
@@ -70,12 +70,12 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
 
                 // Act
-                Response<Models.DequeuedMessage[]> response = await queue.DequeueMessagesAsync(
+                Response<Models.QueueMessageItem[]> response = await queue.ReceiveMessagesAsync(
                     maxMessages: 2,
                     visibilityTimeout: new TimeSpan(1, 0, 0));
 
@@ -90,12 +90,12 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
 
                 // Act
-                Response<Models.DequeuedMessage[]> response = await queue.DequeueMessagesAsync();
+                Response<Models.QueueMessageItem[]> response = await queue.ReceiveMessagesAsync();
 
                 // Assert
                 Assert.AreEqual(1, response.Value.Count());
@@ -123,12 +123,12 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
 
                 // Act
-                Response<Models.PeekedMessage[]> response = await queue.PeekMessagesAsync(maxMessages: 2);
+                Response<Models.PeekedMessageItem[]> response = await queue.PeekMessagesAsync(maxMessages: 2);
 
                 // Assert
                 Assert.AreEqual(2, response.Value.Count());
@@ -141,12 +141,12 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
 
                 // Act
-                Response<Models.PeekedMessage[]> response = await queue.PeekMessagesAsync();
+                Response<Models.PeekedMessageItem[]> response = await queue.PeekMessagesAsync();
 
                 // Assert
                 Assert.AreEqual(1, response.Value.Count());
@@ -174,9 +174,9 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
-                await queue.EnqueueMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
+                await queue.SendMessageAsync(GetNewString());
 
                 // Act
                 Response response = await queue.ClearMessagesAsync();
