@@ -874,6 +874,37 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetBatchSettingEscapedCharacters(bool useWildcard)
+        {
+            const string escapedChars = "!@#$^&()-=";
+            string key = (useWildcard ? "*" : "name-") + escapedChars;
+            string value = $"value-{escapedChars}";
+            string label = (useWildcard ? "*" : "label-") + escapedChars;
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = new ConfigurationSetting($"name-{escapedChars}", value, $"label-{escapedChars}");
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                var selector = new SettingSelector(key, label);
+
+                Assert.AreEqual(key, selector.Keys.First());
+                Assert.AreEqual(label, selector.Labels.First());
+
+                var resultsReturned = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync());
+
+                //At least there should be one key available
+                Assert.GreaterOrEqual(resultsReturned.Count, 1);
+                Assert.AreEqual(value, resultsReturned[0].Value);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
 
         [Test]
         public async Task SetReadOnlyOnSetting()

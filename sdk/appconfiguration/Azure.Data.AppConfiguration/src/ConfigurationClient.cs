@@ -262,7 +262,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using Request request = CreateSetRequest(setting, requestOptions);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                using Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return response.Status switch
                 {
