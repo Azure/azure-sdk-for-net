@@ -268,7 +268,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
                 Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
-                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+                AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
@@ -624,6 +624,17 @@ namespace Azure.Storage.Files.Test
                 Assert.ThrowsAsync<StorageRequestFailedException>(
                     async () => await file.GetPropertiesAsync());
             }
+        }
+
+        private void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
+        {
+            Assert.AreEqual(left.FileAttributes, right.FileAttributes);
+            Assert.AreEqual(left.FileCreationTime, right.FileCreationTime);
+            Assert.AreEqual(left.FileChangeTime, right.FileChangeTime);
+            Assert.AreEqual(left.FileId, right.FileId);
+            Assert.AreEqual(left.FileLastWriteTime, right.FileLastWriteTime);
+            Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
+            Assert.AreEqual(left.ParentId, right.ParentId);
         }
     }
 }
