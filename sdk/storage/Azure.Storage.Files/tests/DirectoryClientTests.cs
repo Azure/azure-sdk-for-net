@@ -626,15 +626,5 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        private void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
-        {
-            Assert.AreEqual(left.FileAttributes, right.FileAttributes);
-            Assert.AreEqual(left.FileCreationTime, right.FileCreationTime);
-            Assert.AreEqual(left.FileChangeTime, right.FileChangeTime);
-            Assert.AreEqual(left.FileId, right.FileId);
-            Assert.AreEqual(left.FileLastWriteTime, right.FileLastWriteTime);
-            Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
-            Assert.AreEqual(left.ParentId, right.ParentId);
-        }
     }
 }

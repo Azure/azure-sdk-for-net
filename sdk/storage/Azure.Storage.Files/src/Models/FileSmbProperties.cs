@@ -140,10 +140,9 @@ namespace Azure.Storage.Files.Models
         private static string DateTimeOffSetToString(DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
+  /// <summary>
+  /// FilesModelFactory provides utilities for mocking.
+  /// </summary>
     public static partial class FilesModelFactory
     {
         /// <summary>
