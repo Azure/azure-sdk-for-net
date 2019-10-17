@@ -868,7 +868,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareInfo>> SetQuotaInternal(
+        internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
             int quotaInBytes,
             bool async,
             CancellationToken cancellationToken)
