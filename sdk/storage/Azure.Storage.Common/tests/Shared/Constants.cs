@@ -49,7 +49,7 @@ namespace Azure.Storage.Test
             public DateTimeOffset ExpiryTime { get; protected internal set; }
             public IPAddress StartAddress { get; protected internal set; }
             public IPAddress EndAddress { get; protected internal set; }
-            public IPRange IPRange { get; protected internal set; }
+            public SasIPRange IPRange { get; protected internal set; }
             public DateTimeOffset KeyStart { get; protected internal set; }
             public DateTimeOffset KeyExpiry { get; protected internal set; }
             public StorageSharedKeyCredential SharedKeyCredential { get; protected internal set; }
@@ -82,7 +82,7 @@ namespace Azure.Storage.Test
                 KeyStart = test.GetUtcNow().AddHours(-1),
                 KeyExpiry = test.GetUtcNow().AddHours(+1)
             };
-            Sas.IPRange = new IPRange(Sas.StartAddress, Sas.EndAddress);
+            Sas.IPRange = new SasIPRange(Sas.StartAddress, Sas.EndAddress);
             Sas.SharedKeyCredential = new StorageSharedKeyCredential(Sas.Account, Sas.AccountKey);
         }
     }

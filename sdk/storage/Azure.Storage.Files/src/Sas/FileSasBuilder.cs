@@ -11,7 +11,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage share, directory, or file.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public struct FileSasBuilder : IEquatable<FileSasBuilder>
+    public class FileSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -61,7 +61,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -202,8 +202,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() =>
-            base.ToString();
+        public override string ToString() => base.ToString();
 
         /// <summary>
         /// Check if two FileSasBuilder instances are equal.
@@ -211,67 +210,13 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
-            => obj is FileSasBuilder other && Equals(other);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the FileSasBuilder.
         /// </summary>
         /// <returns>Hash code for the FileSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
-            => CacheControl.GetHashCode()
-            ^ ContentDisposition.GetHashCode()
-            ^ ContentEncoding.GetHashCode()
-            ^ ContentLanguage.GetHashCode()
-            ^ ContentType.GetHashCode()
-            ^ ExpiresOn.GetHashCode()
-            ^ FilePath.GetHashCode()
-            ^ Identifier.GetHashCode()
-            ^ IPRange.GetHashCode()
-            ^ Permissions.GetHashCode()
-            ^ Protocol.GetHashCode()
-            ^ ShareName.GetHashCode()
-            ^ StartsOn.GetHashCode()
-            ^ Version.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two FileSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileSasBuilder left, FileSasBuilder right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileSasBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileSasBuilder left, FileSasBuilder right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FileSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(FileSasBuilder other)
-            => CacheControl == other.CacheControl
-            && ContentDisposition == other.ContentDisposition
-            && ContentEncoding == other.ContentEncoding
-            && ContentLanguage == other.ContentEncoding
-            && ContentType == other.ContentType
-            && ExpiresOn == other.ExpiresOn
-            && FilePath == other.FilePath
-            && Identifier == other.Identifier
-            && IPRange == other.IPRange
-            && Permissions == other.Permissions
-            && Protocol == other.Protocol
-            && ShareName == other.ShareName
-            && StartsOn == other.StartsOn
-            && Version == other.Version
-            ;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

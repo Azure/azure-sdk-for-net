@@ -165,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                         TimeSpan? maximumWaitTime,
                                                                         CancellationToken cancellationToken)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpEventHubClient));
+            Argument.AssertNotClosed(_closed, nameof(AmqpEventHubConsumer));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
 
             var receivedEventCount = 0;
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                             receivedEventCount = receivedEvents.Count;
 
-                            if (LastEnqueuedEventInformation != null)
+                            if ((LastEnqueuedEventInformation != null) && (receivedEventCount > 0))
                             {
                                 EventData lastEvent = receivedEvents[receivedEventCount - 1];
                                 LastEnqueuedEventInformation.UpdateMetrics(lastEvent.LastPartitionSequenceNumber, lastEvent.LastPartitionOffset, lastEvent.LastPartitionEnqueuedTime, DateTimeOffset.UtcNow);
@@ -235,18 +235,21 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         return Enumerable.Empty<EventData>();
                     }
+                    catch (AmqpException amqpException)
+                    {
+                        throw AmqpError.CreateExceptionForError(amqpException.Error, EventHubName);
+                    }
                     catch (Exception ex)
                     {
-                        EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
-
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
                         retryDelay = _retryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
+                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
                         }
                         else
@@ -260,6 +263,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 // then cancellation has been requested.
 
                 throw new TaskCanceledException();
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
+                throw;
             }
             finally
             {
@@ -281,16 +289,35 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
-            {
-                await ReceiveLink.CloseAsync().ConfigureAwait(false);
-            }
-
-            ReceiveLink.Dispose();
-
             _closed = true;
+
+            var clientId = GetHashCode().ToString();
+            var clientType = GetType();
+
+            try
+            {
+                EventHubsEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    await ReceiveLink.CloseAsync().ConfigureAwait(false);
+                }
+
+                ReceiveLink?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _closed = false;
+                EventHubsEventSource.Log.ClientCloseError(clientType, EventHubName, clientId, ex.Message);
+
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.ClientCloseComplete(clientType, EventHubName, clientId);
+            }
         }
 
         /// <summary>
@@ -300,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="firstOption">The first option to consider.</param>
         /// <param name="secondOption">The second option to consider.</param>
         ///
-        /// <returns></returns>
+        /// <returns>The smaller of the two specified intervals.</returns>
         ///
         private static TimeSpan UseMinimum(TimeSpan firstOption,
                                            TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;

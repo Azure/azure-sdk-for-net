@@ -12,6 +12,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 
@@ -288,12 +289,23 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SubscribeToEvents(CancellationToken)"/>
         ///
         public virtual async IAsyncEnumerable<EventData> SubscribeToEvents(TimeSpan? maximumWaitTime,
-                                                                          [EnumeratorCancellation] CancellationToken cancellationToken = default)
+                                                                           [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            EventHubsEventSource.Log.SubscribeToPartitionStart(EventHubName, PartitionId);
 
-            var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
-            (Guid Identifier, ChannelReader<EventData> ChannelReader) subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
+            (Guid Identifier, ChannelReader<EventData> ChannelReader) subscription;
+
+            try
+            {
+                var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
+                subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.SubscribeToPartitionError(EventHubName, PartitionId, ex.Message);
+                throw;
+            }
 
             try
             {
@@ -305,6 +317,7 @@ namespace Azure.Messaging.EventHubs
             finally
             {
                 await UnsubscribeFromChannelAsync(subscription.Identifier).ConfigureAwait(false);
+                EventHubsEventSource.Log.SubscribeToPartitionComplete(EventHubName, PartitionId);
             }
         }
 

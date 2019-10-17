@@ -246,32 +246,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventHubConsumer.ReceiveAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ReceiveAsyncValidatesClosed()
-        {
-            var eventHub = "eventHubName";
-            var consumerGroup = "$DEFAULT";
-            var partition = "3";
-            var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerOptions { Identifier = "OMG!" };
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
-            var retriableException = new EventHubsException(true, "Test");
-            var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<TokenCredential>();
-            var mockScope = new Mock<AmqpConnectionScope>();
-
-            using var cancellationSource = new CancellationTokenSource();
-
-            var consumer = new AmqpEventHubConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy, null);
-            await consumer.CloseAsync(cancellationSource.Token);
-
-            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsObjectClosedException>());
-        }
-
         /// <summary>
         ///   Verifies functionality of the <see cref="AmqpEventHubConsumer.ReceiveAsync" />
         ///   method.
@@ -324,7 +298,34 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Gets the active retry policy for the given client, using the
+        ///   Verifies functionality of the <see cref="AmqpEventHubConsumer.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReceiveAsyncValidatesClosed()
+        {
+            var eventHub = "eventHubName";
+            var consumerGroup = "$DEFAULT";
+            var partition = "3";
+            var eventPosition = EventPosition.FromOffset(123);
+            var options = new EventHubConsumerOptions { Identifier = "OMG!" };
+            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var retriableException = new EventHubsException(true, "Test");
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<TokenCredential>();
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            var consumer = new AmqpEventHubConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy, null);
+            await consumer.CloseAsync(cancellationSource.Token);
+
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+        }
+
+        /// <summary>
+        ///   Gets the active retry policy for the given consumer, using the
         ///   private field.
         /// </summary>
         ///
@@ -335,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(target);
 
         /// <summary>
-        ///   Gets the active operation timeout for the given client, using the
+        ///   Gets the active operation timeout for the given consumer, using the
         ///   private field.
         /// </summary>
         ///

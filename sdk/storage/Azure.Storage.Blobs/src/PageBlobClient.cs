@@ -304,7 +304,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobContentInfo> Create(
             long size,
             long? sequenceNumber = default,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -362,7 +362,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
             long size,
             long? sequenceNumber = default,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -416,7 +416,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobContentInfo> CreateIfNotExists(
             long size,
             long? sequenceNumber = default,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
@@ -468,7 +468,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             long size,
             long? sequenceNumber = default,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
@@ -524,7 +524,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobContentInfo>> CreateIfNotExistsInternal(
             long size,
             long? sequenceNumber,
-            BlobHttpHeaders? httpHeaders,
+            BlobHttpHeaders httpHeaders,
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken)
@@ -606,7 +606,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobContentInfo>> CreateInternal(
             long size,
             long? sequenceNumber,
-            BlobHttpHeaders? httpHeaders,
+            BlobHttpHeaders httpHeaders,
             Metadata metadata,
             PageBlobAccessConditions? accessConditions,
             bool async,

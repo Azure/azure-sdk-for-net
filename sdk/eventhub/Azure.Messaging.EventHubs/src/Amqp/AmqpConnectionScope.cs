@@ -39,13 +39,23 @@ namespace Azure.Messaging.EventHubs.Amqp
         private const string WebSocketsUriScheme = "wss";
 
         /// <summary>The string formatting mask to apply to the service endpoint to consume events for a given consumer group and partition.</summary>
-        private const string ConsumerPathSuffixMask = "/ConsumerGroups/{0}/Partitions/{1}";
+        private const string ConsumerPathSuffixMask = "{0}/ConsumerGroups/{1}/Partitions/{2}";
+
+        /// <summary>The string formatting mask to apply to the service endpoint to publish events for a given partition.</summary>
+        private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
         /// <summary>
         ///   The version of AMQP to use within the scope.
         /// </summary>
         ///
         private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
+
+        /// <summary>
+        ///   The amount of time to allow an AMQP connection to be idle before considering
+        ///   it to be timed out.
+        /// </summary>
+        ///
+        private static TimeSpan ConnectionIdleTimeout { get; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
         ///   The amount of buffer to apply to account for clock skew when
@@ -241,12 +251,45 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(ConsumerPathSuffixMask, consumerGroup, partitionId));
+            var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var link = await CreateReceivingLinkAsync(connection, consumerEndpoint, eventPosition, consumerOptions, timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            stopWatch.Stop();
+            return link;
+        }
+
+        /// <summary>
+        ///   Opens an AMQP link for use with producer operations.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition to which the link should be bound; if unbound, <c>null</c>.</param>
+        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A link for use with producer operations.</returns>
+        ///
+        public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(string partitionId,
+                                                                         TimeSpan timeout,
+                                                                         CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var stopWatch = Stopwatch.StartNew();
+            var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(PartitionProducerPathSuffixMask, EventHubName, partitionId);
+            var producerEndpoint = new Uri(ServiceEndpoint, path);
+
+            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var link = await CreateSendingLinkAsync(connection, producerEndpoint, timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
@@ -470,7 +513,98 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }
 
                 var link = new ReceivingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{ Id };{ connection.Identifier };{ session.Identifier };{ link.Identifier }";
+                linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
+                link.AttachTo(session);
+
+                stopWatch.Stop();
+
+                // Configure refresh for authorization of the link.
+
+                var refreshTimer = default(Timer);
+
+                var refreshHandler = CreateAuthorizationRefreshHandler
+                (
+                    connection,
+                    link,
+                    TokenProvider,
+                    endpoint,
+                    endpoint.AbsoluteUri,
+                    endpoint.AbsoluteUri,
+                    authClaims,
+                    AuthorizationRefreshTimeout,
+                    () => refreshTimer
+                );
+
+                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+
+                // Track the link before returning it, so that it can be managed with the scope.
+
+                BeginTrackingLinkAsActive(link, refreshTimer);
+                return link;
+            }
+            catch
+            {
+                // Aborting the session will perform any necessary cleanup of
+                // the associated link as well.
+
+                session?.Abort();
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///   Creates an AMQP link for use with publishing operations.
+        /// </summary>
+        ///
+        /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
+        /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
+        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A link for use for operations related to receiving events.</returns>
+        ///
+        protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(AmqpConnection connection,
+                                                                             Uri endpoint,
+                                                                             TimeSpan timeout,
+                                                                             CancellationToken cancellationToken)
+        {
+            Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var session = default(AmqpSession);
+            var stopWatch = Stopwatch.StartNew();
+
+            try
+            {
+                // Perform the initial authorization for the link.
+
+                var authClaims = new[] { EventHubsClaim.Send };
+                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // Create and open the AMQP session associated with the link.
+
+                var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+                session = connection.CreateSession(sessionSettings);
+
+                await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // Create and open the link.
+
+                var linkSettings = new AmqpLinkSettings
+                {
+                    Role = false,
+                    InitialDeliveryCount = 0,
+                    Source = new Source { Address = Guid.NewGuid().ToString() },
+                    Target = new Target { Address = endpoint.AbsolutePath }
+                };
+
+                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.EventHub);
+
+                var link = new SendingAmqpLink(linkSettings);
+                linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
 
                 stopWatch.Stop();
@@ -764,6 +898,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             var connectionSettings = new AmqpConnectionSettings
             {
+                IdleTimeOut = (uint)ConnectionIdleTimeout.TotalMilliseconds,
                 MaxFrameSize = AmqpConstants.DefaultMaxFrameSize,
                 ContainerId = identifier,
                 HostName = hostName

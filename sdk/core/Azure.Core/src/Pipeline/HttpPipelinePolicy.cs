@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
     {
         /// <summary>
         /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
-        /// Last policy in the pipeline is expected to set the <see cref="HttpMessage.Response"/>
+        /// Last policy in the pipeline is expected to set the <see cref="HttpMessage.Response"/>.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>

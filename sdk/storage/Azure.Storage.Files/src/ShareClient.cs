@@ -868,7 +868,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareInfo>> SetQuotaInternal(
+        internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
             int quotaInBytes,
             bool async,
             CancellationToken cancellationToken)
@@ -1593,7 +1593,7 @@ namespace Azure.Storage.Files
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
-           FileSmbProperties? smbProperties = default,
+           FileSmbProperties smbProperties = default,
            string filePermission = default,
            CancellationToken cancellationToken = default)
         {
@@ -1640,7 +1640,7 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
-           FileSmbProperties? smbProperties = default,
+           FileSmbProperties smbProperties = default,
            string filePermission = default,
            CancellationToken cancellationToken = default)
         {

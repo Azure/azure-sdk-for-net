@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
-        private Lazy<TrackOne.EventDataSender> _trackOneSender;
+        private readonly Lazy<TrackOne.EventDataSender> _trackOneSender;
 
         /// <summary>
         ///   The track one <see cref="TrackOne.EventDataSender" /> for use with this transport producer.
@@ -164,9 +164,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
             // Ensure that there was a maximum size populated; if none was provided,
             // default to the maximum size allowed by the link.
 
-            options.MaximumizeInBytes ??= TrackOneSender.MaxMessageSize;
+            options.MaximumSizeInBytes ??= TrackOneSender.MaxMessageSize;
 
-            Argument.AssertInRange(options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize, nameof(options.MaximumizeInBytes));
+            Argument.AssertInRange(options.MaximumSizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize, nameof(options.MaximumSizeInBytes));
 
             return new AmqpEventBatch(new AmqpMessageConverter(), options);
         }

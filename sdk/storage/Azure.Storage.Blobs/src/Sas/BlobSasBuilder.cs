@@ -14,7 +14,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage container or blob.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public struct BlobSasBuilder : IEquatable<BlobSasBuilder>
+    public class BlobSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -66,7 +66,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -355,66 +355,13 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is BlobSasBuilder other && Equals(other);
+            => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the BlobSasBuilder.
         /// </summary>
         /// <returns>Hash code for the BlobSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            BlobName.GetHashCode() ^
-            CacheControl.GetHashCode() ^
-            BlobContainerName.GetHashCode() ^
-            ContentDisposition.GetHashCode() ^
-            ContentEncoding.GetHashCode() ^
-            ContentLanguage.GetHashCode() ^
-            ContentType.GetHashCode() ^
-            ExpiresOn.GetHashCode() ^
-            Identifier.GetHashCode() ^
-            IPRange.GetHashCode() ^
-            Permissions.GetHashCode() ^
-            Protocol.GetHashCode() ^
-            StartsOn.GetHashCode() ^
-            Version.GetHashCode();
-
-        /// <summary>
-        /// Check if two BlobSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobSasBuilder left, BlobSasBuilder right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobSasBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobSasBuilder left, BlobSasBuilder right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two BlobSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobSasBuilder other) =>
-            BlobName == other.BlobName &&
-            CacheControl == other.CacheControl &&
-            BlobContainerName == other.BlobContainerName &&
-            ContentDisposition == other.ContentDisposition &&
-            ContentEncoding == other.ContentEncoding &&
-            ContentLanguage == other.ContentEncoding &&
-            ContentType == other.ContentType &&
-            ExpiresOn == other.ExpiresOn &&
-            Identifier == other.Identifier &&
-            IPRange == other.IPRange &&
-            Permissions == other.Permissions &&
-            Protocol == other.Protocol &&
-            StartsOn == other.StartsOn &&
-            Version == other.Version;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
