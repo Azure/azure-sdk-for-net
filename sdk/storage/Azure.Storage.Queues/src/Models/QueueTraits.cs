@@ -14,7 +14,8 @@ namespace Azure.Storage.Queues.Models
     public enum QueueTraits
     {
         /// <summary>
-        /// Default flag specifying that no flags are set in <see cref="QueueTraits"/>.
+        /// Flag specifying only the default information for queues
+        /// should be included.
         /// </summary>
         None = 0,
 
