@@ -10,7 +10,7 @@ namespace Azure.Identity
     {
         public static byte[] Decode(string str)
         {
-            str = new StringBuilder(str).Replace('-', '+').Replace('_', '/').Append('=', (str.Length % 4 == 0) ? 0 : 4 - (str.Length % 4)).ToString();
+            str = new StringBuilder(str).Replace('-', '+').Replace('_', '/').Append('=', (str.Length % 3 == 0) ? 0 : 3 - (str.Length % 3)).ToString();
 
             return Convert.FromBase64String(str);
         }
