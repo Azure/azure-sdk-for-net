@@ -1126,8 +1126,6 @@ namespace Azure.Storage.Files.Test
             // Arrange
             using (GetNewFile(out FileClient file))
             {
-                await file.DownloadAsync();
-                await file.GetPropertiesAsync();
                 // Act
                 IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
