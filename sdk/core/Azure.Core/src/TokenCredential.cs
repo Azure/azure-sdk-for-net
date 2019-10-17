@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents a credential capable of providing an OAuth token
+    /// Represents a credential capable of providing an OAuth token.
     /// </summary>
     public abstract class TokenCredential
     {
@@ -16,7 +16,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="requestContext">The <see cref="TokenRequestContext"/> with authentication information.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A valid <see cref="AccessToken"/></returns>
+        /// <returns>A valid <see cref="AccessToken"/>.</returns>
         public abstract Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken);
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="requestContext">The <see cref="TokenRequestContext"/> with authentication information.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A valid <see cref="AccessToken"/></returns>
+        /// <returns>A valid <see cref="AccessToken"/>.</returns>
         public abstract AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken);
     }
 }

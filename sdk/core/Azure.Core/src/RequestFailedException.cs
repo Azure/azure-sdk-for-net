@@ -11,7 +11,7 @@ namespace Azure
     public class RequestFailedException : Exception
     {
         /// <summary>
-        /// Gets the HTTP status code of the response. Returns <code>0</code> if response was not received.
+        /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
         /// </summary>
         public int Status { get; }
 

@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represent an Azure service OAuth access token with expiry information.
+    /// Represents an Azure service access token with expiry information.
     /// </summary>
     public struct AccessToken
     {
@@ -22,7 +22,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Get the access token value
+        /// Get the access token value.
         /// </summary>
         public string Token { get; }
 

@@ -6,15 +6,15 @@ using System.ComponentModel;
 namespace Azure
 {
     /// <summary>
-    /// Represents a result of Azure operation
+    /// Represents a result of Azure operation.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of returned value.</typeparam>
     public abstract class Response<T>
     {
         /// <summary>
         /// Returns the HTTP response returned by the service.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The HTTP response returned by the service.</returns>
         public abstract Response GetRawResponse();
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Azure
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="response">The <see cref="Response{T}"/> instance.</param>
         public static implicit operator T(Response<T> response) => response.Value;
 
         /// <inheritdoc />

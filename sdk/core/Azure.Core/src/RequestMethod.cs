@@ -6,12 +6,12 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents HTTP methods sent as part of <see cref="Request"/>
+    /// Represents HTTP methods sent as part of a <see cref="Request"/>.
     /// </summary>
     public readonly struct RequestMethod : IEquatable<RequestMethod>
     {
         /// <summary>
-        /// Gets the method.
+        /// Gets the HTTP method.
         /// </summary>
         public string Method { get; }
 
@@ -122,7 +122,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise. <code>false</code></returns>
         public static bool operator ==(RequestMethod left, RequestMethod right)
         {
             return left.Equals(right);
@@ -133,7 +133,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise. <code>false</code></returns>
         public static bool operator !=(RequestMethod left, RequestMethod right)
         {
             return !left.Equals(right);

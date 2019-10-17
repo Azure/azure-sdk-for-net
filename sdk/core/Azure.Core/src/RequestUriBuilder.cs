@@ -28,7 +28,7 @@ namespace Azure.Core
         private string? _scheme;
 
         /// <summary>
-        /// Provides a custom constructor for uniform resource identifiers (URIs) and modifies URIs for the <see cref="System.Uri"></see> class.
+        /// Gets or sets the scheme name of the URI.
         /// </summary>
         public string? Scheme
         {
@@ -247,7 +247,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns a string representation of this <see cref="RequestUriBuilder"/> i
+        /// Returns a string representation of this <see cref="RequestUriBuilder"/> i.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

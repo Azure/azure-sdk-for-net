@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represent an HTTP header
+    /// Represents an HTTP header.
     /// </summary>
     public readonly struct HttpHeader : IEquatable<HttpHeader>
     {
@@ -32,7 +32,7 @@ namespace Azure.Core
         public string Name { get; }
 
         /// <summary>
-        /// Gets header value. If header has multiple values they would be joined with coma. To get separate values use <see cref="RequestHeaders.TryGetValues"/> or <see cref="ResponseHeaders.TryGetValues"/>
+        /// Gets header value. If header has multiple values they would be joined with a comma. To get separate values use <see cref="RequestHeaders.TryGetValues"/> or <see cref="ResponseHeaders.TryGetValues"/>.
         /// </summary>
         public string Value { get; }
 
@@ -66,69 +66,69 @@ namespace Azure.Core
 
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <summary>
-        /// Contains names of commonly used headers
+        /// Contains names of commonly used headers.
         /// </summary>
         public static class Names
 #pragma warning restore CA1034 // Nested types should not be visible
         {
             /// <summary>
-            /// Returns <code>"Date"</code>
+            /// Returns. <code>"Date"</code>
             /// </summary>
             public static string Date => "Date";
             /// <summary>
-            /// Returns <code>"x-ms-date"</code>
+            /// Returns. <code>"x-ms-date"</code>
             /// </summary>
             public static string XMsDate => "x-ms-date";
             /// <summary>
-            /// Returns <code>"Content-Type"</code>
+            /// Returns. <code>"Content-Type"</code>
             /// </summary>
             public static string ContentType => "Content-Type";
             /// <summary>
-            /// Returns <code>"Content-Length"</code>
+            /// Returns. <code>"Content-Length"</code>
             /// </summary>
             public static string ContentLength => "Content-Length";
             /// <summary>
-            /// Returns <code>"ETag"</code>
+            /// Returns. <code>"ETag"</code>
             /// </summary>
             public static string ETag => "ETag";
             /// <summary>
-            /// Returns <code>"x-ms-request-id"</code>
+            /// Returns. <code>"x-ms-request-id"</code>
             /// </summary>
             public static string XMsRequestId => "x-ms-request-id";
             /// <summary>
-            /// Returns <code>"User-Agent"</code>
+            /// Returns. <code>"User-Agent"</code>
             /// </summary>
             public static string UserAgent => "User-Agent";
             /// <summary>
-            /// Returns <code>"Accept"</code>
+            /// Returns. <code>"Accept"</code>
             /// </summary>
             public static string Accept => "Accept";
             /// <summary>
-            /// Returns <code>"Authorization"</code>
+            /// Returns. <code>"Authorization"</code>
             /// </summary>
             public static string Authorization => "Authorization";
             /// <summary>
-            /// Returns <code>"Range"</code>
+            /// Returns. <code>"Range"</code>
             /// </summary>
             public static string Range => "Range";
             /// <summary>
-            /// Returns <code>"x-ms-range"</code>
+            /// Returns. <code>"x-ms-range"</code>
             /// </summary>
             public static string XMsRange => "x-ms-range";
             /// <summary>
-            /// Returns <code>"If-Match"</code>
+            /// Returns. <code>"If-Match"</code>
             /// </summary>
             public static string IfMatch => "If-Match";
             /// <summary>
-            /// Returns <code>"If-None-Match"</code>
+            /// Returns. <code>"If-None-Match"</code>
             /// </summary>
             public static string IfNoneMatch => "If-None-Match";
             /// <summary>
-            /// Returns <code>"If-Modified-Since"</code>
+            /// Returns. <code>"If-Modified-Since"</code>
             /// </summary>
             public static string IfModifiedSince => "If-Modified-Since";
             /// <summary>
-            /// Returns <code>"If-Unmodified-Since"</code>
+            /// Returns. <code>"If-Unmodified-Since"</code>
             /// </summary>
             public static string IfUnmodifiedSince => "If-Unmodified-Since";
         }
@@ -147,19 +147,19 @@ namespace Azure.Core
             private const string ApplicationFormUrlEncoded = "application/x-www-form-urlencoded";
 
             /// <summary>
-            /// Returns header with name "ContentType" and value "application/json"
+            /// Returns header with name "ContentType" and value "application/json".
             /// </summary>
             public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, ApplicationJson);
             /// <summary>
-            /// Returns header with name "Accept" and value "application/json"
+            /// Returns header with name "Accept" and value "application/json".
             /// </summary>
             public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, ApplicationJson);
             /// <summary>
-            /// Returns header with name "ContentType" and value "application/octet-stream"
+            /// Returns header with name "ContentType" and value "application/octet-stream".
             /// </summary>
             public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, ApplicationOctetStream);
             /// <summary>
-            /// Returns header with name "ContentType" and value "application/x-www-form-urlencoded"
+            /// Returns header with name "ContentType" and value "application/x-www-form-urlencoded".
             /// </summary>
             public static readonly HttpHeader FormUrlEncodedContentType = new HttpHeader(Names.ContentType, ApplicationFormUrlEncoded);
         }

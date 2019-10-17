@@ -6,7 +6,7 @@ using System;
 namespace Azure
 {
     /// <summary>
-    /// Represents a HTTP ETag
+    /// Represents an HTTP ETag.
     /// </summary>
     public readonly struct ETag : IEquatable<ETag>
     {
@@ -16,9 +16,9 @@ namespace Azure
         private readonly string _value;
 
         /// <summary>
-        /// Creates a new instance of <see cref="ETag"/>
+        /// Creates a new instance of <see cref="ETag"/>.
         /// </summary>
-        /// <param name="etag"></param>
+        /// <param name="etag">The string value of the ETag.</param>
         public ETag(string etag) => _value = etag;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Azure
         /// </summary>
         /// <param name="left">The <see cref="ETag"/> to compare.</param>
         /// <param name="right">The <see cref="ETag"/> to compare to.</param>
-        /// <returns><code>true</code> if values of both ETags are equal, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if values of both ETags are equal, otherwise. <code>false</code></returns>
         public static bool operator ==(ETag left, ETag right) => left.Equals(right);
 
         /// <summary>
@@ -34,11 +34,11 @@ namespace Azure
         /// </summary>
         /// <param name="left">The <see cref="ETag"/> to compare.</param>
         /// <param name="right">The <see cref="ETag"/> to compare to.</param>
-        /// <returns><code>true</code> if values of both ETags are not equal, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if values of both ETags are not equal, otherwise. <code>false</code></returns>
         public static bool operator !=(ETag left, ETag right) => !left.Equals(right);
 
         /// <summary>
-        /// Instance of <see cref="ETag"/> with the value <code>*</code>
+        /// Instance of <see cref="ETag"/> with the value. <code>*</code>
         /// </summary>
         public static readonly ETag All = new ETag("*");
 
@@ -71,7 +71,7 @@ namespace Azure
         /// <summary>
         ///
         /// </summary>
-        /// <returns>The string representation of this <see cref="ETag"/></returns>
+        /// <returns>The string representation of this <see cref="ETag"/>.</returns>
         public override string ToString()
         {
             return _value ?? "<null>";

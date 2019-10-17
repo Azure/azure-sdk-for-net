@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace Azure.Core
 {
     /// <summary>
-    ///
+    /// Exposes client options related to logging, telemetry and distributed tracing.
     /// </summary>
     public class DiagnosticsOptions
     {
@@ -42,8 +42,8 @@ namespace Azure.Core
 
         /// <summary>
         /// Gets or sets value indicating whether the "User-Agent" header containing <see cref="ApplicationId"/>, client library package name and version, <see cref="RuntimeInformation.FrameworkDescription"/>
-        /// and <see cref="RuntimeInformation.OSDescription"/>.
-        /// The default value can be controlled process wide by setting `AZURE_TELEMETRY_DISABLED` to true, false, 1 or 0.
+        /// and <see cref="RuntimeInformation.OSDescription"/> should be sent.
+        /// The default value can be controlled process wide by setting <c>AZURE_TELEMETRY_DISABLED</c> to <c>true</c>, <c>false</c>, <c>1</c> or <c>0</c>.
         /// </summary>
         public bool IsTelemetryEnabled { get; set; }
 
@@ -84,7 +84,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets or sets the default application id. Default application id would be set on all instaces
+        /// Gets or sets the default application id. Default application id would be set on all instaces.
         /// </summary>
         public static string? DefaultApplicationId { get; set; }
 

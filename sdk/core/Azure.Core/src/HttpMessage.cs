@@ -79,7 +79,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
-        /// <returns><code>true</code> if property exists, otherwise <code>false</code>.</returns>
+        /// <returns><code>true</code> if property exists, otherwise. <code>false</code>.</returns>
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
@@ -101,7 +101,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> would result in exception.
         /// </summary>
-        /// <returns>The content stream or null if response didn't have any</returns>
+        /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
             switch (_response?.ContentStream)

@@ -10,7 +10,7 @@ using System.Globalization;
 namespace Azure.Core
 {
     /// <summary>
-    /// Headers received as part of the <see cref="Response"/>
+    /// Headers received as part of the <see cref="Response"/>.
     /// </summary>
     public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     {
@@ -51,29 +51,29 @@ namespace Azure.Core
         public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out string? value) ? value : null;
 
         /// <summary>
-        /// Returns an enumerator that iterates through the <see cref="ResponseHeaders"/>
+        /// Returns an enumerator that iterates through the <see cref="ResponseHeaders"/>.
         /// </summary>
-        /// <returns>A <see cref="IEnumerator{T}"/> for the <see cref="ResponseHeaders"/></returns>
+        /// <returns>A <see cref="IEnumerator{T}"/> for the <see cref="ResponseHeaders"/>.</returns>
         public IEnumerator<HttpHeader> GetEnumerator()
         {
             return _response.EnumerateHeaders().GetEnumerator();
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the <see cref="ResponseHeaders"/>
+        /// Returns an enumerator that iterates through the <see cref="ResponseHeaders"/>.
         /// </summary>
-        /// <returns>A <see cref="IEnumerator"/> for the <see cref="ResponseHeaders"/></returns>
+        /// <returns>A <see cref="IEnumerator"/> for the <see cref="ResponseHeaders"/>.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _response.EnumerateHeaders().GetEnumerator();
         }
 
         /// <summary>
-        /// Returns header value if headers is stored in the collection. If header has multiple values they are going to be joined with coma.
+        /// Returns header value if headers is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The reference to populate with value.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
         public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
             return _response.TryGetHeader(name, out value);
@@ -84,7 +84,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="values">The reference to populate with values.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
         public bool TryGetValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
             return _response.TryGetHeaderValues(name, out values);
@@ -95,7 +95,7 @@ namespace Azure.Core
         /// Returns if headers is stored in the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
         public bool Contains(string name)
         {
             return _response.ContainsHeader(name);

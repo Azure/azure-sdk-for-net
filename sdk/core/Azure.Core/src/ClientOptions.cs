@@ -44,12 +44,12 @@ namespace Azure.Core
         public RetryOptions Retry { get; }
 
         /// <summary>
-        /// Adds a <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
+        /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/> otherwise use <see cref="HttpPipelinePosition.PerRetry"/>
         /// to run the policy for every retry. Note that the same instance of <paramref name="policy"/> would be added to all pipelines of client constructed using this <see cref="ClientOptions"/> object.
         /// </summary>
         /// <param name="policy">The <see cref="HttpPipelinePolicy"/> instance to be added to the pipeline.</param>
-        /// <param name="position">The position of policy in the pipeline</param>
+        /// <param name="position">The position of policy in the pipeline.</param>
         public void AddPolicy(HttpPipelinePolicy policy, HttpPipelinePosition position)
         {
             switch (position)

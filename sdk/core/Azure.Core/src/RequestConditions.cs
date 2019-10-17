@@ -18,7 +18,7 @@ namespace Azure
 
         /// <summary>
         /// Optionally limit requests to resources that have remained
-        /// unmodified
+        /// unmodified.
         /// </summary>
         public DateTimeOffset? IfUnmodifiedSince { get; set; }
     }

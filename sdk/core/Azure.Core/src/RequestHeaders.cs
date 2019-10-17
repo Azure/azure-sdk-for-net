@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.Core
 {
     /// <summary>
-    /// Headers to be sent as part of the <see cref="Request"/>
+    /// Headers to be sent as part of the <see cref="Request"/>.
     /// </summary>
     public readonly struct RequestHeaders : IEnumerable<HttpHeader>
     {
@@ -20,18 +20,18 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the <see cref="RequestHeaders"/>
+        /// Returns an enumerator that iterates through the <see cref="RequestHeaders"/>.
         /// </summary>
-        /// <returns>A <see cref="IEnumerator{T}"/> for the <see cref="RequestHeaders"/></returns>
+        /// <returns>A <see cref="IEnumerator{T}"/> for the <see cref="RequestHeaders"/>.</returns>
         public IEnumerator<HttpHeader> GetEnumerator()
         {
             return _request.EnumerateHeaders().GetEnumerator();
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the <see cref="RequestHeaders"/>
+        /// Returns an enumerator that iterates through the <see cref="RequestHeaders"/>.
         /// </summary>
-        /// <returns>A <see cref="IEnumerator"/> for the <see cref="RequestHeaders"/></returns>
+        /// <returns>A <see cref="IEnumerator"/> for the <see cref="RequestHeaders"/>.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _request.EnumerateHeaders().GetEnumerator();
@@ -57,11 +57,11 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns header value if headers is stored in the collection. If header has multiple values they are going to be joined with coma.
+        /// Returns header value if headers is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The reference to populate with value.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
         public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
             return _request.TryGetHeader(name, out value);
@@ -72,7 +72,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="values">The reference to populate with values.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
         public bool TryGetValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
             return _request.TryGetHeaderValues(name, out values);
@@ -83,7 +83,7 @@ namespace Azure.Core
         /// Returns if headers is stored in the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
         public bool Contains(string name)
         {
             return _request.ContainsHeader(name);
@@ -103,7 +103,7 @@ namespace Azure.Core
         /// Removes the header from the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
-        /// <returns><code>true</code> if header existed, otherwise <code>false</code></returns>
+        /// <returns><code>true</code> if header existed, otherwise. <code>false</code></returns>
         public bool Remove(string name)
         {
             return _request.RemoveHeader(name);

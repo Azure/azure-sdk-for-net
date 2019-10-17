@@ -11,7 +11,7 @@ using System.Buffers;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents the content of sent as part of <see cref="Request"/>
+    /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
     public abstract class RequestContent : IDisposable
     {
@@ -67,7 +67,7 @@ namespace Azure.Core
         public abstract void WriteTo(Stream stream, CancellationToken cancellation);
 
         /// <summary>
-        /// Returns length of contents if available.
+        /// Attempts to compute the length of the underlying content, if available.
         /// </summary>
         /// <param name="length">The length of the underlying data.</param>
         public abstract bool TryComputeLength(out long length);
