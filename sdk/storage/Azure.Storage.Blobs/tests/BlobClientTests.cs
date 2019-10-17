@@ -104,7 +104,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(8)]
         [TestCase(16)]
         [TestCase(null)]
-        public async Task UploadAsync_Stream_ParallelTransferOptions(int? maximumThreadCount)
+        public async Task UploadAsync_Stream_StorageTransferOptions(int? maximumThreadCount)
         {
             using (GetNewContainer(out BlobContainerClient container))
             {
@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(8)]
         [TestCase(16)]
         [TestCase(null)]
-        public async Task UploadAsync_File_ParallelTransferOptions(int? maximumThreadCount)
+        public async Task UploadAsync_File_StorageTransferOptions(int? maximumThreadCount)
         {
             using (GetNewContainer(out BlobContainerClient container))
             {
