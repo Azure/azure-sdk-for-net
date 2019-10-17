@@ -56,7 +56,7 @@ namespace Azure.Storage.Sas
         private readonly DateTimeOffset _expiryTime;
 
         // sip
-        private readonly IPRange _ipRange;
+        private readonly SasIPRange _ipRange;
 
         // si
         private readonly string _identifier;
@@ -128,7 +128,7 @@ namespace Azure.Storage.Sas
         /// to accept requests.  When specifying a range, note that the range
         /// is inclusive.
         /// </summary>
-        public IPRange IPRange => _ipRange;
+        public SasIPRange IPRange => _ipRange;
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
@@ -228,7 +228,7 @@ namespace Azure.Storage.Sas
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,
-            IPRange ipRange,
+            SasIPRange ipRange,
             string identifier,
             string resource,
             string permissions,
@@ -312,7 +312,7 @@ namespace Azure.Storage.Sas
                         _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.IPRangeUpper:
-                        _ipRange = IPRange.Parse(kv.Value);
+                        _ipRange = SasIPRange.Parse(kv.Value);
                         break;
                     case Constants.Sas.Parameters.IdentifierUpper:
                         _identifier = kv.Value;

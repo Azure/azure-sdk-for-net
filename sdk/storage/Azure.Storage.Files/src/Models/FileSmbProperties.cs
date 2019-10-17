@@ -3,21 +3,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+
+#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
     /// The SMB properties for a file.
     /// </summary>
-    public struct FileSmbProperties : IEquatable<FileSmbProperties>
+    public class FileSmbProperties
     {
         /// <summary>
         /// The file system attributes for this file.
         /// </summary>
-        public NtfsFileAttributes? FileAttributes { get; set; }
+        public NtfsFileAttributes FileAttributes { get; set; }
 
         /// <summary>
         /// The key of the file permission.
@@ -48,6 +51,10 @@ namespace Azure.Storage.Files.Models
         /// The parentId of the file
         /// </summary>
         public string ParentId { get; internal set; }
+
+        internal FileSmbProperties()
+        {
+        }
 
         internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
         {
@@ -110,50 +117,16 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="other">The other instance to compare to.</param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object other)
-            => other is FileSmbProperties props && Equals(props);
+            => base.Equals(other);
 
         /// <summary>
         /// Gets the hash code for the FileSmbProperties.
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-            => FileAttributes.GetHashCode()
-            ^ FilePermissionKey.GetHashCode()
-            ^ FileCreationTime.GetHashCode()
-            ^ FileLastWriteTime.GetHashCode()
-            ^ FileChangeTime.GetHashCode()
-            ^ FileId.GetHashCode()
-            ^ ParentId.GetHashCode();
-
-        /// <summary>
-        /// Check if two FileSmbProperties instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileSmbProperties left, FileSmbProperties right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileSmbProperties instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileSmbProperties left, FileSmbProperties right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FileSmbProperties instances are equal.
-        /// </summary>
-        /// <param name="other">The other instance to compare to.</param>
-        public bool Equals(FileSmbProperties other)
-            => FileAttributes == other.FileAttributes
-            && FilePermissionKey == other.FilePermissionKey
-            && FileCreationTime == other.FileCreationTime
-            && FileLastWriteTime == other.FileLastWriteTime
-            && FileChangeTime == other.FileChangeTime
-            && FileId == other.FileId
-            && ParentId == other.ParentId;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
 
         internal string FileCreationTimeToString()
             => NullableDateTimeOffsetToString(FileCreationTime);
@@ -167,10 +140,9 @@ namespace Azure.Storage.Files.Models
         private static string DateTimeOffSetToString(DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
+  /// <summary>
+  /// FilesModelFactory provides utilities for mocking.
+  /// </summary>
     public static partial class FilesModelFactory
     {
         /// <summary>

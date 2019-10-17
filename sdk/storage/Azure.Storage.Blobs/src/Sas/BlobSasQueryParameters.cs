@@ -68,7 +68,7 @@ namespace Azure.Storage.Sas
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,
-            IPRange ipRange,
+            SasIPRange ipRange,
             string identifier,
             string resource,
             string permissions,

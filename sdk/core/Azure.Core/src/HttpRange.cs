@@ -29,10 +29,10 @@ namespace Azure
         public long? Length { get; }
 
         /// <summary>
-        /// Creates an instance of HttpRange
+        /// Creates an instance of HttpRange.
         /// </summary>
         /// <param name="offset">The starting offset of the <see cref="HttpRange"/>. Defaults to 0.</param>
-        /// <param name="length">The lenght of the range. null means to the end</param>
+        /// <param name="length">The length of the range. null means to the end.</param>
         public HttpRange(long offset = 0, long? length = default)
         {
             if (offset < 0)

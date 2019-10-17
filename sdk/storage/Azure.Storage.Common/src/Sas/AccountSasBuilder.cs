@@ -12,7 +12,7 @@ namespace Azure.Storage.Sas
     /// For more information, see
     /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
     /// </summary>
-    public struct AccountSasBuilder : IEquatable<AccountSasBuilder>
+    public class AccountSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -61,7 +61,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// The services associated with the shared access signature. The
@@ -139,8 +139,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() =>
-            base.ToString();
+        public override string ToString() => base.ToString();
 
         /// <summary>
         /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
@@ -148,57 +147,13 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            obj is AccountSasBuilder other &&
-            Equals(other);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasBuilder"/>.
         /// </summary>
         /// <returns>Hash code for the <see cref="AccountSasBuilder"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            ExpiresOn.GetHashCode() ^
-            IPRange.GetHashCode() ^
-            (Permissions?.GetHashCode() ?? 0) ^
-            Protocol.GetHashCode() ^
-            ResourceTypes.GetHashCode() ^
-            (Services.GetHashCode()) ^
-            StartsOn.GetHashCode() ^
-            (Version?.GetHashCode() ?? 0);
-
-        /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(AccountSasBuilder left, AccountSasBuilder right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are not
-        /// equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(AccountSasBuilder left, AccountSasBuilder right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(AccountSasBuilder other) =>
-            ExpiresOn == other.ExpiresOn &&
-            IPRange == other.IPRange &&
-            Permissions == other.Permissions &&
-            Protocol == other.Protocol &&
-            ResourceTypes == other.ResourceTypes &&
-            Services == other.Services &&
-            StartsOn == other.StartsOn &&
-            Version == other.Version;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

@@ -41,7 +41,7 @@ namespace Azure
 
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time.  This may
-        /// make mutliple service requests.
+        /// make multiple service requests.
         /// </summary>
         /// <param name="continuationToken">
         /// A continuation token indicating where to resume paging or null to
@@ -60,7 +60,7 @@ namespace Azure
 
         /// <summary>
         /// Enumerate the values in the collection asynchronously.  This may
-        /// make mutliple service requests.
+        /// make multiple service requests.
         /// </summary>
         /// <param name="cancellationToken">
         /// The <see cref="CancellationToken"/> used for requests made while

@@ -10,23 +10,71 @@ using System.Buffers;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// Represents the content sent as part of the <see cref="Request"/>.
+    /// </summary>
     public abstract class RequestContent : IDisposable
     {
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.</returns>
         public static RequestContent Create(Stream stream) => new StreamContent(stream);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="Array"/>of <see cref="Byte"/>.
+        /// </summary>
+        /// <param name="bytes">The <see cref="Array"/>of <see cref="Byte"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps provided <see cref="Array"/>of <see cref="Byte"/>.</returns>
         public static RequestContent Create(byte[] bytes) => new ArrayContent(bytes, 0, bytes.Length);
 
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="Array"/>of <see cref="Byte"/>.
+        /// </summary>
+        /// <param name="bytes">The <see cref="Array"/>of <see cref="Byte"/> to use.</param>
+        /// <param name="index">The offset in <paramref name="bytes"/> to start from.</param>
+        /// <param name="length">The length of the segment to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps provided <see cref="Array"/>of <see cref="Byte"/>.</returns>
         public static RequestContent Create(byte[] bytes, int index, int length) => new ArrayContent(bytes, index, length);
 
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="bytes">The <see cref="ReadOnlyMemory{T}"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="ReadOnlyMemory{T}"/>.</returns>
         public static RequestContent Create(ReadOnlyMemory<byte> bytes) => new MemoryContent(bytes);
 
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="ReadOnlySequence{T}"/>.
+        /// </summary>
+        /// <param name="bytes">The <see cref="ReadOnlySequence{T}"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="ReadOnlySequence{T}"/>.</returns>
         public static RequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
 
+        /// <summary>
+        /// Writes contents of this object to an instance of <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <param name="cancellation">To cancellation token to use.</param>
         public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
 
+        /// <summary>
+        /// Writes contents of this object to an instance of <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <param name="cancellation">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellation);
 
+        /// <summary>
+        /// Attempts to compute the length of the underlying content, if available.
+        /// </summary>
+        /// <param name="length">The length of the underlying data.</param>
         public abstract bool TryComputeLength(out long length);
 
+        /// <summary>
+        /// Frees resources held by the <see cref="RequestContent"/> object.
+        /// </summary>
         public abstract void Dispose();
 
         private sealed class StreamContent : RequestContent
@@ -106,8 +154,6 @@ namespace Azure.Core
                 _contentStart = index;
                 _contentLength = length;
             }
-
-            public ReadOnlyMemory<byte> Bytes => _bytes.AsMemory(_contentStart, _contentLength);
 
             public override void Dispose() { }
 

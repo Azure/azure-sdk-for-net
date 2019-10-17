@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -490,7 +490,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(FileInfo, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             FileInfo content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
@@ -583,7 +583,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -636,7 +636,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
@@ -655,7 +655,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -708,7 +708,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             FileInfo content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
@@ -778,7 +778,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
             Stream content,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
@@ -952,7 +952,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
             FileInfo file,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
