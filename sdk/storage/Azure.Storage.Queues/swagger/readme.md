@@ -185,6 +185,7 @@ directive:
   where: $.definitions.GeoReplication.properties.Status
   transform: >
     $["x-ms-enum"].name = "GeoReplicationStatus";
+    $["x-ms-enum"].modelAsString = false;
 ```
 
 ### StorageError
