@@ -1338,6 +1338,7 @@ directive:
     $.PageList["x-az-public"] = false;
     $.PageRange["x-az-public"] = false;
     $.ClearRange["x-az-public"] = false;
+```
 
 ### Access Policy properties renaming
 ``` yaml
