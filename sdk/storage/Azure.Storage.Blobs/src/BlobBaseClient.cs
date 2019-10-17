@@ -1403,14 +1403,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Operation<long> StartCopyFromUri(
+        public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
@@ -1484,14 +1484,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
@@ -1573,7 +1573,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             string copyId,
             CancellationToken cancellationToken = default)
         {
