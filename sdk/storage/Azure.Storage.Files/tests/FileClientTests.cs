@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Test
     public class FileClientTests : FileTestBase
     {
         public FileClientTests(bool async)
-            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -1459,7 +1459,13 @@ namespace Azure.Storage.Files
             do
             {
                 Response<StorageClosedHandlesSegment> response =
-                    await ForceCloseHandlesInternal(Constants.CloseAllHandles, marker, recursive, async, cancellationToken).ConfigureAwait(false);
+                    await ForceCloseHandlesInternal(
+                        Constants.CloseAllHandles,
+                        marker,
+                        recursive,
+                        async,
+                        cancellationToken)
+                    .ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
 
