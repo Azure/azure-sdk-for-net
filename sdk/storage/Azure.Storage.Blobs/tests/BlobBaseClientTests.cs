@@ -588,8 +588,6 @@ namespace Azure.Storage.Blobs.Test
                     Operation<long> operation = await destBlob.StartCopyFromUriAsync(source: srcBlob.Uri);
                     await operation.WaitForCompletionAsync();
 
-                    await destBlob.StartCopyFromUriAsync(source: srcBlob.Uri).WaitForCompletionAsync();
-
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.StartCopyFromUriAsync(
