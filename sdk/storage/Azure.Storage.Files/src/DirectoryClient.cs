@@ -983,8 +983,12 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the items.
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only
+        /// files and directories whose name begins with the specified prefix.
+        /// </param>
+        /// <param name="shareSnapshot">
+        /// Optional share snapshot to query.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -999,9 +1003,10 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<StorageFileItem> GetFilesAndDirectories(
-            GetFilesAndDirectoriesOptions? options = default,
+            string prefix = default,
+            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, prefix, shareSnapshot).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
@@ -1011,8 +1016,12 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the items.
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only
+        /// files and directories whose name begins with the specified prefix.
+        /// </param>
+        /// <param name="shareSnapshot">
+        /// Optional share snapshot to query.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1027,9 +1036,10 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<StorageFileItem> GetFilesAndDirectoriesAsync(
-            GetFilesAndDirectoriesOptions? options = default,
+            string prefix = default,
+            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, prefix, shareSnapshot).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
@@ -1047,8 +1057,12 @@ namespace Azure.Storage.Files
         /// be used as the value for the <paramref name="marker"/> parameter
         /// in a subsequent call to request the next segment of list items.
         /// </param>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the items.
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only
+        /// files and directories whose name begins with the specified prefix.
+        /// </param>
+        /// <param name="shareSnapshot">
+        /// Optional share snapshot to query.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -1071,7 +1085,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         internal async Task<Response<FilesAndDirectoriesSegment>> GetFilesAndDirectoriesInternal(
             string marker,
-            GetFilesAndDirectoriesOptions? options,
+            string prefix,
+            string shareSnapshot,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -1083,7 +1098,8 @@ namespace Azure.Storage.Files
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
-                    $"{nameof(options)}: {options}");
+                    $"{nameof(prefix)}: {prefix}\n" +
+                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
                     return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
@@ -1091,9 +1107,9 @@ namespace Azure.Storage.Files
                         Pipeline,
                         Uri,
                         marker: marker,
-                        prefix: options?.Prefix,
+                        prefix: prefix,
                         maxresults: pageSizeHint,
-                        sharesnapshot: options?.ShareSnapshot,
+                        sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Directory.ListFilesAndDirectoriesSegmentOperationName,
                         cancellationToken: cancellationToken)

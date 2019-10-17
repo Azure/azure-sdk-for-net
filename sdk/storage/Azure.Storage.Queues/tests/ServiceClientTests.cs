@@ -117,7 +117,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = (await service.CreateQueueAsync(queueName)).Value; // Ensure at least one queue
             try
             {
-                AsyncPageable<QueueItem> queues = service.GetQueuesAsync(new GetQueuesOptions { Prefix = prefix });
+                AsyncPageable<QueueItem> queues = service.GetQueuesAsync(prefix: prefix);
                 IList<QueueItem> items = await queues.ToListAsync();
 
                 Assert.AreNotEqual(0, items.Count());
@@ -138,7 +138,7 @@ namespace Azure.Storage.Queues.Test
             {
                 IDictionary<string, string> metadata = BuildMetadata();
                 await queue.SetMetadataAsync(metadata);
-                QueueItem first = await service.GetQueuesAsync(new GetQueuesOptions { IncludeMetadata = true }).FirstAsync();
+                QueueItem first = await service.GetQueuesAsync(QueueTraits.Metadata).FirstAsync();
                 Assert.IsNotNull(first.Metadata);
             }
         }
