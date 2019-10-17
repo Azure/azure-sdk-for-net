@@ -84,6 +84,18 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="client">
         /// The client used to check for completion.
         /// </param>
+        /// <param name="id">The ID of this operation.</param>
+        public CopyFromUriOperation(string id, BlobBaseClient client):
+            this(client, id, null, CancellationToken.None)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="CopyFromUriOperation"/> instance
+        /// </summary>
+        /// <param name="client">
+        /// The client used to check for completion.
+        /// </param>
         /// <param name="copyId">The ID of this operation.</param>
         /// <param name="initialResponse">
         /// Either the response from initiating the operation or getting the
