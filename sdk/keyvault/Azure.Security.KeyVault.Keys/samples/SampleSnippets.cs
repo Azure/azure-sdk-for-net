@@ -218,7 +218,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             while (!operation.HasCompleted)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
                 operation.UpdateStatus();
             }
@@ -236,7 +236,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 // Deleting a key when soft delete is enabled may not happen immediately.
                 while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
 
                     rsaKeyOperation.UpdateStatus();
                     ecKeyOperation.UpdateStatus();

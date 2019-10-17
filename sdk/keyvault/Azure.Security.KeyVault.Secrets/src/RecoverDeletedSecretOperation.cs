@@ -14,6 +14,8 @@ namespace Azure.Security.KeyVault.Secrets
     /// </summary>
     public class RecoverDeletedSecretOperation : Operation<SecretProperties>
     {
+        private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
+
         private readonly KeyVaultPipeline _pipeline;
         private readonly SecretProperties _value;
         private Response _response;
@@ -97,7 +99,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         /// <inheritdoc />
         public override ValueTask<Response<SecretProperties>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
+            this.DefaultWaitForCompletionAsync(s_defaultPollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<SecretProperties>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>

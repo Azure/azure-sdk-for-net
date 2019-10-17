@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // To ensure secret is deleted on server side.
             while (!operation.HasCompleted)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
                 operation.UpdateStatus();
             }

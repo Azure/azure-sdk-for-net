@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // To ensure secrets are deleted on server side.
             while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
                 bankSecretOperation.UpdateStatus();
                 storageSecretOperation.UpdateStatus();

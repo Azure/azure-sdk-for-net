@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // To ensure the keys are deleted on server side.
             while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
                 rsaKeyOperation.UpdateStatus();
                 ecKeyOperation.UpdateStatus();

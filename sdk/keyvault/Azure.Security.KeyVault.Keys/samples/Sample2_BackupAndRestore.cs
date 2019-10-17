@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 // To ensure the key is deleted on server side.
                 while (!operation.HasCompleted)
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
 
                     operation.UpdateStatus();
                 }
