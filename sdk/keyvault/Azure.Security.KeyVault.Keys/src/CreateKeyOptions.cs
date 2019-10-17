@@ -9,12 +9,19 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// The key-specific properties needed to create a key using the <see cref="KeyClient"/>.
     /// </summary>
-    public class KeyCreateOptions
+    public class CreateKeyOptions
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateKeyOptions"/> class.
+        /// </summary>
+        public CreateKeyOptions()
+        {
+        }
+
         /// <summary>
         /// List of supported <see cref="KeyOperations"/>.
         /// </summary>
-        public IList<KeyOperation> KeyOperations { get; set; }
+        public IList<KeyOperation> KeyOperations { get; } = new List<KeyOperation>();
 
         /// <summary>
         /// Not before date in UTC.
@@ -24,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Expiry date in UTC.
         /// </summary>
-        public DateTimeOffset? Expires { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary>
         /// Determines whether the object is enabled.
@@ -34,6 +41,6 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// A dictionary of tags with specific metadata about the key.
         /// </summary>
-        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
+        public IDictionary<string, string> Tags { get; } = new Dictionary<string, string>();
     }
 }

@@ -152,7 +152,7 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToString(),
+                Protocol.ToProtocolString(),
                 Version,
                 CacheControl,
                 ContentDisposition,

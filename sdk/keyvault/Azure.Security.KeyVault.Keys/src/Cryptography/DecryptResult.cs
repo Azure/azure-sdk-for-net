@@ -14,8 +14,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string KeyIdPropertyName = "kid";
         private const string PlaintextPropertyName = "value";
 
+        internal DecryptResult()
+        {
+        }
+
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to decrypt
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to decrypt
         /// </summary>
         public string KeyId { get; internal set; }
 

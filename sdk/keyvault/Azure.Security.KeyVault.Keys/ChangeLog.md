@@ -1,5 +1,35 @@
 # Release History
 
+## 4.0.0-preview.6
+
+### Breaking changes
+
+- `Key` has been renamed to `KeyVaultKey` to avoid ambiquity with other libraries and to yield better search results.
+- `Key.KeyMaterial` has been renamed to `KeyVaultKey.Key`.
+- The default `JsonWebKey` constructor has been removed.
+- `JsonWebKey` constructors now take an optional collection of key operations.
+- `JsonWebKey.KeyOps` is now read-only. You must pass a collection of key operations at construction time.
+- `VaultUri` properties and `vaultUri` parameters have been renamed to `VaultEndpoint` and `vaultEndpoint` respectively.
+- `Hsm` properties and `hsm` parameters have been renamed to `HardwareProtected` and `hardwareProtected` respectively.
+- On `KeyProperties`, `Expires`, `Created`, and `Updated` have been renamed to `ExpiresOn`, `CreatedOn`, and `UpdatedOn` respectively.
+- On `DeletedKey`, `DeletedDate` has been renamed to `DeletedOn`.
+- `KeyClient.GetKeys` and `KeyClient.GetKeyVersions` have been renamed to `KeyClient.GetPropertiesOfKeys` and `KeyClient.GetPropertiesOfKeyVersions` respectively.
+- `KeyClient.RestoreKey` has been renamed to `KeyClient.RestoreKeyBackup` to better associate it with `KeyClient.BackupKey`.
+- `KeyCreateOptions` has been renamed to `CreateKeyOptions`.
+- `EcCreateKeyOptions` has been renamed to `CreateEcKeyOptions`.
+- `CreateEcKeyOptions.Curve` has been renamed to `CurveName` to be consistent.
+- The `curveName` optional parameter has been removed from  the `CreateEcKeyOptions` constructor. Set it using the `CurveName` property instead.
+- `RsaKeyCreateOptions` has been renamed to `CreateRsaKeyOptions`.
+- The `keySize` optional parameter has been removed from  the `CreateRsaKeyOptions` constructor. Set it using the `KeySize` property instead.
+- `KeyImportOptions` has been renamed to `ImportKeyOptions`.
+
+### Major changes
+
+- `JsonWebKey.KeyType` and `JsonWebKey.KeyOps` have been exposed as `KeyVaultKey.KeyType` and `KeyVaultKey.KeyOperations` respectively.
+- `KeyClient.VaultEndpoint` has been added with the original value pass to `KeyClient`.
+- `KeyModelFactory` added to create mocks of model types for testing.
+- `CryptographyModeFactory` added to create mocks of model types for testing.
+
 ## 4.0.0-preview.5 (2019-10-07)
 
 ### Breaking changes

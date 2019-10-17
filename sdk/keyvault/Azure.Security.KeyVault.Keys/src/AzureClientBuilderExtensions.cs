@@ -16,12 +16,12 @@ namespace Microsoft.Extensions.Azure
     public static class AzureClientBuilderExtensions
     {
         /// <summary>
-        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
+        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultEndpoint"/>
         /// </summary>
-        public static IAzureClientBuilder<KeyClient, KeyClientOptions> AddKeyClient<TBuilder>(this TBuilder builder, Uri vaultUri)
+        public static IAzureClientBuilder<KeyClient, KeyClientOptions> AddKeyClient<TBuilder>(this TBuilder builder, Uri vaultEndpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<KeyClient, KeyClientOptions>((options, cred) => new KeyClient(vaultUri, cred, options));
+            return builder.RegisterClientFactory<KeyClient, KeyClientOptions>((options, cred) => new KeyClient(vaultEndpoint, cred, options));
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
+        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultEndpoint"/>
         /// </summary>
-        public static IAzureClientBuilder<CryptographyClient, CryptographyClientOptions> AddCryptographyClient<TBuilder>(this TBuilder builder, Uri vaultUri)
+        public static IAzureClientBuilder<CryptographyClient, CryptographyClientOptions> AddCryptographyClient<TBuilder>(this TBuilder builder, Uri vaultEndpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<CryptographyClient, CryptographyClientOptions>((options, cred) => new CryptographyClient(vaultUri, cred, options));
+            return builder.RegisterClientFactory<CryptographyClient, CryptographyClientOptions>((options, cred) => new CryptographyClient(vaultEndpoint, cred, options));
         }
 
         /// <summary>

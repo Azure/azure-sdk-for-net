@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
 {
-    internal class VaultBackup : IJsonDeserializable, IJsonSerializable
+    internal class SecretBackup : IJsonDeserializable, IJsonSerializable
     {
         public byte[] Value { get; set; }
 

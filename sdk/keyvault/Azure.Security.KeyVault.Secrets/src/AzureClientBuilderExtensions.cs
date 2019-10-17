@@ -15,12 +15,12 @@ namespace Microsoft.Extensions.Azure
     public static class AzureClientBuilderExtensions
     {
         /// <summary>
-        /// Registers a <see cref="SecretClient"/> instance with the provided <paramref name="vaultUri"/>
+        /// Registers a <see cref="SecretClient"/> instance with the provided <paramref name="vaultEndpoint"/>
         /// </summary>
-        public static IAzureClientBuilder<SecretClient, SecretClientOptions> AddSecretClient<TBuilder>(this TBuilder builder, Uri vaultUri)
+        public static IAzureClientBuilder<SecretClient, SecretClientOptions> AddSecretClient<TBuilder>(this TBuilder builder, Uri vaultEndpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<SecretClient, SecretClientOptions>((options, cred) => new SecretClient(vaultUri, cred, options));
+            return builder.RegisterClientFactory<SecretClient, SecretClientOptions>((options, cred) => new SecretClient(vaultEndpoint, cred, options));
         }
 
         /// <summary>
