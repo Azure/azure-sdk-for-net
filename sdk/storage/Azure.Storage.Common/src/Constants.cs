@@ -293,6 +293,11 @@ namespace Azure.Storage
 
             public const string SetHttpHeadersOperationName =
                 "Azure.Storage.Files.FileClient.SetHttpHeaders";
+            public const string ForceCloseAllHandlesOperationName =
+                "Azure.Storage.Files.FileClient.ForceCloseAllHandles";
+            public const string ForceCloseHandleOperationName =
+                "Azure.Storage.Files.FileClient.ForceCloseHandle";
+
             internal static class Directory
             {
                 public const string CreateOperationName =
@@ -309,8 +314,10 @@ namespace Azure.Storage
                     "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment";
                 public const string GetHandlesOperationName =
                     "Azure.Storage.Files.DirectoryClient.ListHandles";
-                public const string ForceCloseHandlesOperationName =
-                    "Azure.Storage.Files.DirectoryClient.ForceCloseHandles";
+                public const string ForceCloseAllHandlesOperationName =
+                    "Azure.Storage.Files.DirectoryClient.ForceCloseAllHandles";
+                public const string ForceCloseHandleOperationName =
+                    "Azure.Storage.Files.DirectoryClient.ForceCloseHandle";
             }
 
             internal static class Service
@@ -464,7 +471,7 @@ namespace Azure.Storage
             internal static class AccountResources
             {
                 public const char Service = 's';
-                public const char BlobContainer = 'c';
+                public const char Container = 'c';
                 public const char Object = 'o';
             }
         }
@@ -480,8 +487,8 @@ namespace Azure.Storage
 
         internal static class GeoRedundantRead
         {
-            internal const string AlternateHostKey = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
-            internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
+            internal const string AlternateHostKey = "Azure.Storage.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string ResourceNotReplicated = "Azure.Storage.GeoRedundantReadPolicy.ResourceNotReplicated";
         }
 
         internal static class HttpStatusCode

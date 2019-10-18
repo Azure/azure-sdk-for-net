@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RsaCryptographyProvider : LocalCryptographyProvider
     {
-        internal RsaCryptographyProvider(Key key) : base(key)
+        internal RsaCryptographyProvider(KeyVaultKey key) : base(key)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
+        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(plaintext, nameof(plaintext));
 
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result;
         }
 
-        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
+        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(ciphertext, nameof(ciphertext));
 

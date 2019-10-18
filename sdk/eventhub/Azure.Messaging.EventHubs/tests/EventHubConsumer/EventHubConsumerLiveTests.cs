@@ -1379,7 +1379,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             await consumer.CloseAsync();
                         }
 
-                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ObjectDisposedException>());
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<EventHubsClientClosedException>().Or.InstanceOf<ObjectDisposedException>());
                     }
                 }
             }
@@ -1738,10 +1738,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task FailingToCreateOwnerConsumerDoesNotCompromiseReceiveBehavior()
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(2, "anotherConsumerGroup"))
+            var customConsumerGroup = "anotherConsumerGroup";
+
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2, new[] { customConsumerGroup }))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1760,9 +1761,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // It should be possible to create new valid consumers.
 
-                    EventHubConsumer newExclusiveConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    EventHubConsumer newExclusiveConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 30 });
                     EventHubConsumer anotherPartitionConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[1], EventPosition.Latest);
-                    EventHubConsumer anotherConsumerGroupConsumer = client.CreateConsumer("anotherConsumerGroup", partitionIds[0], EventPosition.Latest);
+                    EventHubConsumer anotherConsumerGroupConsumer = client.CreateConsumer(customConsumerGroup, partitionIds[0], EventPosition.Latest);
 
                     Assert.That(async () => await newExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     Assert.That(async () => await anotherPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
@@ -1786,7 +1787,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task FailingToCreateInvalidPartitionConsumerDoesNotCompromiseReceiveBehavior()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -1827,7 +1827,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task FailingToCreateInvalidConsumerGroupConsumerDoesNotCompromiseReceiveBehavior()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -1928,7 +1927,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ConsumersInDifferentConsumerGroupsShouldAllReceiveEvents()
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1, consumerGroup: "anotherConsumerGroup"))
+            var customConsumerGroup = "anotherConsumerGroup";
+
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1, new[] { customConsumerGroup }))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1945,7 +1946,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (EventHubProducer producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
                     await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
-                    await using (EventHubConsumer anotherConsumer = client.CreateConsumer("anotherConsumerGroup", partition, EventPosition.Latest))
+                    await using (EventHubConsumer anotherConsumer = client.CreateConsumer(customConsumerGroup, partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumers to connect and set their positions at the
                         // end of the event stream.

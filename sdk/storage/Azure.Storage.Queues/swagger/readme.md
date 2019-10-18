@@ -185,6 +185,7 @@ directive:
   where: $.definitions.GeoReplication.properties.Status
   transform: >
     $["x-ms-enum"].name = "GeoReplicationStatus";
+    $["x-ms-enum"].modelAsString = false;
 ```
 
 ### StorageError
@@ -334,9 +335,32 @@ directive:
     $.QueueServiceProperties.properties.Logging.xml = { "name": "Logging"};
     $.Metrics["x-ms-client-name"] = "QueueMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.QueueServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
+```
+
+### Access Policy properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+    $["x-ms-client-name"] = "QueueAccessPolicy";
+    $.xml = {"name": "AccessPolicy"};
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    delete $.properties.Start;
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    delete $.properties.Expiry;
+    $.properties.Permissions = $.properties.Permission;
+    $.properties.Permissions.xml = { "name": "Permission"};
+    delete $.properties.Permission;
+    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```

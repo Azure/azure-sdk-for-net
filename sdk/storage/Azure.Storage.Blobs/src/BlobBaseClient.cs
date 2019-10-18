@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -979,7 +978,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Download(Stream, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Download(Stream, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -990,8 +989,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -1014,19 +1013,19 @@ namespace Azure.Storage.Blobs.Specialized
             ///// progress updates about data transfers.
             ///// </param>
             //IProgress<StorageProgress> progressHandler = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
                 destination,
                 accessConditions,
                 //progressHandler,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Download(FileInfo, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Download(FileInfo, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -1037,8 +1036,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -1061,19 +1060,19 @@ namespace Azure.Storage.Blobs.Specialized
             ///// progress updates about data transfers.
             ///// </param>
             //IProgress<StorageProgress> progressHandler = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
                 destination,
                 accessConditions,
                 //progressHandler,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadAsync(Stream, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadAsync(Stream, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -1084,8 +1083,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -1108,18 +1107,18 @@ namespace Azure.Storage.Blobs.Specialized
             ///// progress updates about data transfers.
             ///// </param>
             //IProgress<StorageProgress> progressHandler = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
                 destination,
                 accessConditions,
                 //progressHandler,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="DownloadAsync(FileInfo, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadAsync(FileInfo, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -1130,8 +1129,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -1154,13 +1153,13 @@ namespace Azure.Storage.Blobs.Specialized
             ///// progress updates about data transfers.
             ///// </param>
             //IProgress<StorageProgress> progressHandler = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
                 destination,
                 accessConditions,
                 //progressHandler,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -1180,8 +1179,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// The maximum size stream that we'll download as a single block.  The
         /// default value is 256MB.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -1208,7 +1207,7 @@ namespace Azure.Storage.Blobs.Specialized
             ///// </param>
             //IProgress<StorageProgress> progressHandler,
             long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1225,7 +1224,7 @@ namespace Azure.Storage.Blobs.Specialized
                     DownloadPartitionAsync,
                     WritePartitionAsync,
                     singleBlockThreshold,
-                    parallelTransferOptions,
+                    transferOptions,
                     async,
                     cancellationToken
                     );
@@ -1298,8 +1297,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// The maximum size stream that we'll download as a single block.  The
         /// default value is 256MB.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -1326,7 +1325,7 @@ namespace Azure.Storage.Blobs.Specialized
             ///// </param>
             //IProgress<StorageProgress> progressHandler,
             long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1337,7 +1336,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 //progressHandler,
                 singleBlockThreshold,
-                parallelTransferOptions,
+                transferOptions,
                 async,
                 cancellationToken
                 ).ContinueWith(
@@ -1404,14 +1403,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Operation<long> StartCopyFromUri(
+        public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
@@ -1485,14 +1484,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
@@ -1514,78 +1513,6 @@ namespace Azure.Storage.Blobs.Specialized
             return new CopyFromUriOperation(
                 this,
                 response.Value.CopyId,
-                response.GetRawResponse(),
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Get an existing <see cref="CopyFromUriOperation"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
-        /// </summary>
-        /// <param name="copyId">
-        /// The ID of a copy operation that's already beeen started.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Operation{Int64}"/> representing the copy
-        /// operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Operation<long> StartCopyFromUri(
-            string copyId,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobProperties> response = GetPropertiesInternal(
-                null,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-            return new CopyFromUriOperation(
-                this,
-                copyId,
-                response.GetRawResponse(),
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Get an existing <see cref="CopyFromUriOperation"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
-        /// </summary>
-        /// <param name="copyId">
-        /// The ID of a copy operation that's already beeen started.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Operation{Int64}"/> representing the copy
-        /// operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
-            string copyId,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobProperties> response = await GetPropertiesInternal(
-                null,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-            return new CopyFromUriOperation(
-                this,
-                copyId,
                 response.GetRawResponse(),
                 cancellationToken);
         }
@@ -2412,7 +2339,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobInfo> SetHttpHeaders(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
@@ -2448,7 +2375,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetHttpHeadersAsync(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
@@ -2487,7 +2414,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobInfo>> SetHttpHeadersInternal(
-            BlobHttpHeaders? httpHeaders,
+            BlobHttpHeaders httpHeaders,
             BlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)

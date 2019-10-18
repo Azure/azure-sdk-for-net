@@ -57,6 +57,7 @@ namespace Azure.Storage.Files.Test
             var builder1 = new FileUriBuilder(uri1);
             var fileClient1 = new FileClient(uri1);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient1.Name);
+            TestHelper.AssertCacheableProperty("dir1/dir2/file.txt", () => fileClient1.Path);
             Assert.AreEqual("file.txt", builder1.LastDirectoryOrFileName);
 
             // one directory
@@ -64,6 +65,7 @@ namespace Azure.Storage.Files.Test
             var builder2 = new FileUriBuilder(uri2);
             var fileClient2 = new FileClient(uri2);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient2.Name);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient2.Path);
             Assert.AreEqual("file.txt", builder2.LastDirectoryOrFileName);
 
             // trailing slash
@@ -71,6 +73,7 @@ namespace Azure.Storage.Files.Test
             var builder3 = new FileUriBuilder(uri3);
             var fileClient3 = new FileClient(uri3);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient3.Name);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient3.Path);
             Assert.AreEqual("file.txt", builder3.LastDirectoryOrFileName);
 
             // no directories
@@ -78,6 +81,7 @@ namespace Azure.Storage.Files.Test
             var builder4 = new FileUriBuilder(uri4);
             var fileClient4 = new FileClient(uri4);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Name);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Path);
             Assert.AreEqual("file.txt", builder4.LastDirectoryOrFileName);
 
             // no directories or files
@@ -85,6 +89,7 @@ namespace Azure.Storage.Files.Test
             var builder5 = new FileUriBuilder(uri5);
             var fileClient5 = new FileClient(uri5);
             TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Name);
+            TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Path);
             Assert.AreEqual(string.Empty, builder5.LastDirectoryOrFileName);
         }
 
@@ -200,9 +205,9 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 AssertValidStorageFileInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -326,7 +331,7 @@ namespace Azure.Storage.Files.Test
                 Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
                 Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
                 Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
-                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+                AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
@@ -478,9 +483,9 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 AssertValidStorageFileInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -766,7 +771,7 @@ namespace Azure.Storage.Files.Test
                 // Properties are equal
                 Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
                 AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.Details.ContentType);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
                 Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
                 Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
@@ -779,7 +784,7 @@ namespace Azure.Storage.Files.Test
                 Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Details.CopySource);
                 Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Details.CopyStatus);
                 Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Details.IsServerEncrypted);
-                Assert.AreEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
+                AssertPropertiesEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
             }
         }
 
@@ -1108,7 +1113,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                IList<StorageHandle> handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
@@ -1122,7 +1127,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                IList<StorageHandle> handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
@@ -1152,10 +1157,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await file.ForceCloseHandlesAsync();
+                int handlesClosed = await file.ForceCloseAllHandlesAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
             }
         }
 
@@ -1169,8 +1174,24 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    file.ForceCloseHandlesAsync(),
+                    file.ForceCloseAllHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
+
+            }
+        }
+
+        [Test]
+        public async Task ForceCloseHandle_Error()
+        {
+            // Arrange
+            using (GetNewDirectory(out DirectoryClient directory))
+            {
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    file.ForceCloseHandleAsync("nonExistantHandleId"),
+                    actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
 
             }
         }

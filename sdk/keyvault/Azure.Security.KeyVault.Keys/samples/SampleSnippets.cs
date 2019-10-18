@@ -32,10 +32,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new KeyClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new key using the key client
-            Key key = client.CreateKey("key-name", KeyType.Rsa);
+            KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
             #endregion
 
             #region CreateCryptographyClient
@@ -54,24 +54,24 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region CreateKey
             // Create a key. Note that you can specify the type of key
             // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
-            Key key = client.CreateKey("key-name", KeyType.Rsa);
+            KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.KeyMaterial.KeyType);
+            Console.WriteLine(key.KeyType);
 
             // Create a software RSA key
-            var rsaCreateKey = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
-            Key rsaKey = client.CreateRsaKey(rsaCreateKey);
+            var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
+            KeyVaultKey rsaKey = client.CreateRsaKey(rsaCreateKey);
 
             Console.WriteLine(rsaKey.Name);
-            Console.WriteLine(rsaKey.KeyMaterial.KeyType);
+            Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
-            var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
-            Key ecKey = client.CreateEcKey(echsmkey);
+            var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
+            KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
             Console.WriteLine(ecKey.Name);
-            Console.WriteLine(ecKey.KeyMaterial.KeyType);
+            Console.WriteLine(ecKey.KeyType);
             #endregion
         }
 
@@ -80,24 +80,24 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             #region CreateKeyAsync
             // Create a key of any type
-            Key key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
+            KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.KeyMaterial.KeyType);
+            Console.WriteLine(key.KeyType);
 
             // Create a software RSA key
-            var rsaCreateKey = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
-            Key rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
+            var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
+            KeyVaultKey rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
 
             Console.WriteLine(rsaKey.Name);
-            Console.WriteLine(rsaKey.KeyMaterial.KeyType);
+            Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
-            var echsmkey = new EcKeyCreateOptions("ec-key-name", hsm: true);
-            Key ecKey = await client.CreateEcKeyAsync(echsmkey);
+            var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
+            KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
             Console.WriteLine(ecKey.Name);
-            Console.WriteLine(ecKey.KeyMaterial.KeyType);
+            Console.WriteLine(ecKey.KeyType);
             #endregion
         }
 
@@ -108,10 +108,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
             client.CreateKey("key-name", KeyType.Rsa);
 
             #region RetrieveKey
-            Key key = client.GetKey("key-name");
+            KeyVaultKey key = client.GetKey("key-name");
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.KeyMaterial.KeyType);
+            Console.WriteLine(key.KeyType);
             #endregion
         }
 
@@ -119,16 +119,16 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void UpdateKey()
         {
             #region UpdateKey
-            Key key = client.CreateKey("key-name", KeyType.Rsa);
+            KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
 
             // You can specify additional application-specific metadata in the form of tags.
             key.Properties.Tags["foo"] = "updated tag";
 
-            Key updatedKey = client.UpdateKeyProperties(key.Properties, key.KeyMaterial.KeyOps);
+            KeyVaultKey updatedKey = client.UpdateKeyProperties(key.Properties);
 
             Console.WriteLine(updatedKey.Name);
             Console.WriteLine(updatedKey.Properties.Version);
-            Console.WriteLine(updatedKey.Properties.Updated);
+            Console.WriteLine(updatedKey.Properties.UpdatedOn);
             #endregion
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void ListKeys()
         {
             #region ListKeys
-            Pageable<KeyProperties> allKeys = client.GetKeys();
+            Pageable<KeyProperties> allKeys = client.GetPropertiesOfKeys();
 
             foreach (KeyProperties keyProperties in allKeys)
             {
@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region NotFound
             try
             {
-                Key key = await client.GetKeyAsync("some_key");
+                KeyVaultKey key = await client.GetKeyAsync("some_key");
             }
             catch (RequestFailedException ex)
             {
@@ -181,7 +181,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeletedKey key = client.DeleteKey("key-name");
 
             Console.WriteLine(key.Name);
-            Console.WriteLine(key.DeletedDate);
+            Console.WriteLine(key.DeletedOn);
             #endregion
 
             DeletedKey rsaKey = client.DeleteKey("rsa-key-name");

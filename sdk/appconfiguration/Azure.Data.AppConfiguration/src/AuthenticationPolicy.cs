@@ -81,9 +81,9 @@ namespace Azure.Data.AppConfiguration
             var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
             string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
-            message.Request.Headers.Add("Date", utcNowString);
-            message.Request.Headers.Add("x-ms-content-sha256", contentHash);
-            message.Request.Headers.Add("Authorization", $"HMAC-SHA256 Credential={_credential}&SignedHeaders={signedHeaders}&Signature={signature}");
+            message.Request.Headers.SetValue("Date", utcNowString);
+            message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
+            message.Request.Headers.SetValue("Authorization", $"HMAC-SHA256 Credential={_credential}&SignedHeaders={signedHeaders}&Signature={signature}");
         }
     }
 }

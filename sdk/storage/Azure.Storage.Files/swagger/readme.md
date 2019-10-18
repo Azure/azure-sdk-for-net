@@ -148,6 +148,15 @@ directive:
     }
 ```
 
+### Hide ListSharesIncludeType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ListSharesInclude
+  transform: >
+    $.items["x-az-public"] = false;
+```
+
 ### /{shareName}?restype=share
 ``` yaml
 directive:
@@ -320,8 +329,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.StorageHandle) {
-        $.StorageHandle = $.HandleItem;
+    if (!$.StorageFileHandle) {
+        $.StorageFileHandle = $.HandleItem;
         delete $.HandleItem;
     }
     if (!$.StorageHandlesSegment) {
@@ -331,7 +340,7 @@ directive:
         const path = $.StorageHandlesSegment.properties.HandleList.items.$ref.replace(/[#].*$/, "#/definitions/");
         $.StorageHandlesSegment.properties.Handles = {
             "type": "array",
-            "items": { "$ref": path + "StorageHandle" },
+            "items": { "$ref": path + "StorageFileHandle" },
             "xml": { "name": "Entries", "wrapped": true }
         };
         delete $.StorageHandlesSegment.properties.HandleList;
@@ -667,9 +676,32 @@ directive:
   transform: >
     $.Metrics["x-ms-client-name"] = "FileMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "FileCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+```
+
+### Access Policy properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+    $["x-ms-client-name"] = "FileAccessPolicy";
+    $.xml = {"name": "AccessPolicy"};
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    delete $.properties.Start;
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    delete $.properties.Expiry;
+    $.properties.Permissions = $.properties.Permission;
+    $.properties.Permissions.xml = { "name": "Permission"};
+    delete $.properties.Permission;
+    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```

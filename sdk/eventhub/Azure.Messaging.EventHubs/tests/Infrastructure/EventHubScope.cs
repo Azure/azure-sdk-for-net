@@ -110,19 +110,6 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         /// </summary>
         ///
         /// <param name="partitionCount">The number of partitions that the Event Hub should be configured with.</param>
-        /// <param name="consumerGroup">The name of a consumer group to create and associate with the Event Hub; the default consumer group should not be specified, as it is implicitly created.</param>
-        /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
-        public static Task<EventHubScope> CreateAsync(int partitionCount,
-                                                      string consumerGroup,
-                                                      [CallerMemberName] string caller = "") => CreateAsync(partitionCount, new[] { consumerGroup }, caller);
-
-        /// <summary>
-        ///   Performs the tasks needed to create a new Event Hub instance with the requested
-        ///   partition count and a dynamically assigned unique name.
-        /// </summary>
-        ///
-        /// <param name="partitionCount">The number of partitions that the Event Hub should be configured with.</param>
         /// <param name="consumerGroups">The set of consumer groups to create and associate with the Event Hub; the default consumer group should not be included, as it is implicitly created.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
         ///

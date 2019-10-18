@@ -5,7 +5,7 @@
     <Description>Kusto.Tests Class Library</Description>
     <AssemblyName>Kusto.Tests</AssemblyName>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

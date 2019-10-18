@@ -93,7 +93,7 @@ namespace Azure.Storage.Files
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value; }
+            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
         }
         private string _directoryOrFilePath;
 

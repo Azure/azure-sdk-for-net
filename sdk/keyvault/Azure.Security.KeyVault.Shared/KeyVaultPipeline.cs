@@ -6,19 +6,17 @@ using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault
 {
     internal class KeyVaultPipeline
     {
-        private readonly Uri _vaultUri;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        public KeyVaultPipeline(Uri vaultEndpoint, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
-            _vaultUri = vaultUri;
+            VaultEndpoint = vaultEndpoint;
             _pipeline = pipeline;
 
             _clientDiagnostics = clientDiagnostics;
@@ -28,10 +26,12 @@ namespace Azure.Security.KeyVault
 
         public string ApiVersion { get; }
 
+        public Uri VaultEndpoint { get; }
+
         public Uri CreateFirstPageUri(string path)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Reset(_vaultUri);
+            firstPage.Reset(VaultEndpoint);
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault
         public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Reset(_vaultUri);
+            firstPage.Reset(VaultEndpoint);
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.Uri.Reset(_vaultUri);
+            request.Uri.Reset(VaultEndpoint);
 
             foreach (var p in path)
             {
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return new Page<T>(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return new Page<T>(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
             }
             catch (Exception e)
             {

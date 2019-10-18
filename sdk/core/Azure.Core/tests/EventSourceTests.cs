@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(ErrorResponseEvent);
-            Assert.AreEqual(EventLevel.Error, e.Level);
+            Assert.AreEqual(EventLevel.Warning, e.Level);
             Assert.AreEqual("ErrorResponse", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 500);

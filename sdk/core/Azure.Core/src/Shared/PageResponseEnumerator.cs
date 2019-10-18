@@ -11,7 +11,6 @@ namespace Azure.Core
 {
     internal static class PageResponseEnumerator
     {
-
         public static FuncPageable<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
             return new FuncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));

@@ -29,30 +29,32 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Let's create a RSA key valid for 1 year. If the key
             // already exists in the Key Vault, then a new version of the key is created.
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-            var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048)
+            var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                KeySize = 2048,
+                ExpiresOn = DateTimeOffset.Now.AddYears(1)
             };
 
             client.CreateRsaKey(rsaKey);
 
             // Let's Get the Cloud RSA Key from the Key Vault.
-            Key cloudRsaKey = client.GetKey(rsaKeyName);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            KeyVaultKey cloudRsaKey = client.GetKey(rsaKeyName);
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 
             // After one year, the Cloud RSA Key is still required, we need to update the expiry time of the key.
             // The update method can be used to update the expiry attribute of the key.
-            cloudRsaKey.Properties.Expires.Value.AddYears(1);
-            Key updatedKey = client.UpdateKeyProperties(cloudRsaKey.Properties, cloudRsaKey.KeyMaterial.KeyOps);
-            Debug.WriteLine($"Key's updated expiry time is {updatedKey.Properties.Expires}");
+            cloudRsaKey.Properties.ExpiresOn.Value.AddYears(1);
+            KeyVaultKey updatedKey = client.UpdateKeyProperties(cloudRsaKey.Properties, cloudRsaKey.KeyOperations);
+            Debug.WriteLine($"Key's updated expiry time is {updatedKey.Properties.ExpiresOn}");
 
             // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
             // it has the required size.
             // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault
             // with the new specified size.
-            var newRsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 4096)
+            var newRsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                KeySize = 4096,
+                ExpiresOn = DateTimeOffset.Now.AddYears(1)
             };
 
             client.CreateRsaKey(newRsaKey);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Files.Models
 {
-    internal class GetFileHandlesAsyncCollection : StorageCollectionEnumerator<StorageHandle>
+    internal class GetFileHandlesAsyncCollection : StorageCollectionEnumerator<StorageFileHandle>
     {
         private readonly FileClient _client;
 
@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.Models
             _client = client;
         }
 
-        public override async ValueTask<Page<StorageHandle>> GetNextPageAsync(
+        public override async ValueTask<Page<StorageFileHandle>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool isAsync,
@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.Models
             Response<StorageHandlesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
-            return new Page<StorageHandle>(
+            return Page<StorageFileHandle>.FromValues(
                 response.Value.Handles.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

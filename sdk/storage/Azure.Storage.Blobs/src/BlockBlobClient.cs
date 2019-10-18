@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -368,7 +367,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
@@ -434,7 +433,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
@@ -503,7 +502,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> UploadInternal(
             Stream content,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             AccessTier? accessTier,
@@ -1146,7 +1145,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> CommitBlockList(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
@@ -1213,7 +1212,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
@@ -1283,7 +1282,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> CommitBlockListInternal(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             AccessTier? accessTier,

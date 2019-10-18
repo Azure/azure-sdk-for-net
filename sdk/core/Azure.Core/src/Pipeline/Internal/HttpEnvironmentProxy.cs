@@ -236,7 +236,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Gets the proxy URI. (iWebProxy interface)
+        /// Gets the proxy URI. (iWebProxy interface).
         /// </summary>
         public Uri GetProxy(Uri uri)
         {

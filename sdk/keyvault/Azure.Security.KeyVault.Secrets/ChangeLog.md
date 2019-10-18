@@ -1,5 +1,21 @@
 # Release History
 
+## 4.0.0-preview.6
+
+### Breaking changes
+
+- `Secret` has been renamed to `KeyVaultSecret` to avoid ambiquity with other libraries and to yield better search results.
+- `VaultUri` properties and `vaultUri` parameters have been renamed to `VaultEndpoint` and `vaultEndpoint` respectively.
+- On `SecretProperties`, `Expires`, `Created`, and `Updated` have been renamed to `ExpiresOn`, `CreatedOn`, and `UpdatedOn` respectively.
+- On `DeletedSecret`, `DeletedDate` has been renamed to `DeletedOn`.
+- `SecretClient.GetSecrets` and `SecretClient.GetSecretVersions` have been renamed to `SecretClient.GetPropertiesOfSecrets` and `SecretClient.GetPropertiesOfSecretVersions` respectively.
+- `SecretClient.RestoreSecret` has been renamed to `SecretClient.RestoreSecretBackup` to better associate it with `SecretClient.BackupSecret`.
+
+### Major changes
+
+- `SecretClient.VaultEndpoint` has been added with the original value pass to `SecretClient`.
+- `KeyModelFactory` added to create mocks of model types for testing.
+
 ## 4.0.0-preview.5 (2019-10-07)
 
 ### Breaking changes

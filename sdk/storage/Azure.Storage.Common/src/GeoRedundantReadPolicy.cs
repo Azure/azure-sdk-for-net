@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage

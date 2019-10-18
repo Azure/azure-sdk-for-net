@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -438,7 +437,7 @@ namespace Azure.Storage.Blobs
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -472,8 +471,8 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -491,12 +490,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -505,13 +504,13 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(FileInfo, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -545,8 +544,8 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -564,12 +563,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             FileInfo content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -578,13 +577,13 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -610,8 +609,8 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="progressHandler">
@@ -637,12 +636,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -651,12 +650,12 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -690,8 +689,8 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="cancellationToken">
@@ -709,12 +708,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             FileInfo content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
@@ -723,7 +722,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 progressHandler,
                 accessTier,
-                parallelTransferOptions: parallelTransferOptions,
+                transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -759,8 +758,8 @@ namespace Azure.Storage.Blobs
         /// The maximum size stream that we'll upload as a single block.  The
         /// default value is 256MB.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -779,13 +778,13 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
             Stream content,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
             long? singleBlockThreshold = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -803,7 +802,7 @@ namespace Azure.Storage.Blobs
                 threshold => TryGetStreamLength(content, out var length) && length < threshold,
                 memoryPool => new StreamPartitioner(content, memoryPool),
                 singleBlockThreshold.Value,
-                parallelTransferOptions,
+                transferOptions,
                 async,
                 cancellationToken);
             return async ?
@@ -933,8 +932,8 @@ namespace Azure.Storage.Blobs
         /// The maximum size stream that we'll upload as a single block.  The
         /// default value is 256MB.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -953,13 +952,13 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
             FileInfo file,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
             long? singleBlockThreshold = default,
-            ParallelTransferOptions parallelTransferOptions = default,
+            StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -976,7 +975,7 @@ namespace Azure.Storage.Blobs
                 threshold => file.Length < threshold,
                 memoryPool => new StreamPartitioner(file, memoryPool),
                 singleBlockThreshold.Value,
-                parallelTransferOptions,
+                transferOptions,
                 async,
                 cancellationToken);
             return async ?
