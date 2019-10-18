@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -27,6 +28,29 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="EventData.Properties" />
         ///
         public ReadOnlyMemory<byte> Body { get; }
+
+        /// <summary>
+        ///   The data associated with the event, in stream form.
+        /// </summary>
+        ///
+        /// <value>
+        ///   A <see cref="Stream" /> containing the raw data representing the <see cref="Body" />
+        ///   of the event.  The caller is assumed to have ownership of the stream, including responsibility
+        ///   for managing its lifespan and ensuring proper disposal.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   If the means for deserializing the raw data is not apparent to consumers, a
+        ///   common technique is to make use of <see cref="EventData.Properties" /> to associate serialization hints
+        ///   as an aid to consumers who wish to deserialize the binary data.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventData.Properties" />
+        ///
+        public Stream BodyAsStream
+        {
+            get => new MemoryStream(Body.ToArray());
+        }
 
         /// <summary>
         ///   The set of free-form event properties which may be used for passing metadata associated with the event with the event body
