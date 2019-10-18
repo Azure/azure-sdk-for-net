@@ -903,8 +903,7 @@ namespace Azure.Storage.Queues
         #endregion ClearMessages
 
         #region SendMessage
-#pragma warning disable AZC0002
-        // Client method should have cancellationToken as the last optional parameter
+        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
@@ -917,7 +916,9 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
         public virtual Response<SendReceipt> SendMessage(string messageText) =>
-            SendMessage(messageText, null);
+            SendMessage(
+                messageText,
+                null); // Pass anything else so we don't recurse on this overload
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
@@ -930,9 +931,52 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        public virtual Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
-            SendMessageAsync(messageText, null);
+        public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
+            await SendMessageAsync(
+                messageText,
+                null) // Pass anything else so we don't recurse on this overload
+            .ConfigureAwait(false);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// </summary>
+        /// <param name="messageText">
+        /// Message text.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        public virtual Response<SendReceipt> SendMessage(string messageText, CancellationToken cancellationToken = default) =>
+            SendMessage(
+                messageText,
+                cancellationToken: cancellationToken,
+                visibilityTimeout: default); // Pass anything else so we don't recurse on this overload
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// </summary>
+        /// <param name="messageText">
+        /// Message text.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText, CancellationToken cancellationToken = default) =>
+            await SendMessageAsync(messageText,
+                cancellationToken: cancellationToken,
+                visibilityTimeout: default) // Pass anything else so we don't recurse on this overload
+            .ConfigureAwait(false);
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
@@ -1078,7 +1122,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
         /// </returns>
-        public virtual Response<QueueMessage[]> ReceiveMessages() => ReceiveMessages(null);
+        public virtual Response<QueueMessage[]> ReceiveMessages() => ReceiveMessages(null); // Pass anything else so we don't recurse on this overload
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
@@ -1087,8 +1131,41 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
         /// </returns>
-        public virtual Task<Response<QueueMessage[]>> ReceiveMessagesAsync() => ReceiveMessagesAsync(null);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual async Task<Response<QueueMessage[]>> ReceiveMessagesAsync() =>
+            await ReceiveMessagesAsync(null)  // Pass anything else so we don't recurse on this overload
+            .ConfigureAwait(false);
+        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// Receives one or more messages from the front of the queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
+        /// </returns>
+        public virtual Response<QueueMessage[]> ReceiveMessages(CancellationToken cancellationToken = default) =>
+            ReceiveMessages(
+                cancellationToken: cancellationToken,
+                visibilityTimeout: null); // Pass anything else so we don't recurse on this overload
+
+        /// <summary>
+        /// Retrieves one or more messages from the front of the queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
+        /// </returns>
+        public virtual async Task<Response<QueueMessage[]>> ReceiveMessagesAsync(CancellationToken cancellationToken = default) =>
+            await ReceiveMessagesAsync(
+                cancellationToken: cancellationToken,
+                visibilityTimeout: null) // Pass anything else so we don't recurse on this overload
+            .ConfigureAwait(false);
 
         /// <summary>
         /// Receives one or more messages from the front of the queue.

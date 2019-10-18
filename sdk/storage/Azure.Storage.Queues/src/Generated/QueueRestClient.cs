@@ -1432,7 +1432,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Get Messages on a Queue</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.DequeuedMessage>>> DequeueAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>>> DequeueAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1530,8 +1530,8 @@ namespace Azure.Storage.Queues
             /// Create the Messages.DequeueAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Messages.DequeueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.DequeuedMessage}}.</returns>
-            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.DequeuedMessage>> DequeueAsync_CreateResponse(
+            /// <returns>The Messages.DequeueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.QueueMessage}}.</returns>
+            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>> DequeueAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1541,11 +1541,11 @@ namespace Azure.Storage.Queues
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.DequeuedMessage> _value =
+                        System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
                                     _xml.Element(System.Xml.Linq.XName.Get("QueueMessagesList", "")).Elements(System.Xml.Linq.XName.Get("QueueMessage", "")),
-                                    Azure.Storage.Queues.Models.DequeuedMessage.FromXml));
+                                    Azure.Storage.Queues.Models.QueueMessage.FromXml));
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -1702,11 +1702,11 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Put Message on a Queue</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.EnqueuedMessage>>> EnqueueAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SendReceipt>>> EnqueueAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Queues.Models.QueueMessage message,
+                Azure.Storage.Queues.Models.QueueSendMessage message,
                 int? visibilitytimeout = default,
                 int? messageTimeToLive = default,
                 int? timeout = default,
@@ -1770,7 +1770,7 @@ namespace Azure.Storage.Queues
             internal static Azure.Core.HttpMessage EnqueueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Queues.Models.QueueMessage message,
+                Azure.Storage.Queues.Models.QueueSendMessage message,
                 int? visibilitytimeout = default,
                 int? messageTimeToLive = default,
                 int? timeout = default,
@@ -1802,7 +1802,7 @@ namespace Azure.Storage.Queues
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueMessage.ToXml(message, "QueueMessage", "");
+                System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueSendMessage.ToXml(message, "QueueMessage", "");
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -1815,8 +1815,8 @@ namespace Azure.Storage.Queues
             /// Create the Messages.EnqueueAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Messages.EnqueueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.EnqueuedMessage}}.</returns>
-            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.EnqueuedMessage>> EnqueueAsync_CreateResponse(
+            /// <returns>The Messages.EnqueueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.SendReceipt}}.</returns>
+            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SendReceipt>> EnqueueAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1826,11 +1826,11 @@ namespace Azure.Storage.Queues
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.EnqueuedMessage> _value =
+                        System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SendReceipt> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
                                     _xml.Element(System.Xml.Linq.XName.Get("QueueMessagesList", "")).Elements(System.Xml.Linq.XName.Get("QueueMessage", "")),
-                                    Azure.Storage.Queues.Models.EnqueuedMessage.FromXml));
+                                    Azure.Storage.Queues.Models.SendReceipt.FromXml));
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -2010,12 +2010,12 @@ namespace Azure.Storage.Queues
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Queues.Models.UpdatedMessage}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.UpdatedMessage>> UpdateAsync(
+            /// <returns>Azure.Response{Azure.Storage.Queues.Models.UpdateReceipt}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Queues.Models.QueueMessage message,
+                Azure.Storage.Queues.Models.QueueSendMessage message,
                 string popReceipt,
                 int visibilitytimeout,
                 int? timeout = default,
@@ -2079,7 +2079,7 @@ namespace Azure.Storage.Queues
             internal static Azure.Core.HttpMessage UpdateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Queues.Models.QueueMessage message,
+                Azure.Storage.Queues.Models.QueueSendMessage message,
                 string popReceipt,
                 int visibilitytimeout,
                 int? timeout = default,
@@ -2115,7 +2115,7 @@ namespace Azure.Storage.Queues
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueMessage.ToXml(message, "QueueMessage", "");
+                System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueSendMessage.ToXml(message, "QueueMessage", "");
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -2128,8 +2128,8 @@ namespace Azure.Storage.Queues
             /// Create the MessageId.UpdateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The MessageId.UpdateAsync Azure.Response{Azure.Storage.Queues.Models.UpdatedMessage}.</returns>
-            internal static Azure.Response<Azure.Storage.Queues.Models.UpdatedMessage> UpdateAsync_CreateResponse(
+            /// <returns>The MessageId.UpdateAsync Azure.Response{Azure.Storage.Queues.Models.UpdateReceipt}.</returns>
+            internal static Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt> UpdateAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -2138,7 +2138,7 @@ namespace Azure.Storage.Queues
                     case 204:
                     {
                         // Create the result
-                        Azure.Storage.Queues.Models.UpdatedMessage _value = new Azure.Storage.Queues.Models.UpdatedMessage();
+                        Azure.Storage.Queues.Models.UpdateReceipt _value = new Azure.Storage.Queues.Models.UpdateReceipt();
 
                         // Get response headers
                         string _header;
@@ -2306,248 +2306,6 @@ namespace Azure.Storage.Queues
 #endregion Service
 
 #region Models
-#region class DequeuedMessage
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Get Messages on a Queue.
-    /// </summary>
-    public partial class DequeuedMessage
-    {
-        /// <summary>
-        /// The Id of the Message.
-        /// </summary>
-        public string MessageId { get; internal set; }
-
-        /// <summary>
-        /// The time the Message was inserted into the Queue.
-        /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
-
-        /// <summary>
-        /// The time that the Message will expire and be automatically deleted.
-        /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
-
-        /// <summary>
-        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
-        /// </summary>
-        public string PopReceipt { get; internal set; }
-
-        /// <summary>
-        /// The time that the message will again become visible in the Queue.
-        /// </summary>
-        public System.DateTimeOffset TimeNextVisible { get; internal set; }
-
-        /// <summary>
-        /// The number of times the message has been dequeued.
-        /// </summary>
-        public long DequeueCount { get; internal set; }
-
-        /// <summary>
-        /// The content of the Message.
-        /// </summary>
-        public string MessageText { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of DequeuedMessage instances.
-        /// You can use QueuesModelFactory.DequeuedMessage instead.
-        /// </summary>
-        internal DequeuedMessage() { }
-
-        /// <summary>
-        /// Deserializes XML into a new DequeuedMessage instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized DequeuedMessage instance.</returns>
-        internal static Azure.Storage.Queues.Models.DequeuedMessage FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.DequeuedMessage _value = new Azure.Storage.Queues.Models.DequeuedMessage();
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
-            if (_child != null)
-            {
-                _value.MessageId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
-            if (_child != null)
-            {
-                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
-            if (_child != null)
-            {
-                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("PopReceipt", ""));
-            if (_child != null)
-            {
-                _value.PopReceipt = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", ""));
-            if (_child != null)
-            {
-                _value.TimeNextVisible = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
-            if (_child != null)
-            {
-                _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
-            if (_child != null)
-            {
-                _value.MessageText = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.DequeuedMessage value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new DequeuedMessage instance for mocking.
-        /// </summary>
-        public static DequeuedMessage DequeuedMessage(
-            string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
-            string popReceipt,
-            System.DateTimeOffset timeNextVisible,
-            long dequeueCount,
-            string messageText)
-        {
-            return new DequeuedMessage()
-            {
-                MessageId = messageId,
-                InsertionTime = insertionTime,
-                ExpirationTime = expirationTime,
-                PopReceipt = popReceipt,
-                TimeNextVisible = timeNextVisible,
-                DequeueCount = dequeueCount,
-                MessageText = messageText,
-            };
-        }
-    }
-}
-#endregion class DequeuedMessage
-
-#region class EnqueuedMessage
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Put Message on a Queue
-    /// </summary>
-    public partial class EnqueuedMessage
-    {
-        /// <summary>
-        /// The Id of the Message.
-        /// </summary>
-        public string MessageId { get; internal set; }
-
-        /// <summary>
-        /// The time the Message was inserted into the Queue.
-        /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
-
-        /// <summary>
-        /// The time that the Message will expire and be automatically deleted.
-        /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
-
-        /// <summary>
-        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
-        /// </summary>
-        public string PopReceipt { get; internal set; }
-
-        /// <summary>
-        /// The time that the message will again become visible in the Queue.
-        /// </summary>
-        public System.DateTimeOffset TimeNextVisible { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of EnqueuedMessage instances.
-        /// You can use QueuesModelFactory.EnqueuedMessage instead.
-        /// </summary>
-        internal EnqueuedMessage() { }
-
-        /// <summary>
-        /// Deserializes XML into a new EnqueuedMessage instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized EnqueuedMessage instance.</returns>
-        internal static Azure.Storage.Queues.Models.EnqueuedMessage FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.EnqueuedMessage _value = new Azure.Storage.Queues.Models.EnqueuedMessage();
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
-            if (_child != null)
-            {
-                _value.MessageId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
-            if (_child != null)
-            {
-                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
-            if (_child != null)
-            {
-                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("PopReceipt", ""));
-            if (_child != null)
-            {
-                _value.PopReceipt = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", ""));
-            if (_child != null)
-            {
-                _value.TimeNextVisible = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.EnqueuedMessage value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new EnqueuedMessage instance for mocking.
-        /// </summary>
-        public static EnqueuedMessage EnqueuedMessage(
-            string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
-            string popReceipt,
-            System.DateTimeOffset timeNextVisible)
-        {
-            return new EnqueuedMessage()
-            {
-                MessageId = messageId,
-                InsertionTime = insertionTime,
-                ExpirationTime = expirationTime,
-                PopReceipt = popReceipt,
-                TimeNextVisible = timeNextVisible,
-            };
-        }
-    }
-}
-#endregion class EnqueuedMessage
-
 #region enum ListQueuesIncludeType
 namespace Azure.Storage.Queues.Models
 {
@@ -3613,14 +3371,44 @@ namespace Azure.Storage.Queues.Models
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// A Message object which can be stored in a Queue
+    /// The object returned in the QueueMessageList array when calling Get Messages on a Queue.
     /// </summary>
-    internal partial class QueueMessage
+    public partial class QueueMessage
     {
         /// <summary>
-        /// The content of the message
+        /// The Id of the Message.
         /// </summary>
-        public string MessageText { get; set; }
+        public string MessageId { get; internal set; }
+
+        /// <summary>
+        /// The time the Message was inserted into the Queue.
+        /// </summary>
+        public System.DateTimeOffset InsertionTime { get; internal set; }
+
+        /// <summary>
+        /// The time that the Message will expire and be automatically deleted.
+        /// </summary>
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
+
+        /// <summary>
+        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
+        /// </summary>
+        public string PopReceipt { get; internal set; }
+
+        /// <summary>
+        /// The time that the message will again become visible in the Queue.
+        /// </summary>
+        public System.DateTimeOffset TimeNextVisible { get; internal set; }
+
+        /// <summary>
+        /// The number of times the message has been dequeued.
+        /// </summary>
+        public long DequeueCount { get; internal set; }
+
+        /// <summary>
+        /// The content of the Message.
+        /// </summary>
+        public string MessageText { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of QueueMessage instances.
@@ -3629,20 +3417,84 @@ namespace Azure.Storage.Queues.Models
         internal QueueMessage() { }
 
         /// <summary>
-        /// Serialize a QueueMessage instance as XML.
+        /// Deserializes XML into a new QueueMessage instance.
         /// </summary>
-        /// <param name="value">The QueueMessage instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "QueueMessage".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueMessage value, string name = "QueueMessage", string ns = "")
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized QueueMessage instance.</returns>
+        internal static Azure.Storage.Queues.Models.QueueMessage FromXml(System.Xml.Linq.XElement element)
         {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("MessageText", ""),
-                value.MessageText));
-            return _element;
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.QueueMessage _value = new Azure.Storage.Queues.Models.QueueMessage();
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
+            if (_child != null)
+            {
+                _value.MessageId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
+            if (_child != null)
+            {
+                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
+            if (_child != null)
+            {
+                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("PopReceipt", ""));
+            if (_child != null)
+            {
+                _value.PopReceipt = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", ""));
+            if (_child != null)
+            {
+                _value.TimeNextVisible = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
+            if (_child != null)
+            {
+                _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
+            if (_child != null)
+            {
+                _value.MessageText = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueMessage value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueMessage instance for mocking.
+        /// </summary>
+        public static QueueMessage QueueMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible,
+            long dequeueCount,
+            string messageText)
+        {
+            return new QueueMessage()
+            {
+                MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                PopReceipt = popReceipt,
+                TimeNextVisible = timeNextVisible,
+                DequeueCount = dequeueCount,
+                MessageText = messageText,
+            };
         }
     }
 }
@@ -3898,6 +3750,45 @@ namespace Azure.Storage.Queues.Models
     }
 }
 #endregion class QueueRetentionPolicy
+
+#region class QueueSendMessage
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// A Message object which can be stored in a Queue
+    /// </summary>
+    internal partial class QueueSendMessage
+    {
+        /// <summary>
+        /// The content of the message
+        /// </summary>
+        public string MessageText { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of QueueSendMessage instances.
+        /// You can use QueuesModelFactory.QueueSendMessage instead.
+        /// </summary>
+        internal QueueSendMessage() { }
+
+        /// <summary>
+        /// Serialize a QueueSendMessage instance as XML.
+        /// </summary>
+        /// <param name="value">The QueueSendMessage instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "QueueMessage".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.QueueSendMessage value, string name = "QueueMessage", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("MessageText", ""),
+                value.MessageText));
+            return _element;
+        }
+    }
+}
+#endregion class QueueSendMessage
 
 #region class QueueServiceProperties
 namespace Azure.Storage.Queues.Models
@@ -4305,6 +4196,115 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class QueuesSegment
 
+#region class SendReceipt
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// The object returned in the QueueMessageList array when calling Put Message on a Queue
+    /// </summary>
+    public partial class SendReceipt
+    {
+        /// <summary>
+        /// The Id of the Message.
+        /// </summary>
+        public string MessageId { get; internal set; }
+
+        /// <summary>
+        /// The time the Message was inserted into the Queue.
+        /// </summary>
+        public System.DateTimeOffset InsertionTime { get; internal set; }
+
+        /// <summary>
+        /// The time that the Message will expire and be automatically deleted.
+        /// </summary>
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
+
+        /// <summary>
+        /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
+        /// </summary>
+        public string PopReceipt { get; internal set; }
+
+        /// <summary>
+        /// The time that the message will again become visible in the Queue.
+        /// </summary>
+        public System.DateTimeOffset TimeNextVisible { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of SendReceipt instances.
+        /// You can use QueuesModelFactory.SendReceipt instead.
+        /// </summary>
+        internal SendReceipt() { }
+
+        /// <summary>
+        /// Deserializes XML into a new SendReceipt instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SendReceipt instance.</returns>
+        internal static Azure.Storage.Queues.Models.SendReceipt FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.SendReceipt _value = new Azure.Storage.Queues.Models.SendReceipt();
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
+            if (_child != null)
+            {
+                _value.MessageId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
+            if (_child != null)
+            {
+                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
+            if (_child != null)
+            {
+                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("PopReceipt", ""));
+            if (_child != null)
+            {
+                _value.PopReceipt = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", ""));
+            if (_child != null)
+            {
+                _value.TimeNextVisible = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.SendReceipt value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new SendReceipt instance for mocking.
+        /// </summary>
+        public static SendReceipt SendReceipt(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible)
+        {
+            return new SendReceipt()
+            {
+                MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                PopReceipt = popReceipt,
+                TimeNextVisible = timeNextVisible,
+            };
+        }
+    }
+}
+#endregion class SendReceipt
+
 #region class StorageError
 namespace Azure.Storage.Queues.Models
 {
@@ -4358,13 +4358,13 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class StorageError
 
-#region class UpdatedMessage
+#region class UpdateReceipt
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// UpdatedMessage
+    /// UpdateReceipt
     /// </summary>
-    public partial class UpdatedMessage
+    public partial class UpdateReceipt
     {
         /// <summary>
         /// The pop receipt of the queue message.
@@ -4377,10 +4377,10 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset TimeNextVisible { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of UpdatedMessage instances.
-        /// You can use QueuesModelFactory.UpdatedMessage instead.
+        /// Prevent direct instantiation of UpdateReceipt instances.
+        /// You can use QueuesModelFactory.UpdateReceipt instead.
         /// </summary>
-        internal UpdatedMessage() { }
+        internal UpdateReceipt() { }
     }
 
     /// <summary>
@@ -4389,13 +4389,13 @@ namespace Azure.Storage.Queues.Models
     public static partial class QueuesModelFactory
     {
         /// <summary>
-        /// Creates a new UpdatedMessage instance for mocking.
+        /// Creates a new UpdateReceipt instance for mocking.
         /// </summary>
-        public static UpdatedMessage UpdatedMessage(
+        public static UpdateReceipt UpdateReceipt(
             string popReceipt,
             System.DateTimeOffset timeNextVisible)
         {
-            return new UpdatedMessage()
+            return new UpdateReceipt()
             {
                 PopReceipt = popReceipt,
                 TimeNextVisible = timeNextVisible,
@@ -4403,6 +4403,6 @@ namespace Azure.Storage.Queues.Models
         }
     }
 }
-#endregion class UpdatedMessage
+#endregion class UpdateReceipt
 #endregion Models
 
