@@ -418,7 +418,7 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(Constants.KB, response.Value.Quota);
+                Assert.AreEqual(Constants.KB, response.Value.QuotaInGB);
             }
         }
 
