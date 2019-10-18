@@ -50,24 +50,24 @@ namespace Azure.Identity
             int i = 0;
             TokenCredential[] chain = new TokenCredential[5];
 
-            if (options.IncludeEnvironmentCredential)
+            if (!options.ExcludeEnvironmentCredential)
             {
                 chain[i++] = new EnvironmentCredential(options);
             }
 
-            if (options.IncludeManagedIdentityCredential)
+            if (!options.ExcludeManagedIdentityCredential)
             {
                 chain[i++] = new ManagedIdentityCredential(options.ManagedIdentityClientId, options);
             }
 
-            if (options.IncludeSharedTokenCacheCredential)
+            if (!options.ExcludeSharedTokenCacheCredential)
             {
-                chain[i++] = new SharedTokenCacheCredential(null, options.PreferredAccountUsername);
+                chain[i++] = new SharedTokenCacheCredential(options.SharedTokenCacheUsername);
             }
 
-            if (options.IncludeInteractiveBrowserCredential)
+            if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = new InteractiveBrowserCredential(null, null, options);
+                chain[i++] = new InteractiveBrowserCredential(null, Constants.DeveloperSignOnClientId, options);
             }
 
             chain[i++] = new CredentialNotFoundGuard();

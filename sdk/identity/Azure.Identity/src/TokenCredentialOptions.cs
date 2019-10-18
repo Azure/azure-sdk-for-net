@@ -3,14 +3,13 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Options to configure requests made to Azure Identity Services
+    /// Options to configure requests made to the OATH identity service
     /// </summary>
-    public class AzureCredentialOptions : ClientOptions
+    public class TokenCredentialOptions : ClientOptions
     {
         private static readonly Uri s_defaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
 
@@ -20,9 +19,9 @@ namespace Azure.Identity
         public Uri AuthorityHost { get; set; }
 
         /// <summary>
-        /// Creates an instance of AzureCredentialOptions with default settings.
+        /// Creates an instance of <see cref="TokenCredentialOptions"/> with default settings.
         /// </summary>
-        public AzureCredentialOptions()
+        public TokenCredentialOptions()
         {
             AuthorityHost = s_defaultAuthorityHost;
         }
