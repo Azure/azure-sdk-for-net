@@ -903,6 +903,37 @@ namespace Azure.Storage.Queues
         #endregion ClearMessages
 
         #region SendMessage
+        #pragma warning disable AZC0002
+        // Client method should have cancellationToken as the last optional parameter
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// </summary>
+        /// <param name="messageText">
+        /// Message text.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendMessageResult}"/>
+        /// </returns>
+        public virtual Response<SendMessageResult> SendMessage(string messageText) =>
+            SendMessage(messageText, null);
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// </summary>
+        /// <param name="messageText">
+        /// Message text.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendMessageResult}"/>
+        /// </returns>
+        public virtual Task<Response<SendMessageResult>> SendMessageAsync(string messageText) =>
+            SendMessageAsync(messageText, null);
+        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
@@ -1039,6 +1070,26 @@ namespace Azure.Storage.Queues
         #endregion SendMessage
 
         #region ReceivesMessages
+        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        /// <summary>
+        /// Receives one or more messages from the front of the queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// </summary>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessageItem"/>
+        /// </returns>
+        public virtual Response<QueueMessageItem[]> ReceiveMessages() => ReceiveMessages(null);
+
+        /// <summary>
+        /// Retrieves one or more messages from the front of the queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// </summary>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessageItem"/>
+        /// </returns>
+        public virtual Task<Response<QueueMessageItem[]>> ReceiveMessagesAsync() => ReceiveMessagesAsync(null);
+        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
         /// <summary>
         /// Receives one or more messages from the front of the queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
