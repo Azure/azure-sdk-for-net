@@ -24,7 +24,7 @@ namespace Azure.Identity
         private readonly IPublicClientApplication _pubApp = null;
         private readonly HttpPipeline _pipeline = null;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AzureCredentialOptions _options;
+        private readonly TokenCredentialOptions _options;
         private readonly string _username = null;
         private readonly SecureString _password;
 
@@ -38,35 +38,35 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the UsernamePasswordCredential with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
         /// and password.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password">The user account's user name, UPN.</param>
-        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
-        public UsernamePasswordCredential(string username, string password, string clientId, string tenantId)
+        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, clientId, tenantId, null)
         {
 
         }
 
         /// <summary>
-        /// Creates an instance of the UsernamePasswordCredential with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
         /// and password.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password">The user account's user name, UPN.</param>
-        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
-        public UsernamePasswordCredential(string username, string password, string clientId, string tenantId, AzureCredentialOptions options)
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
             _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
 
-            _options = options ?? new AzureCredentialOptions();
+            _options = options ?? new TokenCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
 

@@ -37,7 +37,7 @@ namespace Azure.Identity
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public EnvironmentCredential(AzureCredentialOptions options)
+        public EnvironmentCredential(TokenCredentialOptions options)
         {
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;

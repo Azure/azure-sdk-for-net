@@ -29,7 +29,7 @@ namespace Azure.Identity
         /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm
         /// </param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ManagedIdentityCredential(string clientId = null, AzureCredentialOptions options = null)
+        public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
         {
             _clientId = clientId;
 
