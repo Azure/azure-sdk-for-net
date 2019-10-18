@@ -676,6 +676,9 @@ directive:
   transform: >
     $.Metrics["x-ms-client-name"] = "FileMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "FileCorsRule";

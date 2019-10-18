@@ -15290,14 +15290,14 @@ namespace Azure.Storage.Blobs.Models
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Indicates whether metrics should generate summary statistics for called API operations.
-        /// </summary>
-        public bool? IncludeAPIs { get; set; }
-
-        /// <summary>
         /// the retention policy which determines how long the associated data should persist
         /// </summary>
         public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics should generate summary statistics for called API operations.
+        /// </summary>
+        public bool? IncludeApis { get; set; }
 
         /// <summary>
         /// Creates a new BlobMetrics instance
@@ -15341,17 +15341,17 @@ namespace Azure.Storage.Blobs.Models
                 #pragma warning disable CA1308 // Normalize strings to uppercase
                 value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
                 #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.IncludeAPIs != null)
+            if (value.RetentionPolicy != null)
+            {
+                _element.Add(Azure.Storage.Blobs.Models.BlobRetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+            }
+            if (value.IncludeApis != null)
             {
                 _element.Add(new System.Xml.Linq.XElement(
                     System.Xml.Linq.XName.Get("IncludeAPIs", ""),
                     #pragma warning disable CA1308 // Normalize strings to uppercase
-                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    value.IncludeApis.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
                     #pragma warning restore CA1308 // Normalize strings to uppercase
-            }
-            if (value.RetentionPolicy != null)
-            {
-                _element.Add(Azure.Storage.Blobs.Models.BlobRetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
             }
             return _element;
         }
@@ -15376,15 +15376,15 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Enabled = bool.Parse(_child.Value);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
-            if (_child != null)
-            {
-                _value.IncludeAPIs = bool.Parse(_child.Value);
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
             if (_child != null)
             {
                 _value.RetentionPolicy = Azure.Storage.Blobs.Models.BlobRetentionPolicy.FromXml(_child);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
+            if (_child != null)
+            {
+                _value.IncludeApis = bool.Parse(_child.Value);
             }
             CustomizeFromXml(element, _value);
             return _value;
