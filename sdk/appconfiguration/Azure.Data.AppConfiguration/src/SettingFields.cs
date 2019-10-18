@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// A value indicating whether the configuration setting is locked.
         /// </summary>
-        Locked = 0x0040,
+        ReadOnly = 0x0040,
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
         /// </summary>
