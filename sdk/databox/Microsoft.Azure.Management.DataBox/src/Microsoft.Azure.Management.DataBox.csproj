@@ -12,22 +12,20 @@
     <PackageReleaseNotes>
 
       <![CDATA[
-
-                General availability release of the Azure Databox SDK [Sha 256 signed] which allows  
-
-                1) Creation, Updation, Deletion of order along with getting order status 
-
-                2) Validating address and its supportability by Azure Data Box service
+                Changes:
                 
-                3) Getting device credentials to unlock a device
+                1) Creation, Updation, Deletion of Scheduled order along with getting order status 
                 
-                4) Ordering a pickup from logistic partners for the device
+                2) Validating Job creation inputs and its supportability by Azure Data Box service
+                
+                3) Fetching region configuration details supported by Azure Data Box service
                 
                 5) Fetching list of available skus in Data Box family based on customer location
                 
                 6) Validating Job creation inputs and its supportability by Azure Data Box service
                 
                 7) Fetching region configuration details supported by Azure Data Box service
+                4) Deprecating validate address API
 
             ]]>
 
