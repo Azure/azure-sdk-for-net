@@ -779,7 +779,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
                 w.line(`/// <summary>`);
                 w.line(`/// ${value.description || text}`);
                 w.line(`/// </summary>`);
-                w.line(`public static readonly ${enumFullName} ${name} = new ${enumName}(@"${text}");`)
+                w.line(`public static ${enumFullName} ${name} { get; } = new ${enumName}(@"${text}");`)
             }
             if (separator()) { w.line(); }
 
