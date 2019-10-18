@@ -218,7 +218,7 @@ namespace Azure.Storage.Files.Tests
 
             public DisposingShare(ShareClient share, IDictionary<string, string> metadata)
             {
-                share.CreateAsync(metadata: metadata, quotaInBytes: 1).Wait();
+                share.CreateAsync(metadata: metadata, quotaInGB: 1).Wait();
 
                 ShareClient = share;
             }
