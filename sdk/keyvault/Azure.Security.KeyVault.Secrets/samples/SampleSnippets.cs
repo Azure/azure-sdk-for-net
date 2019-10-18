@@ -130,35 +130,39 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #endregion
         }
 
-        [OneTimeTearDown]
+        [Ignore("The secret is deleted and purged on tear down of this text fixture.")]
         public async Task DeleteSecret()
         {
             #region DeleteSecret
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
 
-            await operation.WaitForCompletionAsync();
-
             DeletedSecret secret = operation.Value;
             Console.WriteLine(secret.Name);
             Console.WriteLine(secret.Value);
             #endregion
-
-            try
-            {
-                await client.PurgeDeletedSecretAsync(secret.Name);
-            }
-            catch
-            {
-                // Merely attempt to purge a deleted secret since the Key Vault may not have soft delete enabled.
-            }
         }
 
-        [Ignore("The secret is deleted on tear down of this test fixture.")]
+        [OneTimeTearDown]
+        public async Task DeleteAndPurgeSecret()
+        {
+            #region DeleteAndPurgeSecret
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
+
+            // You only need to wait for completion if you want to purge or recover the secret.
+            await operation.WaitForCompletionAsync();
+
+            DeletedSecret secret = operation.Value;
+            await client.PurgeDeletedSecretAsync(secret.Name);
+            #endregion
+        }
+
+        [Ignore("The secret is deleted and purged on tear down of this text fixture.")]
         public void DeleteSecretSync()
         {
             #region DeleteSecretSync
             DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
+            // You only need to wait for completion if you want to purge or recover the secret.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);
@@ -167,18 +171,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             DeletedSecret secret = operation.Value;
-            Console.WriteLine(secret.Name);
-            Console.WriteLine(secret.Value);
+            client.PurgeDeletedSecret(secret.Name);
             #endregion
-
-            try
-            {
-                client.PurgeDeletedSecret(secret.Name);
-            }
-            catch
-            {
-                // Merely attempt to purge a deleted secret since the Key Vault may not have soft delete enabled.
-            }
         }
     }
 }

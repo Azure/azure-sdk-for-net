@@ -177,17 +177,29 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #endregion
         }
 
-        [OneTimeTearDown]
+        [Ignore("The key is deleted and purged on tear down of this text fixture.")]
         public async Task DeleteKey()
         {
             #region DeleteKey
             DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
-            await operation.WaitForCompletionAsync();
-
             DeletedKey key = operation.Value;
             Console.WriteLine(key.Name);
             Console.WriteLine(key.DeletedOn);
+            #endregion
+        }
+
+        [OneTimeTearDown]
+        public async Task DeleteAndPurgeKey()
+        {
+            #region DeleteAndPurgeKey
+            DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
+
+            // You only need to wait for completion if you want to purge or recover the key.
+            await operation.WaitForCompletionAsync();
+
+            DeletedKey key = operation.Value;
+            await client.PurgeDeletedKeyAsync(key.Name);
             #endregion
 
             DeleteKeyOperation rsaKeyOperation = await client.StartDeleteKeyAsync("rsa-key-name");
@@ -200,9 +212,9 @@ namespace Azure.Security.KeyVault.Keys.Samples
                     rsaKeyOperation.WaitForCompletionAsync().AsTask(),
                     ecKeyOperation.WaitForCompletionAsync().AsTask());
 
-                await client.PurgeDeletedKeyAsync(key.Name);
-                await client.PurgeDeletedKeyAsync(rsaKeyOperation.Value.Name);
-                await client.PurgeDeletedKeyAsync(ecKeyOperation.Value.Name);
+                Task.WaitAll(
+                    client.PurgeDeletedKeyAsync(rsaKeyOperation.Value.Name),
+                    client.PurgeDeletedKeyAsync(ecKeyOperation.Value.Name));
             }
             catch
             {
@@ -210,7 +222,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             }
         }
 
-        [Ignore("The key is deleted on tear down of this test fixture.")]
+        [Ignore("The key is deleted and purged on tear down of this text fixture.")]
         public void DeleteKeySync()
         {
             #region DeleteKeySync
@@ -224,32 +236,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             }
 
             DeletedKey key = operation.Value;
-            Console.WriteLine(key.Name);
-            Console.WriteLine(key.DeletedOn);
+            client.PurgeDeletedKey(key.Name);
             #endregion
-
-            DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey("rsa-key-name");
-            DeleteKeyOperation ecKeyOperation = client.StartDeleteKey("ec-key-name");
-
-            try
-            {
-                // Deleting a key when soft delete is enabled may not happen immediately.
-                while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
-                {
-                    Thread.Sleep(2000);
-
-                    rsaKeyOperation.UpdateStatus();
-                    ecKeyOperation.UpdateStatus();
-                }
-
-                client.PurgeDeletedKey(key.Name);
-                client.PurgeDeletedKey(rsaKeyOperation.Value.Name);
-                client.PurgeDeletedKey(ecKeyOperation.Value.Name);
-            }
-            catch
-            {
-                // Merely attempt to purge a deleted key since the Key Vault may not have soft delete enabled.
-            }
         }
     }
 }

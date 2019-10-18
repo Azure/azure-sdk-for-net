@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         /// <summary>
         /// Gets the <see cref="DeletedSecret"/>.
-        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to purge or re-create a secret in this pending state.
+        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to purge or recover a secret in this pending state.
         /// </summary>
         /// <remarks>
         /// Azure Key Vault will return a <see cref="DeletedSecret"/> immediately but may take time to actually delete the secret if soft-delete is enabled.

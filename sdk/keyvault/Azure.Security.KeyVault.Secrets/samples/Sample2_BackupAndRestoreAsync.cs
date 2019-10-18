@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // The storage account secret is no longer in use, so you delete it.
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync(secretName);
 
-            // To ensure secret is deleted on server side.
+            // To ensure the secret is deleted on server before we try to purge it.
             await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.

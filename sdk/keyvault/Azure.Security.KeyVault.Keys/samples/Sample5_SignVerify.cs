@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation rsaKeyOperation = keyClient.StartDeleteKey(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = keyClient.StartDeleteKey(ecKeyName);
 
-            // To ensure the keys are deleted on server side.
+            // To ensure the keys are deleted on server before we try to purge them.
             while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
             {
                 Thread.Sleep(2000);

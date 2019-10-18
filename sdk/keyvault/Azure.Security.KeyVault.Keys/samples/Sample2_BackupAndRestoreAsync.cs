@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 // The storage account key is no longer in use, so you delete it.
                 DeleteKeyOperation operation = await client.StartDeleteKeyAsync(rsaKeyName);
 
-                // To ensure the key is deleted on server side.
+                // To ensure the key is deleted on server before we try to purge it.
                 await operation.WaitForCompletionAsync();
 
                 // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.

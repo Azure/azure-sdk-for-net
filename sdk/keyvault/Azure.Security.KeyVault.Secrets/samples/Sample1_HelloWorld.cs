@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // The bank account was closed. You need to delete its credentials from the key vault.
             DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 
-            // To ensure secret is deleted on server side.
+            // To ensure the secret is deleted on server before we try to purge it.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

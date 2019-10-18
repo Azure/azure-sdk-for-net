@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
             DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
-            // To ensure secrets are deleted on server side.
+            // To ensure the secrets are deleted on server before we try to purge them.
             while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
             {
                 Thread.Sleep(2000);

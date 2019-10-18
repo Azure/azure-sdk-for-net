@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation bankSecretOperation = await client.StartDeleteSecretAsync(bankSecretName);
             DeleteSecretOperation storageSecretOperation = await client.StartDeleteSecretAsync(storageSecretName);
 
-            // To ensure secrets are deleted on server side.
+            // To ensure the secrets are deleted on server before we try to purge them.
             Task.WaitAll(
                 bankSecretOperation.WaitForCompletionAsync().AsTask(),
                 storageSecretOperation.WaitForCompletionAsync().AsTask());
@@ -90,8 +90,9 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            await client.PurgeDeletedSecretAsync(bankSecretName);
-            await client.PurgeDeletedSecretAsync(storageSecretName);
+            Task.WaitAll(
+                client.PurgeDeletedSecretAsync(bankSecretName),
+                client.PurgeDeletedSecretAsync(storageSecretName));
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Gets the <see cref="DeletedKey"/>.
-        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to purge or re-create a key in this pending state.
+        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to purge or recover a key in this pending state.
         /// </summary>
         /// <remarks>
         /// Azure Key Vault will return a <see cref="DeletedKey"/> immediately but may take time to actually delete the key if soft-delete is enabled.
