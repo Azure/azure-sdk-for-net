@@ -48,8 +48,8 @@ namespace Azure.Storage.Sas
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
-        /// stored access policy.  The <see cref="FileSasPermissions"/>
-        /// , <see cref="ShareSasPermissions"/>, or <see cref="FileAccountSasPermissions"/>
+        /// stored access policy.  The <see cref="FileSasPermissions"/>,
+        /// <see cref="ShareSasPermissions"/>, or <see cref="FileAccountSasPermissions"/>
         /// can be used to create the permissions string.
         /// </summary>
         public string Permissions { get; private set; }
@@ -163,9 +163,13 @@ namespace Azure.Storage.Sas
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
-            if (string.IsNullOrEmpty(Permissions) || ExpiresOn == default)
+            if (ExpiresOn == default)
             {
-                throw Errors.SasMissingData();
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
             }
 
             string resource;

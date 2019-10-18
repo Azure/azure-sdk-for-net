@@ -122,9 +122,13 @@ namespace Azure.Storage.Sas
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
-            if (string.IsNullOrEmpty(Permissions) || ExpiresOn == default)
+            if (ExpiresOn == default)
             {
-                throw Errors.SasMissingData();
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
             }
             if (string.IsNullOrEmpty(Version))
             {

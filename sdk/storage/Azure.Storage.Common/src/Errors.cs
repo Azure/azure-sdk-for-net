@@ -48,8 +48,8 @@ namespace Azure.Storage
         public static InvalidOperationException AccountSasMissingData()
             => new InvalidOperationException($"Account SAS is missing at least one of these: ExpiryTime, Permissions, Service, or ResourceType");
 
-        public static InvalidOperationException SasMissingData()
-            => new InvalidOperationException($"SAS is missing at least one of these: ExpiryTime or Permissions");
+        public static InvalidOperationException SasMissingData(string paramName)
+            => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
 
         public static InvalidOperationException TaskIncomplete()
             => new InvalidOperationException("Task is not completed");

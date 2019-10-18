@@ -306,11 +306,11 @@ namespace Azure.Storage.Test.Shared
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(
-                BlobContainerSasPermissions.Read |
-                BlobContainerSasPermissions.Add |
-                BlobContainerSasPermissions.Create |
-                BlobContainerSasPermissions.Delete |
-                BlobContainerSasPermissions.Write);
+                BlobSasPermissions.Read |
+                BlobSasPermissions.Add |
+                BlobSasPermissions.Create |
+                BlobSasPermissions.Delete |
+                BlobSasPermissions.Write);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
@@ -326,11 +326,11 @@ namespace Azure.Storage.Test.Shared
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(
-                BlobContainerSasPermissions.Read |
-                BlobContainerSasPermissions.Add |
-                BlobContainerSasPermissions.Create |
-                BlobContainerSasPermissions.Delete |
-                BlobContainerSasPermissions.Write);
+                BlobSasPermissions.Read |
+                BlobSasPermissions.Add |
+                BlobSasPermissions.Create |
+                BlobSasPermissions.Delete |
+                BlobSasPermissions.Write);
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 

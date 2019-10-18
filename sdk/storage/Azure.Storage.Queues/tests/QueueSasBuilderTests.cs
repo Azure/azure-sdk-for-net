@@ -94,7 +94,7 @@ namespace Azure.Storage.Queues.Test
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
             };
-            queueSasBuilder.SetPermissions(QueueSasPermissions.All);
+            queueSasBuilder.SetPermissions(Permissions);
 
             if (includeVersion)
             {
