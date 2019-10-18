@@ -1861,7 +1861,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> referencing the incremental
+        /// A <see cref="CopyFromUriOperation"/> referencing the incremental
         /// copy operation.
         /// </returns>
         /// <remarks>
@@ -1914,7 +1914,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This can be determined by performing a <see cref="GetPageRangesDiff"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual Operation<long> StartCopyIncremental(
+        public virtual CopyFromUriOperation StartCopyIncremental(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
@@ -1966,7 +1966,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
@@ -2019,7 +2019,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This can be determined by performing a <see cref="GetPageRangesDiffAsync"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyIncrementalAsync(
+        public virtual async Task<CopyFromUriOperation> StartCopyIncrementalAsync(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
@@ -2035,76 +2035,8 @@ namespace Azure.Storage.Blobs.Specialized
             return new CopyFromUriOperation(
                 this,
                 response.Value.CopyId,
-                response.GetRawResponse(),
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// The <see cref="StartCopyIncremental(String, CancellationToken)"/>
-        /// operation gets the status of an existing copy operation, specified
-        /// by the <paramref name="copyId"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
-        /// </summary>
-        /// <param name="copyId">
-        /// The ID of a copy operation that's already beeen started.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Operation{Int64}"/> referencing the incremental
-        /// copy operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Operation<long> StartCopyIncremental(
-             string copyId,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobProperties> response = GetProperties(null, cancellationToken);
-            return new CopyFromUriOperation(
-                this,
-                copyId,
-                response.GetRawResponse(),
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// The <see cref="StartCopyIncrementalAsync(String, CancellationToken)"/>
-        /// operation gets the status of an existing copy operation, specified
-        /// by the <paramref name="copyId"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
-        /// </summary>
-        /// <param name="copyId">
-        /// The ID of a copy operation that's already beeen started.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
-        /// state of the incremental copy operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyIncrementalAsync(
-           string copyId,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobProperties> response = await GetPropertiesAsync(null, cancellationToken).ConfigureAwait(false);
-            return new CopyFromUriOperation(
-                this,
-                copyId,
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
                 response.GetRawResponse(),
                 cancellationToken);
         }

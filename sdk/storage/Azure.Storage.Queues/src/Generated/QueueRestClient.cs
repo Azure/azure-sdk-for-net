@@ -2585,7 +2585,7 @@ namespace Azure.Storage.Queues.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Status", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
-                _value.Status = _child.Value;
+                _value.Status = Azure.Storage.Queues.QueueRestClient.Serialization.ParseGeoReplicationStatus(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("LastSyncTime", ""));
             if (_child != null)
@@ -2621,93 +2621,64 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class GeoReplication
 
-#region enum strings GeoReplicationStatus
+#region enum GeoReplicationStatus
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// The status of the secondary location
     /// </summary>
-    public readonly struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
+    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
+    public enum GeoReplicationStatus
+    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
-        /// <summary>
-        /// The GeoReplicationStatus value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GeoReplicationStatus"/> structure.
-        /// </summary>
-        /// <param name="value">The string value of the instance.</param>
-        public GeoReplicationStatus(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
-
         /// <summary>
         /// live
         /// </summary>
-        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Live = new GeoReplicationStatus(@"live");
+        Live,
 
         /// <summary>
         /// bootstrap
         /// </summary>
-        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap = new GeoReplicationStatus(@"bootstrap");
+        Bootstrap,
 
         /// <summary>
         /// unavailable
         /// </summary>
-        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable = new GeoReplicationStatus(@"unavailable");
-
-        /// <summary>
-        /// Determines if two <see cref="GeoReplicationStatus"/> values are the same.
-        /// </summary>
-        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
-        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
-
-        /// <summary>
-        /// Determines if two <see cref="GeoReplicationStatus"/> values are different.
-        /// </summary>
-        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
-        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
-        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => !left.Equals(right);
-
-        /// <summary>
-        /// Converts a string to a <see cref="GeoReplicationStatus"/>.
-        /// </summary>
-        /// <param name="value">The string value to convert.</param>
-        /// <returns>The GeoReplicationStatus value.</returns>
-        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
-
-        /// <summary>
-        /// Check if two <see cref="GeoReplicationStatus"/> instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Azure.Storage.Queues.Models.GeoReplicationStatus other && Equals(other);
-
-        /// <summary>
-        /// Check if two <see cref="GeoReplicationStatus"/> instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
-
-        /// <summary>
-        /// Get a hash code for the <see cref="GeoReplicationStatus"/>.
-        /// </summary>
-        /// <returns>Hash code for the GeoReplicationStatus.</returns>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-
-        /// <summary>
-        /// Convert the <see cref="GeoReplicationStatus"/> to a string.
-        /// </summary>
-        /// <returns>String representation of the GeoReplicationStatus.</returns>
-        public override string ToString() => _value;
+        Unavailable
     }
 }
-#endregion enum strings GeoReplicationStatus
+
+namespace Azure.Storage.Queues
+{
+    internal static partial class QueueRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Queues.Models.GeoReplicationStatus value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Queues.Models.GeoReplicationStatus.Live => "live",
+                    Azure.Storage.Queues.Models.GeoReplicationStatus.Bootstrap => "bootstrap",
+                    Azure.Storage.Queues.Models.GeoReplicationStatus.Unavailable => "unavailable",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.GeoReplicationStatus value.")
+                };
+            }
+
+            public static Azure.Storage.Queues.Models.GeoReplicationStatus ParseGeoReplicationStatus(string value)
+            {
+                return value switch
+                {
+                    "live" => Azure.Storage.Queues.Models.GeoReplicationStatus.Live,
+                    "bootstrap" => Azure.Storage.Queues.Models.GeoReplicationStatus.Bootstrap,
+                    "unavailable" => Azure.Storage.Queues.Models.GeoReplicationStatus.Unavailable,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.GeoReplicationStatus value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum GeoReplicationStatus
 
 #region enum ListQueuesIncludeType
 namespace Azure.Storage.Queues.Models

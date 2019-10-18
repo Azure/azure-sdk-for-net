@@ -585,9 +585,6 @@ namespace Azure.Storage.Blobs.Test
 
                     BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
-                    Operation<long> operation = await destBlob.StartCopyFromUriAsync(source: srcBlob.Uri);
-                    await operation.WaitForCompletionAsync();
-
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.StartCopyFromUriAsync(
