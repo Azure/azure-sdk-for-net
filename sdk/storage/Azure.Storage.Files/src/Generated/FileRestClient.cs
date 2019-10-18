@@ -1606,7 +1606,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier>>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1691,8 +1691,8 @@ namespace Azure.Storage.Files
             /// Create the Share.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.GetAccessPolicyAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Files.Models.SignedIdentifier}}.</returns>
-            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>> GetAccessPolicyAsync_CreateResponse(
+            /// <returns>The Share.GetAccessPolicyAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Files.Models.FileSignedIdentifier}}.</returns>
+            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier>> GetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1702,11 +1702,11 @@ namespace Azure.Storage.Files
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> _value =
+                        System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
                                     _xml.Element(System.Xml.Linq.XName.Get("SignedIdentifiers", "")).Elements(System.Xml.Linq.XName.Get("SignedIdentifier", "")),
-                                    Azure.Storage.Files.Models.SignedIdentifier.FromXml));
+                                    Azure.Storage.Files.Models.FileSignedIdentifier.FromXml));
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -1740,7 +1740,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier> permissions = default,
                 int? timeout = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.SetAccessPolicy",
@@ -1795,7 +1795,7 @@ namespace Azure.Storage.Files
             internal static Azure.Core.HttpMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier> permissions = default,
                 int? timeout = default)
             {
                 // Validation
@@ -1822,9 +1822,9 @@ namespace Azure.Storage.Files
                 System.Xml.Linq.XElement _body = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("SignedIdentifiers", ""));
                 if (permissions != null)
                 {
-                    foreach (Azure.Storage.Files.Models.SignedIdentifier _child in permissions)
+                    foreach (Azure.Storage.Files.Models.FileSignedIdentifier _child in permissions)
                     {
-                        _body.Add(Azure.Storage.Files.Models.SignedIdentifier.ToXml(_child));
+                        _body.Add(Azure.Storage.Files.Models.FileSignedIdentifier.ToXml(_child));
                     }
                 }
                 string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
@@ -6794,7 +6794,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The retention policy.
         /// </summary>
-        public Azure.Storage.Files.Models.RetentionPolicy RetentionPolicy { get; set; }
+        public Azure.Storage.Files.Models.FileRetentionPolicy RetentionPolicy { get; set; }
 
         /// <summary>
         /// Indicates whether metrics should generate summary statistics for called API operations.
@@ -6817,7 +6817,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
+                RetentionPolicy = new Azure.Storage.Files.Models.FileRetentionPolicy();
             }
         }
 
@@ -6842,7 +6842,7 @@ namespace Azure.Storage.Files.Models
                 #pragma warning restore CA1308 // Normalize strings to uppercase
             if (value.RetentionPolicy != null)
             {
-                _element.Add(Azure.Storage.Files.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+                _element.Add(Azure.Storage.Files.Models.FileRetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
             }
             if (value.IncludeApis != null)
             {
@@ -6878,7 +6878,7 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
             if (_child != null)
             {
-                _value.RetentionPolicy = Azure.Storage.Files.Models.RetentionPolicy.FromXml(_child);
+                _value.RetentionPolicy = Azure.Storage.Files.Models.FileRetentionPolicy.FromXml(_child);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
             if (_child != null)
@@ -6986,6 +6986,84 @@ namespace Azure.Storage.Files
     }
 }
 #endregion enum FileRangeWriteType
+
+#region class FileRetentionPolicy
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// The retention policy.
+    /// </summary>
+    public partial class FileRetentionPolicy
+    {
+        /// <summary>
+        /// Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it.
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires.
+        /// </summary>
+        public int? Days { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileRetentionPolicy instances.
+        /// You can use FilesModelFactory.FileRetentionPolicy instead.
+        /// </summary>
+        internal FileRetentionPolicy() { }
+
+        /// <summary>
+        /// Serialize a FileRetentionPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The FileRetentionPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.FileRetentionPolicy value, string name = "RetentionPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.Days != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Days", ""),
+                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new FileRetentionPolicy instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FileRetentionPolicy instance.</returns>
+        internal static Azure.Storage.Files.Models.FileRetentionPolicy FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.FileRetentionPolicy _value = new Azure.Storage.Files.Models.FileRetentionPolicy();
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
+            if (_child != null)
+            {
+                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileRetentionPolicy value);
+    }
+}
+#endregion class FileRetentionPolicy
 
 #region class FileServiceProperties
 namespace Azure.Storage.Files.Models
@@ -7102,6 +7180,94 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class FileServiceProperties
+
+#region class FileSignedIdentifier
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Signed identifier.
+    /// </summary>
+    public partial class FileSignedIdentifier
+    {
+        /// <summary>
+        /// A unique id.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The access policy.
+        /// </summary>
+        public Azure.Storage.Files.Models.FileAccessPolicy AccessPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new FileSignedIdentifier instance
+        /// </summary>
+        public FileSignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new FileSignedIdentifier instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal FileSignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                AccessPolicy = new Azure.Storage.Files.Models.FileAccessPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a FileSignedIdentifier instance as XML.
+        /// </summary>
+        /// <param name="value">The FileSignedIdentifier instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.FileSignedIdentifier value, string name = "SignedIdentifier", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Id", ""),
+                value.Id));
+            if (value.AccessPolicy != null)
+            {
+                _element.Add(Azure.Storage.Files.Models.FileAccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new FileSignedIdentifier instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FileSignedIdentifier instance.</returns>
+        internal static Azure.Storage.Files.Models.FileSignedIdentifier FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.FileSignedIdentifier _value = new Azure.Storage.Files.Models.FileSignedIdentifier(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Id", ""));
+            if (_child != null)
+            {
+                _value.Id = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
+            if (_child != null)
+            {
+                _value.AccessPolicy = Azure.Storage.Files.Models.FileAccessPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileSignedIdentifier value);
+    }
+}
+#endregion class FileSignedIdentifier
 
 #region class FilesAndDirectoriesSegment
 namespace Azure.Storage.Files.Models
@@ -7945,84 +8111,6 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class RawStorageFileProperties
 
-#region class RetentionPolicy
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// The retention policy.
-    /// </summary>
-    public partial class RetentionPolicy
-    {
-        /// <summary>
-        /// Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it.
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires.
-        /// </summary>
-        public int? Days { get; set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of RetentionPolicy instances.
-        /// You can use FilesModelFactory.RetentionPolicy instead.
-        /// </summary>
-        internal RetentionPolicy() { }
-
-        /// <summary>
-        /// Serialize a RetentionPolicy instance as XML.
-        /// </summary>
-        /// <param name="value">The RetentionPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.RetentionPolicy value, string name = "RetentionPolicy", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.Days != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Days", ""),
-                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new RetentionPolicy instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized RetentionPolicy instance.</returns>
-        internal static Azure.Storage.Files.Models.RetentionPolicy FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.RetentionPolicy _value = new Azure.Storage.Files.Models.RetentionPolicy();
-            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
-            if (_child != null)
-            {
-                _value.Enabled = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
-            if (_child != null)
-            {
-                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.RetentionPolicy value);
-    }
-}
-#endregion class RetentionPolicy
-
 #region class ShareInfo
 namespace Azure.Storage.Files.Models
 {
@@ -8563,94 +8651,6 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class SharesSegment
-
-#region class SignedIdentifier
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Signed identifier.
-    /// </summary>
-    public partial class SignedIdentifier
-    {
-        /// <summary>
-        /// A unique id.
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The access policy.
-        /// </summary>
-        public Azure.Storage.Files.Models.FileAccessPolicy AccessPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new SignedIdentifier instance
-        /// </summary>
-        public SignedIdentifier()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new SignedIdentifier instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SignedIdentifier(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                AccessPolicy = new Azure.Storage.Files.Models.FileAccessPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a SignedIdentifier instance as XML.
-        /// </summary>
-        /// <param name="value">The SignedIdentifier instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Id", ""),
-                value.Id));
-            if (value.AccessPolicy != null)
-            {
-                _element.Add(Azure.Storage.Files.Models.FileAccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new SignedIdentifier instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SignedIdentifier instance.</returns>
-        internal static Azure.Storage.Files.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.SignedIdentifier _value = new Azure.Storage.Files.Models.SignedIdentifier(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Id", ""));
-            if (_child != null)
-            {
-                _value.Id = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
-            if (_child != null)
-            {
-                _value.AccessPolicy = Azure.Storage.Files.Models.FileAccessPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SignedIdentifier value);
-    }
-}
-#endregion class SignedIdentifier
 
 #region class StorageClosedHandlesSegment
 namespace Azure.Storage.Files.Models

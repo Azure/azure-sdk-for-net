@@ -1340,7 +1340,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<BlobContainerInfo> SetAccessPolicy(
             PublicAccessType accessType = PublicAccessType.None,
-            IEnumerable<SignedIdentifier> permissions = default,
+            IEnumerable<BlobSignedIdentifier> permissions = default,
             BlobContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             SetAccessPolicyInternal(
@@ -1393,7 +1393,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual async Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
             PublicAccessType accessType = PublicAccessType.None,
-            IEnumerable<SignedIdentifier> permissions = default,
+            IEnumerable<BlobSignedIdentifier> permissions = default,
             BlobContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await SetAccessPolicyInternal(
@@ -1449,7 +1449,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         private async Task<Response<BlobContainerInfo>> SetAccessPolicyInternal(
             PublicAccessType accessType,
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<BlobSignedIdentifier> permissions,
             BlobContainerAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)

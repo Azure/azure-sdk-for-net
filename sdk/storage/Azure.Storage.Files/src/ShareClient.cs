@@ -1045,7 +1045,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<IEnumerable<SignedIdentifier>> GetAccessPolicy(
+        public virtual Response<IEnumerable<FileSignedIdentifier>> GetAccessPolicy(
             CancellationToken cancellationToken = default) =>
             GetAccessPolicyInternal(
                 false, // async
@@ -1064,14 +1064,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}"/>
+        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{FileSignedIdentifier}"/>
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
+        public virtual async Task<Response<IEnumerable<FileSignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default) =>
             await GetAccessPolicyInternal(
                 true, // async
@@ -1093,14 +1093,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}"/>
+        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{FileSignedIdentifier}"/>
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyInternal(
+        private async Task<Response<IEnumerable<FileSignedIdentifier>>> GetAccessPolicyInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1158,7 +1158,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetAccessPolicy(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<FileSignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
             SetAccessPolicyInternal(
                 permissions,
@@ -1190,7 +1190,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<FileSignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
             await SetAccessPolicyInternal(
                 permissions,
@@ -1225,7 +1225,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> SetAccessPolicyInternal(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<FileSignedIdentifier> permissions,
             bool async,
             CancellationToken cancellationToken)
         {
