@@ -60,32 +60,18 @@ namespace Azure.Security.KeyVault.Keys.Samples
             client.CreateRsaKey(newRsaKey);
 
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
-            client.DeleteKey(rsaKeyName);
+            DeleteKeyOperation operation = client.StartDeleteKey(rsaKeyName);
 
-            // To ensure key is deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(client, rsaKeyName));
+            // To ensure the key is deleted on server before we try to purge it.
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(2000);
+
+                operation.UpdateStatus();
+            }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             client.PurgeDeletedKey(rsaKeyName);
-
-        }
-
-        private bool WaitForDeletedKey(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedKey(keyName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }

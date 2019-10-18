@@ -62,8 +62,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void DeleteKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartDeleteKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartDeleteKeyAsync(string.Empty));
         }
 
         [Test]
@@ -76,8 +76,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void RecoverDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecoverDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartRecoverDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartRecoverDeletedKeyAsync(string.Empty));
         }
 
         [Test]
