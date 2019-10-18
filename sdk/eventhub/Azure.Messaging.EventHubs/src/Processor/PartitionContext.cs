@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Diagnostics;
 
