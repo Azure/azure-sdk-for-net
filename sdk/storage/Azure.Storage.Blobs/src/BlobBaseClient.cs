@@ -1513,8 +1513,6 @@ namespace Azure.Storage.Blobs.Specialized
             return new CopyFromUriOperation(
                 this,
                 response.Value.CopyId,
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// A <see cref="RequestFailedException"/> will be thrown if
                 response.GetRawResponse(),
                 cancellationToken);
         }
