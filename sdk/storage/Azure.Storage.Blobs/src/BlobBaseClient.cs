@@ -1403,14 +1403,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Operation<long> StartCopyFromUri(
+        public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
@@ -1484,14 +1484,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Operation{Int64}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
@@ -1513,78 +1513,6 @@ namespace Azure.Storage.Blobs.Specialized
             return new CopyFromUriOperation(
                 this,
                 response.Value.CopyId,
-                response.GetRawResponse(),
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Get an existing <see cref="CopyFromUriOperation"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
-        /// </summary>
-        /// <param name="copyId">
-        /// The ID of a copy operation that's already beeen started.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Operation{Int64}"/> representing the copy
-        /// operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Operation<long> StartCopyFromUri(
-            string copyId,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobProperties> response = GetPropertiesInternal(
-                null,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-            return new CopyFromUriOperation(
-                this,
-                copyId,
-                response.GetRawResponse(),
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Get an existing <see cref="CopyFromUriOperation"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
-        /// </summary>
-        /// <param name="copyId">
-        /// The ID of a copy operation that's already beeen started.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Operation{Int64}"/> representing the copy
-        /// operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
-            string copyId,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobProperties> response = await GetPropertiesInternal(
-                null,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-            return new CopyFromUriOperation(
-                this,
-                copyId,
                 response.GetRawResponse(),
                 cancellationToken);
         }
