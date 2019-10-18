@@ -209,6 +209,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IIpGroupsOperations.
+        /// </summary>
+        public virtual IIpGroupsOperations IpGroups { get; private set; }
+
+        /// <summary>
         /// Gets the ILoadBalancersOperations.
         /// </summary>
         public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
@@ -780,6 +785,7 @@ namespace Microsoft.Azure.Management.Network
             ExpressRouteLinks = new ExpressRouteLinksOperations(this);
             FirewallPolicies = new FirewallPoliciesOperations(this);
             FirewallPolicyRuleGroups = new FirewallPolicyRuleGroupsOperations(this);
+            IpGroups = new IpGroupsOperations(this);
             LoadBalancers = new LoadBalancersOperations(this);
             LoadBalancerBackendAddressPools = new LoadBalancerBackendAddressPoolsOperations(this);
             LoadBalancerFrontendIPConfigurations = new LoadBalancerFrontendIPConfigurationsOperations(this);

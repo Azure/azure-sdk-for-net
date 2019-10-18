@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "FirewallPolicyRuleGroups", "2019-09-01"),
                 new Tuple<string, string, string>("Network", "HubVirtualNetworkConnections", "2019-09-01"),
                 new Tuple<string, string, string>("Network", "InboundNatRules", "2019-09-01"),
+                new Tuple<string, string, string>("Network", "IpGroups", "2019-09-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerBackendAddressPools", "2019-09-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerFrontendIPConfigurations", "2019-09-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerLoadBalancingRules", "2019-09-01"),

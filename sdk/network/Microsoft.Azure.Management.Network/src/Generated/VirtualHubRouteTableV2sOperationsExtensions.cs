@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualHubName'>
             /// The name of the VirtualHub.
             /// </param>
-            public static IPage<HubVirtualNetworkConnection> List(this IVirtualHubRouteTableV2sOperations operations, string resourceGroupName, string virtualHubName)
+            public static IPage<VirtualHubRouteTableV2> List(this IVirtualHubRouteTableV2sOperations operations, string resourceGroupName, string virtualHubName)
             {
                 return operations.ListAsync(resourceGroupName, virtualHubName).GetAwaiter().GetResult();
             }
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<HubVirtualNetworkConnection>> ListAsync(this IVirtualHubRouteTableV2sOperations operations, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualHubRouteTableV2>> ListAsync(this IVirtualHubRouteTableV2sOperations operations, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualHubName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<HubVirtualNetworkConnection> ListNext(this IVirtualHubRouteTableV2sOperations operations, string nextPageLink)
+            public static IPage<VirtualHubRouteTableV2> ListNext(this IVirtualHubRouteTableV2sOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<HubVirtualNetworkConnection>> ListNextAsync(this IVirtualHubRouteTableV2sOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualHubRouteTableV2>> ListNextAsync(this IVirtualHubRouteTableV2sOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
