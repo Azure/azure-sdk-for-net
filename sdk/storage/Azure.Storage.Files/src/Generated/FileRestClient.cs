@@ -447,7 +447,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
@@ -459,7 +459,7 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                int? quota = default,
+                int? quotaInGB = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -474,7 +474,7 @@ namespace Azure.Storage.Files
                         resourceUri,
                         timeout,
                         metadata,
-                        quota))
+                        quotaInGB))
                     {
                         if (async)
                         {
@@ -510,14 +510,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <returns>The Share.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                int? quota = default)
+                int? quotaInGB = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -543,7 +543,7 @@ namespace Azure.Storage.Files
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
-                if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 return _message;
             }
@@ -724,7 +724,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("x-ms-share-quota", out _header))
                         {
-                            _value.Quota = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.QuotaInGB = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -1314,7 +1314,7 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1325,7 +1325,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? quota = default,
+                int? quotaInGB = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1339,7 +1339,7 @@ namespace Azure.Storage.Files
                         pipeline,
                         resourceUri,
                         timeout,
-                        quota))
+                        quotaInGB))
                     {
                         if (async)
                         {
@@ -1374,13 +1374,13 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <returns>The Share.SetQuotaAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetQuotaAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? quota = default)
+                int? quotaInGB = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1401,7 +1401,7 @@ namespace Azure.Storage.Files
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 return _message;
             }
@@ -8205,9 +8205,9 @@ namespace Azure.Storage.Files.Models
         public Azure.ETag? Etag { get; internal set; }
 
         /// <summary>
-        /// Quota
+        /// QuotaInGB
         /// </summary>
-        public int? Quota { get; internal set; }
+        public int? QuotaInGB { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of ShareItemProperties instances.
@@ -8238,7 +8238,7 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
             {
-                _value.Quota = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.QuotaInGB = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -8258,13 +8258,13 @@ namespace Azure.Storage.Files.Models
         public static ShareItemProperties ShareItemProperties(
             System.DateTimeOffset? lastModified = default,
             Azure.ETag? etag = default,
-            int? quota = default)
+            int? quotaInGB = default)
         {
             return new ShareItemProperties()
             {
                 LastModified = lastModified,
                 Etag = etag,
-                Quota = quota,
+                QuotaInGB = quotaInGB,
             };
         }
     }
@@ -8297,7 +8297,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Returns the current share quota in GB.
         /// </summary>
-        public int Quota { get; internal set; }
+        public int QuotaInGB { get; internal set; }
 
         /// <summary>
         /// Creates a new ShareProperties instance
@@ -8320,14 +8320,14 @@ namespace Azure.Storage.Files.Models
             System.Collections.Generic.IDictionary<string, string> metadata,
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            int quota)
+            int quotaInGB)
         {
             return new ShareProperties()
             {
                 Metadata = metadata,
                 ETag = eTag,
                 LastModified = lastModified,
-                Quota = quota,
+                QuotaInGB = quotaInGB,
             };
         }
     }
