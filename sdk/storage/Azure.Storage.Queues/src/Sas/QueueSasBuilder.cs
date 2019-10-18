@@ -53,7 +53,7 @@ namespace Azure.Storage.Sas
         /// <see cref="QueueAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
-        private string Permissions { get; set; }
+        public string Permissions { get; private set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
