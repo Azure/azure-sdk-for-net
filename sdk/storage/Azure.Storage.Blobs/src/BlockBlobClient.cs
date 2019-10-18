@@ -350,7 +350,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -371,7 +371,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
                 content,
@@ -416,7 +416,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadInternal(
                 content,
@@ -482,7 +482,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -506,7 +506,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             AccessTier? accessTier,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -606,7 +606,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on the upload of this block.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -626,7 +626,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             StageBlockInternal(
                 base64BlockId,
@@ -671,7 +671,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on the upload of this block.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -691,7 +691,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await StageBlockInternal(
                 base64BlockId,
@@ -736,7 +736,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on the upload of this block.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -759,7 +759,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash,
             LeaseAccessConditions? leaseAccessConditions,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
