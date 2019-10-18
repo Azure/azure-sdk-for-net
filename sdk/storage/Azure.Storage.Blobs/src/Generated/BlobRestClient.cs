@@ -827,19 +827,21 @@ namespace Azure.Storage.Blobs
                 {
                     case 200:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo();
 
                         // Get response headers
                         string _header;
+                        Azure.Storage.Blobs.Models.SkuName skuName = default;
+                        Azure.Storage.Blobs.Models.AccountKind accountKind = default;
                         if (response.Headers.TryGetValue("x-ms-sku-name", out _header))
                         {
-                            _value.SkuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
+                            skuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-account-kind", out _header))
                         {
-                            _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
+                            accountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
                         }
+
+                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo(skuName, accountKind);
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -12546,29 +12548,76 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion enum strings AccessTier
 
-#region class AccountInfo
+#region struct AccountInfo
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// AccountInfo
     /// </summary>
-    public partial class AccountInfo
+    public readonly partial struct AccountInfo: System.IEquatable<AccountInfo>
     {
         /// <summary>
         /// Identifies the sku name of the account
         /// </summary>
-        public Azure.Storage.Blobs.Models.SkuName SkuName { get; internal set; }
+        public Azure.Storage.Blobs.Models.SkuName SkuName { get; }
 
         /// <summary>
         /// Identifies the account kind
         /// </summary>
-        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
+        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; }
 
         /// <summary>
         /// Prevent direct instantiation of AccountInfo instances.
         /// You can use BlobsModelFactory.AccountInfo instead.
         /// </summary>
-        internal AccountInfo() { }
+        internal AccountInfo(
+            Azure.Storage.Blobs.Models.SkuName skuName,
+            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            {
+                SkuName = skuName;
+                AccountKind = accountKind;
+            }
+
+        /// <summary>
+        /// Check if two AccountInfo instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public bool Equals(AccountInfo other)
+        {
+            if (!SkuName.Equals(other.SkuName))
+            {
+                return false;
+            }
+            if (!AccountKind.Equals(other.AccountKind))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two AccountInfo instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override bool Equals(object obj) => obj is AccountInfo && Equals((AccountInfo)obj);
+
+        /// <summary>
+        /// Get a hash code for the AccountInfo.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]
+        public override int GetHashCode()
+        {
+            var hashCode = new Azure.Core.HashCodeBuilder();
+            hashCode.Add(SkuName);
+            hashCode.Add(AccountKind);
+
+            return hashCode.ToHashCode();
+        }
     }
 
     /// <summary>
@@ -12583,15 +12632,11 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.SkuName skuName,
             Azure.Storage.Blobs.Models.AccountKind accountKind)
         {
-            return new AccountInfo()
-            {
-                SkuName = skuName,
-                AccountKind = accountKind,
-            };
+            return new AccountInfo(skuName, accountKind);
         }
     }
 }
-#endregion class AccountInfo
+#endregion struct AccountInfo
 
 #region enum AccountKind
 namespace Azure.Storage.Blobs.Models
