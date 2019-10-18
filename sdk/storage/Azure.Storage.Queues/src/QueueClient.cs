@@ -65,7 +65,7 @@ namespace Azure.Storage.Queues
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
-        public virtual int MaxMessagesPeek => Constants.Queue.MaxMessagesDequeue;
+        public virtual int MaxPeekableMessages => Constants.Queue.MaxMessagesDequeue;
 
         /// <summary>
         /// Gets the maximum number of bytes allowed for a message's UTF-8 text.
