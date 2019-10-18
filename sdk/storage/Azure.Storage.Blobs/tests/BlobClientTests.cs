@@ -104,7 +104,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(8)]
         [TestCase(16)]
         [TestCase(null)]
-        public async Task UploadAsync_Stream_ParallelTransferOptions(int? maximumThreadCount)
+        public async Task UploadAsync_Stream_StorageTransferOptions(int? maximumThreadCount)
         {
             using (GetNewContainer(out BlobContainerClient container))
             {
@@ -113,9 +113,9 @@ namespace Azure.Storage.Blobs.Test
 
                 using (var stream = new MemoryStream(data))
                 {
-                    var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
+                    var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                    await Verify(stream => blob.UploadAsync(stream, parallelTransferOptions: options));
+                    await Verify(stream => blob.UploadAsync(stream, transferOptions: options));
 
                     async Task Verify(Func<Stream, Task<Response<BlobContentInfo>>> upload)
                     {
@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(8)]
         [TestCase(16)]
         [TestCase(null)]
-        public async Task UploadAsync_File_ParallelTransferOptions(int? maximumThreadCount)
+        public async Task UploadAsync_File_StorageTransferOptions(int? maximumThreadCount)
         {
             using (GetNewContainer(out BlobContainerClient container))
             {
@@ -262,9 +262,9 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
+                        var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                        await Verify(blob.UploadAsync(file, parallelTransferOptions: options));
+                        await Verify(blob.UploadAsync(file, transferOptions: options));
 
                         async Task Verify(Task<Response<BlobContentInfo>> upload)
                         {
@@ -349,13 +349,13 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
+                        var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
                         // Assert
                         await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                             blob.UploadAsync(
                             file,
-                            parallelTransferOptions: options,
+                            transferOptions: options,
                             accessTier: AccessTier.P10),
                             e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
 
@@ -418,7 +418,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task UploadStreamAndVerify(
             long size,
             long singleBlockThreshold,
-            ParallelTransferOptions parallelTransferOptions)
+            StorageTransferOptions transferOptions)
         {
             var data = GetRandomBuffer(size);
             using (GetNewContainer(out BlobContainerClient container))
@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs.Test
                         blobAccessConditions: default,
                         progressHandler: default,
                         singleBlockThreshold: singleBlockThreshold,
-                        parallelTransferOptions: parallelTransferOptions,
+                        transferOptions: transferOptions,
                         async: true);
                 }
 
@@ -464,7 +464,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task UploadFileAndVerify(
             long size,
             long singleBlockThreshold,
-            ParallelTransferOptions parallelTransferOptions)
+            StorageTransferOptions transferOptions)
         {
             var data = GetRandomBuffer(size);
             var path = Path.GetTempFileName();
@@ -489,7 +489,7 @@ namespace Azure.Storage.Blobs.Test
                             blobAccessConditions: default,
                             progressHandler: default,
                             singleBlockThreshold: singleBlockThreshold,
-                            parallelTransferOptions: parallelTransferOptions,
+                            transferOptions: transferOptions,
                             async: true);
                     }
 
@@ -533,7 +533,7 @@ namespace Azure.Storage.Blobs.Test
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadStreamAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadStreamAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
+            await UploadStreamAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
         [TestCase(512)]
@@ -547,7 +547,7 @@ namespace Azure.Storage.Blobs.Test
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadFileAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
+            await UploadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
         [LiveOnly]
@@ -569,7 +569,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadStreamAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
         [Test]
@@ -592,7 +592,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
+            await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
         #endregion Upload
