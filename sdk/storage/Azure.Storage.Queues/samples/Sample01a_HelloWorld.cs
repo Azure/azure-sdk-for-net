@@ -76,7 +76,7 @@ namespace Azure.Storage.Queues.Samples
 
                 // Get the next 10 messages from the queue
                 List<string> messages = new List<string>();
-                foreach (QueueMessageItem message in queue.ReceiveMessages(maxMessages: 10).Value)
+                foreach (QueueMessage message in queue.ReceiveMessages(maxMessages: 10).Value)
                 {
                     // "Process" the message
                     messages.Add(message.MessageText);
@@ -124,7 +124,7 @@ namespace Azure.Storage.Queues.Samples
 
                 // Get the messages from the queue
                 List<string> messages = new List<string>();
-                foreach (PeekedMessageItem message in queue.PeekMessages(maxMessages: 10).Value)
+                foreach (PeekedMessage message in queue.PeekMessages(maxMessages: 10).Value)
                 {
                     // Inspect the message
                     messages.Add(message.MessageText);
@@ -166,11 +166,11 @@ namespace Azure.Storage.Queues.Samples
                 queue.SendMessage("third");
 
                 // Get the messages from the queue with a short visibility timeout
-                List<QueueMessageItem> messages = new List<QueueMessageItem>();
-                foreach (QueueMessageItem message in queue.ReceiveMessages(10, TimeSpan.FromSeconds(1)).Value)
+                List<QueueMessage> messages = new List<QueueMessage>();
+                foreach (QueueMessage message in queue.ReceiveMessages(10, TimeSpan.FromSeconds(1)).Value)
                 {
                     // Tell the service we need a little more time to process the message
-                    UpdateMessageResult changedMessage = queue.UpdateMessage(
+                    UpdateReceipt changedMessage = queue.UpdateMessage(
                         message.MessageText,
                         message.MessageId,
                         message.PopReceipt,
@@ -185,7 +185,7 @@ namespace Azure.Storage.Queues.Samples
                 Assert.AreEqual(0, queue.ReceiveMessages(10).Value.Count());
 
                 // Finish processing the messages
-                foreach (QueueMessageItem message in messages)
+                foreach (QueueMessage message in messages)
                 {
                     // Tell the service we need a little more time to process the message
                     queue.DeleteMessage(message.MessageId, message.PopReceipt);

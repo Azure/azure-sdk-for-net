@@ -24,7 +24,7 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.SendMessageResult sendMessageResult = (await queue.SendMessageAsync(string.Empty)).Value;
+                Models.SendReceipt sendMessageResult = (await queue.SendMessageAsync(string.Empty)).Value;
 
                 // Act
                 Response result = await queue.DeleteMessageAsync(sendMessageResult.MessageId, sendMessageResult.PopReceipt);
@@ -53,7 +53,7 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.SendMessageResult sendMessageResult = (await queue.SendMessageAsync(string.Empty)).Value;
+                Models.SendReceipt sendMessageResult = (await queue.SendMessageAsync(string.Empty)).Value;
 
                 // Act
                 Response result = await queue.DeleteMessageAsync(sendMessageResult.MessageId, sendMessageResult.PopReceipt);
@@ -73,10 +73,10 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                Models.SendMessageResult sendMessageResult = (await queue.SendMessageAsync(message0)).Value;
+                Models.SendReceipt sendMessageResult = (await queue.SendMessageAsync(message0)).Value;
 
                 // Act
-                Response<Models.UpdateMessageResult> result = await queue.UpdateMessageAsync(
+                Response<Models.UpdateReceipt> result = await queue.UpdateMessageAsync(
                     message1,
                     sendMessageResult.MessageId,
                     sendMessageResult.PopReceipt,
@@ -96,10 +96,10 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                Models.SendMessageResult sendMessageResult = (await queue.SendMessageAsync(message0)).Value;
+                Models.SendReceipt sendMessageResult = (await queue.SendMessageAsync(message0)).Value;
 
                 // Act
-                Response<Models.UpdateMessageResult> result = await queue.UpdateMessageAsync(
+                Response<Models.UpdateReceipt> result = await queue.UpdateMessageAsync(
                     message1,
                     sendMessageResult.MessageId,
                     sendMessageResult.PopReceipt);
@@ -118,9 +118,9 @@ namespace Azure.Storage.Queues.Test
                 var message1 = "bar";
 
                 await queue.SendMessageAsync(message0);
-                Models.QueueMessageItem message = (await queue.ReceiveMessagesAsync(1)).Value.First();
+                Models.QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value.First();
 
-                Response<Models.UpdateMessageResult> update = await queue.UpdateMessageAsync(
+                Response<Models.UpdateReceipt> update = await queue.UpdateMessageAsync(
                     message1,
                     message.MessageId,
                     message.PopReceipt);
@@ -128,7 +128,7 @@ namespace Azure.Storage.Queues.Test
                 Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
                 Assert.AreNotEqual(update.Value.TimeNextVisible, message.TimeNextVisible);
 
-                Models.QueueMessageItem newMessage = message.Update(update);
+                Models.QueueMessage newMessage = message.Update(update);
                 Assert.AreEqual(message.MessageId, newMessage.MessageId);
                 Assert.AreEqual(message.MessageText, newMessage.MessageText);
                 Assert.AreEqual(message.InsertionTime, newMessage.InsertionTime);
@@ -150,14 +150,14 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                Models.SendMessageResult enqueuedMessage = (await queue.SendMessageAsync(message0)).Value;
+                Models.SendReceipt enqueuedMessage = (await queue.SendMessageAsync(message0)).Value;
 
                 // Act
                 await queue.UpdateMessageAsync(message1, enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
                 // Assert
-                Response<Models.PeekedMessageItem[]> peekedMessages = await queue.PeekMessagesAsync(1);
-                Models.PeekedMessageItem peekedMessage = peekedMessages.Value.First();
+                Response<Models.PeekedMessage[]> peekedMessages = await queue.PeekMessagesAsync(1);
+                Models.PeekedMessage peekedMessage = peekedMessages.Value.First();
 
                 Assert.AreEqual(1, peekedMessages.Value.Count());
                 Assert.AreEqual(message1, peekedMessage.MessageText);

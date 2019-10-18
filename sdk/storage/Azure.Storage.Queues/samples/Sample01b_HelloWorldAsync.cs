@@ -77,7 +77,7 @@ namespace Azure.Storage.Queues.Samples
 
                 // Get the messages from the queue
                 List<string> messages = new List<string>();
-                foreach (QueueMessageItem message in (await queue.ReceiveMessagesAsync(maxMessages: 10)).Value)
+                foreach (QueueMessage message in (await queue.ReceiveMessagesAsync(maxMessages: 10)).Value)
                 {
                     // "Process" the message
                     messages.Add(message.MessageText);
@@ -125,7 +125,7 @@ namespace Azure.Storage.Queues.Samples
 
                 // Get the messages from the queue
                 List<string> messages = new List<string>();
-                foreach (PeekedMessageItem message in (await queue.PeekMessagesAsync(maxMessages: 10)).Value)
+                foreach (PeekedMessage message in (await queue.PeekMessagesAsync(maxMessages: 10)).Value)
                 {
                     // Inspect the message
                     messages.Add(message.MessageText);
@@ -167,11 +167,11 @@ namespace Azure.Storage.Queues.Samples
                 await queue.SendMessageAsync("third");
 
                 // Get the messages from the queue with a short visibility timeout
-                List<QueueMessageItem> messages = new List<QueueMessageItem>();
-                foreach (QueueMessageItem message in (await queue.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(1))).Value)
+                List<QueueMessage> messages = new List<QueueMessage>();
+                foreach (QueueMessage message in (await queue.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(1))).Value)
                 {
                     // Tell the service we need a little more time to process the message
-                    UpdateMessageResult changedMessage = await queue.UpdateMessageAsync(
+                    UpdateReceipt changedMessage = await queue.UpdateMessageAsync(
                         message.MessageText,
                         message.MessageId,
                         message.PopReceipt,
@@ -186,7 +186,7 @@ namespace Azure.Storage.Queues.Samples
                 Assert.AreEqual(0, (await queue.ReceiveMessagesAsync(10)).Value.Count());
 
                 // Finish processing the messages
-                foreach (QueueMessageItem message in messages)
+                foreach (QueueMessage message in messages)
                 {
                     // Tell the service we need a little more time to process the message
                     await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
