@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
@@ -125,7 +126,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 var cacheSku = new CacheSku() { Name = sku };
                 var subnetUri = $"/subscriptions/{this.subscriptionId}/resourcegroups/{this.resourceGroup.Name}/providers/Microsoft.Network/virtualNetworks/{this.virtualNetwork.Name}/subnets/{this.subNet.Name}";
                 var cacheParameters = new Cache() { CacheSizeGB = cacheSize, Location = this.resourceGroup.Location, Sku = cacheSku, Subnet = subnetUri };
-                cache = this.StoragecacheManagementClient.Caches.Create(this.resourceGroup.Name, name, cacheParameters);
+                cache = this.StoragecacheManagementClient.Caches.CreateOrUpdate(this.resourceGroup.Name, name, cacheParameters);
             }
 
             return cache;
@@ -276,21 +277,26 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="storageTargetName">Storage target name.</param>
         /// <param name="storageTargetParameters">Storage target parameters.</param>
         /// <param name="testOutputHelper">test output helper.</param>
+        /// <param name="wait">Wait for storage target to deploy.</param>
         /// <returns>CLFS storage target.</returns>
         public StorageTarget CreateStorageTarget(
             string cacheName,
             string storageTargetName,
             StorageTarget storageTargetParameters,
-            ITestOutputHelper testOutputHelper = null)
+            ITestOutputHelper testOutputHelper = null,
+            bool wait = true)
         {
             StorageTarget storageTarget;
-            storageTarget = this.StoragecacheManagementClient.StorageTargets.Create(
+            storageTarget = this.StoragecacheManagementClient.StorageTargets.CreateOrUpdate(
                 this.resourceGroup.Name,
                 cacheName,
                 storageTargetName,
                 storageTargetParameters);
+            if (wait)
+            {
+                this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
+            }
 
-            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
             return storageTarget;
         }
 
@@ -304,7 +310,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="polling_delay">Delay between cache polling.</param>
         /// <param name="timeout">Timeout for cache polling.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WaitForStoragteTargetState(string cacheName, string storageTargetName, string state, ITestOutputHelper testOutputHelper, int polling_delay = 60, int timeout = -1)
+        public async Task WaitForStoragteTargetState(string cacheName, string storageTargetName, string state, ITestOutputHelper testOutputHelper, int polling_delay = 60, int timeout = 900)
         {
             var waitTask = Task.Run(async () =>
             {
@@ -326,7 +332,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 }
             });
 
-            if (waitTask != await Task.WhenAny(waitTask, Task.Delay(timeout)))
+            if (waitTask != await Task.WhenAny(waitTask, Task.Delay(new TimeSpan(0, 0, timeout))))
             {
                 throw new TimeoutException();
             }
@@ -341,35 +347,35 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="timeout">Timeout for polling.</param>
         /// <param name="polling_delay">Delay between polling.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = -1, int polling_delay = 60)
+        public async Task WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = 900, int polling_delay = 60)
         {
             var waitTask = Task.Run(async () =>
             {
-                string curr_state = null;
-                while (!string.Equals(curr_state, state, StringComparison.OrdinalIgnoreCase))
+                string currentState = null;
+                while (!string.Equals(currentState, state))
                 {
-                    curr_state = operation(name);
-                    if (operation == this.GetCacheProvisioningState)
-                    {
-                        this.ProvisioningState = curr_state;
-                    }
-
-                    if (operation == this.GetCacheHealthgState)
-                    {
-                        this.CacheHealth = curr_state;
-                    }
-
+                    currentState = operation(name);
                     if (operation == this.GetCacheProvisioningState
-                        && string.Equals(curr_state, "Failed", StringComparison.OrdinalIgnoreCase))
+                        && string.Equals(currentState, "Failed", StringComparison.OrdinalIgnoreCase))
                     {
                         throw new Exception(string.Format("Cache {0} failed to deploy.", name));
                     }
 
                     await Task.Delay(new TimeSpan(0, 0, polling_delay));
                 }
+
+                if (operation == this.GetCacheProvisioningState)
+                {
+                    this.ProvisioningState = currentState;
+                }
+
+                if (operation == this.GetCacheHealthgState)
+                {
+                    this.CacheHealth = currentState;
+                }
             });
 
-            if (waitTask != await Task.WhenAny(waitTask, Task.Delay(timeout)))
+            if (waitTask != await Task.WhenAny(waitTask, Task.Delay(new TimeSpan(0, 0, timeout))))
             {
                 throw new TimeoutException();
             }
