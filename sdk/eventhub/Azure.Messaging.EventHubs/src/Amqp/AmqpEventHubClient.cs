@@ -429,10 +429,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpEventHubClient));
 
-            LastEnqueuedEventProperties lastEnqueuedEventProperties = consumerOptions.TrackLastEnqueuedEventInformation
-                ? new LastEnqueuedEventProperties(EventHubName, partitionId)
-                : null;
-
             EventHubRetryPolicy retryPolicy = defaultRetryPolicy ?? _retryPolicy;
 
             var transportConsumer = new AmqpEventHubConsumer
@@ -444,8 +440,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 consumerOptions,
                 ConnectionScope,
                 MessageConverter,
-                retryPolicy,
-                lastEnqueuedEventProperties
+                retryPolicy
             );
 
             return new EventHubConsumer(transportConsumer, EventHubName, consumerGroup, partitionId, eventPosition, consumerOptions, retryPolicy);

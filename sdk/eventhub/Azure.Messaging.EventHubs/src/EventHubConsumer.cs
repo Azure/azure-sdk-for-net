@@ -108,25 +108,6 @@ namespace Azure.Messaging.EventHubs
         public string Identifier => Options?.Identifier;
 
         /// <summary>
-        ///   A set of information about the last enqueued event of a partition, as observed by the consumer as
-        ///   events are received from the Event Hubs service.
-        /// </summary>
-        ///
-        /// <value>
-        ///   <c>null</c>, if the information was not requested by setting <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />;
-        ///   otherwise, the properties describing the most recently enqueued event in the partition.
-        /// </value>
-        ///
-        /// <remarks>
-        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
-        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
-        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
-        ///   against periodically making requests for partition properties using the Event Hub client.
-        /// </remarks>
-        ///
-        public LastEnqueuedEventProperties LastEnqueuedEventInformation => InnerConsumer.LastEnqueuedEventInformation;
-
-        /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
@@ -214,6 +195,31 @@ namespace Azure.Messaging.EventHubs
         ///
         protected EventHubConsumer()
         {
+        }
+
+        /// <summary>
+        ///   A set of information about the last enqueued event of a partition, as observed by the consumer as
+        ///   events are received from the Event Hubs service.  This is only available if the consumer was
+        ///   created with <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> set.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
+        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
+        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
+        ///   against periodically making requests for partition properties using the Event Hub client.
+        /// </remarks>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> set.</exception>
+        ///
+        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventInformation()
+        {
+            if (!Options.TrackLastEnqueuedEventInformation)
+            {
+                throw new InvalidOperationException(Resources.TrackLastEnqueuedEventInformationNotSet);
+            }
+
+            return new LastEnqueuedEventProperties(EventHubName, PartitionId, InnerConsumer.LastReceivedEvent);
         }
 
         /// <summary>
