@@ -676,11 +676,16 @@ directive:
   transform: >
     $.Metrics["x-ms-client-name"] = "FileMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "FileCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "FileRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```
 
 ### Access Policy properties renaming
@@ -701,4 +706,14 @@ directive:
     $.properties.Permissions.xml = { "name": "Permission"};
     delete $.properties.Permission;
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
+```
+
+### SignedIdentifier
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "FileSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
 ```

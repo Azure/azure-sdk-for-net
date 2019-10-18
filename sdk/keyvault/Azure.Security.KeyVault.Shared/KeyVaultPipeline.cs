@@ -213,6 +213,18 @@ namespace Azure.Security.KeyVault
             return SendRequest(request, cancellationToken);
         }
 
+        public async Task<Response> GetResponseAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
+        {
+            using Request request = CreateRequest(method, path);
+            return await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public Response GetResponse(RequestMethod method, CancellationToken cancellationToken, params string[] path)
+        {
+            using Request request = CreateRequest(method, path);
+            return _pipeline.SendRequest(request, cancellationToken);
+        }
+
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);

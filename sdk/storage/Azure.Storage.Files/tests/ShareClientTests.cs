@@ -291,14 +291,14 @@ namespace Azure.Storage.Files.Test
             using (GetNewShare(out ShareClient share))
             {
                 // Arrange
-                SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 await share.SetAccessPolicyAsync(signedIdentifiers);
 
                 // Act
-                Response<System.Collections.Generic.IEnumerable<SignedIdentifier>> response = await share.GetAccessPolicyAsync();
+                Response<System.Collections.Generic.IEnumerable<FileSignedIdentifier>> response = await share.GetAccessPolicyAsync();
 
                 // Assert
-                SignedIdentifier acl = response.Value.First();
+                FileSignedIdentifier acl = response.Value.First();
 
                 Assert.AreEqual(1, response.Value.Count());
                 Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
@@ -328,7 +328,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewShare(out ShareClient share))
             {
                 // Arrange
-                SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
                 Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
@@ -345,7 +345,7 @@ namespace Azure.Storage.Files.Test
             var shareName = GetNewShareName();
             FileServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -373,7 +373,7 @@ namespace Azure.Storage.Files.Test
             var shareName = GetNewShareName();
             FileServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -459,7 +459,7 @@ namespace Azure.Storage.Files.Test
             var shareName = GetNewShareName();
             FileServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(

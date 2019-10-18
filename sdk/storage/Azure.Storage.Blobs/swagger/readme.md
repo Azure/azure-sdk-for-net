@@ -286,6 +286,8 @@ directive:
   where: $.definitions.SignedIdentifier
   transform: >
     delete $.xml;
+    $["x-ms-client-name"] = "BlobSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
 ```
 
 ### /{containerName}?comp=lease&restype=container&acquire
@@ -540,11 +542,26 @@ directive:
   where: $.definitions.LeaseStatus
   transform: >
     $["x-ms-enum"].name = "LeaseStatus";
+```
+
+### GeoReplication
+``` yaml
+directive:
 - from: swagger-document
-  where: $.definitions.GeoReplication.properties.Status
+  where: $.definitions
   transform: >
-    $["x-ms-enum"].name = "GeoReplicationStatus";
-    $["x-ms-enum"].modelAsString = false;
+    if (!$.BlobGeoReplication) {
+        $.BlobGeoReplication = $.GeoReplication;
+        delete $.GeoReplication;
+        $.BlobGeoReplication.xml = {"name": "GeoReplication"};
+        $.BlobGeoReplication.properties.Status["x-ms-enum"].name = "BlobGeoReplicationStatus";
+        $.BlobGeoReplication.properties.Status["x-ms-enum"].modelAsString = false;
+        const def = $.BlobServiceStatistics.properties.GeoReplication;
+        if (!def["$ref"].endsWith("BlobGeoReplication")) {
+            const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobGeoReplication");
+            $.BlobServiceStatistics.properties.GeoReplication = {"$ref": path};
+        }
+    }
 ```
 
 ### /{containerName}/{blob}?comp=properties&SetHTTPHeaders
@@ -1269,6 +1286,9 @@ directive:
     $.BlobServiceProperties.properties.Logging.xml = { "name": "Logging"};
     $.Metrics["x-ms-client-name"] = "BlobMetrics";
     $.Metrics.xml = { "name": "Metrics"};
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.BlobServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.BlobServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "BlobCorsRule";

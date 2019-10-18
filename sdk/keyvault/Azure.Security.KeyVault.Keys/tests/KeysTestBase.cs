@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 {
                     if (cleanupItem.Delete)
                     {
-                        await Client.DeleteKeyAsync(cleanupItem.Name);
+                        await Client.StartDeleteKeyAsync(cleanupItem.Name);
                     }
                 }
 

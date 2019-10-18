@@ -108,34 +108,18 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 
             // The Cloud Keys are no longer needed, need to delete them from the Key Vault.
-            await keyClient.DeleteKeyAsync(rsaKeyName);
-            await keyClient.DeleteKeyAsync(ecKeyName);
+            DeleteKeyOperation rsaKeyOperation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
+            DeleteKeyOperation ecKeyOperation = await keyClient.StartDeleteKeyAsync(ecKeyName);
 
-            // To ensure the keys are deleted on server side.
-            Assert.IsTrue(await WaitForDeletedKeyAsync(keyClient, rsaKeyName));
-            Assert.IsTrue(await WaitForDeletedKeyAsync(keyClient, ecKeyName));
+            // To ensure the key is deleted on server before we try to purge it.
+            Task.WaitAll(
+                rsaKeyOperation.WaitForCompletionAsync().AsTask(),
+                ecKeyOperation.WaitForCompletionAsync().AsTask());
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            await keyClient.PurgeDeletedKeyAsync(rsaKeyName);
-            await keyClient.PurgeDeletedKeyAsync(ecKeyName);
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedKeyAsync(keyName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
+            Task.WaitAll(
+                keyClient.PurgeDeletedKeyAsync(rsaKeyName),
+                keyClient.PurgeDeletedKeyAsync(ecKeyName));
         }
     }
 }

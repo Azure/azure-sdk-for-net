@@ -182,10 +182,20 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.GeoReplication.properties.Status
+  where: $.definitions
   transform: >
-    $["x-ms-enum"].name = "GeoReplicationStatus";
-    $["x-ms-enum"].modelAsString = false;
+    if (!$.QueueGeoReplication) {
+        $.QueueGeoReplication = $.GeoReplication;
+        delete $.GeoReplication;
+        $.QueueGeoReplication.xml = {"name": "GeoReplication"};
+        $.QueueGeoReplication.properties.Status["x-ms-enum"].name = "QueueGeoReplicationStatus";
+        $.QueueGeoReplication.properties.Status["x-ms-enum"].modelAsString = false;
+        const def = $.QueueServiceStatistics.properties.GeoReplication;
+        if (!def["$ref"].endsWith("QueueGeoReplication")) {
+            const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueGeoReplication");
+            $.QueueServiceStatistics.properties.GeoReplication = {"$ref": path};
+        }
+    }
 ```
 
 ### StorageError
@@ -283,6 +293,11 @@ directive:
   transform: >
     delete $.xml;
 - from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "QueueSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
+- from: swagger-document
   where: $.parameters.QueueAcl
   transform: >
     $.name = "permissions";
@@ -335,11 +350,16 @@ directive:
     $.QueueServiceProperties.properties.Logging.xml = { "name": "Logging"};
     $.Metrics["x-ms-client-name"] = "QueueMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.QueueServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
+    $.RetentionPolicy["x-ms-client-name"] = "QueueRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```
 
 ### Access Policy properties renaming

@@ -382,10 +382,10 @@ namespace Azure.Storage.Test.Shared
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public BlobSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new BlobSignedIdentifier
                 {
                     Id = GetNewString(),
                     AccessPolicy =

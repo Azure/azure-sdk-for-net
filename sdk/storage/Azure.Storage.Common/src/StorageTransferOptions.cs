@@ -7,9 +7,9 @@ using System.ComponentModel;
 namespace Azure.Storage
 {
     /// <summary>
-    /// <see cref="ParallelTransferOptions"/> is used to provide options for parallel transfers.
+    /// <see cref="StorageTransferOptions"/> is used to provide options for parallel transfers.
     /// </summary>
-    public struct ParallelTransferOptions : IEquatable<ParallelTransferOptions>
+    public struct StorageTransferOptions : IEquatable<StorageTransferOptions>
     {
         /// <summary>
         /// The maximum length of an transfer in bytes.
@@ -28,7 +28,7 @@ namespace Azure.Storage
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is ParallelTransferOptions other
+            => obj is StorageTransferOptions other
             && Equals(other)
             ;
 
@@ -49,7 +49,7 @@ namespace Azure.Storage
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator ==(ParallelTransferOptions left, ParallelTransferOptions right) => left.Equals(right);
+        public static bool operator ==(StorageTransferOptions left, StorageTransferOptions right) => left.Equals(right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -58,7 +58,7 @@ namespace Azure.Storage
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator !=(ParallelTransferOptions left, ParallelTransferOptions right) => !(left == right);
+        public static bool operator !=(StorageTransferOptions left, StorageTransferOptions right) => !(left == right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -66,7 +66,7 @@ namespace Azure.Storage
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool Equals(ParallelTransferOptions obj)
+        public bool Equals(StorageTransferOptions obj)
             => MaximumTransferLength == obj.MaximumTransferLength
             && MaximumConcurrency == obj.MaximumConcurrency
             ;

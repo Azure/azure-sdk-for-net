@@ -67,32 +67,14 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await client.SetSecretAsync(secretNewValue);
 
             // The bank account was closed. You need to delete its credentials from the key vault.
-            await client.DeleteSecretAsync(secretName);
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync(secretName);
 
-            // To ensure secret is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedSecretAsync(client, secretName));
+            // To ensure the secret is deleted on server before we try to purge it.
+            await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             await client.PurgeDeletedSecretAsync(secretName);
 
-        }
-
-        private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedSecretAsync(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }
