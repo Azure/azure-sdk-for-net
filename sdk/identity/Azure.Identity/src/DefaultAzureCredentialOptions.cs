@@ -15,7 +15,7 @@ namespace Azure.Identity
         /// <remarks>
         /// If multiple accounts are found in the shared token cache and no value is specifed, or the specfied value matches no accounts in
         /// the cache the SharedTokenCacheCredential will not be used for authentication.
-        /// .</remarks>
+        /// </remarks>
         public string SharedTokenCacheUsername { get; set; }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// Setting to true disables launching the default system browser to authenitcate in developement environments.
+        /// Setting to true disables launching the default system browser to authenticate in developement environments.
         /// </summary>
-        public bool ExcludeInteractiveBrowserCredential { get; set; } = false;
+        public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
     }
 }

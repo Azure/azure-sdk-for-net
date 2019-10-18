@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Options to configure requests made to the OATH identity service
+    /// Options to configure requests made to the OAUTH identity service
     /// </summary>
     public class TokenCredentialOptions : ClientOptions
     {
