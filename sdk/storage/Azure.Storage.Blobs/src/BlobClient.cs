@@ -454,10 +454,10 @@ namespace Azure.Storage.Blobs
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
                 return await UploadAsync(
-                stream,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                    stream,
+                    accessConditions: default, // Pass anything else so we don't recurse on this overload
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
         }
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
