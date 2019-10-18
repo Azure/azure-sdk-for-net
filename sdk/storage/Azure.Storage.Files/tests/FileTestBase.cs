@@ -157,10 +157,10 @@ namespace Azure.Storage.Files.Tests
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public FileSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new FileSignedIdentifier
                 {
                     Id = GetNewString(),
                     AccessPolicy =

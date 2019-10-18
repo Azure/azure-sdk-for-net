@@ -697,6 +697,8 @@ directive:
     $.CorsRule["x-ms-client-name"] = "FileCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "FileRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```
 
 ### Access Policy properties renaming
@@ -728,3 +730,12 @@ directive:
     $["x-ms-client-name"] = "quotaInGB";
 ```
 
+### SignedIdentifier
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "FileSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
+```

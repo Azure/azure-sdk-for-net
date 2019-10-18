@@ -567,7 +567,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
-                SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
                 await container.SetAccessPolicyAsync(
@@ -582,7 +582,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
                 Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 
-                SignedIdentifier acl = response.Value.SignedIdentifiers.First();
+                BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
                 Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
                 Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
                 Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
@@ -596,7 +596,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -615,7 +615,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateAsync();
                 PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
-                SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
                 BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                     parameters: parameters,
@@ -652,7 +652,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Arrange
                     PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
-                    SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                    BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                     BlobContainerAccessConditions accessConditions = BuildContainerAccessConditions(
                         parameters: parameters,
                         ifUnmodifiedSince: true,
