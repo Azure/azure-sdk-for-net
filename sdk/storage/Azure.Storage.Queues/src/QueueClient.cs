@@ -1506,12 +1506,12 @@ namespace Azure.Storage.Queues
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
         /// </summary>
-        /// <param name="messageText">
-        /// Updated message text.
-        /// </param>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="messageText">
+        /// Optional. Updated message text.
         /// </param>
         /// <param name="visibilityTimeout">
         /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
@@ -1525,9 +1525,9 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
         public virtual Response<UpdateReceipt> UpdateMessage(
-            string messageText,
             string messageId,
             string popReceipt,
+            string messageText = null,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
@@ -1543,12 +1543,12 @@ namespace Azure.Storage.Queues
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
         /// </summary>
-        /// <param name="messageText">
-        /// Updated message text.
-        /// </param>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="messageText">
+        /// Optional. Updated message text.
         /// </param>
         /// <param name="visibilityTimeout">
         /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
@@ -1562,9 +1562,9 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
-            string messageText,
             string messageId,
             string popReceipt,
+            string messageText = null,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(

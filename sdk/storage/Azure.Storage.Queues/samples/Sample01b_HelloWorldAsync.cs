@@ -172,9 +172,9 @@ namespace Azure.Storage.Queues.Samples
                 {
                     // Tell the service we need a little more time to process the message
                     UpdateReceipt changedMessage = await queue.UpdateMessageAsync(
-                        message.MessageText,
                         message.MessageId,
                         message.PopReceipt,
+                        message.MessageText,
                         TimeSpan.FromSeconds(5));
                     messages.Add(message.Update(changedMessage));
                 }
