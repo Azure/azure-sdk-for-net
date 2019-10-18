@@ -12,8 +12,8 @@ namespace Data.ApplicationInsights.Tests
 
         protected ApplicationInsightsDataClient GetClient(MockContext ctx, string appId = DefaultAppId, string apiKey = DefaultApiKey)
         {
-            var credentials = new ApiKeyClientCredentials(apiKey);
-            var client = new ApplicationInsightsDataClient(credentials, HttpMockServer.CreateInstance());
+            var Dacredentials = new ApiKeyClientCredentials(apiKey);
+            var client = new ApplicationInsightsDataClient(Dacredentials, HttpMockServer.CreateInstance());
             client.BaseUri = new Uri("https://api.applicationinsights.io/v1");
 
             return client;
