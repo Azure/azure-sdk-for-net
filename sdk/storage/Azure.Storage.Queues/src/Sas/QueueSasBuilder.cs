@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Sas
 {
@@ -52,7 +53,7 @@ namespace Azure.Storage.Sas
         /// <see cref="QueueAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        private string Permissions { get; set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -76,6 +77,37 @@ namespace Azure.Storage.Sas
         public string QueueName { get; set; }
 
         /// <summary>
+        /// Sets the permissions for a queue SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="QueueSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(QueueSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a queue account level SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="QueueAccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(QueueAccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
+
+        /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
@@ -91,7 +123,6 @@ namespace Azure.Storage.Sas
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            Permissions = QueueAccountSasPermissions.Parse(Permissions).ToString();
             if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;

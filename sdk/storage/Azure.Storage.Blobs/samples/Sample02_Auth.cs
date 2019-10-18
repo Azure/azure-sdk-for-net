@@ -146,12 +146,11 @@ namespace Azure.Storage.Blobs.Samples
                 // Allow access to the service level APIs
                 ResourceTypes = AccountSasResourceTypes.Service,
 
-                // Allow read access
-                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
-
                 // Access expires in 1 hour!
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);

@@ -90,11 +90,11 @@ namespace Azure.Storage.Queues.Test
                 Protocol = constants.Sas.Protocol,
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
             };
+            queueSasBuilder.SetPermissions(QueueSasPermissions.All);
 
             if (includeVersion)
             {

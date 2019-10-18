@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Files;
 
 namespace Azure.Storage.Sas
 {
@@ -48,10 +49,10 @@ namespace Azure.Storage.Sas
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
         /// stored access policy.  The <see cref="FileSasPermissions"/>
-        /// and <see cref="ShareSasPermissions"/>
+        /// , <see cref="ShareSasPermissions"/>, or <see cref="FileAccountSasPermissions"/>
         /// can be used to create the permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        private string Permissions { get; set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -107,6 +108,48 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
+        /// Sets the permissions for a file SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="FileSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(FileSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a file account level SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="FileAccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(FileAccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a share SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="ShareSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(ShareSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
+
+        /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
@@ -125,14 +168,10 @@ namespace Azure.Storage.Sas
 
             if (string.IsNullOrEmpty(FilePath))
             {
-                // Make sure the permission characters are in the correct order
-                Permissions = ShareSasPermissions.Parse(Permissions).ToString();
                 resource = Constants.Sas.Resource.Share;
             }
             else
             {
-                // Make sure the permission characters are in the correct order
-                Permissions = FileSasPermissions.Parse(Permissions).ToString();
                 resource = Constants.Sas.Resource.File;
             }
 

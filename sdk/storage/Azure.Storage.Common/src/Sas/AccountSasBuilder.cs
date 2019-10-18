@@ -51,7 +51,7 @@ namespace Azure.Storage.Sas
         /// <see cref="AccountSasPermissions"/> type can be used to create the
         /// permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        private string Permissions { get; set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -74,6 +74,26 @@ namespace Azure.Storage.Sas
         /// user is restricted to operations on the specified resources.
         /// </summary>
         public AccountSasResourceTypes ResourceTypes { get; set; }
+
+        /// <summary>
+        /// Sets the permissions for an account SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="AccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(AccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -100,8 +120,6 @@ namespace Azure.Storage.Sas
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }
-            // Make sure the permission characters are in the correct order
-            Permissions = AccountSasPermissions.Parse(Permissions).ToString();
             var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
             var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
 
