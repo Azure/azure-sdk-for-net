@@ -1291,7 +1291,7 @@ namespace Azure.Storage.Files
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response ForceCloseHandle(
@@ -1331,7 +1331,7 @@ namespace Azure.Storage.Files
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> ForceCloseHandleAsync(
@@ -1446,7 +1446,7 @@ namespace Azure.Storage.Files
         /// The number of handles closed.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<int> ForceCloseAllHandlesInternal(

@@ -4,17 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
     /// <summary>
     /// Provide helpful information about errors calling Azure Storage endpoints.
-    /// </summary>S
+    /// </summary>
     internal class StorageRequestFailedExceptionHelpers
     {
         public static RequestFailedException CreateException(Response response, string message = null, Exception innerException = null, string errorCode = null, IDictionary<string, string> additionalInfo = null)

@@ -1189,7 +1189,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.ForceCloseHandleAsync("nonExistantHandleId"),
                     actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
 

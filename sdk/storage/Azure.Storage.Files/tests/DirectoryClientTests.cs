@@ -583,7 +583,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
                 AsyncPageable<StorageFileHandle> handles = directory.GetHandlesAsync();
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.ForceCloseHandleAsync("nonExistantHandleId"),
                     actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
             }
