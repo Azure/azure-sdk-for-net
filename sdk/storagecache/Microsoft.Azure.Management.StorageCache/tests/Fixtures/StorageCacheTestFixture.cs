@@ -56,6 +56,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     // TODO - Remove QP handler before pushing to remote azure-sdk-net branch and instead use recorded handler.
                     QueryParameterDelegatingHandler handler = new QueryParameterDelegatingHandler { IsPassThrough = true, UseMockCache = true };
                     StorageCacheManagementClient storagecacheMgmtClient = this.Context.GetClient<StorageCacheManagementClient>(handler);
+
                     // StorageCacheManagementClient storagecacheMgmtClient = this.Context.GetClient<StorageCacheManagementClient>();
                     storagecacheMgmtClient.ApiVersion = Constants.DefaultAPIVersion;
 
@@ -104,8 +105,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     {
                         this.Cache = null;
                         this.Cache = this.CacheHelper.Create(this.cacheName, sku, int_size);
-                        //TODO : uncomment this so that test can wait for cache to be healthy before proceeding, once swagger health state issue is resolved.
-                        // this.CacheHelper.CheckCacheState(this.cacheName);
+                        this.CacheHelper.CheckCacheState(this.cacheName);
                     }
                 }
                 catch (Exception)

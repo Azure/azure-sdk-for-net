@@ -46,5 +46,18 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
                 throw new KeyNotFoundException(string.Format("Generated name not found for calling method: {0}", methodName), e);
             }
         }
+
+        /// <summary>
+        /// Throw expception if the given condition is satisfied.
+        /// </summary>
+        /// <param name="condition">Condition to verify.</param>
+        /// <param name="message">Exception message to raise.</param>
+        public static void ThrowIfTrue(bool condition, string message)
+        {
+            if (condition)
+            {
+                throw new Exception(message);
+            }
+        }
     }
 }
