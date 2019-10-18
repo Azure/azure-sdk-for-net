@@ -741,10 +741,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key, testSetting.Label);
-                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .ToArray();
+                var batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync());
 
-                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(1, batch.Count);
                 Assert.AreEqual(testSetting.Key, batch[0].Key);
                 Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
@@ -874,16 +873,18 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task GetBatchSettingEscapedCharacters(bool useWildcard)
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public async Task GetBatchSettingEscapedCharacters(bool useWildcardForKey, bool useWildcardForValue)
         {
             const string escapedChars = "!@#$^&()-=";
-            string key = (useWildcard ? "*" : "name-") + escapedChars;
+            string key = (useWildcardForKey ? "*" : "key-") + escapedChars;
             string value = $"value-{escapedChars}";
-            string label = (useWildcard ? "*" : "label-") + escapedChars;
+            string label = (useWildcardForValue ? "*" : "label-") + escapedChars;
             ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = new ConfigurationSetting($"name-{escapedChars}", value, $"label-{escapedChars}");
+            ConfigurationSetting testSetting = new ConfigurationSetting($"key-{escapedChars}", value, $"label-{escapedChars}");
 
             try
             {
@@ -897,8 +898,43 @@ namespace Azure.Data.AppConfiguration.Tests
                 var resultsReturned = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync());
 
                 //At least there should be one key available
-                Assert.GreaterOrEqual(resultsReturned.Count, 1);
-                Assert.AreEqual(value, resultsReturned[0].Value);
+                CollectionAssert.IsNotEmpty(resultsReturned);
+                CollectionAssert.Contains(resultsReturned.Select(r => r.Key), $"key-{escapedChars}");
+                CollectionAssert.Contains(resultsReturned.Select(r => r.Value), value);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public async Task GetBatchSettingComma(bool useWildcardForKey, bool useWildcardForValue)
+        {
+            string key = useWildcardForKey ? "*" : "a,b";
+            string value = "e,f";
+            string label = useWildcardForValue ? "*" : "c,d";
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = new ConfigurationSetting("a,b", value, "c,d");
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                var selector = new SettingSelector(key, label);
+
+                Assert.AreEqual(key, selector.Keys.First());
+                Assert.AreEqual(label, selector.Labels.First());
+
+                var resultsReturned = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync());
+
+                //At least there should be one key available
+                CollectionAssert.IsNotEmpty(resultsReturned);
+                CollectionAssert.Contains(resultsReturned.Select(r => r.Key), "a,b");
+                CollectionAssert.Contains(resultsReturned.Select(r => r.Value), value);
             }
             finally
             {
