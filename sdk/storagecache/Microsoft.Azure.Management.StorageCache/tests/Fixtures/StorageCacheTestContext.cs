@@ -5,8 +5,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using Microsoft.Azure.Management.Authorization;
+    using Microsoft.Azure.Management.Authorization.Models;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Resources;
@@ -47,6 +50,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             string methodName = ".ctor")
         {
             this.mockContext = MockContext.Start(suiteObject.GetType().Name, methodName);
+            this.RegisterSubscriptionForResource("Microsoft.StorageCache");
         }
 
         /// <summary>
@@ -237,6 +241,47 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         }
 
         /// <summary>
+        /// Register subscription for resource.
+        /// </summary>
+        /// <param name="providerName">Resource provider name.</param>
+        public void RegisterSubscriptionForResource(string providerName)
+        {
+            ResourceManagementClient resourceManagementClient = this.GetClient<ResourceManagementClient>();
+            var reg = resourceManagementClient.Providers.Register(providerName);
+            StorageCacheTestUtilities.ThrowIfTrue(reg == null, $"Failed to register provider {providerName}");
+            var result = resourceManagementClient.Providers.Get(providerName);
+            StorageCacheTestUtilities.ThrowIfTrue(result == null, $"Failed to register provier {providerName}");
+        }
+
+        /// <summary>
+        /// Add role assignment by role name.
+        /// </summary>
+        /// <param name="context">Context.</param>
+        /// <param name="scope">The scope of the role assignment to create.</param>
+        /// <param name="roleName">The role name.</param>
+        /// <param name="assignmentName">The name of the role assignment to create.</param>
+        public void AddRoleAssignment(StorageCacheTestContext context, string scope, string roleName, string assignmentName)
+        {
+            AuthorizationManagementClient authorizationManagementClient = context.GetClient<AuthorizationManagementClient>();
+            var roleDefinition = authorizationManagementClient.RoleDefinitions
+                .List(scope)
+                .First(role => role.RoleName.StartsWith(roleName));
+
+            var newRoleAssignment = new RoleAssignmentCreateParameters()
+            {
+                RoleDefinitionId = roleDefinition.Id,
+                PrincipalId = "831d4223-7a3c-4121-a445-1e423591e57b",
+
+                // The principal ID assigned to the role.
+                // This maps to the ID inside the Active Directory.
+                // It can point to a user, service principal, or security group.
+                CanDelegate = false,
+            };
+
+            authorizationManagementClient.RoleAssignments.Create(scope, assignmentName, newRoleAssignment);
+        }
+
+        /// <summary>
         /// This code added to correctly implement the disposable pattern.
         /// </summary>
         public void Dispose()
@@ -267,6 +312,5 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                 this.disposedValue = true;
             }
         }
-
     }
 }

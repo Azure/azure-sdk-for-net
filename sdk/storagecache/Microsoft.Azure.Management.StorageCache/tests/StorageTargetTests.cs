@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 var client = context.GetClient<StorageCacheManagementClient>();
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                var storageTarget = this.AddClfsStorageAccount(context, "2");
+                var storageTarget = this.AddClfsStorageAccount(context, "2", wait: false);
                 IList<StorageTarget> storageTargetListResponse = this.fixture.CacheHelper.StoragecacheManagementClient.StorageTargets.ListByCache(this.fixture.ResourceGroup.Name, this.fixture.Cache.Name).Value;
                 Assert.True(storageTargetListResponse.Count >= 1);
                 bool found = false;
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 var client = context.GetClient<StorageCacheManagementClient>();
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                var storageTarget = this.AddClfsStorageAccount(context, "3");
+                var storageTarget = this.AddClfsStorageAccount(context, "3", wait: false);
                 var response = this.fixture.CacheHelper.GetstorageTarget(this.fixture.Cache.Name, storageTarget.Name);
                 Assert.Equal(storageTarget.Name, response.Name);
                 Assert.Equal(storageTarget.Id, response.Id, ignoreCase: true);
@@ -404,7 +404,30 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             }
         }
 
-        private StorageTarget AddClfsStorageAccount(StorageCacheTestContext context, string suffix = null)
+        /// <summary>
+        /// Test storage account permission.
+        /// </summary>
+        [Fact]
+        public void TestStorageAccountPermission()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            TestUtilities.Wait(new TimeSpan(0, 0, 900));
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = Constants.DefaultAPIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.AddClfsStorageAccount(context, "4", addPermissions: false));
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
+                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
+                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+                Assert.Contains("hasn't sufficient permissions", ex.Body.Error.Message);
+            }
+        }
+
+        private StorageTarget AddClfsStorageAccount(StorageCacheTestContext context, string suffix = null, bool wait = true, bool addPermissions = true)
         {
             StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
             StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
@@ -415,6 +438,16 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             string storageTargetName = "st-" + prefix;
             string junction = "/junction" + suffix;
             var storageAccount = storageAccountsHelper.CreateStorageAccount(storageAccountName);
+
+            if (addPermissions)
+            {
+                string role1 = "Storage Account Contributor";
+                string role2 = "Storage Blob Data Contributor";
+                this.fixture.Context.AddRoleAssignment(context, storageAccount.Id, role1, TestUtilities.GenerateGuid().ToString());
+                this.fixture.Context.AddRoleAssignment(context, storageAccount.Id, role2, TestUtilities.GenerateGuid().ToString());
+                this.testOutputHelper.WriteLine($"Added {role1} & {role2} role to storage account {storageAccountName}.");
+            }
+
             var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, blobContainerName);
             StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                 storageAccount.Name,
@@ -424,14 +457,14 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 this.fixture.Cache.Name,
                 storageTargetName,
                 storageTargetParameters,
-                this.testOutputHelper);
+                this.testOutputHelper,
+                wait);
 
             this.testOutputHelper.WriteLine($"Storage target Name {storageTarget.Name}");
             this.testOutputHelper.WriteLine($"Storage target NamespacePath {storageTarget.Junctions[0].NamespacePath}");
             this.testOutputHelper.WriteLine($"Storage target TargetPath {storageTarget.Junctions[0].TargetPath}");
             this.testOutputHelper.WriteLine($"Storage target Id {storageTarget.Id}");
             this.testOutputHelper.WriteLine($"Storage target Target {storageTarget.Clfs.Target}");
-            this.testOutputHelper.WriteLine($"Storage target ProvisioningState {storageTarget.ProvisioningState}");
             return storageTarget;
         }
     }
