@@ -35,9 +35,11 @@ pr:
     - sdk/core/
 
 variables:
-  Skip.Release: false
+  Skip.Release: true
   Skip.Test: true
   Skip.Analyze: true
+  Skip.TagRepository: true
+  Skip.PublishPackage: true
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
