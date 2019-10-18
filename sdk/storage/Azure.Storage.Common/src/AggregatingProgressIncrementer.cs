@@ -37,6 +37,7 @@ namespace Azure.Storage
         public void Reset()
         {
             Volatile.Write(ref _currentValue, 0);
+            Report(0);
         }
 
         /// <summary>
