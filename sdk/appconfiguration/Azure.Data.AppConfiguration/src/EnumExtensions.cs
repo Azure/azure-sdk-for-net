@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Azure.Data.AppConfiguration 
+namespace Azure.Data.AppConfiguration
 {
     internal static class EnumExtensions
     {

@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Data.AppConfiguration 
+namespace Azure.Data.AppConfiguration
 {
     internal static class SettingFieldsExtensions
     {

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using NUnit.Framework;
 
-namespace Azure.Data.AppConfiguration.Tests 
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class EnumExtensionsTests
     {
