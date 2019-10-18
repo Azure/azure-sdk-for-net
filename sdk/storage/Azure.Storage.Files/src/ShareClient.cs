@@ -296,7 +296,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -313,11 +313,11 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<ShareInfo> Create(
             Metadata metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 metadata,
-                quotaInBytes,
+                quotaInGB,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -332,7 +332,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -349,11 +349,11 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> CreateAsync(
             Metadata metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 metadata,
-                quotaInBytes,
+                quotaInGB,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="async">
@@ -388,7 +388,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<ShareInfo>> CreateInternal(
             Metadata metadata,
-            int? quotaInBytes,
+            int? quotaInGB,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -398,7 +398,7 @@ namespace Azure.Storage.Files
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(quotaInBytes)}: {quotaInBytes}");
+                    $"{nameof(quotaInGB)}: {quotaInGB}");
                 try
                 {
                     return await FileRestClient.Share.CreateAsync(
@@ -406,7 +406,7 @@ namespace Azure.Storage.Files
                         Pipeline,
                         Uri,
                         metadata: metadata,
-                        quota: quotaInBytes,
+                        quotaInGB: quotaInGB,
                         async: async,
                         operationName: Constants.File.Share.CreateOperationName,
                         cancellationToken: cancellationToken)
@@ -798,7 +798,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
-        /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
+        /// <param name="quotaInGB">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -812,10 +812,10 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetQuota(
-            int quotaInBytes = default,
+            int quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             SetQuotaInternal(
-                quotaInBytes,
+                quotaInGB,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -825,7 +825,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
-        /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
+        /// <param name="quotaInGB">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -839,10 +839,10 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
-            int quotaInBytes = default,
+            int quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             await SetQuotaInternal(
-                quotaInBytes,
+                quotaInGB,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -852,7 +852,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
-        /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
+        /// <param name="quotaInGB">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -869,7 +869,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
-            int quotaInBytes,
+            int quotaInGB,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -879,14 +879,14 @@ namespace Azure.Storage.Files
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(quotaInBytes)}: {quotaInBytes}");
+                    $"{nameof(quotaInGB)}: {quotaInGB}");
                 try
                 {
                     return await FileRestClient.Share.SetQuotaAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        quota: quotaInBytes,
+                        quotaInGB: quotaInGB,
                         async: async,
                         operationName: "Azure.Storage.Files.ShareClient.SetQuota",
                         cancellationToken: cancellationToken)

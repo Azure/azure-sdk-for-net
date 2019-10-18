@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.Test
             {
                 ShareClient share = InstrumentClient((await service.CreateShareAsync(name)).Value);
                 Response<ShareProperties> properties = await share.GetPropertiesAsync();
-                Assert.AreNotEqual(0, properties.Value.Quota);
+                Assert.AreNotEqual(0, properties.Value.QuotaInGB);
             }
             finally
             {

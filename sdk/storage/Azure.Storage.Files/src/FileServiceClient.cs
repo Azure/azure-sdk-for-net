@@ -605,7 +605,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -624,11 +624,11 @@ namespace Azure.Storage.Files
         public virtual Response<ShareClient> CreateShare(
             string shareName,
             IDictionary<string, string> metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default)
         {
             ShareClient share = GetShareClient(shareName);
-            Response<ShareInfo> response = share.Create(metadata, quotaInBytes, cancellationToken);
+            Response<ShareInfo> response = share.Create(metadata, quotaInGB, cancellationToken);
             return Response.FromValue(share, response.GetRawResponse());
         }
 
@@ -645,7 +645,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -664,11 +664,11 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default)
         {
             ShareClient share = GetShareClient(shareName);
-            Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
+            Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInGB, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(share, response.GetRawResponse());
         }
         #endregion CreateShare

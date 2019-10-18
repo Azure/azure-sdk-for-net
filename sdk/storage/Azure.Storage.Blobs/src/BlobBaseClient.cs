@@ -1009,10 +1009,10 @@ namespace Azure.Storage.Blobs.Specialized
             Stream destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1056,10 +1056,10 @@ namespace Azure.Storage.Blobs.Specialized
             FileInfo destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1103,10 +1103,10 @@ namespace Azure.Storage.Blobs.Specialized
             Stream destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1149,10 +1149,10 @@ namespace Azure.Storage.Blobs.Specialized
             FileInfo destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1202,10 +1202,10 @@ namespace Azure.Storage.Blobs.Specialized
             Stream destination,
             BlobAccessConditions? blobAccessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler,
+            //IProgress<long> progressHandler,
             long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,
@@ -1320,10 +1320,10 @@ namespace Azure.Storage.Blobs.Specialized
             FileInfo destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler,
+            //IProgress<long> progressHandler,
             long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,

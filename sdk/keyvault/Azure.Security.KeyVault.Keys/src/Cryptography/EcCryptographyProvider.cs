@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
+            KeyCurveName algorithmCurve = algorithm.GetEcKeyCurveName();
             if (_curve.KeySize != algorithmCurve.KeySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
@@ -103,7 +103,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
+            KeyCurveName algorithmCurve = algorithm.GetEcKeyCurveName();
             if (_curve.KeySize != algorithmCurve.KeySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");

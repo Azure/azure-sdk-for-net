@@ -80,7 +80,7 @@ namespace Azure.Storage.Files.Test
             try
             {
                 // Act
-                Response<ShareInfo> response = await share.CreateAsync(quotaInBytes: 1);
+                Response<ShareInfo> response = await share.CreateAsync(quotaInGB: 1);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -140,7 +140,7 @@ namespace Azure.Storage.Files.Test
 
             try
             {
-                Response<ShareInfo> result = await share.CreateAsync(quotaInBytes: 1);
+                Response<ShareInfo> result = await share.CreateAsync(quotaInGB: 1);
 
                 Assert.AreNotEqual(default, result.GetRawResponse().Headers.RequestId, $"{nameof(result)} may not be populated");
             }
@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Test
             try
             {
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    share.CreateAsync(quotaInBytes: 1),
+                    share.CreateAsync(quotaInGB: 1),
                     e =>
                     {
                         Assert.AreEqual(FileErrorCode.AuthorizationFailure.ToString(), e.ErrorCode);
@@ -418,7 +418,7 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(Constants.KB, response.Value.Quota);
+                Assert.AreEqual(Constants.KB, response.Value.QuotaInGB);
             }
         }
 
@@ -443,7 +443,7 @@ namespace Azure.Storage.Files.Test
             var shareName = GetNewShareName();
             FileServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            await share.CreateAsync(quotaInBytes: 1);
+            await share.CreateAsync(quotaInGB: 1);
 
             // Act
             Response response = await share.DeleteAsync();

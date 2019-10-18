@@ -1587,7 +1587,7 @@ namespace Azure.Storage.Files
         /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -1607,7 +1607,7 @@ namespace Azure.Storage.Files
             HttpRange range,
             Stream content,
             byte[] transactionalContentHash = null,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             UploadRangeInternal(
                 writeType,
@@ -1643,7 +1643,7 @@ namespace Azure.Storage.Files
         /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -1663,7 +1663,7 @@ namespace Azure.Storage.Files
             HttpRange range,
             Stream content,
             byte[] transactionalContentHash = null,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadRangeInternal(
                 writeType,
@@ -1699,7 +1699,7 @@ namespace Azure.Storage.Files
         /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -1722,7 +1722,7 @@ namespace Azure.Storage.Files
             HttpRange range,
             Stream content,
             byte[] transactionalContentHash,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1948,7 +1948,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Stream"/> containing the content of the file to upload.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -1966,7 +1966,7 @@ namespace Azure.Storage.Files
         [ForwardsClientCalls]
         public virtual Response<StorageFileUploadInfo> Upload(
             Stream content,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
                 content,
@@ -1986,7 +1986,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Stream"/> containing the content of the file to upload.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -2004,7 +2004,7 @@ namespace Azure.Storage.Files
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageFileUploadInfo>> UploadAsync(
             Stream content,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadInternal(
                 content,
@@ -2024,7 +2024,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="singleRangeThreshold">
@@ -2048,7 +2048,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         internal async Task<Response<StorageFileUploadInfo>> UploadInternal(
             Stream content,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             int singleRangeThreshold,
             bool async,
             CancellationToken cancellationToken)

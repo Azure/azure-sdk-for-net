@@ -447,7 +447,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
@@ -459,7 +459,7 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                int? quota = default,
+                int? quotaInGB = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -474,7 +474,7 @@ namespace Azure.Storage.Files
                         resourceUri,
                         timeout,
                         metadata,
-                        quota))
+                        quotaInGB))
                     {
                         if (async)
                         {
@@ -510,14 +510,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <returns>The Share.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                int? quota = default)
+                int? quotaInGB = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -543,7 +543,7 @@ namespace Azure.Storage.Files
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
-                if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 return _message;
             }
@@ -724,7 +724,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("x-ms-share-quota", out _header))
                         {
-                            _value.Quota = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.QuotaInGB = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -1314,7 +1314,7 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1325,7 +1325,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? quota = default,
+                int? quotaInGB = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1339,7 +1339,7 @@ namespace Azure.Storage.Files
                         pipeline,
                         resourceUri,
                         timeout,
-                        quota))
+                        quotaInGB))
                     {
                         if (async)
                         {
@@ -1374,13 +1374,13 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <returns>The Share.SetQuotaAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetQuotaAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? quota = default)
+                int? quotaInGB = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1401,7 +1401,7 @@ namespace Azure.Storage.Files
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
-                if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 return _message;
             }
@@ -6325,332 +6325,332 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// AccountAlreadyExists
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists = new FileErrorCode(@"AccountAlreadyExists");
+        public static Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists { get; } = new FileErrorCode(@"AccountAlreadyExists");
 
         /// <summary>
         /// AccountBeingCreated
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated = new FileErrorCode(@"AccountBeingCreated");
+        public static Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated { get; } = new FileErrorCode(@"AccountBeingCreated");
 
         /// <summary>
         /// AccountIsDisabled
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled = new FileErrorCode(@"AccountIsDisabled");
+        public static Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled { get; } = new FileErrorCode(@"AccountIsDisabled");
 
         /// <summary>
         /// AuthenticationFailed
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed = new FileErrorCode(@"AuthenticationFailed");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed { get; } = new FileErrorCode(@"AuthenticationFailed");
 
         /// <summary>
         /// AuthorizationFailure
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure = new FileErrorCode(@"AuthorizationFailure");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure { get; } = new FileErrorCode(@"AuthorizationFailure");
 
         /// <summary>
         /// ConditionHeadersNotSupported
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported = new FileErrorCode(@"ConditionHeadersNotSupported");
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported { get; } = new FileErrorCode(@"ConditionHeadersNotSupported");
 
         /// <summary>
         /// ConditionNotMet
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ConditionNotMet = new FileErrorCode(@"ConditionNotMet");
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionNotMet { get; } = new FileErrorCode(@"ConditionNotMet");
 
         /// <summary>
         /// EmptyMetadataKey
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey = new FileErrorCode(@"EmptyMetadataKey");
+        public static Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey { get; } = new FileErrorCode(@"EmptyMetadataKey");
 
         /// <summary>
         /// InsufficientAccountPermissions
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions = new FileErrorCode(@"InsufficientAccountPermissions");
+        public static Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions { get; } = new FileErrorCode(@"InsufficientAccountPermissions");
 
         /// <summary>
         /// InternalError
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InternalError = new FileErrorCode(@"InternalError");
+        public static Azure.Storage.Files.Models.FileErrorCode InternalError { get; } = new FileErrorCode(@"InternalError");
 
         /// <summary>
         /// InvalidAuthenticationInfo
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo = new FileErrorCode(@"InvalidAuthenticationInfo");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo { get; } = new FileErrorCode(@"InvalidAuthenticationInfo");
 
         /// <summary>
         /// InvalidHeaderValue
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue = new FileErrorCode(@"InvalidHeaderValue");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue { get; } = new FileErrorCode(@"InvalidHeaderValue");
 
         /// <summary>
         /// InvalidHttpVerb
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb = new FileErrorCode(@"InvalidHttpVerb");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb { get; } = new FileErrorCode(@"InvalidHttpVerb");
 
         /// <summary>
         /// InvalidInput
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidInput = new FileErrorCode(@"InvalidInput");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidInput { get; } = new FileErrorCode(@"InvalidInput");
 
         /// <summary>
         /// InvalidMd5
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidMd5 = new FileErrorCode(@"InvalidMd5");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMd5 { get; } = new FileErrorCode(@"InvalidMd5");
 
         /// <summary>
         /// InvalidMetadata
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidMetadata = new FileErrorCode(@"InvalidMetadata");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMetadata { get; } = new FileErrorCode(@"InvalidMetadata");
 
         /// <summary>
         /// InvalidQueryParameterValue
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue = new FileErrorCode(@"InvalidQueryParameterValue");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue { get; } = new FileErrorCode(@"InvalidQueryParameterValue");
 
         /// <summary>
         /// InvalidRange
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidRange = new FileErrorCode(@"InvalidRange");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidRange { get; } = new FileErrorCode(@"InvalidRange");
 
         /// <summary>
         /// InvalidResourceName
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidResourceName = new FileErrorCode(@"InvalidResourceName");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidResourceName { get; } = new FileErrorCode(@"InvalidResourceName");
 
         /// <summary>
         /// InvalidUri
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidUri = new FileErrorCode(@"InvalidUri");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidUri { get; } = new FileErrorCode(@"InvalidUri");
 
         /// <summary>
         /// InvalidXmlDocument
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument = new FileErrorCode(@"InvalidXmlDocument");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument { get; } = new FileErrorCode(@"InvalidXmlDocument");
 
         /// <summary>
         /// InvalidXmlNodeValue
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue = new FileErrorCode(@"InvalidXmlNodeValue");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue { get; } = new FileErrorCode(@"InvalidXmlNodeValue");
 
         /// <summary>
         /// Md5Mismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode Md5Mismatch = new FileErrorCode(@"Md5Mismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode Md5Mismatch { get; } = new FileErrorCode(@"Md5Mismatch");
 
         /// <summary>
         /// MetadataTooLarge
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge = new FileErrorCode(@"MetadataTooLarge");
+        public static Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge { get; } = new FileErrorCode(@"MetadataTooLarge");
 
         /// <summary>
         /// MissingContentLengthHeader
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader = new FileErrorCode(@"MissingContentLengthHeader");
+        public static Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader { get; } = new FileErrorCode(@"MissingContentLengthHeader");
 
         /// <summary>
         /// MissingRequiredQueryParameter
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter = new FileErrorCode(@"MissingRequiredQueryParameter");
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter { get; } = new FileErrorCode(@"MissingRequiredQueryParameter");
 
         /// <summary>
         /// MissingRequiredHeader
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader = new FileErrorCode(@"MissingRequiredHeader");
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader { get; } = new FileErrorCode(@"MissingRequiredHeader");
 
         /// <summary>
         /// MissingRequiredXmlNode
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode = new FileErrorCode(@"MissingRequiredXmlNode");
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode { get; } = new FileErrorCode(@"MissingRequiredXmlNode");
 
         /// <summary>
         /// MultipleConditionHeadersNotSupported
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported = new FileErrorCode(@"MultipleConditionHeadersNotSupported");
+        public static Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported { get; } = new FileErrorCode(@"MultipleConditionHeadersNotSupported");
 
         /// <summary>
         /// OperationTimedOut
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode OperationTimedOut = new FileErrorCode(@"OperationTimedOut");
+        public static Azure.Storage.Files.Models.FileErrorCode OperationTimedOut { get; } = new FileErrorCode(@"OperationTimedOut");
 
         /// <summary>
         /// OutOfRangeInput
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput = new FileErrorCode(@"OutOfRangeInput");
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput { get; } = new FileErrorCode(@"OutOfRangeInput");
 
         /// <summary>
         /// OutOfRangeQueryParameterValue
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue = new FileErrorCode(@"OutOfRangeQueryParameterValue");
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue { get; } = new FileErrorCode(@"OutOfRangeQueryParameterValue");
 
         /// <summary>
         /// RequestBodyTooLarge
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge = new FileErrorCode(@"RequestBodyTooLarge");
+        public static Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge { get; } = new FileErrorCode(@"RequestBodyTooLarge");
 
         /// <summary>
         /// ResourceTypeMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch = new FileErrorCode(@"ResourceTypeMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch { get; } = new FileErrorCode(@"ResourceTypeMismatch");
 
         /// <summary>
         /// RequestUrlFailedToParse
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse = new FileErrorCode(@"RequestUrlFailedToParse");
+        public static Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse { get; } = new FileErrorCode(@"RequestUrlFailedToParse");
 
         /// <summary>
         /// ResourceAlreadyExists
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists = new FileErrorCode(@"ResourceAlreadyExists");
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists { get; } = new FileErrorCode(@"ResourceAlreadyExists");
 
         /// <summary>
         /// ResourceNotFound
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ResourceNotFound = new FileErrorCode(@"ResourceNotFound");
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceNotFound { get; } = new FileErrorCode(@"ResourceNotFound");
 
         /// <summary>
         /// ServerBusy
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ServerBusy = new FileErrorCode(@"ServerBusy");
+        public static Azure.Storage.Files.Models.FileErrorCode ServerBusy { get; } = new FileErrorCode(@"ServerBusy");
 
         /// <summary>
         /// UnsupportedHeader
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader = new FileErrorCode(@"UnsupportedHeader");
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader { get; } = new FileErrorCode(@"UnsupportedHeader");
 
         /// <summary>
         /// UnsupportedXmlNode
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode = new FileErrorCode(@"UnsupportedXmlNode");
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode { get; } = new FileErrorCode(@"UnsupportedXmlNode");
 
         /// <summary>
         /// UnsupportedQueryParameter
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter = new FileErrorCode(@"UnsupportedQueryParameter");
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter { get; } = new FileErrorCode(@"UnsupportedQueryParameter");
 
         /// <summary>
         /// UnsupportedHttpVerb
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb = new FileErrorCode(@"UnsupportedHttpVerb");
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb { get; } = new FileErrorCode(@"UnsupportedHttpVerb");
 
         /// <summary>
         /// CannotDeleteFileOrDirectory
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory = new FileErrorCode(@"CannotDeleteFileOrDirectory");
+        public static Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory { get; } = new FileErrorCode(@"CannotDeleteFileOrDirectory");
 
         /// <summary>
         /// ClientCacheFlushDelay
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay = new FileErrorCode(@"ClientCacheFlushDelay");
+        public static Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay { get; } = new FileErrorCode(@"ClientCacheFlushDelay");
 
         /// <summary>
         /// DeletePending
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode DeletePending = new FileErrorCode(@"DeletePending");
+        public static Azure.Storage.Files.Models.FileErrorCode DeletePending { get; } = new FileErrorCode(@"DeletePending");
 
         /// <summary>
         /// DirectoryNotEmpty
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty = new FileErrorCode(@"DirectoryNotEmpty");
+        public static Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty { get; } = new FileErrorCode(@"DirectoryNotEmpty");
 
         /// <summary>
         /// FileLockConflict
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode FileLockConflict = new FileErrorCode(@"FileLockConflict");
+        public static Azure.Storage.Files.Models.FileErrorCode FileLockConflict { get; } = new FileErrorCode(@"FileLockConflict");
 
         /// <summary>
         /// InvalidFileOrDirectoryPathName
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName = new FileErrorCode(@"InvalidFileOrDirectoryPathName");
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName { get; } = new FileErrorCode(@"InvalidFileOrDirectoryPathName");
 
         /// <summary>
         /// ParentNotFound
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ParentNotFound = new FileErrorCode(@"ParentNotFound");
+        public static Azure.Storage.Files.Models.FileErrorCode ParentNotFound { get; } = new FileErrorCode(@"ParentNotFound");
 
         /// <summary>
         /// ReadOnlyAttribute
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute = new FileErrorCode(@"ReadOnlyAttribute");
+        public static Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute { get; } = new FileErrorCode(@"ReadOnlyAttribute");
 
         /// <summary>
         /// ShareAlreadyExists
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists = new FileErrorCode(@"ShareAlreadyExists");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists { get; } = new FileErrorCode(@"ShareAlreadyExists");
 
         /// <summary>
         /// ShareBeingDeleted
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted = new FileErrorCode(@"ShareBeingDeleted");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted { get; } = new FileErrorCode(@"ShareBeingDeleted");
 
         /// <summary>
         /// ShareDisabled
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareDisabled = new FileErrorCode(@"ShareDisabled");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareDisabled { get; } = new FileErrorCode(@"ShareDisabled");
 
         /// <summary>
         /// ShareNotFound
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareNotFound = new FileErrorCode(@"ShareNotFound");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareNotFound { get; } = new FileErrorCode(@"ShareNotFound");
 
         /// <summary>
         /// SharingViolation
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode SharingViolation = new FileErrorCode(@"SharingViolation");
+        public static Azure.Storage.Files.Models.FileErrorCode SharingViolation { get; } = new FileErrorCode(@"SharingViolation");
 
         /// <summary>
         /// ShareSnapshotInProgress
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress = new FileErrorCode(@"ShareSnapshotInProgress");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress { get; } = new FileErrorCode(@"ShareSnapshotInProgress");
 
         /// <summary>
         /// ShareSnapshotCountExceeded
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded = new FileErrorCode(@"ShareSnapshotCountExceeded");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded { get; } = new FileErrorCode(@"ShareSnapshotCountExceeded");
 
         /// <summary>
         /// ShareSnapshotOperationNotSupported
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported = new FileErrorCode(@"ShareSnapshotOperationNotSupported");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported { get; } = new FileErrorCode(@"ShareSnapshotOperationNotSupported");
 
         /// <summary>
         /// ShareHasSnapshots
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots = new FileErrorCode(@"ShareHasSnapshots");
+        public static Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots { get; } = new FileErrorCode(@"ShareHasSnapshots");
 
         /// <summary>
         /// ContainerQuotaDowngradeNotAllowed
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed = new FileErrorCode(@"ContainerQuotaDowngradeNotAllowed");
+        public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed { get; } = new FileErrorCode(@"ContainerQuotaDowngradeNotAllowed");
 
         /// <summary>
         /// AuthorizationSourceIPMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthorizationSourceIPMismatch = new FileErrorCode(@"AuthorizationSourceIPMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationSourceIPMismatch { get; } = new FileErrorCode(@"AuthorizationSourceIPMismatch");
 
         /// <summary>
         /// AuthorizationProtocolMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthorizationProtocolMismatch = new FileErrorCode(@"AuthorizationProtocolMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationProtocolMismatch { get; } = new FileErrorCode(@"AuthorizationProtocolMismatch");
 
         /// <summary>
         /// AuthorizationPermissionMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthorizationPermissionMismatch = new FileErrorCode(@"AuthorizationPermissionMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationPermissionMismatch { get; } = new FileErrorCode(@"AuthorizationPermissionMismatch");
 
         /// <summary>
         /// AuthorizationServiceMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthorizationServiceMismatch = new FileErrorCode(@"AuthorizationServiceMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationServiceMismatch { get; } = new FileErrorCode(@"AuthorizationServiceMismatch");
 
         /// <summary>
         /// AuthorizationResourceTypeMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode AuthorizationResourceTypeMismatch = new FileErrorCode(@"AuthorizationResourceTypeMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationResourceTypeMismatch { get; } = new FileErrorCode(@"AuthorizationResourceTypeMismatch");
 
         /// <summary>
         /// FeatureVersionMismatch
         /// </summary>
-        public static readonly Azure.Storage.Files.Models.FileErrorCode FeatureVersionMismatch = new FileErrorCode(@"FeatureVersionMismatch");
+        public static Azure.Storage.Files.Models.FileErrorCode FeatureVersionMismatch { get; } = new FileErrorCode(@"FeatureVersionMismatch");
 
         /// <summary>
         /// Determines if two <see cref="FileErrorCode"/> values are the same.
@@ -8293,9 +8293,9 @@ namespace Azure.Storage.Files.Models
         public Azure.ETag? Etag { get; internal set; }
 
         /// <summary>
-        /// Quota
+        /// QuotaInGB
         /// </summary>
-        public int? Quota { get; internal set; }
+        public int? QuotaInGB { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of ShareItemProperties instances.
@@ -8326,7 +8326,7 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
             {
-                _value.Quota = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.QuotaInGB = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -8346,13 +8346,13 @@ namespace Azure.Storage.Files.Models
         public static ShareItemProperties ShareItemProperties(
             System.DateTimeOffset? lastModified = default,
             Azure.ETag? etag = default,
-            int? quota = default)
+            int? quotaInGB = default)
         {
             return new ShareItemProperties()
             {
                 LastModified = lastModified,
                 Etag = etag,
-                Quota = quota,
+                QuotaInGB = quotaInGB,
             };
         }
     }
@@ -8385,7 +8385,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Returns the current share quota in GB.
         /// </summary>
-        public int Quota { get; internal set; }
+        public int QuotaInGB { get; internal set; }
 
         /// <summary>
         /// Creates a new ShareProperties instance
@@ -8408,14 +8408,14 @@ namespace Azure.Storage.Files.Models
             System.Collections.Generic.IDictionary<string, string> metadata,
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            int quota)
+            int quotaInGB)
         {
             return new ShareProperties()
             {
                 Metadata = metadata,
                 ETag = eTag,
                 LastModified = lastModified,
-                Quota = quota,
+                QuotaInGB = quotaInGB,
             };
         }
     }

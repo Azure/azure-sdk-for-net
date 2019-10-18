@@ -33,32 +33,32 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// RSA-OAEP
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep = new KeyWrapAlgorithm(RsaOaepValue);
+        public static KeyWrapAlgorithm RsaOaep { get; } = new KeyWrapAlgorithm(RsaOaepValue);
 
         /// <summary>
         /// RSA1_5
         /// </summary>
-        public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(Rsa15Value);
+        public static KeyWrapAlgorithm Rsa15 { get; } = new KeyWrapAlgorithm(Rsa15Value);
 
         /// <summary>
         /// RSA-OAEP-256
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RsaOaep256Value);
+        public static KeyWrapAlgorithm RsaOaep256 { get; } = new KeyWrapAlgorithm(RsaOaep256Value);
 
         /// <summary>
         /// AES 128 Key Wrap
         /// </summary>
-        public static readonly KeyWrapAlgorithm A128KW = new KeyWrapAlgorithm(A128KWValue);
+        public static KeyWrapAlgorithm A128KW { get; } = new KeyWrapAlgorithm(A128KWValue);
 
         /// <summary>
         /// AES 192 Key Wrap
         /// </summary>
-        public static readonly KeyWrapAlgorithm A192KW = new KeyWrapAlgorithm(A192KWValue);
+        public static KeyWrapAlgorithm A192KW { get; } = new KeyWrapAlgorithm(A192KWValue);
 
         /// <summary>
         /// AES 256 Key Wrap
         /// </summary>
-        public static readonly KeyWrapAlgorithm A256KW = new KeyWrapAlgorithm(A256KWValue);
+        public static KeyWrapAlgorithm A256KW { get; } = new KeyWrapAlgorithm(A256KWValue);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
