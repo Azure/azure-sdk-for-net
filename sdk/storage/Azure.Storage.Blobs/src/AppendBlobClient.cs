@@ -586,7 +586,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on appending content to this append blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -605,7 +605,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             AppendBlockInternal(
                 content,
@@ -642,7 +642,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on appending content to this append blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -661,7 +661,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await AppendBlockInternal(
                 content,
@@ -698,7 +698,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on appending content to this append blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -720,7 +720,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash,
             AppendBlobAccessConditions? accessConditions,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
