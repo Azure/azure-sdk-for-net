@@ -20,11 +20,6 @@
                 
                 3) Fetching region configuration details supported by Azure Data Box service
                 
-                5) Fetching list of available skus in Data Box family based on customer location
-                
-                6) Validating Job creation inputs and its supportability by Azure Data Box service
-                
-                7) Fetching region configuration details supported by Azure Data Box service
                 4) Deprecating validate address API
 
             ]]>
