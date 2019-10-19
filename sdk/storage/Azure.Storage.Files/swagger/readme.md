@@ -438,6 +438,7 @@ directive:
     $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    delete $.head.responses["200"].headers["x-ms-type"];
     $.head.responses["200"]["x-az-response-name"] = "RawStorageFileProperties";
     $.head.responses["200"]["x-az-public"] = false;
     $.head.responses.default = {

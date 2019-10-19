@@ -4128,10 +4128,6 @@ namespace Azure.Storage.Files
                                 _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
                             }
                         }
-                        if (response.Headers.TryGetValue("x-ms-type", out _header))
-                        {
-                            _value.FileType = (Azure.Storage.Files.Models.Header)System.Enum.Parse(typeof(Azure.Storage.Files.Models.Header), _header, false);
-                        }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
                             _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -7982,11 +7978,6 @@ namespace Azure.Storage.Files.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
-        /// Returns the type File. Reserved for future use.
-        /// </summary>
-        public Azure.Storage.Files.Models.Header FileType { get; internal set; }
-
-        /// <summary>
         /// The size of the file in bytes. This header returns the value of the 'x-ms-content-length' header that is stored with the file.
         /// </summary>
         public long ContentLength { get; internal set; }
@@ -9157,21 +9148,5 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class StorageHandlesSegment
-
-#region enum Header
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Returns the type File. Reserved for future use.
-    /// </summary>
-    public enum Header
-    {
-        /// <summary>
-        /// File
-        /// </summary>
-        File
-    }
-}
-#endregion enum Header
 #endregion Models
 
