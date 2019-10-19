@@ -77,6 +77,38 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public async Task RetriesTransportFailures()
+        {
+            int i = 0;
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (i == 0)
+                    {
+                        context.Abort();
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 201;
+                    }
+
+                    i++;
+                    return Task.CompletedTask;
+                });
+
+            using HttpMessage message = httpPipeline.CreateMessage();
+            message.Request.Uri.Reset(testServer.Address);
+            message.BufferResponse = false;
+
+            await httpPipeline.SendAsync(message, CancellationToken.None);
+
+            Assert.AreEqual(message.Response.Status, 201);
+            Assert.AreEqual(i, 2);
+        }
+
         private class TestOptions : ClientOptions
         {
         }
