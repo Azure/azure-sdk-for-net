@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Sas
@@ -14,7 +15,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage container or blob.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public struct BlobSasBuilder : IEquatable<BlobSasBuilder>
+    public class BlobSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -52,11 +53,11 @@ namespace Azure.Storage.Sas
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
         /// stored access policy.  The <see cref="BlobSasPermissions"/>,
-        /// <see cref="BlobContainerSasPermissions"/>, and
-        /// <see cref="SnapshotSasPermissions"/> can be used to create the
+        /// <see cref="BlobContainerSasPermissions"/>, <see cref="SnapshotSasPermissions"/>,
+        /// or <see cref="BlobAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        public string Permissions { get; private set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -134,6 +135,59 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Sets the permissions for a blob SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="BlobSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(BlobSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a blob account level SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="BlobAccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(BlobAccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a blob container SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="BlobContainerSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(BlobContainerSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a Snapshot SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="SnapshotSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(SnapshotSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -307,11 +361,17 @@ namespace Azure.Storage.Sas
         /// </summary>
         private void EnsureState()
         {
+            if (ExpiresOn == default)
+            {
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
+            }
             // Container
             if (String.IsNullOrEmpty(BlobName))
             {
-                // Make sure the permission characters are in the correct order
-                Permissions = BlobContainerSasPermissions.Parse(Permissions).ToString();
                 Resource = Constants.Sas.Resource.Container;
             }
 
@@ -321,15 +381,11 @@ namespace Azure.Storage.Sas
                 // Blob
                 if (String.IsNullOrEmpty(Snapshot))
                 {
-                    // Make sure the permission characters are in the correct order
-                    Permissions = BlobSasPermissions.Parse(Permissions).ToString();
                     Resource = Constants.Sas.Resource.Blob;
                 }
                 // Snapshot
                 else
                 {
-                    // Make sure the permission characters are in the correct order
-                    Permissions = SnapshotSasPermissions.Parse(Permissions).ToString();
                     Resource = Constants.Sas.Resource.BlobSnapshot;
                 }
 
@@ -355,66 +411,13 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is BlobSasBuilder other && Equals(other);
+            => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the BlobSasBuilder.
         /// </summary>
         /// <returns>Hash code for the BlobSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            BlobName.GetHashCode() ^
-            CacheControl.GetHashCode() ^
-            BlobContainerName.GetHashCode() ^
-            ContentDisposition.GetHashCode() ^
-            ContentEncoding.GetHashCode() ^
-            ContentLanguage.GetHashCode() ^
-            ContentType.GetHashCode() ^
-            ExpiresOn.GetHashCode() ^
-            Identifier.GetHashCode() ^
-            IPRange.GetHashCode() ^
-            Permissions.GetHashCode() ^
-            Protocol.GetHashCode() ^
-            StartsOn.GetHashCode() ^
-            Version.GetHashCode();
-
-        /// <summary>
-        /// Check if two BlobSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobSasBuilder left, BlobSasBuilder right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobSasBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobSasBuilder left, BlobSasBuilder right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two BlobSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobSasBuilder other) =>
-            BlobName == other.BlobName &&
-            CacheControl == other.CacheControl &&
-            BlobContainerName == other.BlobContainerName &&
-            ContentDisposition == other.ContentDisposition &&
-            ContentEncoding == other.ContentEncoding &&
-            ContentLanguage == other.ContentEncoding &&
-            ContentType == other.ContentType &&
-            ExpiresOn == other.ExpiresOn &&
-            Identifier == other.Identifier &&
-            IPRange == other.IPRange &&
-            Permissions == other.Permissions &&
-            Protocol == other.Protocol &&
-            StartsOn == other.StartsOn &&
-            Version == other.Version;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

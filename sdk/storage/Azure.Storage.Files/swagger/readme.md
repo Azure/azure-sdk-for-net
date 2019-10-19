@@ -166,6 +166,7 @@ directive:
     $.put.responses["201"].description = "Success";
     $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
     $.get.responses["200"]["x-az-response-name"] = "ShareProperties";
+    $.get.responses["200"].headers["x-ms-share-quota"]["x-ms-client-name"] = "QuotaInGB";
 ```
 
 ### /{shareName}?restype=share&comp=snapshot
@@ -624,6 +625,18 @@ directive:
     }
 ```
 
+### ShareItemProperties properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ShareItemProperties
+  transform: >
+    $.properties.QuotaInGB = $.properties.Quota;
+    $.properties.QuotaInGB.xml = { "name": "Quota"};
+    delete $.properties.Quota;
+```
+
+
 ### FilePermission
 ``` yaml
 directive:
@@ -676,11 +689,16 @@ directive:
   transform: >
     $.Metrics["x-ms-client-name"] = "FileMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "FileCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "FileRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```
 
 ### Access Policy properties renaming
@@ -701,4 +719,23 @@ directive:
     $.properties.Permissions.xml = { "name": "Permission"};
     delete $.properties.Permission;
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
+```
+
+### ShareQuota properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ShareQuota
+  transform: >
+    $["x-ms-client-name"] = "quotaInGB";
+```
+
+### SignedIdentifier
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "FileSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
 ```

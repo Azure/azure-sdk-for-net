@@ -65,7 +65,7 @@ namespace Azure.Storage.Queues
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
-        public virtual int MaxMessagesPeek => Constants.Queue.MaxMessagesDequeue;
+        public virtual int MaxPeekableMessages => Constants.Queue.MaxMessagesDequeue;
 
         /// <summary>
         /// Gets the maximum number of bytes allowed for a message's UTF-8 text.
@@ -655,7 +655,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}" />
         /// </returns>
-        public virtual Response<IEnumerable<SignedIdentifier>> GetAccessPolicy(
+        public virtual Response<IEnumerable<QueueSignedIdentifier>> GetAccessPolicy(
             CancellationToken cancellationToken = default) =>
             GetAccessPolicyInternal(
                 false, // async
@@ -673,7 +673,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}" />
         /// </returns>
-        public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
+        public virtual async Task<Response<IEnumerable<QueueSignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default) =>
             await GetAccessPolicyInternal(
                 true, // async
@@ -694,7 +694,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}" />
         /// </returns>
-        private async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyInternal(
+        private async Task<Response<IEnumerable<QueueSignedIdentifier>>> GetAccessPolicyInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -732,7 +732,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
         /// </summary>
         /// <param name="permissions">
-        /// IEnumerable of <see cref="SignedIdentifier"/>
+        /// IEnumerable of <see cref="QueueSignedIdentifier"/>
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -741,7 +741,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response"/>
         /// </returns>
         public virtual Response SetAccessPolicy(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<QueueSignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
             SetAccessPolicyInternal(
                 permissions,
@@ -754,7 +754,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
         /// </summary>
         /// <param name="permissions">
-        /// IEnumerable of <see cref="SignedIdentifier"/>
+        /// IEnumerable of <see cref="QueueSignedIdentifier"/>
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -763,7 +763,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> SetAccessPolicyAsync(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<QueueSignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
             await SetAccessPolicyInternal(
                 permissions,
@@ -776,7 +776,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
         /// </summary>
         /// <param name="permissions">
-        /// IEnumerable of <see cref="SignedIdentifier"/>
+        /// IEnumerable of <see cref="QueueSignedIdentifier"/>
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -788,7 +788,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> SetAccessPolicyInternal(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<QueueSignedIdentifier> permissions,
             bool async,
             CancellationToken cancellationToken)
         {

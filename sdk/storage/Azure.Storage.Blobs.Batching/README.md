@@ -113,7 +113,7 @@ batchClient.SubmitBatch(batch);
 ## Troubleshooting
 
 All Blob service operations will throw a
-[StorageRequestFailedException][StorageRequestFailedException] on failure with
+[RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.  Subrequest failures will be bundled together into an AggregateException.
 
 ```c#
@@ -133,7 +133,7 @@ try
 }
 catch (AggregateException ex)
 {
-    // Check ex.InnerExceptions for StorageRequestFailedException instances
+    // Check ex.InnerExceptions for RequestFailedException instances
 }
 ```
 
@@ -172,7 +172,7 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-error-codes
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

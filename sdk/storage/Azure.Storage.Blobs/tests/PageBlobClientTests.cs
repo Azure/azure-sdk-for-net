@@ -229,7 +229,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.CreateAsync(
                             size: Constants.KB,
                             accessConditions: accessConditions),
@@ -284,7 +284,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateAsync(invalidPageSize),
                     e =>
                     {
@@ -390,7 +390,7 @@ namespace Azure.Storage.Blobs.Test
                 var data = GetRandomBuffer(Constants.KB);
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.UploadPagesAsync(stream, 5 * Constants.KB),
                         e => Assert.AreEqual("InvalidPageRange", e.ErrorCode));
                 }
@@ -482,7 +482,7 @@ namespace Azure.Storage.Blobs.Test
                     using (var stream = new MemoryStream(data))
                     {
                         // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.UploadPagesAsync(
                                 content: stream,
                                 offset: 0,
@@ -519,8 +519,8 @@ namespace Azure.Storage.Blobs.Test
 
                 var offset = 0 * Constants.KB;
                 var data = GetRandomBuffer(blobSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+                var progressList = new List<long>();
+                var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
                 // Act
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs.Test
                     await WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -638,7 +638,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.ClearPagesAsync(range: new HttpRange(5 * Constants.KB, Constants.KB)),
                     e =>
                     {
@@ -696,7 +696,7 @@ namespace Azure.Storage.Blobs.Test
                         sequenceNumbers: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.ClearPagesAsync(
                             range: new HttpRange(0, Constants.KB),
                             accessConditions: accessConditions),
@@ -796,7 +796,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.GetPageRangesAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
                     e =>
                     {
@@ -855,7 +855,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.GetPageRangesAsync(
                             range: new HttpRange(0, Constants.KB),
                             accessConditions: accessConditions),
@@ -917,7 +917,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.GetPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
                     e =>
                     {
@@ -1011,7 +1011,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.GetPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
                             previousSnapshot: prevSnapshot,
@@ -1095,7 +1095,7 @@ namespace Azure.Storage.Blobs.Test
                 var invalidSize = 511;
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.ResizeAsync(size: invalidSize),
                     e =>
                     {
@@ -1156,7 +1156,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.ResizeAsync(
                             size: newSize,
                             accessConditions: accessConditions),
@@ -1236,7 +1236,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.UpdateSequenceNumberAsync(
                             action: SequenceNumberAction.Update,
                             sequenceNumber: sequenceAccessNumber,
@@ -1255,7 +1255,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.UpdateSequenceNumberAsync(
                         action: SequenceNumberAction.Update,
                         sequenceNumber: -1),
@@ -1326,7 +1326,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         // dummy snapshot value.
@@ -1448,7 +1448,7 @@ namespace Azure.Storage.Blobs.Test
                     snapshot = snapshotResponse.Value.Snapshot;
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.StartCopyIncrementalAsync(
                             sourceUri: sourceBlob.Uri,
                             snapshot: snapshot,
@@ -1533,7 +1533,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient destinationBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destinationBlob.StartCopyFromUriAsync(
                     sourceBlob.Uri,
                     accessTier: AccessTier.Cool),
@@ -1569,7 +1569,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
 
                 // Assert
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.SetAccessTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
             }
@@ -1757,7 +1757,7 @@ namespace Azure.Storage.Blobs.Test
                     var range = new HttpRange(0, Constants.KB);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.UploadPagesFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             sourceRange: range,
@@ -1884,7 +1884,7 @@ namespace Azure.Storage.Blobs.Test
                         var range = new HttpRange(0, Constants.KB);
 
                         // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             destBlob.UploadPagesFromUriAsync(
                                 sourceUri: sourceBlob.Uri,
                                 sourceRange: range,
@@ -1970,7 +1970,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateIfNotExistsAsync(invalidPageSize),
                     e =>
                     {

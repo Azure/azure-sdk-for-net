@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response, response);
 
-                var options = new AzureCredentialOptions() { Transport = mockTransport };
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
 
                 ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response, response);
 
-                var options = new AzureCredentialOptions() { Transport = mockTransport };
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
 
                 ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new AzureCredentialOptions() { Transport = mockTransport };
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
 
                 ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
@@ -156,7 +156,7 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new AzureCredentialOptions() { Transport = mockTransport };
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
 
                 ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
@@ -197,7 +197,7 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new AzureCredentialOptions() { Transport = mockTransport };
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
 
                 ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
@@ -242,7 +242,7 @@ namespace Azure.Identity.Tests
 
                 var mockTransport = new MockTransport(response);
 
-                var options = new AzureCredentialOptions() { Transport = mockTransport };
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
 
                 ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 

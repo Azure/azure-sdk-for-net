@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
                 catch
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                 }
             }
             return false;

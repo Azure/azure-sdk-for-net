@@ -238,7 +238,7 @@ namespace Azure.Storage.Files
         /// describing the shares in the storage account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<ShareItem> GetShares(
@@ -267,7 +267,7 @@ namespace Azure.Storage.Files
         /// the storage account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<ShareItem> GetSharesAsync(
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files
         /// segment of the shares in the storage account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<SharesSegment>> GetSharesInternal(
@@ -377,7 +377,7 @@ namespace Azure.Storage.Files
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<FileServiceProperties> GetProperties(
@@ -403,7 +403,7 @@ namespace Azure.Storage.Files
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<FileServiceProperties>> GetPropertiesAsync(
@@ -432,7 +432,7 @@ namespace Azure.Storage.Files
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<FileServiceProperties>> GetPropertiesInternal(
@@ -488,7 +488,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> if the operation was successful.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response SetProperties(
@@ -519,7 +519,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> if the operation was successful.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> SetPropertiesAsync(
@@ -553,7 +553,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> if the operation was successful.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> SetPropertiesInternal(
@@ -605,7 +605,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -617,18 +617,18 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<ShareClient> CreateShare(
             string shareName,
             IDictionary<string, string> metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default)
         {
             ShareClient share = GetShareClient(shareName);
-            Response<ShareInfo> response = share.Create(metadata, quotaInBytes, cancellationToken);
+            Response<ShareInfo> response = share.Create(metadata, quotaInGB, cancellationToken);
             return Response.FromValue(share, response.GetRawResponse());
         }
 
@@ -645,7 +645,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -657,18 +657,18 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default)
         {
             ShareClient share = GetShareClient(shareName);
-            Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
+            Response<ShareInfo> response = await share.CreateAsync(metadata, quotaInGB, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(share, response.GetRawResponse());
         }
         #endregion CreateShare
@@ -693,7 +693,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
@@ -721,7 +721,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]

@@ -212,7 +212,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             RegisterForCleanup(key.Name, delete: false);
 
-            DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
+            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
+            DeletedKey deletedKey = operation.Value;
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
@@ -225,7 +226,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void DeleteKeyNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.DeleteKeyAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.StartDeleteKeyAsync(Recording.GenerateId()));
         }
 
         [Test]
@@ -237,7 +238,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             RegisterForCleanup(key.Name, delete: false);
 
-            DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
+            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
+            DeletedKey deletedKey = operation.Value;
 
             await WaitForDeletedKey(keyName);
 
@@ -264,13 +266,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
-            DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
+            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
+            DeletedKey deletedKey = deleteOperation.Value;
 
             await WaitForDeletedKey(keyName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
-            KeyVaultKey recoverKeyResult = await Client.RecoverDeletedKeyAsync(keyName);
+            RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
+            KeyVaultKey recoverKeyResult = recoverOperation.Value;
 
             await PollForKey(keyName);
 
@@ -286,7 +290,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void RecoverDeletedKeyNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.RecoverDeletedKeyAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.StartRecoverDeletedKeyAsync(Recording.GenerateId()));
         }
 
         [Test]
@@ -319,7 +323,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] backup = await Client.BackupKeyAsync(keyName);
 
-            await Client.DeleteKeyAsync(keyName);
+            await Client.StartDeleteKeyAsync(keyName);
             await WaitForDeletedKey(keyName);
 
             await Client.PurgeDeletedKeyAsync(keyName);
@@ -372,7 +376,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 KeyVaultKey Key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
                 createdKeys.Add(Key);
-                await Client.DeleteKeyAsync(keyName + i);
+                await Client.StartDeleteKeyAsync(keyName + i);
 
                 RegisterForCleanup(Key.Name, delete: false);
             }

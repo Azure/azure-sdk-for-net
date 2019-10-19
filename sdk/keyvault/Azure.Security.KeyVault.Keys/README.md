@@ -1,5 +1,5 @@
-# Azure Key Vault Key client library for .NET
-Azure Key Vault is a cloud service that provides secure storage of keys for encrypting your data. Multiple keys, and multiple versions of the same key, can be kept in the Key Vault. Cryptographic keys in Key Vault are represented as [JSON Web Key (JWK)][JWK] objects. 
+# Azure Key Vault key client library for .NET
+Azure Key Vault is a cloud service that provides secure storage of keys for encrypting your data. Multiple keys, and multiple versions of the same key, can be kept in the Key Vault. Cryptographic keys in Key Vault are represented as [JSON Web Key (JWK)][JWK] objects.
 
 The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC) keys, each with corresponding support in hardware security modules (HSM). It offers operations to create, retrieve, update, delete, purge, backup, restore and list the keys and its versions.
 
@@ -25,7 +25,7 @@ az keyvault create --resource-group <your-resource-group-name> --name <your-key-
 ```
 
 ### Authenticate the client
-In order to interact with the Key Vault service, you'll need to create an instance of the [KeyClient][key_client_class] class. You would need a **vault url** and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object. 
+In order to interact with the Key Vault service, you'll need to create an instance of the [KeyClient][key_client_class] class. You would need a **vault url** and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity].
 
@@ -53,7 +53,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     $Env:AZURE_TENANT_ID="tenant-ID"
     ```
 
-* Grant the above mentioned application authorization to perform key operations on the key vault:
+* Grant the above mentioned application authorization to perform key operations on the Key Vault:
     ```PowerShell
     az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create
     ```
@@ -73,12 +73,15 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new KeyClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
-// Create a new key using the key client
+// Create a new key using the key client.
 KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
+
+// Retrieve a key using the key client.
+key = client.GetKey("key-name");
 ```
 
 #### Create CryptographyClient
-Once you've created a `Key` in the key vault, you can also create the [CryptographyClient][crypto_client_class]:
+Once you've created a `KeyVaultKey` in the Key Vault, you can also create the [CryptographyClient][crypto_client_class]:
 
 ```C# CreateCryptographyClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
@@ -88,148 +91,185 @@ var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new Default
 
 ## Key concepts
 
-### Keys
-Azure Key Vault supports multiple key types and algorithms, and enables the use of Hardware Security Modules (HSM) for high value keys.
+### KeyVaultKey
+Azure Key Vault supports multiple key types and algorithms, and enables the use of hardware security modules (HSM) for high value keys.
 
-### Key Client:
-A KeyClient providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a KeyClient, you can interact with the primary resource types in Key Vault.
+### KeyClient
+A `KeyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `KeyClient`, you can interact with the primary resource types in Key Vault.
 
 ### Cryptography Client:
-A CryptographyClient providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a CryptographyClient, you can use it to perform cryptographic operations with keys stored in Key Vault.
+A `CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Key Vault.
 
 ## Examples
 The Azure.Security.KeyVault.Keys package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the [above created](#create-keyclient) `client`, covering some of the most common Azure Key Vault Key service related tasks:
+The following section provides several code snippets using the `client` [created above](#create-keyclient), covering some of the most common Azure Key Vault key service related tasks:
 
-### Sync examples
-* [Create a Key](#create-a-key)
-* [Retrieve a Key](#retrieve-a-key)
-* [Update an existing Key](#update-an-existing-key)
-* [Delete a Key](#delete-a-key)
+### Async examples
+* [Create a key](#create-a-key)
+* [Retrieve a key](#retrieve-a-key)
+* [Update an existing key](#update-an-existing-key)
+* [Delete a key](#delete-a-key)
+* [Delete and purge a key](#delete-and-purge-a-key)
 * [List Keys](#list-keys)
 * [Encrypt and Decrypt](#encrypt-and-decrypt)
-### Async examples
-* [Create a Key](#async-create-a-key)
 
-### Create a Key
-Create a Key to be stored in the Azure Key Vault. If a key with the same name already exists, then a new version of the key is created.
+### Sync examples
+* [Create a kKey synchronously](#create-a-key-synchronously)
+* [Delete a key synchronously](#delete-a-key-synchronously)
+
+### Create a key
+Create a key to be stored in the Azure Key Vault. If a key with the same name already exists, then a new version of the key is created.
 
 ```C# CreateKey
 // Create a key. Note that you can specify the type of key
 // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
-KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
-
-Console.WriteLine(key.Name);
-Console.WriteLine(key.Key.KeyType);
-
-// Create a software RSA key
-var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
-KeyVaultKey rsaKey = client.CreateRsaKey(rsaCreateKey);
-
-Console.WriteLine(rsaKey.Name);
-Console.WriteLine(rsaKey.Key.KeyType);
-
-// Create a hardware Elliptic Curve key
-var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
-KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
-
-Console.WriteLine(ecKey.Name);
-Console.WriteLine(ecKey.Key.KeyType);
-```
-
-### Retrieve a Key
-`GetKey` retrieves a key previously stored in the Key Vault.
-
-```C# RetrieveKey
-KeyVaultKey key = client.GetKey("key-name");
-
-Console.WriteLine(key.Name);
-Console.WriteLine(key.Key.KeyType);
-```
-
-### Update an existing Key
-`UpdateKey` updates a key previously stored in the Key Vault.
-
-```C# UpdateKey
-KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
-
-// You can specify additional application-specific metadata in the form of tags.
-key.Properties.Tags["foo"] = "updated tag";
-
-KeyVaultKey updatedKey = client.UpdateKeyProperties(key.Properties, key.Key.KeyOps);
-
-Console.WriteLine(updatedKey.Name);
-Console.WriteLine(updatedKey.Properties.Version);
-Console.WriteLine(updatedKey.Properties.UpdatedOn);
-```
-
-### Delete a Key
-`DeleteKey` deletes a key previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
-
-```C# DeleteKey
-DeletedKey key = client.DeleteKey("key-name");
-
-Console.WriteLine(key.Name);
-Console.WriteLine(key.DeletedDate);
-```
-
-### List Keys
-This example lists all the keys in the specified Key Vault.
-
-```C# ListKeys
-Pageable<KeyProperties> allKeys = client.GetPropertiesOfKeys();
-
-foreach (KeyProperties keyProperties in allKeys)
-{
-    Console.WriteLine(keyProperties.Name);
-}
-```
-
-### Encrypt and Decrypt
-This example creates a CryptographyClient and uses it to encrypt and decrypt with a key in Key Vault.
-
-```C# EncryptDecrypt
-byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
-
-// encrypt the data using the algorithm RSAOAEP
-EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep, plaintext);
-
-// decrypt the encrypted data.
-DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
-```
-
-### Async create a Key
-Async APIs are identical to their synchronous counterparts. Note that all methods end with `Async`.
-
-```C# CreateKeyAsync
-// Create a key of any type
 KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
 Console.WriteLine(key.Name);
-Console.WriteLine(key.Key.KeyType);
+Console.WriteLine(key.KeyType);
 
 // Create a software RSA key
 var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
 KeyVaultKey rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
 
 Console.WriteLine(rsaKey.Name);
-Console.WriteLine(rsaKey.Key.KeyType);
+Console.WriteLine(rsaKey.KeyType);
 
 // Create a hardware Elliptic Curve key
 var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
 KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
 Console.WriteLine(ecKey.Name);
-Console.WriteLine(ecKey.Key.KeyType);
+Console.WriteLine(ecKey.KeyType);
+```
+
+### Retrieve a key
+`GetKeyAsync` retrieves a key previously stored in the Key Vault.
+
+```C# RetrieveKey
+KeyVaultKey key = await client.GetKeyAsync("key-name");
+
+Console.WriteLine(key.Name);
+Console.WriteLine(key.KeyType);
+```
+
+### Update an existing key
+`UpdateKeyAsync` updates a key previously stored in the Key Vault.
+
+```C# UpdateKey
+KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
+
+// You can specify additional application-specific metadata in the form of tags.
+key.Properties.Tags["foo"] = "updated tag";
+
+KeyVaultKey updatedKey = await client.UpdateKeyPropertiesAsync(key.Properties);
+
+Console.WriteLine(updatedKey.Name);
+Console.WriteLine(updatedKey.Properties.Version);
+Console.WriteLine(updatedKey.Properties.UpdatedOn);
+```
+
+### Delete a key
+`StartDeleteKeyAsync` starts a long-running operation to delete a key previously stored in the Key Vault.
+You can retrieve the key immediately without waiting for the operation to complete.
+When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
+
+```C# DeleteKey
+DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
+
+DeletedKey key = operation.Value;
+Console.WriteLine(key.Name);
+Console.WriteLine(key.DeletedOn);
+```
+
+### Delete and purge a key
+You will need to wait for the long-running operation to complete before trying to purge or recover the key.
+
+```C# DeleteAndPurgeKey
+DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
+
+// You only need to wait for completion if you want to purge or recover the key.
+await operation.WaitForCompletionAsync();
+
+DeletedKey key = operation.Value;
+await client.PurgeDeletedKeyAsync(key.Name);
+```
+
+### List Keys
+This example lists all the keys in the specified Key Vault.
+
+```C# ListKeys
+AsyncPageable<KeyProperties> allKeys = client.GetPropertiesOfKeysAsync();
+
+await foreach (KeyProperties keyProperties in allKeys)
+{
+    Console.WriteLine(keyProperties.Name);
+}
+```
+
+### Encrypt and Decrypt
+This example creates a `CryptographyClient` and uses it to encrypt and decrypt with a key in Key Vault.
+
+```C# EncryptDecrypt
+byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+// encrypt the data using the algorithm RSAOAEP
+EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+
+// decrypt the encrypted data.
+DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+```
+
+### Create a key synchronously
+Synchronous APIs are identical to their asynchronous counterparts, but without the typical "Async" suffix for asynchronous methods.
+
+```C# CreateKeySync
+// Create a key of any type
+KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
+
+Console.WriteLine(key.Name);
+Console.WriteLine(key.KeyType);
+
+// Create a software RSA key
+var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
+KeyVaultKey rsaKey = client.CreateRsaKey(rsaCreateKey);
+
+Console.WriteLine(rsaKey.Name);
+Console.WriteLine(rsaKey.KeyType);
+
+// Create a hardware Elliptic Curve key
+var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
+KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
+
+Console.WriteLine(ecKey.Name);
+Console.WriteLine(ecKey.KeyType);
+```
+
+### Delete a key synchronously
+When deleting a key synchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
+You could do this in a loop as shown in the example, or periodically within other operations in your program.
+
+```C# DeleteKeySync
+DeleteKeyOperation operation = client.StartDeleteKey("key-name");
+
+while (!operation.HasCompleted)
+{
+    Thread.Sleep(2000);
+
+    operation.UpdateStatus();
+}
+
+DeletedKey key = operation.Value;
+client.PurgeDeletedKey(key.Name);
 ```
 
 ## Troubleshooting
 
 ### General
-When you interact with the Azure Key Vault Key client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
+When you interact with the Azure Key Vault key client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
 
-For example, if you try to retrieve a Key that doesn't exist in your Key Vault, a `404` error is returned, indicating `Not Found`.
+For example, if you try to retrieve a key that doesn't exist in your Key Vault, a `404` error is returned, indicating "Not Found".
 
 ```C# NotFound
 try
@@ -242,7 +282,7 @@ catch (RequestFailedException ex)
 }
 ```
 
-You will notice that additional information is logged, like the Client Request ID of the operation.
+You will notice that additional information is logged, like the client request ID of the operation.
 
 ```
 Message:
@@ -270,7 +310,7 @@ Headers:
 ```
 
 ## Next steps
-Several Key Vault Keys client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
+Several Key Vault key client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
 * [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault, including:
   * Create a key
   * Get an existing key

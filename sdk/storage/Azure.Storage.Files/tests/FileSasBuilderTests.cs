@@ -95,7 +95,6 @@ namespace Azure.Storage.Files.Test
                 Protocol = constants.Sas.Protocol,
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 ShareName = shareName,
@@ -106,6 +105,7 @@ namespace Azure.Storage.Files.Test
                 ContentLanguage = constants.Sas.ContentLanguage,
                 ContentType = constants.Sas.ContentType
             };
+            fileSasBuilder.SetPermissions(FileSasPermissions.All);
 
             if (includeVersion)
             {

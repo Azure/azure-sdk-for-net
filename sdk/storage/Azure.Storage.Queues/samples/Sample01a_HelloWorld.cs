@@ -216,12 +216,12 @@ namespace Azure.Storage.Queues.Samples
                 // Try to create the queue again
                 queue.Create();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == QueueErrorCode.QueueAlreadyExists)
             {
                 // Ignore any errors if the queue already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
