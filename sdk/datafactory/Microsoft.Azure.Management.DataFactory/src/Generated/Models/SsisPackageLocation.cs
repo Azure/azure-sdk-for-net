@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="configurationPath">The configuration file of the
         /// package execution. Type: string (or Expression with resultType
         /// string).</param>
-        public SSISPackageLocation(object packagePath, string type = default(string), SecureString packagePassword = default(SecureString), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object))
+        public SSISPackageLocation(object packagePath, string type = default(string), SecretBase packagePassword = default(SecretBase), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object))
         {
             PackagePath = packagePath;
             Type = type;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password of the package.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.packagePassword")]
-        public SecureString PackagePassword { get; set; }
+        public SecretBase PackagePassword { get; set; }
 
         /// <summary>
         /// Gets or sets the package access credential.
@@ -101,10 +101,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (PackagePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PackagePath");
-            }
-            if (PackagePassword != null)
-            {
-                PackagePassword.Validate();
             }
             if (AccessCredential != null)
             {
