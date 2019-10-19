@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The file system attributes for this file.
         /// </summary>
-        public NtfsFileAttributes FileAttributes { get; set; }
+        public NtfsFileAttributes? FileAttributes { get; set; }
 
         /// <summary>
         /// The key of the file permission.
@@ -58,7 +58,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageFileInfo.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageFileInfo.FileAttributes);
             FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
             FileCreationTime = rawStorageFileInfo.FileCreationTime;
             FileLastWriteTime = rawStorageFileInfo.FileLastWriteTime;
@@ -70,7 +70,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageFileProperties.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageFileProperties.FileAttributes);
             FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
             FileCreationTime = rawStorageFileProperties.FileCreationTime;
             FileLastWriteTime = rawStorageFileProperties.FileLastWriteTime;
@@ -81,7 +81,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(FlattenedStorageFileProperties flattenedStorageFileProperties)
         {
-            FileAttributes = NtfsFileAttributes.Parse(flattenedStorageFileProperties.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(flattenedStorageFileProperties.FileAttributes);
             FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
             FileCreationTime = flattenedStorageFileProperties.FileCreationTime;
             FileLastWriteTime = flattenedStorageFileProperties.FileLastWriteTime;
@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryInfo.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageDirectoryInfo.FileAttributes);
             FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
             FileCreationTime = rawStorageDirectoryInfo.FileCreationTime;
             FileLastWriteTime = rawStorageDirectoryInfo.FileLastWriteTime;
@@ -103,7 +103,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryProperties.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageDirectoryProperties.FileAttributes);
             FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
             FileCreationTime = rawStorageDirectoryProperties.FileCreationTime;
             FileLastWriteTime = rawStorageDirectoryProperties.FileLastWriteTime;
