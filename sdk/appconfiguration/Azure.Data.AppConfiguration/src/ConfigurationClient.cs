@@ -547,7 +547,7 @@ namespace Azure.Data.AppConfiguration
                 requestOptions.IfNoneMatch = setting.ETag;
             }
 
-            return Get(setting.Key, setting.Label, acceptDateTime : default, requestOptions, cancellationToken);
+            return Get(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
         }
 
         /// <summary>
