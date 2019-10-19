@@ -332,7 +332,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             Upload(
                 content,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs
             {
                 return Upload(
                     stream,
-                    accessConditions: default, // Pass anything else so we don't recurse on this overload
+                    conditions: default, // Pass anything else so we don't recurse on this overload
                     cancellationToken: cancellationToken);
             }
         }
@@ -415,7 +415,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             UploadAsync(
                 content,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -457,7 +457,7 @@ namespace Azure.Storage.Blobs
             {
                 return await UploadAsync(
                     stream,
-                    accessConditions: default, // Pass anything else so we don't recurse on this overload
+                    conditions: default, // Pass anything else so we don't recurse on this overload
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -465,7 +465,7 @@ namespace Azure.Storage.Blobs
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -487,8 +487,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="progressHandler">
@@ -520,7 +520,7 @@ namespace Azure.Storage.Blobs
             Stream content,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             AccessTier? accessTier = default,
             StorageTransferOptions transferOptions = default,
@@ -529,7 +529,7 @@ namespace Azure.Storage.Blobs
                 content,
                 httpHeaders,
                 metadata,
-                accessConditions,
+                conditions,
                 progressHandler,
                 accessTier,
                 transferOptions: transferOptions,
@@ -538,7 +538,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(string, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -560,8 +560,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="progressHandler">
@@ -593,7 +593,7 @@ namespace Azure.Storage.Blobs
             string path,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             AccessTier? accessTier = default,
             StorageTransferOptions transferOptions = default,
@@ -605,7 +605,7 @@ namespace Azure.Storage.Blobs
                     stream,
                     httpHeaders,
                     metadata,
-                    accessConditions,
+                    conditions,
                     progressHandler,
                     accessTier,
                     transferOptions: transferOptions,
@@ -616,7 +616,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -638,8 +638,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="transferOptions">
@@ -671,7 +671,7 @@ namespace Azure.Storage.Blobs
             Stream content,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             AccessTier? accessTier = default,
             StorageTransferOptions transferOptions = default,
@@ -680,7 +680,7 @@ namespace Azure.Storage.Blobs
                 content,
                 httpHeaders,
                 metadata,
-                accessConditions,
+                conditions,
                 progressHandler,
                 accessTier,
                 transferOptions: transferOptions,
@@ -688,7 +688,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, BlobHttpHeaders, Metadata, BlobAccessConditions?, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -710,8 +710,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="progressHandler">
@@ -743,7 +743,7 @@ namespace Azure.Storage.Blobs
             string path,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             AccessTier? accessTier = default,
             StorageTransferOptions transferOptions = default,
@@ -755,7 +755,7 @@ namespace Azure.Storage.Blobs
                     stream,
                     httpHeaders,
                     metadata,
-                    accessConditions,
+                    conditions,
                     progressHandler,
                     accessTier,
                     transferOptions: transferOptions,
@@ -781,8 +781,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="blobAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="progressHandler">
@@ -819,7 +819,7 @@ namespace Azure.Storage.Blobs
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
-            BlobAccessConditions? blobAccessConditions,
+            BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
             long? singleBlockThreshold = default,
@@ -848,7 +848,7 @@ namespace Azure.Storage.Blobs
                 await uploadTask.ConfigureAwait(false) :
                 uploadTask.EnsureCompleted();
 
-            bool TryGetStreamLength(Stream stream, out long length)
+            static bool TryGetStreamLength(Stream stream, out long length)
             {
                 length = 0;
                 try
@@ -871,7 +871,7 @@ namespace Azure.Storage.Blobs
                     content,
                     blobHttpHeaders,
                     metadata,
-                    blobAccessConditions,
+                    conditions,
                     accessTier,
                     progressHandler,
                     async,
@@ -913,7 +913,7 @@ namespace Azure.Storage.Blobs
                     base64BlockId,
                     partition,
                     null,
-                    blobAccessConditions?.LeaseAccessConditions,
+                    conditions,
                     progressHandler,
                     async,
                     cancellationToken);
@@ -932,7 +932,7 @@ namespace Azure.Storage.Blobs
                         base64BlockIds,
                         blobHttpHeaders,
                         metadata,
-                        blobAccessConditions,
+                        conditions,
                         accessTier,
                         async,
                         cancellationToken);
@@ -955,8 +955,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="blobAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="progressHandler">
@@ -993,7 +993,7 @@ namespace Azure.Storage.Blobs
             string path,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
-            BlobAccessConditions? blobAccessConditions,
+            BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
             long? singleBlockThreshold = default,
@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Blobs
                     stream,
                     blobHttpHeaders,
                     metadata,
-                    blobAccessConditions,
+                    conditions,
                     progressHandler,
                     accessTier,
                     singleBlockThreshold: singleBlockThreshold,

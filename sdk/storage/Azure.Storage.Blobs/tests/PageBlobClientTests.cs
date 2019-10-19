@@ -154,7 +154,7 @@ namespace Azure.Storage.Blobs.Test
 
         /// <summary>
         /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and
-        /// UpdateSequenceNumber AccessConditions tests
+        /// UpdateSequenceNumber AccessConditions tests.
         /// </summary>
         public IEnumerable<AccessConditionParameters> Reduced_AccessConditions_Data
             => new[]
@@ -182,14 +182,14 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     Response<BlobContentInfo> response = await blob.CreateAsync(
                         size: Constants.KB,
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -198,7 +198,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
-        /// Data for CreateAsync, GetPageRangesAsync, and GetPageRangesDiffAsync AccessConditions Fail tests
+        /// Data for CreateAsync, GetPageRangesAsync, and GetPageRangesDiffAsync AccessConditions Fail tests.
         /// </summary>
         public IEnumerable<AccessConditionParameters> GetReduced_AccessConditionsFail_Data(string garbageLeaseId)
             => new[]
@@ -225,7 +225,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -233,7 +233,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.CreateAsync(
                             size: Constants.KB,
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         actualException => Assert.IsTrue(true));
                 }
             }
@@ -427,7 +427,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true,
                         sequenceNumbers: true);
@@ -439,7 +439,7 @@ namespace Azure.Storage.Blobs.Test
                         Response<PageInfo> response = await blob.UploadPagesAsync(
                             content: stream,
                             offset: 0,
-                            accessConditions: accessConditions);
+                            conditions: accessConditions);
 
                         // Assert
                         Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -475,7 +475,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true,
                         sequenceNumbers: true);
@@ -488,7 +488,7 @@ namespace Azure.Storage.Blobs.Test
                             blob.UploadPagesAsync(
                                 content: stream,
                                 offset: 0,
-                                accessConditions: accessConditions),
+                                conditions: accessConditions),
                             e => Assert.IsTrue(true));
                     }
                 }
@@ -662,14 +662,14 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true,
                         sequenceNumbers: true);
 
                     Response<PageInfo> response = await blob.ClearPagesAsync(
                         range: new HttpRange(0, Constants.KB),
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
@@ -690,7 +690,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true,
                         sequenceNumbers: true);
@@ -699,7 +699,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.ClearPagesAsync(
                             range: new HttpRange(0, Constants.KB),
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -821,14 +821,14 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     Response<PageRangesInfo> response = await blob.GetPageRangesAsync(
                         range: new HttpRange(0, Constants.KB),
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.Value.PageRanges);
@@ -850,7 +850,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -858,7 +858,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.GetPageRangesAsync(
                             range: new HttpRange(0, Constants.KB),
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         actualException => Assert.IsTrue(true));
                 }
             }
@@ -959,7 +959,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -967,7 +967,7 @@ namespace Azure.Storage.Blobs.Test
                     Response<PageRangesInfo> response = await blob.GetPageRangesDiffAsync(
                         range: new HttpRange(0, Constants.KB),
                         previousSnapshot: prevSnapshot,
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.Value.PageRanges);
@@ -1006,7 +1006,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -1015,7 +1015,7 @@ namespace Azure.Storage.Blobs.Test
                         blob.GetPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
                             previousSnapshot: prevSnapshot,
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -1122,14 +1122,14 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     Response<PageBlobInfo> response = await blob.ResizeAsync(
                         size: newSize,
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1152,7 +1152,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -1160,7 +1160,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.ResizeAsync(
                             size: newSize,
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -1201,7 +1201,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -1209,7 +1209,7 @@ namespace Azure.Storage.Blobs.Test
                     Response<PageBlobInfo> response = await blob.UpdateSequenceNumberAsync(
                         action: SequenceNumberAction.Update,
                         sequenceNumber: sequenceAccessNumber,
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1232,7 +1232,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -1241,7 +1241,7 @@ namespace Azure.Storage.Blobs.Test
                         blob.UpdateSequenceNumberAsync(
                             action: SequenceNumberAction.Update,
                             sequenceNumber: sequenceAccessNumber,
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -1382,7 +1382,7 @@ namespace Azure.Storage.Blobs.Test
                     }
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(parameters: parameters);
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
 
                     snapshotResponse = await sourceBlob.CreateSnapshotAsync();
                     snapshot = snapshotResponse.Value.Snapshot;
@@ -1391,7 +1391,7 @@ namespace Azure.Storage.Blobs.Test
                     Operation<long> response = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot,
-                        accessConditions: accessConditions);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1443,7 +1443,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(parameters: parameters);
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
 
                     snapshotResponse = await sourceBlob.CreateSnapshotAsync();
                     snapshot = snapshotResponse.Value.Snapshot;
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Blobs.Test
                         blob.StartCopyIncrementalAsync(
                             sourceUri: sourceBlob.Uri,
                             snapshot: snapshot,
-                            accessConditions: accessConditions),
+                            conditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -1815,11 +1815,11 @@ namespace Azure.Storage.Blobs.Test
                         parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
                         parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
 
-                        PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                        PageBlobRequestConditions accessConditions = BuildAccessConditions(
                             parameters: parameters,
                             lease: true,
                             sequenceNumbers: true);
-                        PageBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
+                        PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
                         var range = new HttpRange(0, Constants.KB);
 
@@ -1828,8 +1828,8 @@ namespace Azure.Storage.Blobs.Test
                             sourceUri: sourceBlob.Uri,
                             sourceRange: range,
                             range: range,
-                            accessConditions: accessConditions,
-                            sourceAccessConditions: sourceAccessConditions);
+                            conditions: accessConditions,
+                            sourceConditions: sourceAccessConditions);
                     }
                 }
             }
@@ -1877,11 +1877,11 @@ namespace Azure.Storage.Blobs.Test
                         parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
                         parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
 
-                        PageBlobAccessConditions accessConditions = BuildAccessConditions(
+                        PageBlobRequestConditions accessConditions = BuildAccessConditions(
                             parameters: parameters,
                             lease: true,
                             sequenceNumbers: true);
-                        PageBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
+                        PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
                         var range = new HttpRange(0, Constants.KB);
 
@@ -1891,8 +1891,8 @@ namespace Azure.Storage.Blobs.Test
                                 sourceUri: sourceBlob.Uri,
                                 sourceRange: range,
                                 range: range,
-                                accessConditions: accessConditions,
-                                sourceAccessConditions: sourceAccessConditions),
+                                conditions: accessConditions,
+                                sourceConditions: sourceAccessConditions),
                             actualException => Assert.IsTrue(true)
                         );
                     }
@@ -1983,29 +1983,22 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        private PageBlobAccessConditions BuildAccessConditions(
+        private PageBlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
             bool sequenceNumbers = false)
         {
-            var accessConditions = new PageBlobAccessConditions
+            var accessConditions = new PageBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
-                    IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.IfModifiedSince,
-                    IfUnmodifiedSince = parameters.IfUnmodifiedSince
-                }
-
+                IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
+                IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.IfModifiedSince,
+                IfUnmodifiedSince = parameters.IfUnmodifiedSince
             };
 
             if (lease)
             {
-                accessConditions.LeaseAccessConditions = new LeaseAccessConditions
-                {
-                    LeaseId = parameters.LeaseId
-                };
+                accessConditions.LeaseId = parameters.LeaseId;
             }
 
             if (sequenceNumbers)
@@ -2018,16 +2011,13 @@ namespace Azure.Storage.Blobs.Test
             return accessConditions;
         }
 
-        private PageBlobAccessConditions BuildSourceAccessConditions(AccessConditionParameters parameters)
-            => new PageBlobAccessConditions
+        private PageBlobRequestConditions BuildSourceAccessConditions(AccessConditionParameters parameters) =>
+            new PageBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
-                    IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.SourceIfModifiedSince,
-                    IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
-                },
+                IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
+                IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.SourceIfModifiedSince,
+                IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
             };
 
         public class AccessConditionParameters

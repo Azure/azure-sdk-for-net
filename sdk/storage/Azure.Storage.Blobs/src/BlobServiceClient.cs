@@ -1127,8 +1127,8 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContainerName">
         /// The name of the container to delete.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobContainerAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1145,11 +1145,11 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
             string blobContainerName,
-            BlobContainerAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlobContainerClient(blobContainerName)
                 .Delete(
-                    accessConditions,
+                    conditions,
                     cancellationToken);
 
         /// <summary>
@@ -1162,8 +1162,8 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContainerName">
         /// The name of the blob container to delete.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobContainerAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this blob container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1180,12 +1180,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
             string blobContainerName,
-            BlobContainerAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await
                 GetBlobContainerClient(blobContainerName)
                 .DeleteAsync(
-                    accessConditions,
+                    conditions,
                     cancellationToken)
                     .ConfigureAwait(false);
         #endregion DeleteBlobContainer
