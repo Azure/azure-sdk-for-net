@@ -5,6 +5,9 @@ using System;
 
 namespace Azure
 {
+    /// <summary>
+    /// Specifies HTTP options for conditional requests based on modification time.
+    /// </summary>
     public class RequestConditions : MatchConditions
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace Azure
 
         /// <summary>
         /// Optionally limit requests to resources that have remained
-        /// unmodified
+        /// unmodified.
         /// </summary>
         public DateTimeOffset? IfUnmodifiedSince { get; set; }
     }

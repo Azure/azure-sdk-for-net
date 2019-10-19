@@ -179,7 +179,7 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateAsync(),
                     actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
                     );
@@ -248,7 +248,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.CreateAsync(accessConditions: accessConditions),
                         e => { });
                 }
@@ -307,7 +307,7 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateIfNotExistsAsync(),
                     actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
                     );
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(
                             content: stream,
                             transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
@@ -447,7 +447,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(stream),
                         e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
                 }
@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.AppendBlockAsync(
                                 content: stream,
                                 accessConditions: accessConditions),
@@ -563,8 +563,8 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync();
 
                 var data = GetRandomBuffer(blobSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+                var progressList = new List<long>();
+                var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
                 // Act
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
@@ -573,7 +573,7 @@ namespace Azure.Storage.Blobs.Test
                     await WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -756,7 +756,7 @@ namespace Azure.Storage.Blobs.Test
                     await destBlob.CreateAsync();
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.AppendBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
@@ -869,7 +869,7 @@ namespace Azure.Storage.Blobs.Test
                         AppendBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
                         // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             destBlob.AppendBlockFromUriAsync(
                                 sourceUri: sourceBlob.Uri,
                                 accessConditions: accessConditions,

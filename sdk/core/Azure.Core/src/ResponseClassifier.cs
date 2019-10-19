@@ -3,14 +3,13 @@
 
 using System;
 using System.IO;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
     public class ResponseClassifier
     {
         /// <summary>
-        /// Specifies if the response should terminate the pipeline and not be retried.
+        /// Specifies if the request should be retried.
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
@@ -18,11 +17,12 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Specifies if the exception should terminate the pipeline and not be retried.
+        /// Specifies if the operation that caused the exception should be retried.
         /// </summary>
         public virtual bool IsRetriableException(Exception exception)
         {
-            return (exception is IOException);
+            return (exception is IOException) ||
+                   (exception is RequestFailedException requestFailed && requestFailed.Status == 0);
         }
 
         /// <summary>

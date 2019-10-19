@@ -68,6 +68,24 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol PartitionKey { get; } = "x-opt-partition-key";
 
         /// <summary>
+        ///   The message property that identifies the last sequence number enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedSequenceNumber { get; } = "last_enqueued_sequence_number";
+
+        /// <summary>
+        ///   The message property that identifies the last offset enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedOffset { get; } = "last_enqueued_offset";
+
+        /// <summary>
+        ///   The message property that identifies the last time enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedTimeUtc { get; } = "last_enqueued_time_utc";
+
+        /// <summary>
         ///   The set of descriptors for well-known <see cref="DescribedType" />
         ///   property types.
         /// </summary>

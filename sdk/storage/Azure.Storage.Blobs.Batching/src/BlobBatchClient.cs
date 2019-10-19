@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully submitting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will only throw if <paramref name="throwOnFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
@@ -181,7 +181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully submitting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will only throw if <paramref name="throwOnFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
@@ -219,7 +219,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully submitting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will only throw if <paramref name="throwOnFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
@@ -400,7 +400,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             catch (InvalidOperationException ex)
             {
-                // Wrap any parsing errors in a StorageRequestFailedException
+                // Wrap any parsing errors in a RequestFailedException
                 throw BatchErrors.InvalidResponse(rawResponse, ex);
             }
 
@@ -448,7 +448,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -481,7 +481,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -517,7 +517,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -571,7 +571,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -610,7 +610,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -655,7 +655,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>

@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetAccountInfoAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -330,7 +330,7 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 invalidService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
@@ -416,7 +416,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
 
             await service.DeleteBlobContainerAsync(name);
-            Assert.ThrowsAsync<StorageRequestFailedException>(
+            Assert.ThrowsAsync<RequestFailedException>(
                 async () => await container.GetPropertiesAsync());
         }
     }

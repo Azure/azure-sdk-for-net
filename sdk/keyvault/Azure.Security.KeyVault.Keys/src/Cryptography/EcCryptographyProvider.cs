@@ -12,13 +12,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly KeyCurveName _curve;
 
-        internal EcCryptographyProvider(Key key) : base(key)
+        internal EcCryptographyProvider(KeyVaultKey key) : base(key)
         {
             // Unset the KeyMaterial since we want to conditionally set it if supported.
             KeyMaterial = null;
 
             // Only set the JWK if we support the algorithm locally.
-            JsonWebKey keyMaterial = key.KeyMaterial;
+            JsonWebKey keyMaterial = key.Key;
             if (keyMaterial != null && keyMaterial.CurveName.HasValue)
             {
                 _curve = keyMaterial.CurveName.Value;
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
+            KeyCurveName algorithmCurve = algorithm.GetEcKeyCurveName();
             if (_curve.KeySize != algorithmCurve.KeySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
@@ -103,7 +103,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
+            KeyCurveName algorithmCurve = algorithm.GetEcKeyCurveName();
             if (_curve.KeySize != algorithmCurve.KeySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");

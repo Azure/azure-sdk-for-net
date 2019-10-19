@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, tenantId, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             AuthorizationCodeCredential cred = InstrumentClient(new AuthorizationCodeCredential(tenantId, clientId, clientSecret, authCode, options));
 

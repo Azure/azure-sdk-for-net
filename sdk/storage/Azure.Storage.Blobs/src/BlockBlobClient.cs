@@ -350,7 +350,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -362,16 +362,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
                 content,
@@ -416,7 +416,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -428,16 +428,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadInternal(
                 content,
@@ -482,7 +482,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -497,16 +497,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> UploadInternal(
             Stream content,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             AccessTier? accessTier,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -599,14 +599,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// compares the hash of the content that has arrived with this value.
         /// Note that this MD5 hash is not stored with the blob.  If the two
         /// hashes do not match, the operation will throw a
-        /// <see cref="StorageRequestFailedException"/>.
+        /// <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="leaseAccessConditions">
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the upload of this block.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -618,7 +618,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlockInfo> StageBlock(
@@ -626,7 +626,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             StageBlockInternal(
                 base64BlockId,
@@ -664,14 +664,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// compares the hash of the content that has arrived with this value.
         /// Note that this MD5 hash is not stored with the blob.  If the two
         /// hashes do not match, the operation will throw a
-        /// <see cref="StorageRequestFailedException"/>.
+        /// <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="leaseAccessConditions">
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the upload of this block.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -683,7 +683,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlockInfo>> StageBlockAsync(
@@ -691,7 +691,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await StageBlockInternal(
                 base64BlockId,
@@ -729,14 +729,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// compares the hash of the content that has arrived with this value.
         /// Note that this MD5 hash is not stored with the blob.  If the two
         /// hashes do not match, the operation will throw a
-        /// <see cref="StorageRequestFailedException"/>.
+        /// <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="leaseAccessConditions">
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the upload of this block.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -751,7 +751,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<BlockInfo>> StageBlockInternal(
@@ -759,7 +759,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash,
             LeaseAccessConditions? leaseAccessConditions,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -855,7 +855,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the <paramref name="sourceUri"/>
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="sourceAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -874,7 +874,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlockInfo> StageBlockFromUri(
@@ -932,7 +932,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the <paramref name="sourceUri"/>
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="sourceAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -951,7 +951,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
@@ -1009,7 +1009,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the <paramref name="sourceUri"/>
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="sourceAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -1031,7 +1031,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlockInfo>> StageBlockFromUriInternal(
@@ -1114,7 +1114,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob service should search only the uncommitted block list for
         /// the named blocks.  If the block is not found in the uncommitted
         /// block list, it will not be written as part of the blob, and a
-        /// <see cref="StorageRequestFailedException"/> will be thrown.
+        /// <see cref="RequestFailedException"/> will be thrown.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -1140,12 +1140,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> CommitBlockList(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
@@ -1181,7 +1181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob service should search only the uncommitted block list for
         /// the named blocks.  If the block is not found in the uncommitted
         /// block list, it will not be written as part of the blob, and a
-        /// <see cref="StorageRequestFailedException"/> will be thrown.
+        /// <see cref="RequestFailedException"/> will be thrown.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -1207,12 +1207,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             AccessTier? accessTier = default,
@@ -1248,7 +1248,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob service should search only the uncommitted block list for
         /// the named blocks.  If the block is not found in the uncommitted
         /// block list, it will not be written as part of the blob, and a
-        /// <see cref="StorageRequestFailedException"/> will be thrown.
+        /// <see cref="RequestFailedException"/> will be thrown.
         /// </param>
         /// <param name="blobHttpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -1277,12 +1277,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> CommitBlockListInternal(
             IEnumerable<string> base64BlockIds,
-            BlobHttpHeaders? blobHttpHeaders,
+            BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             AccessTier? accessTier,
@@ -1377,7 +1377,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// block list.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlockList> GetBlockList(
@@ -1427,7 +1427,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// block list.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
@@ -1480,7 +1480,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// block list.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlockList>> GetBlockListInternal(

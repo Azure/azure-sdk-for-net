@@ -6,19 +6,17 @@ using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault
 {
     internal class KeyVaultPipeline
     {
-        private readonly Uri _vaultUri;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        public KeyVaultPipeline(Uri vaultEndpoint, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
-            _vaultUri = vaultUri;
+            VaultEndpoint = vaultEndpoint;
             _pipeline = pipeline;
 
             _clientDiagnostics = clientDiagnostics;
@@ -28,10 +26,12 @@ namespace Azure.Security.KeyVault
 
         public string ApiVersion { get; }
 
+        public Uri VaultEndpoint { get; }
+
         public Uri CreateFirstPageUri(string path)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Reset(_vaultUri);
+            firstPage.Reset(VaultEndpoint);
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault
         public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Reset(_vaultUri);
+            firstPage.Reset(VaultEndpoint);
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.Uri.Reset(_vaultUri);
+            request.Uri.Reset(VaultEndpoint);
 
             foreach (var p in path)
             {
@@ -211,6 +211,18 @@ namespace Azure.Security.KeyVault
         {
             using Request request = CreateRequest(method, path);
             return SendRequest(request, cancellationToken);
+        }
+
+        public async Task<Response> GetResponseAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
+        {
+            using Request request = CreateRequest(method, path);
+            return await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public Response GetResponse(RequestMethod method, CancellationToken cancellationToken, params string[] path)
+        {
+            using Request request = CreateRequest(method, path);
+            return _pipeline.SendRequest(request, cancellationToken);
         }
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)

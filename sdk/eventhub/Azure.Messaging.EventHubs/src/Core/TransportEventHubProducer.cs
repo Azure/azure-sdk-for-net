@@ -17,6 +17,16 @@ namespace Azure.Messaging.EventHubs.Core
     internal abstract class TransportEventHubProducer
     {
         /// <summary>
+        ///   Indicates whether or not this producer has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the producer is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public virtual bool Closed { get; }
+
+        /// <summary>
         ///   Updates the active retry policy for the client.
         /// </summary>
         ///

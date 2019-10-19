@@ -234,13 +234,13 @@ namespace Azure.Storage.Blobs.Test
         }
 
         private BlobSasBuilder BuildBlobSasBuilder(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
-            => new BlobSasBuilder
+        {
+            var builder = new BlobSasBuilder
             {
                 Version = null,
                 Protocol = constants.Sas.Protocol,
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 BlobContainerName = containerName,
@@ -252,6 +252,9 @@ namespace Azure.Storage.Blobs.Test
                 ContentLanguage = constants.Sas.ContentLanguage,
                 ContentType = constants.Sas.ContentType
             };
+            builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
+            return builder;
+        }
 
         private string BuildSignature(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
         {
@@ -276,7 +279,7 @@ namespace Azure.Storage.Blobs.Test
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToString(),
+                constants.Sas.Protocol.ToProtocolString(),
                 SasQueryParameters.DefaultSasVersion,
                 resource,
                 includeSnapshot ? Snapshot : null,
@@ -317,7 +320,7 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToString(),
+                constants.Sas.Protocol.ToProtocolString(),
                 SasQueryParameters.DefaultSasVersion,
                 resource,
                 includeSnapshot ? Snapshot : null,

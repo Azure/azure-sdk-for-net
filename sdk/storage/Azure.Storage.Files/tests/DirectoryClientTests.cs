@@ -185,8 +185,8 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 AssertValidStorageDirectoryInfo(response);
                 //Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Test
                 await directory.CreateAsync();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.CreateAsync(),
                     e => Assert.AreEqual("ResourceAlreadyExists", e.ErrorCode.Split('\n')[0]));
             }
@@ -247,7 +247,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.DeleteAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -268,7 +268,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
                 Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
-                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+                AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.GetPropertiesAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -331,9 +331,9 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 AssertValidStorageDirectoryInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -407,7 +407,7 @@ namespace Azure.Storage.Files.Test
                 IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.SetMetadataAsync(metadata),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -473,7 +473,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.GetFilesAndDirectoriesAsync().ToListAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -521,7 +521,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     directory.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
@@ -535,10 +535,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseHandlesAsync();
+                int handlesClosed = await directory.ForceCloseAllHandlesAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
 
             }
         }
@@ -550,10 +550,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseHandlesAsync(recursive: true);
+                int handlesClosed = await directory.ForceCloseAllHandlesAsync(recursive: true);
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
 
             }
         }
@@ -567,10 +567,25 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    directory.ForceCloseHandlesAsync(),
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    directory.ForceCloseAllHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
+            }
+        }
+
+        [Test]
+        public async Task ForceCloseHandle_Error()
+        {
+            // Arrange
+            using (GetNewShare(out ShareClient share))
+            {
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                AsyncPageable<StorageFileHandle> handles = directory.GetHandlesAsync();
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    directory.ForceCloseHandleAsync("nonExistantHandleId"),
+                    actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
             }
         }
 
@@ -595,7 +610,7 @@ namespace Azure.Storage.Files.Test
                 DirectoryClient subdir = (await dir.CreateSubdirectoryAsync(name)).Value;
 
                 await dir.DeleteSubdirectoryAsync(name);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await subdir.GetPropertiesAsync());
             }
         }
@@ -621,9 +636,10 @@ namespace Azure.Storage.Files.Test
                 FileClient file = (await dir.CreateFileAsync(name, 1024)).Value;
 
                 await dir.DeleteFileAsync(name);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await file.GetPropertiesAsync());
             }
         }
+
     }
 }

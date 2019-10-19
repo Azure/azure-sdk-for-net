@@ -41,7 +41,7 @@ namespace Azure.Storage.Queues.Test
             using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     queue.DeleteMessageAsync(GetNewMessageId(), GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
             }
@@ -171,7 +171,7 @@ namespace Azure.Storage.Queues.Test
             using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     queue.UpdateMessageAsync(string.Empty, GetNewMessageId(), GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
 

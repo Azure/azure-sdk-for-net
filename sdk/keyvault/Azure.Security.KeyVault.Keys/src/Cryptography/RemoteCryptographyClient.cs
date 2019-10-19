@@ -320,7 +320,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        internal virtual async Task<Response<Key>> GetKeyAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<KeyVaultKey>> GetKeyAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
             scope.AddAttribute("key", _keyId);
@@ -328,7 +328,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return await Pipeline.SendRequestAsync(RequestMethod.Get, () => new Key(), cancellationToken).ConfigureAwait(false);
+                return await Pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultKey(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -337,7 +337,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        internal virtual Response<Key> GetKey(CancellationToken cancellationToken = default)
+        internal virtual Response<KeyVaultKey> GetKey(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
             scope.AddAttribute("key", _keyId);
@@ -345,7 +345,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return Pipeline.SendRequest(RequestMethod.Get, () => new Key(), cancellationToken);
+                return Pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultKey(), cancellationToken);
             }
             catch (Exception e)
             {

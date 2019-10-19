@@ -196,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void NotClosedEnforcesClosed()
         {
             var target = "test";
-            Assert.That(() => Argument.AssertNotClosed(true, target), Throws.InstanceOf<EventHubsObjectClosedException>().And.Message.Contains(target));
+            Assert.That(() => Argument.AssertNotClosed(true, target), Throws.InstanceOf<EventHubsClientClosedException>().And.Message.Contains(target));
         }
     }
 }
