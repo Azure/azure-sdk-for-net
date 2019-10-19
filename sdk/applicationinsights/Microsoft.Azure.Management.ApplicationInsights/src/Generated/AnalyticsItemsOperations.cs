@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AnalyticsItemsOperations operations.
+    /// AnalyticsItemsOperationsddtgd operations.
     /// </summary>
     internal partial class AnalyticsItemsOperations : IServiceOperations<ApplicationInsightsManagementClient>, IAnalyticsItemsOperations
     {
