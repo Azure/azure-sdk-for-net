@@ -5,6 +5,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
   </PropertyGroup>
 
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />
+
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 
   <ItemGroup>

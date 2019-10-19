@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
             if (algorithmKeySizeBytes == 0)
             {
-                // TODO: Log that we don't support the algorithm locally.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), ref algorithm);
                 return null;
             }
 
@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
             if (algorithmKeySizeBytes == 0)
             {
-                // TODO: Log that we don't support the algorithm locally.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), ref algorithm);
                 return null;
             }
 
