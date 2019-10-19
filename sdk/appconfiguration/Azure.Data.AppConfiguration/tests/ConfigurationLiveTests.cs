@@ -873,13 +873,17 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [TestCase(true, true)]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public async Task GetBatchSettingEscapedCharacters(bool useWildcardForKey, bool useWildcardForValue)
+        [TestCase(true, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, false)]
+        [TestCase(true, false, false)]
+        [TestCase(false, true, true)]
+        [TestCase(false, false, true)]
+        [TestCase(false, true, false)]
+        [TestCase(false, false, false)]
+        public async Task GetBatchSettingEscapedCharacters(bool hasComma, bool useWildcardForKey, bool useWildcardForValue)
         {
-            const string escapedChars = "!@#$^&()-=";
+            string escapedChars = hasComma ? "!@#$^&()-=" : "!@#$^&(,)-=";
             string key = (useWildcardForKey ? "*" : "key-") + escapedChars;
             string value = $"value-{escapedChars}";
             string label = (useWildcardForValue ? "*" : "label-") + escapedChars;
