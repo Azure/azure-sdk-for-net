@@ -60,7 +60,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                queue.EnqueueMessageAsync(string.Empty),
+                queue.SendMessageAsync(string.Empty),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                queue.DequeueMessagesAsync(),
+                queue.ReceiveMessagesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
