@@ -511,11 +511,10 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// </summary>
         /// <param name="setting"></param>
-        /// <param name="acceptDateTime"></param>
         /// <param name="onlyIfChanged"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<ConfigurationSetting>> GetAsync(ConfigurationSetting setting, DateTimeOffset acceptDateTime = default, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
@@ -527,17 +526,16 @@ namespace Azure.Data.AppConfiguration
                 requestOptions.IfNoneMatch = setting.ETag;
             }
 
-            return await GetAsync(setting.Key, setting.Label, acceptDateTime, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="setting"></param>
-        /// <param name="acceptDateTime"></param>
         /// <param name="onlyIfChanged"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<ConfigurationSetting> Get(ConfigurationSetting setting, DateTimeOffset acceptDateTime = default, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Get(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
             if (setting == null)
                 throw new ArgumentNullException($"{nameof(setting)}");
@@ -549,7 +547,7 @@ namespace Azure.Data.AppConfiguration
                 requestOptions.IfNoneMatch = setting.ETag;
             }
 
-            return Get(setting.Key, setting.Label, acceptDateTime, requestOptions, cancellationToken);
+            return Get(setting.Key, setting.Label, acceptDateTime : default, requestOptions, cancellationToken);
         }
 
         /// <summary>
