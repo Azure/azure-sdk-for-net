@@ -352,7 +352,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileInfo> Create(
@@ -405,7 +405,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileInfo>> CreateAsync(
@@ -461,7 +461,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileInfo>> CreateInternal(
@@ -549,7 +549,7 @@ namespace Azure.Storage.Files
         /// state of the file copy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileCopyInfo> StartCopy(
@@ -583,7 +583,7 @@ namespace Azure.Storage.Files
         /// state of the file copy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
@@ -620,7 +620,7 @@ namespace Azure.Storage.Files
         /// state of the file copy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileCopyInfo>> StartCopyInternal(
@@ -680,7 +680,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully aborting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response AbortCopy(
@@ -708,7 +708,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully aborting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> AbortCopyAsync(
@@ -739,7 +739,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully aborting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> AbortCopyInternal(
@@ -793,7 +793,7 @@ namespace Azure.Storage.Files
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="cancellationToken">
@@ -806,7 +806,7 @@ namespace Azure.Storage.Files
         /// the file's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileDownloadInfo> Download(
@@ -834,7 +834,7 @@ namespace Azure.Storage.Files
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="cancellationToken">
@@ -847,7 +847,7 @@ namespace Azure.Storage.Files
         /// the file's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
@@ -875,7 +875,7 @@ namespace Azure.Storage.Files
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="async">
@@ -891,7 +891,7 @@ namespace Azure.Storage.Files
         /// the file's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileDownloadInfo>> DownloadInternal(
@@ -973,7 +973,7 @@ namespace Azure.Storage.Files
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="startOffset">
@@ -1033,7 +1033,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
@@ -1056,7 +1056,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
@@ -1082,7 +1082,7 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
@@ -1138,7 +1138,7 @@ namespace Azure.Storage.Files
         /// file's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileProperties> GetProperties(
@@ -1170,7 +1170,7 @@ namespace Azure.Storage.Files
         /// file's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileProperties>> GetPropertiesAsync(
@@ -1205,7 +1205,7 @@ namespace Azure.Storage.Files
         /// file's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileProperties>> GetPropertiesInternal(
@@ -1277,7 +1277,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileInfo> SetHttpHeaders(
@@ -1325,7 +1325,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
@@ -1376,7 +1376,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileInfo>> SetHttpHeadersInternal(
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Files
         /// file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileInfo> SetMetadata(
@@ -1490,7 +1490,7 @@ namespace Azure.Storage.Files
         /// file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileInfo>> SetMetadataAsync(
@@ -1523,7 +1523,7 @@ namespace Azure.Storage.Files
         /// file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileInfo>> SetMetadataInternal(
@@ -1584,7 +1584,7 @@ namespace Azure.Storage.Files
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the file.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{Long}"/> to provide
@@ -1599,7 +1599,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileUploadInfo> UploadRange(
@@ -1640,7 +1640,7 @@ namespace Azure.Storage.Files
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the file.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{Long}"/> to provide
@@ -1655,7 +1655,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeAsync(
@@ -1696,7 +1696,7 @@ namespace Azure.Storage.Files
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the file.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{Long}"/> to provide
@@ -1714,7 +1714,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileUploadInfo>> UploadRangeInternal(
@@ -1801,7 +1801,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileUploadInfo> UploadRangeFromUri(
@@ -1841,7 +1841,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeFromUriAsync(
@@ -1884,7 +1884,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileUploadInfo>> UploadRangeFromUriInternal(
@@ -1960,7 +1960,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
@@ -1998,7 +1998,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
@@ -2043,7 +2043,7 @@ namespace Azure.Storage.Files
         /// state of the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<StorageFileUploadInfo>> UploadInternal(
@@ -2150,7 +2150,7 @@ namespace Azure.Storage.Files
         /// valid ranges for this file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileRangeInfo> GetRangeList(
@@ -2184,7 +2184,7 @@ namespace Azure.Storage.Files
         /// valid ranges for this file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
@@ -2221,7 +2221,7 @@ namespace Azure.Storage.Files
         /// valid ranges for this file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileRangeInfo>> GetRangeListInternal(
@@ -2280,7 +2280,7 @@ namespace Azure.Storage.Files
         /// describing the handles in the directory.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<StorageFileHandle> GetHandles(
@@ -2304,7 +2304,7 @@ namespace Azure.Storage.Files
         /// handles on the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<StorageFileHandle> GetHandlesAsync(
@@ -2343,7 +2343,7 @@ namespace Azure.Storage.Files
         /// segment of the handles on the file.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<StorageHandlesSegment>> GetHandlesInternal(
@@ -2410,7 +2410,7 @@ namespace Azure.Storage.Files
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response ForceCloseHandle(
@@ -2449,7 +2449,7 @@ namespace Azure.Storage.Files
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> ForceCloseHandleAsync(
@@ -2484,7 +2484,7 @@ namespace Azure.Storage.Files
         /// The number of handles closed.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual int ForceCloseAllHandles(
@@ -2514,7 +2514,7 @@ namespace Azure.Storage.Files
         /// The number of handles closed.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<int> ForceCloseAllHandlesAsync(
@@ -2547,7 +2547,7 @@ namespace Azure.Storage.Files
         /// The number of handles closed.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<int> ForceCloseAllHandlesInternal(
@@ -2608,7 +2608,7 @@ namespace Azure.Storage.Files
         /// segment of the handles closed.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesInternal(

@@ -148,7 +148,7 @@ namespace Azure.Storage.Queues.Test
         public async Task GetQueuesAsync_Error()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetQueuesAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }

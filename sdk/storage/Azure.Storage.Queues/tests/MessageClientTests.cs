@@ -59,7 +59,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.EnqueueMessageAsync(string.Empty),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -112,7 +112,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.DequeueMessagesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -163,7 +163,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.PeekMessagesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -196,7 +196,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.ClearMessagesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }

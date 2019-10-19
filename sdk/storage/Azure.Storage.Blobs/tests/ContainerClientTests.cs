@@ -148,7 +148,7 @@ namespace Azure.Storage.Blobs.Test
 
                 Assert.Fail("CreateAsync unexpected success: blob service SAS should not be usable to create container");
             }
-            catch (StorageRequestFailedException se) when (se.ErrorCode == "AuthorizationFailure") // TODO verify if this is a missing error code
+            catch (RequestFailedException se) when (se.ErrorCode == "AuthorizationFailure") // TODO verify if this is a missing error code
             {
                 pass = true;
             }
@@ -208,7 +208,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.CreateAsync(),
                 e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode.Split('\n')[0]));
 
@@ -276,7 +276,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -321,7 +321,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         container.DeleteAsync(accessConditions: accessConditions),
                         e => { });
                 }
@@ -378,7 +378,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetPropertiesAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -409,7 +409,7 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetMetadataAsync(metadata),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -479,7 +479,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         container.SetMetadataAsync(
                             metadata: metadata,
                             accessConditions: accessConditions),
@@ -541,7 +541,7 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     container.GetAccessPolicyAsync(leaseAccessConditions: leaseAccessConditions),
                     e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode.Split('\n')[0]));
             }
@@ -555,7 +555,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetAccessPolicyAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -599,7 +599,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetAccessPolicyAsync(permissions: signedIdentifiers),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -659,7 +659,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         container.SetAccessPolicyAsync(
                             accessType: publicAccessType,
                             permissions: signedIdentifiers,
@@ -705,7 +705,7 @@ namespace Azure.Storage.Blobs.Test
             TimeSpan duration = TimeSpan.MaxValue;
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(duration: duration),
                 e => StringAssert.Contains("InvalidHeaderValue", e.ErrorCode));
         }
@@ -720,7 +720,7 @@ namespace Azure.Storage.Blobs.Test
             var duration = TimeSpan.FromSeconds(15);
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(duration: duration),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -778,7 +778,7 @@ namespace Azure.Storage.Blobs.Test
                     var duration = TimeSpan.FromSeconds(15);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(
                             duration: duration,
                             accessConditions: accessConditions.HttpAccessConditions),
@@ -826,7 +826,7 @@ namespace Azure.Storage.Blobs.Test
             var id = Recording.Random.NewGuid().ToString();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetLeaseClient(id)).ReleaseAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -888,7 +888,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobLease> aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     lease.RenewAsync(accessConditions: accessConditions.HttpAccessConditions),
                     e => { });
 
@@ -933,7 +933,7 @@ namespace Azure.Storage.Blobs.Test
             var id = Recording.Random.NewGuid().ToString();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetLeaseClient(id)).ReleaseAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -987,7 +987,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobLease> aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     lease.ReleaseAsync(accessConditions: accessConditions.HttpAccessConditions),
                     e => { });
 
@@ -1032,7 +1032,7 @@ namespace Azure.Storage.Blobs.Test
             var id = Recording.Random.NewGuid().ToString();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetLeaseClient()).BreakAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -1095,7 +1095,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobLease> aquireLeaseResponse = await InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(duration: duration);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     InstrumentClient(container.GetLeaseClient()).BreakAsync(
                         accessConditions: accessConditions.HttpAccessConditions),
                     e => { });
@@ -1142,7 +1142,7 @@ namespace Azure.Storage.Blobs.Test
             var id = Recording.Random.NewGuid().ToString();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetLeaseClient(id)).ChangeAsync(id),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -1208,7 +1208,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobLease> aquireLeaseResponse = await InstrumentClient(container.GetLeaseClient(id)).AcquireAsync(duration: duration);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     InstrumentClient(container.GetLeaseClient(aquireLeaseResponse.Value.LeaseId)).ChangeAsync(
                         proposedId: newId,
                         accessConditions: accessConditions.HttpAccessConditions),
@@ -1384,7 +1384,7 @@ namespace Azure.Storage.Blobs.Test
             var id = Recording.Random.NewGuid().ToString();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsAsync().ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -1590,7 +1590,7 @@ namespace Azure.Storage.Blobs.Test
             var id = Recording.Random.NewGuid().ToString();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsByHierarchyAsync().ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
@@ -1621,7 +1621,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 await container.DeleteBlobAsync(name);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await blob.GetPropertiesAsync());
             }
         }
@@ -1644,7 +1644,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsTrue(response.Value);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await blob.GetPropertiesAsync());
             }
         }
@@ -1668,7 +1668,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsFalse(response.Value);
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await blob.GetPropertiesAsync());
             }
         }
@@ -1681,7 +1681,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteBlobIfExistsAsync(GetNewBlobName()),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }

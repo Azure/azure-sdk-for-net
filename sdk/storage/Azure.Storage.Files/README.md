@@ -157,7 +157,7 @@ using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
 ## Troubleshooting
 
 All Azure Storage File service operations will throw a
-[StorageRequestFailedException][StorageRequestFailedException] on failure with
+[RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
 ```c#
@@ -171,7 +171,7 @@ try
 {
     share.Create();
 }
-catch (StorageRequestFailedException ex)
+catch (RequestFailedException ex)
     when (ex.ErrorCode == FileErrorCode.ShareAlreadyExists)
 {
     // Ignore any errors if the share already exists
@@ -215,7 +215,7 @@ additional questions or comments.
 [storage_account_create_portal]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-error-codes
 [samples]: samples/
 [storage_contrib]: ../CONTRIBUTING.md

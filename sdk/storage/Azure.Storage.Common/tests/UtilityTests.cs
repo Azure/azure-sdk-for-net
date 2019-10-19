@@ -50,12 +50,12 @@ namespace Azure.Storage.Common.Test
                     {
                         await blobs.DeleteBlobContainerAsync(container.Name);
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
                     {
                         // Break any lingering leases
                         await blobs.GetBlobContainerClient(container.Name).GetLeaseClient().BreakAsync();
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }
@@ -69,7 +69,7 @@ namespace Azure.Storage.Common.Test
                     {
                         await queues.DeleteQueueAsync(queue.Name);
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == QueueErrorCode.QueueBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == QueueErrorCode.QueueBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }
@@ -83,7 +83,7 @@ namespace Azure.Storage.Common.Test
                     {
                         await files.DeleteShareAsync(share.Name);
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }

@@ -298,7 +298,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> Create(
@@ -356,7 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
@@ -410,7 +410,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> CreateIfNotExists(
@@ -462,7 +462,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobContentInfo>> CreateIfNotExistsInternal(
@@ -549,7 +549,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Constants.Blob.Page.CreateIfNotExistsOperationName)
                     .ConfigureAwait(false);
             }
-            catch (StorageRequestFailedException storageRequestFailedException)
+            catch (RequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
             {
                 return default;
@@ -600,7 +600,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobContentInfo>> CreateInternal(
@@ -689,7 +689,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the blob.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -708,7 +708,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageInfo> UploadPages(
@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the blob.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -769,7 +769,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageInfo>> UploadPagesAsync(
@@ -811,7 +811,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the blob.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -833,7 +833,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageInfo>> UploadPagesInternal(
@@ -938,7 +938,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageInfo> ClearPages(
@@ -980,7 +980,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageInfo>> ClearPagesAsync(
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageInfo>> ClearPagesInternal(
@@ -1109,7 +1109,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageRangesInfo> GetPageRanges(
@@ -1153,7 +1153,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageRangesInfo>> GetPageRangesAsync(
@@ -1200,7 +1200,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageRangesInfo>> GetPageRangesInternal(
@@ -1288,7 +1288,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageRangesInfo> GetPageRangesDiff(
@@ -1343,7 +1343,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
@@ -1401,7 +1401,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageRangesInfo>> GetPageRangesDiffInternal(
@@ -1482,7 +1482,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageBlobInfo> Resize(
@@ -1523,7 +1523,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageBlobInfo>> ResizeAsync(
@@ -1567,7 +1567,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageBlobInfo>> ResizeInternal(
@@ -1637,7 +1637,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the value of the sequence number by 1.  If specifying
         /// <see cref="SequenceNumberAction.Increment"/>, do not include the
         /// <paramref name="sequenceNumber"/> because that will throw a
-        /// <see cref="StorageRequestFailedException"/>.
+        /// <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="sequenceNumber">
         /// An updated sequence number of your choosing, if
@@ -1661,7 +1661,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageBlobInfo> UpdateSequenceNumber(
@@ -1694,7 +1694,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the value of the sequence number by 1.  If specifying
         /// <see cref="SequenceNumberAction.Increment"/>, do not include the
         /// <paramref name="sequenceNumber"/> because that will throw a
-        /// <see cref="StorageRequestFailedException"/>.
+        /// <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="sequenceNumber">
         /// An updated sequence number of your choosing, if
@@ -1718,7 +1718,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageBlobInfo>> UpdateSequenceNumberAsync(
@@ -1751,7 +1751,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the value of the sequence number by 1.  If specifying
         /// <see cref="SequenceNumberAction.Increment"/>, do not include the
         /// <paramref name="sequenceNumber"/> because that will throw a
-        /// <see cref="StorageRequestFailedException"/>.
+        /// <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="sequenceNumber">
         /// An updated sequence number of your choosing, if
@@ -1778,7 +1778,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// page blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageBlobInfo>> UpdateSequenceNumberInternal(
@@ -1865,7 +1865,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// copy operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         ///
         /// The destination of an incremental copy must either not exist, or
@@ -1970,7 +1970,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         ///
         /// The destination of an incremental copy must either not exist, or
@@ -2079,7 +2079,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         ///
         /// The destination of an incremental copy must either not exist, or
@@ -2211,7 +2211,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
@@ -2230,7 +2230,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<PageInfo> UploadPagesFromUri(
@@ -2286,7 +2286,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
@@ -2305,7 +2305,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<PageInfo>> UploadPagesFromUriAsync(
@@ -2361,7 +2361,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
@@ -2383,7 +2383,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated pages.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PageInfo>> UploadPagesFromUriInternal(

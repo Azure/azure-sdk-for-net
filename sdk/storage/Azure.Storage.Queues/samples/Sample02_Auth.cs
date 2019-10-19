@@ -130,8 +130,8 @@ namespace Azure.Storage.Queues.Samples
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex =
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateQueueAsync(Randomize("sample-queue")));
             Assert.AreEqual(403, ex.Status);
         }

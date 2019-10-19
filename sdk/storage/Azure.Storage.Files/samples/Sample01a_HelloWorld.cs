@@ -224,12 +224,12 @@ namespace Azure.Storage.Files.Samples
                 // Try to create the share again
                 share.Create();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == FileErrorCode.ShareAlreadyExists)
             {
                 // Ignore any errors if the share already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

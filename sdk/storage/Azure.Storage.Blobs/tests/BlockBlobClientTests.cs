@@ -229,7 +229,7 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream(data))
                 {
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.StageBlockAsync(
                             base64BlockId: ToBase64(GetNewBlockName()),
                             content: stream,
@@ -298,7 +298,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.StageBlockAsync(GetNewBlockName(), stream),
                         e =>
                         {
@@ -458,7 +458,7 @@ namespace Azure.Storage.Blobs.Test
                 BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
@@ -527,7 +527,7 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
@@ -591,7 +591,7 @@ namespace Azure.Storage.Blobs.Test
                     BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.StageBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             base64BlockId: ToBase64(GetNewBlockName()),
@@ -771,7 +771,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CommitBlockListAsync(
                         base64BlockIds: new string[] { ToBase64(GetNewBlockName()) },
                         accessConditions: new BlobAccessConditions
@@ -864,7 +864,7 @@ namespace Azure.Storage.Blobs.Test
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.CommitBlockListAsync(
                             base64BlockIds: new string[] { ToBase64(blockName) },
                             accessConditions: new BlobAccessConditions
@@ -891,7 +891,7 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CommitBlockListAsync(commitList),
                     e =>
                     {
@@ -981,7 +981,7 @@ namespace Azure.Storage.Blobs.Test
                     ToBase64(secondBlockName)
                 };
 
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CommitBlockListAsync(commitList, accessTier: AccessTier.P10),
                     e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
             }
@@ -1120,7 +1120,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.GetBlockListAsync(
                         leaseAccessConditions: new LeaseAccessConditions
                         {
@@ -1140,7 +1140,7 @@ namespace Azure.Storage.Blobs.Test
                 BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blockBlobName));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.GetBlockListAsync(BlockListTypes.All, "invalidSnapshot"),
                     e =>
                     {
@@ -1345,7 +1345,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.UploadAsync(
                                 content: stream,
                                 accessConditions: new BlobAccessConditions
@@ -1371,7 +1371,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.UploadAsync(
                             content: stream,
                             accessConditions: new BlobAccessConditions

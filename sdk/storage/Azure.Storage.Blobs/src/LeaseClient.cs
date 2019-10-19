@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobLease> Acquire(
@@ -204,7 +204,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> AcquireAsync(
@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobLease>> AcquireInternal(
@@ -351,7 +351,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobLease> Renew(
@@ -387,7 +387,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> RenewAsync(
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobLease>> RenewInternal(
@@ -519,7 +519,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// updated blob or container.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ReleasedObjectInfo> Release(
@@ -555,7 +555,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// updated blob or container.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
@@ -594,7 +594,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// updated blob or container.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
@@ -677,7 +677,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
-        /// <see cref="StorageRequestFailedException"/> will be thrown if the
+        /// <see cref="RequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="accessConditions">
@@ -692,7 +692,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobLease> Change(
@@ -715,7 +715,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
-        /// <see cref="StorageRequestFailedException"/> will be thrown if the
+        /// <see cref="RequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="accessConditions">
@@ -730,7 +730,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> ChangeAsync(
@@ -753,7 +753,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
-        /// <see cref="StorageRequestFailedException"/> will be thrown if the
+        /// <see cref="RequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="httpAccessConditions">
@@ -771,7 +771,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobLease>> ChangeInternal(
@@ -887,7 +887,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the broken lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobLease> Break(
@@ -943,7 +943,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the broken lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> BreakAsync(
@@ -1002,7 +1002,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{Lease}"/> describing the broken lease.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobLease>> BreakInternal(

@@ -179,7 +179,7 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateAsync(),
                     actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
                     );
@@ -248,7 +248,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.CreateAsync(accessConditions: accessConditions),
                         e => { });
                 }
@@ -307,7 +307,7 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateIfNotExistsAsync(),
                     actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
                     );
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(
                             content: stream,
                             transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
@@ -447,7 +447,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(stream),
                         e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
                 }
@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.AppendBlockAsync(
                                 content: stream,
                                 accessConditions: accessConditions),
@@ -756,7 +756,7 @@ namespace Azure.Storage.Blobs.Test
                     await destBlob.CreateAsync();
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.AppendBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
@@ -869,7 +869,7 @@ namespace Azure.Storage.Blobs.Test
                         AppendBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
                         // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             destBlob.AppendBlockFromUriAsync(
                                 sourceUri: sourceBlob.Uri,
                                 accessConditions: accessConditions,
