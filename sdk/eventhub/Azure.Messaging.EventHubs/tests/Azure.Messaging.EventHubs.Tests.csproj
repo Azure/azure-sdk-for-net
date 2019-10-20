@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Samples.csproj" />
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 
   <!-- Import the Azure.Core test framework (shared source) -->
