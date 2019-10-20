@@ -53,13 +53,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        /// <param name="orcCompressionCodec">Possible values include: 'none',
-        /// 'zlib', 'snappy'</param>
-        public OrcDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), string orcCompressionCodec = default(string))
+        public OrcDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             Location = location;
-            OrcCompressionCodec = orcCompressionCodec;
             CustomInit();
         }
 
@@ -73,12 +70,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.location")]
         public DatasetLocation Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'none', 'zlib', 'snappy'
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.orcCompressionCodec")]
-        public string OrcCompressionCodec { get; set; }
 
         /// <summary>
         /// Validate the object.

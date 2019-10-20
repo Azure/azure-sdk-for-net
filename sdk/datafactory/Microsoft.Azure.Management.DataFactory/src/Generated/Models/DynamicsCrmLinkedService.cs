@@ -42,10 +42,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// include: 'Online', 'OnPremisesWithIfd'</param>
         /// <param name="authenticationType">The authentication type to connect
         /// to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for
-        /// on-premises with Ifd scenario, 'AADServicePrincipal' for
-        /// Server-To-Server authentication in online scenario. Type: string
-        /// (or Expression with resultType string). Possible values include:
-        /// 'Office365', 'Ifd', 'AADServicePrincipal'</param>
+        /// on-premises with Ifd scenario. Type: string (or Expression with
+        /// resultType string). Possible values include: 'Office365',
+        /// 'Ifd'</param>
+        /// <param name="username">User name to access the Dynamics CRM
+        /// instance. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -70,31 +72,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// required for online when there are more than one Dynamics CRM
         /// instances associated with the user. Type: string (or Expression
         /// with resultType string).</param>
-        /// <param name="username">User name to access the Dynamics CRM
-        /// instance. Type: string (or Expression with resultType
-        /// string).</param>
         /// <param name="password">Password to access the Dynamics CRM
         /// instance.</param>
-        /// <param name="servicePrincipalId">The client ID of the application
-        /// in Azure Active Directory used for Server-To-Server authentication.
-        /// Type: string (or Expression with resultType string).</param>
-        /// <param name="servicePrincipalCredentialType">The service principal
-        /// credential type to use in Server-To-Server authentication.
-        /// 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for
-        /// certificate. Type: string (or Expression with resultType
-        /// string).</param>
-        /// <param name="servicePrincipalCredential">The credential of the
-        /// service principal object in Azure Active Directory. If
-        /// servicePrincipalCredentialType is 'ServicePrincipalKey',
-        /// servicePrincipalCredential can be SecureString or
-        /// AzureKeyVaultSecretReference. If servicePrincipalCredentialType is
-        /// 'ServicePrincipalCert', servicePrincipalCredential can only be
-        /// AzureKeyVaultSecretReference.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public DynamicsCrmLinkedService(string deploymentType, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object hostName = default(object), object port = default(object), object serviceUri = default(object), object organizationName = default(object), object username = default(object), SecretBase password = default(SecretBase), object servicePrincipalId = default(object), object servicePrincipalCredentialType = default(object), SecretBase servicePrincipalCredential = default(SecretBase), object encryptedCredential = default(object))
+        public DynamicsCrmLinkedService(string deploymentType, string authenticationType, object username, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object hostName = default(object), object port = default(object), object serviceUri = default(object), object organizationName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             DeploymentType = deploymentType;
@@ -105,9 +89,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AuthenticationType = authenticationType;
             Username = username;
             Password = password;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalCredentialType = servicePrincipalCredentialType;
-            ServicePrincipalCredential = servicePrincipalCredential;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -164,10 +145,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets the authentication type to connect to Dynamics CRM
         /// server. 'Office365' for online scenario, 'Ifd' for on-premises with
-        /// Ifd scenario, 'AADServicePrincipal' for Server-To-Server
-        /// authentication in online scenario. Type: string (or Expression with
-        /// resultType string). Possible values include: 'Office365', 'Ifd',
-        /// 'AADServicePrincipal'
+        /// Ifd scenario. Type: string (or Expression with resultType string).
+        /// Possible values include: 'Office365', 'Ifd'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authenticationType")]
         public string AuthenticationType { get; set; }
@@ -184,35 +163,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
         public SecretBase Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the client ID of the application in Azure Active
-        /// Directory used for Server-To-Server authentication. Type: string
-        /// (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.servicePrincipalId")]
-        public object ServicePrincipalId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the service principal credential type to use in
-        /// Server-To-Server authentication. 'ServicePrincipalKey' for
-        /// key/secret, 'ServicePrincipalCert' for certificate. Type: string
-        /// (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.servicePrincipalCredentialType")]
-        public object ServicePrincipalCredentialType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the credential of the service principal object in
-        /// Azure Active Directory. If servicePrincipalCredentialType is
-        /// 'ServicePrincipalKey', servicePrincipalCredential can be
-        /// SecureString or AzureKeyVaultSecretReference. If
-        /// servicePrincipalCredentialType is 'ServicePrincipalCert',
-        /// servicePrincipalCredential can only be
-        /// AzureKeyVaultSecretReference.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.servicePrincipalCredential")]
-        public SecretBase ServicePrincipalCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -238,6 +188,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (AuthenticationType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AuthenticationType");
+            }
+            if (Username == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Username");
             }
         }
     }
