@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Updates tags for an Azure Firewall resource.
+        /// Updates tags of an Azure Firewall resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the Azure Firewall.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update Azure Firewall operation.
+        /// Parameters supplied to update azure firewall tags.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureFirewall>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string azureFirewallName, AzureFirewall parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AzureFirewall>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string azureFirewallName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
