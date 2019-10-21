@@ -791,6 +791,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Container being deleted failure")]
         public async Task AbortCopyFromUriAsync()
         {
             using (GetNewContainer(out BlobContainerClient container))
