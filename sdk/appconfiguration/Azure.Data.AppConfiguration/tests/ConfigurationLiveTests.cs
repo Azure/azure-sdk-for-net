@@ -1059,7 +1059,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(xyzSetting);
 
                 var selector = new SettingSelector("ab,cd");
-                selector.Keys.Add("wz,yz");
+                selector.Keys.Add("wx,yz");
 
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
