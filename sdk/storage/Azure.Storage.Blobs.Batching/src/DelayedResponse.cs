@@ -77,6 +77,11 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
+        public override string ToString()
+        {
+            return _live == null ? "Status: NotSent, Request is not sent yet." : base.ToString();
+        }
+
         // We directly forward the entire Response interface to LiveResponse
         #region forward Response members to Live
         /// <inheritdoc />
