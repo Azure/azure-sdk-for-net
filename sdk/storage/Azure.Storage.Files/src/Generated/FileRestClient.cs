@@ -8180,7 +8180,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Creates a new ShareItem instance
         /// </summary>
-        public ShareItem()
+        internal ShareItem()
             : this(false)
         {
         }
