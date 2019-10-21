@@ -55,11 +55,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // The JWK is not supported by this client. Send to the server.
             if (KeyMaterial is null)
             {
-                if (KeysEventSource.Singleton.IsEnabled())
-                {
-                    KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), _curve.ToString());
-                }
-
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), _curve);
                 return null;
             }
 
@@ -105,11 +101,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // The JWK is not supported by this client. Send to the server.
             if (KeyMaterial is null)
             {
-                if (KeysEventSource.Singleton.IsEnabled())
-                {
-                    KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), _curve.ToString());
-                }
-
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), _curve);
                 return null;
             }
 

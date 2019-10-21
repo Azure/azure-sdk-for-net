@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Encrypt), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Encrypt), algorithm);
                 return null;
             }
 
@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), algorithm);
                 return null;
             }
 
@@ -105,14 +105,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), algorithm);
                 return null;
             }
 
             RSASignaturePadding padding = algorithm.GetRsaSignaturePadding();
             if (padding is null)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), algorithm);
                 return null;
             }
 
@@ -135,14 +135,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), algorithm);
                 return null;
             }
 
             RSASignaturePadding padding = algorithm.GetRsaSignaturePadding();
             if (padding is null)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), algorithm);
                 return null;
             }
 
@@ -166,7 +166,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), algorithm);
                 return null;
             }
 
@@ -200,7 +200,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
-                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), ref algorithm);
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), algorithm);
                 return null;
             }
 

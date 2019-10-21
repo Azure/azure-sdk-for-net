@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys
         public static KeysEventSource Singleton { get; } = new KeysEventSource();
 
         [NonEvent]
-        public void AlgorithmNotSupported<T>(string operation, ref T algorithm) where T : struct
+        public void AlgorithmNotSupported<T>(string operation, T algorithm) where T : notnull
         {
             if (IsEnabled())
             {

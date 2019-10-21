@@ -18,8 +18,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
     [NonParallelizable]
     public class KeysEventSourceTests : ClientTestBase
     {
+        private static readonly byte[] s_buffer = new byte[32];
+
         private const string KeyId = "https://localhost/keys/test";
         private TestEventListener _listener;
+
+        static KeysEventSourceTests()
+        {
+            new Random().NextBytes(s_buffer);
+        }
 
         public KeysEventSourceTests(bool isAsync) : base(isAsync)
         {
@@ -271,26 +278,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private static IEnumerable GetAesOperations()
         {
-            byte[] buffer = new byte[32];
-            new Random().NextBytes(buffer);
-
-            yield return new TestCaseData("WrapKey", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.WrapKeyAsync(algorithm, buffer)));
-            yield return new TestCaseData("UnwrapKey", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.UnwrapKeyAsync(algorithm, buffer)));
+            yield return new TestCaseData("WrapKey", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.WrapKeyAsync(algorithm, s_buffer)));
+            yield return new TestCaseData("UnwrapKey", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.UnwrapKeyAsync(algorithm, s_buffer)));
         }
 
         private static IEnumerable GetEcOperations(bool includePublicKeyMethods, bool ignoreHashingMethods)
         {
-            byte[] buffer = new byte[32];
-            new Random().NextBytes(buffer);
-
-            yield return new TestCaseData("Sign", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignAsync(algorithm, buffer)));
-            yield return new TestCaseData("SignData", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignDataAsync(algorithm, buffer)))
+            yield return new TestCaseData("Sign", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignAsync(algorithm, s_buffer)));
+            yield return new TestCaseData("SignData", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignDataAsync(algorithm, s_buffer)))
                 .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");
 
             if (includePublicKeyMethods)
             {
-                yield return new TestCaseData("Verify", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyAsync(algorithm, buffer, buffer)));
-                yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm, buffer, buffer)))
+                yield return new TestCaseData("Verify", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyAsync(algorithm, s_buffer, s_buffer)));
+                yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm, s_buffer, s_buffer)))
                     .ConditionalIgnore(ignoreHashingMethods, "Cannot create hash locally with invalid algorithm");
             }
         }
@@ -298,22 +299,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // Use RSA operations as a proxy for cryptographic operations since it currently supports them all.
         private static IEnumerable GetRsaOperations(bool includePublicKeyMethods, bool ignoreHashingMethods)
         {
-            byte[] buffer = new byte[32];
-            new Random().NextBytes(buffer);
-
-            yield return new TestCaseData("Decrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.DecryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep, buffer)));
-            yield return new TestCaseData("Sign", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignAsync(algorithm ?? SignatureAlgorithm.RS256, buffer)));
-            yield return new TestCaseData("SignData", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignDataAsync(algorithm ?? SignatureAlgorithm.RS256, buffer)))
+            yield return new TestCaseData("Decrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.DecryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep, s_buffer)));
+            yield return new TestCaseData("Sign", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer)));
+            yield return new TestCaseData("SignData", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignDataAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer)))
                 .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");
-            yield return new TestCaseData("UnwrapKey", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.UnwrapKeyAsync(algorithm ?? KeyWrapAlgorithm.RsaOaep, buffer)));
+            yield return new TestCaseData("UnwrapKey", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.UnwrapKeyAsync(algorithm ?? KeyWrapAlgorithm.RsaOaep, s_buffer)));
 
             if (includePublicKeyMethods)
             {
-                yield return new TestCaseData("Encrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.EncryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep, buffer)));
-                yield return new TestCaseData("Verify", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyAsync(algorithm ?? SignatureAlgorithm.RS256, buffer, buffer)));
-                yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm ?? SignatureAlgorithm.RS256, buffer, buffer)))
+                yield return new TestCaseData("Encrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.EncryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep, s_buffer)));
+                yield return new TestCaseData("Verify", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer, s_buffer)));
+                yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer, s_buffer)))
                     .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");
-                yield return new TestCaseData("WrapKey", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.WrapKeyAsync(algorithm ?? KeyWrapAlgorithm.RsaOaep, buffer)));
+                yield return new TestCaseData("WrapKey", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.WrapKeyAsync(algorithm ?? KeyWrapAlgorithm.RsaOaep, s_buffer)));
             }
         }
     }
