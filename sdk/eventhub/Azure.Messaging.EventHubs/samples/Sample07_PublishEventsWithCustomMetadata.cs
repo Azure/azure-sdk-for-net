@@ -36,10 +36,9 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client and a producer, each using their default set of options.
+            // We will start by creating a producer client, using its default options.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
-            await using (EventHubProducer producer = client.CreateProducer())
+            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
                 // Because an event consists mainly of an opaque set of bytes, it may be difficult for consumers of those events to
                 // make informed decisions about how to process them.
@@ -65,12 +64,12 @@ namespace Azure.Messaging.EventHubs.Samples
                 secondEvent.Properties.Add("priority", "17");
                 secondEvent.Properties.Add("blob", true);
 
-                await producer.SendAsync(new[] { firstEvent, secondEvent });
+                await producerClient.SendAsync(new[] { firstEvent, secondEvent });
 
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

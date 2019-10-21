@@ -40,35 +40,34 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client using its default set of options.  It will be used by the event processor to
-            // communicate with the Azure Event Hubs service.
+            // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
+            // multiple partitions in the Event Hub, passing them to a handler delegate for processing using code that you
+            // provide.
+            //
+            // These handler delegates are invoked for each event or error that occurs during operation of the event processor.  For
+            // a given partition, only a single event will be dispatched for processing at a time so that the order of events within a
+            // partition is preserved.  Partitions, however, are processed concurrently.  As a result, your handlers are potentially processing
+            // multiple events or errors at any given time.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
+            // A partition manager may create checkpoints and list/claim partition ownership.  A developer may implement their
+            // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
+            // a new instance of an InMemoryPartitionManager, provided by the Azure.Messaging.EventHubs.Processor namespace.
+            // This isn't relevant to understanding this sample, but is required by the event processor constructor.
+
+            var partitionManager = new InMemoryPartitionManager();
+
+            // It's also possible to specify custom options upon event processor creation.  We don't want to wait
+            // more than 1 second for every set of events.
+
+            var eventProcessorOptions = new EventProcessorClientOptions
             {
-                // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
-                // multiple partitions in the Event Hub, passing them to the user for processing.
-                //
-                // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
-                // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
-                // a new instance of an InMemoryPartitionManager, provided by the Azure.Messaging.EventHubs.Processor namespace.
-                // This isn't relevant to understanding this sample, but is required by the event processor constructor.
+                MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
+            };
 
-                PartitionManager partitionManager = new InMemoryPartitionManager();
+            // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                // It's also possible to specify custom options upon event processor creation.  We want to receive events from
-                // the latest available position so older events don't interfere with our sample.  We also don't want to wait
-                // more than 1 second for every set of events.
-
-                EventProcessorOptions eventProcessorOptions = new EventProcessorOptions
-                {
-                    InitialEventPosition = EventPosition.Latest,
-                    MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
-                };
-
-                // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
-
-                var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
-
+            await using (var eventProcessor = new EventProcessorClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionManager, connectionString, eventHubName, eventProcessorOptions))
+            {
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;
 
@@ -76,6 +75,9 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 eventProcessor.InitializeProcessingForPartitionAsync = (PartitionContext partitionContext) =>
                 {
+                    // TODO: Set the default initial position to "Latest" here.
+
+
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
@@ -125,8 +127,10 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 eventProcessor.ProcessExceptionAsync = (PartitionContext partitionContext, Exception exception) =>
                 {
-                    // All the unhandled exceptions encountered during the event processor execution are passed to this method so
-                    // the user can decide how to handle them.
+                    // Any exception which occurs within the event processor itself will be passed to this delegate so that they may be
+                    // handled.  Note that this does not include exceptions which occur in the event processing handler or the other delegate properties.
+                    // It is considered responsibility of the developer writing the handler code to ensure that proper exception handling practices are
+                    // followed.
                     //
                     // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                     // to the Console, then something unexpected has happened.
@@ -155,59 +159,58 @@ namespace Azure.Messaging.EventHubs.Samples
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(400));
 
-                var partitionsCount = (await client.GetPartitionIdsAsync()).Length;
-
-                while (partitionsBeingProcessedCount < partitionsCount)
+                await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
                 {
-                    await Task.Delay(500, cancellationSource.Token);
-                }
+                    var partitionsCount = (await producerClient.GetPartitionIdsAsync()).Length;
 
-                // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
-                // specifying a partition to send events to, so these sets may end up in different partitions.
+                    while (partitionsBeingProcessedCount < partitionsCount)
+                    {
+                        await Task.Delay(500, cancellationSource.Token);
+                    }
 
-                EventData[] eventsToPublish = new EventData[]
-                {
-                    new EventData(Encoding.UTF8.GetBytes("I am not the second event.")),
-                    new EventData(Encoding.UTF8.GetBytes("I am not the first event."))
-                };
+                    // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
+                    // specifying a partition to send events to, so these sets may end up in different partitions.
 
-                int amountOfSets = 10;
-                int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
+                    EventData[] eventsToPublish = new EventData[]
+                    {
+                        new EventData(Encoding.UTF8.GetBytes("I am not the second event.")),
+                        new EventData(Encoding.UTF8.GetBytes("I am not the first event."))
+                    };
 
-                await using (EventHubProducer producer = client.CreateProducer())
-                {
-                    Console.WriteLine();
+                    int amountOfSets = 10;
+                    int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
+
                     Console.WriteLine("Sending events to the Event Hub.");
                     Console.WriteLine();
 
                     for (int i = 0; i < amountOfSets; i++)
                     {
-                        await producer.SendAsync(eventsToPublish);
+                        await producerClient.SendAsync(eventsToPublish);
                     }
+
+                    // Because there is some non-determinism in the messaging flow, the sent events may not be immediately
+                    // available.  For this reason, we wait 500 ms before resuming.
+
+                    await Task.Delay(500);
+
+                    // Once stopped, the event processor won't receive events anymore.  In case there are still events being
+                    // processed when the stop method is called, the processing will complete before the corresponding partition
+                    // processor is closed.
+
+                    Console.WriteLine();
+                    Console.WriteLine("Stopping the event processor.");
+                    Console.WriteLine();
+
+                    await eventProcessor.StopAsync();
+
+                    // Print out the amount of events that we received.
+
+                    Console.WriteLine();
+                    Console.WriteLine($"Amount of events received: { totalEventsCount }. Expected: { expectedAmountOfEvents }.");
                 }
-
-                // Because there is some non-determinism in the messaging flow, the sent events may not be immediately
-                // available.  For this reason, we wait 500 ms before resuming.
-
-                await Task.Delay(500);
-
-                // Once stopped, the event processor won't receive events anymore.  In case there are still events being
-                // processed when the stop method is called, the processing will complete before the corresponding partition
-                // processor is closed.
-
-                Console.WriteLine();
-                Console.WriteLine("Stopping the event processor.");
-                Console.WriteLine();
-
-                await eventProcessor.StopAsync();
-
-                // Print out the amount of events that we received.
-
-                Console.WriteLine();
-                Console.WriteLine($"Amount of events received: { totalEventsCount }. Expected: { expectedAmountOfEvents }.");
             }
 
-            // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our clients have passed their "using" scope and have safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

@@ -6,7 +6,7 @@
     Because the common SDK build properties need this value in order to recognize the desired
     target frameworks and related, this needs to be set before the common properties import.
   -->
-  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Samples'))">
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('.Samples'))">
     <IsTestProject>true</IsTestProject>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
