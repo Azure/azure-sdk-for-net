@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "54",
         "Content-Type": "application/json",
-        "Date": "Mon, 21 Oct 2019 03:43:53 GMT",
-        "traceparent": "00-0811f3a1d08e7d499c5a99f31247401c-f6db73ad9d3e2045-00",
+        "Date": "Mon, 21 Oct 2019 16:09:20 GMT",
+        "traceparent": "00-745b4e2e01f28b42affe22e341752c2b-ea27ebdd853ce042-00",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191020.1\u002Bab27420f912a6434ce46dc0b51720b03f70f05bf",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
@@ -32,26 +32,26 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Mon, 21 Oct 2019 03:43:53 GMT",
-        "ETag": "\u0022rSFE8OWhXR0PENTuI1jx22O6EGB\u0022",
-        "Last-Modified": "Mon, 21 Oct 2019 03:43:54 GMT",
+        "Date": "Mon, 21 Oct 2019 16:09:20 GMT",
+        "ETag": "\u0022S87KIR0xlGKAIQLrur4NiJlnhSf\u0022",
+        "Last-Modified": "Mon, 21 Oct 2019 16:09:20 GMT",
         "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3Mjc=;sn=686727",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NjI=;sn=690562",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "905bd8804b59caee01bd6d60dd7d9771",
-        "x-ms-correlation-request-id": "511bbd9a-1b24-4e88-b63d-b4e24f6f3a78",
-        "x-ms-request-id": "511bbd9a-1b24-4e88-b63d-b4e24f6f3a78"
+        "x-ms-correlation-request-id": "0df65104-d7a1-4efc-b5f4-8e4844df7f8f",
+        "x-ms-request-id": "0df65104-d7a1-4efc-b5f4-8e4844df7f8f"
       },
       "ResponseBody": {
-        "etag": "rSFE8OWhXR0PENTuI1jx22O6EGB",
+        "etag": "S87KIR0xlGKAIQLrur4NiJlnhSf",
         "key": "yzabcde-1623831952",
         "label": "yzabcde",
         "content_type": null,
         "value": "Contains abc",
         "tags": {},
         "locked": false,
-        "last_modified": "2019-10-21T03:43:54\u002B00:00"
+        "last_modified": "2019-10-21T16:09:20\u002B00:00"
       }
     },
     {
@@ -60,8 +60,8 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Mon, 21 Oct 2019 03:43:53 GMT",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3Mjc=",
+        "Date": "Mon, 21 Oct 2019 16:09:20 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NjI=",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191020.1\u002Bab27420f912a6434ce46dc0b51720b03f70f05bf",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
@@ -80,17 +80,37 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002Bjson; charset=utf-8",
-        "Date": "Mon, 21 Oct 2019 03:43:53 GMT",
+        "Date": "Mon, 21 Oct 2019 16:09:20 GMT",
         "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3Mjc=;sn=686727",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NjI=;sn=690562",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "daa14a6926731dc7202ff33515ea01ed",
-        "x-ms-correlation-request-id": "eae3c3b8-4565-46c5-beb5-506ea287e69d",
-        "x-ms-request-id": "eae3c3b8-4565-46c5-beb5-506ea287e69d"
+        "x-ms-correlation-request-id": "8ebc6b7a-5dd2-4393-b0e5-ad06e3f94c69",
+        "x-ms-request-id": "8ebc6b7a-5dd2-4393-b0e5-ad06e3f94c69"
       },
       "ResponseBody": {
         "items": [
+          {
+            "etag": "TL8VvrQOMMk37vEX44z9YDW0iTi",
+            "key": "abcde-1025513880",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:25\u002B00:00"
+          },
+          {
+            "etag": "vIm7whfLhwL64oFKhPEu9lRciWa",
+            "key": "abcde-1080682505",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:37\u002B00:00"
+          },
           {
             "etag": "u4qe0vr98D13zgOJOfTfZGp3CKd",
             "key": "abcde-1179400413",
@@ -120,6 +140,46 @@
             "tags": {},
             "locked": false,
             "last_modified": "2019-10-21T03:25:13\u002B00:00"
+          },
+          {
+            "etag": "F741DMgcjZ7PP6OxYzDeX5rXi3A",
+            "key": "abcde-1287229815",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:43\u002B00:00"
+          },
+          {
+            "etag": "SCXfORQgOZLSd8150EdjkwJeOd4",
+            "key": "abcde-1303788820",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:00\u002B00:00"
+          },
+          {
+            "etag": "NCVOigsk6ftYt5BvCVRo6kSZvno",
+            "key": "abcde-1409492144",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:01\u002B00:00"
+          },
+          {
+            "etag": "RlVwUwCcqDolaZASzazd0YI1oMP",
+            "key": "abcde-1569558797",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:15\u002B00:00"
           },
           {
             "etag": "alPbQ2aBVbvbrcbAZkdqzQcanZe",
@@ -152,6 +212,26 @@
             "last_modified": "2019-10-21T03:30:43\u002B00:00"
           },
           {
+            "etag": "w2PgFvJLq9tQbhYLOLogL86rdmN",
+            "key": "abcde-2028223599",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:21\u002B00:00"
+          },
+          {
+            "etag": "NTYaKOw2jjmHCUMYgsjbPh2hXum",
+            "key": "abcde-2061696320",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:08\u002B00:00"
+          },
+          {
             "etag": "bnPwLqYTXu8njNxtgbBfrhqeRk4",
             "key": "abcde-215840164",
             "label": "abcde",
@@ -172,14 +252,34 @@
             "last_modified": "2019-10-21T03:43:23\u002B00:00"
           },
           {
-            "etag": "N5FX7n9jmfeCy00XiR1XM623mSc",
+            "etag": "sHSPD8EOdXfgmRR8k2bbZHeonO4",
+            "key": "abcde-265829424",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:35\u002B00:00"
+          },
+          {
+            "etag": "zkTOWSLRFOUWbcAe44Wwct1ic9m",
             "key": "abcde-300675015",
             "label": "abcde",
             "content_type": null,
             "value": "Starts with abc",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:33:53\u002B00:00"
+            "last_modified": "2019-10-21T16:08:50\u002B00:00"
+          },
+          {
+            "etag": "iphFPl1LqgrJznFry5jew1IkR6w",
+            "key": "abcde-323343792",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:32\u002B00:00"
           },
           {
             "etag": "q5ekgrmT8JESxUwdUZmcXXVXwYU",
@@ -202,6 +302,16 @@
             "last_modified": "2019-10-21T03:43:35\u002B00:00"
           },
           {
+            "etag": "HZRJc8BFY40LtOtBh6TscxNBbs0",
+            "key": "abcde-439852397",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:08\u002B00:00"
+          },
+          {
             "etag": "Ps1LBHvBUPF2upTw6zkDCiLfDER",
             "key": "abcde-449572761",
             "label": "abcde",
@@ -212,24 +322,74 @@
             "last_modified": "2019-10-21T03:42:21\u002B00:00"
           },
           {
-            "etag": "FYc8xsY8t0Ps2AmOUK6kK61Z2ZT",
+            "etag": "OWgtj7u89hcsnU7W6wBeRmVhhG4",
+            "key": "abcde-519344592",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:44\u002B00:00"
+          },
+          {
+            "etag": "bq0c79EFLv0BYqhOK0xGGxxMv7H",
+            "key": "abcde-625188767",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:13\u002B00:00"
+          },
+          {
+            "etag": "fIHipB3KDsTCX9xprjXRBxwAN9Z",
+            "key": "abcde-92103650",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:24\u002B00:00"
+          },
+          {
+            "etag": "1UA3bTXGz8gWcoO2C0kZ9p5decQ",
             "key": "abcde-950677562",
             "label": "abcde",
             "content_type": null,
             "value": "Starts with abc",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:34:02\u002B00:00"
+            "last_modified": "2019-10-21T16:09:02\u002B00:00"
           },
           {
-            "etag": "393l7J6PriNpLZJ8oAYHsu7hbRm",
+            "etag": "7s1VnJi7EaSoTm4dV4iHOxR0cMM",
             "key": "key-abc",
             "label": "abc",
             "content_type": null,
             "value": "abc setting",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:43:36\u002B00:00"
+            "last_modified": "2019-10-21T16:09:03\u002B00:00"
+          },
+          {
+            "etag": "P8DpP9IrvO94a1LhMLsacvBKfx3",
+            "key": "yzabc-1133401749",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:12\u002B00:00"
+          },
+          {
+            "etag": "ZMw3I8m4xO8mhHMiTb54DxXdJky",
+            "key": "yzabc-117559886",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:15\u002B00:00"
           },
           {
             "etag": "NZp80EfNrVHB71vyUgbZa5wckcp",
@@ -262,6 +422,16 @@
             "last_modified": "2019-10-21T03:43:34\u002B00:00"
           },
           {
+            "etag": "uXKo1ejeQy4ifd6mdKfYjThyUtU",
+            "key": "yzabc-1424684149",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:24\u002B00:00"
+          },
+          {
             "etag": "FSgTkXzZkEvxD1nrtfFbC3xlb1e",
             "key": "yzabc-153648472",
             "label": "yzabc",
@@ -282,6 +452,36 @@
             "last_modified": "2019-10-21T03:24:26\u002B00:00"
           },
           {
+            "etag": "tw5zWKtsGeRhdpsX5swksKDI3e0",
+            "key": "yzabc-1740395773",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:31\u002B00:00"
+          },
+          {
+            "etag": "F3UuwbaPMrnskjToyZFlpZ3WNbq",
+            "key": "yzabc-1745388068",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:23\u002B00:00"
+          },
+          {
+            "etag": "1qLXpOGE1aiiv8QoF0PxUdy7gU0",
+            "key": "yzabc-1839869524",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:07\u002B00:00"
+          },
+          {
             "etag": "kqi1EbwPaHiNrlf594si81N65Vp",
             "key": "yzabc-1879859576",
             "label": "yzabc",
@@ -290,6 +490,26 @@
             "tags": {},
             "locked": false,
             "last_modified": "2019-10-21T03:42:01\u002B00:00"
+          },
+          {
+            "etag": "9odBc7C3aS6VkjHuAiHofUFDoFh",
+            "key": "yzabc-1978273073",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:00\u002B00:00"
+          },
+          {
+            "etag": "6TjGsSkQJNGQ3D3wPdOya9UKBiO",
+            "key": "yzabc-1982714551",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:43\u002B00:00"
           },
           {
             "etag": "J32ZsjxRC0mW7MNOsX4aJWLppc3",
@@ -312,14 +532,24 @@
             "last_modified": "2019-10-21T03:42:20\u002B00:00"
           },
           {
-            "etag": "u8mkiWSuqtpvhgOS4FwSc8DySsB",
+            "etag": "TipnrQMSrob8m8p5oOA5tGmoVeM",
+            "key": "yzabc-2093136815",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:07\u002B00:00"
+          },
+          {
+            "etag": "O3H05uwdfZXIp85YjyDILJLOSMh",
             "key": "yzabc-249554548",
             "label": "yzabc",
             "content_type": null,
             "value": "Test of ends with",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:33:52\u002B00:00"
+            "last_modified": "2019-10-21T16:08:49\u002B00:00"
           },
           {
             "etag": "CLfOrQzmwN7QO9nsPlBEBQFQVHC",
@@ -332,14 +562,34 @@
             "last_modified": "2019-10-21T03:25:12\u002B00:00"
           },
           {
-            "etag": "jWgN8lG8wbAv8sAaWwQNPkeAuqh",
+            "etag": "loZE0itUq2todvYZbdoVFgeuN09",
+            "key": "yzabc-390433554",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:57:59\u002B00:00"
+          },
+          {
+            "etag": "8uoF342xG0baPygVhZxcez1eX2w",
             "key": "yzabc-652906355",
             "label": "yzabc",
             "content_type": null,
             "value": "Test of ends with",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:34:01\u002B00:00"
+            "last_modified": "2019-10-21T16:09:01\u002B00:00"
+          },
+          {
+            "etag": "9DWmogREw06sXuD1YfIOd4kzdAh",
+            "key": "yzabc-655475156",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:37\u002B00:00"
           },
           {
             "etag": "t8Erpy1w5b5lospJCQw7lwa8Jul",
@@ -362,6 +612,66 @@
             "last_modified": "2019-10-21T03:25:04\u002B00:00"
           },
           {
+            "etag": "rXMFlah5naPsHBbC4BloaAWGPNc",
+            "key": "yzabc-961314160",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:34\u002B00:00"
+          },
+          {
+            "etag": "AqCGfX3rYCnueiJBbaB7D4uute5",
+            "key": "yzabc-995380725",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:20\u002B00:00"
+          },
+          {
+            "etag": "U9y1sy73ibbPiz8WFn96FHSwomm",
+            "key": "yzabc-999793506",
+            "label": "yzabc",
+            "content_type": null,
+            "value": "Test of ends with",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:44\u002B00:00"
+          },
+          {
+            "etag": "58nY4ZsdKA6Rkx8eaq5LNt8Dawf",
+            "key": "yzabcde-1022940458",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:07\u002B00:00"
+          },
+          {
+            "etag": "RgN3vHUy47vm2KyASfbgZry6P2t",
+            "key": "yzabcde-1144495652",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:43\u002B00:00"
+          },
+          {
+            "etag": "RJ1X7JHq6HJ9uVTXoNhRzd5bA8u",
+            "key": "yzabcde-1268073522",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:34\u002B00:00"
+          },
+          {
             "etag": "CPOqNQMrgq1ZKr8cv3wCQ5GiuQv",
             "key": "yzabcde-1404649393",
             "label": "yzabcde",
@@ -372,14 +682,24 @@
             "last_modified": "2019-10-21T03:30:42\u002B00:00"
           },
           {
-            "etag": "rSFE8OWhXR0PENTuI1jx22O6EGB",
+            "etag": "2T4WjVoQXrnVI9d4DW1j7Z1NWto",
+            "key": "yzabcde-1440161111",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:12\u002B00:00"
+          },
+          {
+            "etag": "S87KIR0xlGKAIQLrur4NiJlnhSf",
             "key": "yzabcde-1623831952",
             "label": "yzabcde",
             "content_type": null,
             "value": "Contains abc",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:43:54\u002B00:00"
+            "last_modified": "2019-10-21T16:09:20\u002B00:00"
           },
           {
             "etag": "ptOyA7jILkaYpbRNBSUXNdUNXUN",
@@ -422,6 +742,16 @@
             "last_modified": "2019-10-21T03:24:46\u002B00:00"
           },
           {
+            "etag": "pqgNYExlhDl9ZJNjE4Qljb0GQLp",
+            "key": "yzabcde-2074148635",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:57:59\u002B00:00"
+          },
+          {
             "etag": "U6Sx9RPeqObwVb06XYBlGWudNlX",
             "key": "yzabcde-2099144846",
             "label": "yzabcde",
@@ -432,6 +762,16 @@
             "last_modified": "2019-10-21T03:25:04\u002B00:00"
           },
           {
+            "etag": "S8ufSOvXq1NKIRNn657PRcuf9Xd",
+            "key": "yzabcde-2125918479",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:24\u002B00:00"
+          },
+          {
             "etag": "9vSzroZJezexU5Llg0qvrE2afzw",
             "key": "yzabcde-24600150",
             "label": "yzabcde",
@@ -440,6 +780,16 @@
             "tags": {},
             "locked": false,
             "last_modified": "2019-10-21T03:42:28\u002B00:00"
+          },
+          {
+            "etag": "uuhxV3HJSVOqaFCNcgrsmgYORsr",
+            "key": "yzabcde-323819820",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:23\u002B00:00"
           },
           {
             "etag": "RVfMPU0XsA4E2nGZFyd7D1BTfzO",
@@ -472,6 +822,16 @@
             "last_modified": "2019-10-21T03:25:12\u002B00:00"
           },
           {
+            "etag": "LU9QcvtKV8S44Xm4mnLWmHESQ66",
+            "key": "yzabcde-51347156",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:00\u002B00:00"
+          },
+          {
             "etag": "UkvGpVG08Uu4HJfBcDAXdhPkbP3",
             "key": "yzabcde-541624712",
             "label": "yzabcde",
@@ -482,14 +842,74 @@
             "last_modified": "2019-10-21T03:42:20\u002B00:00"
           },
           {
-            "etag": "ch7XN2DzyrU5Yx9n1QmVmWSIxW4",
+            "etag": "d1aQVdq3ujUaX34rc2D4NAokaTt",
+            "key": "yzabcde-548383235",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:31\u002B00:00"
+          },
+          {
+            "etag": "H1gmkvdZQb9kAzOUUcWE27C0Z19",
+            "key": "yzabcde-561146303",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:42\u002B00:00"
+          },
+          {
+            "etag": "RCnJYV2VbwvioNkD3nMrD5rhfzI",
             "key": "yzabcde-631107257",
             "label": "yzabcde",
             "content_type": null,
             "value": "Contains abc",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:34:01\u002B00:00"
+            "last_modified": "2019-10-21T16:09:00\u002B00:00"
+          },
+          {
+            "etag": "LtFyCKK6fhrvUwe8YuDR6GVrmPp",
+            "key": "yzabcde-695712296",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:20\u002B00:00"
+          },
+          {
+            "etag": "GTxkaY8PAngSGtQUCIC1R8HyE9l",
+            "key": "yzabcde-799885871",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:37\u002B00:00"
+          },
+          {
+            "etag": "AW9keHhHewH7EyF4zTTQzbHPMcE",
+            "key": "yzabcde-843475285",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:14\u002B00:00"
+          },
+          {
+            "etag": "sRZkw64AgPA7TymmAxlZUccSlcQ",
+            "key": "yzabcde-871295014",
+            "label": "yzabcde",
+            "content_type": null,
+            "value": "Contains abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:07\u002B00:00"
           }
         ]
       }
@@ -499,9 +919,9 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Mon, 21 Oct 2019 03:43:53 GMT",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3Mjc=",
-        "traceparent": "00-6e50359f7aaa7c49ae939c6bed19ac02-e74dc57e215f3548-00",
+        "Date": "Mon, 21 Oct 2019 16:09:20 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NjI=",
+        "traceparent": "00-8e9a517f34416841b0cd1901e4c8fe1b-d9fa8a17c8a83e44-00",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191020.1\u002Bab27420f912a6434ce46dc0b51720b03f70f05bf",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
@@ -520,12 +940,12 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Mon, 21 Oct 2019 03:43:53 GMT",
+        "Date": "Mon, 21 Oct 2019 16:09:20 GMT",
         "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "e4dafa8411f8ccaa58e9b80240dded81",
-        "x-ms-correlation-request-id": "4b3ecfb7-a687-4a3d-92cf-5b9ee20da4c8",
-        "x-ms-request-id": "4b3ecfb7-a687-4a3d-92cf-5b9ee20da4c8"
+        "x-ms-correlation-request-id": "5d622bff-08e8-4dea-b0ea-2fb4a0cc88aa",
+        "x-ms-request-id": "5d622bff-08e8-4dea-b0ea-2fb4a0cc88aa"
       },
       "ResponseBody": []
     }

@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "57",
         "Content-Type": "application/json",
-        "Date": "Mon, 21 Oct 2019 03:43:54 GMT",
-        "traceparent": "00-fae035f6e66d924aa856840068472d38-613f1dbfa6e79648-00",
+        "Date": "Mon, 21 Oct 2019 16:09:21 GMT",
+        "traceparent": "00-e8ac8b0b79aa96438835aef0cd0473ae-3b5810894c7d694b-00",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191020.1\u002Bab27420f912a6434ce46dc0b51720b03f70f05bf",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
@@ -32,26 +32,26 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Mon, 21 Oct 2019 03:43:54 GMT",
-        "ETag": "\u0022wcxIPGVWmm1sd8wmrfAgBp7fPKZ\u0022",
-        "Last-Modified": "Mon, 21 Oct 2019 03:43:55 GMT",
+        "Date": "Mon, 21 Oct 2019 16:09:21 GMT",
+        "ETag": "\u0022GL3PXe40qYxLv6SsPGFhWZw3QJz\u0022",
+        "Last-Modified": "Mon, 21 Oct 2019 16:09:21 GMT",
         "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3MzY=;sn=686736",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NzE=;sn=690571",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "5a972f29cac40f896d48d3830b3c00b3",
-        "x-ms-correlation-request-id": "07a1dedf-dfc8-4748-bb9c-02125d322166",
-        "x-ms-request-id": "07a1dedf-dfc8-4748-bb9c-02125d322166"
+        "x-ms-correlation-request-id": "0bb7e8e9-f874-4307-b545-99f5a571ca0d",
+        "x-ms-request-id": "0bb7e8e9-f874-4307-b545-99f5a571ca0d"
       },
       "ResponseBody": {
-        "etag": "wcxIPGVWmm1sd8wmrfAgBp7fPKZ",
+        "etag": "GL3PXe40qYxLv6SsPGFhWZw3QJz",
         "key": "abcde-300675015",
         "label": "abcde",
         "content_type": null,
         "value": "Starts with abc",
         "tags": {},
         "locked": false,
-        "last_modified": "2019-10-21T03:43:55\u002B00:00"
+        "last_modified": "2019-10-21T16:09:21\u002B00:00"
       }
     },
     {
@@ -60,8 +60,8 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Mon, 21 Oct 2019 03:43:54 GMT",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3MzY=",
+        "Date": "Mon, 21 Oct 2019 16:09:21 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NzE=",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191020.1\u002Bab27420f912a6434ce46dc0b51720b03f70f05bf",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
@@ -80,17 +80,37 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002Bjson; charset=utf-8",
-        "Date": "Mon, 21 Oct 2019 03:43:54 GMT",
+        "Date": "Mon, 21 Oct 2019 16:09:21 GMT",
         "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3MzY=;sn=686736",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NzE=;sn=690571",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "45102736f7ebc1d0d0917c7a23879081",
-        "x-ms-correlation-request-id": "f492a867-523c-4e53-af62-b320db4ff1cf",
-        "x-ms-request-id": "f492a867-523c-4e53-af62-b320db4ff1cf"
+        "x-ms-correlation-request-id": "c6f3bcd4-b082-4bac-9671-aeddb182b4c2",
+        "x-ms-request-id": "c6f3bcd4-b082-4bac-9671-aeddb182b4c2"
       },
       "ResponseBody": {
         "items": [
+          {
+            "etag": "TL8VvrQOMMk37vEX44z9YDW0iTi",
+            "key": "abcde-1025513880",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:25\u002B00:00"
+          },
+          {
+            "etag": "vIm7whfLhwL64oFKhPEu9lRciWa",
+            "key": "abcde-1080682505",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:37\u002B00:00"
+          },
           {
             "etag": "u4qe0vr98D13zgOJOfTfZGp3CKd",
             "key": "abcde-1179400413",
@@ -120,6 +140,46 @@
             "tags": {},
             "locked": false,
             "last_modified": "2019-10-21T03:25:13\u002B00:00"
+          },
+          {
+            "etag": "F741DMgcjZ7PP6OxYzDeX5rXi3A",
+            "key": "abcde-1287229815",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:43\u002B00:00"
+          },
+          {
+            "etag": "SCXfORQgOZLSd8150EdjkwJeOd4",
+            "key": "abcde-1303788820",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:00\u002B00:00"
+          },
+          {
+            "etag": "NCVOigsk6ftYt5BvCVRo6kSZvno",
+            "key": "abcde-1409492144",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:01\u002B00:00"
+          },
+          {
+            "etag": "RlVwUwCcqDolaZASzazd0YI1oMP",
+            "key": "abcde-1569558797",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:15\u002B00:00"
           },
           {
             "etag": "alPbQ2aBVbvbrcbAZkdqzQcanZe",
@@ -152,6 +212,26 @@
             "last_modified": "2019-10-21T03:30:43\u002B00:00"
           },
           {
+            "etag": "w2PgFvJLq9tQbhYLOLogL86rdmN",
+            "key": "abcde-2028223599",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:21\u002B00:00"
+          },
+          {
+            "etag": "NTYaKOw2jjmHCUMYgsjbPh2hXum",
+            "key": "abcde-2061696320",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:48:08\u002B00:00"
+          },
+          {
             "etag": "bnPwLqYTXu8njNxtgbBfrhqeRk4",
             "key": "abcde-215840164",
             "label": "abcde",
@@ -172,14 +252,34 @@
             "last_modified": "2019-10-21T03:43:23\u002B00:00"
           },
           {
-            "etag": "wcxIPGVWmm1sd8wmrfAgBp7fPKZ",
+            "etag": "sHSPD8EOdXfgmRR8k2bbZHeonO4",
+            "key": "abcde-265829424",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:47:35\u002B00:00"
+          },
+          {
+            "etag": "GL3PXe40qYxLv6SsPGFhWZw3QJz",
             "key": "abcde-300675015",
             "label": "abcde",
             "content_type": null,
             "value": "Starts with abc",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:43:55\u002B00:00"
+            "last_modified": "2019-10-21T16:09:21\u002B00:00"
+          },
+          {
+            "etag": "iphFPl1LqgrJznFry5jew1IkR6w",
+            "key": "abcde-323343792",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:32\u002B00:00"
           },
           {
             "etag": "q5ekgrmT8JESxUwdUZmcXXVXwYU",
@@ -202,6 +302,16 @@
             "last_modified": "2019-10-21T03:43:35\u002B00:00"
           },
           {
+            "etag": "HZRJc8BFY40LtOtBh6TscxNBbs0",
+            "key": "abcde-439852397",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:58:08\u002B00:00"
+          },
+          {
             "etag": "Ps1LBHvBUPF2upTw6zkDCiLfDER",
             "key": "abcde-449572761",
             "label": "abcde",
@@ -212,14 +322,44 @@
             "last_modified": "2019-10-21T03:42:21\u002B00:00"
           },
           {
-            "etag": "FYc8xsY8t0Ps2AmOUK6kK61Z2ZT",
+            "etag": "OWgtj7u89hcsnU7W6wBeRmVhhG4",
+            "key": "abcde-519344592",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:44\u002B00:00"
+          },
+          {
+            "etag": "bq0c79EFLv0BYqhOK0xGGxxMv7H",
+            "key": "abcde-625188767",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:53:13\u002B00:00"
+          },
+          {
+            "etag": "fIHipB3KDsTCX9xprjXRBxwAN9Z",
+            "key": "abcde-92103650",
+            "label": "abcde",
+            "content_type": null,
+            "value": "Starts with abc",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-10-21T15:52:24\u002B00:00"
+          },
+          {
+            "etag": "1UA3bTXGz8gWcoO2C0kZ9p5decQ",
             "key": "abcde-950677562",
             "label": "abcde",
             "content_type": null,
             "value": "Starts with abc",
             "tags": {},
             "locked": false,
-            "last_modified": "2019-10-21T03:34:02\u002B00:00"
+            "last_modified": "2019-10-21T16:09:02\u002B00:00"
           }
         ]
       }
@@ -229,9 +369,9 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Mon, 21 Oct 2019 03:43:54 GMT",
-        "Sync-Token": "zAJw6V16=ODotMSM2ODY3MzY=",
-        "traceparent": "00-9ea3cb427967cc44a1bd4688fadfe077-8d13d9d075ad6642-00",
+        "Date": "Mon, 21 Oct 2019 16:09:21 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM2OTA1NzE=",
+        "traceparent": "00-e0e56298a779b247959c3d49cb3dbe93-0117c2854a701040-00",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191020.1\u002Bab27420f912a6434ce46dc0b51720b03f70f05bf",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
@@ -250,12 +390,12 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Mon, 21 Oct 2019 03:43:54 GMT",
+        "Date": "Mon, 21 Oct 2019 16:09:21 GMT",
         "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "f8ab6d3c5b85b8daa658124df72d92ed",
-        "x-ms-correlation-request-id": "686146e8-f8d2-4796-81c1-c12226f6b0e0",
-        "x-ms-request-id": "686146e8-f8d2-4796-81c1-c12226f6b0e0"
+        "x-ms-correlation-request-id": "9e7b5712-023c-427f-b6b4-0a5b72741554",
+        "x-ms-request-id": "9e7b5712-023c-427f-b6b4-0a5b72741554"
       },
       "ResponseBody": []
     }
