@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// a failure occurs. 
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             BlobRequestConditions conditions = default,
