@@ -856,7 +856,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     .ToArray();
 
                 //At least there should be one key available
-                Assert.GreaterOrEqual(batch.Length, 1);
+                CollectionAssert.IsNotEmpty(batch);
                 Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
@@ -950,7 +950,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 // There should be at least one key available
-                Assert.GreaterOrEqual(settings.Length, 1);
+                CollectionAssert.IsNotEmpty(settings);
                 Assert.AreEqual(testSetting.Key, settings[0].Key);
                 Assert.AreEqual(testSetting.Label, settings[0].Label);
             }
@@ -975,7 +975,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 // There should be at least one key available.
-                Assert.GreaterOrEqual(settings.Length, 1);
+                CollectionAssert.IsNotEmpty(settings);
 
                 foreach (ConfigurationSetting setting in settings)
                 {
@@ -1004,7 +1004,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 // There should be at least one key available.
-                Assert.GreaterOrEqual(settings.Length, 1);
+                CollectionAssert.IsNotEmpty(settings);
 
                 foreach (ConfigurationSetting setting in settings)
                 {
@@ -1032,7 +1032,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 // There should be at least one key available.
-                Assert.GreaterOrEqual(settings.Length, 1);
+                CollectionAssert.IsNotEmpty(settings);
 
                 foreach (ConfigurationSetting setting in settings)
                 {
