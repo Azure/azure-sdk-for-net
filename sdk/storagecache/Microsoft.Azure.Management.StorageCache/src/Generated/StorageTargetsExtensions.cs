@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.StorageCache
     public static partial class StorageTargetsExtensions
     {
             /// <summary>
-            /// Returns the StorageTargets for this cache in the subscription and resource
-            /// group.
+            /// Returns a list of Storage Targets for the specified Cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -26,7 +25,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static StorageTargetsResult ListByCache(this IStorageTargets operations, string resourceGroupName, string cacheName)
             {
@@ -34,8 +33,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Returns the StorageTargets for this cache in the subscription and resource
-            /// group.
+            /// Returns a list of Storage Targets for the specified Cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +42,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -58,9 +56,11 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Removes a storage target from a cache.  This operation is allowed at any
-            /// time, but if the cache is down or unhealthy, the actual removal of the
-            /// storage target may be delayed until the cache is healthy again.
+            /// Removes a Storage Target from a Cache. This operation is allowed at any
+            /// time, but if the Cache is down or unhealthy, the actual removal of the
+            /// Storage Target may be delayed until the Cache is healthy again. Note that
+            /// if the Cache has data to flush to the Storage Target, the data will be
+            /// flushed before the Storage Target will be deleted.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -69,10 +69,10 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of storage target.
+            /// Name of Storage Target.
             /// </param>
             public static object Delete(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName)
             {
@@ -80,9 +80,11 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Removes a storage target from a cache.  This operation is allowed at any
-            /// time, but if the cache is down or unhealthy, the actual removal of the
-            /// storage target may be delayed until the cache is healthy again.
+            /// Removes a Storage Target from a Cache. This operation is allowed at any
+            /// time, but if the Cache is down or unhealthy, the actual removal of the
+            /// Storage Target may be delayed until the Cache is healthy again. Note that
+            /// if the Cache has data to flush to the Storage Target, the data will be
+            /// flushed before the Storage Target will be deleted.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,10 +93,10 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of storage target.
+            /// Name of Storage Target.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -108,7 +110,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Returns a storage target from a cache.
+            /// Returns a Storage Target from a Cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -117,10 +119,10 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of storage target.
+            /// Name of the Storage Target.
             /// </param>
             public static StorageTarget Get(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName)
             {
@@ -128,7 +130,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Returns a storage target from a cache.
+            /// Returns a Storage Target from a Cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -137,10 +139,10 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of storage target.
+            /// Name of the Storage Target.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -154,9 +156,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Create/update a storage target.  This operation is allowed at any time, but
-            /// if the cache is down or unhealthy, the actual creation/modification of the
-            /// storage target may be delayed until the cache is healthy again.
+            /// Create or update a Storage Target. This operation is allowed at any time,
+            /// but if the Cache is down or unhealthy, the actual creation/modification of
+            /// the Storage Target may be delayed until the Cache is healthy again.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,23 +167,23 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of storage target.
+            /// Name of the Storage Target.
             /// </param>
             /// <param name='storagetarget'>
-            /// Object containing the definition of a storage target.
+            /// Object containing the definition of a Storage Target.
             /// </param>
-            public static StorageTarget Create(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget))
+            public static StorageTarget CreateOrUpdate(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget))
             {
-                return operations.CreateAsync(resourceGroupName, cacheName, storageTargetName, storagetarget).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, cacheName, storageTargetName, storagetarget).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create/update a storage target.  This operation is allowed at any time, but
-            /// if the cache is down or unhealthy, the actual creation/modification of the
-            /// storage target may be delayed until the cache is healthy again.
+            /// Create or update a Storage Target. This operation is allowed at any time,
+            /// but if the Cache is down or unhealthy, the actual creation/modification of
+            /// the Storage Target may be delayed until the Cache is healthy again.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,76 +192,20 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of storage target.
+            /// Name of the Storage Target.
             /// </param>
             /// <param name='storagetarget'>
-            /// Object containing the definition of a storage target.
+            /// Object containing the definition of a Storage Target.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageTarget> CreateAsync(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageTarget> CreateOrUpdateAsync(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, cacheName, storageTargetName, storagetarget, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Update a storage target.  This operation is allowed at any time, but if the
-            /// cache is down or unhealthy, the actual creation/modification of the storage
-            /// target may be delayed until the cache is healthy again.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Target resource group.
-            /// </param>
-            /// <param name='cacheName'>
-            /// Name of cache.
-            /// </param>
-            /// <param name='storageTargetName'>
-            /// Name of storage target.
-            /// </param>
-            /// <param name='storagetarget'>
-            /// Object containing the definition of a storage target.
-            /// </param>
-            public static StorageTarget Update(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget))
-            {
-                return operations.UpdateAsync(resourceGroupName, cacheName, storageTargetName, storagetarget).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update a storage target.  This operation is allowed at any time, but if the
-            /// cache is down or unhealthy, the actual creation/modification of the storage
-            /// target may be delayed until the cache is healthy again.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Target resource group.
-            /// </param>
-            /// <param name='cacheName'>
-            /// Name of cache.
-            /// </param>
-            /// <param name='storageTargetName'>
-            /// Name of storage target.
-            /// </param>
-            /// <param name='storagetarget'>
-            /// Object containing the definition of a storage target.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<StorageTarget> UpdateAsync(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, cacheName, storageTargetName, storagetarget, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, cacheName, storageTargetName, storagetarget, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

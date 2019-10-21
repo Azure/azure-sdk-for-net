@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.StorageCache
         public StorageCacheManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available RP operations.
+        /// Lists all of the available Resource Provider operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

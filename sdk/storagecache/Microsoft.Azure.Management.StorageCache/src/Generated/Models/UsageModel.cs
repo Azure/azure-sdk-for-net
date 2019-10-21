@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         /// <param name="display">Localized information describing this usage
         /// model.</param>
-        /// <param name="modelName">Non localized keyword naming this usage
+        /// <param name="modelName">Non-localized keyword name for this usage
         /// model.</param>
         /// <param name="targetType">The type of Storage Target to which this
-        /// model is applicable (only nfs for now)</param>
+        /// model is applicable (only nfs3 as of this version).</param>
         public UsageModel(UsageModelDisplay display = default(UsageModelDisplay), string modelName = default(string), string targetType = default(string))
         {
             Display = display;
@@ -51,14 +51,14 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public UsageModelDisplay Display { get; set; }
 
         /// <summary>
-        /// Gets or sets non localized keyword naming this usage model.
+        /// Gets or sets non-localized keyword name for this usage model.
         /// </summary>
         [JsonProperty(PropertyName = "modelName")]
         public string ModelName { get; set; }
 
         /// <summary>
         /// Gets or sets the type of Storage Target to which this model is
-        /// applicable (only nfs for now)
+        /// applicable (only nfs3 as of this version).
         /// </summary>
         [JsonProperty(PropertyName = "targetType")]
         public string TargetType { get; set; }

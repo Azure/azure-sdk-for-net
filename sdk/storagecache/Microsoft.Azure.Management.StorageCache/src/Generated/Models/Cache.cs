@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// A cache instance.  Follows Azure Resource Manager standards:
+    /// A Cache instance. Follows Azure Resource Manager standards:
     /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
     /// </summary>
     [Rest.Serialization.JsonTransformation]
@@ -32,23 +32,22 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Initializes a new instance of the Cache class.
         /// </summary>
         /// <param name="tags">ARM tags as name/value pairs.</param>
-        /// <param name="id">Fully qualified URL of the cache.</param>
+        /// <param name="id">Resource ID of the Cache.</param>
         /// <param name="location">Region name string.</param>
-        /// <param name="name">Name of cache.</param>
-        /// <param name="type">Type for the cache;
+        /// <param name="name">Name of Cache.</param>
+        /// <param name="type">Type of the Cache;
         /// Microsoft.StorageCache/Cache</param>
-        /// <param name="cacheSizeGB">The size of this cache's cache, in
-        /// GB.</param>
-        /// <param name="health">Health of the cache.</param>
+        /// <param name="cacheSizeGB">The size of this Cache, in GB.</param>
+        /// <param name="health">Health of the Cache.</param>
         /// <param name="mountAddresses">Array of IP addresses that can be used
         /// by clients mounting this Cache.</param>
         /// <param name="provisioningState">ARM provisioning state, see
         /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
         /// Possible values include: 'Succeeded', 'Failed', 'Cancelled',
         /// 'Creating', 'Deleting', 'Updating'</param>
-        /// <param name="subnet">Subnet used for the cache.</param>
-        /// <param name="upgradeStatus">Upgrade status of the cache.</param>
-        /// <param name="sku">Sku for the cache.</param>
+        /// <param name="subnet">Subnet used for the Cache.</param>
+        /// <param name="upgradeStatus">Upgrade status of the Cache.</param>
+        /// <param name="sku">SKU for the Cache.</param>
         public Cache(object tags = default(object), string id = default(string), string location = default(string), string name = default(string), string type = default(string), int? cacheSizeGB = default(int?), CacheHealth health = default(CacheHealth), IList<string> mountAddresses = default(IList<string>), string provisioningState = default(string), string subnet = default(string), CacheUpgradeStatus upgradeStatus = default(CacheUpgradeStatus), CacheSku sku = default(CacheSku))
         {
             Tags = tags;
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public object Tags { get; set; }
 
         /// <summary>
-        /// Gets fully qualified URL of the cache.
+        /// Gets resource ID of the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
@@ -90,25 +89,25 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets name of cache.
+        /// Gets name of Cache.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type for the cache; Microsoft.StorageCache/Cache
+        /// Gets type of the Cache; Microsoft.StorageCache/Cache
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the size of this cache's cache, in GB.
+        /// Gets or sets the size of this Cache, in GB.
         /// </summary>
         [JsonProperty(PropertyName = "properties.cacheSizeGB")]
         public int? CacheSizeGB { get; set; }
 
         /// <summary>
-        /// Gets health of the cache.
+        /// Gets health of the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "properties.health")]
         public CacheHealth Health { get; private set; }
@@ -130,19 +129,19 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets subnet used for the cache.
+        /// Gets or sets subnet used for the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public string Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets upgrade status of the cache.
+        /// Gets or sets upgrade status of the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradeStatus")]
         public CacheUpgradeStatus UpgradeStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets sku for the cache.
+        /// Gets or sets SKU for the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public CacheSku Sku { get; set; }

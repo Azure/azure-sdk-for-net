@@ -19,14 +19,13 @@ namespace Microsoft.Azure.Management.StorageCache
     public partial interface IStorageTargets
     {
         /// <summary>
-        /// Returns the StorageTargets for this cache in the subscription and
-        /// resource group.
+        /// Returns a list of Storage Targets for the specified Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,19 +44,21 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<StorageTargetsResult>> ListByCacheWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes a storage target from a cache.  This operation is allowed
-        /// at any time, but if the cache is down or unhealthy, the actual
-        /// removal of the storage target may be delayed until the cache is
-        /// healthy again.
+        /// Removes a Storage Target from a Cache. This operation is allowed at
+        /// any time, but if the Cache is down or unhealthy, the actual removal
+        /// of the Storage Target may be delayed until the Cache is healthy
+        /// again. Note that if the Cache has data to flush to the Storage
+        /// Target, the data will be flushed before the Storage Target will be
+        /// deleted.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of storage target.
+        /// Name of Storage Target.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,16 +77,16 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a storage target from a cache.
+        /// Returns a Storage Target from a Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of storage target.
+        /// Name of the Storage Target.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,22 +105,22 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<StorageTarget>> GetWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create/update a storage target.  This operation is allowed at any
-        /// time, but if the cache is down or unhealthy, the actual
-        /// creation/modification of the storage target may be delayed until
-        /// the cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any
+        /// time, but if the Cache is down or unhealthy, the actual
+        /// creation/modification of the Storage Target may be delayed until
+        /// the Cache is healthy again.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of storage target.
+        /// Name of the Storage Target.
         /// </param>
         /// <param name='storagetarget'>
-        /// Object containing the definition of a storage target.
+        /// Object containing the definition of a Storage Target.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -136,40 +137,6 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<StorageTarget>> CreateWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Update a storage target.  This operation is allowed at any time,
-        /// but if the cache is down or unhealthy, the actual
-        /// creation/modification of the storage target may be delayed until
-        /// the cache is healthy again.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Target resource group.
-        /// </param>
-        /// <param name='cacheName'>
-        /// Name of cache.
-        /// </param>
-        /// <param name='storageTargetName'>
-        /// Name of storage target.
-        /// </param>
-        /// <param name='storagetarget'>
-        /// Object containing the definition of a storage target.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<StorageTarget>> UpdateWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<StorageTarget>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, StorageTarget storagetarget = default(StorageTarget), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

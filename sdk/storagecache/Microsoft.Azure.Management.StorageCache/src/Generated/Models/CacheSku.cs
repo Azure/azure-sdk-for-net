@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Sku for the cache.
+    /// SKU for the Cache.
     /// </summary>
     public partial class CacheSku
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the CacheSku class.
         /// </summary>
-        /// <param name="name">Sku name for this cache.</param>
+        /// <param name="name">SKU name for this Cache.</param>
         public CacheSku(string name = default(string))
         {
             Name = name;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku name for this cache.
+        /// Gets or sets SKU name for this Cache.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

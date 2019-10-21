@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of storage targets.
+    /// A list of Storage Targets.
     /// </summary>
     public partial class StorageTargetsResult
     {
@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the StorageTargetsResult class.
         /// </summary>
-        /// <param name="nextLink">The uri to fetch the next page of storage
-        /// targets.</param>
-        /// <param name="value">The list of storage targets defined for the
-        /// cache.</param>
+        /// <param name="nextLink">The URI to fetch the next page of Storage
+        /// Targets.</param>
+        /// <param name="value">The list of Storage Targets defined for the
+        /// Cache.</param>
         public StorageTargetsResult(string nextLink = default(string), IList<StorageTarget> value = default(IList<StorageTarget>))
         {
             NextLink = nextLink;
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the uri to fetch the next page of storage targets.
+        /// Gets or sets the URI to fetch the next page of Storage Targets.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of storage targets defined for the cache.
+        /// Gets or sets the list of Storage Targets defined for the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<StorageTarget> Value { get; set; }

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of cache usage models.
+    /// A list of Cache usage models.
     /// </summary>
     public partial class UsageModelsResult
     {
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the UsageModelsResult class.
         /// </summary>
-        /// <param name="nextLink">The uri to fetch the next page of cache
+        /// <param name="nextLink">The URI to fetch the next page of Cache
         /// usage models.</param>
         /// <param name="value">The list of usage models available for the
         /// subscription.</param>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the uri to fetch the next page of cache usage models.
+        /// Gets or sets the URI to fetch the next page of Cache usage models.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }

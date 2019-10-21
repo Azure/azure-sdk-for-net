@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.StorageCache
     public static partial class UsageModelsExtensions
     {
             /// <summary>
-            /// Get the list of cache Usage Models available to this subscription.
+            /// Get the list of Cache Usage Models available to this subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Get the list of cache Usage Models available to this subscription.
+            /// Get the list of Cache Usage Models available to this subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

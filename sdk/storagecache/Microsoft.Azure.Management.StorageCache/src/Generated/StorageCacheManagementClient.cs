@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.StorageCache
     /// <summary>
     /// A Storage Cache provides scalable caching service for NAS clients,
     /// serving data from either NFSv3 or Blob at-rest storage (referred to as
-    /// "Storage Targets"). These operations allow you to manage caches.
+    /// "Storage Targets"). These operations allow you to manage Caches.
     /// </summary>
     public partial class StorageCacheManagementClient : ServiceClient<StorageCacheManagementClient>, IStorageCacheManagementClient
     {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.StorageCache
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client API version.
         /// </summary>
         public string ApiVersion { get; set; }
 

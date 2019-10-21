@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="provider">Service provider:
         /// Microsoft.StorageCache</param>
         /// <param name="resource">Resource on which the operation is
-        /// performed: cache, etc.</param>
+        /// performed: Cache, etc.</param>
         public ApiOperationDisplay(string operation = default(string), string provider = default(string), string resource = default(string))
         {
             Operation = operation;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets resource on which the operation is performed: cache,
+        /// Gets or sets resource on which the operation is performed: Cache,
         /// etc.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]

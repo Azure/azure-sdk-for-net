@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.StorageCache
         public StorageCacheManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get the list of cache Usage Models available to this subscription.
+        /// Get the list of Cache Usage Models available to this subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

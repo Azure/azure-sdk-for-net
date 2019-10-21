@@ -44,8 +44,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Returns all Caches the user has access to under a resource group and
-            /// subscription.
+            /// Returns all Caches the user has access to under a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,8 +58,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Returns all Caches the user has access to under a resource group and
-            /// subscription.
+            /// Returns all Caches the user has access to under a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -89,7 +87,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static object Delete(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -106,7 +104,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -129,7 +127,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static Cache Get(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -146,7 +144,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,7 +158,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Create/update a Cache instance.
+            /// Create or update a Cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -169,20 +167,20 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cache'>
-            /// Object containing the user selectable properties of the new cache.  If
+            /// Object containing the user-selectable properties of the new Cache. If
             /// read-only properties are included, they must match the existing values of
             /// those properties.
             /// </param>
-            public static Cache Create(this ICaches operations, string resourceGroupName, string cacheName, Cache cache = default(Cache))
+            public static Cache CreateOrUpdate(this ICaches operations, string resourceGroupName, string cacheName, Cache cache = default(Cache))
             {
-                return operations.CreateAsync(resourceGroupName, cacheName, cache).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, cacheName, cache).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create/update a Cache instance.
+            /// Create or update a Cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -191,19 +189,19 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cache'>
-            /// Object containing the user selectable properties of the new cache.  If
+            /// Object containing the user-selectable properties of the new Cache. If
             /// read-only properties are included, they must match the existing values of
             /// those properties.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cache> CreateAsync(this ICaches operations, string resourceGroupName, string cacheName, Cache cache = default(Cache), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cache> CreateOrUpdateAsync(this ICaches operations, string resourceGroupName, string cacheName, Cache cache = default(Cache), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, cacheName, cache, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, cacheName, cache, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -219,12 +217,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cache'>
-            /// Object containing the user selectable properties of the new cache.  If
-            /// read-only properties are included, they must match the existing values of
-            /// those properties.
+            /// Object containing the user-selectable properties of the Cache. If read-only
+            /// properties are included, they must match the existing values of those
+            /// properties.
             /// </param>
             public static Cache Update(this ICaches operations, string resourceGroupName, string cacheName, Cache cache = default(Cache))
             {
@@ -241,12 +239,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cache'>
-            /// Object containing the user selectable properties of the new cache.  If
-            /// read-only properties are included, they must match the existing values of
-            /// those properties.
+            /// Object containing the user-selectable properties of the Cache. If read-only
+            /// properties are included, they must match the existing values of those
+            /// properties.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -260,7 +258,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a cache to write all dirty data to the StorageTarget(s).  During the
+            /// Tells a Cache to write all dirty data to the Storage Target(s). During the
             /// flush, clients will see errors returned until the flush is complete.
             /// </summary>
             /// <param name='operations'>
@@ -270,7 +268,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static object Flush(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -278,7 +276,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a cache to write all dirty data to the StorageTarget(s).  During the
+            /// Tells a Cache to write all dirty data to the Storage Target(s). During the
             /// flush, clients will see errors returned until the flush is complete.
             /// </summary>
             /// <param name='operations'>
@@ -288,7 +286,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -302,7 +300,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a Stopped state cache to transition to Active state.
+            /// Tells a Stopped state Cache to transition to Active state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,7 +309,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static object Start(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -319,7 +317,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a Stopped state cache to transition to Active state.
+            /// Tells a Stopped state Cache to transition to Active state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -328,7 +326,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -342,7 +340,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells an Active cache to transition to Stopped state.
+            /// Tells an Active Cache to transition to Stopped state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -351,7 +349,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static object Stop(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -359,7 +357,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells an Active cache to transition to Stopped state.
+            /// Tells an Active Cache to transition to Stopped state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -368,7 +366,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -382,7 +380,8 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a cache to upgrade its firmware.
+            /// Upgrade a Cache's firmware if a new version is available. Otherwise, this
+            /// operation has no effect.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -391,7 +390,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             public static object UpgradeFirmware(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -399,7 +398,8 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a cache to upgrade its firmware.
+            /// Upgrade a Cache's firmware if a new version is available. Otherwise, this
+            /// operation has no effect.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -408,7 +408,7 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of cache.
+            /// Name of Cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

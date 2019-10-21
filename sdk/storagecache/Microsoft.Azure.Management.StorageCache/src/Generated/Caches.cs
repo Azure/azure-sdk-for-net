@@ -204,8 +204,7 @@ namespace Microsoft.Azure.Management.StorageCache
         }
 
         /// <summary>
-        /// Returns all Caches the user has access to under a resource group and
-        /// subscription.
+        /// Returns all Caches the user has access to under a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
@@ -377,7 +376,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -595,7 +594,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -771,16 +770,16 @@ namespace Microsoft.Azure.Management.StorageCache
         }
 
         /// <summary>
-        /// Create/update a Cache instance.
+        /// Create or update a Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='cache'>
-        /// Object containing the user selectable properties of the new cache.  If
+        /// Object containing the user-selectable properties of the new Cache. If
         /// read-only properties are included, they must match the existing values of
         /// those properties.
         /// </param>
@@ -805,7 +804,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Cache>> CreateWithHttpMessagesAsync(string resourceGroupName, string cacheName, Cache cache = default(Cache), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Cache>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string cacheName, Cache cache = default(Cache), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -841,7 +840,7 @@ namespace Microsoft.Azure.Management.StorageCache
                 tracingParameters.Add("cacheName", cacheName);
                 tracingParameters.Add("cache", cache);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -989,12 +988,12 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='cache'>
-        /// Object containing the user selectable properties of the new cache.  If
-        /// read-only properties are included, they must match the existing values of
-        /// those properties.
+        /// Object containing the user-selectable properties of the Cache. If read-only
+        /// properties are included, they must match the existing values of those
+        /// properties.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1177,14 +1176,14 @@ namespace Microsoft.Azure.Management.StorageCache
         }
 
         /// <summary>
-        /// Tells a cache to write all dirty data to the StorageTarget(s).  During the
+        /// Tells a Cache to write all dirty data to the Storage Target(s). During the
         /// flush, clients will see errors returned until the flush is complete.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1378,13 +1377,13 @@ namespace Microsoft.Azure.Management.StorageCache
         }
 
         /// <summary>
-        /// Tells a Stopped state cache to transition to Active state.
+        /// Tells a Stopped state Cache to transition to Active state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1578,13 +1577,13 @@ namespace Microsoft.Azure.Management.StorageCache
         }
 
         /// <summary>
-        /// Tells an Active cache to transition to Stopped state.
+        /// Tells an Active Cache to transition to Stopped state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1778,13 +1777,14 @@ namespace Microsoft.Azure.Management.StorageCache
         }
 
         /// <summary>
-        /// Tells a cache to upgrade its firmware.
+        /// Upgrade a Cache's firmware if a new version is available. Otherwise, this
+        /// operation has no effect.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -38,8 +38,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<CachesListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns all Caches the user has access to under a resource group
-        /// and subscription.
+        /// Returns all Caches the user has access to under a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
@@ -67,7 +66,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -92,7 +91,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,16 +110,16 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<Cache>> GetWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create/update a Cache instance.
+        /// Create or update a Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='cache'>
-        /// Object containing the user selectable properties of the new cache.
+        /// Object containing the user-selectable properties of the new Cache.
         /// If read-only properties are included, they must match the existing
         /// values of those properties.
         /// </param>
@@ -139,7 +138,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<Cache>> CreateWithHttpMessagesAsync(string resourceGroupName, string cacheName, Cache cache = default(Cache), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Cache>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string cacheName, Cache cache = default(Cache), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Cache instance.
         /// </summary>
@@ -147,11 +146,11 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='cache'>
-        /// Object containing the user selectable properties of the new cache.
-        /// If read-only properties are included, they must match the existing
+        /// Object containing the user-selectable properties of the Cache. If
+        /// read-only properties are included, they must match the existing
         /// values of those properties.
         /// </param>
         /// <param name='customHeaders'>
@@ -171,7 +170,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<Cache>> UpdateWithHttpMessagesAsync(string resourceGroupName, string cacheName, Cache cache = default(Cache), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tells a cache to write all dirty data to the StorageTarget(s).
+        /// Tells a Cache to write all dirty data to the Storage Target(s).
         /// During the flush, clients will see errors returned until the flush
         /// is complete.
         /// </summary>
@@ -179,7 +178,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -198,13 +197,13 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<object>> FlushWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tells a Stopped state cache to transition to Active state.
+        /// Tells a Stopped state Cache to transition to Active state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -223,13 +222,13 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<object>> StartWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tells an Active cache to transition to Stopped state.
+        /// Tells an Active Cache to transition to Stopped state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -248,13 +247,14 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<object>> StopWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tells a cache to upgrade its firmware.
+        /// Upgrade a Cache's firmware if a new version is available.
+        /// Otherwise, this operation has no effect.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of cache.
+        /// Name of Cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

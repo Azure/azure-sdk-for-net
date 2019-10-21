@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// An indication of cache health.  Gives more information about health
-    /// than just that related to provisioning.
+    /// An indication of Cache health. Gives more information about health than
+    /// just that related to provisioning.
     /// </summary>
     public partial class CacheHealth
     {
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the CacheHealth class.
         /// </summary>
-        /// <param name="state">List of cache health states. Possible values
+        /// <param name="state">List of Cache health states. Possible values
         /// include: 'Unknown', 'Healthy', 'Degraded', 'Down', 'Transitioning',
         /// 'Stopping', 'Stopped', 'Upgrading', 'Flushing'</param>
         /// <param name="statusDescription">Describes explanation of
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of cache health states. Possible values include:
+        /// Gets or sets list of Cache health states. Possible values include:
         /// 'Unknown', 'Healthy', 'Degraded', 'Down', 'Transitioning',
         /// 'Stopping', 'Stopped', 'Upgrading', 'Flushing'
         /// </summary>

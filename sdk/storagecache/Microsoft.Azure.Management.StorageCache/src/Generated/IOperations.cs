@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.StorageCache
     public partial interface IOperations
     {
         /// <summary>
-        /// Lists all of the available RP operations.
+        /// Lists all of the available Resource Provider operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

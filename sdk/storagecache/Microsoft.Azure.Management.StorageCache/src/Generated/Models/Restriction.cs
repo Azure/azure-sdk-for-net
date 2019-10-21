@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// The restriction because of which SKU cannot be used.
+    /// The restrictions preventing this SKU from being used.
     /// </summary>
     public partial class Restriction
     {
@@ -27,16 +27,17 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the Restriction class.
         /// </summary>
-        /// <param name="type">The type of restrictions. As of now only
-        /// possible value for this is location.</param>
+        /// <param name="type">The type of restrictions. In this version, the
+        /// only possible value for this is location.</param>
         /// <param name="values">The value of restrictions. If the restriction
-        /// type is set to location. This would be different locations where
-        /// the SKU is restricted.</param>
+        /// type is set to location, then this would be the different locations
+        /// where the SKU is restricted.</param>
         /// <param name="reasonCode">The reason for the restriction. As of now
-        /// this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is
-        /// set when the SKU has requiredQuotas parameter as the subscription
-        /// does not belong to that quota. The "NotAvailableForSubscription" is
-        /// related to capacity at DC. Possible values include: 'QuotaId',
+        /// this can be "QuotaId" or "NotAvailableForSubscription". "QuotaId"
+        /// is set when the SKU has requiredQuotas parameter as the
+        /// subscription does not belong to that quota.
+        /// "NotAvailableForSubscription" is related to capacity at the
+        /// datacenter. Possible values include: 'QuotaId',
         /// 'NotAvailableForSubscription'</param>
         public Restriction(string type = default(string), IList<string> values = default(IList<string>), string reasonCode = default(string))
         {
@@ -52,26 +53,26 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the type of restrictions. As of now only possible value for
-        /// this is location.
+        /// Gets the type of restrictions. In this version, the only possible
+        /// value for this is location.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
         /// Gets the value of restrictions. If the restriction type is set to
-        /// location. This would be different locations where the SKU is
-        /// restricted.
+        /// location, then this would be the different locations where the SKU
+        /// is restricted.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<string> Values { get; private set; }
 
         /// <summary>
         /// Gets or sets the reason for the restriction. As of now this can be
-        /// "QuotaId" or "NotAvailableForSubscription". Quota Id is set when
+        /// "QuotaId" or "NotAvailableForSubscription". "QuotaId" is set when
         /// the SKU has requiredQuotas parameter as the subscription does not
-        /// belong to that quota. The "NotAvailableForSubscription" is related
-        /// to capacity at DC. Possible values include: 'QuotaId',
+        /// belong to that quota. "NotAvailableForSubscription" is related to
+        /// capacity at the datacenter. Possible values include: 'QuotaId',
         /// 'NotAvailableForSubscription'
         /// </summary>
         [JsonProperty(PropertyName = "reasonCode")]

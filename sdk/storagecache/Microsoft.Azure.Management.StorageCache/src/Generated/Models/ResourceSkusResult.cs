@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSkusResult class.
         /// </summary>
-        /// <param name="nextLink">The uri to fetch the next page of cache
-        /// Skus.</param>
-        /// <param name="value">The list of skus available for the
+        /// <param name="nextLink">The URI to fetch the next page of Cache
+        /// SKUs.</param>
+        /// <param name="value">The list of SKUs available for the
         /// subscription.</param>
         public ResourceSkusResult(string nextLink = default(string), IList<ResourceSku> value = default(IList<ResourceSku>))
         {
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the uri to fetch the next page of cache Skus.
+        /// Gets or sets the URI to fetch the next page of Cache SKUs.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
         /// <summary>
-        /// Gets the list of skus available for the subscription.
+        /// Gets the list of SKUs available for the subscription.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ResourceSku> Value { get; private set; }

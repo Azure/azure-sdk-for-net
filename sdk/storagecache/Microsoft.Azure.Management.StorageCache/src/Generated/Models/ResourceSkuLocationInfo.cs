@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSkuLocationInfo class.
         /// </summary>
-        /// <param name="location">Location where this Sku is available</param>
+        /// <param name="location">Location where this SKU is
+        /// available.</param>
         /// <param name="zones">Zones if any.</param>
         public ResourceSkuLocationInfo(string location = default(string), IList<string> zones = default(IList<string>))
         {
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets location where this Sku is available
+        /// Gets or sets location where this SKU is available.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

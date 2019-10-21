@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.StorageCache
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available RP operations.
+            /// Lists all of the available Resource Provider operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Lists all of the available RP operations.
+            /// Lists all of the available Resource Provider operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

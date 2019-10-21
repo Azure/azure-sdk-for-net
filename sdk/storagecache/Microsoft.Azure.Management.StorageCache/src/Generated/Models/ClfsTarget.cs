@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage container for use as a CLFS StorageTarget.
+    /// Storage container for use as a CLFS Storage Target.
     /// </summary>
     public partial class ClfsTarget
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the ClfsTarget class.
         /// </summary>
-        /// <param name="target">URL of storage container.</param>
+        /// <param name="target">Resource ID of storage container.</param>
         public ClfsTarget(string target = default(string))
         {
             Target = target;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets URL of storage container.
+        /// Gets or sets resource ID of storage container.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; set; }

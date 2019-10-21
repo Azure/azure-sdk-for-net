@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties describing the software upgrade state of the cache
+    /// Properties describing the software upgrade state of the Cache.
     /// </summary>
     public partial class CacheUpgradeStatus
     {
@@ -26,15 +26,15 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Initializes a new instance of the CacheUpgradeStatus class.
         /// </summary>
         /// <param name="currentFirmwareVersion">Version string of the firmware
-        /// currently installed on this cache.</param>
+        /// currently installed on this Cache.</param>
         /// <param name="firmwareUpdateStatus">True if there is a firmware
-        /// update ready to install on this cache.  The firmware will
+        /// update ready to install on this Cache. The firmware will
         /// automatically be installed after firmwareUpdateDeadline if not
         /// triggered earlier via the upgrade operation. Possible values
         /// include: 'available', 'unavailable'</param>
         /// <param name="firmwareUpdateDeadline">Time at which the pending
         /// firmware update will automatically be installed on the
-        /// cache.</param>
+        /// Cache.</param>
         /// <param name="lastFirmwareUpdate">Time of the last successful
         /// firmware update.</param>
         /// <param name="pendingFirmwareVersion">When firmwareUpdateAvailable
@@ -57,14 +57,14 @@ namespace Microsoft.Azure.Management.StorageCache.Models
 
         /// <summary>
         /// Gets version string of the firmware currently installed on this
-        /// cache.
+        /// Cache.
         /// </summary>
         [JsonProperty(PropertyName = "currentFirmwareVersion")]
         public string CurrentFirmwareVersion { get; private set; }
 
         /// <summary>
         /// Gets true if there is a firmware update ready to install on this
-        /// cache.  The firmware will automatically be installed after
+        /// Cache. The firmware will automatically be installed after
         /// firmwareUpdateDeadline if not triggered earlier via the upgrade
         /// operation. Possible values include: 'available', 'unavailable'
         /// </summary>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
 
         /// <summary>
         /// Gets time at which the pending firmware update will automatically
-        /// be installed on the cache.
+        /// be installed on the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "firmwareUpdateDeadline")]
         public System.DateTime? FirmwareUpdateDeadline { get; private set; }

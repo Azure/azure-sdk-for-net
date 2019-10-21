@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the NamespaceJunction class.
         /// </summary>
-        /// <param name="namespacePath">Namespace path on a cache for a storage
-        /// target.</param>
-        /// <param name="targetPath">Path in storage target to which
+        /// <param name="namespacePath">Namespace path on a Cache for a Storage
+        /// Target.</param>
+        /// <param name="targetPath">Path in Storage Target to which
         /// namespacePath points.</param>
         /// <param name="nfsExport">NFS export where targetPath exists.</param>
         public NamespaceJunction(string namespacePath = default(string), string targetPath = default(string), string nfsExport = default(string))
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets namespace path on a cache for a storage target.
+        /// Gets or sets namespace path on a Cache for a Storage Target.
         /// </summary>
         [JsonProperty(PropertyName = "namespacePath")]
         public string NamespacePath { get; set; }
 
         /// <summary>
-        /// Gets or sets path in storage target to which namespacePath points.
+        /// Gets or sets path in Storage Target to which namespacePath points.
         /// </summary>
         [JsonProperty(PropertyName = "targetPath")]
         public string TargetPath { get; set; }

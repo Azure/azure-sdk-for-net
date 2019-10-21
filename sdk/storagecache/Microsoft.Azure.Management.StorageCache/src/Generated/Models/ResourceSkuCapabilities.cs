@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSkuCapabilities class.
         /// </summary>
-        /// <param name="name">Name of a capability, such as ops/sec</param>
+        /// <param name="name">Name of a capability, such as ops/sec.</param>
         /// <param name="value">Quantity, if the capability is measured by
-        /// quantity</param>
+        /// quantity.</param>
         public ResourceSkuCapabilities(string name = default(string), string value = default(string))
         {
             Name = name;
@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of a capability, such as ops/sec
+        /// Gets or sets name of a capability, such as ops/sec.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets quantity, if the capability is measured by quantity
+        /// Gets or sets quantity, if the capability is measured by quantity.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

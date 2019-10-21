@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of the request to list caches. It contains a list of caches and
+    /// Result of the request to list Caches. It contains a list of Caches and
     /// a URL link to get the next set of results.
     /// </summary>
     public partial class CachesListResult
@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the CachesListResult class.
         /// </summary>
-        /// <param name="nextLink">URL to get the next set of cache list
-        /// results if there are any.</param>
-        /// <param name="value">List of caches.</param>
+        /// <param name="nextLink">URL to get the next set of Cache list
+        /// results, if there are any.</param>
+        /// <param name="value">List of Caches.</param>
         public CachesListResult(string nextLink = default(string), IList<Cache> value = default(IList<Cache>))
         {
             NextLink = nextLink;
@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets URL to get the next set of cache list results if there
-        /// are any.
+        /// Gets or sets URL to get the next set of Cache list results, if
+        /// there are any.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
         /// <summary>
-        /// Gets or sets list of caches.
+        /// Gets or sets list of Caches.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<Cache> Value { get; set; }
