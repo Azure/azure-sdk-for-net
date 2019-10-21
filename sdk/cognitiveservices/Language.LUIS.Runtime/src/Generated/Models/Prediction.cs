@@ -32,21 +32,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// <summary>
         /// Initializes a new instance of the Prediction class.
         /// </summary>
-        /// <param name="normalizedQuery">The query after pre-processing and
-        /// normalization.</param>
         /// <param name="topIntent">The name of the top scoring intent.</param>
         /// <param name="intents">A dictionary representing the intents that
         /// fired.</param>
-        /// <param name="entities">The dictionary representing the entities
-        /// that fired.</param>
+        /// <param name="entities">A dictionary representing the entities that
+        /// fired.</param>
         /// <param name="alteredQuery">The query after spell checking. Only set
         /// if spell check was enabled and a spelling mistake was
         /// found.</param>
         /// <param name="sentiment">The result of the sentiment
         /// analysis.</param>
-        public Prediction(string normalizedQuery, string topIntent, IDictionary<string, Intent> intents, IDictionary<string, object> entities, string alteredQuery = default(string), Sentiment sentiment = default(Sentiment))
+        public Prediction(string topIntent, IDictionary<string, Intent> intents, IDictionary<string, object> entities, string alteredQuery = default(string), Sentiment sentiment = default(Sentiment))
         {
-            NormalizedQuery = normalizedQuery;
             AlteredQuery = alteredQuery;
             TopIntent = topIntent;
             Intents = intents;
@@ -59,12 +56,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the query after pre-processing and normalization.
-        /// </summary>
-        [JsonProperty(PropertyName = "normalizedQuery")]
-        public string NormalizedQuery { get; set; }
 
         /// <summary>
         /// Gets or sets the query after spell checking. Only set if spell
@@ -86,7 +77,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         public IDictionary<string, Intent> Intents { get; set; }
 
         /// <summary>
-        /// Gets or sets the dictionary representing the entities that fired.
+        /// Gets or sets a dictionary representing the entities that fired.
         /// </summary>
         [JsonProperty(PropertyName = "entities")]
         public IDictionary<string, object> Entities { get; set; }
@@ -105,10 +96,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (NormalizedQuery == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NormalizedQuery");
-            }
             if (TopIntent == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "TopIntent");
