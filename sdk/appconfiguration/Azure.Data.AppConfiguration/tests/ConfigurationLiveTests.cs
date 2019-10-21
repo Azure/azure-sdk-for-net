@@ -1091,7 +1091,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.GreaterOrEqual(settings.Length, 0);
+                CollectionAssert.IsEmpty(settings);
             }
             finally
             {
