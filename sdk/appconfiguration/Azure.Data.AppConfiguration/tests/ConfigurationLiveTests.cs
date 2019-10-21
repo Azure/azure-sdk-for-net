@@ -13,6 +13,8 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationLiveTests : RecordedTestBase
     {
+        private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
+
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ConfigurationRecordedTestSanitizer();
@@ -46,6 +48,21 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag2", "value2" }
                 }
             };
+        }
+
+        private ConfigurationSetting CreateSetting(string key, string value, string label)
+        {
+            return new ConfigurationSetting()
+            {
+                Key = GenerateKeyId($"{key}-"),
+                Value = value,
+                Label = label,
+            };
+        }
+
+        private ConfigurationSetting CreateSettingSpecialCharacters()
+        {
+            return CreateSetting($"key-{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
         }
 
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
@@ -684,6 +701,50 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task GetSettingSpecialCharacters()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSettingSpecialCharacters();
+
+            // Prepare environment
+            ConfigurationSetting testSettingNoLabel = testSetting.Clone();
+            testSettingNoLabel.Label = null;
+
+            try
+            {
+                await service.SetAsync(testSettingNoLabel);
+
+                // Test
+                ConfigurationSetting setting = await service.GetAsync(testSettingNoLabel.Key);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
+            }
+            finally
+            {
+                await service.DeleteAsync(testSettingNoLabel.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetSettingSpecialCharactersWithLabel()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSettingSpecialCharacters();
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                // Test
+                ConfigurationSetting setting = await service.GetAsync(testSetting.Key, testSetting.Label);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key);
+            }
+        }
+
+        [Test]
         public async Task GetBatchSettingPagination()
         {
             ConfigurationClient service = GetClient();
@@ -874,6 +935,245 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        [Test]
+        public async Task GetBatchSettingSpecialCharacters()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSettingSpecialCharacters();
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                var selector = new SettingSelector(testSetting.Key);
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                // There should be at least one key available
+                Assert.GreaterOrEqual(settings.Length, 1);
+                Assert.AreEqual(testSetting.Key, settings[0].Key);
+                Assert.AreEqual(testSetting.Label, settings[0].Label);
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingStartsWith()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting("abcde", "Starts with abc", "abcde");
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                var selector = new SettingSelector("abc*");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                // There should be at least one key available.
+                Assert.GreaterOrEqual(settings.Length, 1);
+
+                foreach (ConfigurationSetting setting in settings)
+                {
+                    StringAssert.StartsWith("abc", setting.Key);
+                }
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingEndsWith()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting("yzabc", "Test of ends with", "yzabc");
+            string endsWith = testSetting.Key.Substring(5);
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                var selector = new SettingSelector($"*{endsWith}");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                // There should be at least one key available.
+                Assert.GreaterOrEqual(settings.Length, 1);
+
+                foreach (ConfigurationSetting setting in settings)
+                {
+                    StringAssert.EndsWith(endsWith, setting.Key);
+                }
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingContains()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting("yzabcde", "Contains abc", "yzabcde");
+
+            try
+            {
+                await service.SetAsync(testSetting);
+
+                var selector = new SettingSelector("*abc*");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                // There should be at least one key available.
+                Assert.GreaterOrEqual(settings.Length, 1);
+
+                foreach (ConfigurationSetting setting in settings)
+                {
+                    StringAssert.Contains("abc", setting.Key);
+                }
+            }
+            finally
+            {
+                await service.DeleteAsync(testSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingsWithCommaInSelectorKey()
+        {
+            ConfigurationClient service = GetClient();
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("ab,cd", "comma in key");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("wx,yz", "comma in key");
+
+            try
+            {
+                await service.SetAsync(abcSetting);
+                await service.SetAsync(xyzSetting);
+
+                var selector = new SettingSelector(key:null);
+                selector.Keys.Add("ab,cd");
+                selector.Keys.Add("wz,yz");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.GreaterOrEqual(settings.Length, 2);
+                Assert.IsTrue(settings.Any(s => s.Key == "ab,cd"));
+                Assert.IsTrue(settings.Any(s => s.Key == "wx,yz"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                await service.DeleteAsync(abcSetting.Key);
+                await service.DeleteAsync(xyzSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingsWithCommaInSelectorKeyDoesNotOr()
+        {
+            ConfigurationClient service = GetClient();
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("abc", "abc setting");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("xyz", "xyz setting");
+
+            try
+            {
+                await service.SetAsync(abcSetting);
+                await service.SetAsync(xyzSetting);
+
+                var selector = new SettingSelector($"{abcSetting.Key},{xyzSetting.Key}");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.GreaterOrEqual(settings.Length, 0);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                await service.DeleteAsync(abcSetting.Key);
+                await service.DeleteAsync(xyzSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingsWithMultipleKeys()
+        {
+            ConfigurationClient service = GetClient();
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("abc", "abc setting");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("xyz", "xyz setting");
+
+            try
+            {
+                await service.SetAsync(abcSetting);
+                await service.SetAsync(xyzSetting);
+
+                var selector = new SettingSelector("abc");
+                selector.Keys.Add("xyz");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.GreaterOrEqual(settings.Length, 2);
+                Assert.IsTrue(settings.Any(s => s.Key == "abc"));
+                Assert.IsTrue(settings.Any(s => s.Key == "xyz"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                await service.DeleteAsync(abcSetting.Key);
+                await service.DeleteAsync(xyzSetting.Key);
+            }
+        }
+
+        [Test]
+        public async Task GetBatchSettingsWithMultipleLabels()
+        {
+            ConfigurationClient service = GetClient();
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("key-abc", "abc setting", "abc");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("label-xyz", "xyz setting", "xyz");
+
+            try
+            {
+                await service.SetAsync(abcSetting);
+                await service.SetAsync(xyzSetting);
+
+                var selector = new SettingSelector(null, "abc");
+                selector.Labels.Add("xyz");
+
+                ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.GreaterOrEqual(settings.Length, 2);
+                Assert.IsTrue(settings.Any(s => s.Label == "abc"));
+                Assert.IsTrue(settings.Any(s => s.Label == "xyz"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                await service.DeleteAsync(abcSetting.Key);
+                await service.DeleteAsync(xyzSetting.Key);
+            }
+        }
 
         [Test]
         public async Task SetReadOnlyOnSetting()
