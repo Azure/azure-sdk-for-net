@@ -77,7 +77,6 @@ namespace Azure.Data.AppConfiguration
         /// Creates a string in reference to the SettingSelector.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        // TODO ()
         public override string ToString() => base.ToString();
         #endregion
     }
