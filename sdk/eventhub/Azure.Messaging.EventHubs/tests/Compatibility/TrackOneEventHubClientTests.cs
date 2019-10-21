@@ -823,17 +823,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (!metricsEnabled)
                 {
-                    Assert.That(consumer.LastEnqueuedEventInformation, Is.Null, "No metrics should have been created when not requested.");
+                    Assert.That(() => consumer.ReadLastEnqueuedEventInformation(), Throws.TypeOf<InvalidOperationException>(), "No metrics should be available when not requested.");
                 }
                 else
                 {
-                    Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "Metrics should have been created when requested.");
-                    Assert.That(consumer.LastEnqueuedEventInformation.EventHubName, Is.EqualTo(eventHubName), "The metrics event hub should match");
-                    Assert.That(consumer.LastEnqueuedEventInformation.PartitionId, Is.EqualTo(partitionId), "The metrics partition should match");
-                    Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.HasValue, Is.False, "The metrics partition should have no initial offset");
-                    Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.HasValue, Is.False, "The metrics partition should have no initial sequence number");
-                    Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.HasValue, Is.False, "The metrics partition should have no initial enqueue time");
-                    Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.HasValue, Is.False, "The metrics partition should have no initial update time");
+                    var lastEnqueuedEventInformation = consumer.ReadLastEnqueuedEventInformation();
+
+                    Assert.That(lastEnqueuedEventInformation, Is.Not.Null, "Metrics should have been created when requested.");
+                    Assert.That(lastEnqueuedEventInformation.EventHubName, Is.EqualTo(eventHubName), "The metrics event hub should match");
+                    Assert.That(lastEnqueuedEventInformation.PartitionId, Is.EqualTo(partitionId), "The metrics partition should match");
+                    Assert.That(lastEnqueuedEventInformation.LastEnqueuedOffset.HasValue, Is.False, "The metrics partition should have no initial offset");
+                    Assert.That(lastEnqueuedEventInformation.LastEnqueuedSequenceNumber.HasValue, Is.False, "The metrics partition should have no initial sequence number");
+                    Assert.That(lastEnqueuedEventInformation.LastEnqueuedTime.HasValue, Is.False, "The metrics partition should have no initial enqueue time");
+                    Assert.That(lastEnqueuedEventInformation.InformationReceived.HasValue, Is.False, "The metrics partition should have no initial update time");
                 }
 
             }

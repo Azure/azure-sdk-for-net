@@ -373,7 +373,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                 partitionKey: systemAnnotations.PartitionKey,
                 lastPartitionSequenceNumber: systemAnnotations.LastSequenceNumber,
                 lastPartitionOffset: systemAnnotations.LastOffset,
-                lastPartitionEnqueuedTime: systemAnnotations.LastEnqueuedTime);
+                lastPartitionEnqueuedTime: systemAnnotations.LastEnqueuedTime,
+                lastPartitionInformationRetrievalTime: systemAnnotations.LastReceivedTime);
         }
 
         /// <summary>
@@ -478,6 +479,17 @@ namespace Azure.Messaging.EventHubs.Amqp
                     && (long.TryParse((string)propertyValue, out var offset)))
                 {
                     systemProperties.LastOffset = offset;
+                }
+
+                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpProperty.LastPartitionInformationRetrievalTimeUtc, out amqpValue))
+                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
+                {
+                    systemProperties.LastReceivedTime = propertyValue switch
+                    {
+                        DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
+                        long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
+                        _ => (DateTimeOffset)propertyValue
+                    };
                 }
             }
 
@@ -782,6 +794,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             /// <summary>The date and time, in UTC, that an event was last enqueued in the partition.</summary>
             public DateTimeOffset? LastEnqueuedTime;
+
+            /// <summary>The date and time, in UTC, that the last enqueued event information was retrieved from the service.</summary>
+            public DateTimeOffset? LastReceivedTime;
         }
     }
 }
