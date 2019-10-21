@@ -48,7 +48,7 @@ namespace Microsoft.Azure.ContainerRegistry
 
         // Structure : Method>Operation : Scope
         // Key contains operation url which could potentially change culture...
-        private Dictionary<string, string> _acrScopes = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+        private Dictionary<string, string> _acrScopes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         // Internal simplified client for Token Acquisition
         private ContainerRegistryRefreshToken _acrRefresh;
