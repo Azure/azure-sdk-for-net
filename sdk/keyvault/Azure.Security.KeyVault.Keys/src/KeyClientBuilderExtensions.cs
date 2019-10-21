@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to <see cref="KeyClient"/> or <see cref="CryptographyClient"/> to clients builder
     /// </summary>
-    public static class AzureClientBuilderExtensions
+    public static class KeyClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultEndpoint"/>

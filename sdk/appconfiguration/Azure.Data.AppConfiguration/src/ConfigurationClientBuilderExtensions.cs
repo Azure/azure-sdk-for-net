@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="ConfigurationClient"/> client to clients builder
     /// </summary>
-    public static class AzureClientBuilderExtensions
+    public static class ConfigurationClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="ConfigurationClient"/> instance with the provided <paramref name="connectionString"/>

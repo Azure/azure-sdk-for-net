@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="CertificateClient"/> to clients builder
     /// </summary>
-    public static class AzureClientBuilderExtensions
+    public static class CertificateClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="CertificateClient"/> instance with the provided <paramref name="vaultUri"/>
