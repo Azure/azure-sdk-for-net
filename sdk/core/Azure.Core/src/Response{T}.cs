@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Azure
 {
@@ -9,6 +10,7 @@ namespace Azure
     /// Represents a result of Azure operation.
     /// </summary>
     /// <typeparam name="T">The type of returned value.</typeparam>
+    [DebuggerTypeProxy(typeof(ResponseDebugView<>))]
     public abstract class Response<T>
     {
         /// <summary>
@@ -37,7 +39,9 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString()
+        {
+            return $"Status: {GetRawResponse().Status}, Value: {Value}";
+        }
     }
 }
