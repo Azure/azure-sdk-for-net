@@ -73,6 +73,16 @@ namespace Azure.Storage.Blobs
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        internal readonly CustomerProvidedKey? _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
         /// The Storage account name corresponding to the container client.
         /// </summary>
         private string _accountName;
@@ -161,6 +171,7 @@ namespace Azure.Storage.Blobs
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
+            _customerProvidedKey = options.CustomerProvidedKey;
         }
 
         /// <summary>
@@ -245,6 +256,7 @@ namespace Azure.Storage.Blobs
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
+            _customerProvidedKey = options.CustomerProvidedKey;
         }
 
         /// <summary>
@@ -259,11 +271,13 @@ namespace Azure.Storage.Blobs
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = containerUri;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
+            _customerProvidedKey = customerProvidedKey;
         }
         #endregion ctor
 
@@ -275,7 +289,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        public virtual BlobClient GetBlobClient(string blobName) => new BlobClient(Uri.AppendToPath(blobName), _pipeline);
+        public virtual BlobClient GetBlobClient(string blobName) =>
+            new BlobClient(Uri.AppendToPath(blobName), _pipeline, ClientDiagnostics, CustomerProvidedKey);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
