@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobBaseClientTests : BlobTestBase
     {
         public BlobBaseClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -450,7 +450,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("These tests currently take 40 mins for little additional coverage")]
         [Test]
+        [Category("Live")]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
