@@ -3539,7 +3539,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Creates a new QueueItem instance
         /// </summary>
-        public QueueItem()
+        internal QueueItem()
             : this(false)
         {
         }
@@ -4046,7 +4046,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Creates a new QueueServiceStatistics instance
         /// </summary>
-        public QueueServiceStatistics()
+        internal QueueServiceStatistics()
             : this(false)
         {
         }

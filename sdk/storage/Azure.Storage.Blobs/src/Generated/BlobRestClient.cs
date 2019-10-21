@@ -13370,7 +13370,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobContainerItem instance
         /// </summary>
-        public BlobContainerItem()
+        internal BlobContainerItem()
             : this(false)
         {
         }
@@ -14789,7 +14789,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItem instance
         /// </summary>
-        public BlobItem()
+        internal BlobItem()
             : this(false)
         {
         }
@@ -16059,7 +16059,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobServiceStatistics instance
         /// </summary>
-        public BlobServiceStatistics()
+        internal BlobServiceStatistics()
             : this(false)
         {
         }
@@ -16772,7 +16772,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlockList instance
         /// </summary>
-        public BlockList()
+        internal BlockList()
             : this(false)
         {
         }
