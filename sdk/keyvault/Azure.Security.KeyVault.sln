@@ -29,12 +29,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Cer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\identity\Azure.Identity\tests\Azure.Identity.Tests.csproj", "{A9EE98A1-2769-4D37-A336-8418184A4448}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Shared.Tests", "Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests\Azure.Security.KeyVault.Shared.Tests.shproj", "{1AFA2644-A1D9-419F-B87D-9B519B673F24}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Shared.Tests", "Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.shproj", "{1AFA2644-A1D9-419F-B87D-9B519B673F24}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
-		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests\Azure.Security.KeyVault.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
