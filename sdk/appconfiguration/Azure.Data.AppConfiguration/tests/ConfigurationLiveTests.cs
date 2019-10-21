@@ -62,7 +62,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationSetting CreateSettingSpecialCharacters()
         {
-            return CreateSetting($"key-{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
+            return CreateSetting($"{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
         }
 
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
